@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -2410,6 +2410,21 @@ namespace OpenTK.Graphics.OpenGLES2
         AllShaderBitsExt = 4294967295,
         InvalidIndex = 4294967295,
     }
+    public enum AlphaFunction : uint
+    {
+        Never = 512,
+        Less = 513,
+        Equal = 514,
+        Lequal = 515,
+        Greater = 516,
+        Notequal = 517,
+        Gequal = 518,
+        Always = 519,
+    }
+    public enum AtomicCounterBufferPName : uint
+    {
+        AtomicCounterBufferBinding = 37569,
+    }
     [Flags]
     public enum AttribMask : uint
     {
@@ -2417,171 +2432,157 @@ namespace OpenTK.Graphics.OpenGLES2
         StencilBufferBit = 1024,
         ColorBufferBit = 16384,
     }
-    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.Clear" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, ...</summary>
-    [Flags]
-    public enum ClearBufferMask : uint
+    ///<summary>Used in <see cref="GL.GetActiveAttrib" />, <see cref="GL.GetTransformFeedbackVarying" /></summary>
+    public enum AttributeType : uint
     {
-        DepthBufferBit = 256,
-        StencilBufferBit = 1024,
-        ColorBufferBit = 16384,
-        CoverageBufferBitNv = 32768,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        Int64Nv = 5134,
+        UnsignedInt64Nv = 5135,
+        FloatVec2 = 35664,
+        FloatVec3 = 35665,
+        FloatVec4 = 35666,
+        IntVec2 = 35667,
+        IntVec3 = 35668,
+        IntVec4 = 35669,
+        Bool = 35670,
+        BoolVec2 = 35671,
+        BoolVec3 = 35672,
+        BoolVec4 = 35673,
+        FloatMat2 = 35674,
+        FloatMat3 = 35675,
+        FloatMat4 = 35676,
+        Sampler2d = 35678,
+        Sampler3d = 35679,
+        Sampler3dOes = 35679,
+        SamplerCube = 35680,
+        Sampler2dShadow = 35682,
+        Sampler2dShadowExt = 35682,
+        FloatMat2x3 = 35685,
+        FloatMat2x3Nv = 35685,
+        FloatMat2x4 = 35686,
+        FloatMat2x4Nv = 35686,
+        FloatMat3x2 = 35687,
+        FloatMat3x2Nv = 35687,
+        FloatMat3x4 = 35688,
+        FloatMat3x4Nv = 35688,
+        FloatMat4x2 = 35689,
+        FloatMat4x2Nv = 35689,
+        FloatMat4x3 = 35690,
+        FloatMat4x3Nv = 35690,
+        SamplerBuffer = 36290,
+        Sampler2dArrayShadow = 36292,
+        SamplerCubeShadow = 36293,
+        UnsignedIntVec2 = 36294,
+        UnsignedIntVec3 = 36295,
+        UnsignedIntVec4 = 36296,
+        IntSampler2d = 36298,
+        IntSampler3d = 36299,
+        IntSamplerCube = 36300,
+        IntSampler2dArray = 36303,
+        IntSamplerBuffer = 36304,
+        UnsignedIntSampler2d = 36306,
+        UnsignedIntSampler3d = 36307,
+        UnsignedIntSamplerCube = 36308,
+        UnsignedIntSampler2dArray = 36311,
+        UnsignedIntSamplerBuffer = 36312,
+        SamplerCubeMapArray = 36876,
+        SamplerCubeMapArrayShadow = 36877,
+        IntSamplerCubeMapArray = 36878,
+        UnsignedIntSamplerCubeMapArray = 36879,
+        Image2d = 36941,
+        Image3d = 36942,
+        ImageCube = 36944,
+        ImageBuffer = 36945,
+        Image2dArray = 36947,
+        ImageCubeMapArray = 36948,
+        IntImage2d = 36952,
+        IntImage3d = 36953,
+        IntImageCube = 36955,
+        IntImageBuffer = 36956,
+        IntImage2dArray = 36958,
+        IntImageCubeMapArray = 36959,
+        UnsignedIntImage2d = 36963,
+        UnsignedIntImage3d = 36964,
+        UnsignedIntImageCube = 36966,
+        UnsignedIntImageBuffer = 36967,
+        UnsignedIntImage2dArray = 36969,
+        UnsignedIntImageCubeMapArray = 36970,
+        Sampler2dMultisample = 37128,
+        IntSampler2dMultisample = 37129,
+        UnsignedIntSampler2dMultisample = 37130,
+        Sampler2dMultisampleArray = 37131,
+        IntSampler2dMultisampleArray = 37132,
+        UnsignedIntSampler2dMultisampleArray = 37133,
     }
-    ///<summary>Used in <see cref="GL.EXT.BufferStorageEXT" />, <see cref="GL.EXT.BufferStorageExternalEXT" />, <see cref="GL.EXT.NamedBufferStorageExternalEXT" /></summary>
-    [Flags]
-    public enum BufferStorageMask : uint
+    ///<summary>Used in <see cref="GL.BindTransformFeedback" /></summary>
+    public enum BindTransformFeedbackTarget : uint
     {
-        MapReadBit = 1,
-        MapReadBitExt = 1,
-        MapWriteBit = 2,
-        MapWriteBitExt = 2,
-        MapPersistentBitExt = 64,
-        MapCoherentBitExt = 128,
-        DynamicStorageBitExt = 256,
-        ClientStorageBitExt = 512,
+        TransformFeedback = 36386,
     }
-    [Flags]
-    public enum ContextFlagMask : uint
+    public enum BinormalPointerTypeEXT : uint
     {
-        ContextFlagDebugBit = 2,
-        ContextFlagDebugBitKhr = 2,
-        ContextFlagRobustAccessBit = 4,
-        ContextFlagNoErrorBitKhr = 8,
-        ContextFlagProtectedContentBitExt = 16,
+        Byte = 5120,
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
     }
-    ///<summary>Used in <see cref="GL.MapBufferRange" />, <see cref="GL.EXT.MapBufferRangeEXT" /></summary>
-    [Flags]
-    public enum MapBufferAccessMask : uint
+    ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationi" />, <see cref="GL.BlendEquationSeparate" />, ...</summary>
+    public enum BlendEquationModeEXT : uint
     {
-        MapReadBit = 1,
-        MapReadBitExt = 1,
-        MapWriteBit = 2,
-        MapWriteBitExt = 2,
-        MapInvalidateRangeBit = 4,
-        MapInvalidateRangeBitExt = 4,
-        MapInvalidateBufferBit = 8,
-        MapInvalidateBufferBitExt = 8,
-        MapFlushExplicitBit = 16,
-        MapFlushExplicitBitExt = 16,
-        MapUnsynchronizedBit = 32,
-        MapUnsynchronizedBitExt = 32,
-        MapPersistentBitExt = 64,
-        MapCoherentBitExt = 128,
+        FuncAdd = 32774,
+        FuncAddExt = 32774,
+        Min = 32775,
+        MinExt = 32775,
+        Max = 32776,
+        MaxExt = 32776,
+        FuncSubtract = 32778,
+        FuncReverseSubtract = 32779,
     }
-    ///<summary>Used in <see cref="GL.MemoryBarrier" />, <see cref="GL.MemoryBarrierByRegion" /></summary>
-    [Flags]
-    public enum MemoryBarrierMask : uint
+    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.BlendFunci" />, <see cref="GL.BlendFuncSeparate" />, ...</summary>
+    public enum BlendingFactor : uint
     {
-        VertexAttribArrayBarrierBit = 1,
-        ElementArrayBarrierBit = 2,
-        UniformBarrierBit = 4,
-        TextureFetchBarrierBit = 8,
-        ShaderImageAccessBarrierBit = 32,
-        CommandBarrierBit = 64,
-        PixelBufferBarrierBit = 128,
-        TextureUpdateBarrierBit = 256,
-        BufferUpdateBarrierBit = 512,
-        FramebufferBarrierBit = 1024,
-        TransformFeedbackBarrierBit = 2048,
-        AtomicCounterBarrierBit = 4096,
-        ShaderStorageBarrierBit = 8192,
-        ClientMappedBufferBarrierBitExt = 16384,
-        AllBarrierBits = 4294967295,
+        Zero = 0,
+        One = 1,
+        SrcColor = 768,
+        OneMinusSrcColor = 769,
+        SrcAlpha = 770,
+        OneMinusSrcAlpha = 771,
+        DstAlpha = 772,
+        OneMinusDstAlpha = 773,
+        DstColor = 774,
+        OneMinusDstColor = 775,
+        SrcAlphaSaturate = 776,
+        ConstantColor = 32769,
+        OneMinusConstantColor = 32770,
+        ConstantAlpha = 32771,
+        OneMinusConstantAlpha = 32772,
     }
-    ///<summary>Used in <see cref="GL.ClientWaitSync" />, <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
-    [Flags]
-    public enum SyncObjectMask : uint
+    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, <see cref="GL.EXT.BlitFramebufferLayerEXT" />, ...</summary>
+    public enum BlitFramebufferFilter : uint
     {
-        SyncFlushCommandsBit = 1,
-        SyncFlushCommandsBitApple = 1,
+        Nearest = 9728,
+        Linear = 9729,
     }
-    ///<summary>Used in <see cref="GL.UseProgramStages" />, <see cref="GL.EXT.UseProgramStagesEXT" /></summary>
-    [Flags]
-    public enum UseProgramStageMask : uint
+    public enum Boolean : uint
     {
-        VertexShaderBit = 1,
-        VertexShaderBitExt = 1,
-        FragmentShaderBit = 2,
-        FragmentShaderBitExt = 2,
-        GeometryShaderBit = 4,
-        GeometryShaderBitExt = 4,
-        GeometryShaderBitOes = 4,
-        TessControlShaderBit = 8,
-        TessControlShaderBitExt = 8,
-        TessControlShaderBitOes = 8,
-        TessEvaluationShaderBit = 16,
-        TessEvaluationShaderBitExt = 16,
-        TessEvaluationShaderBitOes = 16,
-        ComputeShaderBit = 32,
-        MeshShaderBitNv = 64,
-        TaskShaderBitNv = 128,
-        AllShaderBits = 4294967295,
-        AllShaderBitsExt = 4294967295,
+        False = 0,
+        True = 1,
     }
-    [Flags]
-    public enum SubgroupSupportedFeatures : uint
+    ///<summary>Used in <see cref="GL.ClearBufferfi" />, <see cref="GL.ClearBufferfv" />, <see cref="GL.ClearBufferiv" />, ...</summary>
+    public enum Buffer : uint
     {
-        SubgroupFeatureBasicBitKhr = 1,
-        SubgroupFeatureVoteBitKhr = 2,
-        SubgroupFeatureArithmeticBitKhr = 4,
-        SubgroupFeatureBallotBitKhr = 8,
-        SubgroupFeatureShuffleBitKhr = 16,
-        SubgroupFeatureShuffleRelativeBitKhr = 32,
-        SubgroupFeatureClusteredBitKhr = 64,
-        SubgroupFeatureQuadBitKhr = 128,
-        SubgroupFeaturePartitionedBitNv = 256,
+        Color = 6144,
+        Depth = 6145,
+        Stencil = 6146,
     }
-    [Flags]
-    public enum FragmentShaderDestMaskATI : uint
+    ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.OES.MapBufferOES" /></summary>
+    public enum BufferAccessARB : uint
     {
-        None = 0,
-    }
-    [Flags]
-    public enum FragmentShaderDestModMaskATI : uint
-    {
-        None = 0,
-    }
-    ///<summary>Used in <see cref="GL.NV.PathGlyphIndexArrayNV" />, <see cref="GL.NV.PathGlyphIndexRangeNV" />, <see cref="GL.NV.PathGlyphRangeNV" />, ...</summary>
-    [Flags]
-    public enum PathFontStyle : uint
-    {
-        None = 0,
-        BoldBitNv = 1,
-        ItalicBitNv = 2,
-    }
-    ///<summary>Used in <see cref="GL.NV.GetPathMetricRangeNV" />, <see cref="GL.NV.GetPathMetricsNV" /></summary>
-    [Flags]
-    public enum PathMetricMask : uint
-    {
-        GlyphWidthBitNv = 1,
-        GlyphHeightBitNv = 2,
-        GlyphHorizontalBearingXBitNv = 4,
-        GlyphHorizontalBearingYBitNv = 8,
-        GlyphHorizontalBearingAdvanceBitNv = 16,
-        GlyphVerticalBearingXBitNv = 32,
-        GlyphVerticalBearingYBitNv = 64,
-        GlyphVerticalBearingAdvanceBitNv = 128,
-        GlyphHasKerningBitNv = 256,
-        FontXMinBoundsBitNv = 65536,
-        FontYMinBoundsBitNv = 131072,
-        FontXMaxBoundsBitNv = 262144,
-        FontYMaxBoundsBitNv = 524288,
-        FontUnitsPerEmBitNv = 1048576,
-        FontAscenderBitNv = 2097152,
-        FontDescenderBitNv = 4194304,
-        FontHeightBitNv = 8388608,
-        FontMaxAdvanceWidthBitNv = 16777216,
-        FontMaxAdvanceHeightBitNv = 33554432,
-        FontUnderlinePositionBitNv = 67108864,
-        FontUnderlineThicknessBitNv = 134217728,
-        FontHasKerningBitNv = 268435456,
-        FontNumGlyphIndicesBitNv = 536870912,
-    }
-    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryInfoINTEL" /></summary>
-    [Flags]
-    public enum PerformanceQueryCapsMaskINTEL : uint
-    {
-        PerfquerySingleContextIntel = 0,
-        PerfqueryGlobalContextIntel = 1,
+        ReadOnly = 35000,
+        WriteOnly = 35001,
+        ReadWrite = 35002,
     }
     ///<summary>Used in <see cref="GL.QCOM.EndTilingQCOM" />, <see cref="GL.QCOM.StartTilingQCOM" /></summary>
     [Flags]
@@ -2620,226 +2621,259 @@ namespace OpenTK.Graphics.OpenGLES2
         MultisampleBufferBit6Qcom = 1073741824,
         MultisampleBufferBit7Qcom = 2147483648,
     }
+    ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" /></summary>
+    public enum BufferPNameARB : uint
+    {
+        BufferSize = 34660,
+        BufferUsage = 34661,
+        BufferMapped = 35004,
+        BufferAccessFlags = 37151,
+        BufferMapLength = 37152,
+        BufferMapOffset = 37153,
+    }
+    ///<summary>Used in <see cref="GL.GetBufferPointerv" />, <see cref="GL.OES.GetBufferPointervOES" /></summary>
+    public enum BufferPointerNameARB : uint
+    {
+        BufferMapPointer = 35005,
+    }
+    ///<summary>Used in <see cref="GL.EXT.BufferStorageEXT" />, <see cref="GL.EXT.BufferStorageExternalEXT" />, <see cref="GL.EXT.NamedBufferStorageExternalEXT" /></summary>
     [Flags]
-    public enum FoveationConfigBitQCOM : uint
+    public enum BufferStorageMask : uint
     {
-        FoveationEnableBitQcom = 1,
-        FoveationScaledBinMethodBitQcom = 2,
-        FoveationSubsampledLayoutMethodBitQcom = 4,
+        MapReadBit = 1,
+        MapReadBitExt = 1,
+        MapWriteBit = 2,
+        MapWriteBitExt = 2,
+        MapPersistentBitExt = 64,
+        MapCoherentBitExt = 128,
+        DynamicStorageBitExt = 256,
+        ClientStorageBitExt = 512,
     }
-    ///<summary>Used in <see cref="GL.NV.GetPathCommandsNV" />, <see cref="GL.NV.PathCommandsNV" />, <see cref="GL.NV.PathCoordsNV" />, ...</summary>
-    public enum PathCoordType : uint
+    ///<summary>Used in <see cref="GL.NV.BufferPageCommitmentMemNV" />, <see cref="GL.EXT.BufferStorageEXT" /></summary>
+    public enum BufferStorageTarget : uint
     {
-        ClosePathNv = 0,
-        MoveToNv = 2,
-        RelativeMoveToNv = 3,
-        LineToNv = 4,
-        RelativeLineToNv = 5,
-        HorizontalLineToNv = 6,
-        RelativeHorizontalLineToNv = 7,
-        VerticalLineToNv = 8,
-        RelativeVerticalLineToNv = 9,
-        QuadraticCurveToNv = 10,
-        RelativeQuadraticCurveToNv = 11,
-        CubicCurveToNv = 12,
-        RelativeCubicCurveToNv = 13,
-        SmoothQuadraticCurveToNv = 14,
-        RelativeSmoothQuadraticCurveToNv = 15,
-        SmoothCubicCurveToNv = 16,
-        RelativeSmoothCubicCurveToNv = 17,
-        SmallCcwArcToNv = 18,
-        RelativeSmallCcwArcToNv = 19,
-        SmallCwArcToNv = 20,
-        RelativeSmallCwArcToNv = 21,
-        LargeCcwArcToNv = 22,
-        RelativeLargeCcwArcToNv = 23,
-        LargeCwArcToNv = 24,
-        RelativeLargeCwArcToNv = 25,
-        ConicCurveToNv = 26,
-        RelativeConicCurveToNv = 27,
-        RoundedRectNv = 232,
-        RelativeRoundedRectNv = 233,
-        RoundedRect2Nv = 234,
-        RelativeRoundedRect2Nv = 235,
-        RoundedRect4Nv = 236,
-        RelativeRoundedRect4Nv = 237,
-        RoundedRect8Nv = 238,
-        RelativeRoundedRect8Nv = 239,
-        RestartPathNv = 240,
-        DupFirstCubicCurveToNv = 242,
-        DupLastCubicCurveToNv = 244,
-        RectNv = 246,
-        RelativeRectNv = 247,
-        CircularCcwArcToNv = 248,
-        CircularCwArcToNv = 250,
-        CircularTangentArcToNv = 252,
-        ArcToNv = 254,
-        RelativeArcToNv = 255,
+        ArrayBuffer = 34962,
+        ElementArrayBuffer = 34963,
+        PixelPackBuffer = 35051,
+        PixelUnpackBuffer = 35052,
+        UniformBuffer = 35345,
+        TextureBuffer = 35882,
+        TransformFeedbackBuffer = 35982,
+        CopyReadBuffer = 36662,
+        CopyWriteBuffer = 36663,
+        DrawIndirectBuffer = 36671,
+        ShaderStorageBuffer = 37074,
+        DispatchIndirectBuffer = 37102,
+        AtomicCounterBuffer = 37568,
     }
-    public enum PathRenderingTokenNV : uint
+    ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
+    public enum BufferTargetARB : uint
     {
-        ClosePathNv = 0,
-        MoveToNv = 2,
-        RelativeMoveToNv = 3,
-        LineToNv = 4,
-        RelativeLineToNv = 5,
-        HorizontalLineToNv = 6,
-        RelativeHorizontalLineToNv = 7,
-        VerticalLineToNv = 8,
-        RelativeVerticalLineToNv = 9,
-        QuadraticCurveToNv = 10,
-        RelativeQuadraticCurveToNv = 11,
-        CubicCurveToNv = 12,
-        RelativeCubicCurveToNv = 13,
-        SmoothQuadraticCurveToNv = 14,
-        RelativeSmoothQuadraticCurveToNv = 15,
-        SmoothCubicCurveToNv = 16,
-        RelativeSmoothCubicCurveToNv = 17,
-        SmallCcwArcToNv = 18,
-        RelativeSmallCcwArcToNv = 19,
-        SmallCwArcToNv = 20,
-        RelativeSmallCwArcToNv = 21,
-        LargeCcwArcToNv = 22,
-        RelativeLargeCcwArcToNv = 23,
-        LargeCwArcToNv = 24,
-        RelativeLargeCwArcToNv = 25,
-        ConicCurveToNv = 26,
-        RelativeConicCurveToNv = 27,
-        SharedEdgeNv = 192,
-        RoundedRectNv = 232,
-        RelativeRoundedRectNv = 233,
-        RoundedRect2Nv = 234,
-        RelativeRoundedRect2Nv = 235,
-        RoundedRect4Nv = 236,
-        RelativeRoundedRect4Nv = 237,
-        RoundedRect8Nv = 238,
-        RelativeRoundedRect8Nv = 239,
-        RestartPathNv = 240,
-        DupFirstCubicCurveToNv = 242,
-        DupLastCubicCurveToNv = 244,
-        RectNv = 246,
-        RelativeRectNv = 247,
-        CircularCcwArcToNv = 248,
-        CircularCwArcToNv = 250,
-        CircularTangentArcToNv = 252,
-        ArcToNv = 254,
-        RelativeArcToNv = 255,
+        ArrayBuffer = 34962,
+        ElementArrayBuffer = 34963,
+        PixelPackBuffer = 35051,
+        PixelUnpackBuffer = 35052,
+        UniformBuffer = 35345,
+        TextureBuffer = 35882,
+        TransformFeedbackBuffer = 35982,
+        CopyReadBuffer = 36662,
+        CopyWriteBuffer = 36663,
+        DrawIndirectBuffer = 36671,
+        ShaderStorageBuffer = 37074,
+        DispatchIndirectBuffer = 37102,
+        AtomicCounterBuffer = 37568,
     }
-    public enum Boolean : uint
+    ///<summary>Used in <see cref="GL.BufferData" /></summary>
+    public enum BufferUsageARB : uint
     {
-        False = 0,
-        True = 1,
-    }
-    public enum VertexShaderWriteMaskEXT : uint
-    {
-        False = 0,
-        True = 1,
+        StreamDraw = 35040,
+        StreamRead = 35041,
+        StreamCopy = 35042,
+        StaticDraw = 35044,
+        StaticRead = 35045,
+        StaticCopy = 35046,
+        DynamicDraw = 35048,
+        DynamicRead = 35049,
+        DynamicCopy = 35050,
     }
     public enum ClampColorModeARB : uint
     {
         False = 0,
         True = 1,
     }
-    ///<summary>Used in <see cref="GL.GetGraphicsResetStatus" />, <see cref="GL.KHR.GetGraphicsResetStatus" />, <see cref="GL.EXT.GetGraphicsResetStatusEXT" />, ...</summary>
-    public enum GraphicsResetStatus : uint
+    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.Clear" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, ...</summary>
+    [Flags]
+    public enum ClearBufferMask : uint
     {
-        NoError = 0,
-        GuiltyContextReset = 33363,
-        InnocentContextReset = 33364,
-        UnknownContextReset = 33365,
+        DepthBufferBit = 256,
+        StencilBufferBit = 1024,
+        ColorBufferBit = 16384,
+        CoverageBufferBitNv = 32768,
     }
-    ///<summary>Used in <see cref="GL.GetError" /></summary>
-    public enum ErrorCode : uint
-    {
-        NoError = 0,
-        InvalidEnum = 1280,
-        InvalidValue = 1281,
-        InvalidOperation = 1282,
-        StackOverflow = 1283,
-        StackUnderflow = 1284,
-        OutOfMemory = 1285,
-        InvalidFramebufferOperation = 1286,
-    }
-    public enum TextureSwizzle : uint
-    {
-        Zero = 0,
-        One = 1,
-        Red = 6403,
-        Green = 6404,
-        Blue = 6405,
-        Alpha = 6406,
-    }
-    ///<summary>Used in <see cref="GL.StencilOp" />, <see cref="GL.StencilOpSeparate" /></summary>
-    public enum StencilOp : uint
-    {
-        Zero = 0,
-        Invert = 5386,
-        Keep = 7680,
-        Replace = 7681,
-        Incr = 7682,
-        Decr = 7683,
-        IncrWrap = 34055,
-        DecrWrap = 34056,
-    }
-    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.BlendFunci" />, <see cref="GL.BlendFuncSeparate" />, ...</summary>
-    public enum BlendingFactor : uint
-    {
-        Zero = 0,
-        One = 1,
-        SrcColor = 768,
-        OneMinusSrcColor = 769,
-        SrcAlpha = 770,
-        OneMinusSrcAlpha = 771,
-        DstAlpha = 772,
-        OneMinusDstAlpha = 773,
-        DstColor = 774,
-        OneMinusDstColor = 775,
-        SrcAlphaSaturate = 776,
-        ConstantColor = 32769,
-        OneMinusConstantColor = 32770,
-        ConstantAlpha = 32771,
-        OneMinusConstantAlpha = 32772,
-    }
-    public enum FragmentShaderGenericSourceATI : uint
-    {
-        Zero = 0,
-        One = 1,
-    }
-    public enum FragmentShaderValueRepATI : uint
+    public enum ColorBuffer : uint
     {
         None = 0,
-        Red = 6403,
-        Green = 6404,
-        Blue = 6405,
-        Alpha = 6406,
+        Front = 1028,
+        Back = 1029,
+        FrontAndBack = 1032,
+        ColorAttachment0 = 36064,
+        ColorAttachment1 = 36065,
+        ColorAttachment2 = 36066,
+        ColorAttachment3 = 36067,
+        ColorAttachment4 = 36068,
+        ColorAttachment5 = 36069,
+        ColorAttachment6 = 36070,
+        ColorAttachment7 = 36071,
+        ColorAttachment8 = 36072,
+        ColorAttachment9 = 36073,
+        ColorAttachment10 = 36074,
+        ColorAttachment11 = 36075,
+        ColorAttachment12 = 36076,
+        ColorAttachment13 = 36077,
+        ColorAttachment14 = 36078,
+        ColorAttachment15 = 36079,
+        ColorAttachment16 = 36080,
+        ColorAttachment17 = 36081,
+        ColorAttachment18 = 36082,
+        ColorAttachment19 = 36083,
+        ColorAttachment20 = 36084,
+        ColorAttachment21 = 36085,
+        ColorAttachment22 = 36086,
+        ColorAttachment23 = 36087,
+        ColorAttachment24 = 36088,
+        ColorAttachment25 = 36089,
+        ColorAttachment26 = 36090,
+        ColorAttachment27 = 36091,
+        ColorAttachment28 = 36092,
+        ColorAttachment29 = 36093,
+        ColorAttachment30 = 36094,
+        ColorAttachment31 = 36095,
     }
-    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.WaitSync" />, <see cref="GL.APPLE.FenceSyncAPPLE" />, ...</summary>
-    public enum SyncBehaviorFlags : uint
+    public enum ColorPointerType : uint
     {
-        None = 0,
-    }
-    public enum TextureCompareMode : uint
-    {
-        None = 0,
-        CompareRefToTexture = 34894,
-    }
-    ///<summary>Used in <see cref="GL.NV.PathColorGenNV" /></summary>
-    public enum PathColorFormat : uint
-    {
-        None = 0,
-        Alpha = 6406,
-        Rgb = 6407,
-        Rgba = 6408,
-        Luminance = 6409,
-        LuminanceAlpha = 6410,
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
     }
     public enum CombinerBiasNV : uint
     {
         None = 0,
     }
+    public enum CombinerComponentUsageNV : uint
+    {
+        Blue = 6405,
+        Alpha = 6406,
+        Rgb = 6407,
+    }
+    public enum CombinerPortionNV : uint
+    {
+        Alpha = 6406,
+        Rgb = 6407,
+    }
     public enum CombinerScaleNV : uint
     {
         None = 0,
+    }
+    ///<summary>Used in <see cref="GL.NV.BeginConditionalRenderNV" /></summary>
+    public enum ConditionalRenderMode : uint
+    {
+    }
+    public enum ContainerType : uint
+    {
+        ProgramObjectExt = 35648,
+    }
+    [Flags]
+    public enum ContextFlagMask : uint
+    {
+        ContextFlagDebugBit = 2,
+        ContextFlagDebugBitKhr = 2,
+        ContextFlagRobustAccessBit = 4,
+        ContextFlagNoErrorBitKhr = 8,
+        ContextFlagProtectedContentBitExt = 16,
+    }
+    ///<summary>Used in <see cref="GL.CopyBufferSubData" />, <see cref="GL.NV.CopyBufferSubDataNV" />, <see cref="GL.EXT.CopyImageSubDataEXT" />, ...</summary>
+    public enum CopyBufferSubDataTarget : uint
+    {
+        ArrayBuffer = 34962,
+        ElementArrayBuffer = 34963,
+        PixelPackBuffer = 35051,
+        PixelUnpackBuffer = 35052,
+        UniformBuffer = 35345,
+        TextureBuffer = 35882,
+        TransformFeedbackBuffer = 35982,
+        CopyReadBuffer = 36662,
+        CopyWriteBuffer = 36663,
+        DrawIndirectBuffer = 36671,
+        ShaderStorageBuffer = 37074,
+        DispatchIndirectBuffer = 37102,
+        AtomicCounterBuffer = 37568,
+    }
+    ///<summary>Used in <see cref="GL.CopyImageSubData" /></summary>
+    public enum CopyImageSubDataTarget : uint
+    {
+        Texture2d = 3553,
+        Texture3d = 32879,
+        TextureCubeMap = 34067,
+        Texture2dArray = 35866,
+        Renderbuffer = 36161,
+        TextureCubeMapArray = 36873,
+        Texture2dMultisample = 37120,
+        Texture2dMultisampleArray = 37122,
+    }
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    public enum DebugSeverity : uint
+    {
+        DontCare = 4352,
+        DebugSeverityNotification = 33387,
+        DebugSeverityHigh = 37190,
+        DebugSeverityMedium = 37191,
+        DebugSeverityLow = 37192,
+    }
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    public enum DebugSource : uint
+    {
+        DontCare = 4352,
+        DebugSourceApi = 33350,
+        DebugSourceWindowSystem = 33351,
+        DebugSourceShaderCompiler = 33352,
+        DebugSourceThirdParty = 33353,
+        DebugSourceApplication = 33354,
+        DebugSourceOther = 33355,
+    }
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    public enum DebugType : uint
+    {
+        DontCare = 4352,
+        DebugTypeError = 33356,
+        DebugTypeDeprecatedBehavior = 33357,
+        DebugTypeUndefinedBehavior = 33358,
+        DebugTypePortability = 33359,
+        DebugTypePerformance = 33360,
+        DebugTypeOther = 33361,
+        DebugTypeMarker = 33384,
+        DebugTypePushGroup = 33385,
+        DebugTypePopGroup = 33386,
+    }
+    ///<summary>Used in <see cref="GL.DepthFunc" />, <see cref="GL.NV.PathCoverDepthFuncNV" /></summary>
+    public enum DepthFunction : uint
+    {
+        Never = 512,
+        Less = 513,
+        Equal = 514,
+        Lequal = 515,
+        Greater = 516,
+        Notequal = 517,
+        Gequal = 518,
+        Always = 519,
+    }
+    public enum DepthStencilTextureMode : uint
+    {
+        StencilIndex = 6401,
+        DepthComponent = 6402,
     }
     ///<summary>Used in <see cref="GL.DrawBuffers" /></summary>
     public enum DrawBufferMode : uint
@@ -2897,42 +2931,169 @@ namespace OpenTK.Graphics.OpenGLES2
         ColorAttachment30 = 36094,
         ColorAttachment31 = 36095,
     }
-    public enum PixelTexGenModeSGIX : uint
+    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.DrawElementsBaseVertex" />, <see cref="GL.DrawElementsIndirect" />, ...</summary>
+    public enum DrawElementsType : uint
+    {
+        UnsignedByte = 5121,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+    }
+    public enum ElementPointerTypeATI : uint
+    {
+        UnsignedByte = 5121,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+    }
+    ///<summary>Used in <see cref="GL.Disable" />, <see cref="GL.Disablei" />, <see cref="GL.Enable" />, ...</summary>
+    public enum EnableCap : uint
+    {
+        CullFace = 2884,
+        DepthTest = 2929,
+        StencilTest = 2960,
+        Dither = 3024,
+        Blend = 3042,
+        ScissorTest = 3089,
+        Texture2d = 3553,
+        PolygonOffsetFill = 32823,
+        VertexArray = 32884,
+        SampleAlphaToCoverage = 32926,
+        SampleCoverage = 32928,
+        DebugOutputSynchronous = 33346,
+        TextureCubeMap = 34067,
+        SampleShading = 35894,
+        RasterizerDiscard = 35977,
+        PrimitiveRestartFixedIndex = 36201,
+        SampleMask = 36433,
+        FetchPerSampleArm = 36709,
+        DebugOutput = 37600,
+        ShadingRateImagePerPrimitiveNv = 38321,
+        FramebufferFetchNoncoherentQcom = 38562,
+        ShadingRatePreserveAspectRatioQcom = 38565,
+    }
+    ///<summary>Used in <see cref="GL.GetError" /></summary>
+    public enum ErrorCode : uint
+    {
+        NoError = 0,
+        InvalidEnum = 1280,
+        InvalidValue = 1281,
+        InvalidOperation = 1282,
+        StackOverflow = 1283,
+        StackUnderflow = 1284,
+        OutOfMemory = 1285,
+        InvalidFramebufferOperation = 1286,
+    }
+    public enum EvalMapsModeNV : uint
+    {
+        FillNv = 6914,
+    }
+    ///<summary>Used in <see cref="GL.EXT.ImportMemoryFdEXT" />, <see cref="GL.EXT.ImportMemoryWin32HandleEXT" />, <see cref="GL.EXT.ImportMemoryWin32NameEXT" />, ...</summary>
+    public enum ExternalHandleType : uint
+    {
+        HandleTypeOpaqueFdExt = 38278,
+        HandleTypeOpaqueWin32Ext = 38279,
+        HandleTypeOpaqueWin32KmtExt = 38280,
+        HandleTypeD3d12TilepoolExt = 38281,
+        HandleTypeD3d12ResourceExt = 38282,
+        HandleTypeD3d11ImageExt = 38283,
+        HandleTypeD3d11ImageKmtExt = 38284,
+        HandleTypeD3d12FenceExt = 38292,
+    }
+    ///<summary>Used in <see cref="GL.NV.SetFenceNV" /></summary>
+    public enum FenceConditionNV : uint
+    {
+        AllCompletedNv = 34034,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetFenceivNV" /></summary>
+    public enum FenceParameterNameNV : uint
+    {
+        FenceStatusNv = 34035,
+        FenceConditionNv = 34036,
+    }
+    public enum FogCoordinatePointerType : uint
+    {
+        Float = 5126,
+    }
+    public enum FogMode : uint
+    {
+        Linear = 9729,
+    }
+    public enum FogPointerTypeEXT : uint
+    {
+        Float = 5126,
+    }
+    public enum FogPointerTypeIBM : uint
+    {
+        Float = 5126,
+    }
+    [Flags]
+    public enum FoveationConfigBitQCOM : uint
+    {
+        FoveationEnableBitQcom = 1,
+        FoveationScaledBinMethodBitQcom = 2,
+        FoveationSubsampledLayoutMethodBitQcom = 4,
+    }
+    [Flags]
+    public enum FragmentShaderDestMaskATI : uint
     {
         None = 0,
+    }
+    [Flags]
+    public enum FragmentShaderDestModMaskATI : uint
+    {
+        None = 0,
+    }
+    public enum FragmentShaderGenericSourceATI : uint
+    {
+        Zero = 0,
+        One = 1,
+    }
+    public enum FragmentShaderTextureSourceATI : uint
+    {
+        Texture0 = 33984,
+        Texture1 = 33985,
+        Texture2 = 33986,
+        Texture3 = 33987,
+        Texture4 = 33988,
+        Texture5 = 33989,
+        Texture6 = 33990,
+        Texture7 = 33991,
+        Texture8 = 33992,
+        Texture9 = 33993,
+        Texture10 = 33994,
+        Texture11 = 33995,
+        Texture12 = 33996,
+        Texture13 = 33997,
+        Texture14 = 33998,
+        Texture15 = 33999,
+        Texture16 = 34000,
+        Texture17 = 34001,
+        Texture18 = 34002,
+        Texture19 = 34003,
+        Texture20 = 34004,
+        Texture21 = 34005,
+        Texture22 = 34006,
+        Texture23 = 34007,
+        Texture24 = 34008,
+        Texture25 = 34009,
+        Texture26 = 34010,
+        Texture27 = 34011,
+        Texture28 = 34012,
+        Texture29 = 34013,
+        Texture30 = 34014,
+        Texture31 = 34015,
+    }
+    public enum FragmentShaderValueRepATI : uint
+    {
+        None = 0,
+        Red = 6403,
+        Green = 6404,
+        Blue = 6405,
         Alpha = 6406,
-        Rgb = 6407,
-        Rgba = 6408,
     }
-    ///<summary>Used in <see cref="GL.ReadBuffer" />, <see cref="GL.EXT.ReadBufferIndexedEXT" /></summary>
-    public enum ReadBufferMode : uint
+    ///<summary>Used in <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.FramebufferTexture" />, <see cref="GL.FramebufferTexture2D" />, ...</summary>
+    public enum FramebufferAttachment : uint
     {
-        None = 0,
-        Front = 1028,
-        Back = 1029,
-        ColorAttachment0 = 36064,
-        ColorAttachment1 = 36065,
-        ColorAttachment2 = 36066,
-        ColorAttachment3 = 36067,
-        ColorAttachment4 = 36068,
-        ColorAttachment5 = 36069,
-        ColorAttachment6 = 36070,
-        ColorAttachment7 = 36071,
-        ColorAttachment8 = 36072,
-        ColorAttachment9 = 36073,
-        ColorAttachment10 = 36074,
-        ColorAttachment11 = 36075,
-        ColorAttachment12 = 36076,
-        ColorAttachment13 = 36077,
-        ColorAttachment14 = 36078,
-        ColorAttachment15 = 36079,
-    }
-    public enum ColorBuffer : uint
-    {
-        None = 0,
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
+        DepthStencilAttachment = 33306,
         ColorAttachment0 = 36064,
         ColorAttachment1 = 36065,
         ColorAttachment2 = 36066,
@@ -2965,120 +3126,86 @@ namespace OpenTK.Graphics.OpenGLES2
         ColorAttachment29 = 36093,
         ColorAttachment30 = 36094,
         ColorAttachment31 = 36095,
+        DepthAttachment = 36096,
+        StencilAttachment = 36128,
+        ShadingRateAttachmentExt = 38609,
     }
-    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.GetPathTexGenfvNV" />, ...</summary>
-    public enum PathGenMode : uint
+    ///<summary>Used in <see cref="GL.GetFramebufferAttachmentParameteriv" />, <see cref="GL.GetFramebufferParameteriv" />, <see cref="GL.MESA.GetFramebufferParameterivMESA" /></summary>
+    public enum FramebufferAttachmentParameterName : uint
     {
-        None = 0,
-        PathObjectBoundingBoxNv = 37002,
+        FramebufferAttachmentColorEncoding = 33296,
+        FramebufferAttachmentColorEncodingExt = 33296,
+        FramebufferAttachmentComponentType = 33297,
+        FramebufferAttachmentComponentTypeExt = 33297,
+        FramebufferAttachmentRedSize = 33298,
+        FramebufferAttachmentGreenSize = 33299,
+        FramebufferAttachmentBlueSize = 33300,
+        FramebufferAttachmentAlphaSize = 33301,
+        FramebufferAttachmentDepthSize = 33302,
+        FramebufferAttachmentStencilSize = 33303,
+        FramebufferAttachmentObjectType = 36048,
+        FramebufferAttachmentObjectName = 36049,
+        FramebufferAttachmentTextureLevel = 36050,
+        FramebufferAttachmentTextureCubeMapFace = 36051,
+        FramebufferAttachmentTexture3dZoffsetOes = 36052,
+        FramebufferAttachmentTextureLayer = 36052,
+        FramebufferAttachmentTextureSamplesExt = 36204,
+        FramebufferAttachmentLayered = 36263,
+        FramebufferAttachmentLayeredExt = 36263,
+        FramebufferAttachmentLayeredOes = 36263,
+        FramebufferAttachmentTextureScaleImg = 37183,
+        FramebufferAttachmentTextureNumViewsOvr = 38448,
+        FramebufferAttachmentTextureBaseViewIndexOvr = 38450,
     }
-    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.GetPathSpacingNV" />, ...</summary>
-    public enum PathTransformType : uint
+    ///<summary>Used in <see cref="GL.FramebufferParameteri" />, <see cref="GL.MESA.FramebufferParameteriMESA" /></summary>
+    public enum FramebufferParameterName : uint
     {
-        None = 0,
-        TranslateXNv = 37006,
-        TranslateYNv = 37007,
-        Translate2dNv = 37008,
-        Translate3dNv = 37009,
-        Affine2dNv = 37010,
-        Affine3dNv = 37012,
-        TransposeAffine2dNv = 37014,
-        TransposeAffine3dNv = 37016,
+        FramebufferDefaultWidth = 37648,
+        FramebufferDefaultHeight = 37649,
+        FramebufferDefaultLayers = 37650,
+        FramebufferDefaultSamples = 37651,
+        FramebufferDefaultFixedSampleLocations = 37652,
     }
-    ///<summary>Used in <see cref="GL.BeginTransformFeedback" />, <see cref="GL.DrawArrays" />, <see cref="GL.DrawArraysIndirect" />, ...</summary>
-    public enum PrimitiveType : uint
+    ///<summary>Used in <see cref="GL.CheckFramebufferStatus" /></summary>
+    public enum FramebufferStatus : uint
     {
-        Points = 0,
-        Lines = 1,
-        LineLoop = 2,
-        LineStrip = 3,
-        Triangles = 4,
-        TriangleStrip = 5,
-        TriangleFan = 6,
-        Quads = 7,
-        QuadsExt = 7,
-        LinesAdjacency = 10,
-        LinesAdjacencyExt = 10,
-        LineStripAdjacency = 11,
-        LineStripAdjacencyExt = 11,
-        TrianglesAdjacency = 12,
-        TrianglesAdjacencyExt = 12,
-        TriangleStripAdjacency = 13,
-        TriangleStripAdjacencyExt = 13,
-        Patches = 14,
-        PatchesExt = 14,
+        FramebufferUndefined = 33305,
+        FramebufferComplete = 36053,
+        FramebufferIncompleteAttachment = 36054,
+        FramebufferIncompleteMissingAttachment = 36055,
+        FramebufferUnsupported = 36061,
+        FramebufferIncompleteMultisample = 36182,
+        FramebufferIncompleteLayerTargets = 36264,
     }
-    public enum TextureEnvMode : uint
+    ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.CheckFramebufferStatus" />, <see cref="GL.FramebufferParameteri" />, ...</summary>
+    public enum FramebufferTarget : uint
     {
-        Blend = 3042,
-        Replace = 7681,
-    }
-    public enum LightEnvModeSGIX : uint
-    {
-        Replace = 7681,
-    }
-    ///<summary>Used in <see cref="GL.StencilFunc" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.NV.PathStencilFuncNV" /></summary>
-    public enum StencilFunction : uint
-    {
-        Never = 512,
-        Less = 513,
-        Equal = 514,
-        Lequal = 515,
-        Greater = 516,
-        Notequal = 517,
-        Gequal = 518,
-        Always = 519,
-    }
-    public enum IndexFunctionEXT : uint
-    {
-        Never = 512,
-        Less = 513,
-        Equal = 514,
-        Lequal = 515,
-        Greater = 516,
-        Notequal = 517,
-        Gequal = 518,
-        Always = 519,
-    }
-    public enum AlphaFunction : uint
-    {
-        Never = 512,
-        Less = 513,
-        Equal = 514,
-        Lequal = 515,
-        Greater = 516,
-        Notequal = 517,
-        Gequal = 518,
-        Always = 519,
-    }
-    ///<summary>Used in <see cref="GL.DepthFunc" />, <see cref="GL.NV.PathCoverDepthFuncNV" /></summary>
-    public enum DepthFunction : uint
-    {
-        Never = 512,
-        Less = 513,
-        Equal = 514,
-        Lequal = 515,
-        Greater = 516,
-        Notequal = 517,
-        Gequal = 518,
-        Always = 519,
-    }
-    ///<summary>Used in <see cref="GL.CullFace" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.StencilMaskSeparate" />, ...</summary>
-    public enum TriangleFace : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    public enum FogMode : uint
-    {
-        Linear = 9729,
+        ReadFramebuffer = 36008,
+        DrawFramebuffer = 36009,
+        Framebuffer = 36160,
     }
     ///<summary>Used in <see cref="GL.FrontFace" /></summary>
     public enum FrontFaceDirection : uint
     {
         Cw = 2304,
         Ccw = 2305,
+    }
+    public enum GetFramebufferParameter : uint
+    {
+        SampleBuffers = 32936,
+        Samples = 32937,
+        ImplementationColorReadType = 35738,
+        ImplementationColorReadFormat = 35739,
+        FramebufferDefaultWidth = 37648,
+        FramebufferDefaultHeight = 37649,
+        FramebufferDefaultLayers = 37650,
+        FramebufferDefaultSamples = 37651,
+        FramebufferDefaultFixedSampleLocations = 37652,
+    }
+    ///<summary>Used in <see cref="GL.GetMultisamplefv" /></summary>
+    public enum GetMultisamplePNameNV : uint
+    {
+        SamplePosition = 36432,
     }
     ///<summary>Used in <see cref="GL.GetBooleanv" />, <see cref="GL.GetFloatv" />, <see cref="GL.GetInteger64i_v" />, ...</summary>
     public enum GetPName : uint
@@ -3321,149 +3448,11 @@ namespace OpenTK.Graphics.OpenGLES2
         FragmentShadingRateWithSampleMaskSupportedExt = 38622,
         FragmentShadingRateAttachmentWithDefaultFramebufferSupportedExt = 38623,
     }
-    ///<summary>Used in <see cref="GL.Disable" />, <see cref="GL.Disablei" />, <see cref="GL.Enable" />, ...</summary>
-    public enum EnableCap : uint
-    {
-        CullFace = 2884,
-        DepthTest = 2929,
-        StencilTest = 2960,
-        Dither = 3024,
-        Blend = 3042,
-        ScissorTest = 3089,
-        Texture2d = 3553,
-        PolygonOffsetFill = 32823,
-        VertexArray = 32884,
-        SampleAlphaToCoverage = 32926,
-        SampleCoverage = 32928,
-        DebugOutputSynchronous = 33346,
-        TextureCubeMap = 34067,
-        SampleShading = 35894,
-        RasterizerDiscard = 35977,
-        PrimitiveRestartFixedIndex = 36201,
-        SampleMask = 36433,
-        FetchPerSampleArm = 36709,
-        DebugOutput = 37600,
-        ShadingRateImagePerPrimitiveNv = 38321,
-        FramebufferFetchNoncoherentQcom = 38562,
-        ShadingRatePreserveAspectRatioQcom = 38565,
-    }
-    public enum GetFramebufferParameter : uint
-    {
-        SampleBuffers = 32936,
-        Samples = 32937,
-        ImplementationColorReadType = 35738,
-        ImplementationColorReadFormat = 35739,
-        FramebufferDefaultWidth = 37648,
-        FramebufferDefaultHeight = 37649,
-        FramebufferDefaultLayers = 37650,
-        FramebufferDefaultSamples = 37651,
-        FramebufferDefaultFixedSampleLocations = 37652,
-    }
-    ///<summary>Used in <see cref="GL.Hint" /></summary>
-    public enum HintTarget : uint
-    {
-        GenerateMipmapHint = 33170,
-        ProgramBinaryRetrievableHint = 33367,
-        FragmentShaderDerivativeHint = 35723,
-        FragmentShaderDerivativeHintOes = 35723,
-        BinningControlHintQcom = 36784,
-    }
-    ///<summary>Used in <see cref="GL.PixelStorei" /></summary>
-    public enum PixelStoreParameter : uint
-    {
-        UnpackRowLength = 3314,
-        UnpackRowLengthExt = 3314,
-        UnpackSkipRows = 3315,
-        UnpackSkipRowsExt = 3315,
-        UnpackSkipPixels = 3316,
-        UnpackSkipPixelsExt = 3316,
-        UnpackAlignment = 3317,
-        PackRowLength = 3330,
-        PackRowLengthNv = 3330,
-        PackSkipRows = 3331,
-        PackSkipRowsNv = 3331,
-        PackSkipPixels = 3332,
-        PackSkipPixelsNv = 3332,
-        PackAlignment = 3333,
-        UnpackSkipImages = 32877,
-        UnpackImageHeight = 32878,
-    }
-    public enum TextureEnvParameter : uint
-    {
-        Src1AlphaExt = 34185,
-    }
-    ///<summary>Used in <see cref="GL.CopyImageSubData" /></summary>
-    public enum CopyImageSubDataTarget : uint
-    {
-        Texture2d = 3553,
-        Texture3d = 32879,
-        TextureCubeMap = 34067,
-        Texture2dArray = 35866,
-        Renderbuffer = 36161,
-        TextureCubeMapArray = 36873,
-        Texture2dMultisample = 37120,
-        Texture2dMultisampleArray = 37122,
-    }
-    ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexImage3D" />, ...</summary>
-    public enum TextureTarget : uint
-    {
-        Texture2d = 3553,
-        Texture3d = 32879,
-        Texture3dOes = 32879,
-        TextureCubeMap = 34067,
-        TextureCubeMapPositiveX = 34069,
-        TextureCubeMapNegativeX = 34070,
-        TextureCubeMapPositiveY = 34071,
-        TextureCubeMapNegativeY = 34072,
-        TextureCubeMapPositiveZ = 34073,
-        TextureCubeMapNegativeZ = 34074,
-        Texture2dArray = 35866,
-        TextureBuffer = 35882,
-        Renderbuffer = 36161,
-        TextureCubeMapArray = 36873,
-        TextureCubeMapArrayExt = 36873,
-        TextureCubeMapArrayOes = 36873,
-        Texture2dMultisample = 37120,
-        Texture2dMultisampleArray = 37122,
-    }
     ///<summary>Used in <see cref="GL.GetPointerv" />, <see cref="GL.KHR.GetPointerv" /></summary>
     public enum GetPointervPName : uint
     {
         DebugCallbackFunction = 33348,
         DebugCallbackUserParam = 33349,
-    }
-    ///<summary>Used in <see cref="GL.TexParameterf" />, <see cref="GL.TexParameterfv" />, <see cref="GL.TexParameteri" />, ...</summary>
-    public enum TextureParameterName : uint
-    {
-        TextureWidth = 4096,
-        TextureHeight = 4097,
-        TextureInternalFormat = 4099,
-        TextureBorderColor = 4100,
-        TextureBorderColorNv = 4100,
-        TextureMagFilter = 10240,
-        TextureMinFilter = 10241,
-        TextureWrapS = 10242,
-        TextureWrapT = 10243,
-        TextureRedSize = 32860,
-        TextureGreenSize = 32861,
-        TextureBlueSize = 32862,
-        TextureAlphaSize = 32863,
-        TextureWrapR = 32882,
-        TextureWrapROes = 32882,
-        TextureMinLod = 33082,
-        TextureMaxLod = 33083,
-        TextureBaseLevel = 33084,
-        TextureMaxLevel = 33085,
-        TextureCompareMode = 34892,
-        TextureCompareFunc = 34893,
-        TextureSwizzleR = 36418,
-        TextureSwizzleG = 36419,
-        TextureSwizzleB = 36420,
-        TextureSwizzleA = 36421,
-        TextureUnnormalizedCoordinatesArm = 36714,
-        DepthStencilTextureMode = 37098,
-        TextureTilingExt = 38272,
-        TextureFoveatedCutoffDensityQcom = 38560,
     }
     ///<summary>Used in <see cref="GL.GetTexLevelParameterfv" />, <see cref="GL.GetTexLevelParameteriv" />, <see cref="GL.GetTexParameterfv" />, ...</summary>
     public enum GetTextureParameter : uint
@@ -3484,22 +3473,13 @@ namespace OpenTK.Graphics.OpenGLES2
         TextureUnnormalizedCoordinatesArm = 36714,
         SurfaceCompressionExt = 38592,
     }
-    ///<summary>Used in <see cref="GL.GetSamplerParameterfv" />, <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" /></summary>
-    public enum SamplerParameterF : uint
+    ///<summary>Used in <see cref="GL.GetGraphicsResetStatus" />, <see cref="GL.KHR.GetGraphicsResetStatus" />, <see cref="GL.EXT.GetGraphicsResetStatusEXT" />, ...</summary>
+    public enum GraphicsResetStatus : uint
     {
-        TextureBorderColor = 4100,
-        TextureMinLod = 33082,
-        TextureMaxLod = 33083,
-        TextureUnnormalizedCoordinatesArm = 36714,
-    }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
-    public enum DebugSeverity : uint
-    {
-        DontCare = 4352,
-        DebugSeverityNotification = 33387,
-        DebugSeverityHigh = 37190,
-        DebugSeverityMedium = 37191,
-        DebugSeverityLow = 37192,
+        NoError = 0,
+        GuiltyContextReset = 33363,
+        InnocentContextReset = 33364,
+        UnknownContextReset = 33365,
     }
     ///<summary>Used in <see cref="GL.Hint" /></summary>
     public enum HintMode : uint
@@ -3508,195 +3488,25 @@ namespace OpenTK.Graphics.OpenGLES2
         Fastest = 4353,
         Nicest = 4354,
     }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
-    public enum DebugSource : uint
+    ///<summary>Used in <see cref="GL.Hint" /></summary>
+    public enum HintTarget : uint
     {
-        DontCare = 4352,
-        DebugSourceApi = 33350,
-        DebugSourceWindowSystem = 33351,
-        DebugSourceShaderCompiler = 33352,
-        DebugSourceThirdParty = 33353,
-        DebugSourceApplication = 33354,
-        DebugSourceOther = 33355,
+        GenerateMipmapHint = 33170,
+        ProgramBinaryRetrievableHint = 33367,
+        FragmentShaderDerivativeHint = 35723,
+        FragmentShaderDerivativeHintOes = 35723,
+        BinningControlHintQcom = 36784,
     }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
-    public enum DebugType : uint
+    public enum IndexFunctionEXT : uint
     {
-        DontCare = 4352,
-        DebugTypeError = 33356,
-        DebugTypeDeprecatedBehavior = 33357,
-        DebugTypeUndefinedBehavior = 33358,
-        DebugTypePortability = 33359,
-        DebugTypePerformance = 33360,
-        DebugTypeOther = 33361,
-        DebugTypeMarker = 33384,
-        DebugTypePushGroup = 33385,
-        DebugTypePopGroup = 33386,
-    }
-    ///<summary>Used in <see cref="GL.VertexAttribIFormat" />, <see cref="GL.VertexAttribIPointer" /></summary>
-    public enum VertexAttribIType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-    }
-    public enum ScalarType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-    }
-    public enum WeightPointerTypeARB : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-    }
-    public enum TangentPointerTypeEXT : uint
-    {
-        Byte = 5120,
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
-    }
-    public enum BinormalPointerTypeEXT : uint
-    {
-        Byte = 5120,
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
-    }
-    public enum ColorPointerType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-    }
-    public enum ListNameType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-    }
-    public enum NormalPointerType : uint
-    {
-        Byte = 5120,
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
-    }
-    ///<summary>Used in <see cref="GL.ReadnPixels" />, <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, ...</summary>
-    public enum PixelType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        HalfFloat = 5131,
-        UnsignedShort4444 = 32819,
-        UnsignedShort5551 = 32820,
-        UnsignedShort565 = 33635,
-        UnsignedShort4444RevExt = 33637,
-        UnsignedShort4444RevImg = 33637,
-        UnsignedShort1555RevExt = 33638,
-        UnsignedInt2101010Rev = 33640,
-        UnsignedInt2101010RevExt = 33640,
-        UnsignedInt248 = 34042,
-        UnsignedInt248Oes = 34042,
-        UnsignedInt10f11f11fRev = 35899,
-        UnsignedInt10f11f11fRevApple = 35899,
-        UnsignedInt5999Rev = 35902,
-        UnsignedInt5999RevApple = 35902,
-        Float32UnsignedInt248Rev = 36269,
-    }
-    ///<summary>Used in <see cref="GL.VertexAttribFormat" /></summary>
-    public enum VertexAttribType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        HalfFloat = 5131,
-        Fixed = 5132,
-        UnsignedInt2101010Rev = 33640,
-        UnsignedInt2101010RevExt = 33640,
-        UnsignedInt10f11f11fRev = 35899,
-        Int2101010Rev = 36255,
-    }
-    ///<summary>Used in <see cref="GL.VertexAttribPointer" /></summary>
-    public enum VertexAttribPointerType : uint
-    {
-        Byte = 5120,
-        UnsignedByte = 5121,
-        Short = 5122,
-        UnsignedShort = 5123,
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        HalfFloat = 5131,
-        Fixed = 5132,
-        Int64Nv = 5134,
-        UnsignedInt64Nv = 5135,
-        UnsignedInt2101010Rev = 33640,
-        UnsignedInt2101010RevExt = 33640,
-        UnsignedInt10f11f11fRev = 35899,
-        Int2101010Rev = 36255,
-    }
-    public enum ReplacementCodeTypeSUN : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
-    }
-    public enum ElementPointerTypeATI : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
-    }
-    public enum MatrixIndexPointerTypeARB : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
-    }
-    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.DrawElementsBaseVertex" />, <see cref="GL.DrawElementsIndirect" />, ...</summary>
-    public enum DrawElementsType : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
-    }
-    public enum SecondaryColorPointerTypeIBM : uint
-    {
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
+        Never = 512,
+        Less = 513,
+        Equal = 514,
+        Lequal = 515,
+        Greater = 516,
+        Notequal = 517,
+        Gequal = 518,
+        Always = 519,
     }
     public enum IndexPointerType : uint
     {
@@ -3704,325 +3514,13 @@ namespace OpenTK.Graphics.OpenGLES2
         Int = 5124,
         Float = 5126,
     }
-    public enum TexCoordPointerType : uint
+    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.StencilThenCoverFillPathInstancedNV" />, ...</summary>
+    public enum InstancedPathCoverMode : uint
     {
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
-    }
-    public enum VertexPointerType : uint
-    {
-        Short = 5122,
-        Int = 5124,
-        Float = 5126,
-    }
-    ///<summary>Used in <see cref="GL.ReadnPixels" />, <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, ...</summary>
-    public enum PixelFormat : uint
-    {
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
-        StencilIndex = 6401,
-        DepthComponent = 6402,
-        Red = 6403,
-        RedExt = 6403,
-        Green = 6404,
-        Blue = 6405,
-        Alpha = 6406,
-        Rgb = 6407,
-        Rgba = 6408,
-        Luminance = 6409,
-        LuminanceAlpha = 6410,
-        BgrExt = 32992,
-        BgraExt = 32993,
-        BgraImg = 32993,
-        Rg = 33319,
-        RgInteger = 33320,
-        DepthStencil = 34041,
-        RedInteger = 36244,
-        RgbInteger = 36248,
-        RgbaInteger = 36249,
-    }
-    ///<summary>Used in <see cref="GL.GetActiveAttrib" />, <see cref="GL.GetTransformFeedbackVarying" /></summary>
-    public enum AttributeType : uint
-    {
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        Int64Nv = 5134,
-        UnsignedInt64Nv = 5135,
-        FloatVec2 = 35664,
-        FloatVec3 = 35665,
-        FloatVec4 = 35666,
-        IntVec2 = 35667,
-        IntVec3 = 35668,
-        IntVec4 = 35669,
-        Bool = 35670,
-        BoolVec2 = 35671,
-        BoolVec3 = 35672,
-        BoolVec4 = 35673,
-        FloatMat2 = 35674,
-        FloatMat3 = 35675,
-        FloatMat4 = 35676,
-        Sampler2d = 35678,
-        Sampler3d = 35679,
-        Sampler3dOes = 35679,
-        SamplerCube = 35680,
-        Sampler2dShadow = 35682,
-        Sampler2dShadowExt = 35682,
-        FloatMat2x3 = 35685,
-        FloatMat2x3Nv = 35685,
-        FloatMat2x4 = 35686,
-        FloatMat2x4Nv = 35686,
-        FloatMat3x2 = 35687,
-        FloatMat3x2Nv = 35687,
-        FloatMat3x4 = 35688,
-        FloatMat3x4Nv = 35688,
-        FloatMat4x2 = 35689,
-        FloatMat4x2Nv = 35689,
-        FloatMat4x3 = 35690,
-        FloatMat4x3Nv = 35690,
-        SamplerBuffer = 36290,
-        Sampler2dArrayShadow = 36292,
-        SamplerCubeShadow = 36293,
-        UnsignedIntVec2 = 36294,
-        UnsignedIntVec3 = 36295,
-        UnsignedIntVec4 = 36296,
-        IntSampler2d = 36298,
-        IntSampler3d = 36299,
-        IntSamplerCube = 36300,
-        IntSampler2dArray = 36303,
-        IntSamplerBuffer = 36304,
-        UnsignedIntSampler2d = 36306,
-        UnsignedIntSampler3d = 36307,
-        UnsignedIntSamplerCube = 36308,
-        UnsignedIntSampler2dArray = 36311,
-        UnsignedIntSamplerBuffer = 36312,
-        SamplerCubeMapArray = 36876,
-        SamplerCubeMapArrayShadow = 36877,
-        IntSamplerCubeMapArray = 36878,
-        UnsignedIntSamplerCubeMapArray = 36879,
-        Image2d = 36941,
-        Image3d = 36942,
-        ImageCube = 36944,
-        ImageBuffer = 36945,
-        Image2dArray = 36947,
-        ImageCubeMapArray = 36948,
-        IntImage2d = 36952,
-        IntImage3d = 36953,
-        IntImageCube = 36955,
-        IntImageBuffer = 36956,
-        IntImage2dArray = 36958,
-        IntImageCubeMapArray = 36959,
-        UnsignedIntImage2d = 36963,
-        UnsignedIntImage3d = 36964,
-        UnsignedIntImageCube = 36966,
-        UnsignedIntImageBuffer = 36967,
-        UnsignedIntImage2dArray = 36969,
-        UnsignedIntImageCubeMapArray = 36970,
-        Sampler2dMultisample = 37128,
-        IntSampler2dMultisample = 37129,
-        UnsignedIntSampler2dMultisample = 37130,
-        Sampler2dMultisampleArray = 37131,
-        IntSampler2dMultisampleArray = 37132,
-        UnsignedIntSampler2dMultisampleArray = 37133,
-    }
-    ///<summary>Used in <see cref="GL.GetActiveUniform" /></summary>
-    public enum UniformType : uint
-    {
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        FloatVec2 = 35664,
-        FloatVec3 = 35665,
-        FloatVec4 = 35666,
-        IntVec2 = 35667,
-        IntVec3 = 35668,
-        IntVec4 = 35669,
-        Bool = 35670,
-        BoolVec2 = 35671,
-        BoolVec3 = 35672,
-        BoolVec4 = 35673,
-        FloatMat2 = 35674,
-        FloatMat3 = 35675,
-        FloatMat4 = 35676,
-        Sampler2d = 35678,
-        Sampler3d = 35679,
-        SamplerCube = 35680,
-        Sampler2dShadow = 35682,
-        FloatMat2x3 = 35685,
-        FloatMat2x4 = 35686,
-        FloatMat3x2 = 35687,
-        FloatMat3x4 = 35688,
-        FloatMat4x2 = 35689,
-        FloatMat4x3 = 35690,
-        Sampler2dArray = 36289,
-        SamplerBuffer = 36290,
-        Sampler2dArrayShadow = 36292,
-        SamplerCubeShadow = 36293,
-        UnsignedIntVec2 = 36294,
-        UnsignedIntVec3 = 36295,
-        UnsignedIntVec4 = 36296,
-        IntSampler2d = 36298,
-        IntSampler3d = 36299,
-        IntSamplerCube = 36300,
-        IntSampler2dArray = 36303,
-        IntSamplerBuffer = 36304,
-        UnsignedIntSampler2d = 36306,
-        UnsignedIntSampler3d = 36307,
-        UnsignedIntSamplerCube = 36308,
-        UnsignedIntSampler2dArray = 36311,
-        UnsignedIntSamplerBuffer = 36312,
-        SamplerCubeMapArray = 36876,
-        SamplerCubeMapArrayShadow = 36877,
-        IntSamplerCubeMapArray = 36878,
-        UnsignedIntSamplerCubeMapArray = 36879,
-        Sampler2dMultisample = 37128,
-        IntSampler2dMultisample = 37129,
-        UnsignedIntSampler2dMultisample = 37130,
-        Sampler2dMultisampleArray = 37131,
-        IntSampler2dMultisampleArray = 37132,
-        UnsignedIntSampler2dMultisampleArray = 37133,
-    }
-    public enum MapTypeNV : uint
-    {
-        Float = 5126,
-    }
-    public enum VertexWeightPointerTypeEXT : uint
-    {
-        Float = 5126,
-    }
-    public enum FogCoordinatePointerType : uint
-    {
-        Float = 5126,
-    }
-    public enum FogPointerTypeEXT : uint
-    {
-        Float = 5126,
-    }
-    public enum FogPointerTypeIBM : uint
-    {
-        Float = 5126,
-    }
-    public enum LogicOp : uint
-    {
-        Invert = 5386,
-    }
-    ///<summary>Used in <see cref="GL.NV.StencilFillPathInstancedNV" />, <see cref="GL.NV.StencilFillPathNV" />, <see cref="GL.NV.StencilThenCoverFillPathInstancedNV" />, ...</summary>
-    public enum PathFillMode : uint
-    {
-        Invert = 5386,
-        PathFillModeNv = 36992,
-        CountUpNv = 37000,
-        CountDownNv = 37001,
-    }
-    ///<summary>Used in <see cref="GL.NV.MatrixFrustumEXT" />, <see cref="GL.NV.MatrixLoaddEXT" />, <see cref="GL.NV.MatrixLoadfEXT" />, ...</summary>
-    public enum MatrixMode : uint
-    {
-        Texture = 5890,
-    }
-    ///<summary>Used in <see cref="GL.GetObjectLabel" />, <see cref="GL.ObjectLabel" />, <see cref="GL.KHR.GetObjectLabel" />, ...</summary>
-    public enum ObjectIdentifier : uint
-    {
-        Texture = 5890,
-        VertexArray = 32884,
-        Buffer = 33504,
-        Shader = 33505,
-        Program = 33506,
-        Query = 33507,
-        ProgramPipeline = 33508,
-        Sampler = 33510,
-        Framebuffer = 36160,
-        Renderbuffer = 36161,
-        TransformFeedback = 36386,
-    }
-    ///<summary>Used in <see cref="GL.ClearBufferfi" />, <see cref="GL.ClearBufferfv" />, <see cref="GL.ClearBufferiv" />, ...</summary>
-    public enum Buffer : uint
-    {
-        Color = 6144,
-        Depth = 6145,
-        Stencil = 6146,
-    }
-    public enum PixelCopyType : uint
-    {
-        Color = 6144,
-        ColorExt = 6144,
-        Depth = 6145,
-        DepthExt = 6145,
-        Stencil = 6146,
-        StencilExt = 6146,
-    }
-    ///<summary>Used in <see cref="GL.InvalidateFramebuffer" />, <see cref="GL.InvalidateSubFramebuffer" />, <see cref="GL.EXT.DiscardFramebufferEXT" /></summary>
-    public enum InvalidateFramebufferAttachment : uint
-    {
-        Color = 6144,
-        Depth = 6145,
-        Stencil = 6146,
-        DepthStencilAttachment = 33306,
-        ColorAttachment0 = 36064,
-        ColorAttachment0Ext = 36064,
-        ColorAttachment0Nv = 36064,
-        ColorAttachment1 = 36065,
-        ColorAttachment1Ext = 36065,
-        ColorAttachment1Nv = 36065,
-        ColorAttachment2 = 36066,
-        ColorAttachment2Ext = 36066,
-        ColorAttachment2Nv = 36066,
-        ColorAttachment3 = 36067,
-        ColorAttachment3Ext = 36067,
-        ColorAttachment3Nv = 36067,
-        ColorAttachment4 = 36068,
-        ColorAttachment4Ext = 36068,
-        ColorAttachment4Nv = 36068,
-        ColorAttachment5 = 36069,
-        ColorAttachment5Ext = 36069,
-        ColorAttachment5Nv = 36069,
-        ColorAttachment6 = 36070,
-        ColorAttachment6Ext = 36070,
-        ColorAttachment6Nv = 36070,
-        ColorAttachment7 = 36071,
-        ColorAttachment7Ext = 36071,
-        ColorAttachment7Nv = 36071,
-        ColorAttachment8 = 36072,
-        ColorAttachment8Ext = 36072,
-        ColorAttachment8Nv = 36072,
-        ColorAttachment9 = 36073,
-        ColorAttachment9Ext = 36073,
-        ColorAttachment9Nv = 36073,
-        ColorAttachment10 = 36074,
-        ColorAttachment10Ext = 36074,
-        ColorAttachment10Nv = 36074,
-        ColorAttachment11 = 36075,
-        ColorAttachment11Ext = 36075,
-        ColorAttachment11Nv = 36075,
-        ColorAttachment12 = 36076,
-        ColorAttachment12Ext = 36076,
-        ColorAttachment12Nv = 36076,
-        ColorAttachment13 = 36077,
-        ColorAttachment13Ext = 36077,
-        ColorAttachment13Nv = 36077,
-        ColorAttachment14 = 36078,
-        ColorAttachment14Ext = 36078,
-        ColorAttachment14Nv = 36078,
-        ColorAttachment15 = 36079,
-        ColorAttachment15Ext = 36079,
-        ColorAttachment15Nv = 36079,
-        ColorAttachment16 = 36080,
-        ColorAttachment17 = 36081,
-        ColorAttachment18 = 36082,
-        ColorAttachment19 = 36083,
-        ColorAttachment20 = 36084,
-        ColorAttachment21 = 36085,
-        ColorAttachment22 = 36086,
-        ColorAttachment23 = 36087,
-        ColorAttachment24 = 36088,
-        ColorAttachment25 = 36089,
-        ColorAttachment26 = 36090,
-        ColorAttachment27 = 36091,
-        ColorAttachment28 = 36092,
-        ColorAttachment29 = 36093,
-        ColorAttachment30 = 36094,
-        ColorAttachment31 = 36095,
-        DepthAttachment = 36096,
+        PathFillCoverModeNv = 36994,
+        ConvexHullNv = 37003,
+        BoundingBoxNv = 37005,
+        BoundingBoxOfBoundingBoxesNv = 37020,
     }
     ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexImage3D" />, ...</summary>
     public enum InternalFormat : uint
@@ -4250,58 +3748,748 @@ namespace OpenTK.Graphics.OpenGLES2
         CompressedSrgb8Alpha8Astc6x6x5Oes = 37864,
         CompressedSrgb8Alpha8Astc6x6x6Oes = 37865,
     }
-    public enum DepthStencilTextureMode : uint
+    ///<summary>Used in <see cref="GL.GetInternalformativ" />, <see cref="GL.NV.GetInternalformatSampleivNV" /></summary>
+    public enum InternalFormatPName : uint
     {
+        Samples = 32937,
+        TextureCompressed = 34465,
+        NumSurfaceCompressionFixedRatesExt = 36718,
+        ImageFormatCompatibilityType = 37063,
+        NumSampleCounts = 37760,
+    }
+    ///<summary>Used in <see cref="GL.InvalidateFramebuffer" />, <see cref="GL.InvalidateSubFramebuffer" />, <see cref="GL.EXT.DiscardFramebufferEXT" /></summary>
+    public enum InvalidateFramebufferAttachment : uint
+    {
+        Color = 6144,
+        Depth = 6145,
+        Stencil = 6146,
+        DepthStencilAttachment = 33306,
+        ColorAttachment0 = 36064,
+        ColorAttachment0Ext = 36064,
+        ColorAttachment0Nv = 36064,
+        ColorAttachment1 = 36065,
+        ColorAttachment1Ext = 36065,
+        ColorAttachment1Nv = 36065,
+        ColorAttachment2 = 36066,
+        ColorAttachment2Ext = 36066,
+        ColorAttachment2Nv = 36066,
+        ColorAttachment3 = 36067,
+        ColorAttachment3Ext = 36067,
+        ColorAttachment3Nv = 36067,
+        ColorAttachment4 = 36068,
+        ColorAttachment4Ext = 36068,
+        ColorAttachment4Nv = 36068,
+        ColorAttachment5 = 36069,
+        ColorAttachment5Ext = 36069,
+        ColorAttachment5Nv = 36069,
+        ColorAttachment6 = 36070,
+        ColorAttachment6Ext = 36070,
+        ColorAttachment6Nv = 36070,
+        ColorAttachment7 = 36071,
+        ColorAttachment7Ext = 36071,
+        ColorAttachment7Nv = 36071,
+        ColorAttachment8 = 36072,
+        ColorAttachment8Ext = 36072,
+        ColorAttachment8Nv = 36072,
+        ColorAttachment9 = 36073,
+        ColorAttachment9Ext = 36073,
+        ColorAttachment9Nv = 36073,
+        ColorAttachment10 = 36074,
+        ColorAttachment10Ext = 36074,
+        ColorAttachment10Nv = 36074,
+        ColorAttachment11 = 36075,
+        ColorAttachment11Ext = 36075,
+        ColorAttachment11Nv = 36075,
+        ColorAttachment12 = 36076,
+        ColorAttachment12Ext = 36076,
+        ColorAttachment12Nv = 36076,
+        ColorAttachment13 = 36077,
+        ColorAttachment13Ext = 36077,
+        ColorAttachment13Nv = 36077,
+        ColorAttachment14 = 36078,
+        ColorAttachment14Ext = 36078,
+        ColorAttachment14Nv = 36078,
+        ColorAttachment15 = 36079,
+        ColorAttachment15Ext = 36079,
+        ColorAttachment15Nv = 36079,
+        ColorAttachment16 = 36080,
+        ColorAttachment17 = 36081,
+        ColorAttachment18 = 36082,
+        ColorAttachment19 = 36083,
+        ColorAttachment20 = 36084,
+        ColorAttachment21 = 36085,
+        ColorAttachment22 = 36086,
+        ColorAttachment23 = 36087,
+        ColorAttachment24 = 36088,
+        ColorAttachment25 = 36089,
+        ColorAttachment26 = 36090,
+        ColorAttachment27 = 36091,
+        ColorAttachment28 = 36092,
+        ColorAttachment29 = 36093,
+        ColorAttachment30 = 36094,
+        ColorAttachment31 = 36095,
+        DepthAttachment = 36096,
+    }
+    public enum LightEnvModeSGIX : uint
+    {
+        Replace = 7681,
+    }
+    public enum ListNameType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+    }
+    public enum LogicOp : uint
+    {
+        Invert = 5386,
+    }
+    ///<summary>Used in <see cref="GL.MapBufferRange" />, <see cref="GL.EXT.MapBufferRangeEXT" /></summary>
+    [Flags]
+    public enum MapBufferAccessMask : uint
+    {
+        MapReadBit = 1,
+        MapReadBitExt = 1,
+        MapWriteBit = 2,
+        MapWriteBitExt = 2,
+        MapInvalidateRangeBit = 4,
+        MapInvalidateRangeBitExt = 4,
+        MapInvalidateBufferBit = 8,
+        MapInvalidateBufferBitExt = 8,
+        MapFlushExplicitBit = 16,
+        MapFlushExplicitBitExt = 16,
+        MapUnsynchronizedBit = 32,
+        MapUnsynchronizedBitExt = 32,
+        MapPersistentBitExt = 64,
+        MapCoherentBitExt = 128,
+    }
+    public enum MapTypeNV : uint
+    {
+        Float = 5126,
+    }
+    public enum MatrixIndexPointerTypeARB : uint
+    {
+        UnsignedByte = 5121,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+    }
+    ///<summary>Used in <see cref="GL.NV.MatrixFrustumEXT" />, <see cref="GL.NV.MatrixLoaddEXT" />, <see cref="GL.NV.MatrixLoadfEXT" />, ...</summary>
+    public enum MatrixMode : uint
+    {
+        Texture = 5890,
+    }
+    ///<summary>Used in <see cref="GL.MemoryBarrier" />, <see cref="GL.MemoryBarrierByRegion" /></summary>
+    [Flags]
+    public enum MemoryBarrierMask : uint
+    {
+        VertexAttribArrayBarrierBit = 1,
+        ElementArrayBarrierBit = 2,
+        UniformBarrierBit = 4,
+        TextureFetchBarrierBit = 8,
+        ShaderImageAccessBarrierBit = 32,
+        CommandBarrierBit = 64,
+        PixelBufferBarrierBit = 128,
+        TextureUpdateBarrierBit = 256,
+        BufferUpdateBarrierBit = 512,
+        FramebufferBarrierBit = 1024,
+        TransformFeedbackBarrierBit = 2048,
+        AtomicCounterBarrierBit = 4096,
+        ShaderStorageBarrierBit = 8192,
+        ClientMappedBufferBarrierBitExt = 16384,
+        AllBarrierBits = 4294967295,
+    }
+    ///<summary>Used in <see cref="GL.EXT.GetMemoryObjectParameterivEXT" />, <see cref="GL.EXT.MemoryObjectParameterivEXT" /></summary>
+    public enum MemoryObjectParameterName : uint
+    {
+        DedicatedMemoryObjectExt = 38273,
+        ProtectedMemoryObjectExt = 38299,
+    }
+    public enum NormalPointerType : uint
+    {
+        Byte = 5120,
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
+    }
+    ///<summary>Used in <see cref="GL.GetObjectLabel" />, <see cref="GL.ObjectLabel" />, <see cref="GL.KHR.GetObjectLabel" />, ...</summary>
+    public enum ObjectIdentifier : uint
+    {
+        Texture = 5890,
+        VertexArray = 32884,
+        Buffer = 33504,
+        Shader = 33505,
+        Program = 33506,
+        Query = 33507,
+        ProgramPipeline = 33508,
+        Sampler = 33510,
+        Framebuffer = 36160,
+        Renderbuffer = 36161,
+        TransformFeedback = 36386,
+    }
+    ///<summary>Used in <see cref="GL.PatchParameteri" />, <see cref="GL.EXT.PatchParameteriEXT" />, <see cref="GL.OES.PatchParameteriOES" /></summary>
+    public enum PatchParameterName : uint
+    {
+        PatchVertices = 36466,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.PathColorGenNV" />, ...</summary>
+    public enum PathColor : uint
+    {
+    }
+    ///<summary>Used in <see cref="GL.NV.PathColorGenNV" /></summary>
+    public enum PathColorFormat : uint
+    {
+        None = 0,
+        Alpha = 6406,
+        Rgb = 6407,
+        Rgba = 6408,
+        Luminance = 6409,
+        LuminanceAlpha = 6410,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathCommandsNV" />, <see cref="GL.NV.PathCommandsNV" />, <see cref="GL.NV.PathCoordsNV" />, ...</summary>
+    public enum PathCoordType : uint
+    {
+        ClosePathNv = 0,
+        MoveToNv = 2,
+        RelativeMoveToNv = 3,
+        LineToNv = 4,
+        RelativeLineToNv = 5,
+        HorizontalLineToNv = 6,
+        RelativeHorizontalLineToNv = 7,
+        VerticalLineToNv = 8,
+        RelativeVerticalLineToNv = 9,
+        QuadraticCurveToNv = 10,
+        RelativeQuadraticCurveToNv = 11,
+        CubicCurveToNv = 12,
+        RelativeCubicCurveToNv = 13,
+        SmoothQuadraticCurveToNv = 14,
+        RelativeSmoothQuadraticCurveToNv = 15,
+        SmoothCubicCurveToNv = 16,
+        RelativeSmoothCubicCurveToNv = 17,
+        SmallCcwArcToNv = 18,
+        RelativeSmallCcwArcToNv = 19,
+        SmallCwArcToNv = 20,
+        RelativeSmallCwArcToNv = 21,
+        LargeCcwArcToNv = 22,
+        RelativeLargeCcwArcToNv = 23,
+        LargeCwArcToNv = 24,
+        RelativeLargeCwArcToNv = 25,
+        ConicCurveToNv = 26,
+        RelativeConicCurveToNv = 27,
+        RoundedRectNv = 232,
+        RelativeRoundedRectNv = 233,
+        RoundedRect2Nv = 234,
+        RelativeRoundedRect2Nv = 235,
+        RoundedRect4Nv = 236,
+        RelativeRoundedRect4Nv = 237,
+        RoundedRect8Nv = 238,
+        RelativeRoundedRect8Nv = 239,
+        RestartPathNv = 240,
+        DupFirstCubicCurveToNv = 242,
+        DupLastCubicCurveToNv = 244,
+        RectNv = 246,
+        RelativeRectNv = 247,
+        CircularCcwArcToNv = 248,
+        CircularCwArcToNv = 250,
+        CircularTangentArcToNv = 252,
+        ArcToNv = 254,
+        RelativeArcToNv = 255,
+    }
+    ///<summary>Used in <see cref="GL.NV.CoverFillPathNV" />, <see cref="GL.NV.CoverStrokePathNV" />, <see cref="GL.NV.StencilThenCoverFillPathNV" />, ...</summary>
+    public enum PathCoverMode : uint
+    {
+        PathFillCoverModeNv = 36994,
+        ConvexHullNv = 37003,
+        BoundingBoxNv = 37005,
+    }
+    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.GetPathMetricsNV" />, ...</summary>
+    public enum PathElementType : uint
+    {
+        Utf8Nv = 37018,
+        Utf16Nv = 37019,
+    }
+    ///<summary>Used in <see cref="GL.NV.StencilFillPathInstancedNV" />, <see cref="GL.NV.StencilFillPathNV" />, <see cref="GL.NV.StencilThenCoverFillPathInstancedNV" />, ...</summary>
+    public enum PathFillMode : uint
+    {
+        Invert = 5386,
+        PathFillModeNv = 36992,
+        CountUpNv = 37000,
+        CountDownNv = 37001,
+    }
+    ///<summary>Used in <see cref="GL.NV.PathGlyphIndexArrayNV" />, <see cref="GL.NV.PathGlyphIndexRangeNV" />, <see cref="GL.NV.PathGlyphRangeNV" />, ...</summary>
+    [Flags]
+    public enum PathFontStyle : uint
+    {
+        None = 0,
+        BoldBitNv = 1,
+        ItalicBitNv = 2,
+    }
+    ///<summary>Used in <see cref="GL.NV.PathGlyphRangeNV" />, <see cref="GL.NV.PathGlyphsNV" /></summary>
+    public enum PathFontTarget : uint
+    {
+        StandardFontNameNv = 36978,
+        SystemFontNameNv = 36979,
+        FileNameNv = 36980,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.GetPathTexGenfvNV" />, ...</summary>
+    public enum PathGenMode : uint
+    {
+        None = 0,
+        PathObjectBoundingBoxNv = 37002,
+    }
+    ///<summary>Used in <see cref="GL.NV.PathGlyphRangeNV" />, <see cref="GL.NV.PathGlyphsNV" /></summary>
+    public enum PathHandleMissingGlyphs : uint
+    {
+        SkipMissingGlyphNv = 37033,
+        UseMissingGlyphNv = 37034,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathSpacingNV" /></summary>
+    public enum PathListMode : uint
+    {
+        AccumAdjacentPairsNv = 37037,
+        AdjacentPairsNv = 37038,
+        FirstToRestNv = 37039,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathMetricRangeNV" />, <see cref="GL.NV.GetPathMetricsNV" /></summary>
+    [Flags]
+    public enum PathMetricMask : uint
+    {
+        GlyphWidthBitNv = 1,
+        GlyphHeightBitNv = 2,
+        GlyphHorizontalBearingXBitNv = 4,
+        GlyphHorizontalBearingYBitNv = 8,
+        GlyphHorizontalBearingAdvanceBitNv = 16,
+        GlyphVerticalBearingXBitNv = 32,
+        GlyphVerticalBearingYBitNv = 64,
+        GlyphVerticalBearingAdvanceBitNv = 128,
+        GlyphHasKerningBitNv = 256,
+        FontXMinBoundsBitNv = 65536,
+        FontYMinBoundsBitNv = 131072,
+        FontXMaxBoundsBitNv = 262144,
+        FontYMaxBoundsBitNv = 524288,
+        FontUnitsPerEmBitNv = 1048576,
+        FontAscenderBitNv = 2097152,
+        FontDescenderBitNv = 4194304,
+        FontHeightBitNv = 8388608,
+        FontMaxAdvanceWidthBitNv = 16777216,
+        FontMaxAdvanceHeightBitNv = 33554432,
+        FontUnderlinePositionBitNv = 67108864,
+        FontUnderlineThicknessBitNv = 134217728,
+        FontHasKerningBitNv = 268435456,
+        FontNumGlyphIndicesBitNv = 536870912,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathParameterfvNV" />, <see cref="GL.NV.GetPathParameterivNV" />, <see cref="GL.NV.PathParameterfNV" />, ...</summary>
+    public enum PathParameter : uint
+    {
+        PathStrokeWidthNv = 36981,
+        PathEndCapsNv = 36982,
+        PathInitialEndCapNv = 36983,
+        PathTerminalEndCapNv = 36984,
+        PathJoinStyleNv = 36985,
+        PathMiterLimitNv = 36986,
+        PathDashCapsNv = 36987,
+        PathInitialDashCapNv = 36988,
+        PathTerminalDashCapNv = 36989,
+        PathDashOffsetNv = 36990,
+        PathClientLengthNv = 36991,
+        PathFillModeNv = 36992,
+        PathFillMaskNv = 36993,
+        PathFillCoverModeNv = 36994,
+        PathStrokeCoverModeNv = 36995,
+        PathStrokeMaskNv = 36996,
+        PathObjectBoundingBoxNv = 37002,
+        PathCommandCountNv = 37021,
+        PathCoordCountNv = 37022,
+        PathDashArrayCountNv = 37023,
+        PathComputedLengthNv = 37024,
+        PathFillBoundingBoxNv = 37025,
+        PathStrokeBoundingBoxNv = 37026,
+        PathDashOffsetResetNv = 37044,
+    }
+    public enum PathRenderingTokenNV : uint
+    {
+        ClosePathNv = 0,
+        MoveToNv = 2,
+        RelativeMoveToNv = 3,
+        LineToNv = 4,
+        RelativeLineToNv = 5,
+        HorizontalLineToNv = 6,
+        RelativeHorizontalLineToNv = 7,
+        VerticalLineToNv = 8,
+        RelativeVerticalLineToNv = 9,
+        QuadraticCurveToNv = 10,
+        RelativeQuadraticCurveToNv = 11,
+        CubicCurveToNv = 12,
+        RelativeCubicCurveToNv = 13,
+        SmoothQuadraticCurveToNv = 14,
+        RelativeSmoothQuadraticCurveToNv = 15,
+        SmoothCubicCurveToNv = 16,
+        RelativeSmoothCubicCurveToNv = 17,
+        SmallCcwArcToNv = 18,
+        RelativeSmallCcwArcToNv = 19,
+        SmallCwArcToNv = 20,
+        RelativeSmallCwArcToNv = 21,
+        LargeCcwArcToNv = 22,
+        RelativeLargeCcwArcToNv = 23,
+        LargeCwArcToNv = 24,
+        RelativeLargeCwArcToNv = 25,
+        ConicCurveToNv = 26,
+        RelativeConicCurveToNv = 27,
+        SharedEdgeNv = 192,
+        RoundedRectNv = 232,
+        RelativeRoundedRectNv = 233,
+        RoundedRect2Nv = 234,
+        RelativeRoundedRect2Nv = 235,
+        RoundedRect4Nv = 236,
+        RelativeRoundedRect4Nv = 237,
+        RoundedRect8Nv = 238,
+        RelativeRoundedRect8Nv = 239,
+        RestartPathNv = 240,
+        DupFirstCubicCurveToNv = 242,
+        DupLastCubicCurveToNv = 244,
+        RectNv = 246,
+        RelativeRectNv = 247,
+        CircularCcwArcToNv = 248,
+        CircularCwArcToNv = 250,
+        CircularTangentArcToNv = 252,
+        ArcToNv = 254,
+        RelativeArcToNv = 255,
+    }
+    ///<summary>Used in <see cref="GL.NV.PathStringNV" /></summary>
+    public enum PathStringFormat : uint
+    {
+        PathFormatSvgNv = 36976,
+        PathFormatPsNv = 36977,
+    }
+    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.GetPathSpacingNV" />, ...</summary>
+    public enum PathTransformType : uint
+    {
+        None = 0,
+        TranslateXNv = 37006,
+        TranslateYNv = 37007,
+        Translate2dNv = 37008,
+        Translate3dNv = 37009,
+        Affine2dNv = 37010,
+        Affine3dNv = 37012,
+        TransposeAffine2dNv = 37014,
+        TransposeAffine3dNv = 37016,
+    }
+    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryInfoINTEL" /></summary>
+    [Flags]
+    public enum PerformanceQueryCapsMaskINTEL : uint
+    {
+        PerfquerySingleContextIntel = 0,
+        PerfqueryGlobalContextIntel = 1,
+    }
+    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryDataINTEL" /></summary>
+    public enum PerfQueryDataFlags : uint
+    {
+        PerfqueryDonotFlushIntel = 33785,
+        PerfqueryFlushIntel = 33786,
+        PerfqueryWaitIntel = 33787,
+    }
+    ///<summary>Used in <see cref="GL.GetProgramPipelineiv" />, <see cref="GL.EXT.GetProgramPipelineivEXT" /></summary>
+    public enum PipelineParameterName : uint
+    {
+        ActiveProgram = 33369,
+        FragmentShader = 35632,
+        VertexShader = 35633,
+        InfoLogLength = 35716,
+        GeometryShader = 36313,
+        TessEvaluationShader = 36487,
+        TessControlShader = 36488,
+    }
+    public enum PixelCopyType : uint
+    {
+        Color = 6144,
+        ColorExt = 6144,
+        Depth = 6145,
+        DepthExt = 6145,
+        Stencil = 6146,
+        StencilExt = 6146,
+    }
+    ///<summary>Used in <see cref="GL.ReadnPixels" />, <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, ...</summary>
+    public enum PixelFormat : uint
+    {
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
         StencilIndex = 6401,
         DepthComponent = 6402,
-    }
-    public enum CombinerComponentUsageNV : uint
-    {
+        Red = 6403,
+        RedExt = 6403,
+        Green = 6404,
         Blue = 6405,
         Alpha = 6406,
         Rgb = 6407,
+        Rgba = 6408,
+        Luminance = 6409,
+        LuminanceAlpha = 6410,
+        BgrExt = 32992,
+        BgraExt = 32993,
+        BgraImg = 32993,
+        Rg = 33319,
+        RgInteger = 33320,
+        DepthStencil = 34041,
+        RedInteger = 36244,
+        RgbInteger = 36248,
+        RgbaInteger = 36249,
     }
-    public enum CombinerPortionNV : uint
+    ///<summary>Used in <see cref="GL.PixelStorei" /></summary>
+    public enum PixelStoreParameter : uint
     {
+        UnpackRowLength = 3314,
+        UnpackRowLengthExt = 3314,
+        UnpackSkipRows = 3315,
+        UnpackSkipRowsExt = 3315,
+        UnpackSkipPixels = 3316,
+        UnpackSkipPixelsExt = 3316,
+        UnpackAlignment = 3317,
+        PackRowLength = 3330,
+        PackRowLengthNv = 3330,
+        PackSkipRows = 3331,
+        PackSkipRowsNv = 3331,
+        PackSkipPixels = 3332,
+        PackSkipPixelsNv = 3332,
+        PackAlignment = 3333,
+        UnpackSkipImages = 32877,
+        UnpackImageHeight = 32878,
+    }
+    public enum PixelTexGenModeSGIX : uint
+    {
+        None = 0,
         Alpha = 6406,
         Rgb = 6407,
+        Rgba = 6408,
+    }
+    ///<summary>Used in <see cref="GL.ReadnPixels" />, <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, ...</summary>
+    public enum PixelType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        HalfFloat = 5131,
+        UnsignedShort4444 = 32819,
+        UnsignedShort5551 = 32820,
+        UnsignedShort565 = 33635,
+        UnsignedShort4444RevExt = 33637,
+        UnsignedShort4444RevImg = 33637,
+        UnsignedShort1555RevExt = 33638,
+        UnsignedInt2101010Rev = 33640,
+        UnsignedInt2101010RevExt = 33640,
+        UnsignedInt248 = 34042,
+        UnsignedInt248Oes = 34042,
+        UnsignedInt10f11f11fRev = 35899,
+        UnsignedInt10f11f11fRevApple = 35899,
+        UnsignedInt5999Rev = 35902,
+        UnsignedInt5999RevApple = 35902,
+        Float32UnsignedInt248Rev = 36269,
     }
     ///<summary>Used in <see cref="GL.NV.PolygonModeNV" /></summary>
     public enum PolygonMode : uint
     {
     }
-    public enum EvalMapsModeNV : uint
+    ///<summary>Used in <see cref="GL.GetShaderPrecisionFormat" /></summary>
+    public enum PrecisionType : uint
     {
-        FillNv = 6914,
+        LowFloat = 36336,
+        MediumFloat = 36337,
+        HighFloat = 36338,
+        LowInt = 36339,
+        MediumInt = 36340,
+        HighInt = 36341,
     }
-    ///<summary>Used in <see cref="GL.GetString" />, <see cref="GL.GetStringi" /></summary>
-    public enum StringName : uint
+    ///<summary>Used in <see cref="GL.BeginTransformFeedback" />, <see cref="GL.DrawArrays" />, <see cref="GL.DrawArraysIndirect" />, ...</summary>
+    public enum PrimitiveType : uint
     {
-        Vendor = 7936,
-        Renderer = 7937,
-        Version = 7938,
-        Extensions = 7939,
-        ShadingLanguageVersion = 35724,
+        Points = 0,
+        Lines = 1,
+        LineLoop = 2,
+        LineStrip = 3,
+        Triangles = 4,
+        TriangleStrip = 5,
+        TriangleFan = 6,
+        Quads = 7,
+        QuadsExt = 7,
+        LinesAdjacency = 10,
+        LinesAdjacencyExt = 10,
+        LineStripAdjacency = 11,
+        LineStripAdjacencyExt = 11,
+        TrianglesAdjacency = 12,
+        TrianglesAdjacencyExt = 12,
+        TriangleStripAdjacency = 13,
+        TriangleStripAdjacencyExt = 13,
+        Patches = 14,
+        PatchesExt = 14,
     }
-    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, <see cref="GL.EXT.BlitFramebufferLayerEXT" />, ...</summary>
-    public enum BlitFramebufferFilter : uint
+    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" />, <see cref="GL.GetProgramResourceIndex" />, <see cref="GL.GetProgramResourceiv" />, ...</summary>
+    public enum ProgramInterface : uint
     {
-        Nearest = 9728,
-        Linear = 9729,
+        TransformFeedbackBuffer = 35982,
+        Uniform = 37601,
+        UniformBlock = 37602,
+        ProgramInput = 37603,
+        ProgramOutput = 37604,
+        BufferVariable = 37605,
+        ShaderStorageBlock = 37606,
+        TransformFeedbackVarying = 37620,
     }
-    public enum TextureMagFilter : uint
+    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" /></summary>
+    public enum ProgramInterfacePName : uint
     {
-        Nearest = 9728,
-        Linear = 9729,
+        ActiveResources = 37621,
+        MaxNameLength = 37622,
+        MaxNumActiveVariables = 37623,
     }
-    public enum TextureMinFilter : uint
+    ///<summary>Used in <see cref="GL.ProgramParameteri" />, <see cref="GL.EXT.ProgramParameteriEXT" /></summary>
+    public enum ProgramParameterPName : uint
     {
-        Nearest = 9728,
-        Linear = 9729,
-        NearestMipmapNearest = 9984,
-        LinearMipmapNearest = 9985,
-        NearestMipmapLinear = 9986,
-        LinearMipmapLinear = 9987,
+        ProgramBinaryRetrievableHint = 33367,
+        ProgramSeparable = 33368,
+    }
+    ///<summary>Used in <see cref="GL.GetProgramiv" /></summary>
+    public enum ProgramPropertyARB : uint
+    {
+        ComputeWorkGroupSize = 33383,
+        ProgramBinaryLength = 34625,
+        GeometryVerticesOut = 35094,
+        GeometryInputType = 35095,
+        GeometryOutputType = 35096,
+        ActiveUniformBlockMaxNameLength = 35381,
+        ActiveUniformBlocks = 35382,
+        DeleteStatus = 35712,
+        LinkStatus = 35714,
+        ValidateStatus = 35715,
+        InfoLogLength = 35716,
+        AttachedShaders = 35717,
+        ActiveUniforms = 35718,
+        ActiveUniformMaxLength = 35719,
+        ActiveAttributes = 35721,
+        ActiveAttributeMaxLength = 35722,
+        TransformFeedbackVaryingMaxLength = 35958,
+        TransformFeedbackBufferMode = 35967,
+        TransformFeedbackVaryings = 35971,
+        ActiveAtomicCounterBuffers = 37593,
+    }
+    ///<summary>Used in <see cref="GL.GetProgramResourceiv" /></summary>
+    public enum ProgramResourceProperty : uint
+    {
+        Uniform = 37601,
+        IsPerPatch = 37607,
+        NameLength = 37625,
+        Type = 37626,
+        ArraySize = 37627,
+        Offset = 37628,
+        BlockIndex = 37629,
+        ArrayStride = 37630,
+        MatrixStride = 37631,
+        IsRowMajor = 37632,
+        AtomicCounterBufferIndex = 37633,
+        BufferBinding = 37634,
+        BufferDataSize = 37635,
+        NumActiveVariables = 37636,
+        ActiveVariables = 37637,
+        ReferencedByVertexShader = 37638,
+        ReferencedByTessControlShader = 37639,
+        ReferencedByTessEvaluationShader = 37640,
+        ReferencedByGeometryShader = 37641,
+        ReferencedByFragmentShader = 37642,
+        ReferencedByComputeShader = 37643,
+        TopLevelArraySize = 37644,
+        TopLevelArrayStride = 37645,
+        Location = 37646,
+    }
+    ///<summary>Used in <see cref="GL.EXT.QueryCounterEXT" /></summary>
+    public enum QueryCounterTarget : uint
+    {
+        TimestampExt = 36392,
+    }
+    ///<summary>Used in <see cref="GL.GetQueryObjectuiv" />, <see cref="GL.EXT.GetQueryObjecti64vEXT" />, <see cref="GL.EXT.GetQueryObjectivEXT" />, ...</summary>
+    public enum QueryObjectParameterName : uint
+    {
+        QueryResult = 34918,
+        QueryResultAvailable = 34919,
+    }
+    ///<summary>Used in <see cref="GL.GetQueryiv" />, <see cref="GL.EXT.GetQueryivEXT" /></summary>
+    public enum QueryParameterName : uint
+    {
+        CurrentQuery = 34917,
+    }
+    ///<summary>Used in <see cref="GL.BeginQuery" />, <see cref="GL.EndQuery" />, <see cref="GL.GetQueryiv" />, ...</summary>
+    public enum QueryTarget : uint
+    {
+        AnySamplesPassed = 35887,
+        PrimitivesGenerated = 35975,
+        TransformFeedbackPrimitivesWritten = 35976,
+        AnySamplesPassedConservative = 36202,
+    }
+    ///<summary>Used in <see cref="GL.ReadBuffer" />, <see cref="GL.EXT.ReadBufferIndexedEXT" /></summary>
+    public enum ReadBufferMode : uint
+    {
+        None = 0,
+        Front = 1028,
+        Back = 1029,
+        ColorAttachment0 = 36064,
+        ColorAttachment1 = 36065,
+        ColorAttachment2 = 36066,
+        ColorAttachment3 = 36067,
+        ColorAttachment4 = 36068,
+        ColorAttachment5 = 36069,
+        ColorAttachment6 = 36070,
+        ColorAttachment7 = 36071,
+        ColorAttachment8 = 36072,
+        ColorAttachment9 = 36073,
+        ColorAttachment10 = 36074,
+        ColorAttachment11 = 36075,
+        ColorAttachment12 = 36076,
+        ColorAttachment13 = 36077,
+        ColorAttachment14 = 36078,
+        ColorAttachment15 = 36079,
+    }
+    ///<summary>Used in <see cref="GL.GetRenderbufferParameteriv" /></summary>
+    public enum RenderbufferParameterName : uint
+    {
+        RenderbufferSamples = 36011,
+        RenderbufferSamplesAngle = 36011,
+        RenderbufferSamplesApple = 36011,
+        RenderbufferSamplesExt = 36011,
+        RenderbufferSamplesNv = 36011,
+        RenderbufferWidth = 36162,
+        RenderbufferHeight = 36163,
+        RenderbufferInternalFormat = 36164,
+        RenderbufferRedSize = 36176,
+        RenderbufferGreenSize = 36177,
+        RenderbufferBlueSize = 36178,
+        RenderbufferAlphaSize = 36179,
+        RenderbufferDepthSize = 36180,
+        RenderbufferStencilSize = 36181,
+        RenderbufferSamplesImg = 37171,
+        RenderbufferStorageSamplesAmd = 37298,
+    }
+    ///<summary>Used in <see cref="GL.BindRenderbuffer" />, <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.GetRenderbufferParameteriv" />, ...</summary>
+    public enum RenderbufferTarget : uint
+    {
+        Renderbuffer = 36161,
+    }
+    public enum ReplacementCodeTypeSUN : uint
+    {
+        UnsignedByte = 5121,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+    }
+    ///<summary>Used in <see cref="GL.GetSamplerParameterfv" />, <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" /></summary>
+    public enum SamplerParameterF : uint
+    {
+        TextureBorderColor = 4100,
+        TextureMinLod = 33082,
+        TextureMaxLod = 33083,
+        TextureUnnormalizedCoordinatesArm = 36714,
     }
     ///<summary>Used in <see cref="GL.GetSamplerParameterIiv" />, <see cref="GL.GetSamplerParameterIuiv" />, <see cref="GL.GetSamplerParameteriv" />, ...</summary>
     public enum SamplerParameterI : uint
@@ -4315,15 +4503,90 @@ namespace OpenTK.Graphics.OpenGLES2
         TextureCompareFunc = 34893,
         TextureUnnormalizedCoordinatesArm = 36714,
     }
-    public enum TextureWrapMode : uint
+    public enum ScalarType : uint
     {
-        Repeat = 10497,
-        ClampToBorder = 33069,
-        ClampToBorderExt = 33069,
-        ClampToBorderNv = 33069,
-        ClampToBorderOes = 33069,
-        ClampToEdge = 33071,
-        MirroredRepeat = 33648,
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+    }
+    public enum SecondaryColorPointerTypeIBM : uint
+    {
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
+    }
+    ///<summary>Used in <see cref="GL.NV.GetSemaphoreParameterivNV" />, <see cref="GL.EXT.GetSemaphoreParameterui64vEXT" />, <see cref="GL.NV.SemaphoreParameterivNV" />, ...</summary>
+    public enum SemaphoreParameterName : uint
+    {
+        D3d12FenceValueExt = 38293,
+        TimelineSemaphoreValueNv = 38293,
+        SemaphoreTypeNv = 38323,
+        SemaphoreTypeBinaryNv = 38324,
+        SemaphoreTypeTimelineNv = 38325,
+    }
+    ///<summary>Used in <see cref="GL.ShaderBinary" /></summary>
+    public enum ShaderBinaryFormat : uint
+    {
+        SgxBinaryImg = 35850,
+        MaliShaderBinaryArm = 36704,
+        ShaderBinaryViv = 36804,
+        ShaderBinaryDmp = 37456,
+        GccsoShaderBinaryFj = 37472,
+    }
+    ///<summary>Used in <see cref="GL.GetShaderiv" /></summary>
+    public enum ShaderParameterName : uint
+    {
+        ShaderType = 35663,
+        DeleteStatus = 35712,
+        CompileStatus = 35713,
+        InfoLogLength = 35716,
+        ShaderSourceLength = 35720,
+    }
+    ///<summary>Used in <see cref="GL.CreateShader" />, <see cref="GL.CreateShaderProgramv" />, <see cref="GL.GetShaderPrecisionFormat" />, ...</summary>
+    public enum ShaderType : uint
+    {
+        FragmentShader = 35632,
+        VertexShader = 35633,
+        GeometryShader = 36313,
+        TessEvaluationShader = 36487,
+        TessControlShader = 36488,
+        ComputeShader = 37305,
+    }
+    ///<summary>Used in <see cref="GL.EXT.GetFragmentShadingRatesEXT" />, <see cref="GL.EXT.ShadingRateEXT" /></summary>
+    public enum ShadingRate : uint
+    {
+        ShadingRate1x1PixelsExt = 38566,
+        ShadingRate1x2PixelsExt = 38567,
+        ShadingRate2x1PixelsExt = 38568,
+        ShadingRate2x2PixelsExt = 38569,
+        ShadingRate1x4PixelsExt = 38570,
+        ShadingRate4x1PixelsExt = 38571,
+        ShadingRate4x2PixelsExt = 38572,
+        ShadingRate2x4PixelsExt = 38573,
+        ShadingRate4x4PixelsExt = 38574,
+    }
+    ///<summary>Used in <see cref="GL.EXT.ShadingRateCombinerOpsEXT" /></summary>
+    public enum ShadingRateCombinerOp : uint
+    {
+        FragmentShadingRateCombinerOpKeepExt = 38610,
+        FragmentShadingRateCombinerOpReplaceExt = 38611,
+        FragmentShadingRateCombinerOpMinExt = 38612,
+        FragmentShadingRateCombinerOpMaxExt = 38613,
+        FragmentShadingRateCombinerOpMulExt = 38614,
+    }
+    ///<summary>Used in <see cref="GL.QCOM.ShadingRateQCOM" /></summary>
+    public enum ShadingRateQCOM : uint
+    {
+        ShadingRate1x1PixelsQcom = 38566,
+        ShadingRate1x2PixelsQcom = 38567,
+        ShadingRate2x1PixelsQcom = 38568,
+        ShadingRate2x2PixelsQcom = 38569,
+        ShadingRate4x2PixelsQcom = 38572,
+        ShadingRate4x4PixelsQcom = 38574,
     }
     ///<summary>Used in <see cref="GL.TexBuffer" />, <see cref="GL.TexBufferRange" />, <see cref="GL.TexStorage2D" />, ...</summary>
     public enum SizedInternalFormat : uint
@@ -4536,219 +4799,226 @@ namespace OpenTK.Graphics.OpenGLES2
         CompressedSrgb8Alpha8Astc6x6x5Oes = 37864,
         CompressedSrgb8Alpha8Astc6x6x6Oes = 37865,
     }
-    ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationi" />, <see cref="GL.BlendEquationSeparate" />, ...</summary>
-    public enum BlendEquationModeEXT : uint
+    ///<summary>Used in <see cref="GL.StencilFunc" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.NV.PathStencilFuncNV" /></summary>
+    public enum StencilFunction : uint
     {
-        FuncAdd = 32774,
-        FuncAddExt = 32774,
-        Min = 32775,
-        MinExt = 32775,
-        Max = 32776,
-        MaxExt = 32776,
-        FuncSubtract = 32778,
-        FuncReverseSubtract = 32779,
+        Never = 512,
+        Less = 513,
+        Equal = 514,
+        Lequal = 515,
+        Greater = 516,
+        Notequal = 517,
+        Gequal = 518,
+        Always = 519,
     }
-    ///<summary>Used in <see cref="GL.GetInternalformativ" />, <see cref="GL.NV.GetInternalformatSampleivNV" /></summary>
-    public enum InternalFormatPName : uint
+    ///<summary>Used in <see cref="GL.StencilOp" />, <see cref="GL.StencilOpSeparate" /></summary>
+    public enum StencilOp : uint
     {
-        Samples = 32937,
-        TextureCompressed = 34465,
-        NumSurfaceCompressionFixedRatesExt = 36718,
-        ImageFormatCompatibilityType = 37063,
-        NumSampleCounts = 37760,
+        Zero = 0,
+        Invert = 5386,
+        Keep = 7680,
+        Replace = 7681,
+        Incr = 7682,
+        Decr = 7683,
+        IncrWrap = 34055,
+        DecrWrap = 34056,
     }
-    ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
-    public enum BufferTargetARB : uint
+    ///<summary>Used in <see cref="GL.GetString" />, <see cref="GL.GetStringi" /></summary>
+    public enum StringName : uint
     {
-        ArrayBuffer = 34962,
-        ElementArrayBuffer = 34963,
-        PixelPackBuffer = 35051,
-        PixelUnpackBuffer = 35052,
-        UniformBuffer = 35345,
+        Vendor = 7936,
+        Renderer = 7937,
+        Version = 7938,
+        Extensions = 7939,
+        ShadingLanguageVersion = 35724,
+    }
+    [Flags]
+    public enum SubgroupSupportedFeatures : uint
+    {
+        SubgroupFeatureBasicBitKhr = 1,
+        SubgroupFeatureVoteBitKhr = 2,
+        SubgroupFeatureArithmeticBitKhr = 4,
+        SubgroupFeatureBallotBitKhr = 8,
+        SubgroupFeatureShuffleBitKhr = 16,
+        SubgroupFeatureShuffleRelativeBitKhr = 32,
+        SubgroupFeatureClusteredBitKhr = 64,
+        SubgroupFeatureQuadBitKhr = 128,
+        SubgroupFeaturePartitionedBitNv = 256,
+    }
+    public enum SubroutineParameterName : uint
+    {
+        UniformSize = 35384,
+        UniformNameLength = 35385,
+    }
+    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.WaitSync" />, <see cref="GL.APPLE.FenceSyncAPPLE" />, ...</summary>
+    public enum SyncBehaviorFlags : uint
+    {
+        None = 0,
+    }
+    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.APPLE.FenceSyncAPPLE" /></summary>
+    public enum SyncCondition : uint
+    {
+        SyncGpuCommandsComplete = 37143,
+    }
+    ///<summary>Used in <see cref="GL.ClientWaitSync" />, <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
+    [Flags]
+    public enum SyncObjectMask : uint
+    {
+        SyncFlushCommandsBit = 1,
+        SyncFlushCommandsBitApple = 1,
+    }
+    ///<summary>Used in <see cref="GL.GetSynciv" />, <see cref="GL.APPLE.GetSyncivAPPLE" /></summary>
+    public enum SyncParameterName : uint
+    {
+        ObjectType = 37138,
+        SyncCondition = 37139,
+        SyncStatus = 37140,
+        SyncFlags = 37141,
+    }
+    ///<summary>Used in <see cref="GL.ClientWaitSync" />, <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
+    public enum SyncStatus : uint
+    {
+        AlreadySignaled = 37146,
+        TimeoutExpired = 37147,
+        ConditionSatisfied = 37148,
+        WaitFailed = 37149,
+    }
+    public enum TangentPointerTypeEXT : uint
+    {
+        Byte = 5120,
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
+    }
+    public enum TexCoordPointerType : uint
+    {
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
+    }
+    ///<summary>Used in <see cref="GL.EXT.TexStorageAttribs2DEXT" />, <see cref="GL.EXT.TexStorageAttribs3DEXT" /></summary>
+    public enum TexStorageAttribs : uint
+    {
+        SurfaceCompressionExt = 38592,
+        SurfaceCompressionFixedRateNoneExt = 38593,
+        SurfaceCompressionFixedRateDefaultExt = 38594,
+        SurfaceCompressionFixedRate1bpcExt = 38596,
+        SurfaceCompressionFixedRate2bpcExt = 38597,
+        SurfaceCompressionFixedRate3bpcExt = 38598,
+        SurfaceCompressionFixedRate4bpcExt = 38599,
+        SurfaceCompressionFixedRate5bpcExt = 38600,
+        SurfaceCompressionFixedRate6bpcExt = 38601,
+        SurfaceCompressionFixedRate7bpcExt = 38602,
+        SurfaceCompressionFixedRate8bpcExt = 38603,
+        SurfaceCompressionFixedRate9bpcExt = 38604,
+        SurfaceCompressionFixedRate10bpcExt = 38605,
+        SurfaceCompressionFixedRate11bpcExt = 38606,
+        SurfaceCompressionFixedRate12bpcExt = 38607,
+    }
+    public enum TextureCompareMode : uint
+    {
+        None = 0,
+        CompareRefToTexture = 34894,
+    }
+    public enum TextureEnvMode : uint
+    {
+        Blend = 3042,
+        Replace = 7681,
+    }
+    public enum TextureEnvParameter : uint
+    {
+        Src1AlphaExt = 34185,
+    }
+    ///<summary>Used in <see cref="GL.EXT.SignalSemaphoreEXT" />, <see cref="GL.EXT.WaitSemaphoreEXT" /></summary>
+    public enum TextureLayout : uint
+    {
+        LayoutDepthReadOnlyStencilAttachmentExt = 38192,
+        LayoutDepthAttachmentStencilReadOnlyExt = 38193,
+        LayoutGeneralExt = 38285,
+        LayoutColorAttachmentExt = 38286,
+        LayoutDepthStencilAttachmentExt = 38287,
+        LayoutDepthStencilReadOnlyExt = 38288,
+        LayoutShaderReadOnlyExt = 38289,
+        LayoutTransferSrcExt = 38290,
+        LayoutTransferDstExt = 38291,
+    }
+    public enum TextureMagFilter : uint
+    {
+        Nearest = 9728,
+        Linear = 9729,
+    }
+    public enum TextureMinFilter : uint
+    {
+        Nearest = 9728,
+        Linear = 9729,
+        NearestMipmapNearest = 9984,
+        LinearMipmapNearest = 9985,
+        NearestMipmapLinear = 9986,
+        LinearMipmapLinear = 9987,
+    }
+    ///<summary>Used in <see cref="GL.TexParameterf" />, <see cref="GL.TexParameterfv" />, <see cref="GL.TexParameteri" />, ...</summary>
+    public enum TextureParameterName : uint
+    {
+        TextureWidth = 4096,
+        TextureHeight = 4097,
+        TextureInternalFormat = 4099,
+        TextureBorderColor = 4100,
+        TextureBorderColorNv = 4100,
+        TextureMagFilter = 10240,
+        TextureMinFilter = 10241,
+        TextureWrapS = 10242,
+        TextureWrapT = 10243,
+        TextureRedSize = 32860,
+        TextureGreenSize = 32861,
+        TextureBlueSize = 32862,
+        TextureAlphaSize = 32863,
+        TextureWrapR = 32882,
+        TextureWrapROes = 32882,
+        TextureMinLod = 33082,
+        TextureMaxLod = 33083,
+        TextureBaseLevel = 33084,
+        TextureMaxLevel = 33085,
+        TextureCompareMode = 34892,
+        TextureCompareFunc = 34893,
+        TextureSwizzleR = 36418,
+        TextureSwizzleG = 36419,
+        TextureSwizzleB = 36420,
+        TextureSwizzleA = 36421,
+        TextureUnnormalizedCoordinatesArm = 36714,
+        DepthStencilTextureMode = 37098,
+        TextureTilingExt = 38272,
+        TextureFoveatedCutoffDensityQcom = 38560,
+    }
+    public enum TextureSwizzle : uint
+    {
+        Zero = 0,
+        One = 1,
+        Red = 6403,
+        Green = 6404,
+        Blue = 6405,
+        Alpha = 6406,
+    }
+    ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexImage3D" />, ...</summary>
+    public enum TextureTarget : uint
+    {
+        Texture2d = 3553,
+        Texture3d = 32879,
+        Texture3dOes = 32879,
+        TextureCubeMap = 34067,
+        TextureCubeMapPositiveX = 34069,
+        TextureCubeMapNegativeX = 34070,
+        TextureCubeMapPositiveY = 34071,
+        TextureCubeMapNegativeY = 34072,
+        TextureCubeMapPositiveZ = 34073,
+        TextureCubeMapNegativeZ = 34074,
+        Texture2dArray = 35866,
         TextureBuffer = 35882,
-        TransformFeedbackBuffer = 35982,
-        CopyReadBuffer = 36662,
-        CopyWriteBuffer = 36663,
-        DrawIndirectBuffer = 36671,
-        ShaderStorageBuffer = 37074,
-        DispatchIndirectBuffer = 37102,
-        AtomicCounterBuffer = 37568,
-    }
-    ///<summary>Used in <see cref="GL.GetFramebufferAttachmentParameteriv" />, <see cref="GL.GetFramebufferParameteriv" />, <see cref="GL.MESA.GetFramebufferParameterivMESA" /></summary>
-    public enum FramebufferAttachmentParameterName : uint
-    {
-        FramebufferAttachmentColorEncoding = 33296,
-        FramebufferAttachmentColorEncodingExt = 33296,
-        FramebufferAttachmentComponentType = 33297,
-        FramebufferAttachmentComponentTypeExt = 33297,
-        FramebufferAttachmentRedSize = 33298,
-        FramebufferAttachmentGreenSize = 33299,
-        FramebufferAttachmentBlueSize = 33300,
-        FramebufferAttachmentAlphaSize = 33301,
-        FramebufferAttachmentDepthSize = 33302,
-        FramebufferAttachmentStencilSize = 33303,
-        FramebufferAttachmentObjectType = 36048,
-        FramebufferAttachmentObjectName = 36049,
-        FramebufferAttachmentTextureLevel = 36050,
-        FramebufferAttachmentTextureCubeMapFace = 36051,
-        FramebufferAttachmentTexture3dZoffsetOes = 36052,
-        FramebufferAttachmentTextureLayer = 36052,
-        FramebufferAttachmentTextureSamplesExt = 36204,
-        FramebufferAttachmentLayered = 36263,
-        FramebufferAttachmentLayeredExt = 36263,
-        FramebufferAttachmentLayeredOes = 36263,
-        FramebufferAttachmentTextureScaleImg = 37183,
-        FramebufferAttachmentTextureNumViewsOvr = 38448,
-        FramebufferAttachmentTextureBaseViewIndexOvr = 38450,
-    }
-    ///<summary>Used in <see cref="GL.CheckFramebufferStatus" /></summary>
-    public enum FramebufferStatus : uint
-    {
-        FramebufferUndefined = 33305,
-        FramebufferComplete = 36053,
-        FramebufferIncompleteAttachment = 36054,
-        FramebufferIncompleteMissingAttachment = 36055,
-        FramebufferUnsupported = 36061,
-        FramebufferIncompleteMultisample = 36182,
-        FramebufferIncompleteLayerTargets = 36264,
-    }
-    ///<summary>Used in <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.FramebufferTexture" />, <see cref="GL.FramebufferTexture2D" />, ...</summary>
-    public enum FramebufferAttachment : uint
-    {
-        DepthStencilAttachment = 33306,
-        ColorAttachment0 = 36064,
-        ColorAttachment1 = 36065,
-        ColorAttachment2 = 36066,
-        ColorAttachment3 = 36067,
-        ColorAttachment4 = 36068,
-        ColorAttachment5 = 36069,
-        ColorAttachment6 = 36070,
-        ColorAttachment7 = 36071,
-        ColorAttachment8 = 36072,
-        ColorAttachment9 = 36073,
-        ColorAttachment10 = 36074,
-        ColorAttachment11 = 36075,
-        ColorAttachment12 = 36076,
-        ColorAttachment13 = 36077,
-        ColorAttachment14 = 36078,
-        ColorAttachment15 = 36079,
-        ColorAttachment16 = 36080,
-        ColorAttachment17 = 36081,
-        ColorAttachment18 = 36082,
-        ColorAttachment19 = 36083,
-        ColorAttachment20 = 36084,
-        ColorAttachment21 = 36085,
-        ColorAttachment22 = 36086,
-        ColorAttachment23 = 36087,
-        ColorAttachment24 = 36088,
-        ColorAttachment25 = 36089,
-        ColorAttachment26 = 36090,
-        ColorAttachment27 = 36091,
-        ColorAttachment28 = 36092,
-        ColorAttachment29 = 36093,
-        ColorAttachment30 = 36094,
-        ColorAttachment31 = 36095,
-        DepthAttachment = 36096,
-        StencilAttachment = 36128,
-        ShadingRateAttachmentExt = 38609,
-    }
-    ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" /></summary>
-    public enum BufferPNameARB : uint
-    {
-        BufferSize = 34660,
-        BufferUsage = 34661,
-        BufferMapped = 35004,
-        BufferAccessFlags = 37151,
-        BufferMapLength = 37152,
-        BufferMapOffset = 37153,
-    }
-    ///<summary>Used in <see cref="GL.ProgramParameteri" />, <see cref="GL.EXT.ProgramParameteriEXT" /></summary>
-    public enum ProgramParameterPName : uint
-    {
-        ProgramBinaryRetrievableHint = 33367,
-        ProgramSeparable = 33368,
-    }
-    ///<summary>Used in <see cref="GL.GetProgramPipelineiv" />, <see cref="GL.EXT.GetProgramPipelineivEXT" /></summary>
-    public enum PipelineParameterName : uint
-    {
-        ActiveProgram = 33369,
-        FragmentShader = 35632,
-        VertexShader = 35633,
-        InfoLogLength = 35716,
-        GeometryShader = 36313,
-        TessEvaluationShader = 36487,
-        TessControlShader = 36488,
-    }
-    ///<summary>Used in <see cref="GL.GetProgramiv" /></summary>
-    public enum ProgramPropertyARB : uint
-    {
-        ComputeWorkGroupSize = 33383,
-        ProgramBinaryLength = 34625,
-        GeometryVerticesOut = 35094,
-        GeometryInputType = 35095,
-        GeometryOutputType = 35096,
-        ActiveUniformBlockMaxNameLength = 35381,
-        ActiveUniformBlocks = 35382,
-        DeleteStatus = 35712,
-        LinkStatus = 35714,
-        ValidateStatus = 35715,
-        InfoLogLength = 35716,
-        AttachedShaders = 35717,
-        ActiveUniforms = 35718,
-        ActiveUniformMaxLength = 35719,
-        ActiveAttributes = 35721,
-        ActiveAttributeMaxLength = 35722,
-        TransformFeedbackVaryingMaxLength = 35958,
-        TransformFeedbackBufferMode = 35967,
-        TransformFeedbackVaryings = 35971,
-        ActiveAtomicCounterBuffers = 37593,
-    }
-    ///<summary>Used in <see cref="GL.GetVertexAttribfv" />, <see cref="GL.GetVertexAttribiv" /></summary>
-    public enum VertexAttribPropertyARB : uint
-    {
-        VertexAttribBinding = 33492,
-        VertexAttribRelativeOffset = 33493,
-        VertexAttribArrayEnabled = 34338,
-        VertexAttribArraySize = 34339,
-        VertexAttribArrayStride = 34340,
-        VertexAttribArrayType = 34341,
-        CurrentVertexAttrib = 34342,
-        VertexAttribArrayNormalized = 34922,
-        VertexAttribArrayBufferBinding = 34975,
-        VertexAttribArrayInteger = 35069,
-        VertexAttribArrayDivisor = 35070,
-    }
-    public enum VertexArrayPName : uint
-    {
-        VertexAttribRelativeOffset = 33493,
-        VertexAttribArrayEnabled = 34338,
-        VertexAttribArraySize = 34339,
-        VertexAttribArrayStride = 34340,
-        VertexAttribArrayType = 34341,
-        VertexAttribArrayNormalized = 34922,
-        VertexAttribArrayInteger = 35069,
-        VertexAttribArrayDivisor = 35070,
-    }
-    ///<summary>Used in <see cref="GL.GetQueryObjectuiv" />, <see cref="GL.EXT.GetQueryObjecti64vEXT" />, <see cref="GL.EXT.GetQueryObjectivEXT" />, ...</summary>
-    public enum QueryObjectParameterName : uint
-    {
-        QueryResult = 34918,
-        QueryResultAvailable = 34919,
-    }
-    ///<summary>Used in <see cref="GL.BeginQuery" />, <see cref="GL.EndQuery" />, <see cref="GL.GetQueryiv" />, ...</summary>
-    public enum QueryTarget : uint
-    {
-        AnySamplesPassed = 35887,
-        PrimitivesGenerated = 35975,
-        TransformFeedbackPrimitivesWritten = 35976,
-        AnySamplesPassedConservative = 36202,
-    }
-    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryDataINTEL" /></summary>
-    public enum PerfQueryDataFlags : uint
-    {
-        PerfqueryDonotFlushIntel = 33785,
-        PerfqueryFlushIntel = 33786,
-        PerfqueryWaitIntel = 33787,
+        Renderbuffer = 36161,
+        TextureCubeMapArray = 36873,
+        TextureCubeMapArrayExt = 36873,
+        TextureCubeMapArrayOes = 36873,
+        Texture2dMultisample = 37120,
+        Texture2dMultisampleArray = 37122,
     }
     ///<summary>Used in <see cref="GL.ActiveTexture" />, <see cref="GL.NV.GetPathTexGenfvNV" />, <see cref="GL.NV.GetPathTexGenivNV" /></summary>
     public enum TextureUnit : uint
@@ -4786,40 +5056,36 @@ namespace OpenTK.Graphics.OpenGLES2
         Texture30 = 34014,
         Texture31 = 34015,
     }
-    public enum FragmentShaderTextureSourceATI : uint
+    public enum TextureWrapMode : uint
     {
-        Texture0 = 33984,
-        Texture1 = 33985,
-        Texture2 = 33986,
-        Texture3 = 33987,
-        Texture4 = 33988,
-        Texture5 = 33989,
-        Texture6 = 33990,
-        Texture7 = 33991,
-        Texture8 = 33992,
-        Texture9 = 33993,
-        Texture10 = 33994,
-        Texture11 = 33995,
-        Texture12 = 33996,
-        Texture13 = 33997,
-        Texture14 = 33998,
-        Texture15 = 33999,
-        Texture16 = 34000,
-        Texture17 = 34001,
-        Texture18 = 34002,
-        Texture19 = 34003,
-        Texture20 = 34004,
-        Texture21 = 34005,
-        Texture22 = 34006,
-        Texture23 = 34007,
-        Texture24 = 34008,
-        Texture25 = 34009,
-        Texture26 = 34010,
-        Texture27 = 34011,
-        Texture28 = 34012,
-        Texture29 = 34013,
-        Texture30 = 34014,
-        Texture31 = 34015,
+        Repeat = 10497,
+        ClampToBorder = 33069,
+        ClampToBorderExt = 33069,
+        ClampToBorderNv = 33069,
+        ClampToBorderOes = 33069,
+        ClampToEdge = 33071,
+        MirroredRepeat = 33648,
+    }
+    ///<summary>Used in <see cref="GL.TransformFeedbackVaryings" /></summary>
+    public enum TransformFeedbackBufferMode : uint
+    {
+        InterleavedAttribs = 35980,
+        SeparateAttribs = 35981,
+    }
+    public enum TransformFeedbackPName : uint
+    {
+        TransformFeedbackBufferStart = 35972,
+        TransformFeedbackBufferSize = 35973,
+        TransformFeedbackBufferBinding = 35983,
+        TransformFeedbackPaused = 36387,
+        TransformFeedbackActive = 36388,
+    }
+    ///<summary>Used in <see cref="GL.CullFace" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.StencilMaskSeparate" />, ...</summary>
+    public enum TriangleFace : uint
+    {
+        Front = 1028,
+        Back = 1029,
+        FrontAndBack = 1032,
     }
     ///<summary>Used in <see cref="GL.GetActiveUniformBlockiv" /></summary>
     public enum UniformBlockPName : uint
@@ -4832,20 +5098,108 @@ namespace OpenTK.Graphics.OpenGLES2
         UniformBlockReferencedByVertexShader = 35396,
         UniformBlockReferencedByFragmentShader = 35398,
     }
-    ///<summary>Used in <see cref="GL.NV.SetFenceNV" /></summary>
-    public enum FenceConditionNV : uint
+    ///<summary>Used in <see cref="GL.GetActiveUniformsiv" /></summary>
+    public enum UniformPName : uint
     {
-        AllCompletedNv = 34034,
+        UniformType = 35383,
+        UniformSize = 35384,
+        UniformNameLength = 35385,
+        UniformBlockIndex = 35386,
+        UniformOffset = 35387,
+        UniformArrayStride = 35388,
+        UniformMatrixStride = 35389,
+        UniformIsRowMajor = 35390,
     }
-    ///<summary>Used in <see cref="GL.NV.GetFenceivNV" /></summary>
-    public enum FenceParameterNameNV : uint
+    ///<summary>Used in <see cref="GL.GetActiveUniform" /></summary>
+    public enum UniformType : uint
     {
-        FenceStatusNv = 34035,
-        FenceConditionNv = 34036,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        FloatVec2 = 35664,
+        FloatVec3 = 35665,
+        FloatVec4 = 35666,
+        IntVec2 = 35667,
+        IntVec3 = 35668,
+        IntVec4 = 35669,
+        Bool = 35670,
+        BoolVec2 = 35671,
+        BoolVec3 = 35672,
+        BoolVec4 = 35673,
+        FloatMat2 = 35674,
+        FloatMat3 = 35675,
+        FloatMat4 = 35676,
+        Sampler2d = 35678,
+        Sampler3d = 35679,
+        SamplerCube = 35680,
+        Sampler2dShadow = 35682,
+        FloatMat2x3 = 35685,
+        FloatMat2x4 = 35686,
+        FloatMat3x2 = 35687,
+        FloatMat3x4 = 35688,
+        FloatMat4x2 = 35689,
+        FloatMat4x3 = 35690,
+        Sampler2dArray = 36289,
+        SamplerBuffer = 36290,
+        Sampler2dArrayShadow = 36292,
+        SamplerCubeShadow = 36293,
+        UnsignedIntVec2 = 36294,
+        UnsignedIntVec3 = 36295,
+        UnsignedIntVec4 = 36296,
+        IntSampler2d = 36298,
+        IntSampler3d = 36299,
+        IntSamplerCube = 36300,
+        IntSampler2dArray = 36303,
+        IntSamplerBuffer = 36304,
+        UnsignedIntSampler2d = 36306,
+        UnsignedIntSampler3d = 36307,
+        UnsignedIntSamplerCube = 36308,
+        UnsignedIntSampler2dArray = 36311,
+        UnsignedIntSamplerBuffer = 36312,
+        SamplerCubeMapArray = 36876,
+        SamplerCubeMapArrayShadow = 36877,
+        IntSamplerCubeMapArray = 36878,
+        UnsignedIntSamplerCubeMapArray = 36879,
+        Sampler2dMultisample = 37128,
+        IntSampler2dMultisample = 37129,
+        UnsignedIntSampler2dMultisample = 37130,
+        Sampler2dMultisampleArray = 37131,
+        IntSampler2dMultisampleArray = 37132,
+        UnsignedIntSampler2dMultisampleArray = 37133,
     }
-    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.PathColorGenNV" />, ...</summary>
-    public enum PathColor : uint
+    ///<summary>Used in <see cref="GL.UseProgramStages" />, <see cref="GL.EXT.UseProgramStagesEXT" /></summary>
+    [Flags]
+    public enum UseProgramStageMask : uint
     {
+        VertexShaderBit = 1,
+        VertexShaderBitExt = 1,
+        FragmentShaderBit = 2,
+        FragmentShaderBitExt = 2,
+        GeometryShaderBit = 4,
+        GeometryShaderBitExt = 4,
+        GeometryShaderBitOes = 4,
+        TessControlShaderBit = 8,
+        TessControlShaderBitExt = 8,
+        TessControlShaderBitOes = 8,
+        TessEvaluationShaderBit = 16,
+        TessEvaluationShaderBitExt = 16,
+        TessEvaluationShaderBitOes = 16,
+        ComputeShaderBit = 32,
+        MeshShaderBitNv = 64,
+        TaskShaderBitNv = 128,
+        AllShaderBits = 4294967295,
+        AllShaderBitsExt = 4294967295,
+    }
+    public enum VertexArrayPName : uint
+    {
+        VertexAttribRelativeOffset = 33493,
+        VertexAttribArrayEnabled = 34338,
+        VertexAttribArraySize = 34339,
+        VertexAttribArrayStride = 34340,
+        VertexAttribArrayType = 34341,
+        VertexAttribArrayNormalized = 34922,
+        VertexAttribArrayInteger = 35069,
+        VertexAttribArrayDivisor = 35070,
     }
     ///<summary>Used in <see cref="GL.GetVertexAttribIiv" />, <see cref="GL.GetVertexAttribIuiv" /></summary>
     public enum VertexAttribEnum : uint
@@ -4860,61 +5214,71 @@ namespace OpenTK.Graphics.OpenGLES2
         VertexAttribArrayInteger = 35069,
         VertexAttribArrayDivisor = 35070,
     }
+    ///<summary>Used in <see cref="GL.VertexAttribIFormat" />, <see cref="GL.VertexAttribIPointer" /></summary>
+    public enum VertexAttribIType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+    }
     ///<summary>Used in <see cref="GL.GetVertexAttribPointerv" /></summary>
     public enum VertexAttribPointerPropertyARB : uint
     {
         VertexAttribArrayPointer = 34373,
     }
-    ///<summary>Used in <see cref="GL.GetQueryiv" />, <see cref="GL.EXT.GetQueryivEXT" /></summary>
-    public enum QueryParameterName : uint
+    ///<summary>Used in <see cref="GL.VertexAttribPointer" /></summary>
+    public enum VertexAttribPointerType : uint
     {
-        CurrentQuery = 34917,
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        HalfFloat = 5131,
+        Fixed = 5132,
+        Int64Nv = 5134,
+        UnsignedInt64Nv = 5135,
+        UnsignedInt2101010Rev = 33640,
+        UnsignedInt2101010RevExt = 33640,
+        UnsignedInt10f11f11fRev = 35899,
+        Int2101010Rev = 36255,
     }
-    ///<summary>Used in <see cref="GL.CopyBufferSubData" />, <see cref="GL.NV.CopyBufferSubDataNV" />, <see cref="GL.EXT.CopyImageSubDataEXT" />, ...</summary>
-    public enum CopyBufferSubDataTarget : uint
+    ///<summary>Used in <see cref="GL.GetVertexAttribfv" />, <see cref="GL.GetVertexAttribiv" /></summary>
+    public enum VertexAttribPropertyARB : uint
     {
-        ArrayBuffer = 34962,
-        ElementArrayBuffer = 34963,
-        PixelPackBuffer = 35051,
-        PixelUnpackBuffer = 35052,
-        UniformBuffer = 35345,
-        TextureBuffer = 35882,
-        TransformFeedbackBuffer = 35982,
-        CopyReadBuffer = 36662,
-        CopyWriteBuffer = 36663,
-        DrawIndirectBuffer = 36671,
-        ShaderStorageBuffer = 37074,
-        DispatchIndirectBuffer = 37102,
-        AtomicCounterBuffer = 37568,
+        VertexAttribBinding = 33492,
+        VertexAttribRelativeOffset = 33493,
+        VertexAttribArrayEnabled = 34338,
+        VertexAttribArraySize = 34339,
+        VertexAttribArrayStride = 34340,
+        VertexAttribArrayType = 34341,
+        CurrentVertexAttrib = 34342,
+        VertexAttribArrayNormalized = 34922,
+        VertexAttribArrayBufferBinding = 34975,
+        VertexAttribArrayInteger = 35069,
+        VertexAttribArrayDivisor = 35070,
     }
-    ///<summary>Used in <see cref="GL.NV.BufferPageCommitmentMemNV" />, <see cref="GL.EXT.BufferStorageEXT" /></summary>
-    public enum BufferStorageTarget : uint
+    ///<summary>Used in <see cref="GL.VertexAttribFormat" /></summary>
+    public enum VertexAttribType : uint
     {
-        ArrayBuffer = 34962,
-        ElementArrayBuffer = 34963,
-        PixelPackBuffer = 35051,
-        PixelUnpackBuffer = 35052,
-        UniformBuffer = 35345,
-        TextureBuffer = 35882,
-        TransformFeedbackBuffer = 35982,
-        CopyReadBuffer = 36662,
-        CopyWriteBuffer = 36663,
-        DrawIndirectBuffer = 36671,
-        ShaderStorageBuffer = 37074,
-        DispatchIndirectBuffer = 37102,
-        AtomicCounterBuffer = 37568,
-    }
-    ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.OES.MapBufferOES" /></summary>
-    public enum BufferAccessARB : uint
-    {
-        ReadOnly = 35000,
-        WriteOnly = 35001,
-        ReadWrite = 35002,
-    }
-    ///<summary>Used in <see cref="GL.GetBufferPointerv" />, <see cref="GL.OES.GetBufferPointervOES" /></summary>
-    public enum BufferPointerNameARB : uint
-    {
-        BufferMapPointer = 35005,
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        HalfFloat = 5131,
+        Fixed = 5132,
+        UnsignedInt2101010Rev = 33640,
+        UnsignedInt2101010RevExt = 33640,
+        UnsignedInt10f11f11fRev = 35899,
+        Int2101010Rev = 36255,
     }
     public enum VertexBufferObjectUsage : uint
     {
@@ -4928,399 +5292,35 @@ namespace OpenTK.Graphics.OpenGLES2
         DynamicRead = 35049,
         DynamicCopy = 35050,
     }
-    ///<summary>Used in <see cref="GL.BufferData" /></summary>
-    public enum BufferUsageARB : uint
+    public enum VertexPointerType : uint
     {
-        StreamDraw = 35040,
-        StreamRead = 35041,
-        StreamCopy = 35042,
-        StaticDraw = 35044,
-        StaticRead = 35045,
-        StaticCopy = 35046,
-        DynamicDraw = 35048,
-        DynamicRead = 35049,
-        DynamicCopy = 35050,
-    }
-    ///<summary>Used in <see cref="GL.GetActiveUniformsiv" /></summary>
-    public enum UniformPName : uint
-    {
-        UniformType = 35383,
-        UniformSize = 35384,
-        UniformNameLength = 35385,
-        UniformBlockIndex = 35386,
-        UniformOffset = 35387,
-        UniformArrayStride = 35388,
-        UniformMatrixStride = 35389,
-        UniformIsRowMajor = 35390,
-    }
-    public enum SubroutineParameterName : uint
-    {
-        UniformSize = 35384,
-        UniformNameLength = 35385,
-    }
-    ///<summary>Used in <see cref="GL.CreateShader" />, <see cref="GL.CreateShaderProgramv" />, <see cref="GL.GetShaderPrecisionFormat" />, ...</summary>
-    public enum ShaderType : uint
-    {
-        FragmentShader = 35632,
-        VertexShader = 35633,
-        GeometryShader = 36313,
-        TessEvaluationShader = 36487,
-        TessControlShader = 36488,
-        ComputeShader = 37305,
-    }
-    public enum ContainerType : uint
-    {
-        ProgramObjectExt = 35648,
-    }
-    ///<summary>Used in <see cref="GL.GetShaderiv" /></summary>
-    public enum ShaderParameterName : uint
-    {
-        ShaderType = 35663,
-        DeleteStatus = 35712,
-        CompileStatus = 35713,
-        InfoLogLength = 35716,
-        ShaderSourceLength = 35720,
-    }
-    ///<summary>Used in <see cref="GL.ShaderBinary" /></summary>
-    public enum ShaderBinaryFormat : uint
-    {
-        SgxBinaryImg = 35850,
-        MaliShaderBinaryArm = 36704,
-        ShaderBinaryViv = 36804,
-        ShaderBinaryDmp = 37456,
-        GccsoShaderBinaryFj = 37472,
-    }
-    public enum TransformFeedbackPName : uint
-    {
-        TransformFeedbackBufferStart = 35972,
-        TransformFeedbackBufferSize = 35973,
-        TransformFeedbackBufferBinding = 35983,
-        TransformFeedbackPaused = 36387,
-        TransformFeedbackActive = 36388,
-    }
-    ///<summary>Used in <see cref="GL.TransformFeedbackVaryings" /></summary>
-    public enum TransformFeedbackBufferMode : uint
-    {
-        InterleavedAttribs = 35980,
-        SeparateAttribs = 35981,
-    }
-    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" />, <see cref="GL.GetProgramResourceIndex" />, <see cref="GL.GetProgramResourceiv" />, ...</summary>
-    public enum ProgramInterface : uint
-    {
-        TransformFeedbackBuffer = 35982,
-        Uniform = 37601,
-        UniformBlock = 37602,
-        ProgramInput = 37603,
-        ProgramOutput = 37604,
-        BufferVariable = 37605,
-        ShaderStorageBlock = 37606,
-        TransformFeedbackVarying = 37620,
-    }
-    ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.CheckFramebufferStatus" />, <see cref="GL.FramebufferParameteri" />, ...</summary>
-    public enum FramebufferTarget : uint
-    {
-        ReadFramebuffer = 36008,
-        DrawFramebuffer = 36009,
-        Framebuffer = 36160,
-    }
-    ///<summary>Used in <see cref="GL.GetRenderbufferParameteriv" /></summary>
-    public enum RenderbufferParameterName : uint
-    {
-        RenderbufferSamples = 36011,
-        RenderbufferSamplesAngle = 36011,
-        RenderbufferSamplesApple = 36011,
-        RenderbufferSamplesExt = 36011,
-        RenderbufferSamplesNv = 36011,
-        RenderbufferWidth = 36162,
-        RenderbufferHeight = 36163,
-        RenderbufferInternalFormat = 36164,
-        RenderbufferRedSize = 36176,
-        RenderbufferGreenSize = 36177,
-        RenderbufferBlueSize = 36178,
-        RenderbufferAlphaSize = 36179,
-        RenderbufferDepthSize = 36180,
-        RenderbufferStencilSize = 36181,
-        RenderbufferSamplesImg = 37171,
-        RenderbufferStorageSamplesAmd = 37298,
-    }
-    ///<summary>Used in <see cref="GL.BindRenderbuffer" />, <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.GetRenderbufferParameteriv" />, ...</summary>
-    public enum RenderbufferTarget : uint
-    {
-        Renderbuffer = 36161,
-    }
-    ///<summary>Used in <see cref="GL.GetShaderPrecisionFormat" /></summary>
-    public enum PrecisionType : uint
-    {
-        LowFloat = 36336,
-        MediumFloat = 36337,
-        HighFloat = 36338,
-        LowInt = 36339,
-        MediumInt = 36340,
-        HighInt = 36341,
-    }
-    ///<summary>Used in <see cref="GL.NV.BeginConditionalRenderNV" /></summary>
-    public enum ConditionalRenderMode : uint
-    {
-    }
-    ///<summary>Used in <see cref="GL.BindTransformFeedback" /></summary>
-    public enum BindTransformFeedbackTarget : uint
-    {
-        TransformFeedback = 36386,
-    }
-    ///<summary>Used in <see cref="GL.EXT.QueryCounterEXT" /></summary>
-    public enum QueryCounterTarget : uint
-    {
-        TimestampExt = 36392,
-    }
-    ///<summary>Used in <see cref="GL.GetProgramResourceiv" /></summary>
-    public enum ProgramResourceProperty : uint
-    {
-        Uniform = 37601,
-        IsPerPatch = 37607,
-        NameLength = 37625,
-        Type = 37626,
-        ArraySize = 37627,
-        Offset = 37628,
-        BlockIndex = 37629,
-        ArrayStride = 37630,
-        MatrixStride = 37631,
-        IsRowMajor = 37632,
-        AtomicCounterBufferIndex = 37633,
-        BufferBinding = 37634,
-        BufferDataSize = 37635,
-        NumActiveVariables = 37636,
-        ActiveVariables = 37637,
-        ReferencedByVertexShader = 37638,
-        ReferencedByTessControlShader = 37639,
-        ReferencedByTessEvaluationShader = 37640,
-        ReferencedByGeometryShader = 37641,
-        ReferencedByFragmentShader = 37642,
-        ReferencedByComputeShader = 37643,
-        TopLevelArraySize = 37644,
-        TopLevelArrayStride = 37645,
-        Location = 37646,
+        Short = 5122,
+        Int = 5124,
+        Float = 5126,
     }
     public enum VertexProvokingMode : uint
     {
         FirstVertexConvention = 36429,
         LastVertexConvention = 36430,
     }
-    ///<summary>Used in <see cref="GL.GetMultisamplefv" /></summary>
-    public enum GetMultisamplePNameNV : uint
+    public enum VertexShaderWriteMaskEXT : uint
     {
-        SamplePosition = 36432,
+        False = 0,
+        True = 1,
     }
-    ///<summary>Used in <see cref="GL.PatchParameteri" />, <see cref="GL.EXT.PatchParameteriEXT" />, <see cref="GL.OES.PatchParameteriOES" /></summary>
-    public enum PatchParameterName : uint
+    public enum VertexWeightPointerTypeEXT : uint
     {
-        PatchVertices = 36466,
+        Float = 5126,
     }
-    ///<summary>Used in <see cref="GL.NV.PathStringNV" /></summary>
-    public enum PathStringFormat : uint
+    public enum WeightPointerTypeARB : uint
     {
-        PathFormatSvgNv = 36976,
-        PathFormatPsNv = 36977,
-    }
-    ///<summary>Used in <see cref="GL.NV.PathGlyphRangeNV" />, <see cref="GL.NV.PathGlyphsNV" /></summary>
-    public enum PathFontTarget : uint
-    {
-        StandardFontNameNv = 36978,
-        SystemFontNameNv = 36979,
-        FileNameNv = 36980,
-    }
-    ///<summary>Used in <see cref="GL.NV.GetPathParameterfvNV" />, <see cref="GL.NV.GetPathParameterivNV" />, <see cref="GL.NV.PathParameterfNV" />, ...</summary>
-    public enum PathParameter : uint
-    {
-        PathStrokeWidthNv = 36981,
-        PathEndCapsNv = 36982,
-        PathInitialEndCapNv = 36983,
-        PathTerminalEndCapNv = 36984,
-        PathJoinStyleNv = 36985,
-        PathMiterLimitNv = 36986,
-        PathDashCapsNv = 36987,
-        PathInitialDashCapNv = 36988,
-        PathTerminalDashCapNv = 36989,
-        PathDashOffsetNv = 36990,
-        PathClientLengthNv = 36991,
-        PathFillModeNv = 36992,
-        PathFillMaskNv = 36993,
-        PathFillCoverModeNv = 36994,
-        PathStrokeCoverModeNv = 36995,
-        PathStrokeMaskNv = 36996,
-        PathObjectBoundingBoxNv = 37002,
-        PathCommandCountNv = 37021,
-        PathCoordCountNv = 37022,
-        PathDashArrayCountNv = 37023,
-        PathComputedLengthNv = 37024,
-        PathFillBoundingBoxNv = 37025,
-        PathStrokeBoundingBoxNv = 37026,
-        PathDashOffsetResetNv = 37044,
-    }
-    ///<summary>Used in <see cref="GL.NV.CoverFillPathNV" />, <see cref="GL.NV.CoverStrokePathNV" />, <see cref="GL.NV.StencilThenCoverFillPathNV" />, ...</summary>
-    public enum PathCoverMode : uint
-    {
-        PathFillCoverModeNv = 36994,
-        ConvexHullNv = 37003,
-        BoundingBoxNv = 37005,
-    }
-    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.StencilThenCoverFillPathInstancedNV" />, ...</summary>
-    public enum InstancedPathCoverMode : uint
-    {
-        PathFillCoverModeNv = 36994,
-        ConvexHullNv = 37003,
-        BoundingBoxNv = 37005,
-        BoundingBoxOfBoundingBoxesNv = 37020,
-    }
-    ///<summary>Used in <see cref="GL.NV.CoverFillPathInstancedNV" />, <see cref="GL.NV.CoverStrokePathInstancedNV" />, <see cref="GL.NV.GetPathMetricsNV" />, ...</summary>
-    public enum PathElementType : uint
-    {
-        Utf8Nv = 37018,
-        Utf16Nv = 37019,
-    }
-    ///<summary>Used in <see cref="GL.NV.PathGlyphRangeNV" />, <see cref="GL.NV.PathGlyphsNV" /></summary>
-    public enum PathHandleMissingGlyphs : uint
-    {
-        SkipMissingGlyphNv = 37033,
-        UseMissingGlyphNv = 37034,
-    }
-    ///<summary>Used in <see cref="GL.NV.GetPathSpacingNV" /></summary>
-    public enum PathListMode : uint
-    {
-        AccumAdjacentPairsNv = 37037,
-        AdjacentPairsNv = 37038,
-        FirstToRestNv = 37039,
-    }
-    public enum AtomicCounterBufferPName : uint
-    {
-        AtomicCounterBufferBinding = 37569,
-    }
-    ///<summary>Used in <see cref="GL.GetSynciv" />, <see cref="GL.APPLE.GetSyncivAPPLE" /></summary>
-    public enum SyncParameterName : uint
-    {
-        ObjectType = 37138,
-        SyncCondition = 37139,
-        SyncStatus = 37140,
-        SyncFlags = 37141,
-    }
-    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.APPLE.FenceSyncAPPLE" /></summary>
-    public enum SyncCondition : uint
-    {
-        SyncGpuCommandsComplete = 37143,
-    }
-    ///<summary>Used in <see cref="GL.ClientWaitSync" />, <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
-    public enum SyncStatus : uint
-    {
-        AlreadySignaled = 37146,
-        TimeoutExpired = 37147,
-        ConditionSatisfied = 37148,
-        WaitFailed = 37149,
-    }
-    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" /></summary>
-    public enum ProgramInterfacePName : uint
-    {
-        ActiveResources = 37621,
-        MaxNameLength = 37622,
-        MaxNumActiveVariables = 37623,
-    }
-    ///<summary>Used in <see cref="GL.FramebufferParameteri" />, <see cref="GL.MESA.FramebufferParameteriMESA" /></summary>
-    public enum FramebufferParameterName : uint
-    {
-        FramebufferDefaultWidth = 37648,
-        FramebufferDefaultHeight = 37649,
-        FramebufferDefaultLayers = 37650,
-        FramebufferDefaultSamples = 37651,
-        FramebufferDefaultFixedSampleLocations = 37652,
-    }
-    ///<summary>Used in <see cref="GL.EXT.SignalSemaphoreEXT" />, <see cref="GL.EXT.WaitSemaphoreEXT" /></summary>
-    public enum TextureLayout : uint
-    {
-        LayoutDepthReadOnlyStencilAttachmentExt = 38192,
-        LayoutDepthAttachmentStencilReadOnlyExt = 38193,
-        LayoutGeneralExt = 38285,
-        LayoutColorAttachmentExt = 38286,
-        LayoutDepthStencilAttachmentExt = 38287,
-        LayoutDepthStencilReadOnlyExt = 38288,
-        LayoutShaderReadOnlyExt = 38289,
-        LayoutTransferSrcExt = 38290,
-        LayoutTransferDstExt = 38291,
-    }
-    ///<summary>Used in <see cref="GL.EXT.GetMemoryObjectParameterivEXT" />, <see cref="GL.EXT.MemoryObjectParameterivEXT" /></summary>
-    public enum MemoryObjectParameterName : uint
-    {
-        DedicatedMemoryObjectExt = 38273,
-        ProtectedMemoryObjectExt = 38299,
-    }
-    ///<summary>Used in <see cref="GL.EXT.ImportMemoryFdEXT" />, <see cref="GL.EXT.ImportMemoryWin32HandleEXT" />, <see cref="GL.EXT.ImportMemoryWin32NameEXT" />, ...</summary>
-    public enum ExternalHandleType : uint
-    {
-        HandleTypeOpaqueFdExt = 38278,
-        HandleTypeOpaqueWin32Ext = 38279,
-        HandleTypeOpaqueWin32KmtExt = 38280,
-        HandleTypeD3d12TilepoolExt = 38281,
-        HandleTypeD3d12ResourceExt = 38282,
-        HandleTypeD3d11ImageExt = 38283,
-        HandleTypeD3d11ImageKmtExt = 38284,
-        HandleTypeD3d12FenceExt = 38292,
-    }
-    ///<summary>Used in <see cref="GL.NV.GetSemaphoreParameterivNV" />, <see cref="GL.EXT.GetSemaphoreParameterui64vEXT" />, <see cref="GL.NV.SemaphoreParameterivNV" />, ...</summary>
-    public enum SemaphoreParameterName : uint
-    {
-        D3d12FenceValueExt = 38293,
-        TimelineSemaphoreValueNv = 38293,
-        SemaphoreTypeNv = 38323,
-        SemaphoreTypeBinaryNv = 38324,
-        SemaphoreTypeTimelineNv = 38325,
-    }
-    ///<summary>Used in <see cref="GL.QCOM.ShadingRateQCOM" /></summary>
-    public enum ShadingRateQCOM : uint
-    {
-        ShadingRate1x1PixelsQcom = 38566,
-        ShadingRate1x2PixelsQcom = 38567,
-        ShadingRate2x1PixelsQcom = 38568,
-        ShadingRate2x2PixelsQcom = 38569,
-        ShadingRate4x2PixelsQcom = 38572,
-        ShadingRate4x4PixelsQcom = 38574,
-    }
-    ///<summary>Used in <see cref="GL.EXT.GetFragmentShadingRatesEXT" />, <see cref="GL.EXT.ShadingRateEXT" /></summary>
-    public enum ShadingRate : uint
-    {
-        ShadingRate1x1PixelsExt = 38566,
-        ShadingRate1x2PixelsExt = 38567,
-        ShadingRate2x1PixelsExt = 38568,
-        ShadingRate2x2PixelsExt = 38569,
-        ShadingRate1x4PixelsExt = 38570,
-        ShadingRate4x1PixelsExt = 38571,
-        ShadingRate4x2PixelsExt = 38572,
-        ShadingRate2x4PixelsExt = 38573,
-        ShadingRate4x4PixelsExt = 38574,
-    }
-    ///<summary>Used in <see cref="GL.EXT.TexStorageAttribs2DEXT" />, <see cref="GL.EXT.TexStorageAttribs3DEXT" /></summary>
-    public enum TexStorageAttribs : uint
-    {
-        SurfaceCompressionExt = 38592,
-        SurfaceCompressionFixedRateNoneExt = 38593,
-        SurfaceCompressionFixedRateDefaultExt = 38594,
-        SurfaceCompressionFixedRate1bpcExt = 38596,
-        SurfaceCompressionFixedRate2bpcExt = 38597,
-        SurfaceCompressionFixedRate3bpcExt = 38598,
-        SurfaceCompressionFixedRate4bpcExt = 38599,
-        SurfaceCompressionFixedRate5bpcExt = 38600,
-        SurfaceCompressionFixedRate6bpcExt = 38601,
-        SurfaceCompressionFixedRate7bpcExt = 38602,
-        SurfaceCompressionFixedRate8bpcExt = 38603,
-        SurfaceCompressionFixedRate9bpcExt = 38604,
-        SurfaceCompressionFixedRate10bpcExt = 38605,
-        SurfaceCompressionFixedRate11bpcExt = 38606,
-        SurfaceCompressionFixedRate12bpcExt = 38607,
-    }
-    ///<summary>Used in <see cref="GL.EXT.ShadingRateCombinerOpsEXT" /></summary>
-    public enum ShadingRateCombinerOp : uint
-    {
-        FragmentShadingRateCombinerOpKeepExt = 38610,
-        FragmentShadingRateCombinerOpReplaceExt = 38611,
-        FragmentShadingRateCombinerOpMinExt = 38612,
-        FragmentShadingRateCombinerOpMaxExt = 38613,
-        FragmentShadingRateCombinerOpMulExt = 38614,
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

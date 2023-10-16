@@ -94,7 +94,21 @@ namespace Generator.Writing
         string MangledName,
         ulong Value,
         GroupRef[] Groups,
-        bool IsFlag) : IEquatable<EnumGroupMember?>;
+        bool IsFlag) : IEquatable<EnumGroupMember?>
+    {
+        public static int DefaultComparison(EnumGroupMember m1, EnumGroupMember m2)
+        {
+            int comp = m1.Value.CompareTo(m2.Value);
+            if (comp == 0)
+            {
+                return m1.MangledName.CompareTo(m2.MangledName);
+            }
+            else
+            {
+                return comp;
+            }
+        }
+    }
 
     public record EnumGroup(
         string Name,

@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
@@ -313,97 +313,58 @@ namespace OpenTK.Graphics.Wgl
         SwapUnderlay14 = 536870912,
         SwapUnderlay15 = 1073741824,
     }
-    ///<summary>Used in <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
-    public enum ObjectTypeDX : uint
+    public enum AccelerationType : uint
     {
-        None = 0,
-        Texture2d = 3553,
-        Texture3d = 32879,
-        TextureRectangle = 34037,
-        TextureCubeMap = 34067,
-        Renderbuffer = 36161,
+        NoAccelerationArb = 8229,
+        NoAccelerationExt = 8229,
+        GenericAccelerationArb = 8230,
+        GenericAccelerationExt = 8230,
+        FullAccelerationArb = 8231,
+        FullAccelerationExt = 8231,
     }
-    ///<summary>Used in <see cref="WGL.SwapLayerBuffers" />, <see cref="WGL.OML.SwapLayerBuffersMscOML" /></summary>
-    [Flags]
-    public enum WGLLayerPlaneMask : uint
+    ///<summary>Used in <see cref="WGL.ARB.BindTexImageARB" />, <see cref="WGL.ARB.ReleaseTexImageARB" /></summary>
+    public enum ColorBuffer : uint
     {
-        SwapMainPlane = 1,
-        SwapOverlay1 = 2,
-        SwapOverlay2 = 4,
-        SwapOverlay3 = 8,
-        SwapOverlay4 = 16,
-        SwapOverlay5 = 32,
-        SwapOverlay6 = 64,
-        SwapOverlay7 = 128,
-        SwapOverlay8 = 256,
-        SwapOverlay9 = 512,
-        SwapOverlay10 = 1024,
-        SwapOverlay11 = 2048,
-        SwapOverlay12 = 4096,
-        SwapOverlay13 = 8192,
-        SwapOverlay14 = 16384,
-        SwapOverlay15 = 32768,
-        SwapUnderlay1 = 65536,
-        SwapUnderlay2 = 131072,
-        SwapUnderlay3 = 262144,
-        SwapUnderlay4 = 524288,
-        SwapUnderlay5 = 1048576,
-        SwapUnderlay6 = 2097152,
-        SwapUnderlay7 = 4194304,
-        SwapUnderlay8 = 8388608,
-        SwapUnderlay9 = 16777216,
-        SwapUnderlay10 = 33554432,
-        SwapUnderlay11 = 67108864,
-        SwapUnderlay12 = 134217728,
-        SwapUnderlay13 = 268435456,
-        SwapUnderlay14 = 536870912,
-        SwapUnderlay15 = 1073741824,
+        FrontLeftArb = 8323,
+        FrontRightArb = 8324,
+        BackLeftArb = 8325,
+        BackRightArb = 8326,
+        Aux0Arb = 8327,
+        Aux1Arb = 8328,
+        Aux2Arb = 8329,
+        Aux3Arb = 8330,
+        Aux4Arb = 8331,
+        Aux5Arb = 8332,
+        Aux6Arb = 8333,
+        Aux7Arb = 8334,
+        Aux8Arb = 8335,
+        Aux9Arb = 8336,
     }
-    ///<summary>Used in <see cref="WGL.ARB.CreateBufferRegionARB" /></summary>
-    [Flags]
-    public enum WGLColorBufferMask : uint
+    ///<summary>Used in <see cref="WGL.NV.QueryCurrentContextNV" /></summary>
+    public enum ContextAttribute : uint
     {
-        FrontColorBufferBitArb = 1,
-        BackColorBufferBitArb = 2,
-        DepthBufferBitArb = 4,
-        StencilBufferBitArb = 8,
+        NumVideoCaptureSlotsNv = 8399,
+        NumVideoSlotsNv = 8432,
     }
-    [Flags]
-    public enum WGLContextFlagsMask : uint
+    ///<summary>Used in <see cref="WGL.I3D.GetDigitalVideoParametersI3D" />, <see cref="WGL.I3D.SetDigitalVideoParametersI3D" /></summary>
+    public enum DigitalVideoAttribute : uint
     {
-        ContextDebugBitArb = 1,
-        ContextForwardCompatibleBitArb = 2,
-        ContextRobustAccessBitArb = 4,
-        ContextResetIsolationBitArb = 8,
-    }
-    [Flags]
-    public enum WGLContextProfileMask : uint
-    {
-        ContextCoreProfileBitArb = 1,
-        ContextCompatibilityProfileBitArb = 2,
-        ContextEs2ProfileBitExt = 4,
-        ContextEsProfileBitExt = 4,
-    }
-    ///<summary>Used in <see cref="WGL.I3D.CreateImageBufferI3D" /></summary>
-    [Flags]
-    public enum WGLImageBufferMaskI3D : uint
-    {
-        ImageBufferMinAccessI3d = 1,
-        ImageBufferLockI3d = 2,
-    }
-    ///<summary>Used in <see cref="WGL.NV.DXObjectAccessNV" />, <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
-    [Flags]
-    public enum WGLDXInteropMaskNV : uint
-    {
-        AccessReadOnlyNv = 0,
-        AccessReadWriteNv = 1,
-        AccessWriteDiscardNv = 2,
+        DigitalVideoCursorAlphaFramebufferI3d = 8272,
+        DigitalVideoCursorAlphaValueI3d = 8273,
+        DigitalVideoCursorIncludedI3d = 8274,
+        DigitalVideoGammaCorrectedI3d = 8275,
     }
     ///<summary>Used in <see cref="WGL.UseFontOutlines" />, <see cref="WGL.UseFontOutlinesA" />, <see cref="WGL.UseFontOutlinesW" /></summary>
     public enum FontFormat : uint
     {
         FontLines = 0,
         FontPolygons = 1,
+    }
+    ///<summary>Used in <see cref="WGL.I3D.GetGammaTableParametersI3D" />, <see cref="WGL.I3D.SetGammaTableParametersI3D" /></summary>
+    public enum GammaTableAttribute : uint
+    {
+        GammaTableSizeI3d = 8270,
+        GammaExcludeDesktopI3d = 8271,
     }
     ///<summary>Used in <see cref="WGL.AMD.GetGPUInfoAMD" /></summary>
     public enum GPUPropertyAMD : uint
@@ -417,6 +378,52 @@ namespace OpenTK.Graphics.Wgl
         GpuNumSimdAmd = 8614,
         GpuNumRbAmd = 8615,
         GpuNumSpiAmd = 8616,
+    }
+    ///<summary>Used in <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
+    public enum ObjectTypeDX : uint
+    {
+        None = 0,
+        Texture2d = 3553,
+        Texture3d = 32879,
+        TextureRectangle = 34037,
+        TextureCubeMap = 34067,
+        Renderbuffer = 36161,
+    }
+    ///<summary>Used in <see cref="WGL.ARB.QueryPbufferARB" />, <see cref="WGL.EXT.QueryPbufferEXT" /></summary>
+    public enum PBufferAttribute : uint
+    {
+        PbufferWidthArb = 8244,
+        PbufferWidthExt = 8244,
+        PbufferHeightArb = 8245,
+        PbufferHeightExt = 8245,
+        PbufferLostArb = 8246,
+        TextureFormatArb = 8306,
+        TextureTargetArb = 8307,
+        MipmapTextureArb = 8308,
+        MipmapLevelArb = 8315,
+        CubeMapFaceArb = 8316,
+    }
+    public enum PBufferCubeMapFace : uint
+    {
+        TextureCubeMapPositiveXArb = 8317,
+        TextureCubeMapNegativeXArb = 8318,
+        TextureCubeMapPositiveYArb = 8319,
+        TextureCubeMapNegativeYArb = 8320,
+        TextureCubeMapPositiveZArb = 8321,
+        TextureCubeMapNegativeZArb = 8322,
+    }
+    public enum PBufferTextureFormat : uint
+    {
+        TextureRgbArb = 8309,
+        TextureRgbaArb = 8310,
+        NoTextureArb = 8311,
+    }
+    public enum PBufferTextureTarget : uint
+    {
+        NoTextureArb = 8311,
+        TextureCubeMapArb = 8312,
+        Texture1dArb = 8313,
+        Texture2dArb = 8314,
     }
     public enum PixelFormatAttribute : uint
     {
@@ -500,14 +507,20 @@ namespace OpenTK.Graphics.Wgl
         TransparentAlphaValueArb = 8250,
         TransparentIndexValueArb = 8251,
     }
-    public enum AccelerationType : uint
+    public enum PixelType : uint
     {
-        NoAccelerationArb = 8229,
-        NoAccelerationExt = 8229,
-        GenericAccelerationArb = 8230,
-        GenericAccelerationExt = 8230,
-        FullAccelerationArb = 8231,
-        FullAccelerationExt = 8231,
+        TypeRgbaArb = 8235,
+        TypeRgbaExt = 8235,
+        TypeColorindexArb = 8236,
+        TypeColorindexExt = 8236,
+    }
+    ///<summary>Used in <see cref="WGL._3DL.SetStereoEmitterState3DL" /></summary>
+    public enum StereoEmitterState : uint
+    {
+        StereoEmitterEnable3dl = 8277,
+        StereoEmitterDisable3dl = 8278,
+        StereoPolarityNormal3dl = 8279,
+        StereoPolarityInvert3dl = 8280,
     }
     public enum SwapMethod : uint
     {
@@ -518,88 +531,10 @@ namespace OpenTK.Graphics.Wgl
         SwapUndefinedArb = 8234,
         SwapUndefinedExt = 8234,
     }
-    public enum PixelType : uint
+    ///<summary>Used in <see cref="WGL.NV.QueryVideoCaptureDeviceNV" /></summary>
+    public enum VideoCaptureDeviceAttribute : uint
     {
-        TypeRgbaArb = 8235,
-        TypeRgbaExt = 8235,
-        TypeColorindexArb = 8236,
-        TypeColorindexExt = 8236,
-    }
-    ///<summary>Used in <see cref="WGL.ARB.QueryPbufferARB" />, <see cref="WGL.EXT.QueryPbufferEXT" /></summary>
-    public enum PBufferAttribute : uint
-    {
-        PbufferWidthArb = 8244,
-        PbufferWidthExt = 8244,
-        PbufferHeightArb = 8245,
-        PbufferHeightExt = 8245,
-        PbufferLostArb = 8246,
-        TextureFormatArb = 8306,
-        TextureTargetArb = 8307,
-        MipmapTextureArb = 8308,
-        MipmapLevelArb = 8315,
-        CubeMapFaceArb = 8316,
-    }
-    ///<summary>Used in <see cref="WGL.I3D.GetGammaTableParametersI3D" />, <see cref="WGL.I3D.SetGammaTableParametersI3D" /></summary>
-    public enum GammaTableAttribute : uint
-    {
-        GammaTableSizeI3d = 8270,
-        GammaExcludeDesktopI3d = 8271,
-    }
-    ///<summary>Used in <see cref="WGL.I3D.GetDigitalVideoParametersI3D" />, <see cref="WGL.I3D.SetDigitalVideoParametersI3D" /></summary>
-    public enum DigitalVideoAttribute : uint
-    {
-        DigitalVideoCursorAlphaFramebufferI3d = 8272,
-        DigitalVideoCursorAlphaValueI3d = 8273,
-        DigitalVideoCursorIncludedI3d = 8274,
-        DigitalVideoGammaCorrectedI3d = 8275,
-    }
-    ///<summary>Used in <see cref="WGL._3DL.SetStereoEmitterState3DL" /></summary>
-    public enum StereoEmitterState : uint
-    {
-        StereoEmitterEnable3dl = 8277,
-        StereoEmitterDisable3dl = 8278,
-        StereoPolarityNormal3dl = 8279,
-        StereoPolarityInvert3dl = 8280,
-    }
-    public enum PBufferTextureFormat : uint
-    {
-        TextureRgbArb = 8309,
-        TextureRgbaArb = 8310,
-        NoTextureArb = 8311,
-    }
-    public enum PBufferTextureTarget : uint
-    {
-        NoTextureArb = 8311,
-        TextureCubeMapArb = 8312,
-        Texture1dArb = 8313,
-        Texture2dArb = 8314,
-    }
-    public enum PBufferCubeMapFace : uint
-    {
-        TextureCubeMapPositiveXArb = 8317,
-        TextureCubeMapNegativeXArb = 8318,
-        TextureCubeMapPositiveYArb = 8319,
-        TextureCubeMapNegativeYArb = 8320,
-        TextureCubeMapPositiveZArb = 8321,
-        TextureCubeMapNegativeZArb = 8322,
-    }
-    ///<summary>Used in <see cref="WGL.ARB.BindTexImageARB" />, <see cref="WGL.ARB.ReleaseTexImageARB" /></summary>
-    public enum ColorBuffer : uint
-    {
-        FrontLeftArb = 8323,
-        FrontRightArb = 8324,
-        BackLeftArb = 8325,
-        BackRightArb = 8326,
-        Aux0Arb = 8327,
-        Aux1Arb = 8328,
-        Aux2Arb = 8329,
-        Aux3Arb = 8330,
-        Aux4Arb = 8331,
-        Aux5Arb = 8332,
-        Aux6Arb = 8333,
-        Aux7Arb = 8334,
-        Aux8Arb = 8335,
-        Aux9Arb = 8336,
+        UniqueIdNv = 8398,
     }
     ///<summary>Used in <see cref="WGL.NV.BindVideoImageNV" />, <see cref="WGL.NV.ReleaseVideoImageNV" /></summary>
     public enum VideoOutputBuffer : uint
@@ -619,16 +554,81 @@ namespace OpenTK.Graphics.Wgl
         VideoOutStackedFields12 = 8395,
         VideoOutStackedFields21 = 8396,
     }
-    ///<summary>Used in <see cref="WGL.NV.QueryVideoCaptureDeviceNV" /></summary>
-    public enum VideoCaptureDeviceAttribute : uint
+    ///<summary>Used in <see cref="WGL.ARB.CreateBufferRegionARB" /></summary>
+    [Flags]
+    public enum WGLColorBufferMask : uint
     {
-        UniqueIdNv = 8398,
+        FrontColorBufferBitArb = 1,
+        BackColorBufferBitArb = 2,
+        DepthBufferBitArb = 4,
+        StencilBufferBitArb = 8,
     }
-    ///<summary>Used in <see cref="WGL.NV.QueryCurrentContextNV" /></summary>
-    public enum ContextAttribute : uint
+    [Flags]
+    public enum WGLContextFlagsMask : uint
     {
-        NumVideoCaptureSlotsNv = 8399,
-        NumVideoSlotsNv = 8432,
+        ContextDebugBitArb = 1,
+        ContextForwardCompatibleBitArb = 2,
+        ContextRobustAccessBitArb = 4,
+        ContextResetIsolationBitArb = 8,
+    }
+    [Flags]
+    public enum WGLContextProfileMask : uint
+    {
+        ContextCoreProfileBitArb = 1,
+        ContextCompatibilityProfileBitArb = 2,
+        ContextEs2ProfileBitExt = 4,
+        ContextEsProfileBitExt = 4,
+    }
+    ///<summary>Used in <see cref="WGL.NV.DXObjectAccessNV" />, <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
+    [Flags]
+    public enum WGLDXInteropMaskNV : uint
+    {
+        AccessReadOnlyNv = 0,
+        AccessReadWriteNv = 1,
+        AccessWriteDiscardNv = 2,
+    }
+    ///<summary>Used in <see cref="WGL.I3D.CreateImageBufferI3D" /></summary>
+    [Flags]
+    public enum WGLImageBufferMaskI3D : uint
+    {
+        ImageBufferMinAccessI3d = 1,
+        ImageBufferLockI3d = 2,
+    }
+    ///<summary>Used in <see cref="WGL.SwapLayerBuffers" />, <see cref="WGL.OML.SwapLayerBuffersMscOML" /></summary>
+    [Flags]
+    public enum WGLLayerPlaneMask : uint
+    {
+        SwapMainPlane = 1,
+        SwapOverlay1 = 2,
+        SwapOverlay2 = 4,
+        SwapOverlay3 = 8,
+        SwapOverlay4 = 16,
+        SwapOverlay5 = 32,
+        SwapOverlay6 = 64,
+        SwapOverlay7 = 128,
+        SwapOverlay8 = 256,
+        SwapOverlay9 = 512,
+        SwapOverlay10 = 1024,
+        SwapOverlay11 = 2048,
+        SwapOverlay12 = 4096,
+        SwapOverlay13 = 8192,
+        SwapOverlay14 = 16384,
+        SwapOverlay15 = 32768,
+        SwapUnderlay1 = 65536,
+        SwapUnderlay2 = 131072,
+        SwapUnderlay3 = 262144,
+        SwapUnderlay4 = 524288,
+        SwapUnderlay5 = 1048576,
+        SwapUnderlay6 = 2097152,
+        SwapUnderlay7 = 4194304,
+        SwapUnderlay8 = 8388608,
+        SwapUnderlay9 = 16777216,
+        SwapUnderlay10 = 33554432,
+        SwapUnderlay11 = 67108864,
+        SwapUnderlay12 = 134217728,
+        SwapUnderlay13 = 268435456,
+        SwapUnderlay14 = 536870912,
+        SwapUnderlay15 = 1073741824,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

@@ -174,7 +174,7 @@ namespace Generator
                 Documentation documentation = DocumentationParser.Parse(documentationSource);
 
                 // Processer/overloading
-                OutputData outputSpec = Processor.ProcessSpec2(finalSpecification, documentation);
+                OutputData outputSpec = Processor.ProcessSpec(finalSpecification, documentation);
 
                 // Writing cs files.
                 Writer.Write(outputSpec);

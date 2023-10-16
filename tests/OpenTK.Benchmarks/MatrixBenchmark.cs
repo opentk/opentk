@@ -8,7 +8,7 @@ using System.Text;
 
 namespace OpenTK.Benchmarks
 {
-    [SimpleJob(RuntimeMoniker.NetCoreApp31)]
+    [SimpleJob(RuntimeMoniker.Net70)]
     public class MatrixBenchmark
     {
 
