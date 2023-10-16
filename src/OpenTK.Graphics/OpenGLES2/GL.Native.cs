@@ -1,7 +1,10 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.Wgl;
+using OpenTK.Graphics.Glx;
 
 namespace OpenTK.Graphics.OpenGLES2
 {
@@ -10,49 +13,49 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glActiveShaderProgram</c>]</b><br/> Set the active program object for a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the program pipeline object to set the active program object for. </param>
         /// <param name="program"> Specifies the program object to set as the active program pipeline object pipeline. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglActiveShaderProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glActiveShaderProgram.xhtml" /></remarks>
         public static void ActiveShaderProgram(int pipeline, int program) => GLPointers._glActiveShaderProgram_fnptr(pipeline, program);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glActiveTexture</c>]</b><br/> Select active texture unit. </summary>
         /// <param name="texture"> Specifies which texture unit to make active. The number of texture units is implementation-dependent, but must be at least 32. texture must be one of GL_TEXTUREi, where i ranges from zero to the value of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS minus one. The initial value is GL_TEXTURE0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglActiveTexture.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glActiveTexture.xhtml" /></remarks>
         public static void ActiveTexture(TextureUnit texture) => GLPointers._glActiveTexture_fnptr((uint)texture);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glAttachShader</c>]</b><br/> Attaches a shader object to a program object. </summary>
         /// <param name="program">Specifies the program object to which a shader object will be attached.</param>
         /// <param name="shader">Specifies the shader object that is to be attached.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglAttachShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glAttachShader.xhtml" /></remarks>
         public static void AttachShader(int program, int shader) => GLPointers._glAttachShader_fnptr(program, shader);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBeginQuery</c>]</b><br/> Delimit the boundaries of a query object. </summary>
         /// <param name="target"> Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBeginQuery.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBeginQuery.xhtml" /></remarks>
         public static void BeginQuery(QueryTarget target, int id) => GLPointers._glBeginQuery_fnptr((uint)target, id);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBeginTransformFeedback</c>]</b><br/> Start transform feedback operation. </summary>
         /// <param name="primitiveMode"> Specify the output type of the primitives that will be recorded into the buffer objects that are bound for transform feedback. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBeginTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBeginTransformFeedback.xhtml" /></remarks>
         public static void BeginTransformFeedback(PrimitiveType primitiveMode) => GLPointers._glBeginTransformFeedback_fnptr((uint)primitiveMode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindAttribLocation</c>]</b><br/> Associates a generic vertex attribute index with a named attribute variable. </summary>
         /// <param name="program">Specifies the handle of the program object in which the association is to be made.</param>
         /// <param name="index">Specifies the index of the generic vertex attribute to be bound.</param>
         /// <param name="name">Specifies a null terminated string containing the name of the vertex shader attribute variable to which index is to be bound.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindAttribLocation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindAttribLocation.xhtml" /></remarks>
         public static void BindAttribLocation(int program, uint index, byte* name) => GLPointers._glBindAttribLocation_fnptr(program, index, name);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindBuffer</c>]</b><br/> Bind a named buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBuffer.xhtml" /></remarks>
         public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindBufferBase</c>]</b><br/> Bind a buffer object to an indexed buffer target. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_SHADER_STORAGE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER or GL_UNIFORM_BUFFER. </param>
         /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
         /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindBufferBase.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBufferBase.xhtml" /></remarks>
         public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindBufferRange</c>]</b><br/> Bind a range within a buffer object to an indexed buffer target. </summary>
@@ -61,13 +64,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
         /// <param name="offset"> The starting offset in basic machine units into the buffer object buffer. </param>
         /// <param name="size"> The amount of data in machine units that can be read from the buffet object while used as an indexed target. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindBufferRange.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBufferRange.xhtml" /></remarks>
         public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindFramebuffer</c>]</b><br/> Bind a framebuffer to a framebuffer target. </summary>
         /// <param name="target"> Specifies the framebuffer target of the binding operation. </param>
         /// <param name="framebuffer"> Specifies the name of the framebuffer object to bind. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindFramebuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindFramebuffer.xhtml" /></remarks>
         public static void BindFramebuffer(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebuffer_fnptr((uint)target, framebuffer);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glBindImageTexture</c>]</b><br/> Bind a level of a texture to an image unit. </summary>
@@ -78,41 +81,41 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="layer"> If layered is GL_FALSE, specifies the layer of texture to be bound to the image unit. Ignored otherwise. </param>
         /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
         /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted loads and stores. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindImageTexture.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindImageTexture.xhtml" /></remarks>
         public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glBindProgramPipeline</c>]</b><br/> Bind a program pipeline to the current context. </summary>
         /// <param name="pipeline"> Specifies the name of the pipeline object to bind to the context. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindProgramPipeline.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindProgramPipeline.xhtml" /></remarks>
         public static void BindProgramPipeline(int pipeline) => GLPointers._glBindProgramPipeline_fnptr(pipeline);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindRenderbuffer</c>]</b><br/> Bind a renderbuffer to a renderbuffer target. </summary>
         /// <param name="target"> Specifies the renderbuffer target of the binding operation. target must be GL_RENDERBUFFER. </param>
         /// <param name="renderbuffer"> Specifies the name of the renderbuffer object to bind. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindRenderbuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindRenderbuffer.xhtml" /></remarks>
         public static void BindRenderbuffer(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbuffer_fnptr((uint)target, renderbuffer);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindSampler</c>]</b><br/> Bind a named sampler to a texturing target. </summary>
         /// <param name="unit"> Specifies the index of the texture unit to which the sampler is bound. </param>
         /// <param name="sampler"> Specifies the name of a sampler. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindSampler.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindSampler.xhtml" /></remarks>
         public static void BindSampler(uint unit, int sampler) => GLPointers._glBindSampler_fnptr(unit, sampler);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindTexture</c>]</b><br/> Bind a named texture to a texturing target. </summary>
         /// <param name="target"> Specifies the target to which the texture is bound. Must be either GL_TEXTURE_2D, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_BUFFER. </param>
         /// <param name="texture"> Specifies the name of a texture. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindTexture.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindTexture.xhtml" /></remarks>
         public static void BindTexture(TextureTarget target, int texture) => GLPointers._glBindTexture_fnptr((uint)target, texture);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindTransformFeedback</c>]</b><br/> Bind a transform feedback object. </summary>
         /// <param name="target"> Specifies the target to which to bind the transform feedback object id. target must be GL_TRANSFORM_FEEDBACK. </param>
         /// <param name="id"> Specifies the name of a transform feedback object reserved by glGenTransformFeedbacks. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindTransformFeedback.xhtml" /></remarks>
         public static void BindTransformFeedback(BindTransformFeedbackTarget target, int id) => GLPointers._glBindTransformFeedback_fnptr((uint)target, id);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindVertexArray</c>]</b><br/> Bind a vertex array object. </summary>
         /// <param name="array"> Specifies the name of the vertex array to bind. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindVertexArray.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindVertexArray.xhtml" /></remarks>
         public static void BindVertexArray(int array) => GLPointers._glBindVertexArray_fnptr(array);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glBindVertexBuffer</c>]</b><br/> Bind a buffer to a vertex buffer bind point. </summary>
@@ -120,11 +123,11 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="buffer"> The name of an existing buffer to bind to the vertex buffer binding point. </param>
         /// <param name="offset"> The offset of the first element of the buffer. </param>
         /// <param name="stride"> The distance between elements within the buffer. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindVertexBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindVertexBuffer.xhtml" /></remarks>
         public static void BindVertexBuffer(uint bindingindex, int buffer, IntPtr offset, int stride) => GLPointers._glBindVertexBuffer_fnptr(bindingindex, buffer, offset, stride);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendBarrier</c>]</b><br/> Specifies a boundary between advanced blending passes. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendBarrier.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendBarrier.xhtml" /></remarks>
         public static void BlendBarrier() => GLPointers._glBlendBarrier_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendColor</c>]</b><br/> Set the blend color. </summary>
@@ -132,44 +135,44 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="green"> specify the components of GL_BLEND_COLOR </param>
         /// <param name="blue"> specify the components of GL_BLEND_COLOR </param>
         /// <param name="alpha"> specify the components of GL_BLEND_COLOR </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendColor.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendColor.xhtml" /></remarks>
         public static void BlendColor(float red, float green, float blue, float alpha) => GLPointers._glBlendColor_fnptr(red, green, blue, alpha);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendEquation</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendEquation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquation.xhtml" /></remarks>
         public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendEquationi</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="buf"> for glBlendEquationi, specifies the index of the draw buffer for which to set the blend equation. </param>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendEquation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquation.xhtml" /></remarks>
         public static void BlendEquationi(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationi_fnptr(buf, (uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendEquationSeparate</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendEquationSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquationSeparate.xhtml" /></remarks>
         public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparate_fnptr((uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendEquationSeparatei</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="buf"> for glBlendEquationSeparatei, specifies the index of the draw buffer for which to set the blend equations. </param>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendEquationSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquationSeparate.xhtml" /></remarks>
         public static void BlendEquationSeparatei(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparatei_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendFunc</c>]</b><br/> Specify pixel arithmetic. </summary>
         /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
         /// <param name="dfactor"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendFunc.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFunc.xhtml" /></remarks>
         public static void BlendFunc(BlendingFactor sfactor, BlendingFactor dfactor) => GLPointers._glBlendFunc_fnptr((uint)sfactor, (uint)dfactor);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendFunci</c>]</b><br/> Specify pixel arithmetic. </summary>
         /// <param name="buf"> For glBlendFunci, specifies the index of the draw buffer for which to set the blend function. </param>
         /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
         /// <param name="dfactor"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendFunc.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFunc.xhtml" /></remarks>
         public static void BlendFunci(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunci_fnptr(buf, (uint)src, (uint)dst);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendFuncSeparate</c>]</b><br/> Specify pixel arithmetic for RGB and alpha components separately. </summary>
@@ -177,7 +180,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="dstRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
         /// <param name="srcAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
         /// <param name="dstAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendFuncSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFuncSeparate.xhtml" /></remarks>
         public static void BlendFuncSeparate(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparate_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendFuncSeparatei</c>]</b><br/> Specify pixel arithmetic for RGB and alpha components separately. </summary>
@@ -186,7 +189,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="dstRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
         /// <param name="srcAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
         /// <param name="dstAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlendFuncSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendFuncSeparate.xhtml" /></remarks>
         public static void BlendFuncSeparatei(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparatei_fnptr(buf, (uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBlitFramebuffer</c>]</b><br/> Copy a block of pixels from the read framebuffer to the draw framebuffer. </summary>
@@ -200,7 +203,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="dstY1"> Specify the bounds of the destination rectangle within the write buffer of the write framebuffer. </param>
         /// <param name="mask"> The bitwise OR of the flags indicating which buffers are to be copied. The allowed flags are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT and GL_STENCIL_BUFFER_BIT. </param>
         /// <param name="filter"> Specifies the interpolation to be applied if the image is stretched. Must be GL_NEAREST or GL_LINEAR. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBlitFramebuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlitFramebuffer.xhtml" /></remarks>
         public static void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebuffer_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBufferData</c>]</b><br/> Creates and initializes a buffer object&apos;s data store. </summary>
@@ -208,7 +211,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size"> Specifies the size in bytes of the buffer object&apos;s new data store. </param>
         /// <param name="data"> Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied. </param>
         /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBufferData.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBufferData.xhtml" /></remarks>
         public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBufferSubData</c>]</b><br/> Updates a subset of a buffer object&apos;s data store. </summary>
@@ -216,17 +219,17 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="offset"> Specifies the offset into the buffer object&apos;s data store where data replacement will begin, measured in bytes. </param>
         /// <param name="size"> Specifies the size in bytes of the data store region being replaced. </param>
         /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBufferSubData.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBufferSubData.xhtml" /></remarks>
         public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCheckFramebufferStatus</c>]</b><br/> Check the completeness status of a framebuffer. </summary>
         /// <param name="target"> Specify the target of the framebuffer completeness check. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCheckFramebufferStatus.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCheckFramebufferStatus.xhtml" /></remarks>
         public static FramebufferStatus CheckFramebufferStatus(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatus_fnptr((uint)target);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glClear</c>]</b><br/> Clear buffers to preset values. </summary>
         /// <param name="mask"> Bitwise OR of masks that indicate the buffers to be cleared. The three masks are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClear.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClear.xhtml" /></remarks>
         public static void Clear(ClearBufferMask mask) => GLPointers._glClear_fnptr((uint)mask);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClearBufferfi</c>]</b><br/> Clear individual buffers of the currently bound draw framebuffer. </summary>
@@ -234,28 +237,28 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
         /// <param name="depth"> The value to clear a depth render buffer to. </param>
         /// <param name="stencil"> The value to clear a stencil render buffer to. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearBuffer.xhtml" /></remarks>
         public static void ClearBufferfi(Buffer buffer, int drawbuffer, float depth, int stencil) => GLPointers._glClearBufferfi_fnptr((uint)buffer, drawbuffer, depth, stencil);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClearBufferfv</c>]</b><br/> Clear individual buffers of the currently bound draw framebuffer. </summary>
         /// <param name="buffer"> Specify the buffer to clear. </param>
         /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
         /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearBuffer.xhtml" /></remarks>
         public static void ClearBufferfv(Buffer buffer, int drawbuffer, float* value) => GLPointers._glClearBufferfv_fnptr((uint)buffer, drawbuffer, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClearBufferiv</c>]</b><br/> Clear individual buffers of the currently bound draw framebuffer. </summary>
         /// <param name="buffer"> Specify the buffer to clear. </param>
         /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
         /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearBuffer.xhtml" /></remarks>
         public static void ClearBufferiv(Buffer buffer, int drawbuffer, int* value) => GLPointers._glClearBufferiv_fnptr((uint)buffer, drawbuffer, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClearBufferuiv</c>]</b><br/> Clear individual buffers of the currently bound draw framebuffer. </summary>
         /// <param name="buffer"> Specify the buffer to clear. </param>
         /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
         /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearBuffer.xhtml" /></remarks>
         public static void ClearBufferuiv(Buffer buffer, int drawbuffer, uint* value) => GLPointers._glClearBufferuiv_fnptr((uint)buffer, drawbuffer, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glClearColor</c>]</b><br/> Specify clear values for the color buffers. </summary>
@@ -263,24 +266,24 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="green"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
         /// <param name="blue"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
         /// <param name="alpha"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearColor.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearColor.xhtml" /></remarks>
         public static void ClearColor(float red, float green, float blue, float alpha) => GLPointers._glClearColor_fnptr(red, green, blue, alpha);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glClearDepthf</c>]</b><br/> Specify the clear value for the depth buffer. </summary>
         /// <param name="depth"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearDepthf.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearDepthf.xhtml" /></remarks>
         public static void ClearDepthf(float d) => GLPointers._glClearDepthf_fnptr(d);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glClearStencil</c>]</b><br/> Specify the clear value for the stencil buffer. </summary>
         /// <param name="s"> Specifies the index used when the stencil buffer is cleared. The initial value is 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClearStencil.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClearStencil.xhtml" /></remarks>
         public static void ClearStencil(int s) => GLPointers._glClearStencil_fnptr(s);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClientWaitSync</c>]</b><br/> Block and wait for a sync object to become signaled. </summary>
         /// <param name="sync"> The sync object whose status to wait on. </param>
         /// <param name="flags"> A bitfield controlling the command flushing behavior. flags may be GL_SYNC_FLUSH_COMMANDS_BIT. </param>
         /// <param name="timeout"> The timeout, specified in nanoseconds, for which the implementation should wait for sync to become signaled. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglClientWaitSync.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glClientWaitSync.xhtml" /></remarks>
         public static SyncStatus ClientWaitSync(GLSync sync, SyncObjectMask flags, ulong timeout) => (SyncStatus) GLPointers._glClientWaitSync_fnptr((IntPtr)sync, (uint)flags, timeout);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glColorMask</c>]</b><br/> Enable and disable writing of frame buffer color components. </summary>
@@ -288,7 +291,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glColorMask.xhtml" /></remarks>
         public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._glColorMask_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glColorMaski</c>]</b><br/> Enable and disable writing of frame buffer color components. </summary>
@@ -297,12 +300,12 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glColorMask.xhtml" /></remarks>
         public static void ColorMaski(uint index, bool r, bool g, bool b, bool a) => GLPointers._glColorMaski_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCompileShader</c>]</b><br/> Compiles a shader object. </summary>
         /// <param name="shader">Specifies the shader object to be compiled.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCompileShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCompileShader.xhtml" /></remarks>
         public static void CompileShader(int shader) => GLPointers._glCompileShader_fnptr(shader);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCompressedTexImage2D</c>]</b><br/> Specify a two-dimensional texture image in a compressed format. </summary>
@@ -314,7 +317,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="border"> This value must be 0. </param>
         /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
         /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCompressedTexImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCompressedTexImage2D.xhtml" /></remarks>
         public static void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage2D_fnptr((uint)target, level, (uint)internalformat, width, height, border, imageSize, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glCompressedTexImage3D</c>]</b><br/> Specify a three-dimensional texture image in a compressed format. </summary>
@@ -327,7 +330,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="border"> This value must be 0. </param>
         /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
         /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCompressedTexImage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCompressedTexImage3D.xhtml" /></remarks>
         public static void CompressedTexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage3D_fnptr((uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCompressedTexSubImage2D</c>]</b><br/> Specify a two-dimensional texture subimage in a compressed format. </summary>
@@ -340,7 +343,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the compressed image data stored at address data. </param>
         /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
         /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCompressedTexSubImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCompressedTexSubImage2D.xhtml" /></remarks>
         public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage2D_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glCompressedTexSubImage3D</c>]</b><br/> Specify a three-dimensional texture subimage in a compressed format. </summary>
@@ -355,7 +358,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the compressed image data stored at address data. </param>
         /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
         /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCompressedTexSubImage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCompressedTexSubImage3D.xhtml" /></remarks>
         public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage3D_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glCopyBufferSubData</c>]</b><br/> Copy part of the data store of a buffer object to the data store of another buffer object. </summary>
@@ -364,7 +367,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="readoffset"> Specifies the offset, in basic machine units, within the data store of readtarget from which data should be read. </param>
         /// <param name="writeoffset"> Specifies the offset, in basic machine units, within the data store of writetarget to which data should be written. </param>
         /// <param name="size"> Specifies the size, in basic machine units, of the data to be copied from readtarget to writetarget. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCopyBufferSubData.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCopyBufferSubData.xhtml" /></remarks>
         public static void CopyBufferSubData(CopyBufferSubDataTarget readTarget, CopyBufferSubDataTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size) => GLPointers._glCopyBufferSubData_fnptr((uint)readTarget, (uint)writeTarget, readOffset, writeOffset, size);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glCopyImageSubData</c>]</b><br/> Perform a raw data copy between two images. </summary>
@@ -383,7 +386,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="srcWidth"> The width of the region to be copied. </param>
         /// <param name="srcHeight"> The height of the region to be copied. </param>
         /// <param name="srcDepth"> The depth of the region to be copied. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCopyImageSubData.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCopyImageSubData.xhtml" /></remarks>
         public static void CopyImageSubData(uint srcName, CopyImageSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyImageSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => GLPointers._glCopyImageSubData_fnptr(srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCopyTexImage2D</c>]</b><br/> Copy pixels into a 2D texture image. </summary>
@@ -395,7 +398,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="width"> Specifies the width of the texture image. </param>
         /// <param name="height"> Specifies the height of the texture image. </param>
         /// <param name="border"> Specifies the width of the border. Must be 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCopyTexImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCopyTexImage2D.xhtml" /></remarks>
         public static void CopyTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyTexImage2D_fnptr((uint)target, level, (uint)internalformat, x, y, width, height, border);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCopyTexSubImage2D</c>]</b><br/> Copy a two-dimensional texture subimage. </summary>
@@ -407,7 +410,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="y"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
         /// <param name="width"> Specifies the width of the texture subimage. </param>
         /// <param name="height"> Specifies the height of the texture subimage. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCopyTexSubImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCopyTexSubImage2D.xhtml" /></remarks>
         public static void CopyTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage2D_fnptr((uint)target, level, xoffset, yoffset, x, y, width, height);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glCopyTexSubImage3D</c>]</b><br/> Copy a three-dimensional texture subimage. </summary>
@@ -420,34 +423,34 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="y"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
         /// <param name="width"> Specifies the width of the texture subimage. </param>
         /// <param name="height"> Specifies the height of the texture subimage. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCopyTexSubImage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCopyTexSubImage3D.xhtml" /></remarks>
         public static void CopyTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage3D_fnptr((uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCreateProgram</c>]</b><br/> Creates a program object. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCreateProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCreateProgram.xhtml" /></remarks>
         public static int CreateProgram() => GLPointers._glCreateProgram_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCreateShader</c>]</b><br/> Creates a shader object. </summary>
         /// <param name="shaderType"> Specifies the type of shader to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCreateShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCreateShader.xhtml" /></remarks>
         public static int CreateShader(ShaderType type) => GLPointers._glCreateShader_fnptr((uint)type);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glCreateShaderProgramv</c>]</b><br/> Create a stand-alone program from an array of null-terminated source code strings. </summary>
         /// <param name="type"> Specifies the type of shader to create. </param>
         /// <param name="count"> Specifies the number of source code strings in the array strings. </param>
         /// <param name="strings"> Specifies the address of an array of pointers to source code strings from which to create the program object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCreateShaderProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCreateShaderProgram.xhtml" /></remarks>
         public static int CreateShaderProgramv(ShaderType type, int count, byte** strings) => GLPointers._glCreateShaderProgramv_fnptr((uint)type, count, strings);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCullFace</c>]</b><br/> Specify whether front- or back-facing polygons can be culled. </summary>
         /// <param name="mode"> Specifies whether front- or back-facing polygons are candidates for culling. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCullFace.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glCullFace.xhtml" /></remarks>
         public static void CullFace(TriangleFace mode) => GLPointers._glCullFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageCallback</c>]</b><br/> Specify a callback to receive debugging messages from the GL. </summary>
         /// <param name="callback"> The address of a callback function that will be called when a debug message is generated. </param>
         /// <param name="userParam"> A user supplied pointer that will be passed on each invocation of callback. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageCallback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageCallback.xhtml" /></remarks>
         public static void DebugMessageCallback(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallback_fnptr(callback, userParam);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageControl</c>]</b><br/> Control the reporting of debug messages in a debug context. </summary>
@@ -457,7 +460,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> The length of the array ids. </param>
         /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
         /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageControl.xhtml" /></remarks>
         public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageInsert</c>]</b><br/> Inject an application-supplied message into the debug message queue. </summary>
@@ -467,139 +470,139 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="severity"> The severity of the debug messages to insert. </param>
         /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
         /// <param name="message"> The address of a character array containing the message to insert. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageInsert.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageInsert.xhtml" /></remarks>
         public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsert_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteBuffers</c>]</b><br/> Delete named buffer objects. </summary>
         /// <param name="n"> Specifies the number of buffer objects to be deleted. </param>
         /// <param name="buffers"> Specifies an array of buffer objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteBuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteBuffers.xhtml" /></remarks>
         public static void DeleteBuffers(int n, int* buffers) => GLPointers._glDeleteBuffers_fnptr(n, buffers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteFramebuffers</c>]</b><br/> Delete framebuffer objects. </summary>
         /// <param name="n"> Specifies the number of framebuffer objects to be deleted. </param>
         /// <param name="framebuffers"> A pointer to an array containing n framebuffer objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteFramebuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteFramebuffers.xhtml" /></remarks>
         public static void DeleteFramebuffers(int n, int* framebuffers) => GLPointers._glDeleteFramebuffers_fnptr(n, framebuffers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteProgram</c>]</b><br/> Deletes a program object. </summary>
         /// <param name="program">Specifies the program object to be deleted.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteProgram.xhtml" /></remarks>
         public static void DeleteProgram(int program) => GLPointers._glDeleteProgram_fnptr(program);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glDeleteProgramPipelines</c>]</b><br/> Delete program pipeline objects. </summary>
         /// <param name="n"> Specifies the number of program pipeline objects to delete. </param>
         /// <param name="pipelines"> Specifies an array of names of program pipeline objects to delete. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteProgramPipelines.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteProgramPipelines.xhtml" /></remarks>
         public static void DeleteProgramPipelines(int n, int* pipelines) => GLPointers._glDeleteProgramPipelines_fnptr(n, pipelines);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteQueries</c>]</b><br/> Delete named query objects. </summary>
         /// <param name="n"> Specifies the number of query objects to be deleted. </param>
         /// <param name="ids"> Specifies an array of query objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteQueries.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteQueries.xhtml" /></remarks>
         public static void DeleteQueries(int n, int* ids) => GLPointers._glDeleteQueries_fnptr(n, ids);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteRenderbuffers</c>]</b><br/> Delete renderbuffer objects. </summary>
         /// <param name="n"> Specifies the number of renderbuffer objects to be deleted. </param>
         /// <param name="renderbuffers"> A pointer to an array containing n renderbuffer objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteRenderbuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteRenderbuffers.xhtml" /></remarks>
         public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffers_fnptr(n, renderbuffers);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
         /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
         /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteSamplers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteSamplers.xhtml" /></remarks>
         public static void DeleteSamplers(int count, int* samplers) => GLPointers._glDeleteSamplers_fnptr(count, samplers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteShader</c>]</b><br/> Deletes a shader object. </summary>
         /// <param name="shader">Specifies the shader object to be deleted.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteShader.xhtml" /></remarks>
         public static void DeleteShader(int shader) => GLPointers._glDeleteShader_fnptr(shader);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteSync</c>]</b><br/> Delete a sync object. </summary>
         /// <param name="sync"> The sync object to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteSync.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteSync.xhtml" /></remarks>
         public static void DeleteSync(GLSync sync) => GLPointers._glDeleteSync_fnptr((IntPtr)sync);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDeleteTextures</c>]</b><br/> Delete named textures. </summary>
         /// <param name="n"> Specifies the number of textures to be deleted. </param>
         /// <param name="textures"> Specifies an array of textures to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteTextures.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteTextures.xhtml" /></remarks>
         public static void DeleteTextures(int n, int* textures) => GLPointers._glDeleteTextures_fnptr(n, textures);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteTransformFeedbacks</c>]</b><br/> Delete transform feedback objects. </summary>
         /// <param name="n"> Specifies the number of transform feedback objects to delete. </param>
         /// <param name="ids"> Specifies an array of names of transform feedback objects to delete. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteTransformFeedbacks.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteTransformFeedbacks.xhtml" /></remarks>
         public static void DeleteTransformFeedbacks(int n, int* ids) => GLPointers._glDeleteTransformFeedbacks_fnptr(n, ids);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteVertexArrays</c>]</b><br/> Delete vertex array objects. </summary>
         /// <param name="n"> Specifies the number of vertex array objects to be deleted. </param>
         /// <param name="arrays"> Specifies the address of an array containing the n names of the objects to be deleted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDeleteVertexArrays.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteVertexArrays.xhtml" /></remarks>
         public static void DeleteVertexArrays(int n, int* arrays) => GLPointers._glDeleteVertexArrays_fnptr(n, arrays);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDepthFunc</c>]</b><br/> Specify the value used for depth buffer comparisons. </summary>
         /// <param name="func"> Specifies the depth comparison function. Symbolic constants GL_NEVER, GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, and GL_ALWAYS are accepted. The initial value is GL_LESS. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDepthFunc.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDepthFunc.xhtml" /></remarks>
         public static void DepthFunc(DepthFunction func) => GLPointers._glDepthFunc_fnptr((uint)func);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDepthMask</c>]</b><br/> Enable or disable writing into the depth buffer. </summary>
         /// <param name="flag"> Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled. Otherwise, it is enabled. Initially, depth buffer writing is enabled. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDepthMask.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDepthMask.xhtml" /></remarks>
         public static void DepthMask(bool flag) => GLPointers._glDepthMask_fnptr((byte)(flag ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDepthRangef</c>]</b><br/> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
         /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
         /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDepthRangef.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDepthRangef.xhtml" /></remarks>
         public static void DepthRangef(float n, float f) => GLPointers._glDepthRangef_fnptr(n, f);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDetachShader</c>]</b><br/> Detaches a shader object from a program object to which it is attached. </summary>
         /// <param name="program">Specifies the program object from which to detach the shader object.</param>
         /// <param name="shader">Specifies the shader object to be detached.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDetachShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDetachShader.xhtml" /></remarks>
         public static void DetachShader(int program, int shader) => GLPointers._glDetachShader_fnptr(program, shader);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDisable</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnable.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml" /></remarks>
         public static void Disable(EnableCap cap) => GLPointers._glDisable_fnptr((uint)cap);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glDisablei</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnable.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml" /></remarks>
         public static void Disablei(EnableCap target, uint index) => GLPointers._glDisablei_fnptr((uint)target, index);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDisableVertexAttribArray</c>]</b><br/> Enable or disable a generic vertex attribute array. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be enabled or disabled.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnableVertexAttribArray.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnableVertexAttribArray.xhtml" /></remarks>
         public static void DisableVertexAttribArray(uint index) => GLPointers._glDisableVertexAttribArray_fnptr(index);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glDispatchCompute</c>]</b><br/> Launch one or more compute work groups. </summary>
         /// <param name="num_groups_x"> The number of work groups to be launched in the X dimension. </param>
         /// <param name="num_groups_y"> The number of work groups to be launched in the Y dimension. </param>
         /// <param name="num_groups_z"> The number of work groups to be launched in the Z dimension. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDispatchCompute.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDispatchCompute.xhtml" /></remarks>
         public static void DispatchCompute(uint num_groups_x, uint num_groups_y, uint num_groups_z) => GLPointers._glDispatchCompute_fnptr(num_groups_x, num_groups_y, num_groups_z);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glDispatchComputeIndirect</c>]</b><br/> Launch one or more compute work groups using parameters stored in a buffer. </summary>
         /// <param name="indirect"> The offset into the buffer object currently bound to the GL_DISPATCH_INDIRECT_BUFFER buffer target at which the dispatch parameters are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDispatchComputeIndirect.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDispatchComputeIndirect.xhtml" /></remarks>
         public static void DispatchComputeIndirect(IntPtr indirect) => GLPointers._glDispatchComputeIndirect_fnptr(indirect);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDrawArrays</c>]</b><br/> Render primitives from array data. </summary>
         /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
         /// <param name="first"> Specifies the starting index in the enabled arrays. </param>
         /// <param name="count"> Specifies the number of indices to be rendered. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawArrays.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawArrays.xhtml" /></remarks>
         public static void DrawArrays(PrimitiveType mode, int first, int count) => GLPointers._glDrawArrays_fnptr((uint)mode, first, count);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glDrawArraysIndirect</c>]</b><br/> Render primitives from array data, taking parameters from memory. </summary>
         /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
         /// <param name="indirect"> Specifies the address of a structure containing the draw parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawArraysIndirect.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawArraysIndirect.xhtml" /></remarks>
         public static void DrawArraysIndirect(PrimitiveType mode, void* indirect) => GLPointers._glDrawArraysIndirect_fnptr((uint)mode, indirect);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDrawArraysInstanced</c>]</b><br/> Draw multiple instances of a range of elements. </summary>
@@ -607,13 +610,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="first"> Specifies the starting index in the enabled arrays. </param>
         /// <param name="count"> Specifies the number of indices to be rendered. </param>
         /// <param name="primcount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawArraysInstanced.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawArraysInstanced.xhtml" /></remarks>
         public static void DrawArraysInstanced(PrimitiveType mode, int first, int count, int instancecount) => GLPointers._glDrawArraysInstanced_fnptr((uint)mode, first, count, instancecount);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDrawBuffers</c>]</b><br/> Specifies a list of color buffers to be drawn into. </summary>
         /// <param name="n">Specifies the number of buffers in bufs.</param>
         /// <param name="bufs">Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawBuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawBuffers.xhtml" /></remarks>
         public static void DrawBuffers(int n, DrawBufferMode* bufs) => GLPointers._glDrawBuffers_fnptr(n, (uint*)bufs);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glDrawElements</c>]</b><br/> Render primitives from array data. </summary>
@@ -621,7 +624,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> Specifies the number of elements to be rendered. </param>
         /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
         /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawElements.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawElements.xhtml" /></remarks>
         public static void DrawElements(PrimitiveType mode, int count, DrawElementsType type, void* indices) => GLPointers._glDrawElements_fnptr((uint)mode, count, (uint)type, indices);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glDrawElementsBaseVertex</c>]</b><br/> Render primitives from array data with a per-element offset. </summary>
@@ -630,14 +633,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
         /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
         /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawElementsBaseVertex.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawElementsBaseVertex.xhtml" /></remarks>
         public static void DrawElementsBaseVertex(PrimitiveType mode, int count, DrawElementsType type, void* indices, int basevertex) => GLPointers._glDrawElementsBaseVertex_fnptr((uint)mode, count, (uint)type, indices, basevertex);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glDrawElementsIndirect</c>]</b><br/> Render indexed primitives from array data, taking parameters from memory. </summary>
         /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, and GL_PATCHES are accepted. </param>
         /// <param name="type"> Specifies the type of data in the buffer bound to the GL_ELEMENT_ARRAY_BUFFER binding. </param>
         /// <param name="indirect"> Specifies the address of a structure containing the draw parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawElementsIndirect.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawElementsIndirect.xhtml" /></remarks>
         public static void DrawElementsIndirect(PrimitiveType mode, DrawElementsType type, void* indirect) => GLPointers._glDrawElementsIndirect_fnptr((uint)mode, (uint)type, indirect);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDrawElementsInstanced</c>]</b><br/> Draw multiple instances of a set of elements. </summary>
@@ -646,7 +649,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
         /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
         /// <param name="primcount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawElementsInstanced.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawElementsInstanced.xhtml" /></remarks>
         public static void DrawElementsInstanced(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount) => GLPointers._glDrawElementsInstanced_fnptr((uint)mode, count, (uint)type, indices, instancecount);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glDrawElementsInstancedBaseVertex</c>]</b><br/> Render multiple instances of a set of primitives from array data with a per-element offset. </summary>
@@ -656,7 +659,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
         /// <param name="primcount"> Specifies the number of instances of the indexed geometry that should be drawn. </param>
         /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawElementsInstancedBaseVertex.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawElementsInstancedBaseVertex.xhtml" /></remarks>
         public static void DrawElementsInstancedBaseVertex(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, int basevertex) => GLPointers._glDrawElementsInstancedBaseVertex_fnptr((uint)mode, count, (uint)type, indices, instancecount, basevertex);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDrawRangeElements</c>]</b><br/> Render primitives from array data. </summary>
@@ -666,7 +669,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> Specifies the number of elements to be rendered. </param>
         /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
         /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawRangeElements.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawRangeElements.xhtml" /></remarks>
         public static void DrawRangeElements(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices) => GLPointers._glDrawRangeElements_fnptr((uint)mode, start, end, count, (uint)type, indices);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glDrawRangeElementsBaseVertex</c>]</b><br/> Render primitives from array data with a per-element offset. </summary>
@@ -677,60 +680,60 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
         /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
         /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDrawRangeElementsBaseVertex.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDrawRangeElementsBaseVertex.xhtml" /></remarks>
         public static void DrawRangeElementsBaseVertex(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices, int basevertex) => GLPointers._glDrawRangeElementsBaseVertex_fnptr((uint)mode, start, end, count, (uint)type, indices, basevertex);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glEnable</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnable.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml" /></remarks>
         public static void Enable(EnableCap cap) => GLPointers._glEnable_fnptr((uint)cap);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glEnablei</c>]</b><br/> Enable or disable server-side GL capabilities. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnable.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnable.xhtml" /></remarks>
         public static void Enablei(EnableCap target, uint index) => GLPointers._glEnablei_fnptr((uint)target, index);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glEnableVertexAttribArray</c>]</b><br/> Enable or disable a generic vertex attribute array. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be enabled or disabled.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglEnableVertexAttribArray.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glEnableVertexAttribArray.xhtml" /></remarks>
         public static void EnableVertexAttribArray(uint index) => GLPointers._glEnableVertexAttribArray_fnptr(index);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glEndQuery</c>]</b><br/> Delimit the boundaries of a query object. </summary>
         /// <param name="target"> Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBeginQuery.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBeginQuery.xhtml" /></remarks>
         public static void EndQuery(QueryTarget target) => GLPointers._glEndQuery_fnptr((uint)target);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glEndTransformFeedback</c>]</b><br/> Start transform feedback operation. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBeginTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBeginTransformFeedback.xhtml" /></remarks>
         public static void EndTransformFeedback() => GLPointers._glEndTransformFeedback_fnptr();
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glFenceSync</c>]</b><br/> Create a new sync object and insert it into the GL command stream. </summary>
         /// <param name="condition"> Specifies the condition that must be met to set the sync object&apos;s state to signaled. condition must be GL_SYNC_GPU_COMMANDS_COMPLETE. </param>
         /// <param name="flags"> Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero. flags is a placeholder for anticipated future extensions of fence sync object capabilities. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFenceSync.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFenceSync.xhtml" /></remarks>
         public static GLSync FenceSync(SyncCondition condition, SyncBehaviorFlags flags) => (GLSync) GLPointers._glFenceSync_fnptr((uint)condition, (uint)flags);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glFinish</c>]</b><br/> Block until all GL execution is complete. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFinish.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFinish.xhtml" /></remarks>
         public static void Finish() => GLPointers._glFinish_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glFlush</c>]</b><br/> Force execution of GL commands in finite time. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFlush.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFlush.xhtml" /></remarks>
         public static void Flush() => GLPointers._glFlush_fnptr();
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glFlushMappedBufferRange</c>]</b><br/> Indicate modifications to a range of a mapped buffer. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glFlushMappedBufferRange, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="offset"> Specifies the start of the buffer subrange, in basic machine units. </param>
         /// <param name="length"> Specifies the length of the buffer subrange, in basic machine units. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFlushMappedBufferRange.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFlushMappedBufferRange.xhtml" /></remarks>
         public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glFramebufferParameteri</c>]</b><br/> Set a named parameter of a framebuffer. </summary>
         /// <param name="target"> The target of the operation, which must be GL_READ_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER or GL_FRAMEBUFFER. </param>
         /// <param name="pname"> A token indicating the parameter to be modified. </param>
         /// <param name="param"> The new value for the parameter named pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFramebufferParameteri.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFramebufferParameteri.xhtml" /></remarks>
         public static void FramebufferParameteri(FramebufferTarget target, FramebufferParameterName pname, int param) => GLPointers._glFramebufferParameteri_fnptr((uint)target, (uint)pname, param);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glFramebufferRenderbuffer</c>]</b><br/> Attach a renderbuffer as a logical buffer to the currently bound framebuffer object. </summary>
@@ -738,7 +741,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="attachment"> Specifies the attachment point of the framebuffer. </param>
         /// <param name="renderbuffertarget"> Specifies the renderbuffer target and must be GL_RENDERBUFFER. </param>
         /// <param name="renderbuffer"> Specifies the name of an existing renderbuffer object of type renderbuffertarget to attach. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFramebufferRenderbuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFramebufferRenderbuffer.xhtml" /></remarks>
         public static void FramebufferRenderbuffer(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glFramebufferRenderbuffer_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glFramebufferTexture</c>]</b><br/> Attach a level of a texture object as a logical buffer of a framebuffer object. </summary>
@@ -746,7 +749,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="attachment"> Specifies the attachment point of the framebuffer. </param>
         /// <param name="texture"> Specifies the name of an existing texture object to attach. </param>
         /// <param name="level"> Specifies the mipmap level of the texture object to attach. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFramebufferTexture.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFramebufferTexture.xhtml" /></remarks>
         public static void FramebufferTexture(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level) => GLPointers._glFramebufferTexture_fnptr((uint)target, (uint)attachment, texture, level);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glFramebufferTexture2D</c>]</b><br/> Attach a level of a texture object as a logical buffer to the currently bound framebuffer object. </summary>
@@ -755,7 +758,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="textarget"> Specifies a 2D texture target, 2D multisample texture target, or for cube map textures, which face is to be attached. </param>
         /// <param name="texture"> Specifies the texture object to attach to the framebuffer attachment point named by attachment. </param>
         /// <param name="level"> Specifies the mipmap level of texture to attach. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFramebufferTexture2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFramebufferTexture2D.xhtml" /></remarks>
         public static void FramebufferTexture2D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture2D_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glFramebufferTextureLayer</c>]</b><br/> Attach a single layer of a texture to a framebuffer. </summary>
@@ -764,71 +767,71 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="texture"> Specifies the texture object to attach to the framebuffer attachment point named by attachment. </param>
         /// <param name="level"> Specifies the mipmap level of texture to attach. </param>
         /// <param name="layer"> Specifies the layer of texture to attach. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFramebufferTextureLayer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFramebufferTextureLayer.xhtml" /></remarks>
         public static void FramebufferTextureLayer(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glFramebufferTextureLayer_fnptr((uint)target, (uint)attachment, texture, level, layer);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glFrontFace</c>]</b><br/> Define front- and back-facing polygons. </summary>
         /// <param name="mode"> Specifies the orientation of front-facing polygons. GL_CW and GL_CCW are accepted. The initial value is GL_CCW. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglFrontFace.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFrontFace.xhtml" /></remarks>
         public static void FrontFace(FrontFaceDirection mode) => GLPointers._glFrontFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGenBuffers</c>]</b><br/> Generate buffer object names. </summary>
         /// <param name="n"> Specifies the number of buffer object names to be generated. </param>
         /// <param name="buffers"> Specifies an array in which the generated buffer object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenBuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenBuffers.xhtml" /></remarks>
         public static void GenBuffers(int n, int* buffers) => GLPointers._glGenBuffers_fnptr(n, buffers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGenerateMipmap</c>]</b><br/> Generate mipmaps for a specified texture target. </summary>
         /// <param name="target"> Specifies the target to which the texture whose mimaps to generate is bound. target must be GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_CUBE_MAP or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenerateMipmap.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenerateMipmap.xhtml" /></remarks>
         public static void GenerateMipmap(TextureTarget target) => GLPointers._glGenerateMipmap_fnptr((uint)target);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGenFramebuffers</c>]</b><br/> Generate framebuffer object names. </summary>
         /// <param name="n"> Specifies the number of framebuffer object names to generate. </param>
         /// <param name="framebuffers"> Specifies an array in which the generated framebuffer object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenFramebuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenFramebuffers.xhtml" /></remarks>
         public static void GenFramebuffers(int n, int* framebuffers) => GLPointers._glGenFramebuffers_fnptr(n, framebuffers);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGenProgramPipelines</c>]</b><br/> Reserve program pipeline object names. </summary>
         /// <param name="n"> Specifies the number of program pipeline object names to reserve. </param>
         /// <param name="pipelines"> Specifies an array of into which the reserved names will be written. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenProgramPipelines.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenProgramPipelines.xhtml" /></remarks>
         public static void GenProgramPipelines(int n, int* pipelines) => GLPointers._glGenProgramPipelines_fnptr(n, pipelines);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGenQueries</c>]</b><br/> Generate query object names. </summary>
         /// <param name="n"> Specifies the number of query object names to be generated. </param>
         /// <param name="ids"> Specifies an array in which the generated query object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenQueries.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenQueries.xhtml" /></remarks>
         public static void GenQueries(int n, int* ids) => GLPointers._glGenQueries_fnptr(n, ids);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGenRenderbuffers</c>]</b><br/> Generate renderbuffer object names. </summary>
         /// <param name="n"> Specifies the number of renderbuffer object names to generate. </param>
         /// <param name="renderbuffers"> Specifies an array in which the generated renderbuffer object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenRenderbuffers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenRenderbuffers.xhtml" /></remarks>
         public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffers_fnptr(n, renderbuffers);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
         /// <param name="n"> Specifies the number of sampler object names to generate. </param>
         /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenSamplers.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenSamplers.xhtml" /></remarks>
         public static void GenSamplers(int count, int* samplers) => GLPointers._glGenSamplers_fnptr(count, samplers);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGenTextures</c>]</b><br/> Generate texture names. </summary>
         /// <param name="n"> Specifies the number of texture names to be generated. </param>
         /// <param name="textures"> Specifies an array in which the generated texture names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenTextures.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenTextures.xhtml" /></remarks>
         public static void GenTextures(int n, int* textures) => GLPointers._glGenTextures_fnptr(n, textures);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGenTransformFeedbacks</c>]</b><br/> Reserve transform feedback object names. </summary>
         /// <param name="n"> Specifies the number of transform feedback object names to reserve. </param>
         /// <param name="ids"> Specifies an array of into which the reserved names will be written. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenTransformFeedbacks.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenTransformFeedbacks.xhtml" /></remarks>
         public static void GenTransformFeedbacks(int n, int* ids) => GLPointers._glGenTransformFeedbacks_fnptr(n, ids);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGenVertexArrays</c>]</b><br/> Generate vertex array object names. </summary>
         /// <param name="n"> Specifies the number of vertex array object names to generate. </param>
         /// <param name="arrays"> Specifies an array in which the generated vertex array object names are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGenVertexArrays.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenVertexArrays.xhtml" /></remarks>
         public static void GenVertexArrays(int n, int* arrays) => GLPointers._glGenVertexArrays_fnptr(n, arrays);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetActiveAttrib</c>]</b><br/> Returns information about an active attribute variable for the specified program object. </summary>
@@ -839,7 +842,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size">Returns the size of the attribute variable.</param>
         /// <param name="type">Returns the data type of the attribute variable.</param>
         /// <param name="name">Returns a null terminated string containing the name of the attribute variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetActiveAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetActiveAttrib.xhtml" /></remarks>
         public static void GetActiveAttrib(int program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetActiveAttrib_fnptr(program, index, bufSize, length, size, (uint*)type, name);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetActiveUniform</c>]</b><br/> Returns information about an active uniform variable for the specified program object. </summary>
@@ -850,7 +853,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size">Returns the size of the uniform variable.</param>
         /// <param name="type">Returns the data type of the uniform variable.</param>
         /// <param name="name">Returns a null terminated string containing the name of the uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetActiveUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetActiveUniform.xhtml" /></remarks>
         public static void GetActiveUniform(int program, uint index, int bufSize, int* length, int* size, UniformType* type, byte* name) => GLPointers._glGetActiveUniform_fnptr(program, index, bufSize, length, size, (uint*)type, name);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetActiveUniformBlockiv</c>]</b><br/> Query information about an active uniform block. </summary>
@@ -858,7 +861,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="uniformBlockIndex"> Specifies the index of the uniform block within program. </param>
         /// <param name="pname"> Specifies the name of the parameter to query. </param>
         /// <param name="parameters"> Specifies the address of a variable to receive the result of the query. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetActiveUniformBlockiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetActiveUniformBlockiv.xhtml" /></remarks>
         public static void GetActiveUniformBlockiv(int program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters) => GLPointers._glGetActiveUniformBlockiv_fnptr(program, uniformBlockIndex, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetActiveUniformBlockName</c>]</b><br/> Retrieve the name of an active uniform block. </summary>
@@ -867,7 +870,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize"> Specifies the size of the buffer addressed by uniformBlockName. </param>
         /// <param name="length"> Specifies the address of a variable to receive the number of characters that were written to uniformBlockName. </param>
         /// <param name="uniformBlockName"> Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetActiveUniformBlockName.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetActiveUniformBlockName.xhtml" /></remarks>
         public static void GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, int* length, byte* uniformBlockName) => GLPointers._glGetActiveUniformBlockName_fnptr(program, uniformBlockIndex, bufSize, length, uniformBlockName);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetActiveUniformsiv</c>]</b><br/> Returns information about several active uniform variables for the specified program object. </summary>
@@ -876,7 +879,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="uniformIndices">Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.</param>
         /// <param name="pname">Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.</param>
         /// <param name="parameters">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetActiveUniformsiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetActiveUniformsiv.xhtml" /></remarks>
         public static void GetActiveUniformsiv(int program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters) => GLPointers._glGetActiveUniformsiv_fnptr(program, uniformCount, uniformIndices, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetAttachedShaders</c>]</b><br/> Returns the handles of the shader objects attached to a program object. </summary>
@@ -884,47 +887,47 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="maxCount">Specifies the size of the array for storing the returned object names.</param>
         /// <param name="count">Returns the number of names actually returned in shaders.</param>
         /// <param name="shaders">Specifies an array that is used to return the names of attached shader objects.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetAttachedShaders.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetAttachedShaders.xhtml" /></remarks>
         public static void GetAttachedShaders(int program, int maxCount, int* count, int* shaders) => GLPointers._glGetAttachedShaders_fnptr(program, maxCount, count, shaders);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetAttribLocation</c>]</b><br/> Returns the location of an attribute variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="name">Points to a null terminated string containing the name of the attribute variable whose location is to be queried.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetAttribLocation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetAttribLocation.xhtml" /></remarks>
         public static int GetAttribLocation(int program, byte* name) => GLPointers._glGetAttribLocation_fnptr(program, name);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetBooleani_v</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetBooleani_v(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleani_v_fnptr((uint)target, index, (byte*)data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetBooleanv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetBooleanv(GetPName pname, bool* data) => GLPointers._glGetBooleanv_fnptr((uint)pname, (byte*)data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetBufferParameteri64v</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
         /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
         /// <param name="data"> Returns the requested parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetBufferParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferParameter.xhtml" /></remarks>
         public static void GetBufferParameteri64v(BufferTargetARB target, BufferPNameARB pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
         /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
         /// <param name="data"> Returns the requested parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetBufferParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferParameter.xhtml" /></remarks>
         public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetBufferPointerv</c>]</b><br/> Return the pointer to a mapped buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="pname"> Specifies the pointer to be returned. The symbolic constant must be GL_BUFFER_MAP_POINTER. </param>
         /// <param name="parameters"> Returns the pointer value specified by pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetBufferPointerv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferPointerv.xhtml" /></remarks>
         public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointerv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetDebugMessageLog</c>]</b><br/> Retrieve messages from the debug message log. </summary>
@@ -936,23 +939,23 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="severities"> The address of an array of variables to receive the severites of the retrieved messages. </param>
         /// <param name="lengths"> The address of an array of variables to receive the lengths of the received messages. </param>
         /// <param name="messageLog"> The address of an array of characters that will receive the messages. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetDebugMessageLog.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetDebugMessageLog.xhtml" /></remarks>
         public static uint GetDebugMessageLog(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => GLPointers._glGetDebugMessageLog_fnptr(count, bufSize, (uint*)sources, (uint*)types, ids, (uint*)severities, lengths, messageLog);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetError</c>]</b><br/> Return error information. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetError.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetError.xhtml" /></remarks>
         public static ErrorCode GetError() => (ErrorCode) GLPointers._glGetError_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetFloatv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetFloatv(GetPName pname, float* data) => GLPointers._glGetFloatv_fnptr((uint)pname, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetFragDataLocation</c>]</b><br/> Query the bindings of color numbers to user-defined varying out variables. </summary>
         /// <param name="program"> The name of the program containing varying out variable whose binding to query </param>
         /// <param name="name"> The name of the user-defined varying out variable whose binding to query </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetFragDataLocation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetFragDataLocation.xhtml" /></remarks>
         public static int GetFragDataLocation(int program, byte* name) => GLPointers._glGetFragDataLocation_fnptr(program, name);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetFramebufferAttachmentParameteriv</c>]</b><br/> Retrieve information about attachments of a bound framebuffer object. </summary>
@@ -960,44 +963,44 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="attachment"> Specifies the attachment within target </param>
         /// <param name="pname"> Specifies the parameter of attachment to query. </param>
         /// <param name="parameters"> Specifies the address of a variable receive the value of pname for attachment. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetFramebufferAttachmentParameteriv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetFramebufferAttachmentParameteriv.xhtml" /></remarks>
         public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferAttachmentParameteriv_fnptr((uint)target, (uint)attachment, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetFramebufferParameteriv</c>]</b><br/> Retrieve a named parameter from a framebuffer. </summary>
         /// <param name="target"> The target of the operation, which must be GL_READ_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER or GL_FRAMEBUFFER. </param>
         /// <param name="pname"> A token indicating the parameter to be retrieved. </param>
         /// <param name="parameters"> The address of a variable to receive the value of the parameter named pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetFramebufferParameteriv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetFramebufferParameteriv.xhtml" /></remarks>
         public static void GetFramebufferParameteriv(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glGetGraphicsResetStatus</c>]</b><br/> Check if the rendering context has not been lost due to software or hardware issues. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetGraphicsResetStatus.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetGraphicsResetStatus.xhtml" /></remarks>
         public static GraphicsResetStatus GetGraphicsResetStatus() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatus_fnptr();
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetInteger64i_v</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetInteger64i_v(GetPName target, uint index, long* data) => GLPointers._glGetInteger64i_v_fnptr((uint)target, index, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetInteger64v</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetInteger64v(GetPName pname, long* data) => GLPointers._glGetInteger64v_fnptr((uint)pname, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetIntegeri_v</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetIntegeri_v(GetPName target, uint index, int* data) => GLPointers._glGetIntegeri_v_fnptr((uint)target, index, data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetIntegerv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
         public static void GetIntegerv(GetPName pname, int* data) => GLPointers._glGetIntegerv_fnptr((uint)pname, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetInternalformativ</c>]</b><br/> Retrieve information about implementation-dependent support for internal formats. </summary>
@@ -1006,14 +1009,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="pname"> Specifies the type of information to query. </param>
         /// <param name="bufSize"> Specifies the maximum number of integers that may be written to params by the function. </param>
         /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetInternalformativ.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetInternalformativ.xhtml" /></remarks>
         public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => GLPointers._glGetInternalformativ_fnptr((uint)target, (uint)internalformat, (uint)pname, count, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetMultisamplefv</c>]</b><br/> Retrieve the location of a sample. </summary>
         /// <param name="pname"> Specifies the sample parameter name. pname must be GL_SAMPLE_POSITION. </param>
         /// <param name="index"> Specifies the index of the sample whose position to query. </param>
         /// <param name="val"> Specifies the address of an array to receive the position of the sample. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetMultisamplefv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetMultisamplefv.xhtml" /></remarks>
         public static void GetMultisamplefv(GetMultisamplePNameNV pname, uint index, float* val) => GLPointers._glGetMultisamplefv_fnptr((uint)pname, index, val);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformfv</c>]</b><br/> Returns the value of a uniform variable. </summary>
@@ -1021,7 +1024,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params. </param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetnUniformfv(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfv_fnptr(program, location, bufSize, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformiv</c>]</b><br/> Returns the value of a uniform variable. </summary>
@@ -1029,7 +1032,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params. </param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetnUniformiv(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformiv_fnptr(program, location, bufSize, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformuiv</c>]</b><br/> Returns the value of a uniform variable. </summary>
@@ -1037,7 +1040,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params. </param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetnUniformuiv(int program, int location, int bufSize, uint* parameters) => GLPointers._glGetnUniformuiv_fnptr(program, location, bufSize, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetObjectLabel</c>]</b><br/> Retrieve the label of a named object identified within a namespace. </summary>
@@ -1046,7 +1049,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bifSize">!!missing documentation!!</param>
         /// <param name="length"> The address of a variable to receive the length of the object label. </param>
         /// <param name="label"> The address of a string that will receive the object label. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetObjectLabel.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetObjectLabel.xhtml" /></remarks>
         public static void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label) => GLPointers._glGetObjectLabel_fnptr((uint)identifier, name, bufSize, length, label);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetObjectPtrLabel</c>]</b><br/> Retrieve the label of a sync object identified by a pointer. </summary>
@@ -1054,13 +1057,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bifSize">!!missing documentation!!</param>
         /// <param name="length"> The address of a variable to receive the length of the object label. </param>
         /// <param name="label"> The address of a string that will receive the object label. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetObjectPtrLabel.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetObjectPtrLabel.xhtml" /></remarks>
         public static void GetObjectPtrLabel(void* ptr, int bufSize, int* length, byte* label) => GLPointers._glGetObjectPtrLabel_fnptr(ptr, bufSize, length, label);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetPointerv</c>]</b><br/> Return the address of the specified pointer. </summary>
         /// <param name="pname"> Specifies the pointer to be returned. Must be one of GL_DEBUG_CALLBACK_FUNCTION or GL_DEBUG_CALLBACK_USER_PARAM. </param>
         /// <param name="parameters"> Returns the pointer value specified by pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetPointerv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetPointerv.xhtml" /></remarks>
         public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetProgramBinary</c>]</b><br/> Return a binary representation of a program object&apos;s compiled and linked executable source. </summary>
@@ -1069,7 +1072,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="length"> Specifies the address of a variable to receive the number of bytes written into binary. </param>
         /// <param name="binaryFormat"> Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL. </param>
         /// <param name="binary"> Specifies the address an array into which the GL will return program&apos;s binary representation. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramBinary.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramBinary.xhtml" /></remarks>
         public static void GetProgramBinary(int program, int bufSize, int* length, All* binaryFormat, void* binary) => GLPointers._glGetProgramBinary_fnptr(program, bufSize, length, (uint*)binaryFormat, binary);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetProgramInfoLog</c>]</b><br/> Returns the information log for a program object. </summary>
@@ -1077,7 +1080,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
         /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
         /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramInfoLog.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramInfoLog.xhtml" /></remarks>
         public static void GetProgramInfoLog(int program, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramInfoLog_fnptr(program, bufSize, length, infoLog);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramInterfaceiv</c>]</b><br/> Query a property of an interface in a program. </summary>
@@ -1085,14 +1088,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="programInterface"> A token identifying the interface within program to query. </param>
         /// <param name="pname"> The name of the parameter within programInterface to query. </param>
         /// <param name="parameters"> The address of a variable to retrieve the value of pname for the program interface. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramInterface.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramInterface.xhtml" /></remarks>
         public static void GetProgramInterfaceiv(int program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters) => GLPointers._glGetProgramInterfaceiv_fnptr(program, (uint)programInterface, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetProgramiv</c>]</b><br/> Returns a parameter from a program object. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_ATTACHED_SHADERS, GL_COMPUTE_WORK_GROUP_SIZE, GL_DELETE_STATUS, GL_GEOMETRY_LINKED_INPUT_TYPE, GL_GEOMETRY_LINKED_OUTPUT_TYPE, GL_GEOMETRY_LINKED_VERTICES_OUT, GL_GEOMETRY_SHADER_INVOCATIONS, GL_INFO_LOG_LENGTH, GL_LINK_STATUS, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_PROGRAM_SEPARABLE, GL_TESS_CONTROL_OUTPUT_VERTICES, GL_TESS_GEN_MODE, GL_TESS_GEN_POINT_MODE, GL_TESS_GEN_SPACING, GL_TESS_GEN_VERTEX_ORDER, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH and GL_VALIDATE_STATUS.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramiv.xhtml" /></remarks>
         public static void GetProgramiv(int program, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramPipelineInfoLog</c>]</b><br/> Retrieve the info log string from a program pipeline object. </summary>
@@ -1100,21 +1103,21 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize"> Specifies the maximum number of characters, including the null terminator, that may be written into infoLog. </param>
         /// <param name="length"> Specifies the address of a variable into which will be written the number of characters written into infoLog. </param>
         /// <param name="infoLog"> Specifies the address of an array of characters into which will be written the info log for pipeline. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramPipelineInfoLog.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramPipelineInfoLog.xhtml" /></remarks>
         public static void GetProgramPipelineInfoLog(int pipeline, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramPipelineInfoLog_fnptr(pipeline, bufSize, length, infoLog);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramPipelineiv</c>]</b><br/> Retrieve properties of a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object whose parameter retrieve. </param>
         /// <param name="pname"> Specifies the name of the parameter to retrieve. </param>
         /// <param name="parameters"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramPipeline.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramPipeline.xhtml" /></remarks>
         public static void GetProgramPipelineiv(int pipeline, PipelineParameterName pname, int* parameters) => GLPointers._glGetProgramPipelineiv_fnptr(pipeline, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramResourceIndex</c>]</b><br/> Query the index of a named resource within a program. </summary>
         /// <param name="program"> The name of a program object whose resources to query. </param>
         /// <param name="programInterface"> A token identifying the interface within program containing the resource named name. </param>
         /// <param name="name"> The name of the resource to query the index of. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramResourceIndex.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramResourceIndex.xhtml" /></remarks>
         public static uint GetProgramResourceIndex(int program, ProgramInterface programInterface, byte* name) => GLPointers._glGetProgramResourceIndex_fnptr(program, (uint)programInterface, name);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramResourceiv</c>]</b><br/> Retrieve values for multiple properties of a single active resource within a program object. </summary>
@@ -1126,14 +1129,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize">!!missing documentation!!</param>
         /// <param name="length">!!missing documentation!!</param>
         /// <param name="parameters">!!missing documentation!!</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramResource.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramResource.xhtml" /></remarks>
         public static void GetProgramResourceiv(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters) => GLPointers._glGetProgramResourceiv_fnptr(program, (uint)programInterface, index, propCount, (uint*)props, count, length, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramResourceLocation</c>]</b><br/> Query the location of a named resource within a program. </summary>
         /// <param name="program"> The name of a program object whose resources to query. </param>
         /// <param name="programInterface"> A token identifying the interface within program containing the resource named name. </param>
         /// <param name="name"> The name of the resource to query the location of. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramResourceLocation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramResourceLocation.xhtml" /></remarks>
         public static int GetProgramResourceLocation(int program, ProgramInterface programInterface, byte* name) => GLPointers._glGetProgramResourceLocation_fnptr(program, (uint)programInterface, name);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramResourceName</c>]</b><br/> Query the name of an indexed resource within a program. </summary>
@@ -1143,56 +1146,56 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize"> The size of the character array whose address is given by name. </param>
         /// <param name="length"> The address of a variable which will receive the length of the resource name. </param>
         /// <param name="name"> The address of a character array into which will be written the name of the resource. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetProgramResourceName.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramResourceName.xhtml" /></remarks>
         public static void GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, int* length, byte* name) => GLPointers._glGetProgramResourceName_fnptr(program, (uint)programInterface, index, bufSize, length, name);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetQueryiv</c>]</b><br/> Return parameters of a query object target. </summary>
         /// <param name="target"> Specifies a query object target. Must be GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object target parameter. Must be GL_CURRENT_QUERY. </param>
         /// <param name="parameters"> Returns the requested data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetQueryiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetQueryiv.xhtml" /></remarks>
         public static void GetQueryiv(QueryTarget target, QueryParameterName pname, int* parameters) => GLPointers._glGetQueryiv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetQueryObjectuiv</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="parameters"> Returns the requested data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetQueryObjectuiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetQueryObjectuiv.xhtml" /></remarks>
         public static void GetQueryObjectuiv(int id, QueryObjectParameterName pname, uint* parameters) => GLPointers._glGetQueryObjectuiv_fnptr(id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetRenderbufferParameteriv</c>]</b><br/> Retrieve information about a bound renderbuffer object. </summary>
         /// <param name="target"> Specifies the target of the query operation. target must be GL_RENDERBUFFER. </param>
         /// <param name="pname"> Specifies the parameter whose value to retrieve from the renderbuffer bound to target. </param>
         /// <param name="parameters"> Specifies the address of an array to receive the value of the queried parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetRenderbufferParameteriv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetRenderbufferParameteriv.xhtml" /></remarks>
         public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetSamplerParameterfv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
         public static void GetSamplerParameterfv(int sampler, SamplerParameterF pname, float* parameters) => GLPointers._glGetSamplerParameterfv_fnptr(sampler, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glGetSamplerParameterIiv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
         public static void GetSamplerParameterIiv(int sampler, SamplerParameterI pname, int* parameters) => GLPointers._glGetSamplerParameterIiv_fnptr(sampler, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glGetSamplerParameterIuiv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
         public static void GetSamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* parameters) => GLPointers._glGetSamplerParameterIuiv_fnptr(sampler, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetSamplerParameteriv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
         public static void GetSamplerParameteriv(int sampler, SamplerParameterI pname, int* parameters) => GLPointers._glGetSamplerParameteriv_fnptr(sampler, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetShaderInfoLog</c>]</b><br/> Returns the information log for a shader object. </summary>
@@ -1200,14 +1203,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
         /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
         /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetShaderInfoLog.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetShaderInfoLog.xhtml" /></remarks>
         public static void GetShaderInfoLog(int shader, int bufSize, int* length, byte* infoLog) => GLPointers._glGetShaderInfoLog_fnptr(shader, bufSize, length, infoLog);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetShaderiv</c>]</b><br/> Returns a parameter from a shader object. </summary>
         /// <param name="shader">Specifies the shader object to be queried.</param>
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_SHADER_TYPE, GL_DELETE_STATUS, GL_COMPILE_STATUS, GL_INFO_LOG_LENGTH, GL_SHADER_SOURCE_LENGTH.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetShaderiv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetShaderiv.xhtml" /></remarks>
         public static void GetShaderiv(int shader, ShaderParameterName pname, int* parameters) => GLPointers._glGetShaderiv_fnptr(shader, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetShaderPrecisionFormat</c>]</b><br/> Retrieve the range and precision for numeric formats supported by the shader compiler. </summary>
@@ -1215,7 +1218,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="precisionType"> Specifies the numeric format whose precision and range to query. </param>
         /// <param name="range"> Specifies the address of array of two integers into which encodings of the implementation&apos;s numeric range are returned. </param>
         /// <param name="precision"> Specifies the address of an integer into which the numeric precision of the implementation is written. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetShaderPrecisionFormat.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetShaderPrecisionFormat.xhtml" /></remarks>
         public static void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int* range, int* precision) => GLPointers._glGetShaderPrecisionFormat_fnptr((uint)shadertype, (uint)precisiontype, range, precision);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetShaderSource</c>]</b><br/> Returns the source code string from a shader object. </summary>
@@ -1223,18 +1226,18 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize">Specifies the size of the character buffer for storing the returned source code string.</param>
         /// <param name="length">Returns the length of the string returned in source (excluding the null terminator).</param>
         /// <param name="source">Specifies an array of characters that is used to return the source code string.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetShaderSource.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetShaderSource.xhtml" /></remarks>
         public static void GetShaderSource(int shader, int bufSize, int* length, byte* source) => GLPointers._glGetShaderSource_fnptr(shader, bufSize, length, source);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetString</c>]</b><br/> Return a string describing the current GL connection. </summary>
         /// <param name="name"> Specifies a symbolic constant, one of GL_EXTENSIONS, GL_RENDERER, GL_SHADING_LANGUAGE_VERSION, GL_VENDOR, or GL_VERSION. glGetStringi accepts only the GL_EXTENSIONS token. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetString.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetString.xhtml" /></remarks>
         public static byte* GetString_(StringName name) => GLPointers._glGetString_fnptr((uint)name);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetStringi</c>]</b><br/> Return a string describing the current GL connection. </summary>
         /// <param name="name"> Specifies a symbolic constant, one of GL_EXTENSIONS, GL_RENDERER, GL_SHADING_LANGUAGE_VERSION, GL_VENDOR, or GL_VERSION. glGetStringi accepts only the GL_EXTENSIONS token. </param>
         /// <param name="index"> For glGetStringi, specifies the index of the string to return. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetString.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetString.xhtml" /></remarks>
         public static byte* GetStringi_(StringName name, uint index) => GLPointers._glGetStringi_fnptr((uint)name, index);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetSynciv</c>]</b><br/> Query the properties of a sync object. </summary>
@@ -1243,7 +1246,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="bufSize"> Specifies the size of the buffer whose address is given in values. </param>
         /// <param name="length"> Specifies the address of an variable to receive the number of integers placed in values. </param>
         /// <param name="values"> Specifies the address of an array to receive the values of the queried parameter. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetSynciv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSynciv.xhtml" /></remarks>
         public static void GetSynciv(GLSync sync, SyncParameterName pname, int count, int* length, int* values) => GLPointers._glGetSynciv_fnptr((IntPtr)sync, (uint)pname, count, length, values);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetTexLevelParameterfv</c>]</b><br/> Return texture parameter values for a specific level of detail. </summary>
@@ -1251,7 +1254,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_SAMPLES, GL_TEXTURE_FIXED_SAMPLE_LOCATIONS, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_STENCIL_SIZE, GL_TEXTURE_SHARED_SIZE, GL_TEXTURE_RED_TYPE, GL_TEXTURE_GREEN_TYPE, GL_TEXTURE_BLUE_TYPE, GL_TEXTURE_ALPHA_TYPE, GL_TEXTURE_DEPTH_TYPE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_BUFFER_DATA_STORE_BINDING, GL_TEXTURE_BUFFER_OFFSET, and GL_TEXTURE_BUFFER_SIZE are accepted. </param>
         /// <param name="parameters"> Returns the requested data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexLevelParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexLevelParameter.xhtml" /></remarks>
         public static void GetTexLevelParameterfv(TextureTarget target, int level, GetTextureParameter pname, float* parameters) => GLPointers._glGetTexLevelParameterfv_fnptr((uint)target, level, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetTexLevelParameteriv</c>]</b><br/> Return texture parameter values for a specific level of detail. </summary>
@@ -1259,35 +1262,35 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_SAMPLES, GL_TEXTURE_FIXED_SAMPLE_LOCATIONS, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_STENCIL_SIZE, GL_TEXTURE_SHARED_SIZE, GL_TEXTURE_RED_TYPE, GL_TEXTURE_GREEN_TYPE, GL_TEXTURE_BLUE_TYPE, GL_TEXTURE_ALPHA_TYPE, GL_TEXTURE_DEPTH_TYPE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_BUFFER_DATA_STORE_BINDING, GL_TEXTURE_BUFFER_OFFSET, and GL_TEXTURE_BUFFER_SIZE are accepted. </param>
         /// <param name="parameters"> Returns the requested data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexLevelParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexLevelParameter.xhtml" /></remarks>
         public static void GetTexLevelParameteriv(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexLevelParameteriv_fnptr((uint)target, level, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetTexParameterfv</c>]</b><br/> Return texture parameter values. </summary>
         /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the texture parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexParameter.xhtml" /></remarks>
         public static void GetTexParameterfv(TextureTarget target, GetTextureParameter pname, float* parameters) => GLPointers._glGetTexParameterfv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glGetTexParameterIiv</c>]</b><br/> Return texture parameter values. </summary>
         /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the texture parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexParameter.xhtml" /></remarks>
         public static void GetTexParameterIiv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterIiv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glGetTexParameterIuiv</c>]</b><br/> Return texture parameter values. </summary>
         /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the texture parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexParameter.xhtml" /></remarks>
         public static void GetTexParameterIuiv(TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetTexParameterIuiv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetTexParameteriv</c>]</b><br/> Return texture parameter values. </summary>
         /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the texture parameters. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTexParameter.xhtml" /></remarks>
         public static void GetTexParameteriv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetTransformFeedbackVarying</c>]</b><br/> Retrieve information about varying variables selected for transform feedback. </summary>
@@ -1298,20 +1301,20 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size"> The address of a variable that will receive the size of the varying. </param>
         /// <param name="type"> The address of a variable that will receive the type of the varying. </param>
         /// <param name="name"> The address of a buffer into which will be written the name of the varying. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetTransformFeedbackVarying.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetTransformFeedbackVarying.xhtml" /></remarks>
         public static void GetTransformFeedbackVarying(int program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetTransformFeedbackVarying_fnptr(program, index, bufSize, length, size, (uint*)type, name);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetUniformBlockIndex</c>]</b><br/> Retrieve the index of a named uniform block. </summary>
         /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
         /// <param name="uniformBlockName"> Specifies the address an array of characters containing the name of the uniform block whose index to retrieve. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniformBlockIndex.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniformBlockIndex.xhtml" /></remarks>
         public static uint GetUniformBlockIndex(int program, byte* uniformBlockName) => GLPointers._glGetUniformBlockIndex_fnptr(program, uniformBlockName);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetUniformfv</c>]</b><br/> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetUniformfv(int program, int location, float* parameters) => GLPointers._glGetUniformfv_fnptr(program, location, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetUniformIndices</c>]</b><br/> Retrieve the index of a named uniform block. </summary>
@@ -1319,75 +1322,75 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="uniformCount"> Specifies the number of uniforms whose indices to query. </param>
         /// <param name="uniformNames"> Specifies the address of an array of pointers to buffers containing the names of the queried uniforms. </param>
         /// <param name="uniformIndices"> Specifies the address of an array that will receive the indices of the uniforms. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniformIndices.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniformIndices.xhtml" /></remarks>
         public static void GetUniformIndices(int program, int uniformCount, byte** uniformNames, uint* uniformIndices) => GLPointers._glGetUniformIndices_fnptr(program, uniformCount, uniformNames, uniformIndices);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetUniformiv</c>]</b><br/> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetUniformiv(int program, int location, int* parameters) => GLPointers._glGetUniformiv_fnptr(program, location, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetUniformLocation</c>]</b><br/> Returns the location of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="name">Points to a null terminated string containing the name of the uniform variable whose location is to be queried.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniformLocation.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniformLocation.xhtml" /></remarks>
         public static int GetUniformLocation(int program, byte* name) => GLPointers._glGetUniformLocation_fnptr(program, name);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetUniformuiv</c>]</b><br/> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
         public static void GetUniformuiv(int program, int location, uint* parameters) => GLPointers._glGetUniformuiv_fnptr(program, location, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetVertexAttribfv</c>]</b><br/> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
         /// <param name="parameters">Returns the requested data.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetVertexAttrib.xhtml" /></remarks>
         public static void GetVertexAttribfv(uint index, VertexAttribPropertyARB pname, float* parameters) => GLPointers._glGetVertexAttribfv_fnptr(index, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetVertexAttribIiv</c>]</b><br/> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
         /// <param name="parameters">Returns the requested data.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetVertexAttrib.xhtml" /></remarks>
         public static void GetVertexAttribIiv(uint index, VertexAttribEnum pname, int* parameters) => GLPointers._glGetVertexAttribIiv_fnptr(index, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetVertexAttribIuiv</c>]</b><br/> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
         /// <param name="parameters">Returns the requested data.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetVertexAttrib.xhtml" /></remarks>
         public static void GetVertexAttribIuiv(uint index, VertexAttribEnum pname, uint* parameters) => GLPointers._glGetVertexAttribIuiv_fnptr(index, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetVertexAttribiv</c>]</b><br/> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
         /// <param name="parameters">Returns the requested data.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetVertexAttrib.xhtml" /></remarks>
         public static void GetVertexAttribiv(uint index, VertexAttribPropertyARB pname, int* parameters) => GLPointers._glGetVertexAttribiv_fnptr(index, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetVertexAttribPointerv</c>]</b><br/> Return the address of the specified generic vertex attribute pointer. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be returned.</param>
         /// <param name="pname">Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.</param>
         /// <param name="pointer">Returns the pointer value.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetVertexAttribPointerv.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetVertexAttribPointerv.xhtml" /></remarks>
         public static void GetVertexAttribPointerv(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointerv_fnptr(index, (uint)pname, pointer);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glHint</c>]</b><br/> Specify implementation-specific hints. </summary>
         /// <param name="target"> Specifies a symbolic constant indicating the behavior to be controlled. GL_FRAGMENT_SHADER_DERIVATIVE_HINT, and GL_GENERATE_MIPMAP_HINT are accepted. </param>
         /// <param name="mode"> Specifies a symbolic constant indicating the desired behavior. GL_FASTEST, GL_NICEST, and GL_DONT_CARE are accepted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglHint.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glHint.xhtml" /></remarks>
         public static void Hint(HintTarget target, HintMode mode) => GLPointers._glHint_fnptr((uint)target, (uint)mode);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glInvalidateFramebuffer</c>]</b><br/> Invalidate the contents of attachments within a framebuffer. </summary>
         /// <param name="target"> Specifies the target of the invalidate operation. </param>
         /// <param name="numAttachments"> Specifies how many attachments are supplied in the attachments list. </param>
         /// <param name="attachments"> A list of numAttachments attachments to invalidate. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglInvalidateFramebuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glInvalidateFramebuffer.xhtml" /></remarks>
         public static void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments) => GLPointers._glInvalidateFramebuffer_fnptr((uint)target, numAttachments, (uint*)attachments);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glInvalidateSubFramebuffer</c>]</b><br/> Invalidate portions of the contents of attachments within a framebuffer. </summary>
@@ -1398,88 +1401,88 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="y"> Specifies the bottom origin of the pixel rectangle to invalidate, with lower left hand corner at (0,0). </param>
         /// <param name="width"> Specifies the width of the pixel rectangle to invalidate. </param>
         /// <param name="height"> Specifies the height of the pixel rectangle to invalidate. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglInvalidateSubFramebuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glInvalidateSubFramebuffer.xhtml" /></remarks>
         public static void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments, int x, int y, int width, int height) => GLPointers._glInvalidateSubFramebuffer_fnptr((uint)target, numAttachments, (uint*)attachments, x, y, width, height);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsBuffer</c>]</b><br/> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsBuffer.xhtml" /></remarks>
         public static bool IsBuffer(int buffer) => GLPointers._glIsBuffer_fnptr(buffer) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsEnabled</c>]</b><br/> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsEnabled.xhtml" /></remarks>
         public static bool IsEnabled(EnableCap cap) => GLPointers._glIsEnabled_fnptr((uint)cap) != 0;
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glIsEnabledi</c>]</b><br/> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the capability. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsEnabled.xhtml" /></remarks>
         public static bool IsEnabledi(EnableCap target, uint index) => GLPointers._glIsEnabledi_fnptr((uint)target, index) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsFramebuffer</c>]</b><br/> Determine if a name corresponds to a framebuffer object. </summary>
         /// <param name="framebuffer"> Specifies a value that may be the name of a framebuffer object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsFramebuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsFramebuffer.xhtml" /></remarks>
         public static bool IsFramebuffer(int framebuffer) => GLPointers._glIsFramebuffer_fnptr(framebuffer) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsProgram</c>]</b><br/> Determines if a name corresponds to a program object. </summary>
         /// <param name="program">Specifies a potential program object.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsProgram.xhtml" /></remarks>
         public static bool IsProgram(int program) => GLPointers._glIsProgram_fnptr(program) != 0;
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glIsProgramPipeline</c>]</b><br/> Determine if a name corresponds to a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies a value that may be the name of a program pipeline object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgramPipeline.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsProgramPipeline.xhtml" /></remarks>
         public static bool IsProgramPipeline(int pipeline) => GLPointers._glIsProgramPipeline_fnptr(pipeline) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsQuery</c>]</b><br/> Determine if a name corresponds to a query object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a query object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsQuery.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsQuery.xhtml" /></remarks>
         public static bool IsQuery(int id) => GLPointers._glIsQuery_fnptr(id) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsRenderbuffer</c>]</b><br/> Determine if a name corresponds to a renderbuffer object. </summary>
         /// <param name="renderbuffer"> Specifies a value that may be the name of a renderbuffer object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsRenderbuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsRenderbuffer.xhtml" /></remarks>
         public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbuffer_fnptr(renderbuffer) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSampler.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsSampler.xhtml" /></remarks>
         public static bool IsSampler(int sampler) => GLPointers._glIsSampler_fnptr(sampler) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsShader</c>]</b><br/> Determines if a name corresponds to a shader object. </summary>
         /// <param name="shader">Specifies a potential shader object.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsShader.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsShader.xhtml" /></remarks>
         public static bool IsShader(int shader) => GLPointers._glIsShader_fnptr(shader) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsSync</c>]</b><br/> Determine if a name corresponds to a sync object. </summary>
         /// <param name="sync"> Specifies a value that may be the name of a sync object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSync.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsSync.xhtml" /></remarks>
         public static bool IsSync(GLSync sync) => GLPointers._glIsSync_fnptr((IntPtr)sync) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glIsTexture</c>]</b><br/> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTexture.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsTexture.xhtml" /></remarks>
         public static bool IsTexture(int texture) => GLPointers._glIsTexture_fnptr(texture) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsTransformFeedback</c>]</b><br/> Determine if a name corresponds to a transform feedback object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a transform feedback object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsTransformFeedback.xhtml" /></remarks>
         public static bool IsTransformFeedback(int id) => GLPointers._glIsTransformFeedback_fnptr(id) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsVertexArray</c>]</b><br/> Determine if a name corresponds to a vertex array object. </summary>
         /// <param name="array"> Specifies a value that may be the name of a vertex array object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsVertexArray.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsVertexArray.xhtml" /></remarks>
         public static bool IsVertexArray(int array) => GLPointers._glIsVertexArray_fnptr(array) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glLineWidth</c>]</b><br/> Specify the width of rasterized lines. </summary>
         /// <param name="width"> Specifies the width of rasterized lines. The initial value is 1. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglLineWidth.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glLineWidth.xhtml" /></remarks>
         public static void LineWidth(float width) => GLPointers._glLineWidth_fnptr(width);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glLinkProgram</c>]</b><br/> Links a program object. </summary>
         /// <param name="program">Specifies the handle of the program object to be linked.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglLinkProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glLinkProgram.xhtml" /></remarks>
         public static void LinkProgram(int program) => GLPointers._glLinkProgram_fnptr(program);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glMapBufferRange</c>]</b><br/> Map a section of a buffer object&apos;s data store. </summary>
@@ -1487,22 +1490,22 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="offset"> Specifies the starting offset within the buffer of the range to be mapped. </param>
         /// <param name="length"> Specifies the length of the range to be mapped. </param>
         /// <param name="access"> Specifies a combination of access flags indicating the desired access to the range. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMapBufferRange.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMapBufferRange.xhtml" /></remarks>
         public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glMemoryBarrier</c>]</b><br/> Defines a barrier ordering memory transactions. </summary>
         /// <param name="barriers"> Specifies the barriers to insert. Must be a bitwise combination of GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT, GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT, GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT, GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_SHADER_STORAGE_BARRIER_BIT. If the special value GL_ALL_BARRIER_BITS is specified, all supported barriers will be inserted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMemoryBarrier.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMemoryBarrier.xhtml" /></remarks>
         public static void MemoryBarrier(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrier_fnptr((uint)barriers);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glMemoryBarrierByRegion</c>]</b><br/> Defines a barrier ordering memory transactions. </summary>
         /// <param name="barriers"> Specifies the barriers to insert. Must be a bitwise combination of GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT, GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT, GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT, GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_SHADER_STORAGE_BARRIER_BIT. If the special value GL_ALL_BARRIER_BITS is specified, all supported barriers will be inserted. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMemoryBarrier.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMemoryBarrier.xhtml" /></remarks>
         public static void MemoryBarrierByRegion(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrierByRegion_fnptr((uint)barriers);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glMinSampleShading</c>]</b><br/> Specifies minimum rate at which sample shading takes place. </summary>
         /// <param name="value"> Specifies the rate at which samples are shaded within each covered pixel. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMinSampleShading.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMinSampleShading.xhtml" /></remarks>
         public static void MinSampleShading(float value) => GLPointers._glMinSampleShading_fnptr(value);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glObjectLabel</c>]</b><br/> Label a named object identified within a namespace. </summary>
@@ -1510,40 +1513,40 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="name"> The name of the object to label. </param>
         /// <param name="length"> The length of the label to be used for the object. </param>
         /// <param name="label"> The address of a string containing the label to assign to the object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglObjectLabel.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glObjectLabel.xhtml" /></remarks>
         public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => GLPointers._glObjectLabel_fnptr((uint)identifier, name, length, label);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glObjectPtrLabel</c>]</b><br/> Label a sync object identified by a pointer. </summary>
         /// <param name="ptr"> A pointer identifying a sync object. </param>
         /// <param name="length"> The length of the label to be used for the object. </param>
         /// <param name="label"> The address of a string containing the label to assign to the object. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglObjectPtrLabel.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glObjectPtrLabel.xhtml" /></remarks>
         public static void ObjectPtrLabel(void* ptr, int length, byte* label) => GLPointers._glObjectPtrLabel_fnptr(ptr, length, label);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glPatchParameteri</c>]</b><br/> Specifies the parameters for patch primitives. </summary>
         /// <param name="pname"> Specifies the name of the parameter to set. The symbolc constants GL_PATCH_VERTICES is accepted. </param>
         /// <param name="value"> Specifies the new value for the parameter given by pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPatchParameteri.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPatchParameteri.xhtml" /></remarks>
         public static void PatchParameteri(PatchParameterName pname, int value) => GLPointers._glPatchParameteri_fnptr((uint)pname, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glPauseTransformFeedback</c>]</b><br/> Pause transform feedback operations. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPauseTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPauseTransformFeedback.xhtml" /></remarks>
         public static void PauseTransformFeedback() => GLPointers._glPauseTransformFeedback_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glPixelStorei</c>]</b><br/> Set pixel storage modes. </summary>
         /// <param name="pname"> Specifies the symbolic name of the parameter to be set. Four values affect the packing of pixel data into memory: GL_PACK_ROW_LENGTH, GL_PACK_SKIP_PIXELS, GL_PACK_SKIP_ROWS, and GL_PACK_ALIGNMENT. Six more affect the unpacking of pixel data from memory: GL_UNPACK_ROW_LENGTH, GL_UNPACK_IMAGE_HEIGHT, GL_UNPACK_SKIP_PIXELS, GL_UNPACK_SKIP_ROWS, GL_UNPACK_SKIP_IMAGES, and GL_UNPACK_ALIGNMENT. </param>
         /// <param name="param"> Specifies the value that pname is set to. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPixelStorei.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPixelStorei.xhtml" /></remarks>
         public static void PixelStorei(PixelStoreParameter pname, int param) => GLPointers._glPixelStorei_fnptr((uint)pname, param);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glPolygonOffset</c>]</b><br/> Set the scale and units used to calculate depth values. </summary>
         /// <param name="factor"> Specifies a scale factor that is used to create a variable depth offset for each polygon. The initial value is 0. </param>
         /// <param name="units"> Is multiplied by an implementation-specific value to create a constant depth offset. The initial value is 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPolygonOffset.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPolygonOffset.xhtml" /></remarks>
         public static void PolygonOffset(float factor, float units) => GLPointers._glPolygonOffset_fnptr(factor, units);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glPopDebugGroup</c>]</b><br/> Pop the active debug group. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPopDebugGroup.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPopDebugGroup.xhtml" /></remarks>
         public static void PopDebugGroup() => GLPointers._glPopDebugGroup_fnptr();
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glPrimitiveBoundingBox</c>]</b><br/> Set the bounding box for a primitive. </summary>
@@ -1555,7 +1558,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="maxY"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
         /// <param name="maxZ"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
         /// <param name="maxW"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPrimitiveBoundingBox.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPrimitiveBoundingBox.xhtml" /></remarks>
         public static void PrimitiveBoundingBox(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) => GLPointers._glPrimitiveBoundingBox_fnptr(minX, minY, minZ, minW, maxX, maxY, maxZ, maxW);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glProgramBinary</c>]</b><br/> Load a program object with a program binary. </summary>
@@ -1563,21 +1566,21 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="binaryFormat"> Specifies the format of the binary data in binary. </param>
         /// <param name="binary"> Specifies the address of an array containing the binary to be loaded into program. </param>
         /// <param name="length"> Specifies the number of bytes contained in binary. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramBinary.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramBinary.xhtml" /></remarks>
         public static void ProgramBinary(int program, All binaryFormat, void* binary, int length) => GLPointers._glProgramBinary_fnptr(program, (uint)binaryFormat, binary, length);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glProgramParameteri</c>]</b><br/> Specify a parameter for a program object. </summary>
         /// <param name="program"> Specifies the name of a program object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the name of the parameter to modify. </param>
         /// <param name="value"> Specifies the new value of the parameter specified by pname for program. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramParameteri.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramParameteri.xhtml" /></remarks>
         public static void ProgramParameteri(int program, ProgramParameterPName pname, int value) => GLPointers._glProgramParameteri_fnptr(program, (uint)pname, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1f</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1f(int program, int location, float v0) => GLPointers._glProgramUniform1f_fnptr(program, location, v0);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1585,14 +1588,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform1fv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1i</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1i(int program, int location, int v0) => GLPointers._glProgramUniform1i_fnptr(program, location, v0);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1iv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1600,14 +1603,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform1iv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1ui</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1ui(int program, int location, uint v0) => GLPointers._glProgramUniform1ui_fnptr(program, location, v0);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform1uiv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1615,7 +1618,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform1uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform1uiv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2f</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1623,7 +1626,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2f(int program, int location, float v0, float v1) => GLPointers._glProgramUniform2f_fnptr(program, location, v0, v1);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1631,7 +1634,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform2fv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2i</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1639,7 +1642,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2i(int program, int location, int v0, int v1) => GLPointers._glProgramUniform2i_fnptr(program, location, v0, v1);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2iv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1647,7 +1650,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform2iv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2ui</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1655,7 +1658,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2ui(int program, int location, uint v0, uint v1) => GLPointers._glProgramUniform2ui_fnptr(program, location, v0, v1);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform2uiv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1663,7 +1666,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform2uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform2uiv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3f</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1672,7 +1675,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3f(int program, int location, float v0, float v1, float v2) => GLPointers._glProgramUniform3f_fnptr(program, location, v0, v1, v2);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1680,7 +1683,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform3fv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3i</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1689,7 +1692,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3i(int program, int location, int v0, int v1, int v2) => GLPointers._glProgramUniform3i_fnptr(program, location, v0, v1, v2);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3iv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1697,7 +1700,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform3iv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3ui</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1706,7 +1709,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3ui(int program, int location, uint v0, uint v1, uint v2) => GLPointers._glProgramUniform3ui_fnptr(program, location, v0, v1, v2);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform3uiv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1714,7 +1717,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform3uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform3uiv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4f</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1724,7 +1727,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4f(int program, int location, float v0, float v1, float v2, float v3) => GLPointers._glProgramUniform4f_fnptr(program, location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1732,7 +1735,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform4fv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4i</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1742,7 +1745,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4i(int program, int location, int v0, int v1, int v2, int v3) => GLPointers._glProgramUniform4i_fnptr(program, location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4iv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1750,7 +1753,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform4iv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4ui</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1760,7 +1763,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4ui(int program, int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glProgramUniform4ui_fnptr(program, location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniform4uiv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1768,7 +1771,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniform4uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform4uiv_fnptr(program, location, count, value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix2fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1777,7 +1780,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix2x3fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1786,7 +1789,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x3fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix2x4fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1795,7 +1798,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x4fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix3fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1804,7 +1807,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix3x2fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1813,7 +1816,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x2fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix3x4fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1822,7 +1825,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x4fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix4fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1831,7 +1834,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix4x2fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1840,7 +1843,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x2fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glProgramUniformMatrix4x3fv</c>]</b><br/> Specify the value of a uniform variable for a specified program object. </summary>
@@ -1849,7 +1852,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glProgramUniform.xhtml" /></remarks>
         public static void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x3fv_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glPushDebugGroup</c>]</b><br/> Push a named debug group into the command stream. </summary>
@@ -1857,12 +1860,12 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="id"> The identifier of the message. </param>
         /// <param name="length"> The length of the message to be sent to the debug output stream. </param>
         /// <param name="message"> The a string containing the message to be sent to the debug output stream. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPushDebugGroup.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPushDebugGroup.xhtml" /></remarks>
         public static void PushDebugGroup(DebugSource source, uint id, int length, byte* message) => GLPointers._glPushDebugGroup_fnptr((uint)source, id, length, message);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glReadBuffer</c>]</b><br/> Select a color buffer source for pixels. </summary>
         /// <param name="src"> Specifies a color buffer. Accepted values are GL_BACK, GL_NONE, and GL_COLOR_ATTACHMENTi. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglReadBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glReadBuffer.xhtml" /></remarks>
         public static void ReadBuffer(ReadBufferMode src) => GLPointers._glReadBuffer_fnptr((uint)src);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glReadnPixels</c>]</b><br/> Read a block of pixels from the frame buffer. </summary>
@@ -1874,7 +1877,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
         /// <param name="bufSize"> Specifies the size of the buffer data for glReadnPixels function. </param>
         /// <param name="data"> Returns the pixel data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglReadPixels.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glReadPixels.xhtml" /></remarks>
         public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixels_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glReadPixels</c>]</b><br/> Read a block of pixels from the frame buffer. </summary>
@@ -1885,11 +1888,11 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RGBA, and GL_RGBA_INTEGER. An implementation-chosen format will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_FORMAT. </param>
         /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
         /// <param name="data"> Returns the pixel data. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglReadPixels.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glReadPixels.xhtml" /></remarks>
         public static void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glReadPixels_fnptr(x, y, width, height, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glReleaseShaderCompiler</c>]</b><br/> Release resources consumed by the implementation&apos;s shader compiler. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglReleaseShaderCompiler.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glReleaseShaderCompiler.xhtml" /></remarks>
         public static void ReleaseShaderCompiler() => GLPointers._glReleaseShaderCompiler_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glRenderbufferStorage</c>]</b><br/> Establish data storage, format and dimensions of a renderbuffer object&apos;s image. </summary>
@@ -1897,7 +1900,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="internalformat"> Specifies the internal format to use for the renderbuffer object&apos;s image. </param>
         /// <param name="width"> Specifies the width of the renderbuffer, in pixels. </param>
         /// <param name="height"> Specifies the height of the renderbuffer, in pixels. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglRenderbufferStorage.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glRenderbufferStorage.xhtml" /></remarks>
         public static void RenderbufferStorage(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorage_fnptr((uint)target, (uint)internalformat, width, height);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glRenderbufferStorageMultisample</c>]</b><br/> Establish data storage, format, dimensions and sample count of a renderbuffer object&apos;s image. </summary>
@@ -1906,65 +1909,65 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="internalformat"> Specifies the internal format to use for the renderbuffer object&apos;s image. </param>
         /// <param name="width"> Specifies the width of the renderbuffer, in pixels. </param>
         /// <param name="height"> Specifies the height of the renderbuffer, in pixels. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglRenderbufferStorageMultisample.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glRenderbufferStorageMultisample.xhtml" /></remarks>
         public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glResumeTransformFeedback</c>]</b><br/> Resume transform feedback operations. </summary>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglResumeTransformFeedback.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glResumeTransformFeedback.xhtml" /></remarks>
         public static void ResumeTransformFeedback() => GLPointers._glResumeTransformFeedback_fnptr();
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glSampleCoverage</c>]</b><br/> Specify multisample coverage parameters. </summary>
         /// <param name="value"> Specify a single floating-point sample coverage value. The value is clamped to the range 0 1 . The initial value is 1.0. </param>
         /// <param name="invert"> Specify a single boolean value representing if the coverage masks should be inverted. GL_TRUE and GL_FALSE are accepted. The initial value is GL_FALSE. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSampleCoverage.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSampleCoverage.xhtml" /></remarks>
         public static void SampleCoverage(float value, bool invert) => GLPointers._glSampleCoverage_fnptr(value, (byte)(invert ? 1 : 0));
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glSampleMaski</c>]</b><br/> Set the value of a sub-word of the sample mask. </summary>
         /// <param name="maskNumber"> Specifies which 32-bit sub-word of the sample mask to update. </param>
         /// <param name="mask"> Specifies the new value of the mask sub-word. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSampleMaski.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSampleMaski.xhtml" /></remarks>
         public static void SampleMaski(uint maskNumber, uint mask) => GLPointers._glSampleMaski_fnptr(maskNumber, mask);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameterf</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterf(int sampler, SamplerParameterF pname, float param) => GLPointers._glSamplerParameterf_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterfv(int sampler, SamplerParameterF pname, float* param) => GLPointers._glSamplerParameterfv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameteri</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameteri(int sampler, SamplerParameterI pname, int param) => GLPointers._glSamplerParameteri_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glSamplerParameterIiv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterIiv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameterIiv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glSamplerParameterIuiv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* param) => GLPointers._glSamplerParameterIuiv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSamplerParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameteriv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameteriv_fnptr(sampler, (uint)pname, param);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glScissor</c>]</b><br/> Define the scissor box. </summary>
@@ -1972,7 +1975,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="y"> Specify the lower left corner of the scissor box. Initially (0, 0). </param>
         /// <param name="width"> Specify the width and height of the scissor box. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
         /// <param name="height"> Specify the width and height of the scissor box. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglScissor.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glScissor.xhtml" /></remarks>
         public static void Scissor(int x, int y, int width, int height) => GLPointers._glScissor_fnptr(x, y, width, height);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glShaderBinary</c>]</b><br/> Load pre-compiled shader binaries. </summary>
@@ -1981,7 +1984,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="binaryFormat"> Specifies the format of the shader binaries contained in binary. </param>
         /// <param name="binary"> Specifies the address of an array of bytes containing pre-compiled binary shader code. </param>
         /// <param name="length"> Specifies the length of the array whose address is given in binary. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglShaderBinary.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glShaderBinary.xhtml" /></remarks>
         public static void ShaderBinary(int count, int* shaders, ShaderBinaryFormat binaryFormat, void* binary, int length) => GLPointers._glShaderBinary_fnptr(count, shaders, (uint)binaryFormat, binary, length);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glShaderSource</c>]</b><br/> Replaces the source code in a shader object. </summary>
@@ -1989,14 +1992,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count">Specifies the number of elements in the string and length arrays.</param>
         /// <param name="str">Specifies an array of pointers to strings containing the source code to be loaded into the shader.</param>
         /// <param name="length">Specifies an array of string lengths.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglShaderSource.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glShaderSource.xhtml" /></remarks>
         public static void ShaderSource(int shader, int count, byte** str, int* length) => GLPointers._glShaderSource_fnptr(shader, count, str, length);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilFunc</c>]</b><br/> Set front and back function and reference value for stencil testing. </summary>
         /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
         /// <param name="reference"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1&apos;s. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilFunc.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilFunc.xhtml" /></remarks>
         public static void StencilFunc(StencilFunction func, int reference, uint mask) => GLPointers._glStencilFunc_fnptr((uint)func, reference, mask);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilFuncSeparate</c>]</b><br/> Set front and/or back function and reference value for stencil testing. </summary>
@@ -2004,25 +2007,25 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
         /// <param name="reference"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1&apos;s. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilFuncSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilFuncSeparate.xhtml" /></remarks>
         public static void StencilFuncSeparate(TriangleFace face, StencilFunction func, int reference, uint mask) => GLPointers._glStencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilMask</c>]</b><br/> Control the front and back writing of individual bits in the stencil planes. </summary>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1&apos;s. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilMask.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilMask.xhtml" /></remarks>
         public static void StencilMask(uint mask) => GLPointers._glStencilMask_fnptr(mask);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilMaskSeparate</c>]</b><br/> Control the front and/or back writing of individual bits in the stencil planes. </summary>
         /// <param name="face"> Specifies whether the front and/or back stencil writemask is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1&apos;s. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilMaskSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilMaskSeparate.xhtml" /></remarks>
         public static void StencilMaskSeparate(TriangleFace face, uint mask) => GLPointers._glStencilMaskSeparate_fnptr((uint)face, mask);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilOp</c>]</b><br/> Set front and back stencil test actions. </summary>
         /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
         /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilOp.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilOp.xhtml" /></remarks>
         public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) => GLPointers._glStencilOp_fnptr((uint)fail, (uint)zfail, (uint)zpass);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glStencilOpSeparate</c>]</b><br/> Set front and/or back stencil test actions. </summary>
@@ -2030,14 +2033,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
         /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilOpSeparate.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glStencilOpSeparate.xhtml" /></remarks>
         public static void StencilOpSeparate(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._glStencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glTexBuffer</c>]</b><br/> Attach a buffer object&apos;s data store to a buffer texture object. </summary>
         /// <param name="target"> Specifies the target to which the texture is bound for glTexBuffer. Must be GL_TEXTURE_BUFFER. </param>
         /// <param name="internalFormat"> Specifies the internal format of the data in the store belonging to buffer. </param>
         /// <param name="buffer"> Specifies the name of the buffer object whose storage to attach to the active buffer texture. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexBuffer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexBuffer.xhtml" /></remarks>
         public static void TexBuffer(TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTexBuffer_fnptr((uint)target, (uint)internalformat, buffer);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glTexBufferRange</c>]</b><br/> Attach a range of a buffer object&apos;s data store to a buffer texture object. </summary>
@@ -2046,7 +2049,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="buffer"> Specifies the name of the buffer object whose storage to attach to the active buffer texture. </param>
         /// <param name="offset"> Specifies the offset of the start of the range of the buffer&apos;s data store to attach. </param>
         /// <param name="size"> Specifies the size of the range of the buffer&apos;s data store to attach. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexBufferRange.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexBufferRange.xhtml" /></remarks>
         public static void TexBufferRange(TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTexBufferRange_fnptr((uint)target, (uint)internalformat, buffer, offset, size);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexImage2D</c>]</b><br/> Specify a two-dimensional texture image. </summary>
@@ -2059,7 +2062,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL,GL_STENCIL_INDEX, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexImage2D.xhtml" /></remarks>
         public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTexImage3D</c>]</b><br/> Specify a three-dimensional texture image. </summary>
@@ -2073,49 +2076,49 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_STENCIL_INDEX, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexImage3D.xhtml" /></remarks>
         public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexParameterf</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="param"> Specifies the value of pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameterf(TextureTarget target, TextureParameterName pname, float param) => GLPointers._glTexParameterf_fnptr((uint)target, (uint)pname, param);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexParameterfv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="parameters"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameterfv(TextureTarget target, TextureParameterName pname, float* parameters) => GLPointers._glTexParameterfv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexParameteri</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="param"> Specifies the value of pname. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameteri(TextureTarget target, TextureParameterName pname, int param) => GLPointers._glTexParameteri_fnptr((uint)target, (uint)pname, param);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glTexParameterIiv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="parameters"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameterIiv(TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTexParameterIiv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glTexParameterIuiv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="parameters"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameterIuiv(TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glTexParameterIuiv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexParameteriv</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
         /// <param name="parameters"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexParameter.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexParameter.xhtml" /></remarks>
         public static void TexParameteriv(TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTexParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTexStorage2D</c>]</b><br/> Simultaneously specify storage for all levels of a two-dimensional texture. </summary>
@@ -2124,7 +2127,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="internalformat"> Specifies the sized internal format to be used to store texture image data. </param>
         /// <param name="width"> Specifies the width of the texture, in texels. </param>
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexStorage2D.xhtml" /></remarks>
         public static void TexStorage2D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTexStorage2D_fnptr((uint)target, levels, (uint)internalformat, width, height);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glTexStorage2DMultisample</c>]</b><br/> Specify storage for a two-dimensional multisample texture. </summary>
@@ -2134,7 +2137,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="width"> Specifies the width of the texture, in texels. </param>
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage2DMultisample.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexStorage2DMultisample.xhtml" /></remarks>
         public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => GLPointers._glTexStorage2DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, (byte)(fixedsamplelocations ? 1 : 0));
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTexStorage3D</c>]</b><br/> Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array, or cube map array texture. </summary>
@@ -2144,7 +2147,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="width"> Specifies the width of the texture, in texels. </param>
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
         /// <param name="depth"> Specifies the depth of the texture, in texels. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexStorage3D.xhtml" /></remarks>
         public static void TexStorage3D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3D_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glTexStorage3DMultisample</c>]</b><br/> Specify storage for a two-dimensional multisample array texture. </summary>
@@ -2155,7 +2158,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
         /// <param name="depth"> Specifies the depth of the texture, in layers. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage3DMultisample.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexStorage3DMultisample.xhtml" /></remarks>
         public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._glTexStorage3DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexSubImage2D</c>]</b><br/> Specify a two-dimensional texture subimage. </summary>
@@ -2168,7 +2171,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexSubImage2D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexSubImage2D.xhtml" /></remarks>
         public static void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage2D_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTexSubImage3D</c>]</b><br/> Specify a three-dimensional texture subimage. </summary>
@@ -2183,7 +2186,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexSubImage3D.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTexSubImage3D.xhtml" /></remarks>
         public static void TexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage3D_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTransformFeedbackVaryings</c>]</b><br/> Specify values to record in transform feedback buffers. </summary>
@@ -2191,88 +2194,88 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> The number of varying variables used for transform feedback. </param>
         /// <param name="varyings"> An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback. </param>
         /// <param name="bufferMode"> Identifies the mode used to capture the varying variables when transform feedback is active. bufferMode must be GL_INTERLEAVED_ATTRIBS or GL_SEPARATE_ATTRIBS. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTransformFeedbackVaryings.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glTransformFeedbackVaryings.xhtml" /></remarks>
         public static void TransformFeedbackVaryings(int program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryings_fnptr(program, count, varyings, (uint)bufferMode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform1f</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1f(int location, float v0) => GLPointers._glUniform1f_fnptr(location, v0);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform1fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1fv(int location, int count, float* value) => GLPointers._glUniform1fv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform1i</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1i(int location, int v0) => GLPointers._glUniform1i_fnptr(location, v0);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform1iv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1iv(int location, int count, int* value) => GLPointers._glUniform1iv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform1ui</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1ui(int location, uint v0) => GLPointers._glUniform1ui_fnptr(location, v0);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform1uiv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform1uiv(int location, int count, uint* value) => GLPointers._glUniform1uiv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform2f</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2f(int location, float v0, float v1) => GLPointers._glUniform2f_fnptr(location, v0, v1);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform2fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2fv(int location, int count, float* value) => GLPointers._glUniform2fv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform2i</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2i(int location, int v0, int v1) => GLPointers._glUniform2i_fnptr(location, v0, v1);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform2iv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2iv(int location, int count, int* value) => GLPointers._glUniform2iv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform2ui</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2ui(int location, uint v0, uint v1) => GLPointers._glUniform2ui_fnptr(location, v0, v1);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform2uiv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform2uiv(int location, int count, uint* value) => GLPointers._glUniform2uiv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform3f</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2280,14 +2283,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3f(int location, float v0, float v1, float v2) => GLPointers._glUniform3f_fnptr(location, v0, v1, v2);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform3fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3fv(int location, int count, float* value) => GLPointers._glUniform3fv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform3i</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2295,14 +2298,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3i(int location, int v0, int v1, int v2) => GLPointers._glUniform3i_fnptr(location, v0, v1, v2);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform3iv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3iv(int location, int count, int* value) => GLPointers._glUniform3iv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform3ui</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2310,14 +2313,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3ui(int location, uint v0, uint v1, uint v2) => GLPointers._glUniform3ui_fnptr(location, v0, v1, v2);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform3uiv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform3uiv(int location, int count, uint* value) => GLPointers._glUniform3uiv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform4f</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2326,14 +2329,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4f(int location, float v0, float v1, float v2, float v3) => GLPointers._glUniform4f_fnptr(location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform4fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4fv(int location, int count, float* value) => GLPointers._glUniform4fv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform4i</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2342,14 +2345,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4i(int location, int v0, int v1, int v2, int v3) => GLPointers._glUniform4i_fnptr(location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniform4iv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4iv(int location, int count, int* value) => GLPointers._glUniform4iv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform4ui</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2358,21 +2361,21 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4ui(int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glUniform4ui_fnptr(location, v0, v1, v2, v3);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniform4uiv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void Uniform4uiv(int location, int count, uint* value) => GLPointers._glUniform4uiv_fnptr(location, count, value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformBlockBinding</c>]</b><br/> Assign a binding point to an active uniform block. </summary>
         /// <param name="program"> The name of a program object containing the active uniform block whose binding to assign. </param>
         /// <param name="uniformBlockIndex"> The index of the active uniform block within program whose binding to assign. </param>
         /// <param name="uniformBlockBinding"> Specifies the binding point to which to bind the uniform block with index uniformBlockIndex within program. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniformBlockBinding.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniformBlockBinding.xhtml" /></remarks>
         public static void UniformBlockBinding(int program, uint uniformBlockIndex, uint uniformBlockBinding) => GLPointers._glUniformBlockBinding_fnptr(program, uniformBlockIndex, uniformBlockBinding);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniformMatrix2fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2380,7 +2383,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix2fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix2x3fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2388,7 +2391,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix2x3fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix2x3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix2x4fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2396,7 +2399,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix2x4fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix2x4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniformMatrix3fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2404,7 +2407,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix3fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix3x2fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2412,7 +2415,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix3x2fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix3x2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix3x4fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2420,7 +2423,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix3x4fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix3x4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUniformMatrix4fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2428,7 +2431,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix4fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix4x2fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2436,7 +2439,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix4x2fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix4x2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUniformMatrix4x3fv</c>]</b><br/> Specify the value of a uniform variable for the current program object. </summary>
@@ -2444,59 +2447,59 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUniform.xhtml" /></remarks>
         public static void UniformMatrix4x3fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix4x3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUnmapBuffer</c>]</b><br/> Map a section of a buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMapBufferRange.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMapBufferRange.xhtml" /></remarks>
         public static bool UnmapBuffer(BufferTargetARB target) => GLPointers._glUnmapBuffer_fnptr((uint)target) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUseProgram</c>]</b><br/> Installs a program object as part of current rendering state. </summary>
         /// <param name="program">Specifies the handle of the program object whose executables are to be used as part of current rendering state.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUseProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUseProgram.xhtml" /></remarks>
         public static void UseProgram(int program) => GLPointers._glUseProgram_fnptr(program);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glUseProgramStages</c>]</b><br/> Bind stages of a program object to a program pipeline. </summary>
         /// <param name="pipeline"> Specifies the program pipeline object to which to bind stages from program. </param>
         /// <param name="stages"> Specifies a set of program stages to bind to the program pipeline object. </param>
         /// <param name="program"> Specifies the program object containing the shader executables to use in pipeline. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUseProgramStages.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glUseProgramStages.xhtml" /></remarks>
         public static void UseProgramStages(int pipeline, UseProgramStageMask stages, int program) => GLPointers._glUseProgramStages_fnptr(pipeline, (uint)stages, program);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glValidateProgram</c>]</b><br/> Validates a program object. </summary>
         /// <param name="program">Specifies the handle of the program object to be validated.</param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglValidateProgram.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glValidateProgram.xhtml" /></remarks>
         public static void ValidateProgram(int program) => GLPointers._glValidateProgram_fnptr(program);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glValidateProgramPipeline</c>]</b><br/> Validate a program pipeline object against current GL state. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object to validate. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglValidateProgramPipeline.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glValidateProgramPipeline.xhtml" /></remarks>
         public static void ValidateProgramPipeline(int pipeline) => GLPointers._glValidateProgramPipeline_fnptr(pipeline);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib1f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib1f(uint index, float x) => GLPointers._glVertexAttrib1f_fnptr(index, x);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib1fv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib1fv(uint index, float* v) => GLPointers._glVertexAttrib1fv_fnptr(index, v);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib2f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib2f(uint index, float x, float y) => GLPointers._glVertexAttrib2f_fnptr(index, x, y);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib2fv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib2fv(uint index, float* v) => GLPointers._glVertexAttrib2fv_fnptr(index, v);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib3f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
@@ -2504,13 +2507,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib3f(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3f_fnptr(index, x, y, z);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib3fv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib3fv(uint index, float* v) => GLPointers._glVertexAttrib3fv_fnptr(index, v);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4f</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
@@ -2519,25 +2522,25 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4f(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4f_fnptr(index, x, y, z, w);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttrib4fv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttrib4fv(uint index, float* v) => GLPointers._glVertexAttrib4fv_fnptr(index, v);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glVertexAttribBinding</c>]</b><br/> Associate a vertex attribute and a vertex buffer binding. </summary>
         /// <param name="attribindex"> The index of the attribute to associate with a vertex buffer binding. </param>
         /// <param name="bindingindex"> The index of the vertex buffer binding with which to associate the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribBinding.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribBinding.xhtml" /></remarks>
         public static void VertexAttribBinding(uint attribindex, uint bindingindex) => GLPointers._glVertexAttribBinding_fnptr(attribindex, bindingindex);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribDivisor</c>]</b><br/> Modify the rate at which generic vertex attributes advance during instanced rendering. </summary>
         /// <param name="index"> Specify the index of the generic vertex attribute. </param>
         /// <param name="divisor"> Specify the number of instances that will pass between updates of the generic attribute at slot index. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribDivisor.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribDivisor.xhtml" /></remarks>
         public static void VertexAttribDivisor(uint index, uint divisor) => GLPointers._glVertexAttribDivisor_fnptr(index, divisor);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glVertexAttribFormat</c>]</b><br/> Specify the organization of vertex arrays. </summary>
@@ -2546,7 +2549,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> The type of the data stored in the array. </param>
         /// <param name="normalized"> Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED. </param>
         /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribFormat.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribFormat.xhtml" /></remarks>
         public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => GLPointers._glVertexAttribFormat_fnptr(attribindex, size, (uint)type, (byte)(normalized ? 1 : 0), relativeoffset);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4i</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
@@ -2555,13 +2558,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4i(uint index, int x, int y, int z, int w) => GLPointers._glVertexAttribI4i_fnptr(index, x, y, z, w);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4iv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4iv(uint index, int* v) => GLPointers._glVertexAttribI4iv_fnptr(index, v);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4ui</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
@@ -2570,13 +2573,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w) => GLPointers._glVertexAttribI4ui_fnptr(index, x, y, z, w);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribI4uiv</c>]</b><br/> Specifies the value of a generic vertex attribute. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttrib.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttrib.xhtml" /></remarks>
         public static void VertexAttribI4uiv(uint index, uint* v) => GLPointers._glVertexAttribI4uiv_fnptr(index, v);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glVertexAttribIFormat</c>]</b><br/> Specify the organization of vertex arrays. </summary>
@@ -2584,7 +2587,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size"> The number of values per vertex that are stored in the array. </param>
         /// <param name="type"> The type of the data stored in the array. </param>
         /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribFormat.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribFormat.xhtml" /></remarks>
         public static void VertexAttribIFormat(uint attribindex, int size, VertexAttribIType type, uint relativeoffset) => GLPointers._glVertexAttribIFormat_fnptr(attribindex, size, (uint)type, relativeoffset);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glVertexAttribIPointer</c>]</b><br/> Define an array of generic vertex attribute data. </summary>
@@ -2593,7 +2596,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type">Specifies the data type of each component in the array. The symbolic constants GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, and GL_UNSIGNED_INT are accepted by both functions. Additionally GL_HALF_FLOAT, GL_FLOAT, GL_FIXED, GL_INT_2_10_10_10_REV, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted by glVertexAttribPointer. The initial value is GL_FLOAT.</param>
         /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
         /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribPointer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribPointer.xhtml" /></remarks>
         public static void VertexAttribIPointer(uint index, int size, VertexAttribIType type, int stride, void* pointer) => GLPointers._glVertexAttribIPointer_fnptr(index, size, (uint)type, stride, pointer);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glVertexAttribPointer</c>]</b><br/> Define an array of generic vertex attribute data. </summary>
@@ -2603,13 +2606,13 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="normalized">For glVertexAttribPointer, specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED.</param>
         /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
         /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribPointer.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexAttribPointer.xhtml" /></remarks>
         public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => GLPointers._glVertexAttribPointer_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, pointer);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glVertexBindingDivisor</c>]</b><br/> Modify the rate at which generic vertex attributes advance. </summary>
         /// <param name="bindingindex"> The index of the binding whose divisor to modify. </param>
         /// <param name="divisor"> The new value for the instance step rate to apply. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexBindingDivisor.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glVertexBindingDivisor.xhtml" /></remarks>
         public static void VertexBindingDivisor(uint bindingindex, uint divisor) => GLPointers._glVertexBindingDivisor_fnptr(bindingindex, divisor);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glViewport</c>]</b><br/> Set the viewport. </summary>
@@ -2617,14 +2620,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="y"> Specify the lower left corner of the viewport rectangle, in pixels. The initial value is (0,0). </param>
         /// <param name="width"> Specify the width and height of the viewport. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
         /// <param name="height"> Specify the width and height of the viewport. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglViewport.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glViewport.xhtml" /></remarks>
         public static void Viewport(int x, int y, int width, int height) => GLPointers._glViewport_fnptr(x, y, width, height);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glWaitSync</c>]</b><br/> Instruct the GL server to block until the specified sync object becomes signaled. </summary>
         /// <param name="sync"> Specifies the sync object whose status to wait on. </param>
         /// <param name="flags"> A bitfield controlling the command flushing behavior. flags must be zero. </param>
         /// <param name="timeout"> Specifies the timeout that the server should wait before continuing. timeout must be GL_TIMEOUT_IGNORED. </param>
-        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglWaitSync.xhtml" /></remarks>
+        /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glWaitSync.xhtml" /></remarks>
         public static void WaitSync(GLSync sync, SyncBehaviorFlags flags, ulong timeout) => GLPointers._glWaitSync_fnptr((IntPtr)sync, (uint)flags, timeout);
         
         /// <summary>AMD extensions.</summary>
@@ -3365,7 +3368,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageCallback</c>]</b><br/> Specify a callback to receive debugging messages from the GL. </summary>
             /// <param name="callback"> The address of a callback function that will be called when a debug message is generated. </param>
             /// <param name="userParam"> A user supplied pointer that will be passed on each invocation of callback. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageCallback.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageCallback.xhtml" /></remarks>
             public static void DebugMessageCallback(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallback_fnptr(callback, userParam);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageCallbackKHR</c>]</b><br/>  </summary>
@@ -3378,7 +3381,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="count"> The length of the array ids. </param>
             /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
             /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageControl.xhtml" /></remarks>
             public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageControlKHR</c>]</b><br/>  </summary>
@@ -3391,7 +3394,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="severity"> The severity of the debug messages to insert. </param>
             /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
             /// <param name="message"> The address of a character array containing the message to insert. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageInsert.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDebugMessageInsert.xhtml" /></remarks>
             public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsert_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glDebugMessageInsertKHR</c>]</b><br/>  </summary>
@@ -3406,14 +3409,14 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="severities"> The address of an array of variables to receive the severites of the retrieved messages. </param>
             /// <param name="lengths"> The address of an array of variables to receive the lengths of the received messages. </param>
             /// <param name="messageLog"> The address of an array of characters that will receive the messages. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetDebugMessageLog.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetDebugMessageLog.xhtml" /></remarks>
             public static uint GetDebugMessageLog(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => GLPointers._glGetDebugMessageLog_fnptr(count, bufSize, (uint*)sources, (uint*)types, ids, (uint*)severities, lengths, messageLog);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetDebugMessageLogKHR</c>]</b><br/>  </summary>
             public static uint GetDebugMessageLogKHR(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => GLPointers._glGetDebugMessageLogKHR_fnptr(count, bufSize, (uint*)sources, (uint*)types, ids, (uint*)severities, lengths, messageLog);
             
             /// <summary> <b>[requires: v3.2 | GL_KHR_robustness]</b> <b>[entry point: <c>glGetGraphicsResetStatus</c>]</b><br/> Check if the rendering context has not been lost due to software or hardware issues. </summary>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetGraphicsResetStatus.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetGraphicsResetStatus.xhtml" /></remarks>
             public static GraphicsResetStatus GetGraphicsResetStatus() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatus_fnptr();
             
             /// <summary> <b>[requires: GL_KHR_robustness]</b> <b>[entry point: <c>glGetGraphicsResetStatusKHR</c>]</b><br/>  </summary>
@@ -3424,7 +3427,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params. </param>
             /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
             public static void GetnUniformfv(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfv_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformfvKHR</c>]</b><br/>  </summary>
@@ -3435,7 +3438,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params. </param>
             /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
             public static void GetnUniformiv(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformiv_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformivKHR</c>]</b><br/>  </summary>
@@ -3446,7 +3449,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params. </param>
             /// <param name="parameters">Returns the value of the specified uniform variable.</param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetUniform.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetUniform.xhtml" /></remarks>
             public static void GetnUniformuiv(int program, int location, int bufSize, uint* parameters) => GLPointers._glGetnUniformuiv_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_KHR_robustness]</b> <b>[entry point: <c>glGetnUniformuivKHR</c>]</b><br/>  </summary>
@@ -3458,7 +3461,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="bifSize">!!missing documentation!!</param>
             /// <param name="length"> The address of a variable to receive the length of the object label. </param>
             /// <param name="label"> The address of a string that will receive the object label. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetObjectLabel.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetObjectLabel.xhtml" /></remarks>
             public static void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label) => GLPointers._glGetObjectLabel_fnptr((uint)identifier, name, bufSize, length, label);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetObjectLabelKHR</c>]</b><br/>  </summary>
@@ -3469,7 +3472,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="bifSize">!!missing documentation!!</param>
             /// <param name="length"> The address of a variable to receive the length of the object label. </param>
             /// <param name="label"> The address of a string that will receive the object label. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetObjectPtrLabel.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetObjectPtrLabel.xhtml" /></remarks>
             public static void GetObjectPtrLabel(void* ptr, int bufSize, int* length, byte* label) => GLPointers._glGetObjectPtrLabel_fnptr(ptr, bufSize, length, label);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetObjectPtrLabelKHR</c>]</b><br/>  </summary>
@@ -3478,7 +3481,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetPointerv</c>]</b><br/> Return the address of the specified pointer. </summary>
             /// <param name="pname"> Specifies the pointer to be returned. Must be one of GL_DEBUG_CALLBACK_FUNCTION or GL_DEBUG_CALLBACK_USER_PARAM. </param>
             /// <param name="parameters"> Returns the pointer value specified by pname. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGetPointerv.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetPointerv.xhtml" /></remarks>
             public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetPointervKHR</c>]</b><br/>  </summary>
@@ -3492,7 +3495,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="name"> The name of the object to label. </param>
             /// <param name="length"> The length of the label to be used for the object. </param>
             /// <param name="label"> The address of a string containing the label to assign to the object. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglObjectLabel.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glObjectLabel.xhtml" /></remarks>
             public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => GLPointers._glObjectLabel_fnptr((uint)identifier, name, length, label);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glObjectLabelKHR</c>]</b><br/>  </summary>
@@ -3502,14 +3505,14 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="ptr"> A pointer identifying a sync object. </param>
             /// <param name="length"> The length of the label to be used for the object. </param>
             /// <param name="label"> The address of a string containing the label to assign to the object. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglObjectPtrLabel.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glObjectPtrLabel.xhtml" /></remarks>
             public static void ObjectPtrLabel(void* ptr, int length, byte* label) => GLPointers._glObjectPtrLabel_fnptr(ptr, length, label);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glObjectPtrLabelKHR</c>]</b><br/>  </summary>
             public static void ObjectPtrLabelKHR(void* ptr, int length, byte* label) => GLPointers._glObjectPtrLabelKHR_fnptr(ptr, length, label);
             
             /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glPopDebugGroup</c>]</b><br/> Pop the active debug group. </summary>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPopDebugGroup.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPopDebugGroup.xhtml" /></remarks>
             public static void PopDebugGroup() => GLPointers._glPopDebugGroup_fnptr();
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glPopDebugGroupKHR</c>]</b><br/>  </summary>
@@ -3520,7 +3523,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="id"> The identifier of the message. </param>
             /// <param name="length"> The length of the message to be sent to the debug output stream. </param>
             /// <param name="message"> The a string containing the message to be sent to the debug output stream. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPushDebugGroup.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glPushDebugGroup.xhtml" /></remarks>
             public static void PushDebugGroup(DebugSource source, uint id, int length, byte* message) => GLPointers._glPushDebugGroup_fnptr((uint)source, id, length, message);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glPushDebugGroupKHR</c>]</b><br/>  </summary>
@@ -3535,7 +3538,7 @@ namespace OpenTK.Graphics.OpenGLES2
             /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
             /// <param name="bufSize"> Specifies the size of the buffer data for glReadnPixels function. </param>
             /// <param name="data"> Returns the pixel data. </param>
-            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglReadPixels.xhtml" /></remarks>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glReadPixels.xhtml" /></remarks>
             public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixels_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
             
             /// <summary> <b>[requires: GL_KHR_robustness]</b> <b>[entry point: <c>glReadnPixelsKHR</c>]</b><br/>  </summary>

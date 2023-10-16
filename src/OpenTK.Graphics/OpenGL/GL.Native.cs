@@ -1,7 +1,9 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Graphics.Wgl;
+using OpenTK.Graphics.Glx;
 
 namespace OpenTK.Graphics.OpenGL
 {
@@ -11397,16 +11399,16 @@ namespace OpenTK.Graphics.OpenGL
             public static void ClearDepthdNV(double depth) => GLPointers._glClearDepthdNV_fnptr(depth);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glColor3hNV</c>]</b><br/>  </summary>
-            public static void Color3hNV(Half red, Half green, Half blue) => GLPointers._glColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
+            public static void Color3hNV(Half red, Half green, Half blue) => GLPointers._glColor3hNV_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glColor3hvNV</c>]</b><br/>  </summary>
-            public static void Color3hvNV(Half* v) => GLPointers._glColor3hvNV_fnptr((ushort*)v);
+            public static void Color3hvNV(Half* v) => GLPointers._glColor3hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glColor4hNV</c>]</b><br/>  </summary>
-            public static void Color4hNV(Half red, Half green, Half blue, Half alpha) => GLPointers._glColor4hNV_fnptr((ushort)red, (ushort)green, (ushort)blue, (ushort)alpha);
+            public static void Color4hNV(Half red, Half green, Half blue, Half alpha) => GLPointers._glColor4hNV_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glColor4hvNV</c>]</b><br/>  </summary>
-            public static void Color4hvNV(Half* v) => GLPointers._glColor4hvNV_fnptr((ushort*)v);
+            public static void Color4hvNV(Half* v) => GLPointers._glColor4hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory]</b> <b>[entry point: <c>glColorFormatNV</c>]</b><br/>  </summary>
             public static void ColorFormatNV(int size, ColorPointerType type, int stride) => GLPointers._glColorFormatNV_fnptr(size, (uint)type, stride);
@@ -11571,10 +11573,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void FogCoordFormatNV(All type, int stride) => GLPointers._glFogCoordFormatNV_fnptr((uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glFogCoordhNV</c>]</b><br/>  </summary>
-            public static void FogCoordhNV(Half fog) => GLPointers._glFogCoordhNV_fnptr((ushort)fog);
+            public static void FogCoordhNV(Half fog) => GLPointers._glFogCoordhNV_fnptr(fog);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glFogCoordhvNV</c>]</b><br/>  </summary>
-            public static void FogCoordhvNV(Half* fog) => GLPointers._glFogCoordhvNV_fnptr((ushort*)fog);
+            public static void FogCoordhvNV(Half* fog) => GLPointers._glFogCoordhvNV_fnptr(fog);
             
             /// <summary> <b>[requires: GL_NV_fragment_coverage_to_color]</b> <b>[entry point: <c>glFragmentCoverageColorNV</c>]</b><br/>  </summary>
             public static void FragmentCoverageColorNV(uint color) => GLPointers._glFragmentCoverageColorNV_fnptr(color);
@@ -12057,28 +12059,28 @@ namespace OpenTK.Graphics.OpenGL
             public static void MultiDrawMeshTasksIndirectNV(IntPtr indirect, int drawcount, int stride) => GLPointers._glMultiDrawMeshTasksIndirectNV_fnptr(indirect, drawcount, stride);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord1hNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord1hNV(TextureUnit target, Half s) => GLPointers._glMultiTexCoord1hNV_fnptr((uint)target, (ushort)s);
+            public static void MultiTexCoord1hNV(TextureUnit target, Half s) => GLPointers._glMultiTexCoord1hNV_fnptr((uint)target, s);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord1hvNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord1hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord1hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord1hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord1hvNV_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord2hNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord2hNV(TextureUnit target, Half s, Half t) => GLPointers._glMultiTexCoord2hNV_fnptr((uint)target, (ushort)s, (ushort)t);
+            public static void MultiTexCoord2hNV(TextureUnit target, Half s, Half t) => GLPointers._glMultiTexCoord2hNV_fnptr((uint)target, s, t);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord2hvNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord2hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord2hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord2hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord2hvNV_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord3hNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord3hNV(TextureUnit target, Half s, Half t, Half r) => GLPointers._glMultiTexCoord3hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r);
+            public static void MultiTexCoord3hNV(TextureUnit target, Half s, Half t, Half r) => GLPointers._glMultiTexCoord3hNV_fnptr((uint)target, s, t, r);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord3hvNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord3hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord3hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord3hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord3hvNV_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord4hNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord4hNV(TextureUnit target, Half s, Half t, Half r, Half q) => GLPointers._glMultiTexCoord4hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r, (ushort)q);
+            public static void MultiTexCoord4hNV(TextureUnit target, Half s, Half t, Half r, Half q) => GLPointers._glMultiTexCoord4hNV_fnptr((uint)target, s, t, r, q);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glMultiTexCoord4hvNV</c>]</b><br/>  </summary>
-            public static void MultiTexCoord4hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord4hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord4hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord4hvNV_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment]</b> <b>[entry point: <c>glNamedBufferAttachMemoryNV</c>]</b><br/>  </summary>
             public static void NamedBufferAttachMemoryNV(int buffer, uint memory, ulong offset) => GLPointers._glNamedBufferAttachMemoryNV_fnptr(buffer, memory, offset);
@@ -12090,10 +12092,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void NamedFramebufferSampleLocationsfvNV(int framebuffer, uint start, int count, float* v) => GLPointers._glNamedFramebufferSampleLocationsfvNV_fnptr(framebuffer, start, count, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glNormal3hNV</c>]</b><br/>  </summary>
-            public static void Normal3hNV(Half nx, Half ny, Half nz) => GLPointers._glNormal3hNV_fnptr((ushort)nx, (ushort)ny, (ushort)nz);
+            public static void Normal3hNV(Half nx, Half ny, Half nz) => GLPointers._glNormal3hNV_fnptr(nx, ny, nz);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glNormal3hvNV</c>]</b><br/>  </summary>
-            public static void Normal3hvNV(Half* v) => GLPointers._glNormal3hvNV_fnptr((ushort*)v);
+            public static void Normal3hvNV(Half* v) => GLPointers._glNormal3hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory]</b> <b>[entry point: <c>glNormalFormatNV</c>]</b><br/>  </summary>
             public static void NormalFormatNV(All type, int stride) => GLPointers._glNormalFormatNV_fnptr((uint)type, stride);
@@ -12369,10 +12371,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void ScissorExclusiveNV(int x, int y, int width, int height) => GLPointers._glScissorExclusiveNV_fnptr(x, y, width, height);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glSecondaryColor3hNV</c>]</b><br/>  </summary>
-            public static void SecondaryColor3hNV(Half red, Half green, Half blue) => GLPointers._glSecondaryColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
+            public static void SecondaryColor3hNV(Half red, Half green, Half blue) => GLPointers._glSecondaryColor3hNV_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glSecondaryColor3hvNV</c>]</b><br/>  </summary>
-            public static void SecondaryColor3hvNV(Half* v) => GLPointers._glSecondaryColor3hvNV_fnptr((ushort*)v);
+            public static void SecondaryColor3hvNV(Half* v) => GLPointers._glSecondaryColor3hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory]</b> <b>[entry point: <c>glSecondaryColorFormatNV</c>]</b><br/>  </summary>
             public static void SecondaryColorFormatNV(int size, ColorPointerType type, int stride) => GLPointers._glSecondaryColorFormatNV_fnptr(size, (uint)type, stride);
@@ -12438,28 +12440,28 @@ namespace OpenTK.Graphics.OpenGL
             public static void TexAttachMemoryNV(TextureTarget target, uint memory, ulong offset) => GLPointers._glTexAttachMemoryNV_fnptr((uint)target, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord1hNV</c>]</b><br/>  </summary>
-            public static void TexCoord1hNV(Half s) => GLPointers._glTexCoord1hNV_fnptr((ushort)s);
+            public static void TexCoord1hNV(Half s) => GLPointers._glTexCoord1hNV_fnptr(s);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord1hvNV</c>]</b><br/>  </summary>
-            public static void TexCoord1hvNV(Half* v) => GLPointers._glTexCoord1hvNV_fnptr((ushort*)v);
+            public static void TexCoord1hvNV(Half* v) => GLPointers._glTexCoord1hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord2hNV</c>]</b><br/>  </summary>
-            public static void TexCoord2hNV(Half s, Half t) => GLPointers._glTexCoord2hNV_fnptr((ushort)s, (ushort)t);
+            public static void TexCoord2hNV(Half s, Half t) => GLPointers._glTexCoord2hNV_fnptr(s, t);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord2hvNV</c>]</b><br/>  </summary>
-            public static void TexCoord2hvNV(Half* v) => GLPointers._glTexCoord2hvNV_fnptr((ushort*)v);
+            public static void TexCoord2hvNV(Half* v) => GLPointers._glTexCoord2hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord3hNV</c>]</b><br/>  </summary>
-            public static void TexCoord3hNV(Half s, Half t, Half r) => GLPointers._glTexCoord3hNV_fnptr((ushort)s, (ushort)t, (ushort)r);
+            public static void TexCoord3hNV(Half s, Half t, Half r) => GLPointers._glTexCoord3hNV_fnptr(s, t, r);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord3hvNV</c>]</b><br/>  </summary>
-            public static void TexCoord3hvNV(Half* v) => GLPointers._glTexCoord3hvNV_fnptr((ushort*)v);
+            public static void TexCoord3hvNV(Half* v) => GLPointers._glTexCoord3hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord4hNV</c>]</b><br/>  </summary>
-            public static void TexCoord4hNV(Half s, Half t, Half r, Half q) => GLPointers._glTexCoord4hNV_fnptr((ushort)s, (ushort)t, (ushort)r, (ushort)q);
+            public static void TexCoord4hNV(Half s, Half t, Half r, Half q) => GLPointers._glTexCoord4hNV_fnptr(s, t, r, q);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glTexCoord4hvNV</c>]</b><br/>  </summary>
-            public static void TexCoord4hvNV(Half* v) => GLPointers._glTexCoord4hvNV_fnptr((ushort*)v);
+            public static void TexCoord4hvNV(Half* v) => GLPointers._glTexCoord4hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory]</b> <b>[entry point: <c>glTexCoordFormatNV</c>]</b><br/>  </summary>
             public static void TexCoordFormatNV(int size, All type, int stride) => GLPointers._glTexCoordFormatNV_fnptr(size, (uint)type, stride);
@@ -12606,22 +12608,22 @@ namespace OpenTK.Graphics.OpenGL
             public static void VDPAUUnregisterSurfaceNV(IntPtr surface) => GLPointers._glVDPAUUnregisterSurfaceNV_fnptr(surface);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex2hNV</c>]</b><br/>  </summary>
-            public static void Vertex2hNV(Half x, Half y) => GLPointers._glVertex2hNV_fnptr((ushort)x, (ushort)y);
+            public static void Vertex2hNV(Half x, Half y) => GLPointers._glVertex2hNV_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex2hvNV</c>]</b><br/>  </summary>
-            public static void Vertex2hvNV(Half* v) => GLPointers._glVertex2hvNV_fnptr((ushort*)v);
+            public static void Vertex2hvNV(Half* v) => GLPointers._glVertex2hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex3hNV</c>]</b><br/>  </summary>
-            public static void Vertex3hNV(Half x, Half y, Half z) => GLPointers._glVertex3hNV_fnptr((ushort)x, (ushort)y, (ushort)z);
+            public static void Vertex3hNV(Half x, Half y, Half z) => GLPointers._glVertex3hNV_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex3hvNV</c>]</b><br/>  </summary>
-            public static void Vertex3hvNV(Half* v) => GLPointers._glVertex3hvNV_fnptr((ushort*)v);
+            public static void Vertex3hvNV(Half* v) => GLPointers._glVertex3hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex4hNV</c>]</b><br/>  </summary>
-            public static void Vertex4hNV(Half x, Half y, Half z, Half w) => GLPointers._glVertex4hNV_fnptr((ushort)x, (ushort)y, (ushort)z, (ushort)w);
+            public static void Vertex4hNV(Half x, Half y, Half z, Half w) => GLPointers._glVertex4hNV_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertex4hvNV</c>]</b><br/>  </summary>
-            public static void Vertex4hvNV(Half* v) => GLPointers._glVertex4hvNV_fnptr((ushort*)v);
+            public static void Vertex4hvNV(Half* v) => GLPointers._glVertex4hvNV_fnptr(v);
             
             /// <summary> <b>[requires: GL_NV_vertex_array_range]</b> <b>[entry point: <c>glVertexArrayRangeNV</c>]</b><br/>  </summary>
             public static void VertexArrayRangeNV(int length, void* pointer) => GLPointers._glVertexArrayRangeNV_fnptr(length, pointer);
@@ -12639,10 +12641,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttrib1fvNV(uint index, float* v) => GLPointers._glVertexAttrib1fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib1hNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib1hNV(uint index, Half x) => GLPointers._glVertexAttrib1hNV_fnptr(index, (ushort)x);
+            public static void VertexAttrib1hNV(uint index, Half x) => GLPointers._glVertexAttrib1hNV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib1hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib1hvNV(uint index, Half* v) => GLPointers._glVertexAttrib1hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib1hvNV(uint index, Half* v) => GLPointers._glVertexAttrib1hvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttrib1sNV</c>]</b><br/>  </summary>
             public static void VertexAttrib1sNV(uint index, short x) => GLPointers._glVertexAttrib1sNV_fnptr(index, x);
@@ -12663,10 +12665,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttrib2fvNV(uint index, float* v) => GLPointers._glVertexAttrib2fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib2hNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib2hNV(uint index, Half x, Half y) => GLPointers._glVertexAttrib2hNV_fnptr(index, (ushort)x, (ushort)y);
+            public static void VertexAttrib2hNV(uint index, Half x, Half y) => GLPointers._glVertexAttrib2hNV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib2hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib2hvNV(uint index, Half* v) => GLPointers._glVertexAttrib2hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib2hvNV(uint index, Half* v) => GLPointers._glVertexAttrib2hvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttrib2sNV</c>]</b><br/>  </summary>
             public static void VertexAttrib2sNV(uint index, short x, short y) => GLPointers._glVertexAttrib2sNV_fnptr(index, x, y);
@@ -12687,10 +12689,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttrib3fvNV(uint index, float* v) => GLPointers._glVertexAttrib3fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib3hNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib3hNV(uint index, Half x, Half y, Half z) => GLPointers._glVertexAttrib3hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z);
+            public static void VertexAttrib3hNV(uint index, Half x, Half y, Half z) => GLPointers._glVertexAttrib3hNV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib3hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib3hvNV(uint index, Half* v) => GLPointers._glVertexAttrib3hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib3hvNV(uint index, Half* v) => GLPointers._glVertexAttrib3hvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttrib3sNV</c>]</b><br/>  </summary>
             public static void VertexAttrib3sNV(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3sNV_fnptr(index, x, y, z);
@@ -12711,10 +12713,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttrib4fvNV(uint index, float* v) => GLPointers._glVertexAttrib4fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib4hNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib4hNV(uint index, Half x, Half y, Half z, Half w) => GLPointers._glVertexAttrib4hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z, (ushort)w);
+            public static void VertexAttrib4hNV(uint index, Half x, Half y, Half z, Half w) => GLPointers._glVertexAttrib4hNV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttrib4hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttrib4hvNV(uint index, Half* v) => GLPointers._glVertexAttrib4hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib4hvNV(uint index, Half* v) => GLPointers._glVertexAttrib4hvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttrib4sNV</c>]</b><br/>  </summary>
             public static void VertexAttrib4sNV(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4sNV_fnptr(index, x, y, z, w);
@@ -12858,7 +12860,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttribs1fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs1fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttribs1hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttribs1hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs1hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs1hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs1hvNV_fnptr(index, n, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttribs1svNV</c>]</b><br/>  </summary>
             public static void VertexAttribs1svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs1svNV_fnptr(index, count, v);
@@ -12870,7 +12872,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttribs2fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs2fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttribs2hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttribs2hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs2hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs2hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs2hvNV_fnptr(index, n, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttribs2svNV</c>]</b><br/>  </summary>
             public static void VertexAttribs2svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs2svNV_fnptr(index, count, v);
@@ -12882,7 +12884,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttribs3fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs3fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttribs3hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttribs3hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs3hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs3hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs3hvNV_fnptr(index, n, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttribs3svNV</c>]</b><br/>  </summary>
             public static void VertexAttribs3svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs3svNV_fnptr(index, count, v);
@@ -12894,7 +12896,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexAttribs4fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs4fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexAttribs4hvNV</c>]</b><br/>  </summary>
-            public static void VertexAttribs4hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs4hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs4hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs4hvNV_fnptr(index, n, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glVertexAttribs4svNV</c>]</b><br/>  </summary>
             public static void VertexAttribs4svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs4svNV_fnptr(index, count, v);
@@ -12906,10 +12908,10 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexFormatNV(int size, VertexPointerType type, int stride) => GLPointers._glVertexFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexWeighthNV</c>]</b><br/>  </summary>
-            public static void VertexWeighthNV(Half weight) => GLPointers._glVertexWeighthNV_fnptr((ushort)weight);
+            public static void VertexWeighthNV(Half weight) => GLPointers._glVertexWeighthNV_fnptr(weight);
             
             /// <summary> <b>[requires: GL_NV_half_float]</b> <b>[entry point: <c>glVertexWeighthvNV</c>]</b><br/>  </summary>
-            public static void VertexWeighthvNV(Half* weight) => GLPointers._glVertexWeighthvNV_fnptr((ushort*)weight);
+            public static void VertexWeighthvNV(Half* weight) => GLPointers._glVertexWeighthvNV_fnptr(weight);
             
             /// <summary> <b>[requires: GL_NV_video_capture]</b> <b>[entry point: <c>glVideoCaptureNV</c>]</b><br/>  </summary>
             public static All VideoCaptureNV(uint video_capture_slot, uint* sequence_num, ulong* capture_time) => (All) GLPointers._glVideoCaptureNV_fnptr(video_capture_slot, sequence_num, capture_time);

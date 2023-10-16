@@ -1,10 +1,33 @@
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Generator.Utility
 {
-    public static class NameMangler
+    public class NameManglerSettings
     {
+        public string ExtensionPrefix { get; init; }
+        public string FunctionPrefix { get; init; }
+        public List<string> EnumPrefixes { get; init; }
+        public HashSet<string> FunctionsWithoutPrefix { get; init; }
+        public HashSet<string> EnumsWithoutPrefix { get; init; }
+
+        public NameManglerSettings()
+        {
+            ExtensionPrefix = "GL_";
+            FunctionPrefix = "gl";
+            EnumPrefixes = new List<string> { "GL_" };
+            FunctionsWithoutPrefix = new HashSet<string>();
+            EnumsWithoutPrefix = new HashSet<string>();
+        }
+    }
+
+    // FIXME: Make this not a static class with static settings. Make this an object you have to pass around.
+    // This will make this much less error prone.
+    public class NameMangler
+    {
+        public NameManglerSettings Settings = new NameManglerSettings();
+
         private static readonly List<string> VendorNames = new List<string>
         {
             // This list is taken from here: https://github.com/KhronosGroup/OpenGL-Registry/tree/main/extensions
@@ -50,6 +73,11 @@ namespace Generator.Utility
             "WIN",
         };
 
+        public NameMangler(NameManglerSettings settings)
+        {
+            Settings = settings;
+        }
+
         public static string RemoveStart(string str, string start)
         {
             if (!str.StartsWith(start))
@@ -66,13 +94,13 @@ namespace Generator.Utility
             return str[0..^end.Length];
         }
 
-        public static string RemoveFunctionPrefix(string function)
+        public string RemoveFunctionPrefix(string function)
         {
             // FIXME: Get the settings from a more direct source
-            if (GeneratorSettings.Settings.FunctionsWithoutPrefix.Contains(function))
+            if (Settings.FunctionsWithoutPrefix.Contains(function))
                 return function;
 
-            string prefix = GeneratorSettings.Settings.FunctionPrefix;
+            string prefix = Settings.FunctionPrefix;
 
             if (!function.StartsWith(prefix))
                 throw new System.Exception($"'{function}' dosen't start with '{prefix}'");
@@ -80,13 +108,13 @@ namespace Generator.Utility
             return function[prefix.Length..];
         }
 
-        public static string RemoveEnumPrefix(string @enum)
+        public string RemoveEnumPrefix(string @enum)
         {
             // FIXME: Get the settings from a more direct source
-            if (GeneratorSettings.Settings.EnumsWithoutPrefix.Contains(@enum))
+            if (Settings.EnumsWithoutPrefix.Contains(@enum))
                 return @enum;
 
-            foreach (var prefix in GeneratorSettings.Settings.EnumPrefixes)
+            foreach (var prefix in Settings.EnumPrefixes)
             {
                 if (@enum.StartsWith(prefix))
                 {
@@ -94,13 +122,13 @@ namespace Generator.Utility
                 }
             }
 
-            throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", GeneratorSettings.Settings.EnumPrefixes)}'");
+            throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
         }
 
-        public static string RemoveExtensionPrefix(string extension)
+        public string RemoveExtensionPrefix(string extension)
         {
             // FIXME: Get the settings from a more direct source
-            string prefix = GeneratorSettings.Settings.ExtensionPrefix;
+            string prefix = Settings.ExtensionPrefix;
 
             if (!extension.StartsWith(prefix))
                 throw new System.Exception($"'{extension}' dosen't start with '{prefix}'");
@@ -125,13 +153,13 @@ namespace Generator.Utility
             return str;
         }
 
-        public static string MangleFunctionName(string name)
+        public string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
             return RemoveFunctionPrefix(name);
         }
 
-        public static string MangleEnumName(string name)
+        public string MangleEnumName(string name)
         {
             // Remove the "GL_" prefix.
             var mangledName = RemoveEnumPrefix(name);

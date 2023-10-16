@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -128,14 +128,6 @@ namespace OpenTK.Graphics.Glx
             _glXCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXNamedCopyBufferSubDataNV_fnptr = &glXNamedCopyBufferSubDataNV_Lazy;
-        [UnmanagedCallersOnly]
-        private static void glXNamedCopyBufferSubDataNV_Lazy(Display* dpy, IntPtr readCtx, IntPtr writeCtx, uint readBuffer, uint writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size)
-        {
-            _glXNamedCopyBufferSubDataNV_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void>)GLLoader.BindingsContext.GetProcAddress("glXNamedCopyBufferSubDataNV");
-            _glXNamedCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
-        }
-        
         internal static delegate* unmanaged<Display*, IntPtr, IntPtr, ulong, void> _glXCopyContext_fnptr = &glXCopyContext_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCopyContext_Lazy(Display* dpy, IntPtr src, IntPtr dst, ulong mask)
@@ -176,20 +168,20 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateAssociatedContextAttribsAMD_fnptr(id, share_context, attribList);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr> _glXCreateContextAttribsARB_fnptr = &glXCreateContextAttribsARB_Lazy;
-        [UnmanagedCallersOnly]
-        private static IntPtr glXCreateContextAttribsARB_Lazy(Display* dpy, IntPtr config, IntPtr share_context, byte direct, int* attrib_list)
-        {
-            _glXCreateContextAttribsARB_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContextAttribsARB");
-            return _glXCreateContextAttribsARB_fnptr(dpy, config, share_context, direct, attrib_list);
-        }
-        
         internal static delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr> _glXCreateContext_fnptr = &glXCreateContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateContext_Lazy(Display* dpy, XVisualInfo* vis, IntPtr shareList, byte direct)
         {
             _glXCreateContext_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContext");
             return _glXCreateContext_fnptr(dpy, vis, shareList, direct);
+        }
+        
+        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr> _glXCreateContextAttribsARB_fnptr = &glXCreateContextAttribsARB_Lazy;
+        [UnmanagedCallersOnly]
+        private static IntPtr glXCreateContextAttribsARB_Lazy(Display* dpy, IntPtr config, IntPtr share_context, byte direct, int* attrib_list)
+        {
+            _glXCreateContextAttribsARB_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContextAttribsARB");
+            return _glXCreateContextAttribsARB_fnptr(dpy, config, share_context, direct, attrib_list);
         }
         
         internal static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateContextWithConfigSGIX_fnptr = &glXCreateContextWithConfigSGIX_Lazy;
@@ -424,20 +416,20 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentContext_fnptr();
         }
         
-        internal static delegate* unmanaged<Display*> _glXGetCurrentDisplayEXT_fnptr = &glXGetCurrentDisplayEXT_Lazy;
-        [UnmanagedCallersOnly]
-        private static Display* glXGetCurrentDisplayEXT_Lazy()
-        {
-            _glXGetCurrentDisplayEXT_fnptr = (delegate* unmanaged<Display*>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDisplayEXT");
-            return _glXGetCurrentDisplayEXT_fnptr();
-        }
-        
         internal static delegate* unmanaged<Display*> _glXGetCurrentDisplay_fnptr = &glXGetCurrentDisplay_Lazy;
         [UnmanagedCallersOnly]
         private static Display* glXGetCurrentDisplay_Lazy()
         {
             _glXGetCurrentDisplay_fnptr = (delegate* unmanaged<Display*>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDisplay");
             return _glXGetCurrentDisplay_fnptr();
+        }
+        
+        internal static delegate* unmanaged<Display*> _glXGetCurrentDisplayEXT_fnptr = &glXGetCurrentDisplayEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static Display* glXGetCurrentDisplayEXT_Lazy()
+        {
+            _glXGetCurrentDisplayEXT_fnptr = (delegate* unmanaged<Display*>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDisplayEXT");
+            return _glXGetCurrentDisplayEXT_fnptr();
         }
         
         internal static delegate* unmanaged<nuint> _glXGetCurrentDrawable_fnptr = &glXGetCurrentDrawable_Lazy;
@@ -448,20 +440,20 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentDrawable_fnptr();
         }
         
-        internal static delegate* unmanaged<nuint> _glXGetCurrentReadDrawableSGI_fnptr = &glXGetCurrentReadDrawableSGI_Lazy;
-        [UnmanagedCallersOnly]
-        private static nuint glXGetCurrentReadDrawableSGI_Lazy()
-        {
-            _glXGetCurrentReadDrawableSGI_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentReadDrawableSGI");
-            return _glXGetCurrentReadDrawableSGI_fnptr();
-        }
-        
         internal static delegate* unmanaged<nuint> _glXGetCurrentReadDrawable_fnptr = &glXGetCurrentReadDrawable_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXGetCurrentReadDrawable_Lazy()
         {
             _glXGetCurrentReadDrawable_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentReadDrawable");
             return _glXGetCurrentReadDrawable_fnptr();
+        }
+        
+        internal static delegate* unmanaged<nuint> _glXGetCurrentReadDrawableSGI_fnptr = &glXGetCurrentReadDrawableSGI_Lazy;
+        [UnmanagedCallersOnly]
+        private static nuint glXGetCurrentReadDrawableSGI_Lazy()
+        {
+            _glXGetCurrentReadDrawableSGI_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentReadDrawableSGI");
+            return _glXGetCurrentReadDrawableSGI_fnptr();
         }
         
         internal static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttrib_fnptr = &glXGetFBConfigAttrib_Lazy;
@@ -520,20 +512,20 @@ namespace OpenTK.Graphics.Glx
             return _glXGetMscRateOML_fnptr(dpy, drawable, numerator, denominator);
         }
         
-        internal static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddressARB_fnptr = &glXGetProcAddressARB_Lazy;
-        [UnmanagedCallersOnly]
-        private static IntPtr glXGetProcAddressARB_Lazy(byte* procName)
-        {
-            _glXGetProcAddressARB_fnptr = (delegate* unmanaged<byte*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetProcAddressARB");
-            return _glXGetProcAddressARB_fnptr(procName);
-        }
-        
         internal static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddress_fnptr = &glXGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetProcAddress_Lazy(byte* procName)
         {
             _glXGetProcAddress_fnptr = (delegate* unmanaged<byte*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetProcAddress");
             return _glXGetProcAddress_fnptr(procName);
+        }
+        
+        internal static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddressARB_fnptr = &glXGetProcAddressARB_Lazy;
+        [UnmanagedCallersOnly]
+        private static IntPtr glXGetProcAddressARB_Lazy(byte* procName)
+        {
+            _glXGetProcAddressARB_fnptr = (delegate* unmanaged<byte*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetProcAddressARB");
+            return _glXGetProcAddressARB_fnptr(procName);
         }
         
         internal static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEvent_fnptr = &glXGetSelectedEvent_Lazy;
@@ -702,6 +694,14 @@ namespace OpenTK.Graphics.Glx
         {
             _glXMakeCurrentReadSGI_fnptr = (delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXMakeCurrentReadSGI");
             return _glXMakeCurrentReadSGI_fnptr(dpy, draw, read, ctx);
+        }
+        
+        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXNamedCopyBufferSubDataNV_fnptr = &glXNamedCopyBufferSubDataNV_Lazy;
+        [UnmanagedCallersOnly]
+        private static void glXNamedCopyBufferSubDataNV_Lazy(Display* dpy, IntPtr readCtx, IntPtr writeCtx, uint readBuffer, uint writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size)
+        {
+            _glXNamedCopyBufferSubDataNV_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void>)GLLoader.BindingsContext.GetProcAddress("glXNamedCopyBufferSubDataNV");
+            _glXNamedCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
         }
         
         internal static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelDeltasSGIX_fnptr = &glXQueryChannelDeltasSGIX_Lazy;
@@ -984,20 +984,20 @@ namespace OpenTK.Graphics.Glx
             return _glXSwapBuffersMscOML_fnptr(dpy, drawable, target_msc, divisor, remainder);
         }
         
-        internal static delegate* unmanaged<uint, int> _glXSwapIntervalMESA_fnptr = &glXSwapIntervalMESA_Lazy;
-        [UnmanagedCallersOnly]
-        private static int glXSwapIntervalMESA_Lazy(uint interval)
-        {
-            _glXSwapIntervalMESA_fnptr = (delegate* unmanaged<uint, int>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalMESA");
-            return _glXSwapIntervalMESA_fnptr(interval);
-        }
-        
         internal static delegate* unmanaged<Display*, nuint, int, void> _glXSwapIntervalEXT_fnptr = &glXSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void glXSwapIntervalEXT_Lazy(Display* dpy, nuint drawable, int interval)
         {
             _glXSwapIntervalEXT_fnptr = (delegate* unmanaged<Display*, nuint, int, void>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalEXT");
             _glXSwapIntervalEXT_fnptr(dpy, drawable, interval);
+        }
+        
+        internal static delegate* unmanaged<uint, int> _glXSwapIntervalMESA_fnptr = &glXSwapIntervalMESA_Lazy;
+        [UnmanagedCallersOnly]
+        private static int glXSwapIntervalMESA_Lazy(uint interval)
+        {
+            _glXSwapIntervalMESA_fnptr = (delegate* unmanaged<uint, int>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalMESA");
+            return _glXSwapIntervalMESA_fnptr(interval);
         }
         
         internal static delegate* unmanaged<int, int> _glXSwapIntervalSGI_fnptr = &glXSwapIntervalSGI_Lazy;

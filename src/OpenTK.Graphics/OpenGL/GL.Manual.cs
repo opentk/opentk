@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Core.Native;
 using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGL
@@ -69,6 +70,14 @@ namespace OpenTK.Graphics.OpenGL
             int program = GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
             return program;
+        }
+
+        /// <inheritdoc cref="TransformFeedbackVaryings(int, int, byte**, TransformFeedbackBufferMode)"/>
+        public static unsafe void TransformFeedbackVaryings(int program, int count, string[] varyings, TransformFeedbackBufferMode bufferMode)
+        {
+            IntPtr varyingsPtr = MarshalTk.MarshalStringArrayToPtr(varyings);
+            GL.TransformFeedbackVaryings(program, count, (byte**)varyingsPtr, bufferMode);
+            MarshalTk.FreeStringArrayPtr(varyingsPtr, varyings.Length);
         }
     }
 }

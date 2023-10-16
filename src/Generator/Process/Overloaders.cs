@@ -338,24 +338,24 @@ namespace Generator.Process
             return false;
         }
 
-        public record ColorLayer(List<Parameter> colorParamters, List<Parameter> pointerParameters) : IOverloadLayer
+        public record ColorLayer(List<Parameter> ColorParamters, List<Parameter> PointerParameters) : IOverloadLayer
         {
             CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                for (int i = 0; i < colorParamters.Count; i++)
+                for (int i = 0; i < ColorParamters.Count; i++)
                 {
-                    Parameter colorParamter = colorParamters[i];
+                    Parameter colorParamter = ColorParamters[i];
                     BaseCSType colorType = ((CSRef)colorParamter.Type).ReferencedType;
 
                     writer.WriteLine($"fixed ({colorType.ToCSString()}* tmp_{nameTable[colorParamter]} = &{nameTable[colorParamter]})");
                 }
                 _csScope = writer.CsScope();
 
-                for (int i = 0; i < colorParamters.Count; i++)
+                for (int i = 0; i < ColorParamters.Count; i++)
                 {
-                    Parameter colorParamter = colorParamters[i];
-                    Parameter pointerParameter = pointerParameters[i];
+                    Parameter colorParamter = ColorParamters[i];
+                    Parameter pointerParameter = PointerParameters[i];
 
                     writer.WriteLine($"{pointerParameter.Type.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.Type.ToCSString()})tmp_{nameTable[colorParamter]};");
                 }

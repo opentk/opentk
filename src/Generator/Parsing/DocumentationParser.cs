@@ -36,9 +36,12 @@ namespace Generator.Parsing
 
                 foreach (var file in folder.Files)
                 {
-                    XmlReaderSettings settings = new XmlReaderSettings { NameTable = new System.Xml.NameTable() };
-                    settings.DtdProcessing = DtdProcessing.Ignore;
-                    settings.ValidationType = ValidationType.None;
+                    XmlReaderSettings settings = new XmlReaderSettings
+                    {
+                        NameTable = new System.Xml.NameTable(),
+                        DtdProcessing = DtdProcessing.Ignore,
+                        ValidationType = ValidationType.None
+                    };
                     XmlNamespaceManager xmlns = new XmlNamespaceManager(settings.NameTable);
                     xmlns.AddNamespace("mml", "");
                     XmlParserContext context = new XmlParserContext(null, xmlns, "", XmlSpace.Default);
@@ -62,7 +65,7 @@ namespace Generator.Parsing
                             refPagesLink += $"es1.1/xhtml/{filename}.xml";
                             break;
                         case OutputApi.GLES2:
-                            refPagesLink += $"es3.0/html{filename}.xhtml";
+                            refPagesLink += $"es3.0/html/{filename}.xhtml";
                             break;
                         default:
                             throw new Exception("API not supported for documentation.");

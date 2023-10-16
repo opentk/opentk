@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -1417,6 +1417,15 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
+    public enum ScalarType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+        Float = 5126,
+    }
     public enum WeightPointerTypeARB : uint
     {
         Byte = 5120,
@@ -1500,12 +1509,6 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedInt = 5125,
         Float = 5126,
         Fixed = 5132,
-    }
-    public enum ScalarType : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
     }
     public enum ReplacementCodeTypeSUN : uint
     {
@@ -1756,18 +1759,18 @@ namespace OpenTK.Graphics.OpenGLES1
         NearestMipmapLinear = 9986,
         LinearMipmapLinear = 9987,
     }
-    public enum TextureWrapMode : uint
-    {
-        LinearMipmapLinear = 9987,
-        Repeat = 10497,
-        ClampToEdge = 33071,
-    }
     public enum SamplerParameterI : uint
     {
         TextureMagFilter = 10240,
         TextureMinFilter = 10241,
         TextureWrapS = 10242,
         TextureWrapT = 10243,
+    }
+    public enum TextureWrapMode : uint
+    {
+        Repeat = 10497,
+        ClampToEdge = 33071,
+        MirroredRepeatOes = 33648,
     }
     ///<summary>Used in <see cref="GL.EXT.TexStorage1DEXT" />, <see cref="GL.EXT.TexStorage2DEXT" />, <see cref="GL.EXT.TexStorage3DEXT" />, ...</summary>
     public enum SizedInternalFormat : uint

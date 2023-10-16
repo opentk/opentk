@@ -549,8 +549,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>GLint</ptype> <name>dstY0</name></param>
             <param><ptype>GLint</ptype> <name>dstX1</name></param>
             <param><ptype>GLint</ptype> <name>dstY1</name></param>
-            <!-- FIXME: Refer to GL enums/enum groups -->
-            <param><ptype>GLbitfield</ptype> <name>mask</name></param>
+            <param group="gl::ClearBufferMask"><ptype>GLbitfield</ptype> <name>mask</name></param>
             <param><ptype>GLenum</ptype> <name>filter</name></param>
         </command>
         <command>
@@ -575,21 +574,20 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>BOOL</ptype> <name>wglCopyContext</name></proto>
             <param><ptype>HGLRC</ptype> <name>hglrcSrc</name></param>
             <param><ptype>HGLRC</ptype> <name>hglrcDst</name></param>
-            <!-- FIXME: Reference GL enums/enum groups -->
-            <param><ptype>UINT</ptype> <name>mask</name></param>
+            <param group="gl::AttribMask"><ptype>UINT</ptype> <name>mask</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglCopyImageSubDataNV</name></proto>
             <param><ptype>HGLRC</ptype> <name>hSrcRC</name></param>
             <param><ptype>GLuint</ptype> <name>srcName</name></param>
-            <param><ptype>GLenum</ptype> <name>srcTarget</name></param>
+            <param group="gl::TextureTarget"><ptype>GLenum</ptype> <name>srcTarget</name></param>
             <param><ptype>GLint</ptype> <name>srcLevel</name></param>
             <param><ptype>GLint</ptype> <name>srcX</name></param>
             <param><ptype>GLint</ptype> <name>srcY</name></param>
             <param><ptype>GLint</ptype> <name>srcZ</name></param>
             <param><ptype>HGLRC</ptype> <name>hDstRC</name></param>
             <param><ptype>GLuint</ptype> <name>dstName</name></param>
-            <param><ptype>GLenum</ptype> <name>dstTarget</name></param>
+            <param group="gl::TextureTarget"><ptype>GLenum</ptype> <name>dstTarget</name></param>
             <param><ptype>GLint</ptype> <name>dstLevel</name></param>
             <param><ptype>GLint</ptype> <name>dstX</name></param>
             <param><ptype>GLint</ptype> <name>dstY</name></param>
@@ -736,8 +734,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>HANDLE</ptype> <name>hDevice</name></param>
             <param len="1">void *<name>dxObject</name></param>
             <param><ptype>GLuint</ptype> <name>name</name></param>
-            <!-- FIXME: reference GL enums? -->
-            <param ><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="ObjectTypeDX"><ptype>GLenum</ptype> <name>type</name></param>
             <param group="WGLDXInteropMaskNV"><ptype>GLenum</ptype> <name>access</name></param>
         </command>
         <command>
@@ -907,8 +904,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>INT</ptype> <name>wglGetGPUInfoAMD</name></proto>
             <param><ptype>UINT</ptype> <name>id</name></param>
             <param group="GPUPropertyAMD"><ptype>INT</ptype> <name>property</name></param>
-            <!-- FIXME: Reference to GL enum/enum group -->
-            <param><ptype>GLenum</ptype> <name>dataType</name></param>
+            <param group="gl::ScalarType"><ptype>GLenum</ptype> <name>dataType</name></param>
             <param><ptype>UINT</ptype> <name>size</name></param>
             <param len="COMPSIZE(property, dataType, size)">void *<name>data</name></param>
         </command>

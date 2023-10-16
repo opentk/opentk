@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -2676,6 +2676,55 @@ namespace OpenTK.Graphics.OpenGLES2
         ArcToNv = 254,
         RelativeArcToNv = 255,
     }
+    public enum PathRenderingTokenNV : uint
+    {
+        ClosePathNv = 0,
+        MoveToNv = 2,
+        RelativeMoveToNv = 3,
+        LineToNv = 4,
+        RelativeLineToNv = 5,
+        HorizontalLineToNv = 6,
+        RelativeHorizontalLineToNv = 7,
+        VerticalLineToNv = 8,
+        RelativeVerticalLineToNv = 9,
+        QuadraticCurveToNv = 10,
+        RelativeQuadraticCurveToNv = 11,
+        CubicCurveToNv = 12,
+        RelativeCubicCurveToNv = 13,
+        SmoothQuadraticCurveToNv = 14,
+        RelativeSmoothQuadraticCurveToNv = 15,
+        SmoothCubicCurveToNv = 16,
+        RelativeSmoothCubicCurveToNv = 17,
+        SmallCcwArcToNv = 18,
+        RelativeSmallCcwArcToNv = 19,
+        SmallCwArcToNv = 20,
+        RelativeSmallCwArcToNv = 21,
+        LargeCcwArcToNv = 22,
+        RelativeLargeCcwArcToNv = 23,
+        LargeCwArcToNv = 24,
+        RelativeLargeCwArcToNv = 25,
+        ConicCurveToNv = 26,
+        RelativeConicCurveToNv = 27,
+        SharedEdgeNv = 192,
+        RoundedRectNv = 232,
+        RelativeRoundedRectNv = 233,
+        RoundedRect2Nv = 234,
+        RelativeRoundedRect2Nv = 235,
+        RoundedRect4Nv = 236,
+        RelativeRoundedRect4Nv = 237,
+        RoundedRect8Nv = 238,
+        RelativeRoundedRect8Nv = 239,
+        RestartPathNv = 240,
+        DupFirstCubicCurveToNv = 242,
+        DupLastCubicCurveToNv = 244,
+        RectNv = 246,
+        RelativeRectNv = 247,
+        CircularCcwArcToNv = 248,
+        CircularCwArcToNv = 250,
+        CircularTangentArcToNv = 252,
+        ArcToNv = 254,
+        RelativeArcToNv = 255,
+    }
     public enum Boolean : uint
     {
         False = 0,
@@ -3494,6 +3543,16 @@ namespace OpenTK.Graphics.OpenGLES2
         Int = 5124,
         UnsignedInt = 5125,
     }
+    public enum ScalarType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+    }
     public enum WeightPointerTypeARB : uint
     {
         Byte = 5120,
@@ -3607,12 +3666,6 @@ namespace OpenTK.Graphics.OpenGLES2
         UnsignedInt2101010RevExt = 33640,
         UnsignedInt10f11f11fRev = 35899,
         Int2101010Rev = 36255,
-    }
-    public enum ScalarType : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
     }
     public enum ReplacementCodeTypeSUN : uint
     {
@@ -4250,15 +4303,6 @@ namespace OpenTK.Graphics.OpenGLES2
         NearestMipmapLinear = 9986,
         LinearMipmapLinear = 9987,
     }
-    public enum TextureWrapMode : uint
-    {
-        LinearMipmapLinear = 9987,
-        Repeat = 10497,
-        ClampToBorder = 33069,
-        ClampToBorderNv = 33069,
-        ClampToEdge = 33071,
-        MirroredRepeat = 33648,
-    }
     ///<summary>Used in <see cref="GL.GetSamplerParameterIiv" />, <see cref="GL.GetSamplerParameterIuiv" />, <see cref="GL.GetSamplerParameteriv" />, ...</summary>
     public enum SamplerParameterI : uint
     {
@@ -4270,6 +4314,16 @@ namespace OpenTK.Graphics.OpenGLES2
         TextureCompareMode = 34892,
         TextureCompareFunc = 34893,
         TextureUnnormalizedCoordinatesArm = 36714,
+    }
+    public enum TextureWrapMode : uint
+    {
+        Repeat = 10497,
+        ClampToBorder = 33069,
+        ClampToBorderExt = 33069,
+        ClampToBorderNv = 33069,
+        ClampToBorderOes = 33069,
+        ClampToEdge = 33071,
+        MirroredRepeat = 33648,
     }
     ///<summary>Used in <see cref="GL.TexBuffer" />, <see cref="GL.TexBufferRange" />, <see cref="GL.TexStorage2D" />, ...</summary>
     public enum SizedInternalFormat : uint

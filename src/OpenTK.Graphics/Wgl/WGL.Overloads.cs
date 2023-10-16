@@ -1,9 +1,11 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.Glx;
 
 namespace OpenTK.Graphics.Wgl
 {
@@ -279,16 +281,16 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, All, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD(uint id, GPUPropertyAMD property, All dataType, uint size, IntPtr data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, IntPtr data)
             {
                 int returnValue;
                 void* data_vptr = (void*)data;
                 returnValue = GetGPUInfoAMD(id, property, dataType, size, data_vptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, All, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, All dataType, uint size, Span<T1> data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, Span<T1> data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -298,8 +300,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, All, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, All dataType, uint size, T1[] data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, T1[] data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -309,8 +311,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, All, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, All dataType, uint size, ref T1 data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, ref T1 data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -1426,16 +1428,16 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, All, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV(IntPtr hDevice, IntPtr dxObject, uint name, All type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV(IntPtr hDevice, IntPtr dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
             {
                 IntPtr returnValue;
                 void* dxObject_vptr = (void*)dxObject;
                 returnValue = DXRegisterObjectNV(hDevice, dxObject_vptr, name, type, access);
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, All, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, Span<T1> dxObject, uint name, All type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, Span<T1> dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -1445,8 +1447,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, All, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, T1[] dxObject, uint name, All type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, T1[] dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -1456,8 +1458,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, All, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, ref T1 dxObject, uint name, All type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, ref T1 dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;

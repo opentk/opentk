@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:28 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Glx
@@ -301,6 +301,42 @@ namespace OpenTK.Graphics.Glx
         BufferClobberMaskSgix = 134217728,
         PbufferClobberMask = 134217728,
         DontCare = 4294967295,
+    }
+    public enum GLXAttribute : uint
+    {
+        UseGl = 1,
+        BufferSize = 2,
+        Level = 3,
+        Rgba = 4,
+        Doublebuffer = 5,
+        Stereo = 6,
+        AuxBuffers = 7,
+        RedSize = 8,
+        GreenSize = 9,
+        BlueSize = 10,
+        AlphaSize = 11,
+        DepthSize = 12,
+        StencilSize = 13,
+        AccumRedSize = 14,
+        AccumGreenSize = 15,
+        AccumBlueSize = 16,
+        AccumAlphaSize = 17,
+        ConfigCaveat = 32,
+        VisualCaveatExt = 32,
+        XVisualType = 34,
+        XVisualTypeExt = 34,
+        TransparentType = 35,
+        TransparentTypeExt = 35,
+        TransparentIndexValue = 36,
+        TransparentIndexValueExt = 36,
+        TransparentRedValue = 37,
+        TransparentRedValueExt = 37,
+        TransparentGreenValue = 38,
+        TransparentGreenValueExt = 38,
+        TransparentBlueValue = 39,
+        TransparentBlueValueExt = 39,
+        TransparentAlphaValue = 40,
+        TransparentAlphaValueExt = 40,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

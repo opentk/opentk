@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:27 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
@@ -11,6 +11,7 @@ namespace OpenTK.Graphics.Wgl
         AccessReadOnlyNv = 0,
         ContextReleaseBehaviorNoneArb = 0,
         FontLines = 0,
+        None = 0,
         AccessReadWriteNv = 1,
         ContextCoreProfileBitArb = 1,
         ContextDebugBitArb = 1,
@@ -40,6 +41,7 @@ namespace OpenTK.Graphics.Wgl
         SwapOverlay9 = 512,
         SwapOverlay10 = 1024,
         SwapOverlay11 = 2048,
+        Texture2d = 3553,
         SwapOverlay12 = 4096,
         GpuVendorAmd = 7936,
         GpuRendererStringAmd = 7937,
@@ -287,9 +289,13 @@ namespace OpenTK.Graphics.Wgl
         ContextOpenglNoErrorArb = 12723,
         SwapOverlay14 = 16384,
         SwapOverlay15 = 32768,
+        Texture3d = 32879,
         LoseContextOnResetArb = 33362,
         ContextResetNotificationStrategyArb = 33366,
         NoResetNotificationArb = 33377,
+        TextureRectangle = 34037,
+        TextureCubeMap = 34067,
+        Renderbuffer = 36161,
         ContextProfileMaskArb = 37158,
         SwapUnderlay1 = 65536,
         SwapUnderlay2 = 131072,
@@ -306,6 +312,16 @@ namespace OpenTK.Graphics.Wgl
         SwapUnderlay13 = 268435456,
         SwapUnderlay14 = 536870912,
         SwapUnderlay15 = 1073741824,
+    }
+    ///<summary>Used in <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
+    public enum ObjectTypeDX : uint
+    {
+        None = 0,
+        Texture2d = 3553,
+        Texture3d = 32879,
+        TextureRectangle = 34037,
+        TextureCubeMap = 34067,
+        Renderbuffer = 36161,
     }
     ///<summary>Used in <see cref="WGL.SwapLayerBuffers" />, <see cref="WGL.OML.SwapLayerBuffersMscOML" /></summary>
     [Flags]

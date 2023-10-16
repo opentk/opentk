@@ -4,25 +4,41 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using Generator.Parsing;
 using System.CodeDom.Compiler;
+using Generator.Utility;
 
 namespace Generator.Writing
 {
-    // FIXME: Add the needed properties for apis here...
-    //public record API(string name, APIVersion[] APIVersions);
+    public record OutputData(
+        /* FIXME: Maybe do like this?
+        Namespace GL,
+        Namespace GLCompat,
+        Namespace GLES1,
+        Namespace GLES2,
+        Namespace WGL,
+        Namespace GLX,
+        */
 
-    //public record APIVersion(Version Version, Function[] Functions /* something enums */);
+        List<Pointers> Pointers,
+        List<Namespace> Namespaces);
 
-    //public record Extension(string name, Function[] Functions /* something enums */);
+    // FIXME: Maybe change to API.. something? "namespace" is quite generic.
+    public record Namespace(
+        OutputApi Name,
+        SortedDictionary<string, GLVendorFunctions> Vendors,
+        List<EnumGroup> EnumGroups,
+        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
-    //public record Function(NativeFunction Native, Overload[] Overloads);
+    public record Pointers(
+        GLFile File,
+        List<NativeFunction> NativeFunctions);
 
-    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
-
+    /*
     public record GLOutputApi(
         OutputApi Api,
         SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
+    */
 
     public record FunctionDocumentation(
         string Name,
@@ -52,7 +68,8 @@ namespace Generator.Writing
         string FunctionName,
         List<Parameter> Parameters,
         BaseCSType ReturnType,
-        string[] ReferencedEnumGroups);
+        // FIXME: Convert referencedEnumGroups to use GroupRef!
+        GroupRef[] ReferencedEnumGroups);
 
     public record Overload(
         Overload? NestedOverload,
@@ -74,8 +91,9 @@ namespace Generator.Writing
 
     public record EnumGroupMember(
         string Name,
+        string MangledName,
         ulong Value,
-        string[] Groups,
+        GroupRef[] Groups,
         bool IsFlag) : IEquatable<EnumGroupMember?>;
 
     public record EnumGroup(
@@ -120,13 +138,32 @@ namespace Generator.Writing
 
     public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
+        // FIXME: const??
+        public static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const);
+        public static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const);
+        public static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const);
+        public static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const);
+        public static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const);
+        public static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const);
+        public static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const);
+        public static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const);
+
+        public static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const);
+        public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
+        public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
+
+        public static CSPrimitive Half(bool @const) => new CSPrimitive("Half", @const);
+        public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
+        public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
+
         public override string ToCSString()
         {
             return TypeName;
         }
     }
 
-    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    // FIXME: Maybe combine TypeName and GroupRef.
+    public record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -348,5 +385,17 @@ namespace Generator.Writing
         GLES2,
         WGL,
         GLX,
+    }
+
+    [Flags]
+    public enum OutputApiFlags
+    {
+        None = 0,
+        GL = 1 << 0,
+        GLCompat = 1 << 1,
+        GLES1 = 1 << 2,
+        GLES2 = 1 << 3,
+        WGL = 1 << 4,
+        GLX = 1 << 5,
     }
 }
