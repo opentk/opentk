@@ -277,8 +277,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x2041"        name="WGL_SAMPLE_BUFFERS_ARB"/>
         <enum value="0x2041"        name="WGL_SAMPLE_BUFFERS_EXT"/>
         <enum value="0x2042"        name="WGL_COVERAGE_SAMPLES_NV"/>
-        <enum value="0x2042"        name="WGL_SAMPLES_ARB"/>
-        <enum value="0x2042"        name="WGL_SAMPLES_EXT"/>
+        <enum value="0x2042"        name="WGL_SAMPLES_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2042"        name="WGL_SAMPLES_EXT" group="PixelFormatAttribute"/>
         <enum value="0x2043"        name="ERROR_INVALID_PIXEL_TYPE_ARB"/>
         <enum value="0x2043"        name="ERROR_INVALID_PIXEL_TYPE_EXT"/>
         <enum value="0x2044"        name="WGL_GENLOCK_SOURCE_MULTIVIEW_I3D"/>
@@ -345,10 +345,10 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x208E"        name="WGL_AUX7_ARB" group="ColorBuffer"/>
         <enum value="0x208F"        name="WGL_AUX8_ARB" group="ColorBuffer"/>
         <enum value="0x2090"        name="WGL_AUX9_ARB" group="ColorBuffer"/>
-        <enum value="0x2091"        name="WGL_CONTEXT_MAJOR_VERSION_ARB"/>
-        <enum value="0x2092"        name="WGL_CONTEXT_MINOR_VERSION_ARB"/>
-        <enum value="0x2093"        name="WGL_CONTEXT_LAYER_PLANE_ARB"/>
-        <enum value="0x2094"        name="WGL_CONTEXT_FLAGS_ARB"/>
+        <enum value="0x2091"        name="WGL_CONTEXT_MAJOR_VERSION_ARB" group="ContextAttribs"/>
+        <enum value="0x2092"        name="WGL_CONTEXT_MINOR_VERSION_ARB" group="ContextAttribs"/>
+        <enum value="0x2093"        name="WGL_CONTEXT_LAYER_PLANE_ARB" group="ContextAttribs"/>
+        <enum value="0x2094"        name="WGL_CONTEXT_FLAGS_ARB" group="ContextAttribs"/>
         <enum value="0x2095"        name="ERROR_INVALID_VERSION_ARB"/>
         <enum value="0x2096"        name="ERROR_INVALID_PROFILE_ARB"/>
         <enum value="0x2097"        name="WGL_CONTEXT_RELEASE_BEHAVIOR_ARB"/>
@@ -366,8 +366,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x20A6"        name="WGL_TEXTURE_DEPTH_COMPONENT_NV"/>
         <enum value="0x20A7"        name="WGL_DEPTH_COMPONENT_NV"/>
         <enum value="0x20A8"        name="WGL_TYPE_RGBA_UNSIGNED_FLOAT_EXT"/>
-        <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_ARB"/>
-        <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT"/>
+        <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT" group="PixelFormatAttribute"/>
         <enum value="0x20AA"        name="WGL_CONTEXT_MULTIGPU_ATTRIB_NV"/>
         <enum value="0x20AB"        name="WGL_CONTEXT_MULTIGPU_ATTRIB_SINGLE_NV"/>
         <enum value="0x20AC"        name="WGL_CONTEXT_MULTIGPU_ATTRIB_AFR_NV"/>
@@ -457,7 +457,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="GL" start="0x9120" end="0x912F"  vendor="ARB" comment="Values shared with GL. Do not allocate additional values in this range.">
-        <enum value="0x9126"        name="WGL_CONTEXT_PROFILE_MASK_ARB"/>
+        <enum value="0x9126"        name="WGL_CONTEXT_PROFILE_MASK_ARB" group="ContextAttribs"/>
     </enums>
 
     <!-- SECTION: WGL command definitions. -->
@@ -555,8 +555,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglChoosePixelFormatARB</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param>const int *<name>piAttribIList</name></param>
-            <param>const <ptype>FLOAT</ptype> *<name>pfAttribFList</name></param>
+            <param group="PixelFormatAttribute" len="COMPSIZE()">const int *<name>piAttribIList</name></param>
+            <param len="COMPSIZE()">const <ptype>FLOAT</ptype> *<name>pfAttribFList</name></param>
             <param><ptype>UINT</ptype> <name>nMaxFormats</name></param>
             <param len="nMaxFormats">int *<name>piFormats</name></param>
             <param len="1"><ptype>UINT</ptype> *<name>nNumFormats</name></param>
@@ -624,7 +624,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>HGLRC</ptype> <name>wglCreateContextAttribsARB</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param><ptype>HGLRC</ptype> <name>hShareContext</name></param>
-            <param>const int *<name>attribList</name></param>
+            <param group="ContextAttribs" len="COMPSIZE()">const int *<name>attribList</name></param>
         </command>
         <command>
             <proto><ptype>GLboolean</ptype> <name>wglCreateDisplayColorTableEXT</name></proto>
@@ -936,7 +936,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param len="nAttributes">const int *<name>piAttributes</name></param>
+            <param group="PixelFormatAttribute" len="nAttributes">const int *<name>piAttributes</name></param>
             <param len="nAttributes"><ptype>FLOAT</ptype> *<name>pfValues</name></param>
         </command>
         <command>
@@ -945,7 +945,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param len="nAttributes">int *<name>piAttributes</name></param>
+            <param group="PixelFormatAttribute" len="nAttributes">int *<name>piAttributes</name></param>
             <param len="nAttributes"><ptype>FLOAT</ptype> *<name>pfValues</name></param>
         </command>
         <command>
@@ -954,7 +954,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param len="nAttributes">const int *<name>piAttributes</name></param>
+            <param group="PixelFormatAttribute" len="nAttributes">const int *<name>piAttributes</name></param>
             <param len="nAttributes">int *<name>piValues</name></param>
         </command>
         <command>
@@ -963,7 +963,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param len="nAttributes">int *<name>piAttributes</name></param>
+            <param group="PixelFormatAttribute" len="nAttributes">int *<name>piAttributes</name></param>
             <param len="nAttributes">int *<name>piValues</name></param>
         </command>
         <command>

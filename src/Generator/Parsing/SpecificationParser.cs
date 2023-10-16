@@ -188,6 +188,12 @@ namespace Generator.Parsing
                                 enumNameToReference.Add(enumName, value);
                             }
 
+                            // If this enum value was removed and later readded.
+                            if (value.RemovedIn != null && feature.Version > value.RemovedIn)
+                            {
+                                value = value with { AddedIn = feature.Version, RemovedIn = null };
+                            }
+
                             // FIXME: This isn't strictly needed... they are already going to be in order.
                             if (feature.Version < value.AddedIn)
                             {

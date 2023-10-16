@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 16:54:18 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -6,9 +6,9 @@ using OpenTK.Graphics;
 namespace OpenTK.Graphics.Wgl
 {
     /// <summary>A collection of all function pointers to all OpenGL entry points.</summary>
-    public static unsafe partial class WGLPointers
+    public static unsafe partial class WglPointers
     {
-        internal static delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int> _ChoosePixelFormat_fnptr = &ChoosePixelFormat_Lazy;
+        public static delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int> _ChoosePixelFormat_fnptr = &ChoosePixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static int ChoosePixelFormat_Lazy(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
@@ -16,7 +16,7 @@ namespace OpenTK.Graphics.Wgl
             return _ChoosePixelFormat_fnptr(hDc, pPfd);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int> _DescribePixelFormat_fnptr = &DescribePixelFormat_Lazy;
+        public static delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int> _DescribePixelFormat_fnptr = &DescribePixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static int DescribePixelFormat_Lazy(IntPtr hdc, int ipfd, uint cjpfd, PixelFormatDescriptor* ppfd)
         {
@@ -24,7 +24,7 @@ namespace OpenTK.Graphics.Wgl
             return _DescribePixelFormat_fnptr(hdc, ipfd, cjpfd, ppfd);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
         {
@@ -32,7 +32,7 @@ namespace OpenTK.Graphics.Wgl
             return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _GetPixelFormat_fnptr = &GetPixelFormat_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _GetPixelFormat_fnptr = &GetPixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static int GetPixelFormat_Lazy(IntPtr hdc)
         {
@@ -40,7 +40,7 @@ namespace OpenTK.Graphics.Wgl
             return _GetPixelFormat_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int> _SetPixelFormat_fnptr = &SetPixelFormat_Lazy;
+        public static delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int> _SetPixelFormat_fnptr = &SetPixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static int SetPixelFormat_Lazy(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
@@ -48,7 +48,7 @@ namespace OpenTK.Graphics.Wgl
             return _SetPixelFormat_fnptr(hdc, ipfd, ppfd);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _SwapBuffers_fnptr = &SwapBuffers_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _SwapBuffers_fnptr = &SwapBuffers_Lazy;
         [UnmanagedCallersOnly]
         private static int SwapBuffers_Lazy(IntPtr hdc)
         {
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.Wgl
             return _SwapBuffers_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<int, float, float, float, void*> _wglAllocateMemoryNV_fnptr = &wglAllocateMemoryNV_Lazy;
+        public static delegate* unmanaged<int, float, float, float, void*> _wglAllocateMemoryNV_fnptr = &wglAllocateMemoryNV_Lazy;
         [UnmanagedCallersOnly]
         private static void* wglAllocateMemoryNV_Lazy(int size, float readfreq, float writefreq, float priority)
         {
@@ -64,7 +64,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglAllocateMemoryNV_fnptr(size, readfreq, writefreq, priority);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr*, IntPtr*, uint*, uint, int> _wglAssociateImageBufferEventsI3D_fnptr = &wglAssociateImageBufferEventsI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr*, IntPtr*, uint*, uint, int> _wglAssociateImageBufferEventsI3D_fnptr = &wglAssociateImageBufferEventsI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglAssociateImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pEvent, IntPtr* pAddress, uint* pSize, uint count)
         {
@@ -72,7 +72,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglAssociateImageBufferEventsI3D_fnptr(hDC, pEvent, pAddress, pSize, count);
         }
         
-        internal static delegate* unmanaged<int> _wglBeginFrameTrackingI3D_fnptr = &wglBeginFrameTrackingI3D_Lazy;
+        public static delegate* unmanaged<int> _wglBeginFrameTrackingI3D_fnptr = &wglBeginFrameTrackingI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBeginFrameTrackingI3D_Lazy()
         {
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBeginFrameTrackingI3D_fnptr();
         }
         
-        internal static delegate* unmanaged<ushort, byte> _wglBindDisplayColorTableEXT_fnptr = &wglBindDisplayColorTableEXT_Lazy;
+        public static delegate* unmanaged<ushort, byte> _wglBindDisplayColorTableEXT_fnptr = &wglBindDisplayColorTableEXT_Lazy;
         [UnmanagedCallersOnly]
         private static byte wglBindDisplayColorTableEXT_Lazy(ushort id)
         {
@@ -88,7 +88,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindDisplayColorTableEXT_fnptr(id);
         }
         
-        internal static delegate* unmanaged<uint, uint, int> _wglBindSwapBarrierNV_fnptr = &wglBindSwapBarrierNV_Lazy;
+        public static delegate* unmanaged<uint, uint, int> _wglBindSwapBarrierNV_fnptr = &wglBindSwapBarrierNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBindSwapBarrierNV_Lazy(uint group, uint barrier)
         {
@@ -96,7 +96,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindSwapBarrierNV_fnptr(group, barrier);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int> _wglBindTexImageARB_fnptr = &wglBindTexImageARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int> _wglBindTexImageARB_fnptr = &wglBindTexImageARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBindTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
@@ -104,7 +104,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr, int> _wglBindVideoCaptureDeviceNV_fnptr = &wglBindVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<uint, IntPtr, int> _wglBindVideoCaptureDeviceNV_fnptr = &wglBindVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBindVideoCaptureDeviceNV_Lazy(uint uVideoSlot, IntPtr hDevice)
         {
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindVideoCaptureDeviceNV_fnptr(uVideoSlot, hDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, int*, int> _wglBindVideoDeviceNV_fnptr = &wglBindVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, IntPtr, int*, int> _wglBindVideoDeviceNV_fnptr = &wglBindVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBindVideoDeviceNV_Lazy(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, int* piAttribList)
         {
@@ -120,7 +120,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindVideoDeviceNV_fnptr(hDc, uVideoSlot, hVideoDevice, piAttribList);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int, int> _wglBindVideoImageNV_fnptr = &wglBindVideoImageNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int, int> _wglBindVideoImageNV_fnptr = &wglBindVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglBindVideoImageNV_Lazy(IntPtr hVideoDevice, IntPtr hPbuffer, int iVideoBuffer)
         {
@@ -128,7 +128,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, iVideoBuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void> _wglBlitContextFramebufferAMD_fnptr = &wglBlitContextFramebufferAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void> _wglBlitContextFramebufferAMD_fnptr = &wglBlitContextFramebufferAMD_Lazy;
         [UnmanagedCallersOnly]
         private static void wglBlitContextFramebufferAMD_Lazy(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
         {
@@ -136,7 +136,7 @@ namespace OpenTK.Graphics.Wgl
             _wglBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
         
-        internal static delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _wglChoosePixelFormatARB_fnptr = &wglChoosePixelFormatARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _wglChoosePixelFormatARB_fnptr = &wglChoosePixelFormatARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglChoosePixelFormatARB_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
@@ -144,7 +144,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
-        internal static delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _wglChoosePixelFormatEXT_fnptr = &wglChoosePixelFormatEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _wglChoosePixelFormatEXT_fnptr = &wglChoosePixelFormatEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglChoosePixelFormatEXT_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
@@ -152,7 +152,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglChoosePixelFormatEXT_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, int> _wglCopyContext_fnptr = &wglCopyContext_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, uint, int> _wglCopyContext_fnptr = &wglCopyContext_Lazy;
         [UnmanagedCallersOnly]
         private static int wglCopyContext_Lazy(IntPtr hglrcSrc, IntPtr hglrcDst, uint mask)
         {
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCopyContext_fnptr(hglrcSrc, hglrcDst, mask);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, int> _wglCopyImageSubDataNV_fnptr = &wglCopyImageSubDataNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, int> _wglCopyImageSubDataNV_fnptr = &wglCopyImageSubDataNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglCopyImageSubDataNV_Lazy(IntPtr hSrcRC, uint srcName, uint srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, uint dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
         {
@@ -168,7 +168,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
         }
         
-        internal static delegate* unmanaged<IntPtr*, IntPtr> _wglCreateAffinityDCNV_fnptr = &wglCreateAffinityDCNV_Lazy;
+        public static delegate* unmanaged<IntPtr*, IntPtr> _wglCreateAffinityDCNV_fnptr = &wglCreateAffinityDCNV_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAffinityDCNV_Lazy(IntPtr* phGpuList)
         {
@@ -176,7 +176,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateAffinityDCNV_fnptr(phGpuList);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr> _wglCreateAssociatedContextAMD_fnptr = &wglCreateAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<uint, IntPtr> _wglCreateAssociatedContextAMD_fnptr = &wglCreateAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAssociatedContextAMD_Lazy(uint id)
         {
@@ -184,7 +184,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateAssociatedContextAMD_fnptr(id);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr, int*, IntPtr> _wglCreateAssociatedContextAttribsAMD_fnptr = &wglCreateAssociatedContextAttribsAMD_Lazy;
+        public static delegate* unmanaged<uint, IntPtr, int*, IntPtr> _wglCreateAssociatedContextAttribsAMD_fnptr = &wglCreateAssociatedContextAttribsAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAssociatedContextAttribsAMD_Lazy(uint id, IntPtr hShareContext, int* attribList)
         {
@@ -192,7 +192,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateAssociatedContextAttribsAMD_fnptr(id, hShareContext, attribList);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, uint, IntPtr> _wglCreateBufferRegionARB_fnptr = &wglCreateBufferRegionARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, uint, IntPtr> _wglCreateBufferRegionARB_fnptr = &wglCreateBufferRegionARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateBufferRegionARB_Lazy(IntPtr hDC, int iLayerPlane, uint uType)
         {
@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, uType);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr> _wglCreateContext_fnptr = &wglCreateContext_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr> _wglCreateContext_fnptr = &wglCreateContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateContext_Lazy(IntPtr hDc)
         {
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateContext_fnptr(hDc);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr> _wglCreateContextAttribsARB_fnptr = &wglCreateContextAttribsARB_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr> _wglCreateContextAttribsARB_fnptr = &wglCreateContextAttribsARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateContextAttribsARB_Lazy(IntPtr hDC, IntPtr hShareContext, int* attribList)
         {
@@ -216,7 +216,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
         }
         
-        internal static delegate* unmanaged<ushort, byte> _wglCreateDisplayColorTableEXT_fnptr = &wglCreateDisplayColorTableEXT_Lazy;
+        public static delegate* unmanaged<ushort, byte> _wglCreateDisplayColorTableEXT_fnptr = &wglCreateDisplayColorTableEXT_Lazy;
         [UnmanagedCallersOnly]
         private static byte wglCreateDisplayColorTableEXT_Lazy(ushort id)
         {
@@ -224,7 +224,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateDisplayColorTableEXT_fnptr(id);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr> _wglCreateImageBufferI3D_fnptr = &wglCreateImageBufferI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, IntPtr> _wglCreateImageBufferI3D_fnptr = &wglCreateImageBufferI3D_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateImageBufferI3D_Lazy(IntPtr hDC, uint dwSize, uint uFlags)
         {
@@ -232,7 +232,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateImageBufferI3D_fnptr(hDC, dwSize, uFlags);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, IntPtr> _wglCreateLayerContext_fnptr = &wglCreateLayerContext_Lazy;
+        public static delegate* unmanaged<IntPtr, int, IntPtr> _wglCreateLayerContext_fnptr = &wglCreateLayerContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateLayerContext_Lazy(IntPtr hDc, int level)
         {
@@ -240,7 +240,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreateLayerContext_fnptr(hDc, level);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr> _wglCreatePbufferARB_fnptr = &wglCreatePbufferARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr> _wglCreatePbufferARB_fnptr = &wglCreatePbufferARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreatePbufferARB_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
@@ -248,7 +248,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreatePbufferARB_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr> _wglCreatePbufferEXT_fnptr = &wglCreatePbufferEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr> _wglCreatePbufferEXT_fnptr = &wglCreatePbufferEXT_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglCreatePbufferEXT_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglCreatePbufferEXT_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
-        internal static delegate* unmanaged<IntPtr, float, int> _wglDelayBeforeSwapNV_fnptr = &wglDelayBeforeSwapNV_Lazy;
+        public static delegate* unmanaged<IntPtr, float, int> _wglDelayBeforeSwapNV_fnptr = &wglDelayBeforeSwapNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDelayBeforeSwapNV_Lazy(IntPtr hDC, float seconds)
         {
@@ -264,7 +264,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDelayBeforeSwapNV_fnptr(hDC, seconds);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDeleteAssociatedContextAMD_fnptr = &wglDeleteAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDeleteAssociatedContextAMD_fnptr = &wglDeleteAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDeleteAssociatedContextAMD_Lazy(IntPtr hglrc)
         {
@@ -272,7 +272,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDeleteAssociatedContextAMD_fnptr(hglrc);
         }
         
-        internal static delegate* unmanaged<IntPtr, void> _wglDeleteBufferRegionARB_fnptr = &wglDeleteBufferRegionARB_Lazy;
+        public static delegate* unmanaged<IntPtr, void> _wglDeleteBufferRegionARB_fnptr = &wglDeleteBufferRegionARB_Lazy;
         [UnmanagedCallersOnly]
         private static void wglDeleteBufferRegionARB_Lazy(IntPtr hRegion)
         {
@@ -280,7 +280,7 @@ namespace OpenTK.Graphics.Wgl
             _wglDeleteBufferRegionARB_fnptr(hRegion);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDeleteContext_fnptr = &wglDeleteContext_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDeleteContext_fnptr = &wglDeleteContext_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDeleteContext_Lazy(IntPtr oldContext)
         {
@@ -288,7 +288,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDeleteContext_fnptr(oldContext);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDeleteDCNV_fnptr = &wglDeleteDCNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDeleteDCNV_fnptr = &wglDeleteDCNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDeleteDCNV_Lazy(IntPtr hdc)
         {
@@ -296,7 +296,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDeleteDCNV_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int> _wglDescribeLayerPlane_fnptr = &wglDescribeLayerPlane_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int> _wglDescribeLayerPlane_fnptr = &wglDescribeLayerPlane_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDescribeLayerPlane_Lazy(IntPtr hDc, int pixelFormat, int layerPlane, uint nBytes, LayerPlaneDescriptor* plpd)
         {
@@ -304,7 +304,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDescribeLayerPlane_fnptr(hDc, pixelFormat, layerPlane, nBytes, plpd);
         }
         
-        internal static delegate* unmanaged<ushort, void> _wglDestroyDisplayColorTableEXT_fnptr = &wglDestroyDisplayColorTableEXT_Lazy;
+        public static delegate* unmanaged<ushort, void> _wglDestroyDisplayColorTableEXT_fnptr = &wglDestroyDisplayColorTableEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void wglDestroyDisplayColorTableEXT_Lazy(ushort id)
         {
@@ -312,7 +312,7 @@ namespace OpenTK.Graphics.Wgl
             _wglDestroyDisplayColorTableEXT_fnptr(id);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglDestroyImageBufferI3D_fnptr = &wglDestroyImageBufferI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglDestroyImageBufferI3D_fnptr = &wglDestroyImageBufferI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDestroyImageBufferI3D_Lazy(IntPtr hDC, IntPtr pAddress)
         {
@@ -320,7 +320,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDestroyImageBufferI3D_fnptr(hDC, pAddress);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDestroyPbufferARB_fnptr = &wglDestroyPbufferARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDestroyPbufferARB_fnptr = &wglDestroyPbufferARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDestroyPbufferARB_Lazy(IntPtr hPbuffer)
         {
@@ -328,7 +328,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDestroyPbufferARB_fnptr(hPbuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDestroyPbufferEXT_fnptr = &wglDestroyPbufferEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDestroyPbufferEXT_fnptr = &wglDestroyPbufferEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDestroyPbufferEXT_Lazy(IntPtr hPbuffer)
         {
@@ -336,7 +336,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDestroyPbufferEXT_fnptr(hPbuffer);
         }
         
-        internal static delegate* unmanaged<int> _wglDisableFrameLockI3D_fnptr = &wglDisableFrameLockI3D_Lazy;
+        public static delegate* unmanaged<int> _wglDisableFrameLockI3D_fnptr = &wglDisableFrameLockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDisableFrameLockI3D_Lazy()
         {
@@ -344,7 +344,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDisableFrameLockI3D_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDisableGenlockI3D_fnptr = &wglDisableGenlockI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDisableGenlockI3D_fnptr = &wglDisableGenlockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDisableGenlockI3D_Lazy(IntPtr hDC)
         {
@@ -352,7 +352,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDisableGenlockI3D_fnptr(hDC);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglDXCloseDeviceNV_fnptr = &wglDXCloseDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglDXCloseDeviceNV_fnptr = &wglDXCloseDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXCloseDeviceNV_Lazy(IntPtr hDevice)
         {
@@ -360,7 +360,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXCloseDeviceNV_fnptr(hDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglDXLockObjectsNV_fnptr = &wglDXLockObjectsNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglDXLockObjectsNV_fnptr = &wglDXLockObjectsNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXLockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
@@ -368,7 +368,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXLockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglDXObjectAccessNV_fnptr = &wglDXObjectAccessNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglDXObjectAccessNV_fnptr = &wglDXObjectAccessNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXObjectAccessNV_Lazy(IntPtr hObject, uint access)
         {
@@ -376,7 +376,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXObjectAccessNV_fnptr(hObject, access);
         }
         
-        internal static delegate* unmanaged<void*, IntPtr> _wglDXOpenDeviceNV_fnptr = &wglDXOpenDeviceNV_Lazy;
+        public static delegate* unmanaged<void*, IntPtr> _wglDXOpenDeviceNV_fnptr = &wglDXOpenDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglDXOpenDeviceNV_Lazy(void* dxDevice)
         {
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXOpenDeviceNV_fnptr(dxDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, void*, uint, uint, uint, IntPtr> _wglDXRegisterObjectNV_fnptr = &wglDXRegisterObjectNV_Lazy;
+        public static delegate* unmanaged<IntPtr, void*, uint, uint, uint, IntPtr> _wglDXRegisterObjectNV_fnptr = &wglDXRegisterObjectNV_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglDXRegisterObjectNV_Lazy(IntPtr hDevice, void* dxObject, uint name, uint type, uint access)
         {
@@ -392,7 +392,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, type, access);
         }
         
-        internal static delegate* unmanaged<void*, IntPtr, int> _wglDXSetResourceShareHandleNV_fnptr = &wglDXSetResourceShareHandleNV_Lazy;
+        public static delegate* unmanaged<void*, IntPtr, int> _wglDXSetResourceShareHandleNV_fnptr = &wglDXSetResourceShareHandleNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXSetResourceShareHandleNV_Lazy(void* dxObject, IntPtr shareHandle)
         {
@@ -400,7 +400,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglDXUnlockObjectsNV_fnptr = &wglDXUnlockObjectsNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglDXUnlockObjectsNV_fnptr = &wglDXUnlockObjectsNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXUnlockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
@@ -408,7 +408,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXUnlockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglDXUnregisterObjectNV_fnptr = &wglDXUnregisterObjectNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglDXUnregisterObjectNV_fnptr = &wglDXUnregisterObjectNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglDXUnregisterObjectNV_Lazy(IntPtr hDevice, IntPtr hObject)
         {
@@ -416,7 +416,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglDXUnregisterObjectNV_fnptr(hDevice, hObject);
         }
         
-        internal static delegate* unmanaged<int> _wglEnableFrameLockI3D_fnptr = &wglEnableFrameLockI3D_Lazy;
+        public static delegate* unmanaged<int> _wglEnableFrameLockI3D_fnptr = &wglEnableFrameLockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnableFrameLockI3D_Lazy()
         {
@@ -424,7 +424,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnableFrameLockI3D_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglEnableGenlockI3D_fnptr = &wglEnableGenlockI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglEnableGenlockI3D_fnptr = &wglEnableGenlockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnableGenlockI3D_Lazy(IntPtr hDC)
         {
@@ -432,7 +432,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnableGenlockI3D_fnptr(hDC);
         }
         
-        internal static delegate* unmanaged<int> _wglEndFrameTrackingI3D_fnptr = &wglEndFrameTrackingI3D_Lazy;
+        public static delegate* unmanaged<int> _wglEndFrameTrackingI3D_fnptr = &wglEndFrameTrackingI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEndFrameTrackingI3D_Lazy()
         {
@@ -440,7 +440,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEndFrameTrackingI3D_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr*, uint> _wglEnumerateVideoCaptureDevicesNV_fnptr = &wglEnumerateVideoCaptureDevicesNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr*, uint> _wglEnumerateVideoCaptureDevicesNV_fnptr = &wglEnumerateVideoCaptureDevicesNV_Lazy;
         [UnmanagedCallersOnly]
         private static uint wglEnumerateVideoCaptureDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
@@ -448,7 +448,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnumerateVideoCaptureDevicesNV_fnptr(hDc, phDeviceList);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr*, int> _wglEnumerateVideoDevicesNV_fnptr = &wglEnumerateVideoDevicesNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr*, int> _wglEnumerateVideoDevicesNV_fnptr = &wglEnumerateVideoDevicesNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnumerateVideoDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
@@ -456,7 +456,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnumerateVideoDevicesNV_fnptr(hDc, phDeviceList);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int> _wglEnumGpuDevicesNV_fnptr = &wglEnumGpuDevicesNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int> _wglEnumGpuDevicesNV_fnptr = &wglEnumGpuDevicesNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnumGpuDevicesNV_Lazy(IntPtr hGpu, uint iDeviceIndex, _GPU_DEVICE* lpGpuDevice)
         {
@@ -464,7 +464,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnumGpuDevicesNV_fnptr(hGpu, iDeviceIndex, lpGpuDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, int> _wglEnumGpusFromAffinityDCNV_fnptr = &wglEnumGpusFromAffinityDCNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, IntPtr*, int> _wglEnumGpusFromAffinityDCNV_fnptr = &wglEnumGpusFromAffinityDCNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnumGpusFromAffinityDCNV_Lazy(IntPtr hAffinityDC, uint iGpuIndex, IntPtr* hGpu)
         {
@@ -472,7 +472,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnumGpusFromAffinityDCNV_fnptr(hAffinityDC, iGpuIndex, hGpu);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr*, int> _wglEnumGpusNV_fnptr = &wglEnumGpusNV_Lazy;
+        public static delegate* unmanaged<uint, IntPtr*, int> _wglEnumGpusNV_fnptr = &wglEnumGpusNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglEnumGpusNV_Lazy(uint iGpuIndex, IntPtr* phGpu)
         {
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglEnumGpusNV_fnptr(iGpuIndex, phGpu);
         }
         
-        internal static delegate* unmanaged<void*, void> _wglFreeMemoryNV_fnptr = &wglFreeMemoryNV_Lazy;
+        public static delegate* unmanaged<void*, void> _wglFreeMemoryNV_fnptr = &wglFreeMemoryNV_Lazy;
         [UnmanagedCallersOnly]
         private static void wglFreeMemoryNV_Lazy(void* pointer)
         {
@@ -488,7 +488,7 @@ namespace OpenTK.Graphics.Wgl
             _wglFreeMemoryNV_fnptr(pointer);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSampleRateI3D_fnptr = &wglGenlockSampleRateI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSampleRateI3D_fnptr = &wglGenlockSampleRateI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGenlockSampleRateI3D_Lazy(IntPtr hDC, uint uRate)
         {
@@ -496,7 +496,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceDelayI3D_fnptr = &wglGenlockSourceDelayI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceDelayI3D_fnptr = &wglGenlockSourceDelayI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint uDelay)
         {
@@ -504,7 +504,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceEdgeI3D_fnptr = &wglGenlockSourceEdgeI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceEdgeI3D_fnptr = &wglGenlockSourceEdgeI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint uEdge)
         {
@@ -512,7 +512,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceI3D_fnptr = &wglGenlockSourceI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglGenlockSourceI3D_fnptr = &wglGenlockSourceI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceI3D_Lazy(IntPtr hDC, uint uSource)
         {
@@ -520,7 +520,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint> _wglGetContextGPUIDAMD_fnptr = &wglGetContextGPUIDAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, uint> _wglGetContextGPUIDAMD_fnptr = &wglGetContextGPUIDAMD_Lazy;
         [UnmanagedCallersOnly]
         private static uint wglGetContextGPUIDAMD_Lazy(IntPtr hglrc)
         {
@@ -528,7 +528,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetContextGPUIDAMD_fnptr(hglrc);
         }
         
-        internal static delegate* unmanaged<IntPtr> _wglGetCurrentAssociatedContextAMD_fnptr = &wglGetCurrentAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<IntPtr> _wglGetCurrentAssociatedContextAMD_fnptr = &wglGetCurrentAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentAssociatedContextAMD_Lazy()
         {
@@ -536,7 +536,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentAssociatedContextAMD_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr> _wglGetCurrentContext_fnptr = &wglGetCurrentContext_Lazy;
+        public static delegate* unmanaged<IntPtr> _wglGetCurrentContext_fnptr = &wglGetCurrentContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentContext_Lazy()
         {
@@ -544,7 +544,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentContext_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr> _wglGetCurrentDC_fnptr = &wglGetCurrentDC_Lazy;
+        public static delegate* unmanaged<IntPtr> _wglGetCurrentDC_fnptr = &wglGetCurrentDC_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentDC_Lazy()
         {
@@ -552,7 +552,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentDC_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr> _wglGetCurrentReadDCARB_fnptr = &wglGetCurrentReadDCARB_Lazy;
+        public static delegate* unmanaged<IntPtr> _wglGetCurrentReadDCARB_fnptr = &wglGetCurrentReadDCARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentReadDCARB_Lazy()
         {
@@ -560,7 +560,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentReadDCARB_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr> _wglGetCurrentReadDCEXT_fnptr = &wglGetCurrentReadDCEXT_Lazy;
+        public static delegate* unmanaged<IntPtr> _wglGetCurrentReadDCEXT_fnptr = &wglGetCurrentReadDCEXT_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentReadDCEXT_Lazy()
         {
@@ -568,7 +568,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentReadDCEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglGetDigitalVideoParametersI3D_fnptr = &wglGetDigitalVideoParametersI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglGetDigitalVideoParametersI3D_fnptr = &wglGetDigitalVideoParametersI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
@@ -576,7 +576,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, byte*> _wglGetExtensionsStringARB_fnptr = &wglGetExtensionsStringARB_Lazy;
+        public static delegate* unmanaged<IntPtr, byte*> _wglGetExtensionsStringARB_fnptr = &wglGetExtensionsStringARB_Lazy;
         [UnmanagedCallersOnly]
         private static byte* wglGetExtensionsStringARB_Lazy(IntPtr hdc)
         {
@@ -584,7 +584,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetExtensionsStringARB_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<byte*> _wglGetExtensionsStringEXT_fnptr = &wglGetExtensionsStringEXT_Lazy;
+        public static delegate* unmanaged<byte*> _wglGetExtensionsStringEXT_fnptr = &wglGetExtensionsStringEXT_Lazy;
         [UnmanagedCallersOnly]
         private static byte* wglGetExtensionsStringEXT_Lazy()
         {
@@ -592,7 +592,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetExtensionsStringEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<float*, int> _wglGetFrameUsageI3D_fnptr = &wglGetFrameUsageI3D_Lazy;
+        public static delegate* unmanaged<float*, int> _wglGetFrameUsageI3D_fnptr = &wglGetFrameUsageI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetFrameUsageI3D_Lazy(float* pUsage)
         {
@@ -600,7 +600,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetFrameUsageI3D_fnptr(pUsage);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int> _wglGetGammaTableI3D_fnptr = &wglGetGammaTableI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int> _wglGetGammaTableI3D_fnptr = &wglGetGammaTableI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
@@ -608,7 +608,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglGetGammaTableParametersI3D_fnptr = &wglGetGammaTableParametersI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglGetGammaTableParametersI3D_fnptr = &wglGetGammaTableParametersI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
@@ -616,7 +616,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSampleRateI3D_fnptr = &wglGetGenlockSampleRateI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSampleRateI3D_fnptr = &wglGetGenlockSampleRateI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSampleRateI3D_Lazy(IntPtr hDC, uint* uRate)
         {
@@ -624,7 +624,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceDelayI3D_fnptr = &wglGetGenlockSourceDelayI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceDelayI3D_fnptr = &wglGetGenlockSourceDelayI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint* uDelay)
         {
@@ -632,7 +632,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceEdgeI3D_fnptr = &wglGetGenlockSourceEdgeI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceEdgeI3D_fnptr = &wglGetGenlockSourceEdgeI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint* uEdge)
         {
@@ -640,7 +640,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceI3D_fnptr = &wglGetGenlockSourceI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, int> _wglGetGenlockSourceI3D_fnptr = &wglGetGenlockSourceI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceI3D_Lazy(IntPtr hDC, uint* uSource)
         {
@@ -648,7 +648,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
-        internal static delegate* unmanaged<uint, uint*, uint> _wglGetGPUIDsAMD_fnptr = &wglGetGPUIDsAMD_Lazy;
+        public static delegate* unmanaged<uint, uint*, uint> _wglGetGPUIDsAMD_fnptr = &wglGetGPUIDsAMD_Lazy;
         [UnmanagedCallersOnly]
         private static uint wglGetGPUIDsAMD_Lazy(uint maxCount, uint* ids)
         {
@@ -656,7 +656,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGPUIDsAMD_fnptr(maxCount, ids);
         }
         
-        internal static delegate* unmanaged<uint, int, uint, uint, void*, int> _wglGetGPUInfoAMD_fnptr = &wglGetGPUInfoAMD_Lazy;
+        public static delegate* unmanaged<uint, int, uint, uint, void*, int> _wglGetGPUInfoAMD_fnptr = &wglGetGPUInfoAMD_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetGPUInfoAMD_Lazy(uint id, int property, uint dataType, uint size, void* data)
         {
@@ -664,7 +664,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglGetLayerPaletteEntries_fnptr = &wglGetLayerPaletteEntries_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglGetLayerPaletteEntries_fnptr = &wglGetLayerPaletteEntries_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
@@ -672,7 +672,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
-        internal static delegate* unmanaged<IntPtr, int*, int*, int> _wglGetMscRateOML_fnptr = &wglGetMscRateOML_Lazy;
+        public static delegate* unmanaged<IntPtr, int*, int*, int> _wglGetMscRateOML_fnptr = &wglGetMscRateOML_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetMscRateOML_Lazy(IntPtr hdc, int* numerator, int* denominator)
         {
@@ -680,7 +680,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetMscRateOML_fnptr(hdc, numerator, denominator);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr> _wglGetPbufferDCARB_fnptr = &wglGetPbufferDCARB_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr> _wglGetPbufferDCARB_fnptr = &wglGetPbufferDCARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetPbufferDCARB_Lazy(IntPtr hPbuffer)
         {
@@ -688,7 +688,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPbufferDCARB_fnptr(hPbuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr> _wglGetPbufferDCEXT_fnptr = &wglGetPbufferDCEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr> _wglGetPbufferDCEXT_fnptr = &wglGetPbufferDCEXT_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetPbufferDCEXT_Lazy(IntPtr hPbuffer)
         {
@@ -696,7 +696,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPbufferDCEXT_fnptr(hPbuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int> _wglGetPixelFormatAttribfvARB_fnptr = &wglGetPixelFormatAttribfvARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int> _wglGetPixelFormatAttribfvARB_fnptr = &wglGetPixelFormatAttribfvARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribfvARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
@@ -704,7 +704,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPixelFormatAttribfvARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int> _wglGetPixelFormatAttribfvEXT_fnptr = &wglGetPixelFormatAttribfvEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int> _wglGetPixelFormatAttribfvEXT_fnptr = &wglGetPixelFormatAttribfvEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribfvEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
@@ -712,7 +712,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPixelFormatAttribfvEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int> _wglGetPixelFormatAttribivARB_fnptr = &wglGetPixelFormatAttribivARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int> _wglGetPixelFormatAttribivARB_fnptr = &wglGetPixelFormatAttribivARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribivARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPixelFormatAttribivARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int> _wglGetPixelFormatAttribivEXT_fnptr = &wglGetPixelFormatAttribivEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int> _wglGetPixelFormatAttribivEXT_fnptr = &wglGetPixelFormatAttribivEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribivEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
@@ -728,7 +728,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetPixelFormatAttribivEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
-        internal static delegate* unmanaged<char*, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
+        public static delegate* unmanaged<char*, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr wglGetProcAddress_Lazy(char* lpszProc)
         {
@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetProcAddress_fnptr(lpszProc);
         }
         
-        internal static delegate* unmanaged<int> _wglGetSwapIntervalEXT_fnptr = &wglGetSwapIntervalEXT_Lazy;
+        public static delegate* unmanaged<int> _wglGetSwapIntervalEXT_fnptr = &wglGetSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetSwapIntervalEXT_Lazy()
         {
@@ -744,7 +744,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetSwapIntervalEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr, long*, long*, long*, int> _wglGetSyncValuesOML_fnptr = &wglGetSyncValuesOML_Lazy;
+        public static delegate* unmanaged<IntPtr, long*, long*, long*, int> _wglGetSyncValuesOML_fnptr = &wglGetSyncValuesOML_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetSyncValuesOML_Lazy(IntPtr hdc, long* ust, long* msc, long* sbc)
         {
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetSyncValuesOML_fnptr(hdc, ust, msc, sbc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglGetVideoDeviceNV_fnptr = &wglGetVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int, IntPtr*, int> _wglGetVideoDeviceNV_fnptr = &wglGetVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetVideoDeviceNV_Lazy(IntPtr hDC, int numDevices, IntPtr* hVideoDevice)
         {
@@ -760,7 +760,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetVideoDeviceNV_fnptr(hDC, numDevices, hVideoDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, ulong*, ulong*, int> _wglGetVideoInfoNV_fnptr = &wglGetVideoInfoNV_Lazy;
+        public static delegate* unmanaged<IntPtr, ulong*, ulong*, int> _wglGetVideoInfoNV_fnptr = &wglGetVideoInfoNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetVideoInfoNV_Lazy(IntPtr hpVideoDevice, ulong* pulCounterOutputPbuffer, ulong* pulCounterOutputVideo)
         {
@@ -768,7 +768,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetVideoInfoNV_fnptr(hpVideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
         }
         
-        internal static delegate* unmanaged<int*, int> _wglIsEnabledFrameLockI3D_fnptr = &wglIsEnabledFrameLockI3D_Lazy;
+        public static delegate* unmanaged<int*, int> _wglIsEnabledFrameLockI3D_fnptr = &wglIsEnabledFrameLockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglIsEnabledFrameLockI3D_Lazy(int* pFlag)
         {
@@ -776,7 +776,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglIsEnabledFrameLockI3D_fnptr(pFlag);
         }
         
-        internal static delegate* unmanaged<IntPtr, int*, int> _wglIsEnabledGenlockI3D_fnptr = &wglIsEnabledGenlockI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int*, int> _wglIsEnabledGenlockI3D_fnptr = &wglIsEnabledGenlockI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglIsEnabledGenlockI3D_Lazy(IntPtr hDC, int* pFlag)
         {
@@ -784,7 +784,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglIsEnabledGenlockI3D_fnptr(hDC, pFlag);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglJoinSwapGroupNV_fnptr = &wglJoinSwapGroupNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglJoinSwapGroupNV_fnptr = &wglJoinSwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglJoinSwapGroupNV_Lazy(IntPtr hDC, uint group)
         {
@@ -792,7 +792,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglJoinSwapGroupNV_fnptr(hDC, group);
         }
         
-        internal static delegate* unmanaged<ushort*, uint, byte> _wglLoadDisplayColorTableEXT_fnptr = &wglLoadDisplayColorTableEXT_Lazy;
+        public static delegate* unmanaged<ushort*, uint, byte> _wglLoadDisplayColorTableEXT_fnptr = &wglLoadDisplayColorTableEXT_Lazy;
         [UnmanagedCallersOnly]
         private static byte wglLoadDisplayColorTableEXT_Lazy(ushort* table, uint length)
         {
@@ -800,7 +800,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglLoadDisplayColorTableEXT_fnptr(table, length);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglLockVideoCaptureDeviceNV_fnptr = &wglLockVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglLockVideoCaptureDeviceNV_fnptr = &wglLockVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglLockVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
@@ -808,7 +808,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglLockVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglMakeAssociatedContextCurrentAMD_fnptr = &wglMakeAssociatedContextCurrentAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglMakeAssociatedContextCurrentAMD_fnptr = &wglMakeAssociatedContextCurrentAMD_Lazy;
         [UnmanagedCallersOnly]
         private static int wglMakeAssociatedContextCurrentAMD_Lazy(IntPtr hglrc)
         {
@@ -816,7 +816,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, int> _wglMakeContextCurrentARB_fnptr = &wglMakeContextCurrentARB_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, IntPtr, int> _wglMakeContextCurrentARB_fnptr = &wglMakeContextCurrentARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglMakeContextCurrentARB_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
@@ -824,7 +824,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglMakeContextCurrentARB_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, int> _wglMakeContextCurrentEXT_fnptr = &wglMakeContextCurrentEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, IntPtr, int> _wglMakeContextCurrentEXT_fnptr = &wglMakeContextCurrentEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglMakeContextCurrentEXT_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
@@ -832,7 +832,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglMakeContextCurrentEXT_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglMakeCurrent_fnptr = &wglMakeCurrent_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglMakeCurrent_fnptr = &wglMakeCurrent_Lazy;
         [UnmanagedCallersOnly]
         private static int wglMakeCurrent_Lazy(IntPtr hDc, IntPtr newContext)
         {
@@ -840,7 +840,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglMakeCurrent_fnptr(hDc, newContext);
         }
         
-        internal static delegate* unmanaged<int, int*, int> _wglQueryCurrentContextNV_fnptr = &wglQueryCurrentContextNV_Lazy;
+        public static delegate* unmanaged<int, int*, int> _wglQueryCurrentContextNV_fnptr = &wglQueryCurrentContextNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryCurrentContextNV_Lazy(int iAttribute, int* piValue)
         {
@@ -848,7 +848,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryCurrentContextNV_fnptr(iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, int> _wglQueryFrameCountNV_fnptr = &wglQueryFrameCountNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, int> _wglQueryFrameCountNV_fnptr = &wglQueryFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryFrameCountNV_Lazy(IntPtr hDC, uint* count)
         {
@@ -856,7 +856,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryFrameCountNV_fnptr(hDC, count);
         }
         
-        internal static delegate* unmanaged<int*, int> _wglQueryFrameLockMasterI3D_fnptr = &wglQueryFrameLockMasterI3D_Lazy;
+        public static delegate* unmanaged<int*, int> _wglQueryFrameLockMasterI3D_fnptr = &wglQueryFrameLockMasterI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryFrameLockMasterI3D_Lazy(int* pFlag)
         {
@@ -864,7 +864,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryFrameLockMasterI3D_fnptr(pFlag);
         }
         
-        internal static delegate* unmanaged<uint*, uint*, float*, int> _wglQueryFrameTrackingI3D_fnptr = &wglQueryFrameTrackingI3D_Lazy;
+        public static delegate* unmanaged<uint*, uint*, float*, int> _wglQueryFrameTrackingI3D_fnptr = &wglQueryFrameTrackingI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryFrameTrackingI3D_Lazy(uint* pFrameCount, uint* pMissedFrames, float* pLastMissedUsage)
         {
@@ -872,7 +872,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryFrameTrackingI3D_fnptr(pFrameCount, pMissedFrames, pLastMissedUsage);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQueryGenlockMaxSourceDelayI3D_fnptr = &wglQueryGenlockMaxSourceDelayI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQueryGenlockMaxSourceDelayI3D_fnptr = &wglQueryGenlockMaxSourceDelayI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryGenlockMaxSourceDelayI3D_Lazy(IntPtr hDC, uint* uMaxLineDelay, uint* uMaxPixelDelay)
         {
@@ -880,7 +880,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryGenlockMaxSourceDelayI3D_fnptr(hDC, uMaxLineDelay, uMaxPixelDelay);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQueryMaxSwapGroupsNV_fnptr = &wglQueryMaxSwapGroupsNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQueryMaxSwapGroupsNV_fnptr = &wglQueryMaxSwapGroupsNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryMaxSwapGroupsNV_Lazy(IntPtr hDC, uint* maxGroups, uint* maxBarriers)
         {
@@ -888,7 +888,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryMaxSwapGroupsNV_fnptr(hDC, maxGroups, maxBarriers);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglQueryPbufferARB_fnptr = &wglQueryPbufferARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglQueryPbufferARB_fnptr = &wglQueryPbufferARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryPbufferARB_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
@@ -896,7 +896,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryPbufferARB_fnptr(hPbuffer, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglQueryPbufferEXT_fnptr = &wglQueryPbufferEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglQueryPbufferEXT_fnptr = &wglQueryPbufferEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryPbufferEXT_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
@@ -904,7 +904,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryPbufferEXT_fnptr(hPbuffer, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQuerySwapGroupNV_fnptr = &wglQuerySwapGroupNV_Lazy;
+        public static delegate* unmanaged<IntPtr, uint*, uint*, int> _wglQuerySwapGroupNV_fnptr = &wglQuerySwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQuerySwapGroupNV_Lazy(IntPtr hDC, uint* group, uint* barrier)
         {
@@ -912,7 +912,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQuerySwapGroupNV_fnptr(hDC, group, barrier);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int, int*, int> _wglQueryVideoCaptureDeviceNV_fnptr = &wglQueryVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int, int*, int> _wglQueryVideoCaptureDeviceNV_fnptr = &wglQueryVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglQueryVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice, int iAttribute, int* piValue)
         {
@@ -920,7 +920,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglQueryVideoCaptureDeviceNV_fnptr(hDc, hDevice, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int> _wglRealizeLayerPalette_fnptr = &wglRealizeLayerPalette_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int> _wglRealizeLayerPalette_fnptr = &wglRealizeLayerPalette_Lazy;
         [UnmanagedCallersOnly]
         private static int wglRealizeLayerPalette_Lazy(IntPtr hdc, int iLayerPlane, int bRealize)
         {
@@ -928,7 +928,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglRealizeLayerPalette_fnptr(hdc, iLayerPlane, bRealize);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr*, uint, int> _wglReleaseImageBufferEventsI3D_fnptr = &wglReleaseImageBufferEventsI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr*, uint, int> _wglReleaseImageBufferEventsI3D_fnptr = &wglReleaseImageBufferEventsI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleaseImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pAddress, uint count)
         {
@@ -936,7 +936,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleaseImageBufferEventsI3D_fnptr(hDC, pAddress, count);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleasePbufferDCARB_fnptr = &wglReleasePbufferDCARB_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleasePbufferDCARB_fnptr = &wglReleasePbufferDCARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleasePbufferDCARB_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
@@ -944,7 +944,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleasePbufferDCARB_fnptr(hPbuffer, hDC);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleasePbufferDCEXT_fnptr = &wglReleasePbufferDCEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleasePbufferDCEXT_fnptr = &wglReleasePbufferDCEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleasePbufferDCEXT_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
@@ -952,7 +952,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleasePbufferDCEXT_fnptr(hPbuffer, hDC);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int> _wglReleaseTexImageARB_fnptr = &wglReleaseTexImageARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int> _wglReleaseTexImageARB_fnptr = &wglReleaseTexImageARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleaseTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
@@ -960,7 +960,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleaseTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleaseVideoCaptureDeviceNV_fnptr = &wglReleaseVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglReleaseVideoCaptureDeviceNV_fnptr = &wglReleaseVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
@@ -968,7 +968,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleaseVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglReleaseVideoDeviceNV_fnptr = &wglReleaseVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglReleaseVideoDeviceNV_fnptr = &wglReleaseVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoDeviceNV_Lazy(IntPtr hVideoDevice)
         {
@@ -976,7 +976,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleaseVideoDeviceNV_fnptr(hVideoDevice);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int> _wglReleaseVideoImageNV_fnptr = &wglReleaseVideoImageNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int> _wglReleaseVideoImageNV_fnptr = &wglReleaseVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoImageNV_Lazy(IntPtr hPbuffer, int iVideoBuffer)
         {
@@ -984,7 +984,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglReleaseVideoImageNV_fnptr(hPbuffer, iVideoBuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, int> _wglResetFrameCountNV_fnptr = &wglResetFrameCountNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int> _wglResetFrameCountNV_fnptr = &wglResetFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglResetFrameCountNV_Lazy(IntPtr hDC)
         {
@@ -992,7 +992,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglResetFrameCountNV_fnptr(hDC);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int> _wglRestoreBufferRegionARB_fnptr = &wglRestoreBufferRegionARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int> _wglRestoreBufferRegionARB_fnptr = &wglRestoreBufferRegionARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglRestoreBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc)
         {
@@ -1000,7 +1000,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglRestoreBufferRegionARB_fnptr(hRegion, x, y, width, height, xSrc, ySrc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int, int> _wglSaveBufferRegionARB_fnptr = &wglSaveBufferRegionARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int, int> _wglSaveBufferRegionARB_fnptr = &wglSaveBufferRegionARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSaveBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height)
         {
@@ -1008,7 +1008,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSaveBufferRegionARB_fnptr(hRegion, x, y, width, height);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, ulong*, int, int> _wglSendPbufferToVideoNV_fnptr = &wglSendPbufferToVideoNV_Lazy;
+        public static delegate* unmanaged<IntPtr, int, ulong*, int, int> _wglSendPbufferToVideoNV_fnptr = &wglSendPbufferToVideoNV_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSendPbufferToVideoNV_Lazy(IntPtr hPbuffer, int iBufferType, ulong* pulCounterPbuffer, int bBlock)
         {
@@ -1016,7 +1016,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSendPbufferToVideoNV_fnptr(hPbuffer, iBufferType, pulCounterPbuffer, bBlock);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglSetDigitalVideoParametersI3D_fnptr = &wglSetDigitalVideoParametersI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglSetDigitalVideoParametersI3D_fnptr = &wglSetDigitalVideoParametersI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
@@ -1024,7 +1024,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int> _wglSetGammaTableI3D_fnptr = &wglSetGammaTableI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int> _wglSetGammaTableI3D_fnptr = &wglSetGammaTableI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
@@ -1032,7 +1032,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int*, int> _wglSetGammaTableParametersI3D_fnptr = &wglSetGammaTableParametersI3D_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int*, int> _wglSetGammaTableParametersI3D_fnptr = &wglSetGammaTableParametersI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
@@ -1040,7 +1040,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglSetLayerPaletteEntries_fnptr = &wglSetLayerPaletteEntries_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglSetLayerPaletteEntries_fnptr = &wglSetLayerPaletteEntries_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
@@ -1048,7 +1048,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
-        internal static delegate* unmanaged<IntPtr, int*, int> _wglSetPbufferAttribARB_fnptr = &wglSetPbufferAttribARB_Lazy;
+        public static delegate* unmanaged<IntPtr, int*, int> _wglSetPbufferAttribARB_fnptr = &wglSetPbufferAttribARB_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetPbufferAttribARB_Lazy(IntPtr hPbuffer, int* piAttribList)
         {
@@ -1056,7 +1056,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetPbufferAttribARB_fnptr(hPbuffer, piAttribList);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglSetStereoEmitterState3DL_fnptr = &wglSetStereoEmitterState3DL_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglSetStereoEmitterState3DL_fnptr = &wglSetStereoEmitterState3DL_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSetStereoEmitterState3DL_Lazy(IntPtr hDC, uint uState)
         {
@@ -1064,7 +1064,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSetStereoEmitterState3DL_fnptr(hDC, uState);
         }
         
-        internal static delegate* unmanaged<IntPtr, IntPtr, int> _wglShareLists_fnptr = &wglShareLists_Lazy;
+        public static delegate* unmanaged<IntPtr, IntPtr, int> _wglShareLists_fnptr = &wglShareLists_Lazy;
         [UnmanagedCallersOnly]
         private static int wglShareLists_Lazy(IntPtr hrcSrvShare, IntPtr hrcSrvSource)
         {
@@ -1072,7 +1072,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglShareLists_fnptr(hrcSrvShare, hrcSrvSource);
         }
         
-        internal static delegate* unmanaged<IntPtr, long, long, long, long> _wglSwapBuffersMscOML_fnptr = &wglSwapBuffersMscOML_Lazy;
+        public static delegate* unmanaged<IntPtr, long, long, long, long> _wglSwapBuffersMscOML_fnptr = &wglSwapBuffersMscOML_Lazy;
         [UnmanagedCallersOnly]
         private static long wglSwapBuffersMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder)
         {
@@ -1080,7 +1080,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
         }
         
-        internal static delegate* unmanaged<int, int> _wglSwapIntervalEXT_fnptr = &wglSwapIntervalEXT_Lazy;
+        public static delegate* unmanaged<int, int> _wglSwapIntervalEXT_fnptr = &wglSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSwapIntervalEXT_Lazy(int interval)
         {
@@ -1088,7 +1088,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSwapIntervalEXT_fnptr(interval);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglSwapLayerBuffers_fnptr = &wglSwapLayerBuffers_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, int> _wglSwapLayerBuffers_fnptr = &wglSwapLayerBuffers_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSwapLayerBuffers_Lazy(IntPtr hdc, uint fuFlags)
         {
@@ -1096,7 +1096,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSwapLayerBuffers_fnptr(hdc, fuFlags);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, long, long, long, long> _wglSwapLayerBuffersMscOML_fnptr = &wglSwapLayerBuffersMscOML_Lazy;
+        public static delegate* unmanaged<IntPtr, int, long, long, long, long> _wglSwapLayerBuffersMscOML_fnptr = &wglSwapLayerBuffersMscOML_Lazy;
         [UnmanagedCallersOnly]
         private static long wglSwapLayerBuffersMscOML_Lazy(IntPtr hdc, int fuPlanes, long target_msc, long divisor, long remainder)
         {
@@ -1104,7 +1104,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglSwapLayerBuffersMscOML_fnptr(hdc, fuPlanes, target_msc, divisor, remainder);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmaps_fnptr = &wglUseFontBitmaps_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmaps_fnptr = &wglUseFontBitmaps_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmaps_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
@@ -1112,7 +1112,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmapsA_fnptr = &wglUseFontBitmapsA_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmapsA_fnptr = &wglUseFontBitmapsA_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmapsA_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
@@ -1120,7 +1120,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontBitmapsA_fnptr(hDC, first, count, listBase);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmapsW_fnptr = &wglUseFontBitmapsW_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, int> _wglUseFontBitmapsW_fnptr = &wglUseFontBitmapsW_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmapsW_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
@@ -1128,7 +1128,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontBitmapsW_fnptr(hDC, first, count, listBase);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlines_fnptr = &wglUseFontOutlines_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlines_fnptr = &wglUseFontOutlines_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlines_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
@@ -1136,7 +1136,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontOutlines_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlinesA_fnptr = &wglUseFontOutlinesA_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlinesA_fnptr = &wglUseFontOutlinesA_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlinesA_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
@@ -1144,7 +1144,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontOutlinesA_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlinesW_fnptr = &wglUseFontOutlinesW_Lazy;
+        public static delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int> _wglUseFontOutlinesW_fnptr = &wglUseFontOutlinesW_Lazy;
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlinesW_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
@@ -1152,7 +1152,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglUseFontOutlinesW_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
-        internal static delegate* unmanaged<IntPtr, long, long, long, long*, long*, long*, int> _wglWaitForMscOML_fnptr = &wglWaitForMscOML_Lazy;
+        public static delegate* unmanaged<IntPtr, long, long, long, long*, long*, long*, int> _wglWaitForMscOML_fnptr = &wglWaitForMscOML_Lazy;
         [UnmanagedCallersOnly]
         private static int wglWaitForMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc)
         {
@@ -1160,7 +1160,7 @@ namespace OpenTK.Graphics.Wgl
             return _wglWaitForMscOML_fnptr(hdc, target_msc, divisor, remainder, ust, msc, sbc);
         }
         
-        internal static delegate* unmanaged<IntPtr, long, long*, long*, long*, int> _wglWaitForSbcOML_fnptr = &wglWaitForSbcOML_Lazy;
+        public static delegate* unmanaged<IntPtr, long, long*, long*, long*, int> _wglWaitForSbcOML_fnptr = &wglWaitForSbcOML_Lazy;
         [UnmanagedCallersOnly]
         private static int wglWaitForSbcOML_Lazy(IntPtr hdc, long target_sbc, long* ust, long* msc, long* sbc)
         {

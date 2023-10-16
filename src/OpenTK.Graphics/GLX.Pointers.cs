@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 16:54:18 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -6,9 +6,9 @@ using OpenTK.Graphics;
 namespace OpenTK.Graphics.Glx
 {
     /// <summary>A collection of all function pointers to all OpenGL entry points.</summary>
-    public static unsafe partial class GLXPointers
+    public static unsafe partial class GlxPointers
     {
-        internal static delegate* unmanaged<Display*, int, int, nuint, int> _glXBindChannelToWindowSGIX_fnptr = &glXBindChannelToWindowSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, nuint, int> _glXBindChannelToWindowSGIX_fnptr = &glXBindChannelToWindowSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXBindChannelToWindowSGIX_Lazy(Display* display, int screen, int channel, nuint window)
         {
@@ -16,7 +16,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindChannelToWindowSGIX_fnptr(display, screen, channel, window);
         }
         
-        internal static delegate* unmanaged<Display*, int, int> _glXBindHyperpipeSGIX_fnptr = &glXBindHyperpipeSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int> _glXBindHyperpipeSGIX_fnptr = &glXBindHyperpipeSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXBindHyperpipeSGIX_Lazy(Display* dpy, int hpId)
         {
@@ -24,7 +24,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindHyperpipeSGIX_fnptr(dpy, hpId);
         }
         
-        internal static delegate* unmanaged<Display*, uint, uint, byte> _glXBindSwapBarrierNV_fnptr = &glXBindSwapBarrierNV_Lazy;
+        public static delegate* unmanaged<Display*, uint, uint, byte> _glXBindSwapBarrierNV_fnptr = &glXBindSwapBarrierNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXBindSwapBarrierNV_Lazy(Display* dpy, uint group, uint barrier)
         {
@@ -32,7 +32,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindSwapBarrierNV_fnptr(dpy, group, barrier);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, void> _glXBindSwapBarrierSGIX_fnptr = &glXBindSwapBarrierSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, void> _glXBindSwapBarrierSGIX_fnptr = &glXBindSwapBarrierSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXBindSwapBarrierSGIX_Lazy(Display* dpy, nuint drawable, int barrier)
         {
@@ -40,7 +40,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindSwapBarrierSGIX_fnptr(dpy, drawable, barrier);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, int*, void> _glXBindTexImageEXT_fnptr = &glXBindTexImageEXT_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, int*, void> _glXBindTexImageEXT_fnptr = &glXBindTexImageEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void glXBindTexImageEXT_Lazy(Display* dpy, nuint drawable, int buffer, int* attrib_list)
         {
@@ -48,7 +48,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindTexImageEXT_fnptr(dpy, drawable, buffer, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, uint, nuint, int> _glXBindVideoCaptureDeviceNV_fnptr = &glXBindVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, uint, nuint, int> _glXBindVideoCaptureDeviceNV_fnptr = &glXBindVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXBindVideoCaptureDeviceNV_Lazy(Display* dpy, uint video_capture_slot, nuint device)
         {
@@ -56,7 +56,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindVideoCaptureDeviceNV_fnptr(dpy, video_capture_slot, device);
         }
         
-        internal static delegate* unmanaged<Display*, uint, uint, int*, int> _glXBindVideoDeviceNV_fnptr = &glXBindVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, uint, uint, int*, int> _glXBindVideoDeviceNV_fnptr = &glXBindVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXBindVideoDeviceNV_Lazy(Display* dpy, uint video_slot, uint video_device, int* attrib_list)
         {
@@ -64,7 +64,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindVideoDeviceNV_fnptr(dpy, video_slot, video_device, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, uint, nuint, int, int> _glXBindVideoImageNV_fnptr = &glXBindVideoImageNV_Lazy;
+        public static delegate* unmanaged<Display*, uint, nuint, int, int> _glXBindVideoImageNV_fnptr = &glXBindVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXBindVideoImageNV_Lazy(Display* dpy, uint VideoDevice, nuint pbuf, int iVideoBuffer)
         {
@@ -72,7 +72,7 @@ namespace OpenTK.Graphics.Glx
             return _glXBindVideoImageNV_fnptr(dpy, VideoDevice, pbuf, iVideoBuffer);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void> _glXBlitContextFramebufferAMD_fnptr = &glXBlitContextFramebufferAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void> _glXBlitContextFramebufferAMD_fnptr = &glXBlitContextFramebufferAMD_Lazy;
         [UnmanagedCallersOnly]
         private static void glXBlitContextFramebufferAMD_Lazy(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
         {
@@ -80,7 +80,7 @@ namespace OpenTK.Graphics.Glx
             _glXBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, int, int, int, int> _glXChannelRectSGIX_fnptr = &glXChannelRectSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, int, int, int, int> _glXChannelRectSGIX_fnptr = &glXChannelRectSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXChannelRectSGIX_Lazy(Display* display, int screen, int channel, int x, int y, int w, int h)
         {
@@ -88,7 +88,7 @@ namespace OpenTK.Graphics.Glx
             return _glXChannelRectSGIX_fnptr(display, screen, channel, x, y, w, h);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, uint, int> _glXChannelRectSyncSGIX_fnptr = &glXChannelRectSyncSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, uint, int> _glXChannelRectSyncSGIX_fnptr = &glXChannelRectSyncSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXChannelRectSyncSGIX_Lazy(Display* display, int screen, int channel, uint synctype)
         {
@@ -96,7 +96,7 @@ namespace OpenTK.Graphics.Glx
             return _glXChannelRectSyncSGIX_fnptr(display, screen, channel, synctype);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfig_fnptr = &glXChooseFBConfig_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfig_fnptr = &glXChooseFBConfig_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr* glXChooseFBConfig_Lazy(Display* dpy, int screen, int* attrib_list, int* nelements)
         {
@@ -104,7 +104,7 @@ namespace OpenTK.Graphics.Glx
             return _glXChooseFBConfig_fnptr(dpy, screen, attrib_list, nelements);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfigSGIX_fnptr = &glXChooseFBConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfigSGIX_fnptr = &glXChooseFBConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr* glXChooseFBConfigSGIX_Lazy(Display* dpy, int screen, int* attrib_list, int* nelements)
         {
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.Glx
             return _glXChooseFBConfigSGIX_fnptr(dpy, screen, attrib_list, nelements);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, XVisualInfo*> _glXChooseVisual_fnptr = &glXChooseVisual_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, XVisualInfo*> _glXChooseVisual_fnptr = &glXChooseVisual_Lazy;
         [UnmanagedCallersOnly]
         private static XVisualInfo* glXChooseVisual_Lazy(Display* dpy, int screen, int* attribList)
         {
@@ -120,7 +120,7 @@ namespace OpenTK.Graphics.Glx
             return _glXChooseVisual_fnptr(dpy, screen, attribList);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXCopyBufferSubDataNV_fnptr = &glXCopyBufferSubDataNV_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXCopyBufferSubDataNV_fnptr = &glXCopyBufferSubDataNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCopyBufferSubDataNV_Lazy(Display* dpy, IntPtr readCtx, IntPtr writeCtx, uint readTarget, uint writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size)
         {
@@ -128,7 +128,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, ulong, void> _glXCopyContext_fnptr = &glXCopyContext_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, IntPtr, ulong, void> _glXCopyContext_fnptr = &glXCopyContext_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCopyContext_Lazy(Display* dpy, IntPtr src, IntPtr dst, ulong mask)
         {
@@ -136,7 +136,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyContext_fnptr(dpy, src, dst, mask);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, void> _glXCopyImageSubDataNV_fnptr = &glXCopyImageSubDataNV_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, void> _glXCopyImageSubDataNV_fnptr = &glXCopyImageSubDataNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCopyImageSubDataNV_Lazy(Display* dpy, IntPtr srcCtx, uint srcName, uint srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr dstCtx, uint dstName, uint dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
         {
@@ -144,7 +144,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyImageSubDataNV_fnptr(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, int, int, int, void> _glXCopySubBufferMESA_fnptr = &glXCopySubBufferMESA_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, int, int, int, void> _glXCopySubBufferMESA_fnptr = &glXCopySubBufferMESA_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCopySubBufferMESA_Lazy(Display* dpy, nuint drawable, int x, int y, int width, int height)
         {
@@ -152,7 +152,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopySubBufferMESA_fnptr(dpy, drawable, x, y, width, height);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr, IntPtr> _glXCreateAssociatedContextAMD_fnptr = &glXCreateAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<uint, IntPtr, IntPtr> _glXCreateAssociatedContextAMD_fnptr = &glXCreateAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateAssociatedContextAMD_Lazy(uint id, IntPtr share_list)
         {
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateAssociatedContextAMD_fnptr(id, share_list);
         }
         
-        internal static delegate* unmanaged<uint, IntPtr, int*, IntPtr> _glXCreateAssociatedContextAttribsAMD_fnptr = &glXCreateAssociatedContextAttribsAMD_Lazy;
+        public static delegate* unmanaged<uint, IntPtr, int*, IntPtr> _glXCreateAssociatedContextAttribsAMD_fnptr = &glXCreateAssociatedContextAttribsAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateAssociatedContextAttribsAMD_Lazy(uint id, IntPtr share_context, int* attribList)
         {
@@ -168,7 +168,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateAssociatedContextAttribsAMD_fnptr(id, share_context, attribList);
         }
         
-        internal static delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr> _glXCreateContext_fnptr = &glXCreateContext_Lazy;
+        public static delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr> _glXCreateContext_fnptr = &glXCreateContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateContext_Lazy(Display* dpy, XVisualInfo* vis, IntPtr shareList, byte direct)
         {
@@ -176,7 +176,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateContext_fnptr(dpy, vis, shareList, direct);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr> _glXCreateContextAttribsARB_fnptr = &glXCreateContextAttribsARB_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr> _glXCreateContextAttribsARB_fnptr = &glXCreateContextAttribsARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateContextAttribsARB_Lazy(Display* dpy, IntPtr config, IntPtr share_context, byte direct, int* attrib_list)
         {
@@ -184,7 +184,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateContextAttribsARB_fnptr(dpy, config, share_context, direct, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateContextWithConfigSGIX_fnptr = &glXCreateContextWithConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateContextWithConfigSGIX_fnptr = &glXCreateContextWithConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateContextWithConfigSGIX_Lazy(Display* dpy, IntPtr config, int render_type, IntPtr share_list, byte direct)
         {
@@ -192,7 +192,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateContextWithConfigSGIX_fnptr(dpy, config, render_type, share_list, direct);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint> _glXCreateGLXPbufferSGIX_fnptr = &glXCreateGLXPbufferSGIX_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint> _glXCreateGLXPbufferSGIX_fnptr = &glXCreateGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreateGLXPbufferSGIX_Lazy(Display* dpy, IntPtr config, uint width, uint height, int* attrib_list)
         {
@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateGLXPbufferSGIX_fnptr(dpy, config, width, height, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint> _glXCreateGLXPixmap_fnptr = &glXCreateGLXPixmap_Lazy;
+        public static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint> _glXCreateGLXPixmap_fnptr = &glXCreateGLXPixmap_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreateGLXPixmap_Lazy(Display* dpy, XVisualInfo* visual, nuint pixmap)
         {
@@ -208,7 +208,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateGLXPixmap_fnptr(dpy, visual, pixmap);
         }
         
-        internal static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint, nuint> _glXCreateGLXPixmapMESA_fnptr = &glXCreateGLXPixmapMESA_Lazy;
+        public static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint, nuint> _glXCreateGLXPixmapMESA_fnptr = &glXCreateGLXPixmapMESA_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreateGLXPixmapMESA_Lazy(Display* dpy, XVisualInfo* visual, nuint pixmap, nuint cmap)
         {
@@ -216,7 +216,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateGLXPixmapMESA_fnptr(dpy, visual, pixmap, cmap);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, nuint, nuint> _glXCreateGLXPixmapWithConfigSGIX_fnptr = &glXCreateGLXPixmapWithConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, nuint, nuint> _glXCreateGLXPixmapWithConfigSGIX_fnptr = &glXCreateGLXPixmapWithConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreateGLXPixmapWithConfigSGIX_Lazy(Display* dpy, IntPtr config, nuint pixmap)
         {
@@ -224,7 +224,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateGLXPixmapWithConfigSGIX_fnptr(dpy, config, pixmap);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateNewContext_fnptr = &glXCreateNewContext_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateNewContext_fnptr = &glXCreateNewContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXCreateNewContext_Lazy(Display* dpy, IntPtr config, int render_type, IntPtr share_list, byte direct)
         {
@@ -232,7 +232,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateNewContext_fnptr(dpy, config, render_type, share_list, direct);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int*, nuint> _glXCreatePbuffer_fnptr = &glXCreatePbuffer_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int*, nuint> _glXCreatePbuffer_fnptr = &glXCreatePbuffer_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreatePbuffer_Lazy(Display* dpy, IntPtr config, int* attrib_list)
         {
@@ -240,7 +240,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreatePbuffer_fnptr(dpy, config, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreatePixmap_fnptr = &glXCreatePixmap_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreatePixmap_fnptr = &glXCreatePixmap_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreatePixmap_Lazy(Display* dpy, IntPtr config, nuint pixmap, int* attrib_list)
         {
@@ -248,7 +248,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreatePixmap_fnptr(dpy, config, pixmap, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreateWindow_fnptr = &glXCreateWindow_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreateWindow_fnptr = &glXCreateWindow_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXCreateWindow_Lazy(Display* dpy, IntPtr config, nuint win, int* attrib_list)
         {
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateWindow_fnptr(dpy, config, win, attrib_list);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, float, void> _glXCushionSGI_fnptr = &glXCushionSGI_Lazy;
+        public static delegate* unmanaged<Display*, nuint, float, void> _glXCushionSGI_fnptr = &glXCushionSGI_Lazy;
         [UnmanagedCallersOnly]
         private static void glXCushionSGI_Lazy(Display* dpy, nuint window, float cushion)
         {
@@ -264,7 +264,7 @@ namespace OpenTK.Graphics.Glx
             _glXCushionSGI_fnptr(dpy, window, cushion);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, float, byte> _glXDelayBeforeSwapNV_fnptr = &glXDelayBeforeSwapNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, float, byte> _glXDelayBeforeSwapNV_fnptr = &glXDelayBeforeSwapNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXDelayBeforeSwapNV_Lazy(Display* dpy, nuint drawable, float seconds)
         {
@@ -272,7 +272,7 @@ namespace OpenTK.Graphics.Glx
             return _glXDelayBeforeSwapNV_fnptr(dpy, drawable, seconds);
         }
         
-        internal static delegate* unmanaged<IntPtr, byte> _glXDeleteAssociatedContextAMD_fnptr = &glXDeleteAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, byte> _glXDeleteAssociatedContextAMD_fnptr = &glXDeleteAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXDeleteAssociatedContextAMD_Lazy(IntPtr ctx)
         {
@@ -280,7 +280,7 @@ namespace OpenTK.Graphics.Glx
             return _glXDeleteAssociatedContextAMD_fnptr(ctx);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, void> _glXDestroyContext_fnptr = &glXDestroyContext_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, void> _glXDestroyContext_fnptr = &glXDestroyContext_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyContext_Lazy(Display* dpy, IntPtr ctx)
         {
@@ -288,7 +288,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyContext_fnptr(dpy, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPbufferSGIX_fnptr = &glXDestroyGLXPbufferSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPbufferSGIX_fnptr = &glXDestroyGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyGLXPbufferSGIX_Lazy(Display* dpy, nuint pbuf)
         {
@@ -296,7 +296,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyGLXPbufferSGIX_fnptr(dpy, pbuf);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPixmap_fnptr = &glXDestroyGLXPixmap_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPixmap_fnptr = &glXDestroyGLXPixmap_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyGLXPixmap_Lazy(Display* dpy, nuint pixmap)
         {
@@ -304,7 +304,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyGLXPixmap_fnptr(dpy, pixmap);
         }
         
-        internal static delegate* unmanaged<Display*, int, int> _glXDestroyHyperpipeConfigSGIX_fnptr = &glXDestroyHyperpipeConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int> _glXDestroyHyperpipeConfigSGIX_fnptr = &glXDestroyHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXDestroyHyperpipeConfigSGIX_Lazy(Display* dpy, int hpId)
         {
@@ -312,7 +312,7 @@ namespace OpenTK.Graphics.Glx
             return _glXDestroyHyperpipeConfigSGIX_fnptr(dpy, hpId);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyPbuffer_fnptr = &glXDestroyPbuffer_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXDestroyPbuffer_fnptr = &glXDestroyPbuffer_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyPbuffer_Lazy(Display* dpy, nuint pbuf)
         {
@@ -320,7 +320,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyPbuffer_fnptr(dpy, pbuf);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyPixmap_fnptr = &glXDestroyPixmap_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXDestroyPixmap_fnptr = &glXDestroyPixmap_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyPixmap_Lazy(Display* dpy, nuint pixmap)
         {
@@ -328,7 +328,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyPixmap_fnptr(dpy, pixmap);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyWindow_fnptr = &glXDestroyWindow_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXDestroyWindow_fnptr = &glXDestroyWindow_Lazy;
         [UnmanagedCallersOnly]
         private static void glXDestroyWindow_Lazy(Display* dpy, nuint win)
         {
@@ -336,7 +336,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyWindow_fnptr(dpy, win);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, nuint*> _glXEnumerateVideoCaptureDevicesNV_fnptr = &glXEnumerateVideoCaptureDevicesNV_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, nuint*> _glXEnumerateVideoCaptureDevicesNV_fnptr = &glXEnumerateVideoCaptureDevicesNV_Lazy;
         [UnmanagedCallersOnly]
         private static nuint* glXEnumerateVideoCaptureDevicesNV_Lazy(Display* dpy, int screen, int* nelements)
         {
@@ -344,7 +344,7 @@ namespace OpenTK.Graphics.Glx
             return _glXEnumerateVideoCaptureDevicesNV_fnptr(dpy, screen, nelements);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, uint*> _glXEnumerateVideoDevicesNV_fnptr = &glXEnumerateVideoDevicesNV_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, uint*> _glXEnumerateVideoDevicesNV_fnptr = &glXEnumerateVideoDevicesNV_Lazy;
         [UnmanagedCallersOnly]
         private static uint* glXEnumerateVideoDevicesNV_Lazy(Display* dpy, int screen, int* nelements)
         {
@@ -352,7 +352,7 @@ namespace OpenTK.Graphics.Glx
             return _glXEnumerateVideoDevicesNV_fnptr(dpy, screen, nelements);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, void> _glXFreeContextEXT_fnptr = &glXFreeContextEXT_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, void> _glXFreeContextEXT_fnptr = &glXFreeContextEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void glXFreeContextEXT_Lazy(Display* dpy, IntPtr context)
         {
@@ -360,7 +360,7 @@ namespace OpenTK.Graphics.Glx
             _glXFreeContextEXT_fnptr(dpy, context);
         }
         
-        internal static delegate* unmanaged<void*, uint> _glXGetAGPOffsetMESA_fnptr = &glXGetAGPOffsetMESA_Lazy;
+        public static delegate* unmanaged<void*, uint> _glXGetAGPOffsetMESA_fnptr = &glXGetAGPOffsetMESA_Lazy;
         [UnmanagedCallersOnly]
         private static uint glXGetAGPOffsetMESA_Lazy(void* pointer)
         {
@@ -368,7 +368,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetAGPOffsetMESA_fnptr(pointer);
         }
         
-        internal static delegate* unmanaged<Display*, int, byte*> _glXGetClientString_fnptr = &glXGetClientString_Lazy;
+        public static delegate* unmanaged<Display*, int, byte*> _glXGetClientString_fnptr = &glXGetClientString_Lazy;
         [UnmanagedCallersOnly]
         private static byte* glXGetClientString_Lazy(Display* dpy, int name)
         {
@@ -376,7 +376,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetClientString_fnptr(dpy, name);
         }
         
-        internal static delegate* unmanaged<Display*, XVisualInfo*, int, int*, int> _glXGetConfig_fnptr = &glXGetConfig_Lazy;
+        public static delegate* unmanaged<Display*, XVisualInfo*, int, int*, int> _glXGetConfig_fnptr = &glXGetConfig_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetConfig_Lazy(Display* dpy, XVisualInfo* visual, int attrib, int* value)
         {
@@ -384,7 +384,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetConfig_fnptr(dpy, visual, attrib, value);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint> _glXGetContextGPUIDAMD_fnptr = &glXGetContextGPUIDAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, uint> _glXGetContextGPUIDAMD_fnptr = &glXGetContextGPUIDAMD_Lazy;
         [UnmanagedCallersOnly]
         private static uint glXGetContextGPUIDAMD_Lazy(IntPtr ctx)
         {
@@ -392,7 +392,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetContextGPUIDAMD_fnptr(ctx);
         }
         
-        internal static delegate* unmanaged<IntPtr, nuint> _glXGetContextIDEXT_fnptr = &glXGetContextIDEXT_Lazy;
+        public static delegate* unmanaged<IntPtr, nuint> _glXGetContextIDEXT_fnptr = &glXGetContextIDEXT_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXGetContextIDEXT_Lazy(IntPtr context)
         {
@@ -400,7 +400,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetContextIDEXT_fnptr(context);
         }
         
-        internal static delegate* unmanaged<IntPtr> _glXGetCurrentAssociatedContextAMD_fnptr = &glXGetCurrentAssociatedContextAMD_Lazy;
+        public static delegate* unmanaged<IntPtr> _glXGetCurrentAssociatedContextAMD_fnptr = &glXGetCurrentAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetCurrentAssociatedContextAMD_Lazy()
         {
@@ -408,7 +408,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentAssociatedContextAMD_fnptr();
         }
         
-        internal static delegate* unmanaged<IntPtr> _glXGetCurrentContext_fnptr = &glXGetCurrentContext_Lazy;
+        public static delegate* unmanaged<IntPtr> _glXGetCurrentContext_fnptr = &glXGetCurrentContext_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetCurrentContext_Lazy()
         {
@@ -416,7 +416,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentContext_fnptr();
         }
         
-        internal static delegate* unmanaged<Display*> _glXGetCurrentDisplay_fnptr = &glXGetCurrentDisplay_Lazy;
+        public static delegate* unmanaged<Display*> _glXGetCurrentDisplay_fnptr = &glXGetCurrentDisplay_Lazy;
         [UnmanagedCallersOnly]
         private static Display* glXGetCurrentDisplay_Lazy()
         {
@@ -424,7 +424,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentDisplay_fnptr();
         }
         
-        internal static delegate* unmanaged<Display*> _glXGetCurrentDisplayEXT_fnptr = &glXGetCurrentDisplayEXT_Lazy;
+        public static delegate* unmanaged<Display*> _glXGetCurrentDisplayEXT_fnptr = &glXGetCurrentDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
         private static Display* glXGetCurrentDisplayEXT_Lazy()
         {
@@ -432,7 +432,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentDisplayEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<nuint> _glXGetCurrentDrawable_fnptr = &glXGetCurrentDrawable_Lazy;
+        public static delegate* unmanaged<nuint> _glXGetCurrentDrawable_fnptr = &glXGetCurrentDrawable_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXGetCurrentDrawable_Lazy()
         {
@@ -440,7 +440,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentDrawable_fnptr();
         }
         
-        internal static delegate* unmanaged<nuint> _glXGetCurrentReadDrawable_fnptr = &glXGetCurrentReadDrawable_Lazy;
+        public static delegate* unmanaged<nuint> _glXGetCurrentReadDrawable_fnptr = &glXGetCurrentReadDrawable_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXGetCurrentReadDrawable_Lazy()
         {
@@ -448,7 +448,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentReadDrawable_fnptr();
         }
         
-        internal static delegate* unmanaged<nuint> _glXGetCurrentReadDrawableSGI_fnptr = &glXGetCurrentReadDrawableSGI_Lazy;
+        public static delegate* unmanaged<nuint> _glXGetCurrentReadDrawableSGI_fnptr = &glXGetCurrentReadDrawableSGI_Lazy;
         [UnmanagedCallersOnly]
         private static nuint glXGetCurrentReadDrawableSGI_Lazy()
         {
@@ -456,7 +456,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetCurrentReadDrawableSGI_fnptr();
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttrib_fnptr = &glXGetFBConfigAttrib_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttrib_fnptr = &glXGetFBConfigAttrib_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetFBConfigAttrib_Lazy(Display* dpy, IntPtr config, int attribute, int* value)
         {
@@ -464,7 +464,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetFBConfigAttrib_fnptr(dpy, config, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttribSGIX_fnptr = &glXGetFBConfigAttribSGIX_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttribSGIX_fnptr = &glXGetFBConfigAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetFBConfigAttribSGIX_Lazy(Display* dpy, IntPtr config, int attribute, int* value)
         {
@@ -472,7 +472,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetFBConfigAttribSGIX_fnptr(dpy, config, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, XVisualInfo*, IntPtr> _glXGetFBConfigFromVisualSGIX_fnptr = &glXGetFBConfigFromVisualSGIX_Lazy;
+        public static delegate* unmanaged<Display*, XVisualInfo*, IntPtr> _glXGetFBConfigFromVisualSGIX_fnptr = &glXGetFBConfigFromVisualSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetFBConfigFromVisualSGIX_Lazy(Display* dpy, XVisualInfo* vis)
         {
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetFBConfigFromVisualSGIX_fnptr(dpy, vis);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, IntPtr*> _glXGetFBConfigs_fnptr = &glXGetFBConfigs_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, IntPtr*> _glXGetFBConfigs_fnptr = &glXGetFBConfigs_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr* glXGetFBConfigs_Lazy(Display* dpy, int screen, int* nelements)
         {
@@ -488,7 +488,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetFBConfigs_fnptr(dpy, screen, nelements);
         }
         
-        internal static delegate* unmanaged<uint, uint*, uint> _glXGetGPUIDsAMD_fnptr = &glXGetGPUIDsAMD_Lazy;
+        public static delegate* unmanaged<uint, uint*, uint> _glXGetGPUIDsAMD_fnptr = &glXGetGPUIDsAMD_Lazy;
         [UnmanagedCallersOnly]
         private static uint glXGetGPUIDsAMD_Lazy(uint maxCount, uint* ids)
         {
@@ -496,7 +496,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetGPUIDsAMD_fnptr(maxCount, ids);
         }
         
-        internal static delegate* unmanaged<uint, int, uint, uint, void*, int> _glXGetGPUInfoAMD_fnptr = &glXGetGPUInfoAMD_Lazy;
+        public static delegate* unmanaged<uint, int, uint, uint, void*, int> _glXGetGPUInfoAMD_fnptr = &glXGetGPUInfoAMD_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetGPUInfoAMD_Lazy(uint id, int property, uint dataType, uint size, void* data)
         {
@@ -504,7 +504,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int*, int*, byte> _glXGetMscRateOML_fnptr = &glXGetMscRateOML_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int*, int*, byte> _glXGetMscRateOML_fnptr = &glXGetMscRateOML_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXGetMscRateOML_Lazy(Display* dpy, nuint drawable, int* numerator, int* denominator)
         {
@@ -512,7 +512,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetMscRateOML_fnptr(dpy, drawable, numerator, denominator);
         }
         
-        internal static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddress_fnptr = &glXGetProcAddress_Lazy;
+        public static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddress_fnptr = &glXGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetProcAddress_Lazy(byte* procName)
         {
@@ -520,7 +520,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetProcAddress_fnptr(procName);
         }
         
-        internal static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddressARB_fnptr = &glXGetProcAddressARB_Lazy;
+        public static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddressARB_fnptr = &glXGetProcAddressARB_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXGetProcAddressARB_Lazy(byte* procName)
         {
@@ -528,7 +528,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetProcAddressARB_fnptr(procName);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEvent_fnptr = &glXGetSelectedEvent_Lazy;
+        public static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEvent_fnptr = &glXGetSelectedEvent_Lazy;
         [UnmanagedCallersOnly]
         private static void glXGetSelectedEvent_Lazy(Display* dpy, nuint draw, ulong* event_mask)
         {
@@ -536,7 +536,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSelectedEvent_fnptr(dpy, draw, event_mask);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEventSGIX_fnptr = &glXGetSelectedEventSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEventSGIX_fnptr = &glXGetSelectedEventSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXGetSelectedEventSGIX_Lazy(Display* dpy, nuint drawable, ulong* mask)
         {
@@ -544,7 +544,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSelectedEventSGIX_fnptr(dpy, drawable, mask);
         }
         
-        internal static delegate* unmanaged<int> _glXGetSwapIntervalMESA_fnptr = &glXGetSwapIntervalMESA_Lazy;
+        public static delegate* unmanaged<int> _glXGetSwapIntervalMESA_fnptr = &glXGetSwapIntervalMESA_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetSwapIntervalMESA_Lazy()
         {
@@ -552,7 +552,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetSwapIntervalMESA_fnptr();
         }
         
-        internal static delegate* unmanaged<Display*, nuint, long*, long*, long*, byte> _glXGetSyncValuesOML_fnptr = &glXGetSyncValuesOML_Lazy;
+        public static delegate* unmanaged<Display*, nuint, long*, long*, long*, byte> _glXGetSyncValuesOML_fnptr = &glXGetSyncValuesOML_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXGetSyncValuesOML_Lazy(Display* dpy, nuint drawable, long* ust, long* msc, long* sbc)
         {
@@ -560,7 +560,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetSyncValuesOML_fnptr(dpy, drawable, ust, msc, sbc);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, nuint, ulong*, int> _glXGetTransparentIndexSUN_fnptr = &glXGetTransparentIndexSUN_Lazy;
+        public static delegate* unmanaged<Display*, nuint, nuint, ulong*, int> _glXGetTransparentIndexSUN_fnptr = &glXGetTransparentIndexSUN_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetTransparentIndexSUN_Lazy(Display* dpy, nuint overlay, nuint underlay, ulong* pTransparentIndex)
         {
@@ -568,7 +568,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetTransparentIndexSUN_fnptr(dpy, overlay, underlay, pTransparentIndex);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, uint*, int> _glXGetVideoDeviceNV_fnptr = &glXGetVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, int, int, uint*, int> _glXGetVideoDeviceNV_fnptr = &glXGetVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetVideoDeviceNV_Lazy(Display* dpy, int screen, int numVideoDevices, uint* pVideoDevice)
         {
@@ -576,7 +576,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetVideoDeviceNV_fnptr(dpy, screen, numVideoDevices, pVideoDevice);
         }
         
-        internal static delegate* unmanaged<Display*, int, uint, ulong*, ulong*, int> _glXGetVideoInfoNV_fnptr = &glXGetVideoInfoNV_Lazy;
+        public static delegate* unmanaged<Display*, int, uint, ulong*, ulong*, int> _glXGetVideoInfoNV_fnptr = &glXGetVideoInfoNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetVideoInfoNV_Lazy(Display* dpy, int screen, uint VideoDevice, ulong* pulCounterOutputPbuffer, ulong* pulCounterOutputVideo)
         {
@@ -584,7 +584,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetVideoInfoNV_fnptr(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
         }
         
-        internal static delegate* unmanaged<uint*, int> _glXGetVideoSyncSGI_fnptr = &glXGetVideoSyncSGI_Lazy;
+        public static delegate* unmanaged<uint*, int> _glXGetVideoSyncSGI_fnptr = &glXGetVideoSyncSGI_Lazy;
         [UnmanagedCallersOnly]
         private static int glXGetVideoSyncSGI_Lazy(uint* count)
         {
@@ -592,7 +592,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetVideoSyncSGI_fnptr(count);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfig_fnptr = &glXGetVisualFromFBConfig_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfig_fnptr = &glXGetVisualFromFBConfig_Lazy;
         [UnmanagedCallersOnly]
         private static XVisualInfo* glXGetVisualFromFBConfig_Lazy(Display* dpy, IntPtr config)
         {
@@ -600,7 +600,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetVisualFromFBConfig_fnptr(dpy, config);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfigSGIX_fnptr = &glXGetVisualFromFBConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfigSGIX_fnptr = &glXGetVisualFromFBConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static XVisualInfo* glXGetVisualFromFBConfigSGIX_Lazy(Display* dpy, IntPtr config)
         {
@@ -608,7 +608,7 @@ namespace OpenTK.Graphics.Glx
             return _glXGetVisualFromFBConfigSGIX_fnptr(dpy, config);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, void*, int> _glXHyperpipeAttribSGIX_fnptr = &glXHyperpipeAttribSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, void*, int> _glXHyperpipeAttribSGIX_fnptr = &glXHyperpipeAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXHyperpipeAttribSGIX_Lazy(Display* dpy, int timeSlice, int attrib, int size, void* attribList)
         {
@@ -616,7 +616,7 @@ namespace OpenTK.Graphics.Glx
             return _glXHyperpipeAttribSGIX_fnptr(dpy, timeSlice, attrib, size, attribList);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, GLXHyperpipeConfigSGIX*, int*, int> _glXHyperpipeConfigSGIX_fnptr = &glXHyperpipeConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, GLXHyperpipeConfigSGIX*, int*, int> _glXHyperpipeConfigSGIX_fnptr = &glXHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXHyperpipeConfigSGIX_Lazy(Display* dpy, int networkId, int npipes, GLXHyperpipeConfigSGIX* cfg, int* hpId)
         {
@@ -624,7 +624,7 @@ namespace OpenTK.Graphics.Glx
             return _glXHyperpipeConfigSGIX_fnptr(dpy, networkId, npipes, cfg, hpId);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, IntPtr> _glXImportContextEXT_fnptr = &glXImportContextEXT_Lazy;
+        public static delegate* unmanaged<Display*, nuint, IntPtr> _glXImportContextEXT_fnptr = &glXImportContextEXT_Lazy;
         [UnmanagedCallersOnly]
         private static IntPtr glXImportContextEXT_Lazy(Display* dpy, nuint contextID)
         {
@@ -632,7 +632,7 @@ namespace OpenTK.Graphics.Glx
             return _glXImportContextEXT_fnptr(dpy, contextID);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, byte> _glXIsDirect_fnptr = &glXIsDirect_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, byte> _glXIsDirect_fnptr = &glXIsDirect_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXIsDirect_Lazy(Display* dpy, IntPtr ctx)
         {
@@ -640,7 +640,7 @@ namespace OpenTK.Graphics.Glx
             return _glXIsDirect_fnptr(dpy, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, uint, byte> _glXJoinSwapGroupNV_fnptr = &glXJoinSwapGroupNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, uint, byte> _glXJoinSwapGroupNV_fnptr = &glXJoinSwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXJoinSwapGroupNV_Lazy(Display* dpy, nuint drawable, uint group)
         {
@@ -648,7 +648,7 @@ namespace OpenTK.Graphics.Glx
             return _glXJoinSwapGroupNV_fnptr(dpy, drawable, group);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, nuint, void> _glXJoinSwapGroupSGIX_fnptr = &glXJoinSwapGroupSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, nuint, void> _glXJoinSwapGroupSGIX_fnptr = &glXJoinSwapGroupSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXJoinSwapGroupSGIX_Lazy(Display* dpy, nuint drawable, nuint member)
         {
@@ -656,7 +656,7 @@ namespace OpenTK.Graphics.Glx
             _glXJoinSwapGroupSGIX_fnptr(dpy, drawable, member);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXLockVideoCaptureDeviceNV_fnptr = &glXLockVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXLockVideoCaptureDeviceNV_fnptr = &glXLockVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glXLockVideoCaptureDeviceNV_Lazy(Display* dpy, nuint device)
         {
@@ -664,7 +664,7 @@ namespace OpenTK.Graphics.Glx
             _glXLockVideoCaptureDeviceNV_fnptr(dpy, device);
         }
         
-        internal static delegate* unmanaged<IntPtr, byte> _glXMakeAssociatedContextCurrentAMD_fnptr = &glXMakeAssociatedContextCurrentAMD_Lazy;
+        public static delegate* unmanaged<IntPtr, byte> _glXMakeAssociatedContextCurrentAMD_fnptr = &glXMakeAssociatedContextCurrentAMD_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXMakeAssociatedContextCurrentAMD_Lazy(IntPtr ctx)
         {
@@ -672,7 +672,7 @@ namespace OpenTK.Graphics.Glx
             return _glXMakeAssociatedContextCurrentAMD_fnptr(ctx);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeContextCurrent_fnptr = &glXMakeContextCurrent_Lazy;
+        public static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeContextCurrent_fnptr = &glXMakeContextCurrent_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXMakeContextCurrent_Lazy(Display* dpy, nuint draw, nuint read, IntPtr ctx)
         {
@@ -680,7 +680,7 @@ namespace OpenTK.Graphics.Glx
             return _glXMakeContextCurrent_fnptr(dpy, draw, read, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, IntPtr, byte> _glXMakeCurrent_fnptr = &glXMakeCurrent_Lazy;
+        public static delegate* unmanaged<Display*, nuint, IntPtr, byte> _glXMakeCurrent_fnptr = &glXMakeCurrent_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXMakeCurrent_Lazy(Display* dpy, nuint drawable, IntPtr ctx)
         {
@@ -688,7 +688,7 @@ namespace OpenTK.Graphics.Glx
             return _glXMakeCurrent_fnptr(dpy, drawable, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeCurrentReadSGI_fnptr = &glXMakeCurrentReadSGI_Lazy;
+        public static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeCurrentReadSGI_fnptr = &glXMakeCurrentReadSGI_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXMakeCurrentReadSGI_Lazy(Display* dpy, nuint draw, nuint read, IntPtr ctx)
         {
@@ -696,7 +696,7 @@ namespace OpenTK.Graphics.Glx
             return _glXMakeCurrentReadSGI_fnptr(dpy, draw, read, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXNamedCopyBufferSubDataNV_fnptr = &glXNamedCopyBufferSubDataNV_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXNamedCopyBufferSubDataNV_fnptr = &glXNamedCopyBufferSubDataNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glXNamedCopyBufferSubDataNV_Lazy(Display* dpy, IntPtr readCtx, IntPtr writeCtx, uint readBuffer, uint writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size)
         {
@@ -704,7 +704,7 @@ namespace OpenTK.Graphics.Glx
             _glXNamedCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelDeltasSGIX_fnptr = &glXQueryChannelDeltasSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelDeltasSGIX_fnptr = &glXQueryChannelDeltasSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryChannelDeltasSGIX_Lazy(Display* display, int screen, int channel, int* x, int* y, int* w, int* h)
         {
@@ -712,7 +712,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryChannelDeltasSGIX_fnptr(display, screen, channel, x, y, w, h);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelRectSGIX_fnptr = &glXQueryChannelRectSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelRectSGIX_fnptr = &glXQueryChannelRectSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryChannelRectSGIX_Lazy(Display* display, int screen, int channel, int* dx, int* dy, int* dw, int* dh)
         {
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryChannelRectSGIX_fnptr(display, screen, channel, dx, dy, dw, dh);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContext_fnptr = &glXQueryContext_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContext_fnptr = &glXQueryContext_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryContext_Lazy(Display* dpy, IntPtr ctx, int attribute, int* value)
         {
@@ -728,7 +728,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryContext_fnptr(dpy, ctx, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContextInfoEXT_fnptr = &glXQueryContextInfoEXT_Lazy;
+        public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContextInfoEXT_fnptr = &glXQueryContextInfoEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryContextInfoEXT_Lazy(Display* dpy, IntPtr context, int attribute, int* value)
         {
@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryContextInfoEXT_fnptr(dpy, context, attribute, value);
         }
         
-        internal static delegate* unmanaged<int, uint*, byte> _glXQueryCurrentRendererIntegerMESA_fnptr = &glXQueryCurrentRendererIntegerMESA_Lazy;
+        public static delegate* unmanaged<int, uint*, byte> _glXQueryCurrentRendererIntegerMESA_fnptr = &glXQueryCurrentRendererIntegerMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryCurrentRendererIntegerMESA_Lazy(int attribute, uint* value)
         {
@@ -744,7 +744,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryCurrentRendererIntegerMESA_fnptr(attribute, value);
         }
         
-        internal static delegate* unmanaged<int, byte*> _glXQueryCurrentRendererStringMESA_fnptr = &glXQueryCurrentRendererStringMESA_Lazy;
+        public static delegate* unmanaged<int, byte*> _glXQueryCurrentRendererStringMESA_fnptr = &glXQueryCurrentRendererStringMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte* glXQueryCurrentRendererStringMESA_Lazy(int attribute)
         {
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryCurrentRendererStringMESA_fnptr(attribute);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryDrawable_fnptr = &glXQueryDrawable_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryDrawable_fnptr = &glXQueryDrawable_Lazy;
         [UnmanagedCallersOnly]
         private static void glXQueryDrawable_Lazy(Display* dpy, nuint draw, int attribute, uint* value)
         {
@@ -760,7 +760,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryDrawable_fnptr(dpy, draw, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryExtension_fnptr = &glXQueryExtension_Lazy;
+        public static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryExtension_fnptr = &glXQueryExtension_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryExtension_Lazy(Display* dpy, int* errorb, int* @event)
         {
@@ -768,7 +768,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryExtension_fnptr(dpy, errorb, @event);
         }
         
-        internal static delegate* unmanaged<Display*, int, byte*> _glXQueryExtensionsString_fnptr = &glXQueryExtensionsString_Lazy;
+        public static delegate* unmanaged<Display*, int, byte*> _glXQueryExtensionsString_fnptr = &glXQueryExtensionsString_Lazy;
         [UnmanagedCallersOnly]
         private static byte* glXQueryExtensionsString_Lazy(Display* dpy, int screen)
         {
@@ -776,7 +776,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryExtensionsString_fnptr(dpy, screen);
         }
         
-        internal static delegate* unmanaged<Display*, int, uint*, byte> _glXQueryFrameCountNV_fnptr = &glXQueryFrameCountNV_Lazy;
+        public static delegate* unmanaged<Display*, int, uint*, byte> _glXQueryFrameCountNV_fnptr = &glXQueryFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryFrameCountNV_Lazy(Display* dpy, int screen, uint* count)
         {
@@ -784,7 +784,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryFrameCountNV_fnptr(dpy, screen, count);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryGLXPbufferSGIX_fnptr = &glXQueryGLXPbufferSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryGLXPbufferSGIX_fnptr = &glXQueryGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXQueryGLXPbufferSGIX_Lazy(Display* dpy, nuint pbuf, int attribute, uint* value)
         {
@@ -792,7 +792,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryGLXPbufferSGIX_fnptr(dpy, pbuf, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, void*, int> _glXQueryHyperpipeAttribSGIX_fnptr = &glXQueryHyperpipeAttribSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, void*, int> _glXQueryHyperpipeAttribSGIX_fnptr = &glXQueryHyperpipeAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryHyperpipeAttribSGIX_Lazy(Display* dpy, int timeSlice, int attrib, int size, void* returnAttribList)
         {
@@ -800,7 +800,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryHyperpipeAttribSGIX_fnptr(dpy, timeSlice, attrib, size, returnAttribList);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, void*, void*, int> _glXQueryHyperpipeBestAttribSGIX_fnptr = &glXQueryHyperpipeBestAttribSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, void*, void*, int> _glXQueryHyperpipeBestAttribSGIX_fnptr = &glXQueryHyperpipeBestAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryHyperpipeBestAttribSGIX_Lazy(Display* dpy, int timeSlice, int attrib, int size, void* attribList, void* returnAttribList)
         {
@@ -808,7 +808,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryHyperpipeBestAttribSGIX_fnptr(dpy, timeSlice, attrib, size, attribList, returnAttribList);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, GLXHyperpipeConfigSGIX*> _glXQueryHyperpipeConfigSGIX_fnptr = &glXQueryHyperpipeConfigSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, GLXHyperpipeConfigSGIX*> _glXQueryHyperpipeConfigSGIX_fnptr = &glXQueryHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static GLXHyperpipeConfigSGIX* glXQueryHyperpipeConfigSGIX_Lazy(Display* dpy, int hpId, int* npipes)
         {
@@ -816,7 +816,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryHyperpipeConfigSGIX_fnptr(dpy, hpId, npipes);
         }
         
-        internal static delegate* unmanaged<Display*, int*, GLXHyperpipeNetworkSGIX*> _glXQueryHyperpipeNetworkSGIX_fnptr = &glXQueryHyperpipeNetworkSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int*, GLXHyperpipeNetworkSGIX*> _glXQueryHyperpipeNetworkSGIX_fnptr = &glXQueryHyperpipeNetworkSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static GLXHyperpipeNetworkSGIX* glXQueryHyperpipeNetworkSGIX_Lazy(Display* dpy, int* npipes)
         {
@@ -824,7 +824,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryHyperpipeNetworkSGIX_fnptr(dpy, npipes);
         }
         
-        internal static delegate* unmanaged<Display*, int, int*, byte> _glXQueryMaxSwapBarriersSGIX_fnptr = &glXQueryMaxSwapBarriersSGIX_Lazy;
+        public static delegate* unmanaged<Display*, int, int*, byte> _glXQueryMaxSwapBarriersSGIX_fnptr = &glXQueryMaxSwapBarriersSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryMaxSwapBarriersSGIX_Lazy(Display* dpy, int screen, int* max)
         {
@@ -832,7 +832,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryMaxSwapBarriersSGIX_fnptr(dpy, screen, max);
         }
         
-        internal static delegate* unmanaged<Display*, int, uint*, uint*, byte> _glXQueryMaxSwapGroupsNV_fnptr = &glXQueryMaxSwapGroupsNV_Lazy;
+        public static delegate* unmanaged<Display*, int, uint*, uint*, byte> _glXQueryMaxSwapGroupsNV_fnptr = &glXQueryMaxSwapGroupsNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryMaxSwapGroupsNV_Lazy(Display* dpy, int screen, uint* maxGroups, uint* maxBarriers)
         {
@@ -840,7 +840,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryMaxSwapGroupsNV_fnptr(dpy, screen, maxGroups, maxBarriers);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, uint*, byte> _glXQueryRendererIntegerMESA_fnptr = &glXQueryRendererIntegerMESA_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, uint*, byte> _glXQueryRendererIntegerMESA_fnptr = &glXQueryRendererIntegerMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryRendererIntegerMESA_Lazy(Display* dpy, int screen, int renderer, int attribute, uint* value)
         {
@@ -848,7 +848,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryRendererIntegerMESA_fnptr(dpy, screen, renderer, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, int, byte*> _glXQueryRendererStringMESA_fnptr = &glXQueryRendererStringMESA_Lazy;
+        public static delegate* unmanaged<Display*, int, int, int, byte*> _glXQueryRendererStringMESA_fnptr = &glXQueryRendererStringMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte* glXQueryRendererStringMESA_Lazy(Display* dpy, int screen, int renderer, int attribute)
         {
@@ -856,7 +856,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryRendererStringMESA_fnptr(dpy, screen, renderer, attribute);
         }
         
-        internal static delegate* unmanaged<Display*, int, int, byte*> _glXQueryServerString_fnptr = &glXQueryServerString_Lazy;
+        public static delegate* unmanaged<Display*, int, int, byte*> _glXQueryServerString_fnptr = &glXQueryServerString_Lazy;
         [UnmanagedCallersOnly]
         private static byte* glXQueryServerString_Lazy(Display* dpy, int screen, int name)
         {
@@ -864,7 +864,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryServerString_fnptr(dpy, screen, name);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, uint*, uint*, byte> _glXQuerySwapGroupNV_fnptr = &glXQuerySwapGroupNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, uint*, uint*, byte> _glXQuerySwapGroupNV_fnptr = &glXQuerySwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQuerySwapGroupNV_Lazy(Display* dpy, nuint drawable, uint* group, uint* barrier)
         {
@@ -872,7 +872,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQuerySwapGroupNV_fnptr(dpy, drawable, group, barrier);
         }
         
-        internal static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryVersion_fnptr = &glXQueryVersion_Lazy;
+        public static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryVersion_fnptr = &glXQueryVersion_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXQueryVersion_Lazy(Display* dpy, int* maj, int* min)
         {
@@ -880,7 +880,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryVersion_fnptr(dpy, maj, min);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, int*, int> _glXQueryVideoCaptureDeviceNV_fnptr = &glXQueryVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, int*, int> _glXQueryVideoCaptureDeviceNV_fnptr = &glXQueryVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXQueryVideoCaptureDeviceNV_Lazy(Display* dpy, nuint device, int attribute, int* value)
         {
@@ -888,7 +888,7 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryVideoCaptureDeviceNV_fnptr(dpy, device, attribute, value);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, byte> _glXReleaseBuffersMESA_fnptr = &glXReleaseBuffersMESA_Lazy;
+        public static delegate* unmanaged<Display*, nuint, byte> _glXReleaseBuffersMESA_fnptr = &glXReleaseBuffersMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXReleaseBuffersMESA_Lazy(Display* dpy, nuint drawable)
         {
@@ -896,7 +896,7 @@ namespace OpenTK.Graphics.Glx
             return _glXReleaseBuffersMESA_fnptr(dpy, drawable);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, void> _glXReleaseTexImageEXT_fnptr = &glXReleaseTexImageEXT_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, void> _glXReleaseTexImageEXT_fnptr = &glXReleaseTexImageEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void glXReleaseTexImageEXT_Lazy(Display* dpy, nuint drawable, int buffer)
         {
@@ -904,7 +904,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseTexImageEXT_fnptr(dpy, drawable, buffer);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXReleaseVideoCaptureDeviceNV_fnptr = &glXReleaseVideoCaptureDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXReleaseVideoCaptureDeviceNV_fnptr = &glXReleaseVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glXReleaseVideoCaptureDeviceNV_Lazy(Display* dpy, nuint device)
         {
@@ -912,7 +912,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseVideoCaptureDeviceNV_fnptr(dpy, device);
         }
         
-        internal static delegate* unmanaged<Display*, int, uint, int> _glXReleaseVideoDeviceNV_fnptr = &glXReleaseVideoDeviceNV_Lazy;
+        public static delegate* unmanaged<Display*, int, uint, int> _glXReleaseVideoDeviceNV_fnptr = &glXReleaseVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXReleaseVideoDeviceNV_Lazy(Display* dpy, int screen, uint VideoDevice)
         {
@@ -920,7 +920,7 @@ namespace OpenTK.Graphics.Glx
             return _glXReleaseVideoDeviceNV_fnptr(dpy, screen, VideoDevice);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int> _glXReleaseVideoImageNV_fnptr = &glXReleaseVideoImageNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int> _glXReleaseVideoImageNV_fnptr = &glXReleaseVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXReleaseVideoImageNV_Lazy(Display* dpy, nuint pbuf)
         {
@@ -928,7 +928,7 @@ namespace OpenTK.Graphics.Glx
             return _glXReleaseVideoImageNV_fnptr(dpy, pbuf);
         }
         
-        internal static delegate* unmanaged<Display*, int, byte> _glXResetFrameCountNV_fnptr = &glXResetFrameCountNV_Lazy;
+        public static delegate* unmanaged<Display*, int, byte> _glXResetFrameCountNV_fnptr = &glXResetFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXResetFrameCountNV_Lazy(Display* dpy, int screen)
         {
@@ -936,7 +936,7 @@ namespace OpenTK.Graphics.Glx
             return _glXResetFrameCountNV_fnptr(dpy, screen);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEvent_fnptr = &glXSelectEvent_Lazy;
+        public static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEvent_fnptr = &glXSelectEvent_Lazy;
         [UnmanagedCallersOnly]
         private static void glXSelectEvent_Lazy(Display* dpy, nuint draw, ulong event_mask)
         {
@@ -944,7 +944,7 @@ namespace OpenTK.Graphics.Glx
             _glXSelectEvent_fnptr(dpy, draw, event_mask);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEventSGIX_fnptr = &glXSelectEventSGIX_Lazy;
+        public static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEventSGIX_fnptr = &glXSelectEventSGIX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXSelectEventSGIX_Lazy(Display* dpy, nuint drawable, ulong mask)
         {
@@ -952,7 +952,7 @@ namespace OpenTK.Graphics.Glx
             _glXSelectEventSGIX_fnptr(dpy, drawable, mask);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, ulong*, byte, int> _glXSendPbufferToVideoNV_fnptr = &glXSendPbufferToVideoNV_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, ulong*, byte, int> _glXSendPbufferToVideoNV_fnptr = &glXSendPbufferToVideoNV_Lazy;
         [UnmanagedCallersOnly]
         private static int glXSendPbufferToVideoNV_Lazy(Display* dpy, nuint pbuf, int iBufferType, ulong* pulCounterPbuffer, byte bBlock)
         {
@@ -960,7 +960,7 @@ namespace OpenTK.Graphics.Glx
             return _glXSendPbufferToVideoNV_fnptr(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock);
         }
         
-        internal static delegate* unmanaged<int, byte> _glXSet3DfxModeMESA_fnptr = &glXSet3DfxModeMESA_Lazy;
+        public static delegate* unmanaged<int, byte> _glXSet3DfxModeMESA_fnptr = &glXSet3DfxModeMESA_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXSet3DfxModeMESA_Lazy(int mode)
         {
@@ -968,7 +968,7 @@ namespace OpenTK.Graphics.Glx
             return _glXSet3DfxModeMESA_fnptr(mode);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, void> _glXSwapBuffers_fnptr = &glXSwapBuffers_Lazy;
+        public static delegate* unmanaged<Display*, nuint, void> _glXSwapBuffers_fnptr = &glXSwapBuffers_Lazy;
         [UnmanagedCallersOnly]
         private static void glXSwapBuffers_Lazy(Display* dpy, nuint drawable)
         {
@@ -976,7 +976,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapBuffers_fnptr(dpy, drawable);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, long, long, long, long> _glXSwapBuffersMscOML_fnptr = &glXSwapBuffersMscOML_Lazy;
+        public static delegate* unmanaged<Display*, nuint, long, long, long, long> _glXSwapBuffersMscOML_fnptr = &glXSwapBuffersMscOML_Lazy;
         [UnmanagedCallersOnly]
         private static long glXSwapBuffersMscOML_Lazy(Display* dpy, nuint drawable, long target_msc, long divisor, long remainder)
         {
@@ -984,7 +984,7 @@ namespace OpenTK.Graphics.Glx
             return _glXSwapBuffersMscOML_fnptr(dpy, drawable, target_msc, divisor, remainder);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, int, void> _glXSwapIntervalEXT_fnptr = &glXSwapIntervalEXT_Lazy;
+        public static delegate* unmanaged<Display*, nuint, int, void> _glXSwapIntervalEXT_fnptr = &glXSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
         private static void glXSwapIntervalEXT_Lazy(Display* dpy, nuint drawable, int interval)
         {
@@ -992,7 +992,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapIntervalEXT_fnptr(dpy, drawable, interval);
         }
         
-        internal static delegate* unmanaged<uint, int> _glXSwapIntervalMESA_fnptr = &glXSwapIntervalMESA_Lazy;
+        public static delegate* unmanaged<uint, int> _glXSwapIntervalMESA_fnptr = &glXSwapIntervalMESA_Lazy;
         [UnmanagedCallersOnly]
         private static int glXSwapIntervalMESA_Lazy(uint interval)
         {
@@ -1000,7 +1000,7 @@ namespace OpenTK.Graphics.Glx
             return _glXSwapIntervalMESA_fnptr(interval);
         }
         
-        internal static delegate* unmanaged<int, int> _glXSwapIntervalSGI_fnptr = &glXSwapIntervalSGI_Lazy;
+        public static delegate* unmanaged<int, int> _glXSwapIntervalSGI_fnptr = &glXSwapIntervalSGI_Lazy;
         [UnmanagedCallersOnly]
         private static int glXSwapIntervalSGI_Lazy(int interval)
         {
@@ -1008,7 +1008,7 @@ namespace OpenTK.Graphics.Glx
             return _glXSwapIntervalSGI_fnptr(interval);
         }
         
-        internal static delegate* unmanaged<nuint, int, int, int, void> _glXUseXFont_fnptr = &glXUseXFont_Lazy;
+        public static delegate* unmanaged<nuint, int, int, int, void> _glXUseXFont_fnptr = &glXUseXFont_Lazy;
         [UnmanagedCallersOnly]
         private static void glXUseXFont_Lazy(nuint font, int first, int count, int list)
         {
@@ -1016,7 +1016,7 @@ namespace OpenTK.Graphics.Glx
             _glXUseXFont_fnptr(font, first, count, list);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, long, long, long, long*, long*, long*, byte> _glXWaitForMscOML_fnptr = &glXWaitForMscOML_Lazy;
+        public static delegate* unmanaged<Display*, nuint, long, long, long, long*, long*, long*, byte> _glXWaitForMscOML_fnptr = &glXWaitForMscOML_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXWaitForMscOML_Lazy(Display* dpy, nuint drawable, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc)
         {
@@ -1024,7 +1024,7 @@ namespace OpenTK.Graphics.Glx
             return _glXWaitForMscOML_fnptr(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc);
         }
         
-        internal static delegate* unmanaged<Display*, nuint, long, long*, long*, long*, byte> _glXWaitForSbcOML_fnptr = &glXWaitForSbcOML_Lazy;
+        public static delegate* unmanaged<Display*, nuint, long, long*, long*, long*, byte> _glXWaitForSbcOML_fnptr = &glXWaitForSbcOML_Lazy;
         [UnmanagedCallersOnly]
         private static byte glXWaitForSbcOML_Lazy(Display* dpy, nuint drawable, long target_sbc, long* ust, long* msc, long* sbc)
         {
@@ -1032,7 +1032,7 @@ namespace OpenTK.Graphics.Glx
             return _glXWaitForSbcOML_fnptr(dpy, drawable, target_sbc, ust, msc, sbc);
         }
         
-        internal static delegate* unmanaged<void> _glXWaitGL_fnptr = &glXWaitGL_Lazy;
+        public static delegate* unmanaged<void> _glXWaitGL_fnptr = &glXWaitGL_Lazy;
         [UnmanagedCallersOnly]
         private static void glXWaitGL_Lazy()
         {
@@ -1040,7 +1040,7 @@ namespace OpenTK.Graphics.Glx
             _glXWaitGL_fnptr();
         }
         
-        internal static delegate* unmanaged<int, int, uint*, int> _glXWaitVideoSyncSGI_fnptr = &glXWaitVideoSyncSGI_Lazy;
+        public static delegate* unmanaged<int, int, uint*, int> _glXWaitVideoSyncSGI_fnptr = &glXWaitVideoSyncSGI_Lazy;
         [UnmanagedCallersOnly]
         private static int glXWaitVideoSyncSGI_Lazy(int divisor, int remainder, uint* count)
         {
@@ -1048,7 +1048,7 @@ namespace OpenTK.Graphics.Glx
             return _glXWaitVideoSyncSGI_fnptr(divisor, remainder, count);
         }
         
-        internal static delegate* unmanaged<void> _glXWaitX_fnptr = &glXWaitX_Lazy;
+        public static delegate* unmanaged<void> _glXWaitX_fnptr = &glXWaitX_Lazy;
         [UnmanagedCallersOnly]
         private static void glXWaitX_Lazy()
         {

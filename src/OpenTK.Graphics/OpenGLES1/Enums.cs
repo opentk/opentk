@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 16:54:19 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1

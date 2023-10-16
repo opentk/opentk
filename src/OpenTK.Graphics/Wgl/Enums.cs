@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 16:54:19 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
@@ -322,7 +322,7 @@ namespace OpenTK.Graphics.Wgl
         FullAccelerationArb = 8231,
         FullAccelerationExt = 8231,
     }
-    ///<summary>Used in <see cref="WGL.ARB.BindTexImageARB" />, <see cref="WGL.ARB.ReleaseTexImageARB" /></summary>
+    ///<summary>Used in <see cref="Wgl.ARB.BindTexImageARB" />, <see cref="Wgl.ARB.ReleaseTexImageARB" /></summary>
     public enum ColorBuffer : uint
     {
         FrontLeftArb = 8323,
@@ -340,13 +340,22 @@ namespace OpenTK.Graphics.Wgl
         Aux8Arb = 8335,
         Aux9Arb = 8336,
     }
-    ///<summary>Used in <see cref="WGL.NV.QueryCurrentContextNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.ARB.CreateContextAttribsARB" /></summary>
+    public enum ContextAttribs : uint
+    {
+        ContextMajorVersionArb = 8337,
+        ContextMinorVersionArb = 8338,
+        ContextLayerPlaneArb = 8339,
+        ContextFlagsArb = 8340,
+        ContextProfileMaskArb = 37158,
+    }
+    ///<summary>Used in <see cref="Wgl.NV.QueryCurrentContextNV" /></summary>
     public enum ContextAttribute : uint
     {
         NumVideoCaptureSlotsNv = 8399,
         NumVideoSlotsNv = 8432,
     }
-    ///<summary>Used in <see cref="WGL.I3D.GetDigitalVideoParametersI3D" />, <see cref="WGL.I3D.SetDigitalVideoParametersI3D" /></summary>
+    ///<summary>Used in <see cref="Wgl.I3D.GetDigitalVideoParametersI3D" />, <see cref="Wgl.I3D.SetDigitalVideoParametersI3D" /></summary>
     public enum DigitalVideoAttribute : uint
     {
         DigitalVideoCursorAlphaFramebufferI3d = 8272,
@@ -354,19 +363,19 @@ namespace OpenTK.Graphics.Wgl
         DigitalVideoCursorIncludedI3d = 8274,
         DigitalVideoGammaCorrectedI3d = 8275,
     }
-    ///<summary>Used in <see cref="WGL.UseFontOutlines" />, <see cref="WGL.UseFontOutlinesA" />, <see cref="WGL.UseFontOutlinesW" /></summary>
+    ///<summary>Used in <see cref="Wgl.UseFontOutlines" />, <see cref="Wgl.UseFontOutlinesA" />, <see cref="Wgl.UseFontOutlinesW" /></summary>
     public enum FontFormat : uint
     {
         FontLines = 0,
         FontPolygons = 1,
     }
-    ///<summary>Used in <see cref="WGL.I3D.GetGammaTableParametersI3D" />, <see cref="WGL.I3D.SetGammaTableParametersI3D" /></summary>
+    ///<summary>Used in <see cref="Wgl.I3D.GetGammaTableParametersI3D" />, <see cref="Wgl.I3D.SetGammaTableParametersI3D" /></summary>
     public enum GammaTableAttribute : uint
     {
         GammaTableSizeI3d = 8270,
         GammaExcludeDesktopI3d = 8271,
     }
-    ///<summary>Used in <see cref="WGL.AMD.GetGPUInfoAMD" /></summary>
+    ///<summary>Used in <see cref="Wgl.AMD.GetGPUInfoAMD" /></summary>
     public enum GPUPropertyAMD : uint
     {
         GpuVendorAmd = 7936,
@@ -379,7 +388,7 @@ namespace OpenTK.Graphics.Wgl
         GpuNumRbAmd = 8615,
         GpuNumSpiAmd = 8616,
     }
-    ///<summary>Used in <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
     public enum ObjectTypeDX : uint
     {
         None = 0,
@@ -389,7 +398,7 @@ namespace OpenTK.Graphics.Wgl
         TextureCubeMap = 34067,
         Renderbuffer = 36161,
     }
-    ///<summary>Used in <see cref="WGL.ARB.QueryPbufferARB" />, <see cref="WGL.EXT.QueryPbufferEXT" /></summary>
+    ///<summary>Used in <see cref="Wgl.ARB.QueryPbufferARB" />, <see cref="Wgl.EXT.QueryPbufferEXT" /></summary>
     public enum PBufferAttribute : uint
     {
         PbufferWidthArb = 8244,
@@ -425,6 +434,7 @@ namespace OpenTK.Graphics.Wgl
         Texture1dArb = 8313,
         Texture2dArb = 8314,
     }
+    ///<summary>Used in <see cref="Wgl.ARB.ChoosePixelFormatARB" />, <see cref="Wgl.ARB.GetPixelFormatAttribfvARB" />, <see cref="Wgl.EXT.GetPixelFormatAttribfvEXT" />, ...</summary>
     public enum PixelFormatAttribute : uint
     {
         NumberPixelFormatsArb = 8192,
@@ -506,6 +516,10 @@ namespace OpenTK.Graphics.Wgl
         TransparentBlueValueArb = 8249,
         TransparentAlphaValueArb = 8250,
         TransparentIndexValueArb = 8251,
+        SamplesArb = 8258,
+        SamplesExt = 8258,
+        FramebufferSrgbCapableArb = 8361,
+        FramebufferSrgbCapableExt = 8361,
     }
     public enum PixelType : uint
     {
@@ -514,7 +528,7 @@ namespace OpenTK.Graphics.Wgl
         TypeColorindexArb = 8236,
         TypeColorindexExt = 8236,
     }
-    ///<summary>Used in <see cref="WGL._3DL.SetStereoEmitterState3DL" /></summary>
+    ///<summary>Used in <see cref="Wgl._3DL.SetStereoEmitterState3DL" /></summary>
     public enum StereoEmitterState : uint
     {
         StereoEmitterEnable3dl = 8277,
@@ -531,12 +545,12 @@ namespace OpenTK.Graphics.Wgl
         SwapUndefinedArb = 8234,
         SwapUndefinedExt = 8234,
     }
-    ///<summary>Used in <see cref="WGL.NV.QueryVideoCaptureDeviceNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.NV.QueryVideoCaptureDeviceNV" /></summary>
     public enum VideoCaptureDeviceAttribute : uint
     {
         UniqueIdNv = 8398,
     }
-    ///<summary>Used in <see cref="WGL.NV.BindVideoImageNV" />, <see cref="WGL.NV.ReleaseVideoImageNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.NV.BindVideoImageNV" />, <see cref="Wgl.NV.ReleaseVideoImageNV" /></summary>
     public enum VideoOutputBuffer : uint
     {
         VideoOutColorNv = 8387,
@@ -545,7 +559,7 @@ namespace OpenTK.Graphics.Wgl
         VideoOutColorAndAlphaNv = 8390,
         VideoOutColorAndDepthNv = 8391,
     }
-    ///<summary>Used in <see cref="WGL.NV.SendPbufferToVideoNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.NV.SendPbufferToVideoNV" /></summary>
     public enum VideoOutputBufferType : uint
     {
         VideoOutFrame = 8392,
@@ -554,7 +568,7 @@ namespace OpenTK.Graphics.Wgl
         VideoOutStackedFields12 = 8395,
         VideoOutStackedFields21 = 8396,
     }
-    ///<summary>Used in <see cref="WGL.ARB.CreateBufferRegionARB" /></summary>
+    ///<summary>Used in <see cref="Wgl.ARB.CreateBufferRegionARB" /></summary>
     [Flags]
     public enum WGLColorBufferMask : uint
     {
@@ -579,7 +593,7 @@ namespace OpenTK.Graphics.Wgl
         ContextEs2ProfileBitExt = 4,
         ContextEsProfileBitExt = 4,
     }
-    ///<summary>Used in <see cref="WGL.NV.DXObjectAccessNV" />, <see cref="WGL.NV.DXRegisterObjectNV" /></summary>
+    ///<summary>Used in <see cref="Wgl.NV.DXObjectAccessNV" />, <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
     [Flags]
     public enum WGLDXInteropMaskNV : uint
     {
@@ -587,14 +601,14 @@ namespace OpenTK.Graphics.Wgl
         AccessReadWriteNv = 1,
         AccessWriteDiscardNv = 2,
     }
-    ///<summary>Used in <see cref="WGL.I3D.CreateImageBufferI3D" /></summary>
+    ///<summary>Used in <see cref="Wgl.I3D.CreateImageBufferI3D" /></summary>
     [Flags]
     public enum WGLImageBufferMaskI3D : uint
     {
         ImageBufferMinAccessI3d = 1,
         ImageBufferLockI3d = 2,
     }
-    ///<summary>Used in <see cref="WGL.SwapLayerBuffers" />, <see cref="WGL.OML.SwapLayerBuffersMscOML" /></summary>
+    ///<summary>Used in <see cref="Wgl.SwapLayerBuffers" />, <see cref="Wgl.OML.SwapLayerBuffersMscOML" /></summary>
     [Flags]
     public enum WGLLayerPlaneMask : uint
     {

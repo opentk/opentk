@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:33:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 16:54:18 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL
@@ -88,6 +88,7 @@ namespace OpenTK.Graphics.OpenGL
         HorizontalLineToNv = 6,
         TriangleFan = 6,
         DrawArraysInstancedCommandNv = 7,
+        Quads = 7,
         RelativeHorizontalLineToNv = 7,
         BiasBitAti = 8,
         ContextFlagNoErrorBit = 8,
@@ -234,7 +235,9 @@ namespace OpenTK.Graphics.OpenGL
         InvalidEnum = 1280,
         InvalidValue = 1281,
         InvalidOperation = 1282,
+        StackOverflow = 1283,
         StackOverflowKhr = 1283,
+        StackUnderflow = 1284,
         StackUnderflowKhr = 1284,
         OutOfMemory = 1285,
         InvalidFramebufferOperation = 1286,
@@ -589,6 +592,7 @@ namespace OpenTK.Graphics.OpenGL
         TextureWrapRExt = 32882,
         Max3dTextureSize = 32883,
         Max3dTextureSizeExt = 32883,
+        VertexArray = 32884,
         VertexArrayExt = 32884,
         VertexArrayKhr = 32884,
         NormalArrayExt = 32885,
@@ -5407,6 +5411,7 @@ namespace OpenTK.Graphics.OpenGL
         PolygonOffsetFill = 32823,
         RescaleNormalExt = 32826,
         Texture3dExt = 32879,
+        VertexArray = 32884,
         InterlaceSgix = 32916,
         Multisample = 32925,
         MultisampleSgis = 32925,
@@ -5470,6 +5475,8 @@ namespace OpenTK.Graphics.OpenGL
         InvalidEnum = 1280,
         InvalidValue = 1281,
         InvalidOperation = 1282,
+        StackOverflow = 1283,
+        StackUnderflow = 1284,
         OutOfMemory = 1285,
         InvalidFramebufferOperation = 1286,
         InvalidFramebufferOperationExt = 1286,
@@ -6116,6 +6123,7 @@ namespace OpenTK.Graphics.OpenGL
         Texture3dExt = 32879,
         Max3dTextureSize = 32883,
         Max3dTextureSizeExt = 32883,
+        VertexArray = 32884,
         VertexArrayCountExt = 32893,
         NormalArrayCountExt = 32896,
         ColorArrayCountExt = 32900,
@@ -7250,6 +7258,7 @@ namespace OpenTK.Graphics.OpenGL
     public enum ObjectIdentifier : uint
     {
         Texture = 5890,
+        VertexArray = 32884,
         Buffer = 33504,
         Shader = 33505,
         Program = 33506,
@@ -7807,6 +7816,7 @@ namespace OpenTK.Graphics.OpenGL
         Triangles = 4,
         TriangleStrip = 5,
         TriangleFan = 6,
+        Quads = 7,
         LinesAdjacency = 10,
         LinesAdjacencyArb = 10,
         LinesAdjacencyExt = 10,

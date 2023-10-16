@@ -32,8 +32,8 @@ namespace Generator.Writing
                 string className = pointers.File switch
                 {
                     GLFile.GL => "GL",
-                    GLFile.WGL => "WGL",
-                    GLFile.GLX => "GLX",
+                    GLFile.WGL => "Wgl",
+                    GLFile.GLX => "Glx",
                     _ => throw new Exception(),
                 };
 
@@ -64,8 +64,8 @@ namespace Generator.Writing
                 OutputApi.GLCompat => "GL",
                 OutputApi.GLES1 => "GL",
                 OutputApi.GLES2 => "GL",
-                OutputApi.WGL => "WGL",
-                OutputApi.GLX => "GLX",
+                OutputApi.WGL => "Wgl",
+                OutputApi.GLX => "Glx",
                 _ => throw new Exception(),
             };
 
@@ -139,7 +139,7 @@ namespace Generator.Writing
 
             string entryPoint = function.EntryPoint;
 
-            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+            writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {entryPoint}_Lazy({signature})");
