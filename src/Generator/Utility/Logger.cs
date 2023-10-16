@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Generator.Utility
 {
-    public class Logger : IDisposable
+    internal class Logger : IDisposable
     {
         private enum MessageSeverity
         {
@@ -16,7 +16,7 @@ namespace Generator.Utility
             Fatal
         }
 
-        private struct MessageInfo
+        private readonly struct MessageInfo
         {
             private readonly MessageSeverity _severity;
             private readonly DateTime _time;
@@ -24,7 +24,7 @@ namespace Generator.Utility
             private readonly int _lineNumber;
             private readonly string? _filePath;
 
-            public MessageInfo(MessageSeverity severity, DateTime time, string message, int lineNumber, string? filePath)
+            internal MessageInfo(MessageSeverity severity, DateTime time, string message, int lineNumber, string? filePath)
             {
                 _severity = severity;
                 _time = time;
@@ -36,11 +36,11 @@ namespace Generator.Utility
             [Pure]
             public override string ToString()
             {
-                return $"[{_severity} {_time.ToString("yyyy-MM-dd hh:mm:ss:fffff")} {_filePath}#{_lineNumber}] {_message}\n";
+                return $"[{_severity} {_time:yyyy-MM-dd hh:mm:ss:fffff} {_filePath}#{_lineNumber}] {_message}\n";
             }
 
             [Pure]
-            public ConsoleColor GetColor()
+            internal ConsoleColor GetColor()
             {
                 return _severity switch
                 {
@@ -56,9 +56,9 @@ namespace Generator.Utility
         private static FileStream? _fileStream;
         private static Logger? _instance;
 
-        public static Logger CreateLogger(string logPath) => _instance ?? (_instance = new Logger(logPath));
+        internal static Logger CreateLogger(string logPath) => _instance ??= new Logger(logPath);
 
-        public Logger(string logPath)
+        internal Logger(string logPath)
         {
             _fileStream = File.Create(logPath);
 
@@ -71,16 +71,16 @@ namespace Generator.Utility
             _instance = null;
         }
 
-        public static void Info(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        internal static void Info(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Info, DateTime.Now, message, lineNumber, filePath));
 
-        public static void Warning(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        internal static void Warning(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Warning, DateTime.Now, message, lineNumber, filePath));
 
-        public static void Error(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        internal static void Error(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Error, DateTime.Now, message, lineNumber, filePath));
 
-        public static void Fatal(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
+        internal static void Fatal(string message, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string? filePath = null) =>
             _instance?.WriteLog(new MessageInfo(MessageSeverity.Fatal, DateTime.Now, message, lineNumber, filePath));
 
         private void WriteLog(MessageInfo info)

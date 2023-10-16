@@ -12,9 +12,9 @@ using System.Xml.Linq;
 
 namespace Generator.Parsing
 {
-    public class SpecificationParser
+    internal class SpecificationParser
     {
-        public static Specification2 Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
+        internal static Specification2 Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
@@ -711,7 +711,7 @@ namespace Generator.Parsing
         }
 
 
-        public static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, GLFile currentFile)
+        internal static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, GLFile currentFile)
         {
             Logger.Info("Begining parsing of enums.");
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
@@ -824,14 +824,14 @@ namespace Generator.Parsing
 
             static ulong ConvertToUInt64(string val, TypeSuffix type) => type switch
             {
-                TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val),
-                TypeSuffix.Ull => (ulong)(long)new Int64Converter().ConvertFromString(val),
-                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val),
+                TypeSuffix.None => (uint)(int)new Int32Converter().ConvertFromString(val)!,
+                TypeSuffix.Ull => (ulong)(long)new Int64Converter().ConvertFromString(val)!,
+                TypeSuffix.U => (uint)new UInt32Converter().ConvertFromString(val)!,
                 TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
             };
         }
 
-        public static GroupRef[] ParseGroups(string? groups, GLFile currentFile)
+        internal static GroupRef[] ParseGroups(string? groups, GLFile currentFile)
         {
             if (groups == null) return Array.Empty<GroupRef>();
 
@@ -855,7 +855,7 @@ namespace Generator.Parsing
 
 
 
-        public static List<Feature> ParseFeatures(XElement input)
+        internal static List<Feature> ParseFeatures(XElement input)
         {
             Logger.Info("Begining parsing of features.");
 
@@ -895,7 +895,7 @@ namespace Generator.Parsing
             return features;
         }
 
-        public static List<Extension> ParseExtensions(XElement input, NameMangler nameMangler)
+        internal static List<Extension> ParseExtensions(XElement input, NameMangler nameMangler)
         {
             List<Extension> extensions = new List<Extension>();
             XElement? xelement = input.Element("extensions")!;
@@ -946,7 +946,7 @@ namespace Generator.Parsing
             return extensions;
         }
 
-        public static RequireEntry ParseRequire(XElement requires)
+        internal static RequireEntry ParseRequire(XElement requires)
         {
             GLAPI api = ParseApi(requires.Attribute("api")?.Value);
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
@@ -977,7 +977,7 @@ namespace Generator.Parsing
             return new RequireEntry(api, profile, comment, reqCommands, reqEnums);
         }
 
-        public static RemoveEntry ParseRemove(XElement requires)
+        internal static RemoveEntry ParseRemove(XElement requires)
         {
             GLProfile profile = ParseProfile(requires.Attribute("profile")?.Value);
             string? comment = requires.Attribute("comment")?.Value;
@@ -1008,7 +1008,7 @@ namespace Generator.Parsing
         }
 
 
-        public static GLAPI ParseApi(string? api) => api switch
+        internal static GLAPI ParseApi(string? api) => api switch
         {
             null or "" or "disabled" => GLAPI.None,
 
@@ -1024,7 +1024,7 @@ namespace Generator.Parsing
             _ => GLAPI.Invalid,
         };
 
-        public static GLProfile ParseProfile(string? profile) => profile switch
+        internal static GLProfile ParseProfile(string? profile) => profile switch
         {
             null or "" => GLProfile.None,
 

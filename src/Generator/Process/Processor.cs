@@ -10,7 +10,7 @@ using System.Collections.Immutable;
 
 namespace Generator.Process
 {
-    public static class Processor
+    internal static class Processor
     {
         // These types are only used to pass data from ProcessSpec to GetOutputApiFromRequireTags.
         private record ProcessedGLInformation(
@@ -18,13 +18,13 @@ namespace Generator.Process
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> AllEnumsPerAPI,
             List<EnumGroupInfo> AllEnumGroups);
 
-        public record OverloadedFunction(
+        internal record OverloadedFunction(
             NativeFunction NativeFunction,
             Dictionary<OutputApi, CommandDocumentation> Documentation,
             Overload[] Overloads,
             bool ChangeNativeName);
 
-        public sealed record EnumGroupInfo(
+        internal sealed record EnumGroupInfo(
             string GroupName,
             bool IsFlags)
         {
@@ -57,7 +57,7 @@ namespace Generator.Process
             Version RemovedInVersion,
             RemoveEntry Entry);
 
-        public static OutputData ProcessSpec(Specification2 spec, Documentation docs)
+        internal static OutputData ProcessSpec(Specification2 spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             List<NativeFunction> allEntryPoints = new List<NativeFunction>(spec.Functions.Count);
@@ -768,7 +768,7 @@ namespace Generator.Process
             }
         }
 
-        public static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(NativeFunction function, Documentation documentation)
+        internal static Dictionary<OutputApi, CommandDocumentation> MakeDocumentationForNativeFunction(NativeFunction function, Documentation documentation)
         {
             Dictionary<OutputApi, CommandDocumentation> commandDocs = new Dictionary<OutputApi, CommandDocumentation>();
 
@@ -797,7 +797,7 @@ namespace Generator.Process
         }
 
         // Maybe we can do the return type overloading in a post processing step?
-        public static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
+        internal static OverloadedFunction GenerateOverloads(NativeFunction nativeFunction, Dictionary<OutputApi, CommandDocumentation> functionDocumentation)
         {
             List<Overload> overloads = new List<Overload>
             {

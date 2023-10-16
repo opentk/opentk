@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 
 namespace OpenTK.Graphics
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     namespace OpenGL
     {
         public delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr message, IntPtr userParam);
@@ -473,6 +474,7 @@ namespace OpenTK.Graphics
 
     namespace Wgl
     {
+
         public struct Rect
         {
             public int Left;
@@ -1268,4 +1270,5 @@ namespace OpenTK.Graphics
         public static explicit operator PerfQueryHandle(int perfQuery) => new PerfQueryHandle(perfQuery);
         public static explicit operator int(PerfQueryHandle perfQueryHandle) => perfQueryHandle.Handle;
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

@@ -102,7 +102,7 @@ namespace Generator.Writing
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
 
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
@@ -490,7 +490,7 @@ namespace Generator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");

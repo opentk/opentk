@@ -8,7 +8,7 @@ using Generator.Utility;
 
 namespace Generator.Writing
 {
-    public record OutputData(
+    internal record OutputData(
         /* FIXME: Maybe do like this?
         Namespace GL,
         Namespace GLCompat,
@@ -22,25 +22,25 @@ namespace Generator.Writing
         List<Namespace> Namespaces);
 
     // FIXME: Maybe change to API.. something? "namespace" is quite generic.
-    public record Namespace(
+    internal record Namespace(
         OutputApi Name,
         SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
-    public record Pointers(
+    internal record Pointers(
         GLFile File,
         List<NativeFunction> NativeFunctions);
 
     /*
-    public record GLOutputApi(
+    internal record GLOutputApi(
         OutputApi Api,
         SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
     */
 
-    public record FunctionDocumentation(
+    internal record FunctionDocumentation(
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
@@ -49,11 +49,11 @@ namespace Generator.Writing
         List<string>? RemovedIn
         );
 
-    public record GLVendorFunctions(
+    internal record GLVendorFunctions(
         List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
 
-    public record OverloadedFunction(
+    internal record OverloadedFunction(
         NativeFunction NativeFunction,
         Overload[] Overloads) : IComparable<OverloadedFunction>
     {
@@ -63,7 +63,7 @@ namespace Generator.Writing
         }
     }
 
-    public record NativeFunction(
+    internal record NativeFunction(
         string EntryPoint,
         string FunctionName,
         List<Parameter> Parameters,
@@ -71,7 +71,7 @@ namespace Generator.Writing
         // FIXME: Convert referencedEnumGroups to use GroupRef!
         GroupRef[] ReferencedEnumGroups);
 
-    public record Overload(
+    internal record Overload(
         Overload? NestedOverload,
         IOverloadLayer? MarshalLayerToNested,
         Parameter[] InputParameters,
@@ -81,7 +81,7 @@ namespace Generator.Writing
         string[] GenericTypes,
         string OverloadName);
 
-    public record Parameter(
+    internal record Parameter(
         BaseCSType Type,
         // FIXME: Should we expose this exactly like it's exposed in gl.xml?
         string[] Kinds,
@@ -89,14 +89,14 @@ namespace Generator.Writing
         Expression? Length);
 
 
-    public record EnumGroupMember(
+    internal record EnumGroupMember(
         string Name,
         string MangledName,
         ulong Value,
         GroupRef[] Groups,
         bool IsFlag) : IEquatable<EnumGroupMember?>
     {
-        public static int DefaultComparison(EnumGroupMember m1, EnumGroupMember m2)
+        internal static int DefaultComparison(EnumGroupMember m1, EnumGroupMember m2)
         {
             int comp = m1.Value.CompareTo(m2.Value);
             if (comp == 0)
@@ -110,156 +110,156 @@ namespace Generator.Writing
         }
     }
 
-    public record EnumGroup(
+    internal record EnumGroup(
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
         List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
 
 
-    public interface IOverloadLayer
+    internal interface IOverloadLayer
     {
-        public void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
-        public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
+        internal void WritePrologue(IndentedTextWriter writer, NameTable nameTable);
+        internal string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName);
     }
 
 
-    public abstract record BaseCSType()
+    internal abstract record BaseCSType()
     {
         // We use a custom ToString here to allow ToString to be used for debugging,
         // also this way we make sure you have to override the custom ToString method.
-        public abstract string ToCSString();
+        internal abstract string ToCSString();
     }
 
-    public interface IConstantCSType
+    internal interface IConstantCSType
     {
-        public bool Constant { get; }
+        internal bool Constant { get; }
     }
 
-    public interface IBaseTypeCSType
+    internal interface IBaseTypeCSType
     {
-        public BaseCSType BaseType { get; }
+        internal BaseCSType BaseType { get; }
 
-        public bool TakeAddressInFixedStatement { get; }
+        internal bool TakeAddressInFixedStatement { get; }
 
-        public BaseCSType CreateWithNewType(BaseCSType type);
+        internal BaseCSType CreateWithNewType(BaseCSType type);
     }
 
-    public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
+    internal record CSVoid(bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString() => "void";
+        internal override string ToCSString() => "void";
     }
 
-    public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         // FIXME: const??
-        public static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const);
-        public static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const);
-        public static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const);
-        public static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const);
-        public static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const);
-        public static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const);
-        public static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const);
-        public static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const);
+        internal static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const);
+        internal static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const);
+        internal static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const);
+        internal static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const);
+        internal static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const);
+        internal static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const);
+        internal static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const);
+        internal static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const);
 
-        public static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const);
-        public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
-        public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
+        internal static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const);
+        internal static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
+        internal static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
 
-        public static CSPrimitive Half(bool @const) => new CSPrimitive("Half", @const);
-        public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
-        public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
+        internal static CSPrimitive Half(bool @const) => new CSPrimitive("Half", @const);
+        internal static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
+        internal static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
 
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return TypeName;
         }
     }
 
     // FIXME: Maybe combine TypeName and GroupRef.
-    public record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return TypeName;
         }
     }
 
-    public record CSStructPrimitive(string StructName, bool Constant, CSPrimitive UnderlyingType) : BaseCSType, IConstantCSType
+    internal record CSStructPrimitive(string StructName, bool Constant, CSPrimitive UnderlyingType) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return StructName;
         }
     }
 
-    public record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return TypeName;
         }
     }
 
-    public record CSBool8(bool Constant) : BaseCSType, IConstantCSType
+    internal record CSBool8(bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return "bool";
         }
     }
 
-    public record CSBool32(bool Constant) : BaseCSType, IConstantCSType
+    internal record CSBool32(bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return "int";
         }
     }
 
-    public interface ICSCharType : IConstantCSType { }
+    internal interface ICSCharType : IConstantCSType { }
 
-    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
+    internal record CSChar8(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return "byte";
         }
     }
 
-    public record CSChar16(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
+    internal record CSChar16(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return "char";
         }
     }
 
-    public record CSString(bool Nullable) : BaseCSType
+    internal record CSString(bool Nullable) : BaseCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return $"string{(Nullable ? "?" : "")}";
         }
     }
 
-    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return $"{BaseType.ToCSString()}*";
         }
     }
 
-    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
+    internal record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
     {
-        public enum Type { Ref, Out, In }
+        internal enum Type { Ref, Out, In }
 
         public BaseCSType BaseType => ReferencedType;
 
         public bool TakeAddressInFixedStatement => true;
 
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             string modifier = RefType switch
             {
@@ -277,11 +277,11 @@ namespace Generator.Writing
         }
     }
 
-    public record CSArray(BaseCSType BaseType) : BaseCSType, IBaseTypeCSType
+    internal record CSArray(BaseCSType BaseType) : BaseCSType, IBaseTypeCSType
     {
         public bool TakeAddressInFixedStatement => false;
 
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return $"{BaseType.ToCSString()}[]";
         }
@@ -292,11 +292,11 @@ namespace Generator.Writing
         }
     }
 
-    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType, IBaseTypeCSType
+    internal record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType, IBaseTypeCSType
     {
         public bool TakeAddressInFixedStatement => false;
 
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             if (Readonly)
             {
@@ -314,25 +314,25 @@ namespace Generator.Writing
         }
     }
 
-    public record CSGenericType(string GenericTypeName) : BaseCSType
+    internal record CSGenericType(string GenericTypeName) : BaseCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return GenericTypeName;
         }
     }
 
-    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return "IntPtr";
         }
     }
 
-    public record CSDelegateType(string TypeName) : BaseCSType
+    internal record CSDelegateType(string TypeName) : BaseCSType
     {
-        public override string ToCSString()
+        internal override string ToCSString()
         {
             return TypeName;
         }
@@ -341,30 +341,30 @@ namespace Generator.Writing
 
     // FIXME: Clean up our naming/renaming of variables entirely. Do we even need/want a nametable?
     // If we do this is definitely not the correct API for it.
-    public class NameTable
+    internal class NameTable
     {
-        public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
+        internal Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
 
-        public string? ReturnName = "returnValue";
+        internal string? ReturnName = "returnValue";
 
-        public NameTable()
+        internal NameTable()
         {
         }
 
-        public NameTable(NameTable table)
+        internal NameTable(NameTable table)
         {
             Table = new Dictionary<Parameter, string>(table.Table);
             ReturnName = table.ReturnName;
         }
 
-        public NameTable New()
+        internal NameTable New()
         {
             return new NameTable(this);
         }
 
-        public void Rename(Parameter param, string name) => Table[param] = name;
+        internal void Rename(Parameter param, string name) => Table[param] = name;
 
-        public string this[Parameter param]
+        internal string this[Parameter param]
         {
             get
             {
@@ -377,7 +377,7 @@ namespace Generator.Writing
             }
         }
 
-        public void Apply(NameTable table)
+        internal void Apply(NameTable table)
         {
             foreach (var (param, name) in table.Table)
             {
@@ -390,7 +390,7 @@ namespace Generator.Writing
     }
 
 
-    public enum OutputApi
+    internal enum OutputApi
     {
         Invalid,
         GL,
@@ -402,7 +402,7 @@ namespace Generator.Writing
     }
 
     [Flags]
-    public enum OutputApiFlags
+    internal enum OutputApiFlags
     {
         None = 0,
         GL = 1 << 0,

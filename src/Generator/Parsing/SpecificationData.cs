@@ -7,7 +7,7 @@ using System.IO.Compression;
 
 namespace Generator.Parsing
 {
-    public enum InputAPI
+    internal enum InputAPI
     {
         GL,
         GLES1,
@@ -17,7 +17,7 @@ namespace Generator.Parsing
     }
 
     [Flags]
-    public enum EnumAPI
+    internal enum EnumAPI
     {
         None = 0,
         GL = 1 << 0,
@@ -28,31 +28,31 @@ namespace Generator.Parsing
         GLX = 1 << 5,
     }
 
-    public record GLFileData(
+    internal record GLFileData(
         GLFile File,
         List<NativeFunction> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
 
-    public record Specification2(
+    internal record Specification2(
         //List<Command> Commands,
         List<NativeFunction> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
 
-    public record API(
+    internal record API(
         InputAPI Name,
         List<FunctionReference> Functions,
         List<EnumReference> Enums);
 
-    public record FunctionReference(
+    internal record FunctionReference(
         string EntryPoint,
         Version? AddedIn,
         Version? RemovedIn,
         List<ExtensionReference> PartOfExtensions,
         GLProfile Profile);
 
-    public record EnumReference(
+    internal record EnumReference(
         string EnumName,
         Version? AddedIn,
         Version? RemovedIn,
@@ -62,32 +62,32 @@ namespace Generator.Parsing
         // Is this enum reference copied from another namespace.
         bool IsCrossReferenced);
 
-    public record APIVersion(
+    internal record APIVersion(
         Version Name,
         List<string> EntryPoints,
         List<string> EnumValues);
 
-    public record ExtensionReference(
+    internal record ExtensionReference(
         string Name,
         string Vendor);
         //List<string> EntryPoints,
         //List<string> EnumValues);
 
 
-    /*public record Specification(
+    /*internal record Specification(
         List<Command> Commands,
         List<Enums> Enums,
         List<Feature> Features,
         List<Extension> Extensions);*/
 
 
-    /*public record Command(
+    /*internal record Command(
         string EntryPoint,
         PType ReturnType,
         GLParameter[] Parameters);*/
 
     // FIXME: Maybe flatten the list of enums?
-    /*public record Enums(
+    /*internal record Enums(
         string Namespace,
         GroupRef[] Groups,
         EnumType Type,
@@ -96,7 +96,7 @@ namespace Generator.Parsing
         string? Comment,
         List<EnumEntry> Entries);*/
 
-    public record EnumEntry(
+    internal record EnumEntry(
         string Name,
         string MangledName,
         ulong Value,
@@ -108,14 +108,14 @@ namespace Generator.Parsing
         TypeSuffix Suffix);
 
 
-    public record Feature(
+    internal record Feature(
         GLAPI Api,
         Version Version,
         string Name,
         List<RequireEntry> Requires,
         List<RemoveEntry> Removes);
 
-    public record Extension(
+    internal record Extension(
         string Name,
         string Vendor,
         GLAPI[] SupportedApis,
@@ -123,26 +123,26 @@ namespace Generator.Parsing
         List<RequireEntry> Requires);
 
 
-    public record RequireEntry(
+    internal record RequireEntry(
         GLAPI Api,
         GLProfile Profile,
         string? Comment,
         List<string> Commands,
         List<string> Enums);
 
-    public record RemoveEntry(
+    internal record RemoveEntry(
         GLProfile Profile,
         string? Comment,
         List<string> Commands,
         List<string> Enums);
 
 
-    public record PType(
+    internal record PType(
         GLType Type,
         HandleType? Handle,
         GroupRef? Group);
 
-    public enum GLFile
+    internal enum GLFile
     {
         GL,
         WGL,
@@ -151,26 +151,26 @@ namespace Generator.Parsing
 
     /// <param name="Name">The name of the referenced enum group.</param>
     /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    public record GroupRef(string Name, GLFile Namespace);
+    internal record GroupRef(string Name, GLFile Namespace);
 
-    public abstract record GLType();
+    internal abstract record GLType();
 
-    public record GLBaseType(
+    internal record GLBaseType(
         string OriginalString,
         PrimitiveType Type,
         bool Constant) : GLType;
 
-    public record GLPointerType(
+    internal record GLPointerType(
         GLType BaseType,
         bool Constant) : GLType;
 
 
-    public record Expression
+    internal record Expression
     {
         // FIXME: Clean up this mess. We assume a lot of things we maybe dont wanna assume?
         // Can all lengths even be inverted and what should happen if they cant?
         // For now this works, but it might break later. 2021-06-23.
-        public static string? InvertExpressionAndGetReferencedName(Expression expr, out Func<string, string> inverseExpression)
+        internal static string? InvertExpressionAndGetReferencedName(Expression expr, out Func<string, string> inverseExpression)
         {
             switch (expr)
             {
@@ -195,11 +195,11 @@ namespace Generator.Parsing
         }
     }
 
-    public record Constant(int Value) : Expression;
+    internal record Constant(int Value) : Expression;
 
-    public record CompSize(Expression[] Parameters) : Expression;
+    internal record CompSize(Expression[] Parameters) : Expression;
 
-    public enum BinaryOperator
+    internal enum BinaryOperator
     {
         Invalid,
         Addition,
@@ -208,12 +208,12 @@ namespace Generator.Parsing
         Division,
     }
 
-    public record BinaryOperation(
+    internal record BinaryOperation(
         Expression Left,
         BinaryOperator Operator,
         Expression Right) : Expression
     {
-        public static BinaryOperator Invert(BinaryOperator @operator) => @operator switch
+        internal static BinaryOperator Invert(BinaryOperator @operator) => @operator switch
         {
             BinaryOperator.Addition => BinaryOperator.Subtraction,
             BinaryOperator.Subtraction => BinaryOperator.Addition,
@@ -222,7 +222,7 @@ namespace Generator.Parsing
             _ => throw new Exception("Invalid binary operator, we can't invert it."),
         };
 
-        public static char GetOperationChar(BinaryOperator @operator) => @operator switch
+        internal static char GetOperationChar(BinaryOperator @operator) => @operator switch
         {
             BinaryOperator.Addition => '+',
             BinaryOperator.Subtraction => '-',
@@ -231,7 +231,7 @@ namespace Generator.Parsing
             _ => throw new Exception("Invalid binary operator, there is no char associated."),
         };
 
-        public bool TryDecomposeIntoParameterRefAndConstant([NotNullWhen(true)] out Constant? constant, [NotNullWhen(true)] out ParameterReference? reference)
+        internal bool TryDecomposeIntoParameterRefAndConstant([NotNullWhen(true)] out Constant? constant, [NotNullWhen(true)] out ParameterReference? reference)
         {
             if (Left is ParameterReference leftRef && Right is Constant rightConst)
             {
@@ -254,11 +254,11 @@ namespace Generator.Parsing
         }
     }
 
-    public record ParameterReference(string ParameterName) : Expression;
+    internal record ParameterReference(string ParameterName) : Expression;
 
 
 
-    public enum GLAPI
+    internal enum GLAPI
     {
         Invalid,
         None,
@@ -272,7 +272,7 @@ namespace Generator.Parsing
         GLX,
     }
 
-    public enum GLProfile
+    internal enum GLProfile
     {
         Invalid,
         None,
@@ -282,7 +282,7 @@ namespace Generator.Parsing
     }
 
 
-    public enum PrimitiveType
+    internal enum PrimitiveType
     {
         Invalid,
 
@@ -369,7 +369,7 @@ namespace Generator.Parsing
 
     }
 
-    public enum HandleType
+    internal enum HandleType
     {
         ProgramHandle,
         ProgramPipelineHandle,
@@ -387,7 +387,7 @@ namespace Generator.Parsing
     }
 
 
-    public enum EnumType
+    internal enum EnumType
     {
         Invalid,
         None,
@@ -405,7 +405,7 @@ namespace Generator.Parsing
     /// <br/>
     /// Taken from <see href="https://github.com/KhronosGroup/OpenGL-Registry/blob/0dc24166d162723781f1bf9fe433f71fa03a7aa0/xml/readme.tex#L383">KhronosGroup/OpenGL-Registry/xml/readme.tex#L383</see> 2020-11-22
     /// </summary>
-    public enum TypeSuffix
+    internal enum TypeSuffix
     {
         Invalid,
         None,
