@@ -1,3 +1,32 @@
+## 5.0-pre.9
+
+* Merged PAL2 into OpenTK 5.0. Platform Abstraction Layer 2.0 is an experimental api that represents the future of windowing in OpenTK. (@NogginBops, @utkumaden)
+  To learn more visit: https://nogginbops.github.io/opentk.net/learn/pal2/Introduction.html (will be https://opentk.net/learn/pal2/Introduction.html in the future).
+
+* Merged OpenTK  4.8.1 onto 5.0-pre.9. (@NogginBops)
+  This means that all changes make between 4.7.6 to 4.8.1 are also in this release.
+
+* BREAKING: Disabled generation of typesafe handles by default. (@NogginBops)
+  They are still available optionally when running the generator, but will not be part of the nuget package.
+
+* API: Lots of GL functions are now properly overloaded with math types. (@NogginBops)
+
+* API: Where applicable `System.Numerics` overloads have been added to GL functions. (@NogginBops)
+
+* FIX: `LinearMipmapLinear` is no longer a member in `TextureWrapMode`. (@NogginBops)
+
+* FIX: `GL.CreateShaderProgram` now properly returns an `int`. (@NogginBops)
+
+* API: Added `GL.TransformFeedbackVaryings(int, int, string[], TransformFeedbackBufferMode)` manual overload. (@NogginBops)
+
+* API: Implemented `IEquatable<>` on all typesafe handle types. (@NogginBops)
+
+* FIX: Started using `OperatingSystem.Is*` internally instead of `RuntimeInformation.IsOSPlatform`. (@O1L)
+
+* API: Added `Wgl` and `Glx` bindings (automatic loading the symbols for these APIs is broken, but will be fixed in the next preview). (@NogginBops)
+
+* API: Made all function pointers directly accessibly in `GLPointers`, `GLXPointers`, and `WGLPointers` classes. (@NogginBops)
+
 ## 5.0-pre.8
 
 * Merged 5.0 with 4.7.5, this means that all changes made between 4.6.5 to 4.7.5 are also in this release.
