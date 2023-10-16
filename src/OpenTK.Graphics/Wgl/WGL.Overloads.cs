@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:17:08 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -279,16 +279,16 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD(uint id, GPUPropertyAMD property, PixelType dataType, uint size, IntPtr data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, IntPtr data)
             {
                 int returnValue;
                 void* data_vptr = (void*)data;
                 returnValue = GetGPUInfoAMD(id, property, dataType, size, data_vptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, Span<T1> data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, Span<T1> data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -298,8 +298,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, T1[] data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, T1[] data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -309,8 +309,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, ref T1 data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, ScalarType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, ref T1 data)
                 where T1 : unmanaged
             {
                 int returnValue;

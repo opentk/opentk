@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:17:08 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -119,7 +119,7 @@ namespace OpenTK.Graphics.Wgl
             public static uint GetGPUIDsAMD(uint maxCount, uint* ids) => WGLPointers._wglGetGPUIDsAMD_fnptr(maxCount, ids);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglGetGPUInfoAMD</c>]</b><br/>  </summary>
-            public static int GetGPUInfoAMD(uint id, GPUPropertyAMD property, PixelType dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
+            public static int GetGPUInfoAMD(uint id, GPUPropertyAMD property, ScalarType dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglMakeAssociatedContextCurrentAMD</c>]</b><br/>  </summary>
             public static int MakeAssociatedContextCurrentAMD(IntPtr hglrc) => WGLPointers._wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);

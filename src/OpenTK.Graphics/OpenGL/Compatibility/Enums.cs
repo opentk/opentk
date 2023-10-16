@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:17:08 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
@@ -7401,6 +7401,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Int = 5124,
         UnsignedInt = 5125,
     }
+    ///<summary>Used in <see cref="GL.ATI.ArrayObjectATI" />, <see cref="GL.EXT.SetInvariantEXT" />, <see cref="GL.EXT.SetLocalConstantEXT" />, ...</summary>
+    public enum ScalarType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        Int = 5124,
+        UnsignedInt = 5125,
+        Float = 5126,
+        Double = 5130,
+    }
     ///<summary>Used in <see cref="GL.ARB.WeightPointerARB" /></summary>
     public enum WeightPointerTypeARB : uint
     {
@@ -7545,13 +7557,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         UnsignedInt2101010Rev = 33640,
         UnsignedInt10f11f11fRev = 35899,
         Int2101010Rev = 36255,
-    }
-    ///<summary>Used in <see cref="GL.ATI.ArrayObjectATI" />, <see cref="GL.EXT.SetInvariantEXT" />, <see cref="GL.EXT.SetLocalConstantEXT" />, ...</summary>
-    public enum ScalarType : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
     }
     ///<summary>Used in <see cref="GL.SUN.ReplacementCodePointerSUN" /></summary>
     public enum ReplacementCodeTypeSUN : uint

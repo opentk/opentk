@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:17:08 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -1417,6 +1417,15 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
+    public enum ScalarType : uint
+    {
+        Byte = 5120,
+        UnsignedByte = 5121,
+        Short = 5122,
+        UnsignedShort = 5123,
+        UnsignedInt = 5125,
+        Float = 5126,
+    }
     public enum WeightPointerTypeARB : uint
     {
         Byte = 5120,
@@ -1500,12 +1509,6 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedInt = 5125,
         Float = 5126,
         Fixed = 5132,
-    }
-    public enum ScalarType : uint
-    {
-        UnsignedByte = 5121,
-        UnsignedShort = 5123,
-        UnsignedInt = 5125,
     }
     public enum ReplacementCodeTypeSUN : uint
     {

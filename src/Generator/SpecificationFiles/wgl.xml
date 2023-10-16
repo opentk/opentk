@@ -904,8 +904,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>INT</ptype> <name>wglGetGPUInfoAMD</name></proto>
             <param><ptype>UINT</ptype> <name>id</name></param>
             <param group="GPUPropertyAMD"><ptype>INT</ptype> <name>property</name></param>
-            <!-- FIXME: Make a more fitting enum group than PixelType? -->
-            <param group="gl::PixelType"><ptype>GLenum</ptype> <name>dataType</name></param>
+            <param group="gl::ScalarType"><ptype>GLenum</ptype> <name>dataType</name></param>
             <param><ptype>UINT</ptype> <name>size</name></param>
             <param len="COMPSIZE(property, dataType, size)">void *<name>data</name></param>
         </command>
