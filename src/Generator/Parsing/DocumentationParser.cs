@@ -65,7 +65,7 @@ namespace Generator.Parsing
                             refPagesLink += $"es1.1/xhtml/{filename}.xml";
                             break;
                         case OutputApi.GLES2:
-                            refPagesLink += $"es3.0/html{filename}.xhtml";
+                            refPagesLink += $"es3.0/html/{filename}.xhtml";
                             break;
                         default:
                             throw new Exception("API not supported for documentation.");

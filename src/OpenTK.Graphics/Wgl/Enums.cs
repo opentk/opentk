@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 14:17:47 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 14:36:42 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
