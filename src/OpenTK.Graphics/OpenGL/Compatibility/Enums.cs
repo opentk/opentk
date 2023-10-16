@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 14:17:47 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
@@ -8469,18 +8469,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         NearestClipmapLinearSgix = 33870,
         LinearClipmapNearestSgix = 33871,
     }
-    public enum TextureWrapMode : uint
-    {
-        LinearMipmapLinear = 9987,
-        Clamp = 10496,
-        Repeat = 10497,
-        ClampToBorder = 33069,
-        ClampToBorderArb = 33069,
-        ClampToBorderSgis = 33069,
-        ClampToEdge = 33071,
-        ClampToEdgeSgis = 33071,
-        MirroredRepeat = 33648,
-    }
     ///<summary>Used in <see cref="GL.GetSamplerParameterIiv" />, <see cref="GL.GetSamplerParameterIuiv" />, <see cref="GL.GetSamplerParameteriv" />, ...</summary>
     public enum SamplerParameterI : uint
     {
@@ -8491,6 +8479,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TextureWrapR = 32882,
         TextureCompareMode = 34892,
         TextureCompareFunc = 34893,
+    }
+    public enum TextureWrapMode : uint
+    {
+        Clamp = 10496,
+        Repeat = 10497,
+        ClampToBorder = 33069,
+        ClampToBorderArb = 33069,
+        ClampToBorderSgis = 33069,
+        ClampToEdge = 33071,
+        ClampToEdgeSgis = 33071,
+        MirroredRepeat = 33648,
+        MirroredRepeatArb = 33648,
+        MirroredRepeatIbm = 33648,
     }
     ///<summary>Used in <see cref="GL.ClearBufferData" />, <see cref="GL.ClearBufferSubData" />, <see cref="GL.ClearNamedBufferData" />, ...</summary>
     public enum SizedInternalFormat : uint

@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 14:17:47 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -1759,18 +1759,18 @@ namespace OpenTK.Graphics.OpenGLES1
         NearestMipmapLinear = 9986,
         LinearMipmapLinear = 9987,
     }
-    public enum TextureWrapMode : uint
-    {
-        LinearMipmapLinear = 9987,
-        Repeat = 10497,
-        ClampToEdge = 33071,
-    }
     public enum SamplerParameterI : uint
     {
         TextureMagFilter = 10240,
         TextureMinFilter = 10241,
         TextureWrapS = 10242,
         TextureWrapT = 10243,
+    }
+    public enum TextureWrapMode : uint
+    {
+        Repeat = 10497,
+        ClampToEdge = 33071,
+        MirroredRepeatOes = 33648,
     }
     ///<summary>Used in <see cref="GL.EXT.TexStorage1DEXT" />, <see cref="GL.EXT.TexStorage2DEXT" />, <see cref="GL.EXT.TexStorage3DEXT" />, ...</summary>
     public enum SizedInternalFormat : uint

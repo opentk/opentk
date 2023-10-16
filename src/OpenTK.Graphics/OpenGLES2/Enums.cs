@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 13:59:45 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 14:17:47 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -4303,15 +4303,6 @@ namespace OpenTK.Graphics.OpenGLES2
         NearestMipmapLinear = 9986,
         LinearMipmapLinear = 9987,
     }
-    public enum TextureWrapMode : uint
-    {
-        LinearMipmapLinear = 9987,
-        Repeat = 10497,
-        ClampToBorder = 33069,
-        ClampToBorderNv = 33069,
-        ClampToEdge = 33071,
-        MirroredRepeat = 33648,
-    }
     ///<summary>Used in <see cref="GL.GetSamplerParameterIiv" />, <see cref="GL.GetSamplerParameterIuiv" />, <see cref="GL.GetSamplerParameteriv" />, ...</summary>
     public enum SamplerParameterI : uint
     {
@@ -4323,6 +4314,16 @@ namespace OpenTK.Graphics.OpenGLES2
         TextureCompareMode = 34892,
         TextureCompareFunc = 34893,
         TextureUnnormalizedCoordinatesArm = 36714,
+    }
+    public enum TextureWrapMode : uint
+    {
+        Repeat = 10497,
+        ClampToBorder = 33069,
+        ClampToBorderExt = 33069,
+        ClampToBorderNv = 33069,
+        ClampToBorderOes = 33069,
+        ClampToEdge = 33071,
+        MirroredRepeat = 33648,
     }
     ///<summary>Used in <see cref="GL.TexBuffer" />, <see cref="GL.TexBufferRange" />, <see cref="GL.TexStorage2D" />, ...</summary>
     public enum SizedInternalFormat : uint

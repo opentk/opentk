@@ -1097,7 +1097,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x2700" name="GL_NEAREST_MIPMAP_NEAREST" group="TextureMinFilter"/>
         <enum value="0x2701" name="GL_LINEAR_MIPMAP_NEAREST" group="TextureMinFilter"/>
         <enum value="0x2702" name="GL_NEAREST_MIPMAP_LINEAR" group="TextureMinFilter"/>
-        <enum value="0x2703" name="GL_LINEAR_MIPMAP_LINEAR" group="TextureWrapMode,TextureMinFilter"/>
+        <enum value="0x2703" name="GL_LINEAR_MIPMAP_LINEAR" group="TextureMinFilter"/>
             <unused start="0x2704" end="0x27FF" comment="Unused for TextureMinFilter"/>
         <enum value="0x2800" name="GL_TEXTURE_MAG_FILTER" group="SamplerParameterI,GetTextureParameter,TextureParameterName"/>
         <enum value="0x2801" name="GL_TEXTURE_MIN_FILTER" group="SamplerParameterI,GetTextureParameter,TextureParameterName"/>
@@ -1701,10 +1701,10 @@ typedef unsigned int GLhandleARB;
         <enum value="0x812C" name="GL_MAX_FOG_FUNC_POINTS_SGIS" group="GetPName"/>
         <enum value="0x812D" name="GL_CLAMP_TO_BORDER" group="TextureWrapMode"/>
         <enum value="0x812D" name="GL_CLAMP_TO_BORDER_ARB" group="TextureWrapMode"/>
-        <enum value="0x812D" name="GL_CLAMP_TO_BORDER_EXT"/>
+        <enum value="0x812D" name="GL_CLAMP_TO_BORDER_EXT" group="TextureWrapMode"/>
         <enum value="0x812D" name="GL_CLAMP_TO_BORDER_NV" group="TextureWrapMode"/>
         <enum value="0x812D" name="GL_CLAMP_TO_BORDER_SGIS" group="TextureWrapMode"/>
-        <enum value="0x812D" name="GL_CLAMP_TO_BORDER_OES"/>
+        <enum value="0x812D" name="GL_CLAMP_TO_BORDER_OES" group="TextureWrapMode"/>
         <enum value="0x812E" name="GL_TEXTURE_MULTI_BUFFER_HINT_SGIX" group="HintTarget"/>
         <enum value="0x812F" name="GL_CLAMP_TO_EDGE" group="TextureWrapMode"/>
         <enum value="0x812F" name="GL_CLAMP_TO_EDGE_SGIS" group="TextureWrapMode"/>
@@ -2451,9 +2451,9 @@ typedef unsigned int GLhandleARB;
                  this range. Lesson: assigned ranges belong to vendors,
                  not engineers! -->
         <enum value="0x8370" name="GL_MIRRORED_REPEAT" group="TextureWrapMode"/>
-        <enum value="0x8370" name="GL_MIRRORED_REPEAT_ARB"/>
-        <enum value="0x8370" name="GL_MIRRORED_REPEAT_IBM"/>
-        <enum value="0x8370" name="GL_MIRRORED_REPEAT_OES"/>
+        <enum value="0x8370" name="GL_MIRRORED_REPEAT_ARB" group="TextureWrapMode"/>
+        <enum value="0x8370" name="GL_MIRRORED_REPEAT_IBM" group="TextureWrapMode"/>
+        <enum value="0x8370" name="GL_MIRRORED_REPEAT_OES" group="TextureWrapMode"/>
             <unused start="0x8371" end="0x837F" vendor="HP"/>
     </enums>
 
