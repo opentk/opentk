@@ -586,7 +586,7 @@ namespace OpenTK.Graphics
         public const int LUIDSizeEXT = 8;
     }
 
-    public struct CLContext
+    public struct CLContext : IEquatable<CLContext>
     {
         public IntPtr Value;
 
@@ -595,11 +595,36 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is CLContext context && Equals(context);
+        }
+
+        public bool Equals(CLContext other)
+        {
+            return Value.Equals(other.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value);
+        }
+
+        public static bool operator ==(CLContext left, CLContext right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CLContext left, CLContext right)
+        {
+            return !(left == right);
+        }
+
         public static explicit operator CLContext(IntPtr val) => new CLContext(val);
         public static explicit operator IntPtr(CLContext val) => val.Value;
     }
 
-    public struct CLEvent
+    public struct CLEvent : IEquatable<CLEvent>
     {
         public IntPtr Value;
 
@@ -608,11 +633,36 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is CLEvent @event && Equals(@event);
+        }
+
+        public bool Equals(CLEvent other)
+        {
+            return Value.Equals(other.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value);
+        }
+
+        public static bool operator ==(CLEvent left, CLEvent right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CLEvent left, CLEvent right)
+        {
+            return !(left == right);
+        }
+
         public static explicit operator CLEvent(IntPtr val) => new CLEvent(val);
         public static explicit operator IntPtr(CLEvent val) => val.Value;
     }
 
-    public struct GLSync
+    public struct GLSync : IEquatable<GLSync>
     {
         public IntPtr Value;
 
@@ -621,12 +671,37 @@ namespace OpenTK.Graphics
             Value = value;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is GLSync sync && Equals(sync);
+        }
+
+        public bool Equals(GLSync other)
+        {
+            return Value.Equals(other.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Value);
+        }
+
+        public static bool operator ==(GLSync left, GLSync right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(GLSync left, GLSync right)
+        {
+            return !(left == right);
+        }
+
         public static explicit operator GLSync(IntPtr val) => new GLSync(val);
         public static explicit operator IntPtr(GLSync val) => val.Value;
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    public struct GLHandleARB
+    public struct GLHandleARB : IEquatable<GLHandleARB>
     {
         [FieldOffset(0)] private readonly uint _value1;
         [FieldOffset(0)] private readonly IntPtr _value2;
@@ -643,13 +718,38 @@ namespace OpenTK.Graphics
             _value2 = val;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is GLHandleARB aRB && Equals(aRB);
+        }
+
+        public bool Equals(GLHandleARB other)
+        {
+            return _value2.Equals(other._value2);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_value2);
+        }
+
+        public static bool operator ==(GLHandleARB left, GLHandleARB right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(GLHandleARB left, GLHandleARB right)
+        {
+            return !(left == right);
+        }
+
         public static explicit operator GLHandleARB(uint val) => new GLHandleARB(val);
         public static explicit operator GLHandleARB(IntPtr val) => new GLHandleARB(val);
         public static explicit operator uint(GLHandleARB val) => val._value1;
         public static explicit operator IntPtr(GLHandleARB val) => val._value2;
     }
 
-    public struct ProgramHandle
+    public struct ProgramHandle : IEquatable<ProgramHandle>
     {
         public static readonly ProgramHandle Zero = new ProgramHandle(0);
 
@@ -689,7 +789,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(ProgramHandle programHandle) => programHandle.Handle;
     }
 
-    public struct ProgramPipelineHandle
+    public struct ProgramPipelineHandle : IEquatable<ProgramPipelineHandle>
     {
         public static readonly ProgramPipelineHandle Zero = new ProgramPipelineHandle(0);
 
@@ -729,7 +829,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(ProgramPipelineHandle programPipelineHandle) => programPipelineHandle.Handle;
     }
 
-    public struct TextureHandle
+    public struct TextureHandle : IEquatable<TextureHandle>
     {
         public static readonly TextureHandle Zero = new TextureHandle(0);
 
@@ -769,7 +869,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(TextureHandle textureHandle) => textureHandle.Handle;
     }
 
-    public struct BufferHandle
+    public struct BufferHandle : IEquatable<BufferHandle>
     {
         public static readonly BufferHandle Zero = new BufferHandle(0);
 
@@ -849,7 +949,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(ShaderHandle shaderHandle) => shaderHandle.Handle;
     }
 
-    public struct QueryHandle
+    public struct QueryHandle : IEquatable<QueryHandle>
     {
         public static readonly QueryHandle Zero = new QueryHandle(0);
 
@@ -889,7 +989,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(QueryHandle queryHandle) => queryHandle.Handle;
     }
 
-    public struct FramebufferHandle
+    public struct FramebufferHandle : IEquatable<FramebufferHandle>
     {
         public static readonly FramebufferHandle Zero = new FramebufferHandle(0);
 
@@ -929,7 +1029,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(FramebufferHandle framebufferHandle) => framebufferHandle.Handle;
     }
 
-    public struct RenderbufferHandle
+    public struct RenderbufferHandle : IEquatable<RenderbufferHandle>
     {
         public static readonly RenderbufferHandle Zero = new RenderbufferHandle(0);
 
@@ -969,7 +1069,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(RenderbufferHandle renderbufferHandle) => renderbufferHandle.Handle;
     }
 
-    public struct SamplerHandle
+    public struct SamplerHandle : IEquatable<SamplerHandle>
     {
         public static readonly SamplerHandle Zero = new SamplerHandle(0);
 
@@ -1009,7 +1109,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(SamplerHandle samplerHandle) => samplerHandle.Handle;
     }
 
-    public struct TransformFeedbackHandle
+    public struct TransformFeedbackHandle : IEquatable<TransformFeedbackHandle>
     {
         public static readonly TransformFeedbackHandle Zero = new TransformFeedbackHandle(0);
 
@@ -1049,7 +1149,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(TransformFeedbackHandle transformFeedbackHandle) => transformFeedbackHandle.Handle;
     }
 
-    public struct VertexArrayHandle
+    public struct VertexArrayHandle : IEquatable<VertexArrayHandle>
     {
         public static readonly VertexArrayHandle Zero = new VertexArrayHandle(0);
 
@@ -1089,7 +1189,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(VertexArrayHandle vertexArrayHandle) => vertexArrayHandle.Handle;
     }
 
-    public struct DisplayListHandle
+    public struct DisplayListHandle : IEquatable<DisplayListHandle>
     {
         public static readonly DisplayListHandle Zero = new DisplayListHandle(0);
 
@@ -1129,7 +1229,7 @@ namespace OpenTK.Graphics
         public static explicit operator int(DisplayListHandle displayListHandle) => displayListHandle.Handle;
     }
 
-    public struct PerfQueryHandle
+    public struct PerfQueryHandle : IEquatable<PerfQueryHandle>
     {
         public static readonly PerfQueryHandle Zero = new PerfQueryHandle(0);
 
