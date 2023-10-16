@@ -348,6 +348,12 @@ namespace Generator.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Mathematics;");
             writer.WriteLine("using OpenTK.Graphics;");
+
+            // FIXME: This is messy.
+            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
+            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
+            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
