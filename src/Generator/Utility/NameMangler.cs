@@ -205,7 +205,7 @@ namespace Generator.Utility
                 }
                 else
                 {
-                    stringBuilder.Append(nextUpper ? char.ToUpper(c) : char.ToLower(c));
+                    stringBuilder.Append(nextUpper ? char.ToUpperInvariant(c) : char.ToLowerInvariant(c));
                     nextUpper = false;
                 }
             }
