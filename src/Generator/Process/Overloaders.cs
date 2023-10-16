@@ -14,7 +14,7 @@ using static Generator.Process.ColorTypeOverloader;
 
 namespace Generator.Process
 {
-    public interface IOverloader
+    internal interface IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads);
 
@@ -22,12 +22,13 @@ namespace Generator.Process
         // All return mathType overloaders need to run before any of the other overloaders.
         // This is to ensure that correct scoping for the new return variables.
         // FIXME: Maybe we dont want classes for these?
-        public static readonly IOverloader[] Overloaders = new IOverloader[]
+        internal static readonly IOverloader[] Overloaders = new IOverloader[]
         {
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
             new GetReturnOverloader(),
+            new BoolReturnOverloader(),
 
             new ColorTypeOverloader(),
             new MathTypeOverloader(),
@@ -42,7 +43,7 @@ namespace Generator.Process
         };
     }
 
-    public class TrimNameOverloader : IOverloader
+    internal class TrimNameOverloader : IOverloader
     {
         private static readonly Regex Endings = new Regex(
             @"(u?[sb](64)?v?|v|i_v|fi)$",
@@ -108,7 +109,7 @@ namespace Generator.Process
         }
     }
 
-    public class GetReturnOverloader : IOverloader
+    internal class GetReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -187,7 +188,7 @@ namespace Generator.Process
         }
     }
 
-    public class StringReturnOverloader : IOverloader
+    internal class StringReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -249,7 +250,7 @@ namespace Generator.Process
                 writer.WriteLine($"{PointerType.ToCSString()} {NestedReturnName};");
             }
 
-            public string WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
                 writer.WriteLine($"{NewReturnName} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
                 return NewReturnName;
@@ -257,7 +258,55 @@ namespace Generator.Process
         }
     }
 
-    public class ColorTypeOverloader : IOverloader
+    internal class BoolReturnOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            if (overload.ReturnType is CSBool32 boolType)
+            {
+                var newReturnName = $"{overload.NameTable.ReturnName}_bool";
+                var layer = new BoolReturnLayer(boolType, newReturnName, overload.NameTable.ReturnName!);
+                var returnType = new CSBool8(boolType.Constant);
+                var nameTable = overload.NameTable.New();
+                nameTable.ReturnName = newReturnName;
+                newOverloads = new List<Overload>()
+                {
+                    overload with
+                    {
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        ReturnType = returnType,
+                        NameTable = nameTable,
+                    }
+                };
+                return true;
+            }
+            else
+            {
+                newOverloads = default;
+                return false;
+            }
+        }
+
+        private record BoolReturnLayer(BaseCSType Type, string NewReturnName, string NestedReturnName) : IOverloadLayer
+        {
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                // This is weird, here we need to create the variable that the internal layers
+                // are going to consider as the final return variable. So we need access to the
+                // return name of the nested layer.
+                writer.WriteLine($"{Type.ToCSString()} {NestedReturnName};");
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                writer.WriteLine($"{NewReturnName} = {returnName} != 0;");
+                return NewReturnName;
+            }
+        }
+    }
+
+    internal class ColorTypeOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -338,7 +387,7 @@ namespace Generator.Process
             return false;
         }
 
-        public record ColorLayer(List<Parameter> ColorParamters, List<Parameter> PointerParameters) : IOverloadLayer
+        internal record ColorLayer(List<Parameter> ColorParamters, List<Parameter> PointerParameters) : IOverloadLayer
         {
             CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
@@ -369,7 +418,7 @@ namespace Generator.Process
         }
     }
 
-    public sealed class MathTypeOverloader : IOverloader
+    internal sealed class MathTypeOverloader : IOverloader
     {
         // Regex to match names of vector methods.
         private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
@@ -656,7 +705,7 @@ namespace Generator.Process
             }
         }
 
-        public record MathLayer(List<Parameter> PointerParams, List<Parameter> VectorParams) : IOverloadLayer
+        internal record MathLayer(List<Parameter> PointerParams, List<Parameter> VectorParams) : IOverloadLayer
         {
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
@@ -689,7 +738,7 @@ namespace Generator.Process
         }
     }
 
-    public class FunctionPtrToDelegateOverloader : IOverloader
+    internal class FunctionPtrToDelegateOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -733,10 +782,10 @@ namespace Generator.Process
 
         class FunctionPtrToDelegateLayer : IOverloadLayer
         {
-            public readonly List<Parameter> DelegateParameters;
-            public readonly List<Parameter> PointerParameters;
+            internal readonly List<Parameter> DelegateParameters;
+            internal readonly List<Parameter> PointerParameters;
 
-            public FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
+            internal FunctionPtrToDelegateLayer(List<Parameter> delegateParameters, List<Parameter> pointerParameters)
             {
                 DelegateParameters = delegateParameters;
                 PointerParameters = pointerParameters;
@@ -758,7 +807,7 @@ namespace Generator.Process
         }
     }
 
-    public sealed class PointerToOffsetOverloader : IOverloader
+    internal sealed class PointerToOffsetOverloader : IOverloader
     {
         private readonly Dictionary<string, string> _methodsAndParametersToOverload = new Dictionary<string, string>
         {
@@ -838,7 +887,7 @@ namespace Generator.Process
             return true;
         }
 
-        public record PointerToOffsetLayer(Parameter PointerParameter,
+        internal record PointerToOffsetLayer(Parameter PointerParameter,
             Parameter OffsetParameter) : IOverloadLayer
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
@@ -854,7 +903,7 @@ namespace Generator.Process
         }
     }
 
-    public class VoidPtrToIntPtrOverloader : IOverloader
+    internal class VoidPtrToIntPtrOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -915,13 +964,13 @@ namespace Generator.Process
         }
     }
 
-    public class GenCreateAndDeleteOverloader : IOverloader
+    internal class GenCreateAndDeleteOverloader : IOverloader
     {
-        public static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
+        internal static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
 
         // Atm only Queries/Query needs this renaming
         // - 2022-06-27
-        public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
+        internal static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
         {
             { "Queries", "Query" },
             { "TransformFeedbacks", "TransformFeedback" },
@@ -934,7 +983,7 @@ namespace Generator.Process
             { "Buffers", "Buffer" },
         };
 
-        public static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
+        internal static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
         {
             { "ids", "id" },
             { "arrays", "array" },
@@ -1106,7 +1155,7 @@ namespace Generator.Process
         }
     }
 
-    public class StringOverloader : IOverloader
+    internal class StringOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1214,7 +1263,7 @@ namespace Generator.Process
 
         private record StringLayer(Parameter PointerParameter, Parameter StringParameter, StringLayer.StringType Type) : IOverloadLayer
         {
-            public enum StringType
+            internal enum StringType
             {
                 Char8,
                 Char16,
@@ -1293,7 +1342,7 @@ namespace Generator.Process
         }
     }
 
-    public class SpanAndArrayOverloader : IOverloader
+    internal class SpanAndArrayOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1465,7 +1514,7 @@ namespace Generator.Process
         }
     }
 
-    public class RefInsteadOfPointerOverloader : IOverloader
+    internal class RefInsteadOfPointerOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
@@ -1583,7 +1632,7 @@ namespace Generator.Process
         }
     }
 
-    public class OutToReturnOverloader : IOverloader
+    internal class OutToReturnOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {

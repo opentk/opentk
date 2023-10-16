@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace Generator.Parsing
 {
-    public record Documentation(
+    internal record Documentation(
         // FIXME: Better name
         Dictionary<OutputApi, VersionDocumentation> VersionDocumentation
         );
 
-    public record VersionDocumentation(
+    internal record VersionDocumentation(
         Dictionary<string, CommandDocumentation> Commands
         );
 
-    public record CommandDocumentation(
+    internal record CommandDocumentation(
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
         string RefPagesLink);
 
-    public record ParameterDocumentation(
+    internal record ParameterDocumentation(
         string Name,
         string Description
         );

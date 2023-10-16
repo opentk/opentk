@@ -32,8 +32,8 @@ namespace Generator.Writing
                 string className = pointers.File switch
                 {
                     GLFile.GL => "GL",
-                    GLFile.WGL => "WGL",
-                    GLFile.GLX => "GLX",
+                    GLFile.WGL => "Wgl",
+                    GLFile.GLX => "Glx",
                     _ => throw new Exception(),
                 };
 
@@ -64,8 +64,8 @@ namespace Generator.Writing
                 OutputApi.GLCompat => "GL",
                 OutputApi.GLES1 => "GL",
                 OutputApi.GLES2 => "GL",
-                OutputApi.WGL => "WGL",
-                OutputApi.GLX => "GLX",
+                OutputApi.WGL => "Wgl",
+                OutputApi.GLX => "Glx",
                 _ => throw new Exception(),
             };
 
@@ -102,7 +102,7 @@ namespace Generator.Writing
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
 
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
@@ -139,7 +139,8 @@ namespace Generator.Writing
 
             string entryPoint = function.EntryPoint;
 
-            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+            writer.WriteLine($"/// <summary><b>[entry point: <c>{entryPoint}</c>]</b></summary>");
+            writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {entryPoint}_Lazy({signature})");
@@ -489,7 +490,7 @@ namespace Generator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");

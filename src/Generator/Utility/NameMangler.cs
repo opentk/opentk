@@ -4,15 +4,15 @@ using System.Text;
 
 namespace Generator.Utility
 {
-    public class NameManglerSettings
+    internal class NameManglerSettings
     {
-        public string ExtensionPrefix { get; init; }
-        public string FunctionPrefix { get; init; }
-        public List<string> EnumPrefixes { get; init; }
-        public HashSet<string> FunctionsWithoutPrefix { get; init; }
-        public HashSet<string> EnumsWithoutPrefix { get; init; }
+        internal string ExtensionPrefix { get; init; }
+        internal string FunctionPrefix { get; init; }
+        internal List<string> EnumPrefixes { get; init; }
+        internal HashSet<string> FunctionsWithoutPrefix { get; init; }
+        internal HashSet<string> EnumsWithoutPrefix { get; init; }
 
-        public NameManglerSettings()
+        internal NameManglerSettings()
         {
             ExtensionPrefix = "GL_";
             FunctionPrefix = "gl";
@@ -24,9 +24,9 @@ namespace Generator.Utility
 
     // FIXME: Make this not a static class with static settings. Make this an object you have to pass around.
     // This will make this much less error prone.
-    public class NameMangler
+    internal class NameMangler
     {
-        public NameManglerSettings Settings = new NameManglerSettings();
+        internal NameManglerSettings Settings = new NameManglerSettings();
 
         private static readonly List<string> VendorNames = new List<string>
         {
@@ -73,12 +73,12 @@ namespace Generator.Utility
             "WIN",
         };
 
-        public NameMangler(NameManglerSettings settings)
+        internal NameMangler(NameManglerSettings settings)
         {
             Settings = settings;
         }
 
-        public static string RemoveStart(string str, string start)
+        internal static string RemoveStart(string str, string start)
         {
             if (!str.StartsWith(start))
                 throw new System.Exception($"'{str}' dosen't start with '{start}'");
@@ -86,7 +86,7 @@ namespace Generator.Utility
             return str[start.Length..];
         }
 
-        public static string RemoveEnd(string str, string end)
+        internal static string RemoveEnd(string str, string end)
         {
             if (!str.EndsWith(end))
                 throw new System.Exception($"'{str}' dosen't end with '{end}'");
@@ -94,7 +94,7 @@ namespace Generator.Utility
             return str[0..^end.Length];
         }
 
-        public string RemoveFunctionPrefix(string function)
+        internal string RemoveFunctionPrefix(string function)
         {
             // FIXME: Get the settings from a more direct source
             if (Settings.FunctionsWithoutPrefix.Contains(function))
@@ -108,7 +108,7 @@ namespace Generator.Utility
             return function[prefix.Length..];
         }
 
-        public string RemoveEnumPrefix(string @enum)
+        internal string RemoveEnumPrefix(string @enum)
         {
             // FIXME: Get the settings from a more direct source
             if (Settings.EnumsWithoutPrefix.Contains(@enum))
@@ -125,7 +125,7 @@ namespace Generator.Utility
             throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", Settings.EnumPrefixes)}'");
         }
 
-        public string RemoveExtensionPrefix(string extension)
+        internal string RemoveExtensionPrefix(string extension)
         {
             // FIXME: Get the settings from a more direct source
             string prefix = Settings.ExtensionPrefix;
@@ -136,7 +136,7 @@ namespace Generator.Utility
             return extension[prefix.Length..];
         }
 
-        public static string RemoveVendorPostfix(string str)
+        internal static string RemoveVendorPostfix(string str)
         {
             foreach (var vendor in VendorNames)
             {
@@ -153,20 +153,20 @@ namespace Generator.Utility
             return str;
         }
 
-        public string MangleFunctionName(string name)
+        internal string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
             return RemoveFunctionPrefix(name);
         }
 
-        public string MangleEnumName(string name)
+        internal string MangleEnumName(string name)
         {
             // Remove the "GL_" prefix.
             var mangledName = RemoveEnumPrefix(name);
             return MangleMemberName(mangledName);
         }
 
-        public static string MangleParameterName(string name) => name switch
+        internal static string MangleParameterName(string name) => name switch
         {
             "base" => "@base",
             "event" => "@event",
@@ -178,12 +178,12 @@ namespace Generator.Utility
             _ => name
         };
 
-        public static string MangleClassName(string name)
+        internal static string MangleClassName(string name)
         {
             return MangleMemberName(name);
         }
 
-        public static string MangleExtensionName(string name)
+        internal static string MangleExtensionName(string name)
         {
             return MangleMemberName(name);
         }
@@ -216,14 +216,14 @@ namespace Generator.Utility
 
         private static readonly char[] NewlineAndTabCharacters = new[] { '\r', '\n', '\t' };
 
-        public static string MangleCommandPurpose(string purpose)
+        internal static string MangleCommandPurpose(string purpose)
         {
             purpose = TrimAndRemoveChars(purpose, NewlineAndTabCharacters);
             purpose = XmlEscapeCharacters(purpose);
             return CapitalizeFirst(purpose) + ".";
         }
 
-        public static string MangleParameterDescription(string description)
+        internal static string MangleParameterDescription(string description)
         {
             description = TrimAndRemoveChars(description, NewlineAndTabCharacters);
             description = XmlEscapeCharacters(description);
@@ -280,10 +280,10 @@ namespace Generator.Utility
         }
 
         /// <summary>
-        /// Escapes all "'<>& characters.
+        /// Escapes all "'&lt;&gt;&amp; characters.
         /// This extension will not detect already escaped strings.
         /// </summary>
-        public static string XmlEscapeCharacters(string str)
+        internal static string XmlEscapeCharacters(string str)
         {
             StringBuilder sb = new StringBuilder(str);
 

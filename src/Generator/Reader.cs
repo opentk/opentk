@@ -6,10 +6,11 @@ using System.Net;
 using System.Text.Json;
 using System.Linq;
 using System.Reflection;
+using System.Net.Http;
 
 namespace Generator
 {
-    public record DocumentationSource(DocumentationFolder[] Folders) : IDisposable
+    internal record DocumentationSource(DocumentationFolder[] Folders) : IDisposable
     {
         public void Dispose()
         {
@@ -22,7 +23,7 @@ namespace Generator
         }
     }
 
-    public record DocumentationFolder(string Folder, FileStream[] Files) : IDisposable
+    internal record DocumentationFolder(string Folder, FileStream[] Files) : IDisposable
     {
         public void Dispose()
         {
@@ -35,7 +36,7 @@ namespace Generator
         }
     }
 
-    public static class Reader
+    internal static class Reader
     {
         private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
@@ -62,7 +63,7 @@ namespace Generator
             return stream;
         }
 
-        public static FileStream ReadGLSpecFromGithub()
+        internal static FileStream ReadGLSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
             string filePath = Path.Combine(TempDirectory, "gl.xml");
@@ -70,7 +71,7 @@ namespace Generator
             return ReadFileFromGithub(url, filePath);
         }
 
-        public static FileStream ReadWGLSpecFromGithub()
+        internal static FileStream ReadWGLSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/wgl.xml";
             string filePath = Path.Combine(TempDirectory, "wgl.xml");
@@ -78,7 +79,7 @@ namespace Generator
             return ReadFileFromGithub(url, filePath);
         }
 
-        public static FileStream ReadGLXSpecFromGithub()
+        internal static FileStream ReadGLXSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/glx.xml";
             string filePath = Path.Combine(TempDirectory, "glx.xml");
@@ -86,7 +87,7 @@ namespace Generator
             return ReadFileFromGithub(url, filePath);
         }
 
-        public static DocumentationSource ReadDocumentationFromGithub()
+        internal static DocumentationSource ReadDocumentationFromGithub()
         {
             Path.GetFullPath(TempDirectory);
             string[] DocumentationFolders = new string[]
@@ -124,6 +125,7 @@ namespace Generator
                     Directory.CreateDirectory(folderPath);
 
                     string url = $"https://api.github.com/repos/KhronosGroup/OpenGL-Refpages/contents/{DocumentationFolders[folderIndex]}/";
+
 
                     HttpWebRequest request = WebRequest.CreateHttp(url);
                     request.Headers.Add("User-Agent: Other");

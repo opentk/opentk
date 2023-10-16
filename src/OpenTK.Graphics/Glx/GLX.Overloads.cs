@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 15:11:28 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -9,7 +9,7 @@ using OpenTK.Graphics.Wgl;
 
 namespace OpenTK.Graphics.Glx
 {
-    public static unsafe partial class GLX
+    public static unsafe partial class Glx
     {
         /// <inheritdoc cref="ChooseFBConfig(Display*, int, int*, int*)"/>
         public static unsafe GLXFBConfig* ChooseFBConfig(ref Display dpy, int screen, in int attrib_list, ref int nelements)

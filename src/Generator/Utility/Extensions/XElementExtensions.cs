@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Generator.Utility.Extensions
 {
-    public static class XElementExtensions
+    internal static class XElementExtensions
     {
         // TODO: This is only used in one place.
         // Consider moving it into the place where it's being used.
-        public static string GetXmlText(this XElement element, Func<XElement, string>? elementPredicate = null)
+        internal static string GetXmlText(this XElement element, Func<XElement, string>? elementPredicate = null)
         {
             var sb = new StringBuilder();
 
@@ -32,22 +32,22 @@ namespace Generator.Utility.Extensions
             return sb.ToString();
         }
 
-        public static IEnumerable<XElement> ElementsIgnoreNamespace(this XElement element, string name)
+        internal static IEnumerable<XElement> ElementsIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name);
         }
         
-        public static XElement ElementIgnoreNamespace(this XElement element, string name)
+        internal static XElement ElementIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name).First();
         }
 
-        public static XElement? ElementIgnoreNamespace(this XElement element, Predicate<XElement> pred)
+        internal static XElement? ElementIgnoreNamespace(this XElement element, Predicate<XElement> pred)
         {
             return element.Descendants().Where(e => pred(e)).FirstOrDefault();
         }
 
-        public static XAttribute? AttributeIgnoreNamespace(this XElement element, string name)
+        internal static XAttribute? AttributeIgnoreNamespace(this XElement element, string name)
         {
             return element.Attributes().Where(a => a.Name.LocalName == "id").FirstOrDefault();
         }

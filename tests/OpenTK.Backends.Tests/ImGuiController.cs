@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace OpenTK.Backends.Tests
 {
-    public class InputData
+    internal class InputData
     {
         public bool LeftMouse, MiddleMouse, RightMouse;
 
@@ -29,7 +29,7 @@ namespace OpenTK.Backends.Tests
         }
     }
 
-    public class ImGuiController : IDisposable
+    internal class ImGuiController : IDisposable
     {
         private bool _useGLES;
 
