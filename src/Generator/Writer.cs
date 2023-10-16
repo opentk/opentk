@@ -139,6 +139,7 @@ namespace Generator.Writing
 
             string entryPoint = function.EntryPoint;
 
+            writer.WriteLine($"/// <summary><b>[entry point: <c>{entryPoint}</c>]</b></summary>");
             writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
