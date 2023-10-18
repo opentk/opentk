@@ -10,8 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEE
 		CONTRIBUTING.md = CONTRIBUTING.md
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
-		stylecop.json = stylecop.json
-		stylecop.ruleset = stylecop.ruleset
+		.github\workflows\Build.yml = .github\workflows\Build.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Input", "src\OpenTK.Input\OpenTK.Input.csproj", "{FD2151DE-0663-4100-9AB5-D1E22CF2144D}"
@@ -33,11 +32,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
-	ProjectSection(SolutionItems) = preProject
-		RELEASE_NOTES.md = RELEASE_NOTES.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
@@ -85,8 +79,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacOSTestProject", "tests\MacOSTestProject\MacOSTestProject.csproj", "{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANGLETestProject", "tests\ANGLETestProject\ANGLETestProject.csproj", "{7888FB56-FCBC-4240-B78F-691481A56AA1}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -190,10 +182,6 @@ Global
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -216,7 +204,6 @@ Global
 		{3E6C9007-27B2-4B50-91F5-9FF658089997} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{7888FB56-FCBC-4240-B78F-691481A56AA1} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94} = {471E0D18-D620-4CBE-A471-F3DB470E6D49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

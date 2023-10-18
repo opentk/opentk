@@ -9,6 +9,18 @@ jobs:
   Build:
     strategy:
       matrix:
+        project: [
+          OpenAL,
+          OpenTK.Compute,
+          OpenTK.Core,
+          OpenTK.Graphics,
+          OpenTK.Input,
+          OpenTK.Mathemathics,
+          OpenTK.Platform.Native,
+          OpenTK.Windowing.Common,
+          OpenTK.Windowing.Desktop,
+          OpenTK.Windowing.GraphicsLibraryFramework,
+        ]
         os: [ubuntu, windows]
     runs-on: ${{ matrix.os }}-latest
     steps:
@@ -18,7 +30,7 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - name: Build
-        run: dotnet publish --configuration Release
+        run: dotnet publish --configuration Release ./src/${{ matrix.project }}/${{ matrix.project }}.csproj
       - name: Upload binaries
         uses: actions/upload-artifact@v3
         with:
@@ -47,7 +59,7 @@ jobs:
     needs: [Build]
     strategy:
       matrix:
-        package: [
+        project: [
           OpenAL,
           OpenTK.Compute,
           OpenTK.Core,

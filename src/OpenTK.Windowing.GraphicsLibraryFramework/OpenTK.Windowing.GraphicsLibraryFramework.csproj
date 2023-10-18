@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <TargetFrameworks>net7.0</TargetFrameworks>
+      <TargetFramework>net7.0</TargetFramework>
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <LangVersion>8.0</LangVersion>
