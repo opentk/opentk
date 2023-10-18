@@ -1,5 +1,5 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Graphics.Egl;
+using OpenTK.OpenGL.Egl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

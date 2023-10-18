@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 1591 // Missing XML comments
 
-namespace OpenTK.Graphics.Egl
+namespace OpenTK.OpenGL.Egl
 {
     using EGLNativeDisplayType = IntPtr;
     using EGLNativeWindowType = IntPtr;
