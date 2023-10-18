@@ -1,9 +1,0 @@
-source https://api.nuget.org/v3/index.json
-
-storage: none
-framework: net7.0
-
-strategy: min
-
-nuget FsCheck.Xunit
-nuget xunit.assert

@@ -6,4 +6,12 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OpenTKSolutionRoot>$(MSBuildThisFileDirectory)</OpenTKSolutionRoot>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsDebug)'=='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsDebug)'!='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Release\</OutputPath>
+  </PropertyGroup>
 </Project>

@@ -89,7 +89,6 @@ namespace OpenTK.Mathematics
         /// <param name="m30">First item of the fourth row of the matrix.</param>
         /// <param name="m31">Second item of the fourth row of the matrix.</param>
         /// <param name="m32">Third item of the fourth row of the matrix.</param>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1117", Justification = "For better readability of Matrix struct.")]
         public Matrix4x3
         (
             float m00, float m01, float m02,

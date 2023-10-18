@@ -30,24 +30,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A
 		props\stylecop.props = props\stylecop.props
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{DB4C8652-965F-44F9-998B-8918768DB6AA}"
-	ProjectSection(SolutionItems) = preProject
-		appveyor.yml = appveyor.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{BBBE802B-9F6E-4299-97CE-97CDA43802B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
 	ProjectSection(SolutionItems) = preProject
-		build.cmd = build.cmd
-		build.fsx = build.fsx
-		build.sh = build.sh
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
@@ -118,14 +106,6 @@ Global
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30B46B07-2836-4862-B7FA-A158B581F83E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0100EDA0-A134-4D9E-AE6B-470169BD8B94}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48936313-63D4-4A26-87F0-040AA15FF4A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40349C84-AAF1-4159-B118-0565F7351523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40349C84-AAF1-4159-B118-0565F7351523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40349C84-AAF1-4159-B118-0565F7351523}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -219,8 +199,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0100EDA0-A134-4D9E-AE6B-470169BD8B94} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{48936313-63D4-4A26-87F0-040AA15FF4A6} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{40349C84-AAF1-4159-B118-0565F7351523} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 		{CB4028A7-A449-4452-9FC5-78CDB545FEB9} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
 		{17FB3437-BD1A-423B-B333-B2D7F775BC79} = {BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}
