@@ -1,9 +1,0 @@
-<Project>
-  <PropertyGroup>
-    <HasCommonProperties>true</HasCommonProperties>
-    <!--<LangVersion Condition="$(MSBuildProjectExtension.EndsWith('.csproj'))">11.0</LangVersion>
-    <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <OpenTKSolutionRoot>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\..))</OpenTKSolutionRoot>-->
-  </PropertyGroup>
-</Project>

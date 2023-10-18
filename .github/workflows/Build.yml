@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           retention-days: 7
-          name: OpenTK-${{ matrix.os }}
+          name: ${{ matrix.project }}-${{ matrix.os }}
           path: ./bin/Release/publish/*
   
   Test:

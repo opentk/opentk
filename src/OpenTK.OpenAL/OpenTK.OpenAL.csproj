@@ -30,7 +30,4 @@
   <ItemGroup>
     <Folder Include="Extensions\EXT.Double\Enums\" />
   </ItemGroup>
-
-  <Import Project="..\..\..\props\common.props" />
-  <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
 </Project>
