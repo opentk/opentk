@@ -10,12 +10,12 @@ jobs:
     strategy:
       matrix:
         project: [
-          OpenAL,
+          OpenTK.OpenAL,
           OpenTK.Compute,
           OpenTK.Core,
-          OpenTK.Graphics,
+          OpenTK.OpenGL,
           OpenTK.Input,
-          OpenTK.Mathemathics,
+          OpenTK.Mathematics,
           OpenTK.Platform.Native,
           OpenTK.Windowing.Common,
           OpenTK.Windowing.Desktop,
@@ -60,12 +60,12 @@ jobs:
     strategy:
       matrix:
         project: [
-          OpenAL,
+          OpenTK.OpenAL,
           OpenTK.Compute,
           OpenTK.Core,
-          OpenTK.Graphics,
+          OpenTK.OpenGL,
           OpenTK.Input,
-          OpenTK.Mathemathics,
+          OpenTK.Mathematics,
           OpenTK.Platform.Native,
           OpenTK.Windowing.Common,
           OpenTK.Windowing.Desktop,

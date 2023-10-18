@@ -10,9 +10,6 @@
   <PropertyGroup>
     <Description>Core shared functionality for the OpenTK library.</Description>
   </PropertyGroup>
-
-  <Import Project="..\..\props\common.props" />
-  <Import Project="..\..\props\nuget-common.props" />
   
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />

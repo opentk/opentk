@@ -12,7 +12,4 @@
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
       <PackageReference Include="OpenTK.redist.glfw" Version="3.3.8.39" />
     </ItemGroup>
-
-    <Import Project="..\..\props\common.props" />
-    <Import Project="..\..\props\nuget-common.props" />
 </Project>

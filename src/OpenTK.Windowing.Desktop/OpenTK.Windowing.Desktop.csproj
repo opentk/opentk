@@ -12,7 +12,4 @@
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
     </ItemGroup>
-
-    <Import Project="..\..\props\common.props" />
-    <Import Project="..\..\props\nuget-common.props" />
 </Project>
