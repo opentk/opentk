@@ -8,10 +8,10 @@
 //
 
 using System;
-using OpenTK.OpenAL.Interfaces;
+using OpenTK.OpenAL.Extensions.Soft.Enums;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Extensions.Soft
+namespace OpenTK.OpenAL.Extensions.Soft.Interfaces
 {
     /// <summary>
     /// Defines the public interface for the state-related functions of OpenAL 1.1 (OpenAL Soft).

@@ -1,4 +1,6 @@
 ﻿using System;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Core.Platform
 {

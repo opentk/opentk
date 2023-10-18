@@ -7,9 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Mathematics;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
 
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Presets
 {
     /// <summary>
     /// Defines a set of predefined reverb properties.

@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL
 {
 #pragma warning disable SA1402 // File may only contain a single type
     /// <summary>A list of valid Enable/Disable/IsEnabled parameters.</summary>

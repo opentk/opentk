@@ -8,9 +8,8 @@
 //
 
 using System;
-using OpenTK.OpenAL.Interfaces;
 
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenTK.OpenAL.Extensions.Creative.XRam.Interfaces
 {
     /// <summary>
     /// Defines the public interface of the X-RAM extension.

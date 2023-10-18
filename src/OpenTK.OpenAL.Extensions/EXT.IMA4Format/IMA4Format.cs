@@ -7,11 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Extensions;
+using OpenTK.OpenAL.Extensions.EXT.IMA4Format.Enums;
+using OpenTK.OpenAL.Extensions.EXT.IMA4Format.Interfaces;
 
-namespace OpenTK.OpenAL.Native.Extensions.EXT.IMA4Format
+namespace OpenTK.OpenAL.Extensions.EXT.IMA4Format
 {
     /// <summary>
     /// Exposes the multi-channel buffers extension by Creative Labs.

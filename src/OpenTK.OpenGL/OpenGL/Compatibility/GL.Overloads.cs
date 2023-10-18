@@ -7,6 +7,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.Wgl;
 using OpenTK.Graphics.Glx;
+using OpenTK.Mathematics.Colors;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
 {

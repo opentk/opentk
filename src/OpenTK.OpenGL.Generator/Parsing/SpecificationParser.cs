@@ -1,16 +1,15 @@
-using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using OpenTK.OpenGL.Generator.Process;
+using OpenTK.OpenGL.Generator.Utility;
+using OpenTK.OpenGL.Generator.Utility.Extensions;
 
-namespace Generator.Parsing
+namespace OpenTK.OpenGL.Generator.Parsing
 {
     internal class SpecificationParser
     {
@@ -89,7 +88,7 @@ namespace Generator.Parsing
                 //List<FunctionReference> functions = new List<FunctionReference>();
                 Dictionary<string, FunctionReference> entryPointToReference = new Dictionary<string, FunctionReference>();
 
-                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
+                // FIXME: If we want to generate the compatibility thing we want to remove all of the
                 foreach (var feature in features)
                 {
                     foreach (var requires in feature.Requires)
@@ -312,7 +311,7 @@ namespace Generator.Parsing
 
             BaseCSType returnType = ParsePType(proto, currentFile, out GroupRef? returnGroup);
             if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
-            
+
             string functionName = nameMangler.MangleFunctionName(entryPoint);
 
             return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
@@ -480,7 +479,7 @@ namespace Generator.Parsing
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
             BaseCSType type = ParseType(str, handle, groupRef);
-            
+
             return type;
         }
 
@@ -768,7 +767,7 @@ namespace Generator.Parsing
                             _ => throw new Exception(),
                         };
                     }
-                    else 
+                    else
                     {
                         enumApi = api switch
                         {

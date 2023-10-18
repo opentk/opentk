@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Core.Platform
+﻿namespace OpenTK.Core.Platform.Handles
 {
     /// <summary>
     /// Handle to an OpenGL context.

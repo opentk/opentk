@@ -8,8 +8,9 @@
 //
 
 using OpenTK.Mathematics;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Presets
 {
     /// <summary>
     /// Defines a set of predefined reverb properties.

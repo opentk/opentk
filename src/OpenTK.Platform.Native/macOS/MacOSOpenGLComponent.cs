@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
 namespace OpenTK.Platform.Native.macOS

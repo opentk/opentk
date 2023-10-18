@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration
+namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.Enums
 {
     /// <summary>
     /// Defines available parameters for <see cref="ICaptureEnumerationContextState.GetString(Device*,GetCaptureEnumerationContextString)" />.

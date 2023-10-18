@@ -10,11 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OpenTK.Core.Extensions;
-using OpenTK.Core.Loader;
-using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration;
+using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.Enums;
+using OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration.Interfaces;
 
-namespace OpenTK.OpenAL.Extensions.Enumeration
+namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enumeration
 {
     /// <summary>
     /// Exposes the API in the CaptureEnumerationEnumeration extension.

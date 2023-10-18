@@ -1,14 +1,14 @@
 <Project>
   <PropertyGroup>
-    <!--<PathMap>$(MSBuildThisFileDirectory)src\=.</PathMap>-->
-    <LangVersion Condition="$(MSBuildProjectExtension.EndsWith('.csproj'))">11.0</LangVersion>
-    <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OpenTKSolutionRoot>$(MSBuildThisFileDirectory)</OpenTKSolutionRoot>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   
   <PropertyGroup>
     <Authors>The OpenTK team.</Authors>
+    <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
     <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>

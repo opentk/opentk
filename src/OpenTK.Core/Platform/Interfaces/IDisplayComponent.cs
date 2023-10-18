@@ -1,7 +1,8 @@
 using System;
+using OpenTK.Core.Platform.Handles;
 using OpenTK.Mathematics;
 
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Interface for drivers which provide the display component.

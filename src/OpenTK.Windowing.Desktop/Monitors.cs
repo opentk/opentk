@@ -13,7 +13,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Events;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
 namespace OpenTK.Windowing.Desktop
 {

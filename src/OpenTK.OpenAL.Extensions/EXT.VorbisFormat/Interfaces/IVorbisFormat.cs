@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
+using OpenTK.OpenAL.Extensions.EXT.VorbisFormat.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

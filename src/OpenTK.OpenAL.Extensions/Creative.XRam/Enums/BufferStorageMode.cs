@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+namespace OpenTK.OpenAL.Extensions.Creative.XRam.Enums
 {
     /// <summary>
     /// This enum is used to abstract the need of using AL.GetEnumValue() with the extension. The values do not

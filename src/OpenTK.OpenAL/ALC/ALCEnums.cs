@@ -7,9 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
-
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL
 {
 #pragma warning disable SA1402 // File may only contain a single type
     /// <summary>
@@ -61,7 +59,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetString(ALDevice, AlcGetString)"/>.
+    /// Defines available parameters for <see cref="Extensions.SOFT.DeviceClock.ALC.GetString(ALDevice, AlcGetString)"/>.
     /// </summary>
     public enum AlcGetString : int
     {
@@ -90,7 +88,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetString(ALDevice, AlcGetStringList)"/>.
+    /// Defines available parameters for <see cref="Extensions.SOFT.DeviceClock.ALC.GetString(ALDevice, AlcGetStringList)"/>.
     /// </summary>
     public enum AlcGetStringList : int
     {
@@ -105,7 +103,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetInteger(ALDevice, AlcGetInteger, int, int[])"/>.
+    /// Defines available parameters for <see cref="Extensions.SOFT.DeviceClock.ALC.GetInteger(ALDevice, AlcGetInteger, int, int[])"/>.
     /// </summary>
     public enum AlcGetInteger : int
     {
@@ -135,7 +133,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetString(ALDevice, GetEnumerationString)" />.
+    /// Defines available parameters for <see cref="Extensions.SOFT.DeviceClock.ALC.GetString(ALDevice, GetEnumerationString)" />.
     /// </summary>
     public enum GetEnumerationString
     {
@@ -163,7 +161,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="ALC.GetStringListPtr(ALDevice, GetEnumerationStringList)" />.
+    /// Defines available parameters for <see cref="Extensions.SOFT.DeviceClock.ALC.GetStringListPtr(ALDevice, GetEnumerationStringList)" />.
     /// </summary>
     public enum GetEnumerationStringList
     {

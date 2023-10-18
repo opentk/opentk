@@ -9,6 +9,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {

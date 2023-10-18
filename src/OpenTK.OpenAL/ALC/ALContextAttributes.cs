@@ -9,9 +9,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Convenience class for handling ALContext attributes.
@@ -20,33 +19,33 @@ namespace OpenTK.Audio.OpenAL
     {
         /// <summary>
         /// Gets or sets the output buffer frequency in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
         /// </summary>
         public int? Frequency { get; set; }
 
         /// <summary>
         /// Gets or sets the number of mono sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
         /// Not guaranteed to get exact number of mono sources when creating a context.
         /// </summary>
         public int? MonoSources { get; set; }
 
         /// <summary>
         /// Gets or sets the number of stereo sources.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
         /// Not guaranteed to get exact number of mono sources when creating a context.
         /// </summary>
         public int? StereoSources { get; set; }
 
         /// <summary>
         /// Gets or sets the refrash interval in Hz.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
         /// </summary>
         public int? Refresh { get; set; }
 
         /// <summary>
         /// Gets or sets if the context is synchronous.
-        /// This does not actually change any AL state. To apply these attributes see <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
+        /// This does not actually change any AL state. To apply these attributes see <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/>.
         /// </summary>
         public bool? Sync { get; set; }
 
@@ -82,8 +81,8 @@ namespace OpenTK.Audio.OpenAL
         }
 
         /// <summary>
-        /// Converts these context attributes to a <see cref="ALC.CreateContext(ALDevice, int[])"/> compatible list.
-        /// Alternativly, consider using the more convenient <see cref="ALC.CreateContext(ALDevice, ALContextAttributes)"/> overload.
+        /// Converts these context attributes to a <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, int[])"/> compatible list.
+        /// Alternativly, consider using the more convenient <see cref="Extensions.SOFT.DeviceClock.ALC.CreateContext(ALDevice, ALContextAttributes)"/> overload.
         /// </summary>
         /// <returns>The attibute list in the form of a span.</returns>
         public int[] CreateAttributeArray()

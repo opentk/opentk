@@ -1,9 +1,10 @@
 // This file is auto generated, do not edit. Generated: 2023-10-16 17:21:49 GMT+02:00
+
 using System;
 using System.Runtime.InteropServices;
-using OpenTK.Graphics;
+using OpenTK.Graphics.Glx;
 
-namespace OpenTK.Graphics.Glx
+namespace OpenTK.Graphics
 {
     /// <summary>A collection of all function pointers to all OpenGL entry points.</summary>
     public static unsafe partial class GlxPointers
@@ -16,7 +17,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindChannelToWindowSGIX_fnptr = (delegate* unmanaged<Display*, int, int, nuint, int>)GLLoader.BindingsContext.GetProcAddress("glXBindChannelToWindowSGIX");
             return _glXBindChannelToWindowSGIX_fnptr(display, screen, channel, window);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindHyperpipeSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int> _glXBindHyperpipeSGIX_fnptr = &glXBindHyperpipeSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -25,7 +26,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindHyperpipeSGIX_fnptr = (delegate* unmanaged<Display*, int, int>)GLLoader.BindingsContext.GetProcAddress("glXBindHyperpipeSGIX");
             return _glXBindHyperpipeSGIX_fnptr(dpy, hpId);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindSwapBarrierNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, uint, uint, byte> _glXBindSwapBarrierNV_fnptr = &glXBindSwapBarrierNV_Lazy;
         [UnmanagedCallersOnly]
@@ -34,7 +35,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindSwapBarrierNV_fnptr = (delegate* unmanaged<Display*, uint, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glXBindSwapBarrierNV");
             return _glXBindSwapBarrierNV_fnptr(dpy, group, barrier);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindSwapBarrierSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, void> _glXBindSwapBarrierSGIX_fnptr = &glXBindSwapBarrierSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -43,7 +44,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindSwapBarrierSGIX_fnptr = (delegate* unmanaged<Display*, nuint, int, void>)GLLoader.BindingsContext.GetProcAddress("glXBindSwapBarrierSGIX");
             _glXBindSwapBarrierSGIX_fnptr(dpy, drawable, barrier);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindTexImageEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, int*, void> _glXBindTexImageEXT_fnptr = &glXBindTexImageEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -52,7 +53,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindTexImageEXT_fnptr = (delegate* unmanaged<Display*, nuint, int, int*, void>)GLLoader.BindingsContext.GetProcAddress("glXBindTexImageEXT");
             _glXBindTexImageEXT_fnptr(dpy, drawable, buffer, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindVideoCaptureDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, uint, nuint, int> _glXBindVideoCaptureDeviceNV_fnptr = &glXBindVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -61,7 +62,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<Display*, uint, nuint, int>)GLLoader.BindingsContext.GetProcAddress("glXBindVideoCaptureDeviceNV");
             return _glXBindVideoCaptureDeviceNV_fnptr(dpy, video_capture_slot, device);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindVideoDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, uint, uint, int*, int> _glXBindVideoDeviceNV_fnptr = &glXBindVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -70,7 +71,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindVideoDeviceNV_fnptr = (delegate* unmanaged<Display*, uint, uint, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXBindVideoDeviceNV");
             return _glXBindVideoDeviceNV_fnptr(dpy, video_slot, video_device, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBindVideoImageNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, uint, nuint, int, int> _glXBindVideoImageNV_fnptr = &glXBindVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
@@ -79,7 +80,7 @@ namespace OpenTK.Graphics.Glx
             _glXBindVideoImageNV_fnptr = (delegate* unmanaged<Display*, uint, nuint, int, int>)GLLoader.BindingsContext.GetProcAddress("glXBindVideoImageNV");
             return _glXBindVideoImageNV_fnptr(dpy, VideoDevice, pbuf, iVideoBuffer);
         }
-        
+
         /// <summary><b>[entry point: <c>glXBlitContextFramebufferAMD</c>]</b></summary>
         public static delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void> _glXBlitContextFramebufferAMD_fnptr = &glXBlitContextFramebufferAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -88,7 +89,7 @@ namespace OpenTK.Graphics.Glx
             _glXBlitContextFramebufferAMD_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glXBlitContextFramebufferAMD");
             _glXBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
-        
+
         /// <summary><b>[entry point: <c>glXChannelRectSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, int, int, int, int> _glXChannelRectSGIX_fnptr = &glXChannelRectSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -97,7 +98,7 @@ namespace OpenTK.Graphics.Glx
             _glXChannelRectSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int, int, int, int, int>)GLLoader.BindingsContext.GetProcAddress("glXChannelRectSGIX");
             return _glXChannelRectSGIX_fnptr(display, screen, channel, x, y, w, h);
         }
-        
+
         /// <summary><b>[entry point: <c>glXChannelRectSyncSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, uint, int> _glXChannelRectSyncSGIX_fnptr = &glXChannelRectSyncSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -106,7 +107,7 @@ namespace OpenTK.Graphics.Glx
             _glXChannelRectSyncSGIX_fnptr = (delegate* unmanaged<Display*, int, int, uint, int>)GLLoader.BindingsContext.GetProcAddress("glXChannelRectSyncSGIX");
             return _glXChannelRectSyncSGIX_fnptr(display, screen, channel, synctype);
         }
-        
+
         /// <summary><b>[entry point: <c>glXChooseFBConfig</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfig_fnptr = &glXChooseFBConfig_Lazy;
         [UnmanagedCallersOnly]
@@ -115,7 +116,7 @@ namespace OpenTK.Graphics.Glx
             _glXChooseFBConfig_fnptr = (delegate* unmanaged<Display*, int, int*, int*, IntPtr*>)GLLoader.BindingsContext.GetProcAddress("glXChooseFBConfig");
             return _glXChooseFBConfig_fnptr(dpy, screen, attrib_list, nelements);
         }
-        
+
         /// <summary><b>[entry point: <c>glXChooseFBConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, int*, IntPtr*> _glXChooseFBConfigSGIX_fnptr = &glXChooseFBConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -124,7 +125,7 @@ namespace OpenTK.Graphics.Glx
             _glXChooseFBConfigSGIX_fnptr = (delegate* unmanaged<Display*, int, int*, int*, IntPtr*>)GLLoader.BindingsContext.GetProcAddress("glXChooseFBConfigSGIX");
             return _glXChooseFBConfigSGIX_fnptr(dpy, screen, attrib_list, nelements);
         }
-        
+
         /// <summary><b>[entry point: <c>glXChooseVisual</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, XVisualInfo*> _glXChooseVisual_fnptr = &glXChooseVisual_Lazy;
         [UnmanagedCallersOnly]
@@ -133,7 +134,7 @@ namespace OpenTK.Graphics.Glx
             _glXChooseVisual_fnptr = (delegate* unmanaged<Display*, int, int*, XVisualInfo*>)GLLoader.BindingsContext.GetProcAddress("glXChooseVisual");
             return _glXChooseVisual_fnptr(dpy, screen, attribList);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCopyBufferSubDataNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXCopyBufferSubDataNV_fnptr = &glXCopyBufferSubDataNV_Lazy;
         [UnmanagedCallersOnly]
@@ -142,7 +143,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyBufferSubDataNV_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void>)GLLoader.BindingsContext.GetProcAddress("glXCopyBufferSubDataNV");
             _glXCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCopyContext</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, IntPtr, ulong, void> _glXCopyContext_fnptr = &glXCopyContext_Lazy;
         [UnmanagedCallersOnly]
@@ -151,7 +152,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyContext_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glXCopyContext");
             _glXCopyContext_fnptr(dpy, src, dst, mask);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCopyImageSubDataNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, void> _glXCopyImageSubDataNV_fnptr = &glXCopyImageSubDataNV_Lazy;
         [UnmanagedCallersOnly]
@@ -160,7 +161,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopyImageSubDataNV_fnptr = (delegate* unmanaged<Display*, IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glXCopyImageSubDataNV");
             _glXCopyImageSubDataNV_fnptr(dpy, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCopySubBufferMESA</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, int, int, int, void> _glXCopySubBufferMESA_fnptr = &glXCopySubBufferMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -169,7 +170,7 @@ namespace OpenTK.Graphics.Glx
             _glXCopySubBufferMESA_fnptr = (delegate* unmanaged<Display*, nuint, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glXCopySubBufferMESA");
             _glXCopySubBufferMESA_fnptr(dpy, drawable, x, y, width, height);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateAssociatedContextAMD</c>]</b></summary>
         public static delegate* unmanaged<uint, IntPtr, IntPtr> _glXCreateAssociatedContextAMD_fnptr = &glXCreateAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -178,7 +179,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateAssociatedContextAMD_fnptr = (delegate* unmanaged<uint, IntPtr, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateAssociatedContextAMD");
             return _glXCreateAssociatedContextAMD_fnptr(id, share_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateAssociatedContextAttribsAMD</c>]</b></summary>
         public static delegate* unmanaged<uint, IntPtr, int*, IntPtr> _glXCreateAssociatedContextAttribsAMD_fnptr = &glXCreateAssociatedContextAttribsAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -187,7 +188,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateAssociatedContextAttribsAMD_fnptr = (delegate* unmanaged<uint, IntPtr, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateAssociatedContextAttribsAMD");
             return _glXCreateAssociatedContextAttribsAMD_fnptr(id, share_context, attribList);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateContext</c>]</b></summary>
         public static delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr> _glXCreateContext_fnptr = &glXCreateContext_Lazy;
         [UnmanagedCallersOnly]
@@ -196,7 +197,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateContext_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, IntPtr, byte, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContext");
             return _glXCreateContext_fnptr(dpy, vis, shareList, direct);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateContextAttribsARB</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr> _glXCreateContextAttribsARB_fnptr = &glXCreateContextAttribsARB_Lazy;
         [UnmanagedCallersOnly]
@@ -205,7 +206,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateContextAttribsARB_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, byte, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContextAttribsARB");
             return _glXCreateContextAttribsARB_fnptr(dpy, config, share_context, direct, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateContextWithConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateContextWithConfigSGIX_fnptr = &glXCreateContextWithConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -214,7 +215,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateContextWithConfigSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateContextWithConfigSGIX");
             return _glXCreateContextWithConfigSGIX_fnptr(dpy, config, render_type, share_list, direct);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateGLXPbufferSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint> _glXCreateGLXPbufferSGIX_fnptr = &glXCreateGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -223,7 +224,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPbufferSGIX");
             return _glXCreateGLXPbufferSGIX_fnptr(dpy, config, width, height, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateGLXPixmap</c>]</b></summary>
         public static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint> _glXCreateGLXPixmap_fnptr = &glXCreateGLXPixmap_Lazy;
         [UnmanagedCallersOnly]
@@ -232,7 +233,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateGLXPixmap_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPixmap");
             return _glXCreateGLXPixmap_fnptr(dpy, visual, pixmap);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateGLXPixmapMESA</c>]</b></summary>
         public static delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint, nuint> _glXCreateGLXPixmapMESA_fnptr = &glXCreateGLXPixmapMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -241,7 +242,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateGLXPixmapMESA_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, nuint, nuint, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPixmapMESA");
             return _glXCreateGLXPixmapMESA_fnptr(dpy, visual, pixmap, cmap);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateGLXPixmapWithConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, nuint, nuint> _glXCreateGLXPixmapWithConfigSGIX_fnptr = &glXCreateGLXPixmapWithConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -250,7 +251,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateGLXPixmapWithConfigSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, nuint, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPixmapWithConfigSGIX");
             return _glXCreateGLXPixmapWithConfigSGIX_fnptr(dpy, config, pixmap);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateNewContext</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr> _glXCreateNewContext_fnptr = &glXCreateNewContext_Lazy;
         [UnmanagedCallersOnly]
@@ -259,7 +260,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateNewContext_fnptr = (delegate* unmanaged<Display*, IntPtr, int, IntPtr, byte, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXCreateNewContext");
             return _glXCreateNewContext_fnptr(dpy, config, render_type, share_list, direct);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreatePbuffer</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int*, nuint> _glXCreatePbuffer_fnptr = &glXCreatePbuffer_Lazy;
         [UnmanagedCallersOnly]
@@ -268,7 +269,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreatePbuffer_fnptr = (delegate* unmanaged<Display*, IntPtr, int*, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreatePbuffer");
             return _glXCreatePbuffer_fnptr(dpy, config, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreatePixmap</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreatePixmap_fnptr = &glXCreatePixmap_Lazy;
         [UnmanagedCallersOnly]
@@ -277,7 +278,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreatePixmap_fnptr = (delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreatePixmap");
             return _glXCreatePixmap_fnptr(dpy, config, pixmap, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCreateWindow</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint> _glXCreateWindow_fnptr = &glXCreateWindow_Lazy;
         [UnmanagedCallersOnly]
@@ -286,7 +287,7 @@ namespace OpenTK.Graphics.Glx
             _glXCreateWindow_fnptr = (delegate* unmanaged<Display*, IntPtr, nuint, int*, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateWindow");
             return _glXCreateWindow_fnptr(dpy, config, win, attrib_list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXCushionSGI</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, float, void> _glXCushionSGI_fnptr = &glXCushionSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -295,7 +296,7 @@ namespace OpenTK.Graphics.Glx
             _glXCushionSGI_fnptr = (delegate* unmanaged<Display*, nuint, float, void>)GLLoader.BindingsContext.GetProcAddress("glXCushionSGI");
             _glXCushionSGI_fnptr(dpy, window, cushion);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDelayBeforeSwapNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, float, byte> _glXDelayBeforeSwapNV_fnptr = &glXDelayBeforeSwapNV_Lazy;
         [UnmanagedCallersOnly]
@@ -304,7 +305,7 @@ namespace OpenTK.Graphics.Glx
             _glXDelayBeforeSwapNV_fnptr = (delegate* unmanaged<Display*, nuint, float, byte>)GLLoader.BindingsContext.GetProcAddress("glXDelayBeforeSwapNV");
             return _glXDelayBeforeSwapNV_fnptr(dpy, drawable, seconds);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDeleteAssociatedContextAMD</c>]</b></summary>
         public static delegate* unmanaged<IntPtr, byte> _glXDeleteAssociatedContextAMD_fnptr = &glXDeleteAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -313,7 +314,7 @@ namespace OpenTK.Graphics.Glx
             _glXDeleteAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXDeleteAssociatedContextAMD");
             return _glXDeleteAssociatedContextAMD_fnptr(ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyContext</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, void> _glXDestroyContext_fnptr = &glXDestroyContext_Lazy;
         [UnmanagedCallersOnly]
@@ -322,7 +323,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyContext_fnptr = (delegate* unmanaged<Display*, IntPtr, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyContext");
             _glXDestroyContext_fnptr(dpy, ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyGLXPbufferSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPbufferSGIX_fnptr = &glXDestroyGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -331,7 +332,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyGLXPbufferSGIX");
             _glXDestroyGLXPbufferSGIX_fnptr(dpy, pbuf);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyGLXPixmap</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPixmap_fnptr = &glXDestroyGLXPixmap_Lazy;
         [UnmanagedCallersOnly]
@@ -340,7 +341,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyGLXPixmap_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyGLXPixmap");
             _glXDestroyGLXPixmap_fnptr(dpy, pixmap);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyHyperpipeConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int> _glXDestroyHyperpipeConfigSGIX_fnptr = &glXDestroyHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -349,7 +350,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyHyperpipeConfigSGIX_fnptr = (delegate* unmanaged<Display*, int, int>)GLLoader.BindingsContext.GetProcAddress("glXDestroyHyperpipeConfigSGIX");
             return _glXDestroyHyperpipeConfigSGIX_fnptr(dpy, hpId);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyPbuffer</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXDestroyPbuffer_fnptr = &glXDestroyPbuffer_Lazy;
         [UnmanagedCallersOnly]
@@ -358,7 +359,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyPbuffer_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyPbuffer");
             _glXDestroyPbuffer_fnptr(dpy, pbuf);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyPixmap</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXDestroyPixmap_fnptr = &glXDestroyPixmap_Lazy;
         [UnmanagedCallersOnly]
@@ -367,7 +368,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyPixmap_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyPixmap");
             _glXDestroyPixmap_fnptr(dpy, pixmap);
         }
-        
+
         /// <summary><b>[entry point: <c>glXDestroyWindow</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXDestroyWindow_fnptr = &glXDestroyWindow_Lazy;
         [UnmanagedCallersOnly]
@@ -376,7 +377,7 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyWindow_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyWindow");
             _glXDestroyWindow_fnptr(dpy, win);
         }
-        
+
         /// <summary><b>[entry point: <c>glXEnumerateVideoCaptureDevicesNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, nuint*> _glXEnumerateVideoCaptureDevicesNV_fnptr = &glXEnumerateVideoCaptureDevicesNV_Lazy;
         [UnmanagedCallersOnly]
@@ -385,7 +386,7 @@ namespace OpenTK.Graphics.Glx
             _glXEnumerateVideoCaptureDevicesNV_fnptr = (delegate* unmanaged<Display*, int, int*, nuint*>)GLLoader.BindingsContext.GetProcAddress("glXEnumerateVideoCaptureDevicesNV");
             return _glXEnumerateVideoCaptureDevicesNV_fnptr(dpy, screen, nelements);
         }
-        
+
         /// <summary><b>[entry point: <c>glXEnumerateVideoDevicesNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, uint*> _glXEnumerateVideoDevicesNV_fnptr = &glXEnumerateVideoDevicesNV_Lazy;
         [UnmanagedCallersOnly]
@@ -394,7 +395,7 @@ namespace OpenTK.Graphics.Glx
             _glXEnumerateVideoDevicesNV_fnptr = (delegate* unmanaged<Display*, int, int*, uint*>)GLLoader.BindingsContext.GetProcAddress("glXEnumerateVideoDevicesNV");
             return _glXEnumerateVideoDevicesNV_fnptr(dpy, screen, nelements);
         }
-        
+
         /// <summary><b>[entry point: <c>glXFreeContextEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, void> _glXFreeContextEXT_fnptr = &glXFreeContextEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -403,7 +404,7 @@ namespace OpenTK.Graphics.Glx
             _glXFreeContextEXT_fnptr = (delegate* unmanaged<Display*, IntPtr, void>)GLLoader.BindingsContext.GetProcAddress("glXFreeContextEXT");
             _glXFreeContextEXT_fnptr(dpy, context);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetAGPOffsetMESA</c>]</b></summary>
         public static delegate* unmanaged<void*, uint> _glXGetAGPOffsetMESA_fnptr = &glXGetAGPOffsetMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -412,7 +413,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetAGPOffsetMESA_fnptr = (delegate* unmanaged<void*, uint>)GLLoader.BindingsContext.GetProcAddress("glXGetAGPOffsetMESA");
             return _glXGetAGPOffsetMESA_fnptr(pointer);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetClientString</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, byte*> _glXGetClientString_fnptr = &glXGetClientString_Lazy;
         [UnmanagedCallersOnly]
@@ -421,7 +422,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetClientString_fnptr = (delegate* unmanaged<Display*, int, byte*>)GLLoader.BindingsContext.GetProcAddress("glXGetClientString");
             return _glXGetClientString_fnptr(dpy, name);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetConfig</c>]</b></summary>
         public static delegate* unmanaged<Display*, XVisualInfo*, int, int*, int> _glXGetConfig_fnptr = &glXGetConfig_Lazy;
         [UnmanagedCallersOnly]
@@ -430,7 +431,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetConfig_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetConfig");
             return _glXGetConfig_fnptr(dpy, visual, attrib, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetContextGPUIDAMD</c>]</b></summary>
         public static delegate* unmanaged<IntPtr, uint> _glXGetContextGPUIDAMD_fnptr = &glXGetContextGPUIDAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -439,7 +440,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetContextGPUIDAMD_fnptr = (delegate* unmanaged<IntPtr, uint>)GLLoader.BindingsContext.GetProcAddress("glXGetContextGPUIDAMD");
             return _glXGetContextGPUIDAMD_fnptr(ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetContextIDEXT</c>]</b></summary>
         public static delegate* unmanaged<IntPtr, nuint> _glXGetContextIDEXT_fnptr = &glXGetContextIDEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -448,7 +449,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetContextIDEXT_fnptr = (delegate* unmanaged<IntPtr, nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetContextIDEXT");
             return _glXGetContextIDEXT_fnptr(context);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentAssociatedContextAMD</c>]</b></summary>
         public static delegate* unmanaged<IntPtr> _glXGetCurrentAssociatedContextAMD_fnptr = &glXGetCurrentAssociatedContextAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -457,7 +458,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentAssociatedContextAMD");
             return _glXGetCurrentAssociatedContextAMD_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentContext</c>]</b></summary>
         public static delegate* unmanaged<IntPtr> _glXGetCurrentContext_fnptr = &glXGetCurrentContext_Lazy;
         [UnmanagedCallersOnly]
@@ -466,7 +467,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentContext_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentContext");
             return _glXGetCurrentContext_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentDisplay</c>]</b></summary>
         public static delegate* unmanaged<Display*> _glXGetCurrentDisplay_fnptr = &glXGetCurrentDisplay_Lazy;
         [UnmanagedCallersOnly]
@@ -475,7 +476,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentDisplay_fnptr = (delegate* unmanaged<Display*>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDisplay");
             return _glXGetCurrentDisplay_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentDisplayEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*> _glXGetCurrentDisplayEXT_fnptr = &glXGetCurrentDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -484,7 +485,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentDisplayEXT_fnptr = (delegate* unmanaged<Display*>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDisplayEXT");
             return _glXGetCurrentDisplayEXT_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentDrawable</c>]</b></summary>
         public static delegate* unmanaged<nuint> _glXGetCurrentDrawable_fnptr = &glXGetCurrentDrawable_Lazy;
         [UnmanagedCallersOnly]
@@ -493,7 +494,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentDrawable_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentDrawable");
             return _glXGetCurrentDrawable_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentReadDrawable</c>]</b></summary>
         public static delegate* unmanaged<nuint> _glXGetCurrentReadDrawable_fnptr = &glXGetCurrentReadDrawable_Lazy;
         [UnmanagedCallersOnly]
@@ -502,7 +503,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentReadDrawable_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentReadDrawable");
             return _glXGetCurrentReadDrawable_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetCurrentReadDrawableSGI</c>]</b></summary>
         public static delegate* unmanaged<nuint> _glXGetCurrentReadDrawableSGI_fnptr = &glXGetCurrentReadDrawableSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -511,7 +512,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetCurrentReadDrawableSGI_fnptr = (delegate* unmanaged<nuint>)GLLoader.BindingsContext.GetProcAddress("glXGetCurrentReadDrawableSGI");
             return _glXGetCurrentReadDrawableSGI_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetFBConfigAttrib</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttrib_fnptr = &glXGetFBConfigAttrib_Lazy;
         [UnmanagedCallersOnly]
@@ -520,7 +521,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetFBConfigAttrib_fnptr = (delegate* unmanaged<Display*, IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetFBConfigAttrib");
             return _glXGetFBConfigAttrib_fnptr(dpy, config, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetFBConfigAttribSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXGetFBConfigAttribSGIX_fnptr = &glXGetFBConfigAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -529,7 +530,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetFBConfigAttribSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetFBConfigAttribSGIX");
             return _glXGetFBConfigAttribSGIX_fnptr(dpy, config, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetFBConfigFromVisualSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, XVisualInfo*, IntPtr> _glXGetFBConfigFromVisualSGIX_fnptr = &glXGetFBConfigFromVisualSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -538,7 +539,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetFBConfigFromVisualSGIX_fnptr = (delegate* unmanaged<Display*, XVisualInfo*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetFBConfigFromVisualSGIX");
             return _glXGetFBConfigFromVisualSGIX_fnptr(dpy, vis);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetFBConfigs</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, IntPtr*> _glXGetFBConfigs_fnptr = &glXGetFBConfigs_Lazy;
         [UnmanagedCallersOnly]
@@ -547,7 +548,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetFBConfigs_fnptr = (delegate* unmanaged<Display*, int, int*, IntPtr*>)GLLoader.BindingsContext.GetProcAddress("glXGetFBConfigs");
             return _glXGetFBConfigs_fnptr(dpy, screen, nelements);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetGPUIDsAMD</c>]</b></summary>
         public static delegate* unmanaged<uint, uint*, uint> _glXGetGPUIDsAMD_fnptr = &glXGetGPUIDsAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -556,7 +557,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetGPUIDsAMD_fnptr = (delegate* unmanaged<uint, uint*, uint>)GLLoader.BindingsContext.GetProcAddress("glXGetGPUIDsAMD");
             return _glXGetGPUIDsAMD_fnptr(maxCount, ids);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetGPUInfoAMD</c>]</b></summary>
         public static delegate* unmanaged<uint, int, uint, uint, void*, int> _glXGetGPUInfoAMD_fnptr = &glXGetGPUInfoAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -565,7 +566,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetGPUInfoAMD_fnptr = (delegate* unmanaged<uint, int, uint, uint, void*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetGPUInfoAMD");
             return _glXGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetMscRateOML</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int*, int*, byte> _glXGetMscRateOML_fnptr = &glXGetMscRateOML_Lazy;
         [UnmanagedCallersOnly]
@@ -574,7 +575,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetMscRateOML_fnptr = (delegate* unmanaged<Display*, nuint, int*, int*, byte>)GLLoader.BindingsContext.GetProcAddress("glXGetMscRateOML");
             return _glXGetMscRateOML_fnptr(dpy, drawable, numerator, denominator);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetProcAddress</c>]</b></summary>
         public static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddress_fnptr = &glXGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
@@ -583,7 +584,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetProcAddress_fnptr = (delegate* unmanaged<byte*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetProcAddress");
             return _glXGetProcAddress_fnptr(procName);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetProcAddressARB</c>]</b></summary>
         public static delegate* unmanaged<byte*, IntPtr> _glXGetProcAddressARB_fnptr = &glXGetProcAddressARB_Lazy;
         [UnmanagedCallersOnly]
@@ -592,7 +593,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetProcAddressARB_fnptr = (delegate* unmanaged<byte*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXGetProcAddressARB");
             return _glXGetProcAddressARB_fnptr(procName);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetSelectedEvent</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEvent_fnptr = &glXGetSelectedEvent_Lazy;
         [UnmanagedCallersOnly]
@@ -601,7 +602,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSelectedEvent_fnptr = (delegate* unmanaged<Display*, nuint, ulong*, void>)GLLoader.BindingsContext.GetProcAddress("glXGetSelectedEvent");
             _glXGetSelectedEvent_fnptr(dpy, draw, event_mask);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetSelectedEventSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, ulong*, void> _glXGetSelectedEventSGIX_fnptr = &glXGetSelectedEventSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -610,7 +611,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSelectedEventSGIX_fnptr = (delegate* unmanaged<Display*, nuint, ulong*, void>)GLLoader.BindingsContext.GetProcAddress("glXGetSelectedEventSGIX");
             _glXGetSelectedEventSGIX_fnptr(dpy, drawable, mask);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetSwapIntervalMESA</c>]</b></summary>
         public static delegate* unmanaged<int> _glXGetSwapIntervalMESA_fnptr = &glXGetSwapIntervalMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -619,7 +620,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSwapIntervalMESA_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("glXGetSwapIntervalMESA");
             return _glXGetSwapIntervalMESA_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetSyncValuesOML</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, long*, long*, long*, byte> _glXGetSyncValuesOML_fnptr = &glXGetSyncValuesOML_Lazy;
         [UnmanagedCallersOnly]
@@ -628,7 +629,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetSyncValuesOML_fnptr = (delegate* unmanaged<Display*, nuint, long*, long*, long*, byte>)GLLoader.BindingsContext.GetProcAddress("glXGetSyncValuesOML");
             return _glXGetSyncValuesOML_fnptr(dpy, drawable, ust, msc, sbc);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetTransparentIndexSUN</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, nuint, ulong*, int> _glXGetTransparentIndexSUN_fnptr = &glXGetTransparentIndexSUN_Lazy;
         [UnmanagedCallersOnly]
@@ -637,7 +638,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetTransparentIndexSUN_fnptr = (delegate* unmanaged<Display*, nuint, nuint, ulong*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetTransparentIndexSUN");
             return _glXGetTransparentIndexSUN_fnptr(dpy, overlay, underlay, pTransparentIndex);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetVideoDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, uint*, int> _glXGetVideoDeviceNV_fnptr = &glXGetVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -646,7 +647,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetVideoDeviceNV_fnptr = (delegate* unmanaged<Display*, int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetVideoDeviceNV");
             return _glXGetVideoDeviceNV_fnptr(dpy, screen, numVideoDevices, pVideoDevice);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetVideoInfoNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, uint, ulong*, ulong*, int> _glXGetVideoInfoNV_fnptr = &glXGetVideoInfoNV_Lazy;
         [UnmanagedCallersOnly]
@@ -655,7 +656,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetVideoInfoNV_fnptr = (delegate* unmanaged<Display*, int, uint, ulong*, ulong*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetVideoInfoNV");
             return _glXGetVideoInfoNV_fnptr(dpy, screen, VideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetVideoSyncSGI</c>]</b></summary>
         public static delegate* unmanaged<uint*, int> _glXGetVideoSyncSGI_fnptr = &glXGetVideoSyncSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -664,7 +665,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetVideoSyncSGI_fnptr = (delegate* unmanaged<uint*, int>)GLLoader.BindingsContext.GetProcAddress("glXGetVideoSyncSGI");
             return _glXGetVideoSyncSGI_fnptr(count);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetVisualFromFBConfig</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfig_fnptr = &glXGetVisualFromFBConfig_Lazy;
         [UnmanagedCallersOnly]
@@ -673,7 +674,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetVisualFromFBConfig_fnptr = (delegate* unmanaged<Display*, IntPtr, XVisualInfo*>)GLLoader.BindingsContext.GetProcAddress("glXGetVisualFromFBConfig");
             return _glXGetVisualFromFBConfig_fnptr(dpy, config);
         }
-        
+
         /// <summary><b>[entry point: <c>glXGetVisualFromFBConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, XVisualInfo*> _glXGetVisualFromFBConfigSGIX_fnptr = &glXGetVisualFromFBConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -682,7 +683,7 @@ namespace OpenTK.Graphics.Glx
             _glXGetVisualFromFBConfigSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, XVisualInfo*>)GLLoader.BindingsContext.GetProcAddress("glXGetVisualFromFBConfigSGIX");
             return _glXGetVisualFromFBConfigSGIX_fnptr(dpy, config);
         }
-        
+
         /// <summary><b>[entry point: <c>glXHyperpipeAttribSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, void*, int> _glXHyperpipeAttribSGIX_fnptr = &glXHyperpipeAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -691,7 +692,7 @@ namespace OpenTK.Graphics.Glx
             _glXHyperpipeAttribSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int, void*, int>)GLLoader.BindingsContext.GetProcAddress("glXHyperpipeAttribSGIX");
             return _glXHyperpipeAttribSGIX_fnptr(dpy, timeSlice, attrib, size, attribList);
         }
-        
+
         /// <summary><b>[entry point: <c>glXHyperpipeConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, GLXHyperpipeConfigSGIX*, int*, int> _glXHyperpipeConfigSGIX_fnptr = &glXHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -700,7 +701,7 @@ namespace OpenTK.Graphics.Glx
             _glXHyperpipeConfigSGIX_fnptr = (delegate* unmanaged<Display*, int, int, GLXHyperpipeConfigSGIX*, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXHyperpipeConfigSGIX");
             return _glXHyperpipeConfigSGIX_fnptr(dpy, networkId, npipes, cfg, hpId);
         }
-        
+
         /// <summary><b>[entry point: <c>glXImportContextEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, IntPtr> _glXImportContextEXT_fnptr = &glXImportContextEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -709,7 +710,7 @@ namespace OpenTK.Graphics.Glx
             _glXImportContextEXT_fnptr = (delegate* unmanaged<Display*, nuint, IntPtr>)GLLoader.BindingsContext.GetProcAddress("glXImportContextEXT");
             return _glXImportContextEXT_fnptr(dpy, contextID);
         }
-        
+
         /// <summary><b>[entry point: <c>glXIsDirect</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, byte> _glXIsDirect_fnptr = &glXIsDirect_Lazy;
         [UnmanagedCallersOnly]
@@ -718,7 +719,7 @@ namespace OpenTK.Graphics.Glx
             _glXIsDirect_fnptr = (delegate* unmanaged<Display*, IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXIsDirect");
             return _glXIsDirect_fnptr(dpy, ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXJoinSwapGroupNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, uint, byte> _glXJoinSwapGroupNV_fnptr = &glXJoinSwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
@@ -727,7 +728,7 @@ namespace OpenTK.Graphics.Glx
             _glXJoinSwapGroupNV_fnptr = (delegate* unmanaged<Display*, nuint, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glXJoinSwapGroupNV");
             return _glXJoinSwapGroupNV_fnptr(dpy, drawable, group);
         }
-        
+
         /// <summary><b>[entry point: <c>glXJoinSwapGroupSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, nuint, void> _glXJoinSwapGroupSGIX_fnptr = &glXJoinSwapGroupSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -736,7 +737,7 @@ namespace OpenTK.Graphics.Glx
             _glXJoinSwapGroupSGIX_fnptr = (delegate* unmanaged<Display*, nuint, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXJoinSwapGroupSGIX");
             _glXJoinSwapGroupSGIX_fnptr(dpy, drawable, member);
         }
-        
+
         /// <summary><b>[entry point: <c>glXLockVideoCaptureDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXLockVideoCaptureDeviceNV_fnptr = &glXLockVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -745,7 +746,7 @@ namespace OpenTK.Graphics.Glx
             _glXLockVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXLockVideoCaptureDeviceNV");
             _glXLockVideoCaptureDeviceNV_fnptr(dpy, device);
         }
-        
+
         /// <summary><b>[entry point: <c>glXMakeAssociatedContextCurrentAMD</c>]</b></summary>
         public static delegate* unmanaged<IntPtr, byte> _glXMakeAssociatedContextCurrentAMD_fnptr = &glXMakeAssociatedContextCurrentAMD_Lazy;
         [UnmanagedCallersOnly]
@@ -754,7 +755,7 @@ namespace OpenTK.Graphics.Glx
             _glXMakeAssociatedContextCurrentAMD_fnptr = (delegate* unmanaged<IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXMakeAssociatedContextCurrentAMD");
             return _glXMakeAssociatedContextCurrentAMD_fnptr(ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXMakeContextCurrent</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeContextCurrent_fnptr = &glXMakeContextCurrent_Lazy;
         [UnmanagedCallersOnly]
@@ -763,7 +764,7 @@ namespace OpenTK.Graphics.Glx
             _glXMakeContextCurrent_fnptr = (delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXMakeContextCurrent");
             return _glXMakeContextCurrent_fnptr(dpy, draw, read, ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXMakeCurrent</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, IntPtr, byte> _glXMakeCurrent_fnptr = &glXMakeCurrent_Lazy;
         [UnmanagedCallersOnly]
@@ -772,7 +773,7 @@ namespace OpenTK.Graphics.Glx
             _glXMakeCurrent_fnptr = (delegate* unmanaged<Display*, nuint, IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXMakeCurrent");
             return _glXMakeCurrent_fnptr(dpy, drawable, ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXMakeCurrentReadSGI</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte> _glXMakeCurrentReadSGI_fnptr = &glXMakeCurrentReadSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -781,7 +782,7 @@ namespace OpenTK.Graphics.Glx
             _glXMakeCurrentReadSGI_fnptr = (delegate* unmanaged<Display*, nuint, nuint, IntPtr, byte>)GLLoader.BindingsContext.GetProcAddress("glXMakeCurrentReadSGI");
             return _glXMakeCurrentReadSGI_fnptr(dpy, draw, read, ctx);
         }
-        
+
         /// <summary><b>[entry point: <c>glXNamedCopyBufferSubDataNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void> _glXNamedCopyBufferSubDataNV_fnptr = &glXNamedCopyBufferSubDataNV_Lazy;
         [UnmanagedCallersOnly]
@@ -790,7 +791,7 @@ namespace OpenTK.Graphics.Glx
             _glXNamedCopyBufferSubDataNV_fnptr = (delegate* unmanaged<Display*, IntPtr, IntPtr, uint, uint, IntPtr, IntPtr, nint, void>)GLLoader.BindingsContext.GetProcAddress("glXNamedCopyBufferSubDataNV");
             _glXNamedCopyBufferSubDataNV_fnptr(dpy, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryChannelDeltasSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelDeltasSGIX_fnptr = &glXQueryChannelDeltasSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -799,7 +800,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryChannelDeltasSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryChannelDeltasSGIX");
             return _glXQueryChannelDeltasSGIX_fnptr(display, screen, channel, x, y, w, h);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryChannelRectSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int> _glXQueryChannelRectSGIX_fnptr = &glXQueryChannelRectSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -808,7 +809,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryChannelRectSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int*, int*, int*, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryChannelRectSGIX");
             return _glXQueryChannelRectSGIX_fnptr(display, screen, channel, dx, dy, dw, dh);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryContext</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContext_fnptr = &glXQueryContext_Lazy;
         [UnmanagedCallersOnly]
@@ -817,7 +818,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryContext_fnptr = (delegate* unmanaged<Display*, IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryContext");
             return _glXQueryContext_fnptr(dpy, ctx, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryContextInfoEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, IntPtr, int, int*, int> _glXQueryContextInfoEXT_fnptr = &glXQueryContextInfoEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -826,7 +827,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryContextInfoEXT_fnptr = (delegate* unmanaged<Display*, IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryContextInfoEXT");
             return _glXQueryContextInfoEXT_fnptr(dpy, context, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryCurrentRendererIntegerMESA</c>]</b></summary>
         public static delegate* unmanaged<int, uint*, byte> _glXQueryCurrentRendererIntegerMESA_fnptr = &glXQueryCurrentRendererIntegerMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -835,7 +836,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryCurrentRendererIntegerMESA_fnptr = (delegate* unmanaged<int, uint*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryCurrentRendererIntegerMESA");
             return _glXQueryCurrentRendererIntegerMESA_fnptr(attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryCurrentRendererStringMESA</c>]</b></summary>
         public static delegate* unmanaged<int, byte*> _glXQueryCurrentRendererStringMESA_fnptr = &glXQueryCurrentRendererStringMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -844,7 +845,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryCurrentRendererStringMESA_fnptr = (delegate* unmanaged<int, byte*>)GLLoader.BindingsContext.GetProcAddress("glXQueryCurrentRendererStringMESA");
             return _glXQueryCurrentRendererStringMESA_fnptr(attribute);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryDrawable</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryDrawable_fnptr = &glXQueryDrawable_Lazy;
         [UnmanagedCallersOnly]
@@ -853,7 +854,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryDrawable_fnptr = (delegate* unmanaged<Display*, nuint, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glXQueryDrawable");
             _glXQueryDrawable_fnptr(dpy, draw, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryExtension</c>]</b></summary>
         public static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryExtension_fnptr = &glXQueryExtension_Lazy;
         [UnmanagedCallersOnly]
@@ -862,7 +863,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryExtension_fnptr = (delegate* unmanaged<Display*, int*, int*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryExtension");
             return _glXQueryExtension_fnptr(dpy, errorb, @event);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryExtensionsString</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, byte*> _glXQueryExtensionsString_fnptr = &glXQueryExtensionsString_Lazy;
         [UnmanagedCallersOnly]
@@ -871,7 +872,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryExtensionsString_fnptr = (delegate* unmanaged<Display*, int, byte*>)GLLoader.BindingsContext.GetProcAddress("glXQueryExtensionsString");
             return _glXQueryExtensionsString_fnptr(dpy, screen);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryFrameCountNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, uint*, byte> _glXQueryFrameCountNV_fnptr = &glXQueryFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
@@ -880,7 +881,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryFrameCountNV_fnptr = (delegate* unmanaged<Display*, int, uint*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryFrameCountNV");
             return _glXQueryFrameCountNV_fnptr(dpy, screen, count);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryGLXPbufferSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryGLXPbufferSGIX_fnptr = &glXQueryGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -889,7 +890,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, nuint, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glXQueryGLXPbufferSGIX");
             _glXQueryGLXPbufferSGIX_fnptr(dpy, pbuf, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryHyperpipeAttribSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, void*, int> _glXQueryHyperpipeAttribSGIX_fnptr = &glXQueryHyperpipeAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -898,7 +899,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryHyperpipeAttribSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int, void*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryHyperpipeAttribSGIX");
             return _glXQueryHyperpipeAttribSGIX_fnptr(dpy, timeSlice, attrib, size, returnAttribList);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryHyperpipeBestAttribSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, void*, void*, int> _glXQueryHyperpipeBestAttribSGIX_fnptr = &glXQueryHyperpipeBestAttribSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -907,7 +908,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryHyperpipeBestAttribSGIX_fnptr = (delegate* unmanaged<Display*, int, int, int, void*, void*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryHyperpipeBestAttribSGIX");
             return _glXQueryHyperpipeBestAttribSGIX_fnptr(dpy, timeSlice, attrib, size, attribList, returnAttribList);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryHyperpipeConfigSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, GLXHyperpipeConfigSGIX*> _glXQueryHyperpipeConfigSGIX_fnptr = &glXQueryHyperpipeConfigSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -916,7 +917,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryHyperpipeConfigSGIX_fnptr = (delegate* unmanaged<Display*, int, int*, GLXHyperpipeConfigSGIX*>)GLLoader.BindingsContext.GetProcAddress("glXQueryHyperpipeConfigSGIX");
             return _glXQueryHyperpipeConfigSGIX_fnptr(dpy, hpId, npipes);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryHyperpipeNetworkSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int*, GLXHyperpipeNetworkSGIX*> _glXQueryHyperpipeNetworkSGIX_fnptr = &glXQueryHyperpipeNetworkSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -925,7 +926,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryHyperpipeNetworkSGIX_fnptr = (delegate* unmanaged<Display*, int*, GLXHyperpipeNetworkSGIX*>)GLLoader.BindingsContext.GetProcAddress("glXQueryHyperpipeNetworkSGIX");
             return _glXQueryHyperpipeNetworkSGIX_fnptr(dpy, npipes);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryMaxSwapBarriersSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int*, byte> _glXQueryMaxSwapBarriersSGIX_fnptr = &glXQueryMaxSwapBarriersSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -934,7 +935,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryMaxSwapBarriersSGIX_fnptr = (delegate* unmanaged<Display*, int, int*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryMaxSwapBarriersSGIX");
             return _glXQueryMaxSwapBarriersSGIX_fnptr(dpy, screen, max);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryMaxSwapGroupsNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, uint*, uint*, byte> _glXQueryMaxSwapGroupsNV_fnptr = &glXQueryMaxSwapGroupsNV_Lazy;
         [UnmanagedCallersOnly]
@@ -943,7 +944,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryMaxSwapGroupsNV_fnptr = (delegate* unmanaged<Display*, int, uint*, uint*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryMaxSwapGroupsNV");
             return _glXQueryMaxSwapGroupsNV_fnptr(dpy, screen, maxGroups, maxBarriers);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryRendererIntegerMESA</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, uint*, byte> _glXQueryRendererIntegerMESA_fnptr = &glXQueryRendererIntegerMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -952,7 +953,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryRendererIntegerMESA_fnptr = (delegate* unmanaged<Display*, int, int, int, uint*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryRendererIntegerMESA");
             return _glXQueryRendererIntegerMESA_fnptr(dpy, screen, renderer, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryRendererStringMESA</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, int, byte*> _glXQueryRendererStringMESA_fnptr = &glXQueryRendererStringMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -961,7 +962,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryRendererStringMESA_fnptr = (delegate* unmanaged<Display*, int, int, int, byte*>)GLLoader.BindingsContext.GetProcAddress("glXQueryRendererStringMESA");
             return _glXQueryRendererStringMESA_fnptr(dpy, screen, renderer, attribute);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryServerString</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, int, byte*> _glXQueryServerString_fnptr = &glXQueryServerString_Lazy;
         [UnmanagedCallersOnly]
@@ -970,7 +971,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryServerString_fnptr = (delegate* unmanaged<Display*, int, int, byte*>)GLLoader.BindingsContext.GetProcAddress("glXQueryServerString");
             return _glXQueryServerString_fnptr(dpy, screen, name);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQuerySwapGroupNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, uint*, uint*, byte> _glXQuerySwapGroupNV_fnptr = &glXQuerySwapGroupNV_Lazy;
         [UnmanagedCallersOnly]
@@ -979,7 +980,7 @@ namespace OpenTK.Graphics.Glx
             _glXQuerySwapGroupNV_fnptr = (delegate* unmanaged<Display*, nuint, uint*, uint*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQuerySwapGroupNV");
             return _glXQuerySwapGroupNV_fnptr(dpy, drawable, group, barrier);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryVersion</c>]</b></summary>
         public static delegate* unmanaged<Display*, int*, int*, byte> _glXQueryVersion_fnptr = &glXQueryVersion_Lazy;
         [UnmanagedCallersOnly]
@@ -988,7 +989,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryVersion_fnptr = (delegate* unmanaged<Display*, int*, int*, byte>)GLLoader.BindingsContext.GetProcAddress("glXQueryVersion");
             return _glXQueryVersion_fnptr(dpy, maj, min);
         }
-        
+
         /// <summary><b>[entry point: <c>glXQueryVideoCaptureDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, int*, int> _glXQueryVideoCaptureDeviceNV_fnptr = &glXQueryVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -997,7 +998,7 @@ namespace OpenTK.Graphics.Glx
             _glXQueryVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<Display*, nuint, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("glXQueryVideoCaptureDeviceNV");
             return _glXQueryVideoCaptureDeviceNV_fnptr(dpy, device, attribute, value);
         }
-        
+
         /// <summary><b>[entry point: <c>glXReleaseBuffersMESA</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, byte> _glXReleaseBuffersMESA_fnptr = &glXReleaseBuffersMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -1006,7 +1007,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseBuffersMESA_fnptr = (delegate* unmanaged<Display*, nuint, byte>)GLLoader.BindingsContext.GetProcAddress("glXReleaseBuffersMESA");
             return _glXReleaseBuffersMESA_fnptr(dpy, drawable);
         }
-        
+
         /// <summary><b>[entry point: <c>glXReleaseTexImageEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, void> _glXReleaseTexImageEXT_fnptr = &glXReleaseTexImageEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -1015,7 +1016,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseTexImageEXT_fnptr = (delegate* unmanaged<Display*, nuint, int, void>)GLLoader.BindingsContext.GetProcAddress("glXReleaseTexImageEXT");
             _glXReleaseTexImageEXT_fnptr(dpy, drawable, buffer);
         }
-        
+
         /// <summary><b>[entry point: <c>glXReleaseVideoCaptureDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXReleaseVideoCaptureDeviceNV_fnptr = &glXReleaseVideoCaptureDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -1024,7 +1025,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXReleaseVideoCaptureDeviceNV");
             _glXReleaseVideoCaptureDeviceNV_fnptr(dpy, device);
         }
-        
+
         /// <summary><b>[entry point: <c>glXReleaseVideoDeviceNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, uint, int> _glXReleaseVideoDeviceNV_fnptr = &glXReleaseVideoDeviceNV_Lazy;
         [UnmanagedCallersOnly]
@@ -1033,7 +1034,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseVideoDeviceNV_fnptr = (delegate* unmanaged<Display*, int, uint, int>)GLLoader.BindingsContext.GetProcAddress("glXReleaseVideoDeviceNV");
             return _glXReleaseVideoDeviceNV_fnptr(dpy, screen, VideoDevice);
         }
-        
+
         /// <summary><b>[entry point: <c>glXReleaseVideoImageNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int> _glXReleaseVideoImageNV_fnptr = &glXReleaseVideoImageNV_Lazy;
         [UnmanagedCallersOnly]
@@ -1042,7 +1043,7 @@ namespace OpenTK.Graphics.Glx
             _glXReleaseVideoImageNV_fnptr = (delegate* unmanaged<Display*, nuint, int>)GLLoader.BindingsContext.GetProcAddress("glXReleaseVideoImageNV");
             return _glXReleaseVideoImageNV_fnptr(dpy, pbuf);
         }
-        
+
         /// <summary><b>[entry point: <c>glXResetFrameCountNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, int, byte> _glXResetFrameCountNV_fnptr = &glXResetFrameCountNV_Lazy;
         [UnmanagedCallersOnly]
@@ -1051,7 +1052,7 @@ namespace OpenTK.Graphics.Glx
             _glXResetFrameCountNV_fnptr = (delegate* unmanaged<Display*, int, byte>)GLLoader.BindingsContext.GetProcAddress("glXResetFrameCountNV");
             return _glXResetFrameCountNV_fnptr(dpy, screen);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSelectEvent</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEvent_fnptr = &glXSelectEvent_Lazy;
         [UnmanagedCallersOnly]
@@ -1060,7 +1061,7 @@ namespace OpenTK.Graphics.Glx
             _glXSelectEvent_fnptr = (delegate* unmanaged<Display*, nuint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glXSelectEvent");
             _glXSelectEvent_fnptr(dpy, draw, event_mask);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSelectEventSGIX</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, ulong, void> _glXSelectEventSGIX_fnptr = &glXSelectEventSGIX_Lazy;
         [UnmanagedCallersOnly]
@@ -1069,7 +1070,7 @@ namespace OpenTK.Graphics.Glx
             _glXSelectEventSGIX_fnptr = (delegate* unmanaged<Display*, nuint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glXSelectEventSGIX");
             _glXSelectEventSGIX_fnptr(dpy, drawable, mask);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSendPbufferToVideoNV</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, ulong*, byte, int> _glXSendPbufferToVideoNV_fnptr = &glXSendPbufferToVideoNV_Lazy;
         [UnmanagedCallersOnly]
@@ -1078,7 +1079,7 @@ namespace OpenTK.Graphics.Glx
             _glXSendPbufferToVideoNV_fnptr = (delegate* unmanaged<Display*, nuint, int, ulong*, byte, int>)GLLoader.BindingsContext.GetProcAddress("glXSendPbufferToVideoNV");
             return _glXSendPbufferToVideoNV_fnptr(dpy, pbuf, iBufferType, pulCounterPbuffer, bBlock);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSet3DfxModeMESA</c>]</b></summary>
         public static delegate* unmanaged<int, byte> _glXSet3DfxModeMESA_fnptr = &glXSet3DfxModeMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -1087,7 +1088,7 @@ namespace OpenTK.Graphics.Glx
             _glXSet3DfxModeMESA_fnptr = (delegate* unmanaged<int, byte>)GLLoader.BindingsContext.GetProcAddress("glXSet3DfxModeMESA");
             return _glXSet3DfxModeMESA_fnptr(mode);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSwapBuffers</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, void> _glXSwapBuffers_fnptr = &glXSwapBuffers_Lazy;
         [UnmanagedCallersOnly]
@@ -1096,7 +1097,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapBuffers_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXSwapBuffers");
             _glXSwapBuffers_fnptr(dpy, drawable);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSwapBuffersMscOML</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, long, long, long, long> _glXSwapBuffersMscOML_fnptr = &glXSwapBuffersMscOML_Lazy;
         [UnmanagedCallersOnly]
@@ -1105,7 +1106,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapBuffersMscOML_fnptr = (delegate* unmanaged<Display*, nuint, long, long, long, long>)GLLoader.BindingsContext.GetProcAddress("glXSwapBuffersMscOML");
             return _glXSwapBuffersMscOML_fnptr(dpy, drawable, target_msc, divisor, remainder);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSwapIntervalEXT</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, int, void> _glXSwapIntervalEXT_fnptr = &glXSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
@@ -1114,7 +1115,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapIntervalEXT_fnptr = (delegate* unmanaged<Display*, nuint, int, void>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalEXT");
             _glXSwapIntervalEXT_fnptr(dpy, drawable, interval);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSwapIntervalMESA</c>]</b></summary>
         public static delegate* unmanaged<uint, int> _glXSwapIntervalMESA_fnptr = &glXSwapIntervalMESA_Lazy;
         [UnmanagedCallersOnly]
@@ -1123,7 +1124,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapIntervalMESA_fnptr = (delegate* unmanaged<uint, int>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalMESA");
             return _glXSwapIntervalMESA_fnptr(interval);
         }
-        
+
         /// <summary><b>[entry point: <c>glXSwapIntervalSGI</c>]</b></summary>
         public static delegate* unmanaged<int, int> _glXSwapIntervalSGI_fnptr = &glXSwapIntervalSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -1132,7 +1133,7 @@ namespace OpenTK.Graphics.Glx
             _glXSwapIntervalSGI_fnptr = (delegate* unmanaged<int, int>)GLLoader.BindingsContext.GetProcAddress("glXSwapIntervalSGI");
             return _glXSwapIntervalSGI_fnptr(interval);
         }
-        
+
         /// <summary><b>[entry point: <c>glXUseXFont</c>]</b></summary>
         public static delegate* unmanaged<nuint, int, int, int, void> _glXUseXFont_fnptr = &glXUseXFont_Lazy;
         [UnmanagedCallersOnly]
@@ -1141,7 +1142,7 @@ namespace OpenTK.Graphics.Glx
             _glXUseXFont_fnptr = (delegate* unmanaged<nuint, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glXUseXFont");
             _glXUseXFont_fnptr(font, first, count, list);
         }
-        
+
         /// <summary><b>[entry point: <c>glXWaitForMscOML</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, long, long, long, long*, long*, long*, byte> _glXWaitForMscOML_fnptr = &glXWaitForMscOML_Lazy;
         [UnmanagedCallersOnly]
@@ -1150,7 +1151,7 @@ namespace OpenTK.Graphics.Glx
             _glXWaitForMscOML_fnptr = (delegate* unmanaged<Display*, nuint, long, long, long, long*, long*, long*, byte>)GLLoader.BindingsContext.GetProcAddress("glXWaitForMscOML");
             return _glXWaitForMscOML_fnptr(dpy, drawable, target_msc, divisor, remainder, ust, msc, sbc);
         }
-        
+
         /// <summary><b>[entry point: <c>glXWaitForSbcOML</c>]</b></summary>
         public static delegate* unmanaged<Display*, nuint, long, long*, long*, long*, byte> _glXWaitForSbcOML_fnptr = &glXWaitForSbcOML_Lazy;
         [UnmanagedCallersOnly]
@@ -1159,7 +1160,7 @@ namespace OpenTK.Graphics.Glx
             _glXWaitForSbcOML_fnptr = (delegate* unmanaged<Display*, nuint, long, long*, long*, long*, byte>)GLLoader.BindingsContext.GetProcAddress("glXWaitForSbcOML");
             return _glXWaitForSbcOML_fnptr(dpy, drawable, target_sbc, ust, msc, sbc);
         }
-        
+
         /// <summary><b>[entry point: <c>glXWaitGL</c>]</b></summary>
         public static delegate* unmanaged<void> _glXWaitGL_fnptr = &glXWaitGL_Lazy;
         [UnmanagedCallersOnly]
@@ -1168,7 +1169,7 @@ namespace OpenTK.Graphics.Glx
             _glXWaitGL_fnptr = (delegate* unmanaged<void>)GLLoader.BindingsContext.GetProcAddress("glXWaitGL");
             _glXWaitGL_fnptr();
         }
-        
+
         /// <summary><b>[entry point: <c>glXWaitVideoSyncSGI</c>]</b></summary>
         public static delegate* unmanaged<int, int, uint*, int> _glXWaitVideoSyncSGI_fnptr = &glXWaitVideoSyncSGI_Lazy;
         [UnmanagedCallersOnly]
@@ -1177,7 +1178,7 @@ namespace OpenTK.Graphics.Glx
             _glXWaitVideoSyncSGI_fnptr = (delegate* unmanaged<int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("glXWaitVideoSyncSGI");
             return _glXWaitVideoSyncSGI_fnptr(divisor, remainder, count);
         }
-        
+
         /// <summary><b>[entry point: <c>glXWaitX</c>]</b></summary>
         public static delegate* unmanaged<void> _glXWaitX_fnptr = &glXWaitX_Lazy;
         [UnmanagedCallersOnly]
@@ -1186,6 +1187,6 @@ namespace OpenTK.Graphics.Glx
             _glXWaitX_fnptr = (delegate* unmanaged<void>)GLLoader.BindingsContext.GetProcAddress("glXWaitX");
             _glXWaitX_fnptr();
         }
-        
+
     }
 }

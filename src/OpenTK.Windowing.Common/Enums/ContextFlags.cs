@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Enums
 {
     /// <summary>
     /// Enumerates various flags that affect the creation of new GraphicsContexts.

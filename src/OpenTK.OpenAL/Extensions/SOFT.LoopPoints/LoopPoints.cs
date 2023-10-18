@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using OpenTK.OpenAL.Extensions.SOFT.LoopPoints.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.SOFT.LoopPoints
 {
     public partial class AL
     {
@@ -25,13 +27,13 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
             {
-                return AL.IsExtensionPresent(ExtensionName);
+                return OpenAL.AL.IsExtensionPresent(ExtensionName);
             }
 
-            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            [DllImport(OpenAL.AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = OpenAL.AL.ALCallingConvention)]
             public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, int* values);
 
-            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            [DllImport(OpenAL.AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = OpenAL.AL.ALCallingConvention)]
             public static extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
 
             public static unsafe void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values)

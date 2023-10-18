@@ -9,6 +9,8 @@
 
 using System;
 using OpenTK.Core.Extensions;
+using OpenTK.OpenAL.Extensions.Soft.Enums;
+using OpenTK.OpenAL.Extensions.Soft.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Soft
 {

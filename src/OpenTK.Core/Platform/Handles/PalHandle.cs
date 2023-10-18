@@ -1,6 +1,8 @@
 #nullable enable
 
-namespace OpenTK.Core.Platform
+using OpenTK.Core.Platform.Interfaces;
+
+namespace OpenTK.Core.Platform.Handles
 {
     /// <summary>
     /// Base class for all PAL handle objects.

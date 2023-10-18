@@ -1,11 +1,9 @@
-﻿using Generator.Writing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
-using System.IO.Compression;
+using OpenTK.OpenGL.Generator.Process;
 
-namespace Generator.Parsing
+namespace OpenTK.OpenGL.Generator.Parsing
 {
     internal enum InputAPI
     {

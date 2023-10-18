@@ -1,7 +1,6 @@
 using System;
 using OpenTK.Core.Platform;
 using System.Diagnostics;
-using OpenTK.Core.Utility;
 using System.Collections.Generic;
 
 namespace OpenTK.Platform.Native.X11

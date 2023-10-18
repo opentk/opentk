@@ -7,10 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using OpenTK.Mathematics;
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Events
 {
     /// <summary>
     /// Defines the event data for the window position event.

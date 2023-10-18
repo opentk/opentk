@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Events
 {
     /// <summary>
     /// Defines the event data for the <see cref="NativeWindow.MonitorConnected"/> event.

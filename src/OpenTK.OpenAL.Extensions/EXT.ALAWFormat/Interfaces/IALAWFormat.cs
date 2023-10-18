@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.EXT.ALAWFormat
+using OpenTK.OpenAL.Extensions.EXT.ALAWFormat.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.ALAWFormat.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

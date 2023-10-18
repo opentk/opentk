@@ -9,6 +9,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {

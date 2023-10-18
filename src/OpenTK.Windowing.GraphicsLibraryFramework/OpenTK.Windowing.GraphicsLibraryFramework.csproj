@@ -3,8 +3,6 @@
     <PropertyGroup>
       <TargetFramework>net7.0</TargetFramework>
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <LangVersion>8.0</LangVersion>
     </PropertyGroup>
     
     <ItemGroup>

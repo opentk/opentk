@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Backends.Tests
 {
@@ -143,7 +146,7 @@ namespace OpenTK.Backends.Tests
                     }
                 }
             }
-            
+
             if (selectedWindow != -1)
             {
                 WindowHandle window = (selectedWindow == 0)

@@ -8,6 +8,8 @@
 //
 
 using OpenTK.Core.Extensions;
+using OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Enums;
+using OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
 {

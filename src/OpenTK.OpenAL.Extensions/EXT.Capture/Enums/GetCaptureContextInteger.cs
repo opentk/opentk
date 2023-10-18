@@ -7,7 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.EXT.Capture
+using OpenTK.OpenAL.Extensions.EXT.Capture.Interfaces;
+
+namespace OpenTK.OpenAL.Extensions.EXT.Capture.Enums
 {
     /// <summary>
     /// Defines valid values for the <see cref="ICaptureContextState.GetContextProperty"/> method.

@@ -9,6 +9,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Platform.Native;
 using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 using System.Linq;
+using OpenTK.Core.Platform.Enums;
 
 namespace OpenTK.Backends.Tests
 {

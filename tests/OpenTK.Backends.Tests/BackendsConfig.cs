@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Platform.Native;
-using OpenTK.Core.Utility;
 
 namespace OpenTK.Backends.Tests
 {
@@ -147,7 +149,7 @@ namespace OpenTK.Backends.Tests
                 LoadSingleton();
 
                 return _singleton!;
-            } 
+            }
         }
 
         /// <summary>

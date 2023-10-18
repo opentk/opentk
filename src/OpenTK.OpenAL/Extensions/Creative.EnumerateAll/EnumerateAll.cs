@@ -9,8 +9,10 @@
 
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OpenTK.OpenAL.Extensions.Creative.EnumerateAll.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.Creative.EnumerateAll
 {
     public partial class ALC
     {
@@ -40,7 +42,7 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
             {
-                return ALC.IsExtensionPresent(ALDevice.Null, ExtensionName);
+                return OpenAL.ALC.IsExtensionPresent(ALDevice.Null, ExtensionName);
             }
 
             /// <summary>
@@ -50,7 +52,7 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent(ALDevice device)
             {
-                return ALC.IsExtensionPresent(device, ExtensionName);
+                return OpenAL.ALC.IsExtensionPresent(device, ExtensionName);
             }
 
             /// <summary>
@@ -59,7 +61,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="device">The device for the context.</param>
             /// <param name="param">The named property.</param>
             /// <returns>The value.</returns>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(OpenAL.ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = OpenAL.ALC.AlcCallingConv)]
             public static extern string GetString(ALDevice device, GetEnumerateAllContextString param);
 
             /// <summary>
@@ -68,14 +70,14 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="device">The device for the context.</param>
             /// <param name="param">The named property.</param>
             /// <returns>The value.</returns>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(OpenAL.ALC.Lib, EntryPoint = "alcGetString", ExactSpelling = true, CallingConvention = OpenAL.ALC.AlcCallingConv)]
             public static extern unsafe byte* GetStringList(ALDevice device, GetEnumerateAllContextStringList param);
 
             /// <inheritdoc cref="GetStringList(ALDevice, GetEnumerateAllContextStringList)"/>
             public static unsafe IEnumerable<string> GetStringList(GetEnumerateAllContextStringList param)
             {
                 byte* result = GetStringList(ALDevice.Null, param);
-                return ALC.ALStringListToList(result);
+                return OpenAL.ALC.ALStringListToList(result);
             }
         }
     }

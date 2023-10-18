@@ -1,11 +1,7 @@
-﻿using Generator.Writing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using OpenTK.OpenGL.Generator.Process;
 
-namespace Generator.Parsing
+namespace OpenTK.OpenGL.Generator.Parsing
 {
     internal record Documentation(
         // FIXME: Better name

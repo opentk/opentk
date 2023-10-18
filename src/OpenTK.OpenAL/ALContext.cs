@@ -10,7 +10,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL
 {
     public struct ALContext : IEquatable<ALContext>
     {

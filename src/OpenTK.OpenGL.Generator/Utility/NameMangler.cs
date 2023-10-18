@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using System.Text;
 
-namespace Generator.Utility
+namespace OpenTK.OpenGL.Generator.Utility
 {
     internal class NameManglerSettings
     {

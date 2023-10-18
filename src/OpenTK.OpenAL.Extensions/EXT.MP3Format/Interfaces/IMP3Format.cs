@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.EXT.MP3Format
+using OpenTK.OpenAL.Extensions.EXT.MP3Format.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.MP3Format.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

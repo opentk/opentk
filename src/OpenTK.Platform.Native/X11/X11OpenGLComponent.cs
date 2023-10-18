@@ -3,8 +3,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.X11.GLX;
 
 namespace OpenTK.Platform.Native.X11
@@ -181,7 +184,7 @@ namespace OpenTK.Platform.Native.X11
             // check the glX version.
             // - Noggin_bops 2023-08-27
             GLXWindow glxWindow = glXCreateWindow(X11.Display, window.FBConfig!.Value, window.Window, IntPtr.Zero);
-            
+
             XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
 
             contextDict[contextHandle.Context] = contextHandle;

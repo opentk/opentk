@@ -1,7 +1,8 @@
 ﻿using System;
-using System.IO;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
 
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Interface for drivers which provide the cursor component of the platform abstraction layer.

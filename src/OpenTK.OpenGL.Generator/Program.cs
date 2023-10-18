@@ -1,17 +1,14 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using Generator.Utility;
-using Generator.Writing;
-using Generator.Parsing;
-using Generator.Process;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Runtime.CompilerServices;
+using System.Reflection;
+using OpenTK.OpenGL.Generator.Parsing;
+using OpenTK.OpenGL.Generator.Process;
+using OpenTK.OpenGL.Generator.Utility;
 
-namespace Generator
+namespace OpenTK.OpenGL.Generator
 {
     unsafe class Program
     {

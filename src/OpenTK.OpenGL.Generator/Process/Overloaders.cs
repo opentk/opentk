@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using Generator.Parsing;
-using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
-using static Generator.Process.ColorTypeOverloader;
+using OpenTK.OpenGL.Generator.Parsing;
+using OpenTK.OpenGL.Generator.Utility;
+using OpenTK.OpenGL.Generator.Utility.Extensions;
 
-namespace Generator.Process
+namespace OpenTK.OpenGL.Generator.Process
 {
     internal interface IOverloader
     {
@@ -61,7 +58,7 @@ namespace Generator.Process
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             // See: https://github.com/opentk/opentk/blob/082c8d228d0def042b11424ac002776432f44f47/src/Generator.Bind/FuncProcessor.cs#L417
-            
+
             string name = overload.OverloadName;
             string trimmedName = name;
             // FIXME: Remove vendor name before we trim endings
@@ -422,7 +419,7 @@ namespace Generator.Process
     {
         // Regex to match names of vector methods.
         private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
-        
+
         private static readonly HashSet<string> _mathKinds = new HashSet<string>()
         {
             "Vector1",
@@ -670,7 +667,7 @@ namespace Generator.Process
 
                 Parameter[] parameters = overload.InputParameters.ToArray();
                 List<Parameter> NumericsParameters = new List<Parameter>();
-                
+
                 for (int i = 0; i < overload.InputParameters.Length; i++)
                 {
                     Parameter parameter = overload.InputParameters[i];
@@ -1060,7 +1057,7 @@ namespace Generator.Process
                     parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
                 }
             }
-            
+
             if (lengthParameterIndex == -1)
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
 
@@ -1306,7 +1303,7 @@ namespace Generator.Process
                     }
                     else if (primitive.TypeName == "uint")
                     {
-                        
+
                         writer.WriteLine($"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem((int){nameTable[StringLengthParameter]});");
                     }
                     else

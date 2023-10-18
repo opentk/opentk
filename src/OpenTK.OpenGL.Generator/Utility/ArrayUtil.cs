@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Generator.Utility
+namespace OpenTK.OpenGL.Generator.Utility
 {
     static class ArrayUtil
     {

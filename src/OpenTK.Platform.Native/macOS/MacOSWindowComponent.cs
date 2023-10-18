@@ -4,8 +4,11 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
@@ -209,7 +212,7 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
-            
+
             IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
             {
@@ -295,7 +298,7 @@ namespace OpenTK.Platform.Native.macOS
                             objc_msgSend_CGRect(nswindow.View, selBounds));
 
                         Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
-                        
+
                         EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);

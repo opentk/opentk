@@ -7,15 +7,11 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
-using OpenTK.Core;
-using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Input
 {
     /// <summary>
     /// Encapsulates the state of a Keyboard device.

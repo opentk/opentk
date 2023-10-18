@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.Soft
+namespace OpenTK.OpenAL.Extensions.Soft.Enums
 {
     /// <summary>
     /// A set of resamplers defined in OpenAL Soft.

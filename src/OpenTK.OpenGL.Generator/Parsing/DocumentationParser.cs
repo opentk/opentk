@@ -1,17 +1,14 @@
-﻿using Generator.Utility;
-using Generator.Utility.Extensions;
-using Generator.Writing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using OpenTK.OpenGL.Generator.Process;
+using OpenTK.OpenGL.Generator.Utility;
+using OpenTK.OpenGL.Generator.Utility.Extensions;
 
-namespace Generator.Parsing
+namespace OpenTK.OpenGL.Generator.Parsing
 {
     static class DocumentationParser
     {

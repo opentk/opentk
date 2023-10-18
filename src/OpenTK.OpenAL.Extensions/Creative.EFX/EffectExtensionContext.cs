@@ -10,6 +10,8 @@
 using System;
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {

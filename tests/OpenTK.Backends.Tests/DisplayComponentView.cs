@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core.Platform.Handles;
 
 namespace OpenTK.Backends.Tests
 {

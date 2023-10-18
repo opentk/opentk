@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.EXT.MULAWFormat
+using OpenTK.OpenAL.Extensions.EXT.MULAWFormat.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.MULAWFormat.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

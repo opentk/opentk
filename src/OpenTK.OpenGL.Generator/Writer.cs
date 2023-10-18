@@ -1,15 +1,15 @@
-﻿using Generator.Utility.Extensions;
-using System;
+﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.CodeDom.Compiler;
-using Generator.Parsing;
-using Generator.Utility;
+using OpenTK.OpenGL.Generator.Parsing;
+using OpenTK.OpenGL.Generator.Process;
+using OpenTK.OpenGL.Generator.Utility.Extensions;
 
-namespace Generator.Writing
+namespace OpenTK.OpenGL.Generator
 {
     internal static class Writer
     {
@@ -94,7 +94,7 @@ namespace Generator.Writing
             WriteEnums(directoryPath, className, apiNamespace, @namespace.EnumGroups);
         }
 
-        // FIXME: Maybe we should nest this 
+        // FIXME: Maybe we should nest this
         private static void WriteFunctionPointers(string directoryPath, string className, string apiNamespace, List<NativeFunction> nativeFunctions)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{className}.Pointers.cs"));
@@ -177,24 +177,24 @@ namespace Generator.Writing
                 string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.Type) : param.Type.ToCSString();
 
                 string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
-                
+
                 if (type != primitiveType)
                 {
-                    paramNames.Append($"({primitiveType})");
+                    paramNames.Append($"({primitiveType})".ToString());
                 }
 
                 // HACK: FIXME: You can't cast a bool to byte, sigh..
                 if (swapTypesForUnderlyingType == false && param.Type is CSBool8)
                 {
-                    paramNames.Append($"({param.Name} ? 1 : 0)");
+                    paramNames.Append($"({param.Name} ? 1 : 0)".ToString());
                 }
                 else
                 {
                     paramNames.Append(param.Name);
                 }
-                
+
                 delegateTypes.Append(type);
-                signature.Append($"{type} {param.Name}");
+                signature.Append($"{type} {param.Name}".ToString());
 
                 // If we are adding more types, append a ", "
                 if (i + 1 < function.Parameters.Count)

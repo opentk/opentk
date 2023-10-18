@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Native.Extensions.EXT.IMA4Format
+using OpenTK.OpenAL.Extensions.EXT.IMA4Format.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.IMA4Format.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

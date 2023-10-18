@@ -7,6 +7,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Mathematics.Colors;
+using OpenTK.Windowing.Common.Enums;
+using OpenTK.Windowing.Common.Events;
 
 namespace LocalTest
 {

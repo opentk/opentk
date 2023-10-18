@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Generator.Utility
+namespace OpenTK.OpenGL.Generator.Utility
 {
     internal class Logger : IDisposable
     {

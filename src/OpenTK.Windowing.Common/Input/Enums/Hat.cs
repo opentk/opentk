@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.Common.Input
+namespace OpenTK.Windowing.Common.Input.Enums
 {
     /// <summary>
     /// Status of a joystick hat.

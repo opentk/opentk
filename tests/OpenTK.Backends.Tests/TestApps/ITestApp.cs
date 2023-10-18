@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Handles;
 
-namespace OpenTK.Backends.Tests
+namespace OpenTK.Backends.Tests.TestApps
 {
     /// <summary>
     /// Decorate a class with this attribute to automatically load it at run time.

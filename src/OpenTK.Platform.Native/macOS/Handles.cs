@@ -1,5 +1,7 @@
 ﻿using System;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Handles;
+
 namespace OpenTK.Platform.Native.macOS
 {
     internal class NSWindowHandle : WindowHandle
@@ -42,7 +44,7 @@ namespace OpenTK.Platform.Native.macOS
 
         public IntPtr Screen { get; set; }
 
-        public string Name { get; set; } 
+        public string Name { get; set; }
 
         public bool IsPrimary { get; set; }
 

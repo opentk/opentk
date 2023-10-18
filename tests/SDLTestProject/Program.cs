@@ -4,11 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Mathematics.Colors;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.SDL;
 using OpenTK.Platform.Native.Windows;
@@ -72,7 +76,7 @@ void main()
             Console.WriteLine(RuntimeInformation.RuntimeIdentifier);
             Console.WriteLine($"Is OS 64 bit: {Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {Environment.Is64BitProcess}");
-            
+
             PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
@@ -120,7 +124,7 @@ void main()
             WindowComp.SetMaxClientSize(WindowHandle, 1000, 1000);
             WindowComp.SetMinClientSize(WindowHandle, 100, 100);
 
-            // Generate and set window icon 
+            // Generate and set window icon
             {
                 byte[] icon = new byte[16 * 16 * 4];
                 for (int ccx = 0; ccx < 16; ccx++)
@@ -260,7 +264,7 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                
+
                 WindowComp.SwapBuffers(WindowHandle);
             }
         }

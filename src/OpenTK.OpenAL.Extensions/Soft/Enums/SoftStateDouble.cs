@@ -7,7 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.Soft
+using OpenTK.OpenAL.Extensions.Soft.Interfaces;
+
+namespace OpenTK.OpenAL.Extensions.Soft.Enums
 {
     /// <summary>
     /// A list of valid <see cref="double"/> <see cref="IStateSoft.GetDouble"/> parameters. These enumeration members

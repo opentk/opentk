@@ -13,8 +13,13 @@ using System.Threading.Tasks;
 using OpenTK.Core;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Enums;
+using OpenTK.Windowing.Common.Events;
 using OpenTK.Windowing.Common.Input;
+using OpenTK.Windowing.Desktop.Events;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
+using OpenTK.Windowing.GraphicsLibraryFramework.Input;
 
 namespace OpenTK.Windowing.Desktop
 {

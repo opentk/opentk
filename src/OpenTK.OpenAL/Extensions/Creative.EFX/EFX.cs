@@ -10,8 +10,10 @@
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.Creative.EFX
 {
     public partial class ALC
     {
@@ -45,7 +47,7 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent(ALDevice device)
             {
-                return ALC.IsExtensionPresent(device, ExtensionName);
+                return OpenAL.ALC.IsExtensionPresent(device, ExtensionName);
             }
 
             /// <summary>
@@ -55,7 +57,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="param">The named property.</param>
             /// <param name="size">The size of the provided buffer.</param>
             /// <param name="data">A pointer to the first element of a provided data buffer.</param>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(OpenAL.ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = OpenAL.ALC.AlcCallingConv)]
             public static extern unsafe void GetInteger(ALDevice device, EFXContextInteger param, int size, int* data);
 
             /// <summary>
@@ -65,7 +67,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="param">The named property.</param>
             /// <param name="size">The size of the provided buffer.</param>
             /// <param name="data">A pointer to the first element of a provided data buffer.</param>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(OpenAL.ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = OpenAL.ALC.AlcCallingConv)]
             public static extern void GetInteger(ALDevice device, EFXContextInteger param, int size, ref int data);
 
             /// <summary>
@@ -75,7 +77,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="param">The named property.</param>
             /// <param name="size">The size of the provided buffer.</param>
             /// <param name="data">A pointer to the first element of a provided data buffer.</param>
-            [DllImport(ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = ALC.AlcCallingConv)]
+            [DllImport(OpenAL.ALC.Lib, EntryPoint = "alcGetIntegerv", ExactSpelling = true, CallingConvention = OpenAL.ALC.AlcCallingConv)]
             public static extern void GetInteger(ALDevice device, EFXContextInteger param, int size, int[] data);
 
             /// <summary>

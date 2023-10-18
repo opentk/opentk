@@ -1,4 +1,6 @@
 using System;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
 
 #nullable enable
 

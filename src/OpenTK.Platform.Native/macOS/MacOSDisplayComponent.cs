@@ -1,12 +1,15 @@
 ﻿using System;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.CG;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Net.Http.Headers;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.macOS
 {

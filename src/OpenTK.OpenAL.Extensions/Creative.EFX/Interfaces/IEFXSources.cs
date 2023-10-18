@@ -8,9 +8,10 @@
 //
 
 using System.Runtime.InteropServices;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Interfaces
 {
     /// <summary>
     /// Defines the public API of the source-related functions of the Effects Extension.

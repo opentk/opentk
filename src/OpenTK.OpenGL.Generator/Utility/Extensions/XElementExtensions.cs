@@ -1,10 +1,10 @@
 using System;
-using System.Text;
-using System.Linq;
-using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
-namespace Generator.Utility.Extensions
+namespace OpenTK.OpenGL.Generator.Utility.Extensions
 {
     internal static class XElementExtensions
     {
@@ -36,7 +36,7 @@ namespace Generator.Utility.Extensions
         {
             return element.Descendants().Where(e => e.Name.LocalName == name);
         }
-        
+
         internal static XElement ElementIgnoreNamespace(this XElement element, string name)
         {
             return element.Descendants().Where(e => e.Name.LocalName == name).First();

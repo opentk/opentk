@@ -1,4 +1,7 @@
-namespace OpenTK.Core.Platform
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Interface for drivers which provide the surface component of the platform abstraction layer.

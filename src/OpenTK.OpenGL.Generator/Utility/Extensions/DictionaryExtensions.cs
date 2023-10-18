@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Generator.Utility.Extensions
+namespace OpenTK.OpenGL.Generator.Utility.Extensions
 {
     static class DictionaryExtensions
     {

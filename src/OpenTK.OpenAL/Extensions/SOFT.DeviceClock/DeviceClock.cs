@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using OpenTK.OpenAL.Extensions.SOFT.DeviceClock.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.SOFT.DeviceClock
 {
     public partial class ALC
     {
@@ -29,7 +31,7 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent(ALDevice device)
             {
-                return ALC.IsExtensionPresent(device, ExtensionName);
+                return OpenAL.ALC.IsExtensionPresent(device, ExtensionName);
             }
 
 #pragma warning disable SA1516 // Elements should be separated by blank line

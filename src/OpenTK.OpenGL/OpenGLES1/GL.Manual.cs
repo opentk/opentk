@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
+using OpenTK.Mathematics.Colors;
 
 namespace OpenTK.Graphics.OpenGLES1
 {

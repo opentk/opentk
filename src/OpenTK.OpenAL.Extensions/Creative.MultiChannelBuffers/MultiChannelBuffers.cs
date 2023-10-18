@@ -9,6 +9,8 @@
 
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums;
+using OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers
 {

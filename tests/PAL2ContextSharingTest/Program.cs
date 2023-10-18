@@ -1,14 +1,15 @@
-﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
+﻿using System;
+using System.Diagnostics;
+using OpenTK.Core;
+using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
+using OpenTK.Mathematics.Colors;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.SDL;
-using System;
-using System.Diagnostics;
 
-namespace LocalTest
+namespace PAL2ContextSharingTest
 {
     class Window
     {

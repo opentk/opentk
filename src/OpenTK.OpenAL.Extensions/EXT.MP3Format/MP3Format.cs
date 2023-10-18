@@ -9,6 +9,8 @@
 
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.EXT.MP3Format.Enums;
+using OpenTK.OpenAL.Extensions.EXT.MP3Format.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.EXT.MP3Format
 {

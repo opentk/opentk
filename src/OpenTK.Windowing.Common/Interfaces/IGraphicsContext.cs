@@ -1,6 +1,4 @@
-using System;
-
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Interfaces
 {
     /// <summary>
     /// Defines the interface for OpenGL context management.

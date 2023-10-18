@@ -8,11 +8,10 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
     /// Provides a base for ApiContext so that it can register dll intercepts.

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Generator.Utility.Extensions;
-using Generator.Utility;
-using Generator.Writing;
-using Generator.Parsing;
-using System.Net.Http.Headers;
-using System.Collections.Immutable;
+using OpenTK.OpenGL.Generator.Parsing;
+using OpenTK.OpenGL.Generator.Utility;
+using OpenTK.OpenGL.Generator.Utility.Extensions;
 
-namespace Generator.Process
+namespace OpenTK.OpenGL.Generator.Process
 {
     internal static class Processor
     {
@@ -314,7 +311,7 @@ namespace Generator.Process
                                         }
                                     }
 
-                                    
+
                                 }
                             }
                         }
@@ -379,7 +376,7 @@ namespace Generator.Process
                     // FIXME: Make api an OutputAPI
 
                     Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
-                    
+
                     HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
                     foreach (var functionRef in functions)
@@ -397,7 +394,7 @@ namespace Generator.Process
                                 else
                                 {
                                     functionsByVendor.AddToNestedHashSet("", overloadedFunction);
-                                    
+
                                     referenced = true;
                                 }
                             }
@@ -563,11 +560,11 @@ namespace Generator.Process
                         {
                             if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                             {
-                                group = new GLVendorFunctions(new List<Writing.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                group = new GLVendorFunctions(new List<Process.OverloadedFunction>(), new HashSet<NativeFunction>());
                                 vendors.Add(vendor, group);
                             }
 
-                            group.Functions.Add(new Writing.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
+                            group.Functions.Add(new Process.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
 
                             if (overloadedFunction.ChangeNativeName)
                             {

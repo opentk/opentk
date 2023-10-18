@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
-using Generator.Parsing;
 using System.CodeDom.Compiler;
-using Generator.Utility;
+using System.Collections.Generic;
+using OpenTK.OpenGL.Generator.Parsing;
 
-namespace Generator.Writing
+namespace OpenTK.OpenGL.Generator.Process
 {
     internal record OutputData(
         /* FIXME: Maybe do like this?

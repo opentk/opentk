@@ -1,7 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 
-namespace Generator.Utility.Extensions
+namespace OpenTK.OpenGL.Generator.Utility.Extensions
 {
     internal static class IndentedTextWriterExtension
     {

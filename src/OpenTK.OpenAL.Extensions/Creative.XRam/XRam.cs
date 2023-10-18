@@ -12,6 +12,8 @@ using System.Buffers;
 using System.ComponentModel;
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.Creative.XRam.Enums;
+using OpenTK.OpenAL.Extensions.Creative.XRam.Interfaces;
 
 // ReSharper disable VirtualMemberCallInConstructor
 namespace OpenTK.OpenAL.Extensions.Creative.XRam

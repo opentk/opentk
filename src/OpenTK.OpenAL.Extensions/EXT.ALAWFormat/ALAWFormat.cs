@@ -9,6 +9,8 @@
 
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.EXT.ALAWFormat.Enums;
+using OpenTK.OpenAL.Extensions.EXT.ALAWFormat.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.EXT.ALAWFormat
 {

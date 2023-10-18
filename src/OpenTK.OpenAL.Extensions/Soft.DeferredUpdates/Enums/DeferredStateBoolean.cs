@@ -7,7 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
+using OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Interfaces;
+
+namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Enums
 {
     /// <summary>
     /// A list of valid <see cref="bool"/> <see cref="IDeferredUpdatesState.GetBoolean"/> parameters.

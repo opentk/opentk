@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.EXT.Capture
+using OpenTK.OpenAL.Extensions.EXT.Capture.Enums;
+
+namespace OpenTK.OpenAL.Extensions.EXT.Capture.Interfaces
 {
     /// <summary>
     /// Defines the public API of state-related functions in the Capture extension.

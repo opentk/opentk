@@ -8,7 +8,7 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Interfaces
 {
     /// <summary>
     /// Defines the public API of the Effect Extension.

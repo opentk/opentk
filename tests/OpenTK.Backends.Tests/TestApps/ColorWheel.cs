@@ -1,9 +1,8 @@
 using System;
 using System.Diagnostics;
-using OpenTK.Core.Platform;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Core.Platform.Handles;
 
-namespace OpenTK.Backends.Tests
+namespace OpenTK.Backends.Tests.TestApps
 {
     [TestApp]
     public class ColorWheel : ITestApp

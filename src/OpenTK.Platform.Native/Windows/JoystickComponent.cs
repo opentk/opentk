@@ -1,6 +1,5 @@
 ﻿using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,9 @@ using System.Reflection.Metadata;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.Windows.DirectInput;
 using static OpenTK.Platform.Native.Windows.JoystickComponent;
 using static OpenTK.Platform.Native.Windows.XInput;
@@ -248,7 +250,7 @@ namespace OpenTK.Platform.Native.Windows
                     case JoystickButton.X: xButton = XInputGamepadButton.X; break;
                     case JoystickButton.Y: xButton = XInputGamepadButton.Y; break;
                     case JoystickButton.Start: xButton = XInputGamepadButton.Start; break;
-                    case JoystickButton.Back:  xButton = XInputGamepadButton.Back; break; 
+                    case JoystickButton.Back:  xButton = XInputGamepadButton.Back; break;
                     case JoystickButton.LeftThumb:     xButton = XInputGamepadButton.LeftThumb; break;
                     case JoystickButton.RightThumb:    xButton = XInputGamepadButton.RightThumb; break;
                     case JoystickButton.LeftShoulder:  xButton = XInputGamepadButton.LeftShoulder; break;

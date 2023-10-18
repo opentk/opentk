@@ -1,6 +1,5 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
@@ -11,6 +10,11 @@ using System;
 using System.Diagnostics;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
+using OpenTK.Mathematics.Colors;
 
 namespace OpenTK.Backends.Tests
 {
@@ -191,7 +195,7 @@ namespace OpenTK.Backends.Tests
 
             bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(width, height, useGLES);
-            
+
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {
                 CursorHandle defaultCursor = CursorComp.Create(SystemCursorType.Default);
@@ -426,7 +430,7 @@ namespace OpenTK.Backends.Tests
                 default: return null;
             }
         }
-    
+
         private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
         {
             string message = Marshal.PtrToStringAnsi(messagePtr, length);

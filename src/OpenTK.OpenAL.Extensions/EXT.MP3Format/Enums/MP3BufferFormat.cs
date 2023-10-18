@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.EXT.MP3Format
+namespace OpenTK.OpenAL.Extensions.EXT.MP3Format.Enums
 {
     /// <summary>
     /// Defines valid format specifiers for sound samples. This covers the additions from the multi-channel buffers

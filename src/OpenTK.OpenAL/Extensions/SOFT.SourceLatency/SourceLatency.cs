@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
+using OpenTK.OpenAL.Extensions.SOFT.SourceLatency.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.SOFT.SourceLatency
 {
     public partial class AL
     {
@@ -29,37 +31,37 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
             {
-                return AL.IsExtensionPresent(ExtensionName);
+                return OpenAL.AL.IsExtensionPresent(ExtensionName);
             }
 
 #pragma warning disable SA1516 // Elements should be separated by blank line
             public static unsafe void GetSource(int source, SourceLatencyVector2i param, long* values) => _GetSourcei64vPtr(source, param, values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private unsafe delegate void GetSourcei64vPtrDelegate(int source, SourceLatencyVector2i param, long* values);
             private static readonly GetSourcei64vPtrDelegate _GetSourcei64vPtr = LoadDelegate<GetSourcei64vPtrDelegate>("alGetSourcei64vSOFT");
 
             private static void GetSource(int source, SourceLatencyVector2i param, out long values) => _GetSourcei64vRef(source, param, out values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private delegate void GetSourcei64vRefDelegate(int source, SourceLatencyVector2i param, out long values);
             private static readonly GetSourcei64vRefDelegate _GetSourcei64vRef = LoadDelegate<GetSourcei64vRefDelegate>("alGetSourcei64vSOFT");
 
             public static void GetSource(int source, SourceLatencyVector2i param, long[] values) => _GetSourcei64vArray(source, param, values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private delegate void GetSourcei64vArrayDelegate(int source, SourceLatencyVector2i param, long[] values);
             private static readonly GetSourcei64vArrayDelegate _GetSourcei64vArray = LoadDelegate<GetSourcei64vArrayDelegate>("alGetSourcei64vSOFT");
 
             public static unsafe void GetSource(int source, SourceLatencyVector2d param, double* values) => _GetSourcedvPtr(source, param, values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private unsafe delegate void GetSourcedvPtrDelegate(int source, SourceLatencyVector2d param, double* values);
             private static readonly GetSourcedvPtrDelegate _GetSourcedvPtr = LoadDelegate<GetSourcedvPtrDelegate>("alGetSourcedvSOFT");
 
             private static void GetSource(int source, SourceLatencyVector2d param, out double values) => _GetSourcedvRef(source, param, out values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private delegate void GetSourcedvRefDelegate(int source, SourceLatencyVector2d param, out double values);
             private static readonly GetSourcedvRefDelegate _GetSourcedvRef = LoadDelegate<GetSourcedvRefDelegate>("alGetSourcedvSOFT");
 
             public static void GetSource(int source, SourceLatencyVector2d param, double[] values) => _GetSourcedvArray(source, param, values);
-            [UnmanagedFunctionPointer(AL.ALCallingConvention)]
+            [UnmanagedFunctionPointer(OpenAL.AL.ALCallingConvention)]
             private delegate void GetSourcedvArrayDelegate(int source, SourceLatencyVector2d param, double[] values);
             private static readonly GetSourcedvArrayDelegate _GetSourcedvArray = LoadDelegate<GetSourcedvArrayDelegate>("alGetSourcedvSOFT");
 #pragma warning restore SA1516 // Elements should be separated by blank line

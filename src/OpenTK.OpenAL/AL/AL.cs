@@ -9,22 +9,19 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
-using OpenTK.Audio.OpenAL;
-using OpenTK.Audio.OpenAL.Native;
-using OpenTK.Core.Native;
 using OpenTK.Mathematics;
+using OpenTK.OpenAL.Native;
 
 #pragma warning disable SA1515 // Single-line comment should be preceded by blank line
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 flat API.
     /// </summary>
     public partial class AL : ALBase
     {
-        internal const string Lib = nameof(AL);
+        internal const string Lib = nameof(Extensions.SOFT.SourceLatency.AL);
         internal const CallingConvention ALCallingConvention = CallingConvention.Cdecl;
 
         static AL()

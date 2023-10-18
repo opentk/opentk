@@ -6,6 +6,9 @@ using OpenTK.Graphics;
 using OpenTK.Mathematics;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Mathematics.Colors;
 
 namespace MacOSTestProject
 {

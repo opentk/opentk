@@ -14,7 +14,7 @@ using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Native
 {
     /// <summary>
     /// This is a base class for OpenAL APIs that are using DllImport and want to resolve different dll names on different platforms.

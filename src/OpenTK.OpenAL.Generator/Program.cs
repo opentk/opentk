@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
-namespace OpenALGenerator
+namespace OpenTK.OpenAL.Generator
 {
     class EntryPointAttribute : Attribute
     {

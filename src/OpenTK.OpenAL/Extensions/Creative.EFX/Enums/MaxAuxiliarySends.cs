@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Enums
 {
     /// <summary>
     /// May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per

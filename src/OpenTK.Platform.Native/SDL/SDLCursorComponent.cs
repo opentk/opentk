@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
@@ -61,7 +64,7 @@ namespace OpenTK.Platform.Native.SDL
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_HAND;
                     break;
                 case SystemCursorType.Help:
-                    // FIXME!! 
+                    // FIXME!!
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_ARROW;
                     break;
                 case SystemCursorType.TextBeam:

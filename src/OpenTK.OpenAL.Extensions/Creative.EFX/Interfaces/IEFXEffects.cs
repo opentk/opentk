@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Mathematics;
+using OpenTK.OpenAL.Extensions.Creative.EFX.Enums;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Interfaces
 {
     /// <summary>
     /// Defines the public API of the effect-related functions of the Effects Extension.

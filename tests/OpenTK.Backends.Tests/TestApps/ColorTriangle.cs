@@ -1,16 +1,10 @@
-﻿using ImGuiNET;
-using OpenTK.Core.Platform;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Mathematics;
+using OpenTK.Mathematics.Colors;
 
-namespace OpenTK.Backends.Tests
+namespace OpenTK.Backends.Tests.TestApps
 {
     [TestApp]
     public class ColorTriangle : ITestApp
@@ -148,7 +142,7 @@ void main()
 
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), 0);
-            
+
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), Vector2.SizeInBytes);
 

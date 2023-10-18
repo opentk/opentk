@@ -8,7 +8,9 @@
 //
 
 
-namespace OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers
+using OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers.Enums;
+
+namespace OpenTK.OpenAL.Extensions.Creative.MultiChannelBuffers.Interfaces
 {
     /// <summary>
     /// Defines the public interface for buffer-related functions of the multi-channel buffers extension.

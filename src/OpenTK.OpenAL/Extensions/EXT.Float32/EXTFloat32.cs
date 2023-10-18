@@ -9,8 +9,10 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.OpenAL.Extensions.EXT.Float32.Enums;
+using OpenTK.OpenAL.Native;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.EXT.Float32
 {
     public partial class AL
     {
@@ -37,7 +39,7 @@ namespace OpenTK.Audio.OpenAL
             /// <returns>Whether the extension was present or not.</returns>
             public static bool IsExtensionPresent()
             {
-                return AL.IsExtensionPresent(ExtensionName);
+                return OpenAL.AL.IsExtensionPresent(ExtensionName);
             }
 
             /// <summary>This function fills a buffer with audio buffer. All the pre-defined formats are PCM buffer, but this function may be used by extensions to load other buffer types as well.</summary>
@@ -46,7 +48,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="buffer">Pointer to a pinned audio buffer.</param>
             /// <param name="bytes">The size of the audio buffer in bytes.</param>
             /// <param name="freq">The frequency of the audio buffer.</param>
-            [DllImport(AL.Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            [DllImport(OpenAL.AL.Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = OpenAL.AL.ALCallingConvention)]
             public static unsafe extern void BufferData(int bid, FloatBufferFormat format, float* buffer, int bytes, int freq);
             // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 
@@ -56,7 +58,7 @@ namespace OpenTK.Audio.OpenAL
             /// <param name="buffer">Pointer to a pinned audio buffer.</param>
             /// <param name="bytes">The size of the audio buffer in bytes.</param>
             /// <param name="freq">The frequency of the audio buffer.</param>
-            [DllImport(AL.Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            [DllImport(OpenAL.AL.Lib, EntryPoint = "alBufferData", ExactSpelling = true, CallingConvention = OpenAL.AL.ALCallingConvention)]
             public static extern void BufferData(int bid, FloatBufferFormat format, ref float buffer, int bytes, int freq);
             // AL_API void AL_APIENTRY alBufferData( ALuint bid, ALenum format, const ALvoid* buffer, ALsizei size, ALsizei freq );
 

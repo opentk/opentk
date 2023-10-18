@@ -11,6 +11,8 @@ using System;
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
 using OpenTK.OpenAL.Attributes;
+using OpenTK.OpenAL.Extensions.EXT.Capture.Enums;
+using OpenTK.OpenAL.Extensions.EXT.Capture.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.EXT.Capture
 {

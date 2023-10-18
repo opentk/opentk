@@ -8,8 +8,9 @@
 //
 
 using System;
+using OpenTK.OpenAL.Extensions.Soft.Interfaces;
 
-namespace OpenTK.OpenAL.Extensions.Soft
+namespace OpenTK.OpenAL.Extensions.Soft.Enums
 {
     /// <summary>
     /// A list of valid <see cref="IntPtr"/> <see cref="IStateSoft.GetPointer"/> parameters.

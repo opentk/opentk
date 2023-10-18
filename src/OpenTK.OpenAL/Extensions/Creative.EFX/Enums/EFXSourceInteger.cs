@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenTK.OpenAL.Extensions.Creative.EFX.Enums
 {
     /// <summary>
     /// A list of valid <see cref="int"/> Source/GetSource parameters.

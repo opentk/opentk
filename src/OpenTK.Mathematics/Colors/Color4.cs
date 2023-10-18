@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using OpenTK.Mathematics;
 
 #pragma warning disable SA1649
-namespace OpenTK.Mathematics
+namespace OpenTK.Mathematics.Colors
 {
     /// <summary>
     /// Interface for ColorSpace phantom types with 4 elements.

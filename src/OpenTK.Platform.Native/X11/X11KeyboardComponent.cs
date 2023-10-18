@@ -1,6 +1,9 @@
 using System;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -34,7 +37,7 @@ namespace OpenTK.Platform.Native.X11
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             throw new NotImplementedException();
-            
+
         }
 
         /// <inheritdoc/>

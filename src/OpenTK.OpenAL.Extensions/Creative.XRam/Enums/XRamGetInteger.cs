@@ -7,7 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.OpenAL.Extensions.Creative.XRam
+using OpenTK.OpenAL.Extensions.Creative.XRam.Interfaces;
+
+namespace OpenTK.OpenAL.Extensions.Creative.XRam.Enums
 {
     /// <summary>
     /// A list of valid <see cref="int"/> <see cref="IXRam.GetInteger"/> parameters.

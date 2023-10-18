@@ -9,6 +9,8 @@
 
 using OpenTK.Core.Extensions;
 using OpenTK.Core.Loader;
+using OpenTK.OpenAL.Extensions.EXT.VorbisFormat.Enums;
+using OpenTK.OpenAL.Extensions.EXT.VorbisFormat.Interfaces;
 
 namespace OpenTK.OpenAL.Extensions.EXT.VorbisFormat
 {

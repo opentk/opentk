@@ -1,3 +1,5 @@
+using OpenTK.Core.Platform.Enums;
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>

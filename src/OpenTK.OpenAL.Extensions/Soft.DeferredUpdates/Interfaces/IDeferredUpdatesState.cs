@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.OpenAL.Interfaces;
+using OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Enums;
 
 // ReSharper disable ExplicitCallerInfoArgument
-namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates
+namespace OpenTK.OpenAL.Extensions.Soft.DeferredUpdates.Interfaces
 {
     /// <summary>
     /// Defines the public API of state-related functions in the Deferred Updates extension.

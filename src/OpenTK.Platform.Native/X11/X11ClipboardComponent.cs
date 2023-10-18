@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
@@ -87,7 +89,7 @@ namespace OpenTK.Platform.Native.X11
         private static unsafe bool WaitForXEvents()
         {
             const short POLLIN = 0x0001;
-            
+
             pollfd fd = new pollfd(){
                 fd = XConnectionNumber(X11.Display),
                 events = POLLIN,
@@ -215,7 +217,7 @@ namespace OpenTK.Platform.Native.X11
                     {
                         return ClipboardFormat.Text;
                     }
-                    else if (atom == image_png || 
+                    else if (atom == image_png ||
                              atom == image_bmp)
                     {
                         return ClipboardFormat.Bitmap;

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿#nullable enable
 
-#nullable enable
+using System;
+using OpenTK.Core.Platform.Handles;
 
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Interface for drivers which provide the PAL OpenGL Component.
