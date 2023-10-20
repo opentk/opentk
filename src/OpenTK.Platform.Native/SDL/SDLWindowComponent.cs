@@ -287,6 +287,8 @@ namespace OpenTK.Platform.Native.SDL
                             // FIXME: I don't think this is distance! We want to precisely determine what should be put in the distance field.
                             Vector2 distance = new Vector2(mouseWheel.preciseX, mouseWheel.preciseY);
 
+                            // FIXME: should we use the precise values instead?
+                            SDLMouseComponent.RegisterMouseWheelDelta(scroll);
                             EventQueue.Raise(sdlWindow, PlatformEventType.Scroll, new ScrollEventArgs(sdlWindow, scroll, distance));
 
                             break;

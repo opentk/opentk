@@ -25,7 +25,7 @@ namespace OpenTK.Backends.Tests
         public InputData()
         {
             int[] values = (int[])Enum.GetValuesAsUnderlyingType<Key>();
-            KeysPressed = new bool[values.Max()];
+            KeysPressed = new bool[values.Max() + 1];
         }
     }
 

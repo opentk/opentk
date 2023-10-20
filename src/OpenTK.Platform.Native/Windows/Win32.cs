@@ -912,6 +912,12 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
 
+        [DllImport("user32.dll")]
+        internal static extern short GetKeyState(VK nVirtKey);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetKeyboardState(byte* lpKeyState);
+
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int /* LSTATUS */ RegOpenKeyEx(
             UIntPtr /* HKEY */ hKey,

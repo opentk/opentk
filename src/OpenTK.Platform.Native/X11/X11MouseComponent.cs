@@ -46,5 +46,11 @@ namespace OpenTK.Platform.Native.X11
         {
             XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, x, y);
         }
+
+        /// <inheritdoc/>
+        public void GetMouseState(out MouseState state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -237,6 +237,7 @@ namespace OpenTK.Platform.Native.Windows
                         Key key = KeyboardComponent.ToKey(scancode, vk, extended);
                         Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
+                        KeyboardComponent.KeyStateChanged(code, true);
                         EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -268,13 +269,28 @@ namespace OpenTK.Platform.Native.Windows
                         Key key = KeyboardComponent.ToKey(scancode, (VK)vk, extended);
                         Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {(VK)vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
+                        // FIXME: Detect more specifically the case where both shift keys have been pressed at the same time.
+                        // Instead of always releasing both.
+                        if (code == Scancode.LeftShift || code == Scancode.RightShift)
+                        {
+                            Scancode otherCode = code == Scancode.LeftShift ? Scancode.RightShift : Scancode.LeftShift;
+                            Key otherKey = code == Scancode.LeftShift ? Key.RightShift : Key.LeftShift;
+
+                            // If the state of the key changed when we released it we send an event about it.
+                            if (KeyboardComponent.KeyStateChanged(otherCode, false))
+                            {
+                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode));
+                            }
+                        }
+
                         // Print screen only generates a WM_KEYUP event, so we need to send the KeyDown event here.
                         // - 2023-02-13 NogginBops
                         if (code == Scancode.PrintScreen)
                         {
                             EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false));
                         }
-                        
+
+                        KeyboardComponent.KeyStateChanged(code, false);
                         EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -483,6 +499,10 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (button != null)
                         {
+                            // FIXME: Figure this out more properly
+                            // FIXME: Keep track of which buttons we are pressing?
+                            Win32.SetCapture(hWnd);
+
                             HWND h = HWndDict[hWnd];
                             EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value));
                         }
@@ -535,6 +555,13 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (button != null)
                         {
+                            // FIXME: Figure this out better
+                            bool success = Win32.ReleaseCapture();
+                            if (success == false)
+                            {
+                                throw new Win32Exception();
+                            }
+
                             HWND h = HWndDict[hWnd];
                             EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value));
                         }
@@ -553,6 +580,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
+                        MouseComponent.RegisterMouseWheelDelta((0, delta));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -569,6 +597,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
+                        MouseComponent.RegisterMouseWheelDelta((delta, 0));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);

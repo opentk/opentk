@@ -44,13 +44,84 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
-            throw new NotSupportedException("SDL 2 doesn't support getting keyboard layouts.");
+            // FIXME! Can we do something here?
+            //Logger?.LogError("SDL 2 doesn't support getting keyboard layouts.");
+            return "Unknown";
         }
 
         /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             throw new NotSupportedException("SDL 2 doesn't support getting keyboard layouts.");
+        }
+
+        /// <inheritdoc/>
+        public Scancode GetScancodeFromKey(Key key)
+        {
+            SDL_Keycode keycode = ToSDL(key, Logger);
+
+            SDL_Scancode scancode = SDL_GetScancodeFromKey(keycode);
+
+            return FromSDL(scancode, Logger);
+        }
+
+        /// <inheritdoc/>
+        public Key GetKeyFromScancode(Scancode scancode)
+        {
+            SDL_Scancode scan = ToSDL(scancode, Logger);
+
+            SDL_Keycode keycode = SDL_GetKeyFromScancode(scan);
+
+            return FromSDL(keycode, Logger);
+        }
+
+        /// <inheritdoc/>
+        public unsafe void GetKeyboardState(bool[] keyboardState)
+        {
+            byte* ptr = SDL_GetKeyboardState(out int numkeys);
+            Span<byte> keys = new Span<byte>(ptr, numkeys);
+
+            Array.Fill(keyboardState, false);
+
+            for (int i = 0; i < keys.Length; i++)
+            {
+                // Intentionally send null logger here to avoid spamming messages
+                Scancode code = FromSDL((SDL_Scancode)i, null);
+                if (((int)code) < keyboardState.Length)
+                {
+                    keyboardState[(int)code] = keys[i] == 1;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void BeginIme(WindowHandle window)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+
+            SDL_StartTextInput();
+        }
+
+        /// <inheritdoc/>
+        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+
+            SDL_Rect rect;
+            rect.x = x;
+            rect.y = y;
+            rect.w = width;
+            rect.h = height;
+
+            SDL_SetTextInputRect(rect);
+        }
+
+        /// <inheritdoc/>
+        public void EndIme(WindowHandle window)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+
+            SDL_StopTextInput();
         }
 
         // FIXME: Because we have to make these static we have to pass a logger with it.
@@ -139,7 +210,7 @@ namespace OpenTK.Platform.Native.SDL
                 case Key.OEM1: return SDL_Keycode.SDLK_UNKNOWN;
                 case Key.OEM2: return SDL_Keycode.SDLK_UNKNOWN;
                 case Key.OEM3: return SDL_Keycode.SDLK_SEMICOLON;
-                    // FIXME: Is this correct??
+                // FIXME: Is this correct??
                 case Key.OEM4: return SDL_Keycode.SDLK_CURRENCYUNIT;
                 case Key.OEM5: return SDL_Keycode.SDLK_UNKNOWN;
                 case Key.OEM6: return SDL_Keycode.SDLK_KP_LEFTBRACE;
@@ -268,10 +339,10 @@ namespace OpenTK.Platform.Native.SDL
                 case Scancode.RightShift: return SDL_Scancode.SDL_SCANCODE_RSHIFT;
                 case Scancode.RightAlt: return SDL_Scancode.SDL_SCANCODE_RALT;
                 case Scancode.RightGUI: return SDL_Scancode.SDL_SCANCODE_RGUI;
-                    // FIXME: Can we do something here? Is this key even interesting??
+                // FIXME: Can we do something here? Is this key even interesting??
                 case Scancode.SystemPowerDown: return SDL_Scancode.SDL_SCANCODE_UNKNOWN;
                 case Scancode.SystemSleep: return SDL_Scancode.SDL_SCANCODE_SLEEP;
-                    // FIXME: Can we do something here?
+                // FIXME: Can we do something here?
                 case Scancode.SystemWakeUp: return SDL_Scancode.SDL_SCANCODE_UNKNOWN;
                 case Scancode.ScanNextTrack: return SDL_Scancode.SDL_SCANCODE_AUDIONEXT;
                 case Scancode.ScanPreviousTrack: return SDL_Scancode.SDL_SCANCODE_AUDIOPREV;
@@ -296,59 +367,9 @@ namespace OpenTK.Platform.Native.SDL
                 }
             }
 
-            logger?.LogError($"Could not find Scancode for SDL scancode {scancode}.");
+            logger?.LogWarning($"Could not find Scancode for SDL scancode {scancode}.");
 
             return Scancode.Unknown;
-        }
-
-        /// <inheritdoc/>
-        public Scancode GetScancodeFromKey(Key key)
-        {
-            SDL_Keycode keycode = ToSDL(key, Logger);
-
-            SDL_Scancode scancode = SDL_GetScancodeFromKey(keycode);
-
-            return FromSDL(scancode, Logger);
-        }
-
-        /// <inheritdoc/>
-        public Key GetKeyFromScancode(Scancode scancode)
-        {
-            SDL_Scancode scan = ToSDL(scancode, Logger);
-
-            SDL_Keycode keycode = SDL_GetKeyFromScancode(scan);
-
-            return FromSDL(keycode, Logger);
-        }
-
-        /// <inheritdoc/>
-        public void BeginIme(WindowHandle window)
-        {
-            SDLWindow sdlWindow = window.As<SDLWindow>(this);
-
-            SDL_StartTextInput();
-        }
-
-        /// <inheritdoc/>
-        public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
-        {
-            SDLWindow sdlWindow = window.As<SDLWindow>(this);
-
-            SDL_Rect rect;
-            rect.x = x;
-            rect.y = y;
-            rect.w = width;
-            rect.h = height;
-
-            SDL_SetTextInputRect(rect);
-        }
-
-        /// <inheritdoc/>
-        public void EndIme(WindowHandle window)
-        {
-            SDLWindow sdlWindow = window.As<SDLWindow>(this);
-
-            SDL_StopTextInput();
         }
     }
 }

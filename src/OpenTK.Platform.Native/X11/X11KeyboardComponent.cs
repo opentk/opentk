@@ -42,6 +42,7 @@ namespace OpenTK.Platform.Native.X11
         {
             throw new NotImplementedException();
         }
+
         /// <inheritdoc/>
         public Scancode GetScancodeFromKey(Key key)
         {
@@ -50,6 +51,12 @@ namespace OpenTK.Platform.Native.X11
 
         /// <inheritdoc/>
         public Key GetKeyFromScancode(Scancode scancode)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void GetKeyboardState(bool[] keyboardState)
         {
             throw new NotImplementedException();
         }

@@ -483,6 +483,9 @@ namespace OpenTK.Platform.Native.SDL
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
 
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern byte* SDL_GetKeyboardState(out int numkeys);
+
         internal struct SDL_CursorPtr : IEquatable<SDL_CursorPtr>
         {
             public static SDL_CursorPtr Null => new SDL_CursorPtr(0);

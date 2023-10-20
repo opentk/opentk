@@ -33,6 +33,8 @@ namespace OpenTK.Platform.Native.Windows
 
         private Key[] Keymap = new Key[256];
 
+        private static bool[] KeyboardState = new bool[256];
+
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
@@ -104,7 +106,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public static void KeyboardLayoutChange(WindowHandle handle, IntPtr hKL)
+        internal static void KeyboardLayoutChange(WindowHandle handle, IntPtr hKL)
         {
             // FIXME: We shouldn't need to call this statically...
             if (Instance != null)
@@ -127,6 +129,14 @@ namespace OpenTK.Platform.Native.Windows
 
                 EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(layoutName, layoutDisplayName, localeName.ToString(), displayName.ToString()));
             }
+        }
+
+        /// <returns>If the state of the key changed.</returns>
+        internal static bool KeyStateChanged(Scancode code, bool pressed)
+        {
+            bool prev = KeyboardState[(int)code];
+            KeyboardState[(int)code] = pressed;
+            return prev == pressed;
         }
 
         /// <inheritdoc/>
@@ -218,6 +228,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        /// <remarks>This function is expensive and should be cached if possible.</remarks>
         public string[] GetAvailableKeyboardLayouts()
         {
             int count = Win32.GetKeyboardLayoutList(0, Span<IntPtr>.Empty);
@@ -259,6 +270,36 @@ namespace OpenTK.Platform.Native.Windows
         public Key GetKeyFromScancode(Scancode scancode)
         {
             return Keymap[(int)scancode];
+        }
+
+        /// <inheritdoc/>
+        public unsafe void GetKeyboardState(bool[] keyboardState)
+        {
+            // Copy over the current keyboard state.
+            Array.Fill(keyboardState, false);
+            Array.Copy(KeyboardState, keyboardState, Math.Min(KeyboardState.Length, keyboardState.Length));
+            return;
+
+            // Get the current keyboard state
+            // Translate VKs into scancodes/keycodes and set those indices in the array to true.
+            Span<byte> state = stackalloc byte[256];
+            bool success;
+            fixed (byte* ptr = state)
+            {
+                success = Win32.GetKeyboardState(ptr);
+            }
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            for (int i = 0; i < state.Length; i++)
+            {
+                // Go from VK to Scancode/Key?
+            }
+            
+
+            throw new NotImplementedException();
         }
 
 

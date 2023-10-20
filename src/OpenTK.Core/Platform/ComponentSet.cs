@@ -679,6 +679,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IMouseComponent.GetMouseState(out MouseState state)
+        {
+            _mouseComponent!.GetMouseState(out state);
+        }
+
+        /// <inheritdoc/>
         DisplayHandle IDisplayComponent.Open(int index)
         {
             return _displayComponent!.Open(index);
@@ -778,6 +784,12 @@ namespace OpenTK.Core.Platform
         Key IKeyboardComponent.GetKeyFromScancode(Scancode scancode)
         {
             return _keyboardComponent!.GetKeyFromScancode(scancode);
+        }
+
+        /// <inheritdoc/>
+        void IKeyboardComponent.GetKeyboardState(bool[] keyboardState)
+        {
+            _keyboardComponent!.GetKeyboardState(keyboardState);
         }
 
         /// <inheritdoc/>

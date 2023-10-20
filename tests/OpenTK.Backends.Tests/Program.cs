@@ -47,6 +47,8 @@ namespace OpenTK.Backends.Tests
             new WindowComponentView(),
             new OpenGLComponentView(),
             new DisplayComponentView(),
+            new MouseComponentView(),
+            new KeyboardComponentView(),
             new CursorComponentView(),
             new IconComponentView(),
             new ClipboardComponentView(),
