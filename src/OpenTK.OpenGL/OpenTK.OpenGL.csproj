@@ -4,7 +4,6 @@
         <Nullable>enable</Nullable>
         <RootNamespace>OpenTK.OpenGL</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <PreBuildEvent>dotnet run --project $(OpenTKSolutionRoot)src/OpenTK.OpenGL.Generator/OpenTK.OpenGL.Generator.csproj</PreBuildEvent>
     </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
