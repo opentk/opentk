@@ -314,6 +314,7 @@ namespace OpenTK.Platform.Native.macOS
                         Vector2 delta = new Vector2(scrollX, scrollY);
                         Vector2 distance = new Vector2(scrollX, scrollY);
 
+                        MacOSMouseComponent.RegisterMouseWheelDelta(delta);
                         EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);

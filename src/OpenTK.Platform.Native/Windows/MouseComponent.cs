@@ -62,6 +62,10 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        // FIXME: This is only a 32-bit float and
+        // will quite quickly not be able to represent
+        // deltas if the user continously scrolls in
+        // one direction. Consider switching to doubles.
         // FIXME: This is only ever updated when we get
         // scroll messages to one of our windows, this is
         // not the "global" state of the scroll wheel.
