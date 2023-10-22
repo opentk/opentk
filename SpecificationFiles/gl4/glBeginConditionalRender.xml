@@ -1,0 +1,139 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBeginConditionalRender">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBeginConditionalRender</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBeginConditionalRender</refname>
+        <refpurpose>start conditional rendering</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBeginConditionalRender</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEndConditionalRender</function></funcdef>
+                <paramdef><parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters for <function>glBeginConditionalRender</function></title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of an occlusion query object whose results are used to determine if the rendering commands are discarded.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies how <function>glBeginConditionalRender</function> interprets the results of the occlusion query.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Conditional rendering is started using <function>glBeginConditionalRender</function> and ended using <function>glEndConditionalRender</function>.
+            During conditional rendering, all vertex array commands, as well as <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> and
+            <citerefentry><refentrytitle>glClearBuffer</refentrytitle></citerefentry> have no effect if the (<constant>GL_SAMPLES_PASSED</constant>) result
+            of the query object <parameter>id</parameter> is zero, or if the (<constant>GL_ANY_SAMPLES_PASSED</constant>) result is <constant>GL_FALSE</constant>.
+            The results of commands setting the current vertex state, such as <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry> are
+            undefined. If the (<constant>GL_SAMPLES_PASSED</constant>) result is non-zero or if the (<constant>GL_ANY_SAMPLES_PASSED</constant>) result is
+            <constant>GL_TRUE</constant>, such commands are not discarded. The <parameter>id</parameter> parameter to <function>glBeginConditionalRender</function>
+            must be the name of a query object previously returned from a call to <citerefentry><refentrytitle>glGenQueries</refentrytitle></citerefentry>.
+            <parameter>mode</parameter> specifies how the results of the query object are to be interpreted. If <parameter>mode</parameter> is
+            <constant>GL_QUERY_WAIT</constant>, the GL waits for the results of the query to be available and then uses the results to determine if subsequent
+            rendering commands are discarded. If <parameter>mode</parameter> is <constant>GL_QUERY_NO_WAIT</constant>, the GL may choose to unconditionally
+            execute the subsequent rendering commands without waiting for the query to complete.
+        </para>
+        <para>
+            If <parameter>mode</parameter> is <constant>GL_QUERY_BY_REGION_WAIT</constant>, the GL will also wait for occlusion query results and discard
+            rendering commands if the result of the occlusion query is zero. If the query result is non-zero, subsequent rendering commands are executed,
+            but the GL may discard the results of the commands for any region of the framebuffer that did not contribute to the sample count in the specified
+            occlusion query. Any such discarding is done in an implementation-dependent manner, but the rendering command results may not be discarded for
+            any samples that contributed to the occlusion query sample count. If <parameter>mode</parameter> is <constant>GL_QUERY_BY_REGION_NO_WAIT</constant>,
+            the GL operates as in <constant>GL_QUERY_BY_REGION_WAIT</constant>, but may choose to unconditionally execute the subsequent rendering commands
+            without waiting for the query to complete.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glBeginConditionalRender</function> and <function>glEndConditionalRender</function> are available only if the GL version is 3.0 or greater.
+        </para>
+        <para>
+            The <constant>GL_ANY_SAMPLES_PASSED</constant> query result is available only if the GL version is 3.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>id</parameter> is not the name of an existing query object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBeginConditionalRender</function> is called while conditional rendering is active,
+            or if <function>glEndConditionalRender</function> is called while conditional rendering is inactive.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a query object with a target other than
+            <constant>GL_SAMPLES_PASSED</constant> or <constant>GL_ANY_SAMPLES_PASSED</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a query currently in progress.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBeginConditionalRender</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glEndConditionalRender</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenQueries</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteQueries</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginQuery</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

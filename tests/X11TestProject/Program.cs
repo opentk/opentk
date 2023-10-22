@@ -1,9 +1,12 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Core.Platform;
-using OpenTK.Graphics;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
+using OpenTK.OpenGL;
 using OpenTK.Platform.Native;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 
 namespace X11TestProject
 {

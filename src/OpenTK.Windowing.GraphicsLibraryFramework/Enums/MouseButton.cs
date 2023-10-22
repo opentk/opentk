@@ -1,4 +1,4 @@
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Enums
 {
     /// <summary>
     ///     Specifies the buttons of a mouse.

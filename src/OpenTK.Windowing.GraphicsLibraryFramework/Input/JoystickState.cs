@@ -10,15 +10,13 @@ using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Text;
-using OpenTK.Core;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Common.Input;
+using OpenTK.Windowing.Common.Input.Enums;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
 [assembly: InternalsVisibleTo("OpenTK.Windowing.Desktop")]
 [assembly: InternalsVisibleTo("OpenTK.Tests")]
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Input
 {
     /// <summary>
     /// Encapsulates the state of a joystick device.

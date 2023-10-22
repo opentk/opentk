@@ -1,11 +1,13 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL

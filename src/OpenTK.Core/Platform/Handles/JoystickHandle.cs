@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Core.Platform
+﻿namespace OpenTK.Core.Platform.Handles
 {
     /// <summary>
     /// Handle to a joystick.

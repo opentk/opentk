@@ -1,0 +1,317 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetFramebufferParameter">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetFramebufferParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetFramebufferParameteriv</refname>
+        <refname>glGetNamedFramebufferParameteriv</refname>
+        <refpurpose>query a named parameter of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetFramebufferParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetNamedFramebufferParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer object is
+                    bound for
+                    <function>glGetFramebufferParameteriv</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glGetNamedFramebufferParameteriv</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the parameter of the framebuffer object to
+                    query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the value of parameter
+                    <parameter>pname</parameter> for the framebuffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetFramebufferParameteriv</function> and
+            <function>glGetNamedFramebufferParameteriv</function> query
+            parameters of a specified framebuffer object.
+        </para>
+        <para>
+            For <function>glGetFramebufferParameteriv</function>,
+            the framebuffer object is that bound to
+            <parameter>target</parameter>, which must be one of
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>. Default framebuffers
+            may also be queried if bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            For <function>glGetNamedFramebufferParameteriv</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object. If <parameter>framebuffer</parameter> is
+            zero, the default draw framebuffer is queried.
+        </para>
+        <para>
+            Upon successful return, <parameter>param</parameter> will
+            contain the value of the framebuffer parameter specified by
+            <parameter>pname</parameter>, as described below.
+        </para>
+        <para>
+            The following parameters can only be queried for framebuffer objects:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_WIDTH</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the value of
+                        <constant>GL_FRAMEBUFFER_DEFAULT_WIDTH</constant>
+                        for the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_HEIGHT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the value of
+                        <constant>GL_FRAMEBUFFER_DEFAULT_HEIGHT</constant>
+                        for the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_LAYERS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the value of
+                        <constant>GL_FRAMEBUFFER_DEFAULT_LAYERS</constant>
+                        for the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_SAMPLES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the value of
+                        <constant>GL_FRAMEBUFFER_DEFAULT_SAMPLES</constant>
+                        for the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the boolean
+                        value of
+                        <constant>GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The following parameters can be queried for both default framebuffers
+            and framebuffer objects:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_DOUBLEBUFFER</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns a boolean value
+                        indicating whether double buffering is supported for
+                        the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns a GLenum value
+                        indicating the preferred pixel data format for the
+                        framebuffer object. See
+                        <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns a GLenum value
+                        indicating the implementation's preferred pixel data
+                        type for the framebuffer object. See
+                        <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SAMPLES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns an integer
+                        value indicating the coverage mask size for the
+                        framebuffer object. See
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SAMPLE_BUFFERS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns an integer
+                        value indicating the number of sample buffers
+                        associated with the framebuffer object. See
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_STEREO</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> returns a boolean value
+                        indicating whether stereo buffers (left and right)
+                        are supported for the framebuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Queries of default framebuffers are supported only if the GL
+            version is 4.5 or higher. Otherwise, an
+            <constant>GL_INVALID_OPERATION</constant> error is generated.
+        </para>
+        <para>
+            Queries of the framebuffer-dependent parameters
+            <constant>GL_DOUBLEBUFFER</constant>,
+            <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant>,
+            <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant>,
+            <constant>GL_SAMPLES</constant>,
+            <constant>GL_SAMPLE_BUFFERS</constant> and
+            <constant>GL_STEREO</constant> are supported only if the GL
+            version is 4.5 or higher.
+        </para>
+        <para>
+            The framebuffer-dependent state
+            <constant>GL_SAMPLE_POSITION</constant> cannot be queried
+            with these commands.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glGetFramebufferParameteriv</function> if
+            <parameter>target</parameter> is not one of the accepted
+            framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetNamedFramebufferAttachmentParameteriv</function>
+            if <parameter>framebuffer</parameter> is not zero or the name of
+            an existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>pname</parameter> is not one of the accepted
+            parameter names.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a
+            default framebuffer is queried, and <parameter>pname</parameter>
+            is not one of <constant>GL_DOUBLEBUFFER</constant>,
+            <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT</constant>,
+            <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE</constant>,
+            <constant>GL_SAMPLES</constant>,
+            <constant>GL_SAMPLE_BUFFERS</constant> or
+            <constant>GL_STEREO</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetFramebufferAttachmentParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetFramebufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetNamedFramebufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFramebufferParameteri</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetFramebufferAttachmentParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

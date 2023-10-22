@@ -1,6 +1,5 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
-using OpenTK.Graphics.Egl;
+using OpenTK.OpenGL.Egl;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +8,10 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.ANGLE
 {
@@ -181,7 +184,7 @@ namespace OpenTK.Platform.Native.ANGLE
                 context_attribs.Add(Egl.CONTEXT_OPENGL_DEBUG);
                 context_attribs.Add(1);
             }
-            
+
             context_attribs.Add(Egl.NONE);
 
             ANGLEOpenGLContextHandle? shared = settings.SharedContext?.As<ANGLEOpenGLContextHandle>(this);
@@ -219,7 +222,7 @@ namespace OpenTK.Platform.Native.ANGLE
         /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
-            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this); 
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
             return new Pal2BindingsContext(this, context);
         }
 

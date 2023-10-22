@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Enums
 {
     /// <summary>
     /// Describes the graphics API you want the context to use.

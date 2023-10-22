@@ -1,9 +1,11 @@
-﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
-using OpenTK.Graphics;
-using OpenTK.Graphics.Egl;
-using OpenTK.Graphics.OpenGLES3;
+﻿using OpenTK.Core;
+using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
+using OpenTK.OpenGL.OpenGLES2;
 using OpenTK.Mathematics;
+using OpenTK.OpenGL;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
 

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetHistogramParameter">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetHistogramParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetHistogramParameter</refname>
+        <refpurpose>get histogram parameters</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetHistogramParameterfv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetHistogramParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Must be one of
+                    <constant>GL_HISTOGRAM</constant> or
+                    <constant>GL_PROXY_HISTOGRAM</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    The name of the parameter to be retrieved.
+                    Must be one of
+                    <constant>GL_HISTOGRAM_WIDTH</constant>,
+                    <constant>GL_HISTOGRAM_FORMAT</constant>,
+                    <constant>GL_HISTOGRAM_RED_SIZE</constant>,
+                    <constant>GL_HISTOGRAM_GREEN_SIZE</constant>,
+                    <constant>GL_HISTOGRAM_BLUE_SIZE</constant>,
+                    <constant>GL_HISTOGRAM_ALPHA_SIZE</constant>,
+                    <constant>GL_HISTOGRAM_LUMINANCE_SIZE</constant>, or
+                    <constant>GL_HISTOGRAM_SINK</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Pointer to storage for the returned values.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetHistogramParameter</function> is used to query parameter values for the current histogram or for
+            a proxy.  The histogram state information may be queried by calling
+            <function>glGetHistogramParameter</function> with a <parameter>target</parameter> of <constant>GL_HISTOGRAM</constant> (to
+            obtain information for the current histogram table) or
+            <constant>GL_PROXY_HISTOGRAM</constant> (to obtain information from the most recent
+            proxy request) and one of the following values for the <parameter>pname</parameter> argument:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Parameter
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Description
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_WIDTH</constant>
+                        </entry>
+                        <entry align="left">
+                        Histogram table width
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_FORMAT</constant>
+                        </entry>
+                        <entry align="left">
+                        Internal format
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_RED_SIZE</constant>
+                        </entry>
+                        <entry align="left">
+                        Red component counter size, in bits
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_GREEN_SIZE</constant>
+                        </entry>
+                        <entry align="left">
+                        Green component counter size, in bits
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_BLUE_SIZE</constant>
+                        </entry>
+                        <entry align="left">
+                        Blue component counter size, in bits
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_ALPHA_SIZE</constant>
+                        </entry>
+                        <entry align="left">
+                        Alpha component counter size, in bits
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_LUMINANCE_SIZE</constant>
+                        </entry>
+                        <entry align="left">
+                        Luminance component counter size, in bits
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HISTOGRAM_SINK</constant>
+                        </entry>
+                        <entry align="left">
+                        Value of the <emphasis>sink</emphasis> parameter
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glGetHistogramParameter</function> is present only if <code>ARB_imaging</code> is returned when <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+            is called with an argument of <constant>GL_EXTENSIONS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetHistogramParameter</function> is executed
+            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetHistogram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glHistogram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

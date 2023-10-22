@@ -1,0 +1,411 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMapBufferRange">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMapBufferRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMapBufferRange</refname>
+        <refname>glMapNamedBufferRange</refname>
+        <refpurpose>map all or part of a buffer object's data store into the client's address space</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void *<function>glMapBufferRange</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>access</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void *<function>glMapNamedBufferRange</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>access</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound
+                    for <function>glMapBufferRange</function>, which must be
+                    one of the buffer binding targets in the following
+                    table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object for
+                    <function>glMapNamedBufferRange</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the starting offset within the buffer of the
+                    range to be mapped.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the length of the range to be mapped.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>access</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a combination of access flags indicating the
+                    desired access to the mapped range.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMapBufferRange</function> and
+            <function>glMapNamedBufferRange</function> map all or part of
+            the data store of a specified buffer object into the client's
+            address space. <parameter>offset</parameter> and
+            <parameter>length</parameter> indicate the range of data in the
+            buffer object that is to be mapped, in terms of basic machine
+            units. <parameter>access</parameter> is a bitfield containing
+            flags which describe the requested mapping. These flags are
+            described below.
+        </para>
+        <para>
+            A pointer to the beginning of the mapped range is returned once
+            all pending operations on the buffer object have completed, and
+            may be used to modify and/or query the corresponding range of
+            the data store according to the following flag bits set in
+            <parameter>access</parameter>:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_READ_BIT</constant> indicates that
+                        the returned pointer may be used to read buffer
+                        object data. No GL error is generated if the pointer
+                        is used to query a mapping which excludes this flag,
+                        but the result is undefined and system errors
+                        (possibly including program termination) may occur.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_WRITE_BIT</constant> indicates that
+                        the returned pointer may be used to modify buffer
+                        object data. No GL error is generated if the pointer
+                        is used to modify a mapping which excludes this
+                        flag, but the result is undefined and system errors
+                        (possibly including program termination) may occur.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_PERSISTENT_BIT</constant> indicates
+                        that the mapping is to be made in a persistent
+                        fashion and that the client intends to hold and use
+                        the returned pointer during subsequent GL operation.
+                        It is not an error to call drawing commands (render)
+                        while buffers are mapped using this flag. It is an
+                        error to specify this flag if the buffer's data
+                        store was not allocated through a call to the
+                        <citerefentry><refentrytitle>glBufferStorage</refentrytitle></citerefentry>
+                        command in which the
+                        <constant>GL_MAP_PERSISTENT_BIT</constant> was also
+                        set.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_COHERENT_BIT</constant> indicates
+                        that a persistent mapping is also to be coherent.
+                        Coherent maps guarantee that the effect of writes to
+                        a buffer's data store by either the client or server
+                        will eventually become visible to the other without
+                        further intervention from the application. In the
+                        absence of this bit, persistent mappings are not
+                        coherent and modified ranges of the buffer store
+                        must be explicitly communicated to the GL, either by
+                        unmapping the buffer, or through a call to
+                        <citerefentry><refentrytitle>glFlushMappedBufferRange</refentrytitle></citerefentry>
+                        or
+                        <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            The following <emphasis>optional</emphasis> flag bits in
+            <parameter>access</parameter> may be used to modify the mapping:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_INVALIDATE_RANGE_BIT</constant>
+                        indicates that the previous contents of the
+                        specified range may be discarded. Data within this
+                        range are undefined with the exception of
+                        subsequently written data. No GL error is generated
+                        if subsequent GL operations access unwritten data,
+                        but the result is undefined and system errors
+                        (possibly including program termination) may occur.
+                        This flag may not be used in combination with
+                        <constant>GL_MAP_READ_BIT</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_INVALIDATE_BUFFER_BIT</constant>
+                        indicates that the previous contents of the entire
+                        buffer may be discarded. Data within the entire
+                        buffer are undefined with the exception of
+                        subsequently written data. No GL error is generated
+                        if subsequent GL operations access unwritten data,
+                        but the result is undefined and system errors
+                        (possibly including program termination) may occur.
+                        This flag may not be used in combination with
+                        <constant>GL_MAP_READ_BIT</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_FLUSH_EXPLICIT_BIT</constant>
+                        indicates that one or more discrete subranges of the
+                        mapping may be modified. When this flag is set,
+                        modifications to each subrange must be explicitly
+                        flushed by calling
+                        <citerefentry><refentrytitle>glFlushMappedBufferRange</refentrytitle></citerefentry>.
+                        No GL error is set if a subrange of the mapping is
+                        modified and not flushed, but data within the
+                        corresponding subrange of the buffer are undefined.
+                        This flag may only be used in conjunction with
+                        <constant>GL_MAP_WRITE_BIT</constant>. When this
+                        option is selected, flushing is strictly limited to
+                        regions that are explicitly indicated with calls to
+                        <citerefentry><refentrytitle>glFlushMappedBufferRange</refentrytitle></citerefentry>
+                        prior to unmap; if this option is not selected
+                        <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+                        will automatically flush the entire mapped range
+                        when called.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_UNSYNCHRONIZED_BIT</constant>
+                        indicates that the GL should not attempt to
+                        synchronize pending operations on the buffer prior
+                        to returning from
+                        <function>glMapBufferRange</function> or
+                        <function>glMapNamedBufferRange</function>. No GL
+                        error is generated if pending operations which
+                        source or modify the buffer overlap the mapped
+                        region, but the result of such previous and any
+                        subsequent operations is undefined.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            If an error occurs, a <code>NULL</code> pointer is returned.
+        </para>
+        <para>
+            If no error occurs, the returned pointer will reflect an
+            allocation aligned to the value of
+            <constant>GL_MIN_MAP_BUFFER_ALIGNMENT</constant> basic machine
+            units. Subtracting <parameter>offset</parameter> from this
+            returned pointer will always produce a multiple of the value of
+            <constant>GL_MIN_MAP_BUFFER_ALIGNMENT</constant>.
+        </para>
+        <para>
+            The returned pointer values may not be passed as parameter
+            values to GL commands. For example, they may not be used to
+            specify array pointers, or to specify or query pixel or texture
+            image data; such actions produce undefined results, although
+            implementations may not check for such behavior for performance
+            reasons.
+        </para>
+        <para>
+            Mappings to the data stores of buffer objects may have
+            nonstandard performance characteristics. For example, such
+            mappings may be marked as uncacheable regions of memory, and in
+            such cases reading from them may be very slow. To ensure optimal
+            performance, the client should use the mapping in a fashion
+            consistent with the values of
+            <constant>GL_BUFFER_USAGE</constant> for the buffer object and
+            of <parameter>access</parameter>. Using a mapping in a fashion
+            inconsistent with these values is liable to be multiple orders
+            of magnitude slower than using normal memory.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Alignment of the returned pointer is guaranteed only if the
+            version of the GL version is 4.2 or greater. Also, the
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is accepted
+            only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and
+            <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are
+            accepted only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available
+            only if the GL version is 4.4 or greater.
+        </para>
+        <para>
+            The <constant>GL_MAP_PERSISTENT_BIT</constant> and
+            <constant>GL_MAP_COHERENT_BIT</constant> flags are available
+            only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glMapBufferRange</function> if
+            <parameter>target</parameter> is not one of the buffer binding
+            targets listed above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glMapBufferRange</function> if zero is bound to
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glMapNamedBufferRange</function> if
+            <parameter>buffer</parameter> is not the name of an existing
+            buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>offset</parameter> or <parameter>length</parameter>
+            is negative, if $offset + length$ is greater than the value of
+            <constant>GL_BUFFER_SIZE</constant> for the buffer object, or if
+            <parameter>access</parameter> has any bits set other than those
+            defined above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated for any
+            of the following conditions:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <parameter>length</parameter> is zero.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        The buffer object is already in a mapped state.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Neither <constant>GL_MAP_READ_BIT</constant> nor
+                        <constant>GL_MAP_WRITE_BIT</constant> is set.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_READ_BIT</constant> is set and any
+                        of <constant>GL_MAP_INVALIDATE_RANGE_BIT</constant>,
+                        <constant>GL_MAP_INVALIDATE_BUFFER_BIT</constant>
+                        or <constant>GL_MAP_UNSYNCHRONIZED_BIT</constant> is
+                        set.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_MAP_FLUSH_EXPLICIT_BIT</constant> is
+                        set and <constant>GL_MAP_WRITE_BIT</constant> is not
+                        set.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Any of <constant>GL_MAP_READ_BIT</constant>,
+                        <constant>GL_MAP_WRITE_BIT</constant>,
+                        <constant>GL_MAP_PERSISTENT_BIT</constant>, or
+                        <constant>GL_MAP_COHERENT_BIT</constant> are set,
+                        but the same bit is not included in the buffer's
+                        storage flags.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            No error is generated if memory outside the mapped range is
+            modified or queried, but the result is undefined and system
+            errors (possibly including program termination) may occur.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            with <parameter>pname</parameter>
+            <constant>GL_MIN_MAP_BUFFER_ALIGNMENT</constant>. The value must
+            be a power of two that is at least 64.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMapBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glMapNamedBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFlushMappedBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferStorage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,6 +1,6 @@
 #nullable enable
 
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Handles
 {
     /// <summary>
     /// Handle to a window object.

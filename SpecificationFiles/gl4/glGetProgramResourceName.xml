@@ -1,0 +1,254 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramResourceName">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramResourceName</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramResourceName</refname>
+        <refpurpose>query the name of an indexed resource within a program</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetProgramResourceName</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>programInterface</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei * <parameter>length</parameter></paramdef>
+                <paramdef>char * <parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of a program object whose resources to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>programInterface</parameter></term>
+            <listitem>
+                <para>
+                    A token identifying the interface within <parameter>program</parameter> containing the indexed resource.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    The index of the resource within <parameter>programInterface</parameter> of <parameter>program</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    The size of the character array whose address is given by <parameter>name</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The address of a variable which will receive the length of the resource name.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    The address of a character array into which will be written the name of the resource.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetProgramResourceName</function> retrieves the name string
+            assigned to the single active resource with an index of <parameter>index</parameter>
+            in the interface <parameter>programInterface</parameter> of program object
+            <parameter>program</parameter>. <parameter>index</parameter> must be less than
+            the number of entries in the active resource list for <parameter>programInterface</parameter>.
+        </para>
+        <para>
+            <parameter>program</parameter> must be the name of an existing program object. <parameter>programInterface</parameter>
+            is the name of the interface within <parameter>program</parameter> which contains the resource and must be one of the following
+            values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_UNIFORM</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active uniforms within <parameter>program</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_UNIFORM_BLOCK</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active uniform blocks within <parameter>program</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PROGRAM_INPUT</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active input variables used by the first shader stage of <parameter>program</parameter>.
+                        If <parameter>program</parameter> contains multiple shader stages then input variables from any stage other than the first
+                        will not be enumerated.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PROGRAM_OUTPUT</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active output variables produced by the last shader stage of <parameter>program</parameter>.
+                        If <parameter>program</parameter> contains multiple shader stages then output variables from any stage other than the last
+                        will not be enumerated.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_VERTEX_SUBROUTINE</constant></term>
+                <term><constant>GL_TESS_CONTROL_SUBROUTINE</constant></term>
+                <term><constant>GL_TESS_EVALUATION_SUBROUTINE</constant></term>
+                <term><constant>GL_GEOMETRY_SUBROUTINE</constant></term>
+                <term><constant>GL_FRAGMENT_SUBROUTINE</constant></term>
+                <term><constant>GL_COMPUTE_SUBROUTINE</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active subroutines for the vertex, tessellation control, tessellation evaluation,
+                        geometry, fragment and compute shader stages of <parameter>program</parameter>, respectively.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant></term>
+                <term><constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active subroutine uniform variables used by the vertex, tessellation control, tessellation evaluation,
+                        geometry, fragment and compute shader stages of <parameter>program</parameter>, respectively.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TRANSFORM_FEEDBACK_VARYING</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of output variables from the last non-fragment stage of <parameter>program</parameter> that would be
+                        captured if transform feedback were active.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_VARIABLE</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active buffer variables used by <parameter>program</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SHADER_STORAGE_BLOCK</constant></term>
+                <listitem>
+                    <para>
+                        The query is targeted at the set of active shader storage blocks used by <parameter>program</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The name string assigned to the active resource identified by <parameter>index</parameter> is
+            returned as a null-terminated string in the character array whose address is given in <parameter>name</parameter>.  The actual number of
+            characters written into <parameter>name</parameter>, excluding the null terminator, is returned
+            in <parameter>length</parameter>.  If <parameter>length</parameter> is NULL, no length is returned.  The maximum
+            number of characters that may be written into <parameter>name</parameter>, including the null
+            terminator, is specified by <parameter>bufSize</parameter>.  If the length of the name string
+            <emphasis>including the null terminator</emphasis> is greater than <parameter>bufSize</parameter>, the first
+            <parameter>bufSize</parameter>-1 characters of the name string will be written to <parameter>name</parameter>,
+            followed by a null terminator.  If <parameter>bufSize</parameter> is zero, no error will be
+            generated but no characters will be written to <parameter>name</parameter>.  The length of the
+            longest name string for <parameter>programInterface</parameter>&gt;, including a null terminator,
+            can be queried by calling <citerefentry><refentrytitle>glGetProgramInterface</refentrytitle></citerefentry> with a <parameter>pname</parameter> of
+            <constant>GL_MAX_NAME_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>programInterface</parameter>
+            is not one of the accepted interface types.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>progam</parameter> is not
+            the name of an existing program.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
+            than or equal to the number of entries in the active resource list for
+            <parameter>programInterface</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>programInterface</parameter> is
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant> or <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, since active atomic
+            counter and transform feedback buffer resources are not assigned name strings.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramResourceName</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramResourceIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResource</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceLocation</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceLocationIndex</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

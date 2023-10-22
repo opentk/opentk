@@ -1,0 +1,133 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glClientWaitSync">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glClientWaitSync</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClientWaitSync</refname>
+        <refpurpose>block and wait for a sync object to become signaled</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLenum <function>glClientWaitSync</function></funcdef>
+                <paramdef>GLsync <parameter>sync</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>flags</parameter></paramdef>
+                <paramdef>GLuint64 <parameter>timeout</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sync</parameter></term>
+            <listitem>
+                <para>
+                    The sync object whose status to wait on.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>flags</parameter></term>
+            <listitem>
+                <para>
+                    A bitfield controlling the command flushing behavior. <parameter>flags</parameter> may be <constant>GL_SYNC_FLUSH_COMMANDS_BIT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>timeout</parameter></term>
+            <listitem>
+                <para>
+                    The timeout, specified in nanoseconds, for which the implementation should wait for <parameter>sync</parameter> to become signaled.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glClientWaitSync</function> causes the client to block and wait for the sync object specified by <parameter>sync</parameter> to become signaled. If
+            <parameter>sync</parameter> is signaled when <function>glClientWaitSync</function> is called, <function>glClientWaitSync</function> returns immediately, otherwise
+            it will block and wait for up to <parameter>timeout</parameter> nanoseconds for <parameter>sync</parameter> to become signaled.
+        </para>
+        <para>
+            The return value is one of four status values:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_ALREADY_SIGNALED</constant> indicates that <parameter>sync</parameter> was signaled at the time that <function>glClientWaitSync</function>
+                        was called.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_TIMEOUT_EXPIRED</constant> indicates that at least <parameter>timeout</parameter> nanoseconds passed and <parameter>sync</parameter> did not
+                        become signaled.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_CONDITION_SATISFIED</constant> indicates that <parameter>sync</parameter> was signaled before the timeout expired.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_WAIT_FAILED</constant> indicates that an error occurred. Additionally, an OpenGL error will be generated.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glClientWaitSync</function> is available only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sync</parameter> is not the name of an existing sync object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>flags</parameter> contains any unsupported flag.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glClientWaitSync</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsSync</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>
+            </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

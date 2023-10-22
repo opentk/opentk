@@ -1,0 +1,192 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glClearBufferData">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glClearBufferData</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClearBufferData</refname>
+        <refname>glClearNamedBufferData</refname>
+        <refpurpose>fill a buffer object's data store with a fixed value</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearBufferData</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>data</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glClearNamedBufferData</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void *<parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound
+                    for <function>glClearBufferData</function>, which must
+                    be one of the buffer binding targets in the
+                    following table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object for
+                    <function>glClearNamedBufferData</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    The internal format with which the data will be stored
+                    in the buffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    The format of the data in memory addressed by
+                    <parameter>data</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the data in memory addressed by
+                    <parameter>data</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    The address of a memory location storing the data to be
+                    replicated into the buffer's data store.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glClearBufferData</function> and
+            <function>glClearNamedBufferData</function> fill the entirety of
+            a buffer object's data store with data from client memory.
+        </para>
+        <para>
+            Data, initially supplied in a format specified by
+            <parameter>format</parameter> in data type
+            <parameter>type</parameter> is read from the memory address
+            given by <parameter>data</parameter> and converted into the
+            internal representation given by
+            <parameter>internalformat</parameter>, which must be one of the
+            following sized internal formats:
+        </para>
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="texboformattable.xml"/>
+        <para>
+            This converted data is then replicated throughout the buffer
+            object's data store. If <parameter>data</parameter> is NULL,
+            then the buffer's data store is filled with zeros.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glClearBufferData</function> if
+            <parameter>target</parameter> is not one of the generic buffer
+            binding targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by
+            <function>glClearBufferData</function> if no buffer is bound
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glClearNamedBufferData</function> if
+            <parameter>buffer</parameter> is not the name of an existing
+            buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>internalformat</parameter> is not one of the valid
+            sized internal formats listed in the table above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if any
+            part of the specified range of the buffer object is mapped with
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>
+            or
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            unless it was mapped with the
+            <constant>GL_MAP_PERSISTENT_BIT</constant> bit set in the
+            <function>glMapBufferRange</function>
+            <parameter>access</parameter> flags.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>format</parameter> is not a valid format, or
+            <parameter>type</parameter> is not a valid type.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glClearBufferData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glClearNamedBufferData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glClearBufferSubData</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

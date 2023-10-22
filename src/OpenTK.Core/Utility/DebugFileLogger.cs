@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
-namespace OpenTK.Core.Utility
+namespace OpenTK.Core
 {
     /// <summary>
     /// A logger used to create an opentk debug file in the current directory.

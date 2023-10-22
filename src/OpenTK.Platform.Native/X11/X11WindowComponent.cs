@@ -9,8 +9,11 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
@@ -174,16 +177,16 @@ namespace OpenTK.Platform.Native.X11
 
                 XFree(array);
             }
-        
+
             // Create a helper window to help with clipboard stuff.
             // FIXME: Will this only be used for clipboard stuff?
-            unsafe 
+            unsafe
             {
                 XSetWindowAttributes wa = default;
                 wa.EventMask = XEventMask.PropertyChange;
-                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow,
                     0, 0, 1, 1, 0, 0,
-                    WindowClass.InputOnly, 
+                    WindowClass.InputOnly,
                     ref Unsafe.AsRef<XVisual>(XDefaultVisual(X11.Display, X11.DefaultScreen)),
                     XWindowAttributeValueMask.EventMask,
                     ref wa);
@@ -742,7 +745,7 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 xwindow.Width = configure.width;
                                 xwindow.Height = configure.height;
-                                
+
                                 EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
                             }
 
@@ -876,12 +879,12 @@ namespace OpenTK.Platform.Native.X11
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.Exposure;
 
-                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
-                    0, 0, 600, 800, 0, 0, 
-                    WindowClass.InputOutput, 
+                window = XCreateWindow(X11.Display, X11.DefaultRootWindow,
+                    0, 0, 600, 800, 0, 0,
+                    WindowClass.InputOutput,
                     ref Unsafe.NullRef<XVisual>(),
                     XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                     ref attributes);
 
                 // FIXME: How do we handle vulkan windows?
@@ -1425,10 +1428,10 @@ namespace OpenTK.Platform.Native.X11
             {
                 return Math.Min(
                     Math.Min(
-                        a.DistanceToNearestEdge(b.Min), 
+                        a.DistanceToNearestEdge(b.Min),
                         a.DistanceToNearestEdge(b.Max)),
                     Math.Min(
-                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)), 
+                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)),
                         a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
             }
         }
@@ -1499,7 +1502,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 return WindowMode.Maximized;
             }
-            
+
             if (wmState.HasFlag(WMState.Hidden))
             {
                 return WindowMode.Hidden;
@@ -1701,7 +1704,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
             XDisplayHandle? xdisplay = display?.As<XDisplayHandle>(this);
-            
+
             // FIXME: Save window position and size so we can restore later.
 
             if (xdisplay == null)
@@ -1865,11 +1868,11 @@ namespace OpenTK.Platform.Native.X11
             // Check for ToolBox
             {
                 XGetWindowProperty(
-                    X11.Display, 
-                    xwindow.Window, 
-                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE], 
-                    0, 1, false, 
-                    X11.Atoms[KnownAtoms.ATOM], 
+                    X11.Display,
+                    xwindow.Window,
+                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
+                    0, 1, false,
+                    X11.Atoms[KnownAtoms.ATOM],
                     out _,
                     out _,
                     out _,
@@ -1891,11 +1894,11 @@ namespace OpenTK.Platform.Native.X11
             // Check for borderless
             {
                 XGetWindowProperty(
-                    X11.Display, 
-                    xwindow.Window, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                    0, long.MaxValue, false, 
-                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    X11.Display,
+                    xwindow.Window,
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                    0, long.MaxValue, false,
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
                     out _,
                     out _,
                     out _,
@@ -1915,7 +1918,7 @@ namespace OpenTK.Platform.Native.X11
             }
 
             // If FixedSize is set, assume FixedBorder.
-            if (xwindow.FixedSize != (-1, -1)) 
+            if (xwindow.FixedSize != (-1, -1))
             {
                 return WindowBorderStyle.FixedBorder;
             }
@@ -1946,7 +1949,7 @@ namespace OpenTK.Platform.Native.X11
                     SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
 
                     SetDecorations(xwindow, false);
-                    
+
                     SetFixedSize(xwindow, false, -1, -1);
                     xwindow.FixedSize = (-1, -1);
                     break;
@@ -2007,7 +2010,7 @@ namespace OpenTK.Platform.Native.X11
                     else
                         hints->Flags &= ~XSizeHintFlags.MinSize;
                 }
-                else 
+                else
                 {
                     hints->MinWidth = fixedWidth;
                     hints->MaxWidth = fixedWidth;
@@ -2025,7 +2028,7 @@ namespace OpenTK.Platform.Native.X11
 
             static unsafe void SetDecorations(XWindowHandle xwindow, bool enable)
             {
-                // We use 
+                // We use
                 const int MWM_HINTS_DECORATIONS = 1 << 1;
 
                 const int MWM_DECOR_ALL = 1 << 0;
@@ -2033,24 +2036,24 @@ namespace OpenTK.Platform.Native.X11
                 MotifWmHints hints = default;
                 hints.flags = MWM_HINTS_DECORATIONS;
                 hints.decorations = enable ? MWM_DECOR_ALL : 0;
-                
-                XChangeProperty(X11.Display, 
-                        xwindow.Window, 
-                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
-                        32, 
-                        XPropertyMode.Replace, 
-                        (IntPtr)(void*)&hints, 
+
+                XChangeProperty(X11.Display,
+                        xwindow.Window,
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS],
+                        32,
+                        XPropertyMode.Replace,
+                        (IntPtr)(void*)&hints,
                         sizeof(MotifWmHints) / sizeof(long));
             }
-        
+
             static unsafe int SetNetWMWindowType(XWindow window, XAtom type)
             {
                 return XChangeProperty(
-                        X11.Display, 
-                        window, 
+                        X11.Display,
+                        window,
                         X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
-                        X11.Atoms[KnownAtoms.ATOM], 32, 
+                        X11.Atoms[KnownAtoms.ATOM], 32,
                         XPropertyMode.Replace,
                         (IntPtr)(void*)&type,
                         1);

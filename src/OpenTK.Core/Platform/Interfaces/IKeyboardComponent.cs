@@ -1,4 +1,7 @@
-namespace OpenTK.Core.Platform
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+
+namespace OpenTK.Core.Platform.Interfaces
 {
 #nullable enable
 

@@ -1,0 +1,232 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFramebufferRenderbuffer">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFramebufferRenderbuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFramebufferRenderbuffer</refname>
+        <refname>glNamedFramebufferRenderbuffer</refname>
+        <refpurpose>attach a renderbuffer as a logical buffer of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferRenderbuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>renderbuffertarget</parameter></paramdef>
+                <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glNamedFramebufferRenderbuffer</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>renderbuffertarget</parameter></paramdef>
+                <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer is bound
+                    for <function>glFramebufferRenderbuffer</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glNamedFramebufferRenderbuffer</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachment</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the attachment point of the framebuffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>renderbuffertarget</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the renderbuffer target. Must be
+                    <constant>GL_RENDERBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>renderbuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of an existing renderbuffer object of
+                    type <parameter>renderbuffertarget</parameter> to
+                    attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glFramebufferRenderbuffer</function> and
+            <function>glNamedFramebufferRenderbuffer</function> attaches a
+            renderbuffer as one of the logical buffers of the specified
+            framebuffer object. Renderbuffers cannot be attached to the
+            default draw and read framebuffer, so they are not valid targets
+            of these commands.
+        </para>
+        <para>
+            For <function>glFramebufferRenderbuffer</function>,
+            the framebuffer object is that bound to
+            <parameter>target</parameter>, which must be
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            For <function>glNamedFramebufferRenderbuffer</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object.
+        </para>
+        <para>
+            <parameter>renderbuffertarget</parameter> must be
+            <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            <parameter>renderbuffer</parameter> must be zero or the name of
+            an existing renderbuffer object of type
+            <parameter>renderbuffertarget</parameter>. If
+            <parameter>renderbuffer</parameter> is not zero, then the
+            specified renderbuffer will be used as the logical buffer
+            identified by <parameter>attachment</parameter> of the specified
+            framebuffer object. If <parameter>renderbuffer</parameter> is
+            zero, then the value of
+            <parameter>renderbuffertarget</parameter> is ignored.
+        </para>
+        <para>
+            <parameter>attachment</parameter> specifies the logical
+            attachment of the framebuffer and must be
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant> or
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
+            <emphasis>i</emphasis> in may range from zero to the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
+            Setting <parameter>attachment</parameter> to the value
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> is a special
+            case causing both the depth and stencil attachments of the
+            specified framebuffer object to be set to
+            <parameter>renderbuffer</parameter>, which should have the base
+            internal format <constant>GL_DEPTH_STENCIL</constant>.
+        </para>
+        <para>
+            The value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> for
+            the specified attachment point is set to
+            <constant>GL_RENDERBUFFER</constant> and the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant> is
+            set to <parameter>renderbuffer</parameter>. All other state
+            values of specified attachment point are set to their default
+            values. No change is made to the state of the renderbuuffer
+            object and any previous attachment to the
+            <parameter>attachment</parameter> logical buffer of the
+            specified framebuffer object is broken.
+        </para>
+        <para>
+            If <parameter>renderbuffer</parameter> is zero, these commands
+            will detach the image, if any, identified by the specified
+            attachment point of the specified framebuffer object. All state
+            values of the attachment point are set to their default values.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glFramebufferRenderbuffer</function> if
+            <parameter>target</parameter> is not one of the accepted
+            framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glFramebufferRenderbuffer</function> if zero is bound
+            to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glNamedFramebufferRenderbuffer</function> if
+            <parameter>framebuffer</parameter> is not the name of an
+            existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>attachment</parameter> is not one of the accepted
+            attachment points.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>renderbuffertarget</parameter> is not
+            <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>renderbuffertarget</parameter> is not zero or the
+            name of an existing renderbuffer object of type
+            <constant>GL_RENDERBUFFER</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFramebufferRenderbuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glNamedFramebufferRenderbuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture1D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture2D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture3D</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

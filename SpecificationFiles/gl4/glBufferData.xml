@@ -1,0 +1,326 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBufferData">
+  <info>
+    <copyright>
+      <year>2005</year>
+
+      <holder>Sams Publishing</holder>
+    </copyright>
+
+    <copyright>
+      <year>2010-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glBufferData</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glBufferData</refname>
+
+    <refname>glNamedBufferData</refname>
+
+    <refpurpose>creates and initializes a buffer object's data
+    store</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glBufferData</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+
+        <paramdef>const void * <parameter>data</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>usage</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glNamedBufferData</function></funcdef>
+
+        <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+
+        <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+
+        <paramdef>const void *<parameter>data</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>usage</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>
+            Specifies the target to which the buffer object is bound for
+            <function>glBufferData</function>, which must be one of the
+            buffer binding targets in the following table:
+          </para>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>buffer</parameter></term>
+
+        <listitem>
+          <para>Specifies the name of the buffer object for
+          <function>glNamedBufferData</function> function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>size</parameter></term>
+
+        <listitem>
+          <para>Specifies the size in bytes of the buffer object's new data
+          store.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>data</parameter></term>
+
+        <listitem>
+          <para>Specifies a pointer to data that will be copied into the data
+          store for initialization, or <constant>NULL</constant> if no data is
+          to be copied.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>usage</parameter></term>
+
+        <listitem>
+          <para>Specifies the expected usage pattern of the data store. The
+          symbolic constant must be <constant>GL_STREAM_DRAW</constant>,
+          <constant>GL_STREAM_READ</constant>,
+          <constant>GL_STREAM_COPY</constant>,
+          <constant>GL_STATIC_DRAW</constant>,
+          <constant>GL_STATIC_READ</constant>,
+          <constant>GL_STATIC_COPY</constant>,
+          <constant>GL_DYNAMIC_DRAW</constant>,
+          <constant>GL_DYNAMIC_READ</constant>, or
+          <constant>GL_DYNAMIC_COPY</constant>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glBufferData</function> and
+    <function>glNamedBufferData</function> create a new data store for a
+    buffer object. In case of <function>glBufferData</function>, the buffer
+    object currently bound to <parameter>target</parameter> is used. For
+    <function>glNamedBufferData</function>, a buffer object associated with ID
+    specified by the caller in <parameter>buffer</parameter> will be used
+    instead.</para>
+
+    <para>While creating the new storage, any pre-existing data store is
+    deleted. The new data store is created with the specified
+    <parameter>size</parameter> in bytes and <parameter>usage</parameter>. If
+    <parameter>data</parameter> is not <constant>NULL</constant>, the data
+    store is initialized with data from this pointer. In its initial state,
+    the new data store is not mapped, it has a <constant>NULL</constant>
+    mapped pointer, and its mapped access is
+    <constant>GL_READ_WRITE</constant>.</para>
+
+    <para><parameter>usage</parameter> is a hint to the GL implementation as
+    to how a buffer object's data store will be accessed. This enables the GL
+    implementation to make more intelligent decisions that may significantly
+    impact buffer object performance. It does not, however, constrain the
+    actual usage of the data store. <parameter>usage</parameter> can be broken
+    down into two parts: first, the frequency of access (modification and
+    usage), and second, the nature of that access. The frequency of access may
+    be one of these:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>STREAM</term>
+
+        <listitem>
+          <para>The data store contents will be modified once and used at most
+          a few times.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>STATIC</term>
+
+        <listitem>
+          <para>The data store contents will be modified once and used many
+          times.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>DYNAMIC</term>
+
+        <listitem>
+          <para>The data store contents will be modified repeatedly and used
+          many times.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>The nature of access may be one of these:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term>DRAW</term>
+
+        <listitem>
+          <para>The data store contents are modified by the application, and
+          used as the source for GL drawing and image specification
+          commands.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>READ</term>
+
+        <listitem>
+          <para>The data store contents are modified by reading data from the
+          GL, and used to return that data when queried by the
+          application.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>COPY</term>
+
+        <listitem>
+          <para>The data store contents are modified by reading data from the
+          GL, and used as the source for GL drawing and image specification
+          commands.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If <parameter>data</parameter> is <constant>NULL</constant>, a data store of the specified size is still created,
+            but its contents remain uninitialized and thus undefined.
+        </para>
+        <para>
+            Clients must align data elements consistently with the requirements of the client
+            platform, with an additional base-level requirement that an offset within a buffer to
+            a datum comprising <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation> bytes be a
+            multiple of <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is available only if the GL version
+            is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are available only if the GL version
+            is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated by
+    <function>glBufferData</function> if <parameter>target</parameter> is not
+    one of the accepted buffer targets.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>usage</parameter> is not <constant>GL_STREAM_DRAW</constant>,
+    <constant>GL_STREAM_READ</constant>, <constant>GL_STREAM_COPY</constant>,
+    <constant>GL_STATIC_DRAW</constant>, <constant>GL_STATIC_READ</constant>,
+    <constant>GL_STATIC_COPY</constant>, <constant>GL_DYNAMIC_DRAW</constant>,
+    <constant>GL_DYNAMIC_READ</constant>, or
+    <constant>GL_DYNAMIC_COPY</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>size</parameter> is negative.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glBufferData</function> if the reserved buffer object name 0 is
+    bound to <parameter>target</parameter>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glNamedBufferData</function> if buffer is not the name of an
+    existing buffer object.</para>
+
+    <para>
+        <constant>GL_INVALID_OPERATION</constant> is generated if the
+        <constant>GL_BUFFER_IMMUTABLE_STORAGE</constant> flag of the buffer
+        object is <constant>GL_TRUE</constant>.
+    </para>
+
+    <para><constant>GL_OUT_OF_MEMORY</constant> is generated if the GL is
+    unable to create a data store with the specified
+    <parameter>size</parameter>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para>
+        <citerefentry><refentrytitle>glGetBufferSubData</refentrytitle></citerefentry>
+    </para>
+
+    <para>
+        <citerefentry><refentrytitle>glGetBufferParameter</refentrytitle></citerefentry>
+        with argument <constant>GL_BUFFER_SIZE</constant> or <constant>GL_BUFFER_USAGE</constant>
+    </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBufferData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glNamedBufferData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,143 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetActiveSubroutineName">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetActiveSubroutineName</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetActiveSubroutineName</refname>
+        <refpurpose>query the name of an active shader subroutine</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetActiveSubroutineName</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>shadertype</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLchar *<parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the program containing the subroutine.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>shadertype</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the shader stage from which to query the subroutine name.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the shader subroutine uniform.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the buffer whose address is given in <parameter>name</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a variable which is to receive the length of the shader subroutine uniform name.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array into which the name of the shader subroutine uniform will be written.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetActiveSubroutineName</function> queries the name of an active shader subroutine uniform from the
+            program object given in <parameter>program</parameter>. <parameter>index</parameter> specifies the index of
+            the shader subroutine uniform within the shader stage given by <parameter>stage</parameter>, and must between
+            zero and the value of <constant>GL_ACTIVE_SUBROUTINES</constant> minus one for the shader stage.
+        </para>
+        <para>
+            The name of the selected subroutine is returned as a null-terminated string in <parameter>name</parameter>. The
+            actual number of characters written into <parameter>name</parameter>, not including the null-terminator, is
+            returned in <parameter>length</parameter>. If <parameter>length</parameter> is <constant>NULL</constant>,
+            no length is returned. The maximum number of characters that may be written into <parameter>name</parameter>,
+            including the null-terminator, is given in <parameter>bufSize</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater than or equal to
+            the value of <constant>GL_ACTIVE_SUBROUTINES</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is not the name of an
+            existing program object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramStage</refentrytitle></citerefentry> with argument <constant>GL_ACTIVE_SUBROUTINE_UNIFORM_MAX_LENGTH</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetActiveSubroutineName</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetSubroutineIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniform</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramStage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

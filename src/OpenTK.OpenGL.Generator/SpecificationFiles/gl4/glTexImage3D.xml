@@ -1,0 +1,609 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glTexImage3D">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glTexImage3D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexImage3D</refname>
+        <refpurpose>specify a three-dimensional texture image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexImage3D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLint <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLsizei <parameter>depth</parameter></paramdef>
+                <paramdef>GLint <parameter>border</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target texture.
+                    Must be one of <constant>GL_TEXTURE_3D</constant>, <constant>GL_PROXY_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant> or <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the level-of-detail number.
+                    Level 0 is the base image level.
+                    Level
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                    is the
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                        <!-- eqn: n sup th: -->
+                        <mml:msup><mml:mi mathvariant="italic">n</mml:mi>
+                        <mml:mi mathvariant="italic">th</mml:mi>
+                        </mml:msup>
+                    </mml:math></inlineequation>
+                    mipmap reduction image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of color components in the texture.
+                    Must be one of base internal formats given in Table 1,
+                    one of the sized internal formats given in Table 2, or one
+                    of the compressed internal formats given in Table 3, below.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the width of the texture image.
+                    All implementations support 3D texture images that are at least 16 texels
+                    wide.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the height of the texture image.
+                    All implementations support 3D texture images that are at least 256 texels
+                    high.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>depth</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the depth of the texture image, or the number of layers in a texture array.
+                    All implementations support 3D texture images that are at least 256 texels
+                    deep, and texture arrays that are at least 256 layers deep.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>border</parameter></term>
+            <listitem>
+                <para>
+                    This value must be 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the format of the pixel data.
+                    The following symbolic values are accepted:
+                    <constant>GL_RED</constant>,
+                    <constant>GL_RG</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_BGR</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_BGRA</constant>,
+                    <constant>GL_RED_INTEGER</constant>,
+                    <constant>GL_RG_INTEGER</constant>,
+                    <constant>GL_RGB_INTEGER</constant>,
+                    <constant>GL_BGR_INTEGER</constant>,
+                    <constant>GL_RGBA_INTEGER</constant>,
+                    <constant>GL_BGRA_INTEGER</constant>,
+                    <constant>GL_STENCIL_INDEX</constant>,
+                    <constant>GL_DEPTH_COMPONENT</constant>,
+                    <constant>GL_DEPTH_STENCIL</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the data type of the pixel data.
+                    The following symbolic values are accepted:
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_HALF_FLOAT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+                    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+                    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the image data in memory.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Texturing maps a portion of a specified texture image
+            onto each graphical primitive for which texturing is enabled.
+            To enable and disable three-dimensional texturing, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+            and <!-- FIX: link to glEnable --> <function>glDisable</function> with argument <constant>GL_TEXTURE_3D</constant>.
+        </para>
+        <para>
+            To define texture images, call <function>glTexImage3D</function>.
+            The arguments describe the parameters of the texture image,
+            such as height,
+            width, depth,
+            width of the border,
+            level-of-detail number
+            (see <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>),
+            and number of color components provided.
+            The last three arguments describe how the image is represented in memory.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_PROXY_TEXTURE_3D</constant>, no data is read from <parameter>data</parameter>, but
+            all of the texture image state is recalculated, checked for
+            consistency, and checked
+            against the implementation's capabilities. If the implementation cannot
+            handle a texture of the requested texture size, it sets
+            all of the image state to 0,
+            but does not generate an error (see <citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>). To query for an
+            entire mipmap array, use an image array level greater than or equal to
+            1.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TEXTURE_3D</constant>,
+            data is read from <parameter>data</parameter> as a sequence of signed or unsigned bytes,
+            shorts,
+            or longs,
+            or single-precision floating-point values,
+            depending on <parameter>type</parameter>.
+            These values are grouped into sets of one,
+            two,
+            three,
+            or four values,
+            depending on <parameter>format</parameter>,
+            to form elements.
+            Each data byte is treated as eight 1-bit elements,
+            with bit ordering determined by <constant>GL_UNPACK_LSB_FIRST</constant>
+            (see <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
+            specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            The first element corresponds to the lower left corner of the texture
+            image.
+            Subsequent elements progress left-to-right through the remaining texels
+            in the lowest row of the texture image, and then in successively higher
+            rows of the texture image.
+            The final element corresponds to the upper right corner of the texture
+            image.
+        </para>
+        <para>
+            <parameter>format</parameter> determines the composition of each element in <parameter>data</parameter>.
+            It can assume one of these symbolic values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_RED</constant></term>
+                <listitem>
+                    <para>
+                        Each element is a single red component.
+                        The GL converts it to floating point and assembles it into an RGBA element
+                        by attaching 0 for green and blue, and 1 for alpha.
+                        Each component is clamped to the range [0,1].
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RG</constant></term>
+                <listitem>
+                    <para>
+                        Each element is a red and green pair.
+                        The GL converts each to floating point and assembles it into an RGBA element
+                        by attaching 0 for blue, and 1 for alpha.
+                        Each component is clamped to the range [0,1].
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGB</constant></term>
+                <term><constant>GL_BGR</constant></term>
+                <listitem>
+                    <para>
+                        Each element is an RGB triple.
+                        The GL converts it to floating point and assembles it into an RGBA element
+                        by attaching 1 for alpha.
+                        Each component is clamped to the range [0,1].
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGBA</constant></term>
+                <term><constant>GL_BGRA</constant></term>
+                <listitem>
+                    <para>
+                        Each element contains all four components.
+                        Each component is clamped to the range [0,1].
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            If an application wants to store the texture at a certain
+            resolution or in a certain format, it can request the resolution
+            and format with <parameter>internalformat</parameter>. The GL will choose an internal
+            representation that closely approximates that requested by <parameter>internalformat</parameter>, but
+            it may not match exactly.
+            (The representations specified by <constant>GL_RED</constant>, <constant>GL_RG</constant>, <constant>GL_RGB</constant>,
+            and <constant>GL_RGBA</constant> must match exactly.)
+        </para>
+        <para>
+            <parameter>internalformat</parameter> may be one of the base internal formats shown in
+            Table 1, below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="baseformattable.xml"/>
+        </para>
+        <para>
+            <parameter>internalformat</parameter> may also be one of the sized internal formats
+            shown in Table 2, below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="internalformattable.xml"/>
+        </para>
+        <para>
+            Finally, <parameter>internalformat</parameter> may also be one of the generic or compressed
+            texture formats shown in Table 3 below
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="compressedformattable.xml"/>
+        </para>
+        <para>
+                If the <parameter>internalformat</parameter> parameter is one of the generic compressed formats,
+                <constant>GL_COMPRESSED_RED</constant>, <constant>GL_COMPRESSED_RG</constant>,
+                <constant>GL_COMPRESSED_RGB</constant>, or
+                <constant>GL_COMPRESSED_RGBA</constant>, the GL will replace the internal format with the symbolic constant for a specific internal format and compress the texture before storage.  If no corresponding internal format is available, or the GL can not compress that image for any reason, the internal format is instead replaced with a corresponding base internal format.
+        </para>
+        <para>
+            If the <parameter>internalformat</parameter> parameter is
+            <constant>GL_SRGB</constant>,
+                              <constant>GL_SRGB8</constant>,
+                              <constant>GL_SRGB_ALPHA</constant>, or
+                              <constant>GL_SRGB8_ALPHA8</constant>, the texture is treated as if the red, green, blue, or luminance components are encoded in the sRGB color space.    Any alpha component is left unchanged.  The conversion from the sRGB encoded component
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+            </mml:math></inlineequation>
+                        to a linear component
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                    <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
+                    <mml:mi mathvariant="italic">l</mml:mi>
+                    </mml:msub>
+            </mml:math></inlineequation>
+            is:
+                </para>
+                <para>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                        <mml:mrow>
+                                <mml:msub>
+                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                  <mml:mi mathvariant="italic">l</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                  <mml:mo>{</mml:mo>
+
+                                  <mml:mtable columnalign="left">
+                                        <mml:mtr>
+                                          <mml:mtd columnalign="left">
+                                                <mml:mfrac>
+                                                  <mml:msub>
+                                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                                        <mml:mi mathvariant="italic">s</mml:mi>
+                                                  </mml:msub>
+                                                  <mml:mn>12.92</mml:mn>
+                                                </mml:mfrac>
+                                          </mml:mtd>
+                                          <mml:mtd columnalign="left">
+                                                <mml:mrow>
+                                                  <mml:mspace width="1ex"/>
+                                                  <mml:mo>if</mml:mo>
+                                                  <mml:mspace width="1ex"/>
+                                                </mml:mrow>
+                                                <mml:msub>
+                                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                                  <mml:mi mathvariant="italic">s</mml:mi>
+                                                </mml:msub>
+                                                <mml:mo>&le;</mml:mo>
+                                                <mml:mn>0.04045</mml:mn>
+                                          </mml:mtd>
+                                        </mml:mtr>
+                                        <mml:mtr>
+                                        <mml:mtd columnalign="left">
+                                        <mml:msup>
+                                          <mml:mrow>
+                                                <mml:mo>(</mml:mo>
+                                                <mml:mfrac>
+                                                  <mml:mrow>
+                                                        <mml:msub>
+                                                          <mml:mi>c</mml:mi>
+                                                          <mml:mi>s</mml:mi>
+                                                        </mml:msub>
+                                                        <mml:mo>+</mml:mo>
+                                                        <mml:mn>0.055</mml:mn>
+                                                  </mml:mrow>
+                                                  <mml:mn>1.055</mml:mn>
+                                                </mml:mfrac>
+                                                <mml:mo>)</mml:mo>
+                                          </mml:mrow>
+                                          <mml:mn>2.4</mml:mn>
+                                        </mml:msup>
+                                        </mml:mtd>
+                                  <mml:mtd columnalign="left">
+                                                <mml:mrow>
+                                                  <mml:mspace width="1ex"/>
+                                                  <mml:mo>if</mml:mo>
+                                                  <mml:mspace width="1ex"/>
+                                                </mml:mrow>
+                                                <mml:msub>
+                                                  <mml:mi mathvariant="italic">c</mml:mi>
+                                                  <mml:mi mathvariant="italic">s</mml:mi>
+                                                </mml:msub>
+                                                <mml:mo>&gt;</mml:mo>
+                                                <mml:mn>0.04045</mml:mn>
+                                          </mml:mtd>
+                                        </mml:mtr>
+                                  </mml:mtable>
+                                </mml:mrow>
+                                </mml:mrow>
+                        </mml:math>
+                        </inlineequation>
+                </para>
+                <para>
+                        Assume
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                                <mml:msub><mml:mi mathvariant="italic">c</mml:mi>
+                                                                <mml:mi mathvariant="italic">s</mml:mi>
+                                                                </mml:msub>
+                                                </mml:math></inlineequation>
+                        is the sRGB component in the range [0,1].
+       </para>
+        <para>
+            Use the <constant>GL_PROXY_TEXTURE_3D</constant> target to try out a resolution and
+            format. The implementation will
+            update and recompute its best match for the requested storage resolution
+            and format. To then query this state, call <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>.
+            If the texture cannot be accommodated, texture state is set to 0.
+        </para>
+        <para>
+            A one-component texture image uses only the red component of the RGBA
+            color extracted from <parameter>data</parameter>.
+            A two-component image uses the R and A values.
+            A three-component image uses the R, G, and B values.
+            A four-component image uses all of the RGBA components.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> mode affects texture images.
+        </para>
+        <para>
+            <parameter>data</parameter> may be a null pointer.
+            In this case texture memory is
+            allocated to accommodate a texture of width <parameter>width</parameter>, height <parameter>height</parameter>,
+            and depth <parameter>depth</parameter>.
+            You can then download subtextures to initialize this
+            texture memory.
+            The image is undefined if the user tries to apply
+            an uninitialized portion of the texture image to a primitive.
+        </para>
+        <para>
+            <function>glTexImage3D</function> specifies the three-dimensional texture for the current texture unit,
+            specified with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_STENCIL_INDEX</constant> may be used for <parameter>format</parameter> only if the GL
+            version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_TEXTURE_3D</constant>
+            or <constant>GL_PROXY_TEXTURE_3D</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> is not an accepted
+            format constant.  Format constants other than <constant>GL_STENCIL_INDEX</constant> and <constant>GL_DEPTH_COMPONENT</constant>
+            are accepted.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not a type constant.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is less than 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> may be generated if <parameter>level</parameter> is greater than
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: log sub 2 (max): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
+                    <mml:mn>2</mml:mn>
+                    </mml:msub>
+                    <mml:mo>&af;</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mi mathvariant="italic">max</mml:mi>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            where <emphasis>max</emphasis> is the returned value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>internalformat</parameter> is not one of the
+            accepted resolution and format symbolic constants.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter>, <parameter>height</parameter>, or <parameter>depth</parameter> is less than 0 or greater than <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
+            <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+            and <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter> or <parameter>internalformat</parameter> is
+            <constant>GL_DEPTH_COMPONENT</constant>, <constant>GL_DEPTH_COMPONENT16</constant>,
+            <constant>GL_DEPTH_COMPONENT24</constant>, or <constant>GL_DEPTH_COMPONENT32</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>data</parameter> is not evenly divisible
+            into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glTexImage3D</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><constant>GL_HALF_FLOAT</constant></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,5 +1,5 @@
 using ImGuiNET;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Core.Platform;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using OpenTK.Core.Platform.Handles;
 
 namespace OpenTK.Backends.Tests
 {
@@ -33,7 +34,7 @@ namespace OpenTK.Backends.Tests
         private int selectedWindow = -1;
 
         // FIXME: Linq
-        private string[] testAppNames = TestApps.All.Select(app => app.Name).ToArray();
+        private string[] testAppNames = TestApps.TestApps.All.Select(app => app.Name).ToArray();
 
         private int lastActiveApp = 0;
 
@@ -132,7 +133,7 @@ namespace OpenTK.Backends.Tests
                     string title = Program.WindowComp.GetTitle(windowData.Window);
                     windowTitle = $"{title} ({(windowData.Context == null ? "no context" : "opengl")})";
                 }
-                
+
                 if (ImGui.BeginCombo("Child Window", windowTitle))
                 {
                     for (int i = 0; i < Program.WindowManager.Windows.Count; i++)
@@ -185,11 +186,11 @@ namespace OpenTK.Backends.Tests
 
             ImGui.BeginDisabled(
                 selectedWindow == -1 ||
-                Program.WindowManager.Windows[selectedWindow].Application?.GetType() == TestApps.All[lastActiveApp]
+                Program.WindowManager.Windows[selectedWindow].Application?.GetType() == TestApps.TestApps.All[lastActiveApp]
             );
             if (ImGui.Button("Launch") && selectedWindow != -1)
             {
-                Program.WindowManager.Windows[selectedWindow].Application = TestApps.Create(lastActiveApp);
+                Program.WindowManager.Windows[selectedWindow].Application = TestApps.TestApps.Create(lastActiveApp);
             }
             ImGui.EndDisabled();
 

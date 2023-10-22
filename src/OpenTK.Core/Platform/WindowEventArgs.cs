@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Mathematics;
 
 namespace OpenTK.Core.Platform

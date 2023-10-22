@@ -23,11 +23,11 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using OpenTK.Core.Utility;
-
 #nullable enable
 
-namespace OpenTK.Core.Platform
+using OpenTK.Core.Platform.Enums;
+
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Common interface for all platform abstraction layer components.

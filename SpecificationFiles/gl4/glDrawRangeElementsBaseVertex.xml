@@ -1,0 +1,164 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawRangeElementsBaseVertex">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawRangeElementsBaseVertex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawRangeElementsBaseVertex</refname>
+        <refpurpose>render primitives from array data with a per-element offset</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawRangeElementsBaseVertex</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLuint <parameter>start</parameter></paramdef>
+                <paramdef>GLuint <parameter>end</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>void *<parameter>indices</parameter></paramdef>
+                <paramdef>GLint <parameter>basevertex</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>, <constant>GL_LINE_STRIP</constant>, <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>, <constant>GL_TRIANGLE_STRIP</constant>, <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>, <constant>GL_LINES_ADJACENCY</constant>, <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant> and <constant>GL_PATCHES</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>start</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the minimum array index contained in <parameter>indices</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>end</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the maximum array index contained in <parameter>indices</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of elements to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of the values in indices. Must be one of <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>, or <constant>GL_UNSIGNED_INT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indices</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the location where the indices are stored.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>basevertex</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a constant that should be added to each element of <parameter>indices</parameter>
+                    when chosing elements from the enabled vertex arrays.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDrawRangeElementsBaseVertex</function> is a restricted form of
+            <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>. <parameter>mode</parameter>,
+            <parameter>count</parameter> and <parameter>basevertex</parameter> match
+            the corresponding arguments to <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>, with the additional
+            constraint that all values in the array <parameter>indices</parameter> must lie between <parameter>start</parameter> and <parameter>end</parameter>,
+            inclusive, prior to adding <parameter>basevertex</parameter>. Index values lying outside the range [<parameter>start</parameter>, <parameter>end</parameter>]
+            are treated in the same way as <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>. The <emphasis>i</emphasis>th element
+            transferred by the corresponding draw call will be taken from element <parameter>indices</parameter>[i] + <parameter>basevertex</parameter> of each enabled
+            array. If the resulting value is larger than the maximum value representable by <parameter>type</parameter>, it is as if the calculation were upconverted to
+            32-bit unsigned integers (with wrapping on overflow conditions). The operation is undefined if the sum would be negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>end</parameter> &lt; <parameter>start</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array or the element array and the buffer object's data store is currently mapped.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDrawRangeElementsBaseVertex</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstancedBaseVertex</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

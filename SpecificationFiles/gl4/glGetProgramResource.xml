@@ -1,0 +1,443 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramResource">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramResource</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramResource</refname>
+        <refpurpose>retrieve values for multiple properties of a single active resource within a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetProgramResourceiv</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>programInterface</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLsizei <parameter>propCount</parameter></paramdef>
+                <paramdef>const GLenum * <parameter>props</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei * <parameter>length</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of a program object whose resources to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>programInterface</parameter></term>
+            <listitem>
+                <para>
+                    A token identifying the interface within <parameter>program</parameter> containing the resource named <parameter>name</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetProgramResourceiv</function> returns values for multiple properties of a single active resource with an
+            index of <parameter>index</parameter> in the interface <parameter>programInterface</parameter> of program object
+            <parameter>program</parameter>.  For each resource, values for <parameter>propCount</parameter> properties specified
+            by the array <parameter>props</parameter> are returned.  <parameter>propCount</parameter> may not be zero.
+            An error is generated if any value
+            in <parameter>props</parameter> is not one of the properties described immediately belowor if any value in <parameter>props</parameter> is not
+            allowed for <parameter>programInterface</parameter>.  The set of allowed <parameter>programInterface</parameter>
+            values for each property can be found in the following table:
+        </para>
+        <informaltable>
+            <tgroup cols="2" align="left">
+                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                <colspec colnum="2" colname="col2" colwidth="2*"/>
+                <thead>
+                    <row>
+                        <entry>Property</entry>
+                        <entry>Supported Interfaces</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><constant>GL_NAME_LENGTH</constant></entry>
+                        <entry>Any except <constant>GL_ATOMIC_COUNTER_BUFFER</constant> and <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TYPE</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant>, <constant>GL_TRANSFORM_FEEDBACK_VARYING</constant>, <constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_ARRAY_SIZE</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant>, <constant>GL_PROGRAM_INPUT</constant>,
+                                            <constant>GL_PROGRAM_OUTPUT, VERTEX_SUBROUTINE_UNIFORM</constant>, <constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant>, <constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant>, <constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant>, <constant>GL_TRANSFORM_FEEDBACK_VARYING</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_OFFSET</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant>, <constant>GL_TRANSFORM_FEEDBACK_VARYING</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_BLOCK_INDEX</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_ARRAY_STRIDE</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_MATRIX_STRIDE</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_IS_ROW_MAJOR</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_ATOMIC_COUNTER_BUFFER_INDEX</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TEXTURE_BUFFER</constant></entry>
+                        <entry><emphasis>none</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_BUFFER_BINDING</constant></entry>
+                        <entry><constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_BUFFER_DATA_SIZE</constant></entry>
+                        <entry><constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_NUM_ACTIVE_VARIABLES</constant></entry>
+                        <entry><constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_ACTIVE_VARIABLES</constant></entry>
+                        <entry><constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_VERTEX_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_TESS_CONTROL_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_TESS_EVALUATION_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_GEOMETRY_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_FRAGMENT_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_REFERENCED_BY_COMPUTE_SHADER</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_UNIFORM_BLOCK</constant>, <constant>GL_ATOMIC_COUNTER_SHADER</constant>,
+                                            <constant>GL_BUFFER</constant>, <constant>GL_SHADER_STORAGE_BLOCK</constant>, <constant>GL_BUFFER_VARIABLE</constant>,
+                                            <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_NUM_COMPATIBLE_SUBROUTINES</constant></entry>
+                        <entry><constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant>, <constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant>, <constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant>, <constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_COMPATIBLE_SUBROUTINES</constant></entry>
+                        <entry><constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant>, <constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant>, <constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant>, <constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TOP_LEVEL_ARRAY_SIZE</constant></entry>
+                        <entry><constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TOP_LEVEL_ARRAY_STRIDE</constant></entry>
+                        <entry><constant>GL_BUFFER_VARIABLE</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_LOCATION</constant></entry>
+                        <entry><constant>GL_UNIFORM</constant>, <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant>,
+                                            <constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant>, <constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant>, <constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant>,
+                                            <constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant>, <constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_LOCATION_INDEX</constant></entry>
+                        <entry><constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_IS_PER_PATCH</constant></entry>
+                        <entry><constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_LOCATION_COMPONENT</constant></entry>
+                        <entry><constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TRANSFORM_FEEDBACK_BUFFER_INDEX</constant></entry>
+                        <entry><constant>GL_TRANSFORM_FEEDBACK_VARYING</constant></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE</constant></entry>
+                        <entry><constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+        <para>
+            For the property <constant>GL_NAME_LENGTH</constant>, a single integer identifying the length of
+            the name string associated with an active variable, interface block, or
+            subroutine is written to <parameter>params</parameter>.  The name length includes a terminating
+            null character.
+        </para>
+        <para>
+            For the property <constant>GL_TYPE</constant>, a single integer identifying the type of an active
+            variable is written to <parameter>params</parameter>.  The integer returned is one of the
+            values found in table 2.16.
+        </para>
+        <para>
+            For the property <constant>GL_ARRAY_SIZE</constant>, a single integer identifying the number of
+            active array elements of an active variable is written to <parameter>params</parameter>.  The
+            array size returned is in units of the type associated with the property
+            <constant>GL_TYPE</constant>.  For active variables not corresponding to an array of basic types,
+            the value zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_BLOCK_INDEX</constant>, a single integer identifying the index of
+            the active interface block containing an active variable is written to
+            <parameter>params</parameter>.  If the variable is not the member of an interface block, the
+            value -1 is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_OFFSET</constant>, a single integer identifying the offset of an
+            active variable is written to <parameter>params</parameter>.  For variables in the <constant>GL_UNIFORM</constant> and
+            <constant>GL_BUFFER_VARIABLE</constant> interfaces that are backed by a buffer object, the value
+            written is the offset of that variable relative to the base of the buffer
+            range holding its value.  For variables in the <constant>GL_TRANSFORM_FEEDBACK_VARYING</constant>
+            interface, the value written is the offset in the transform feedback
+            buffer storage assigned to each vertex captured in transform feedback mode
+            where the value of the variable will be stored.  Such offsets are
+            specified via the <code>xfb_offset</code> layout qualifier or assigned according to
+            the variables position in the list of strings passed to
+            <citerefentry><refentrytitle>glTransformFeedbackVaryings</refentrytitle></citerefentry>.  Offsets are expressed in basic machine units.
+            For all variables not recorded in transform feedback mode, including the
+            special names <code>"gl_NextBuffer"</code>, <code>"gl_SkipComponents1"</code>, <code>"gl_SkipComponents2"</code>,
+            <code>"gl_SkipComponents3"</code>, and <code>"gl_SkipComponents4"</code>, -1 is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_ARRAY_STRIDE</constant>, a single integer identifying the stride
+            between array elements in an active variable is written to <parameter>params</parameter>.  For
+            active variables declared as an array of basic types, the value written is
+            the difference, in basic machine units, between the offsets of consecutive
+            elements in an array.  For active variables not declared as an array of
+            basic types, zero is written to <parameter>params</parameter>.  For active variables not backed
+            by a buffer object, -1 is written to <parameter>params</parameter>, regardless of the variable
+            type.
+        </para>
+        <para>
+            For the property <constant>GL_MATRIX_STRIDE</constant>, a single integer identifying the stride
+            between columns of a column-major matrix or rows of a row-major matrix is
+            written to <parameter>params</parameter>.  For active variables declared a single matrix or
+            array of matrices, the value written is the difference, in basic machine
+            units, between the offsets of consecutive columns or rows in each matrix.
+            For active variables not declared as a matrix or array of matrices, zero
+            is written to <parameter>params</parameter>.  For active variables not backed by a buffer
+            object, -1 is written to <parameter>params</parameter>, regardless of the variable type.
+        </para>
+        <para>
+            For the property <constant>GL_IS_ROW_MAJOR</constant>, a single integer identifying whether an
+            active variable is a row-major matrix is written to <parameter>params</parameter>.  For active
+            variables backed by a buffer object, declared as a single matrix or array
+            of matrices, and stored in row-major order, one is written to <parameter>params</parameter>.
+            For all other active variables, zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_ATOMIC_COUNTER_BUFFER_INDEX</constant>, a single integer identifying
+            the index of the active atomic counter buffer containing an active
+            variable is written to <parameter>params</parameter>.  If the variable is not an atomic counter
+            uniform, the value -1 is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_BUFFER_BINDING</constant>, to index of the buffer binding point
+            associated with the active uniform block, shader storage block, atomic
+            counter buffer or transform feedback buffer is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_BUFFER_DATA_SIZE</constant>, then the implementation-dependent
+            minimum total buffer object size, in basic machine units, required to hold
+            all active variables associated with an active uniform block, shader
+            storage block, or atomic counter buffer is written to <parameter>params</parameter>.  If the
+            final member of an active shader storage block is array with no declared
+            size, the minimum buffer size is computed assuming the array was declared
+            as an array with one element.
+        </para>
+        <para>
+            For the property <constant>GL_NUM_ACTIVE_VARIABLES</constant>, the number of active variables
+            associated with an active uniform block, shader storage block, atomic
+            counter buffer or transform feedback buffer is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_ACTIVE_VARIABLES</constant>, an array of active variable indices
+            associated with an active uniform block, shader storage block, atomic
+            counter buffer or transform feedback buffer is written to <parameter>params</parameter>.  The number of values written to
+            <parameter>params</parameter> for an active resource is given by the value of the property
+            <constant>GL_NUM_ACTIVE_VARIABLES</constant> for the resource.
+        </para>
+        <para>
+            For the properties <constant>GL_REFERENCED_BY_VERTEX_SHADER</constant>,
+            <constant>GL_REFERENCED_BY_TESS_CONTROL_SHADER</constant>, <constant>GL_REFERENCED_BY_TESS_EVALUATION_SHADER</constant>,
+            <constant>GL_REFERENCED_BY_GEOMETRY_SHADER</constant>, <constant>GL_REFERENCED_BY_FRAGMENT_SHADER</constant>, and
+            <constant>GL_REFERENCED_BY_COMPUTE_SHADER</constant>, a single integer is written to <parameter>params</parameter>,
+            identifying whether the active resource is referenced by the vertex,
+            tessellation control, tessellation evaluation, geometry, or fragment
+            shaders, respectively, in the program object.  The value one is written to
+            <parameter>params</parameter> if an active variable is referenced by the corresponding shader,
+            or if an active uniform block, shader storage block, or atomic counter
+            buffer contains at least one variable referenced by the corresponding
+            shader.  Otherwise, the value zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_TOP_LEVEL_ARRAY_SIZE</constant>, a single integer identifying the
+            number of active array elements of the top-level shader storage block
+            member containing to the active variable is written to <parameter>params</parameter>.  If the
+            top-level block member is not declared as an array, the value one is
+            written to <parameter>params</parameter>.  If the top-level block member is an array with no
+            declared size, the value zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_TOP_LEVEL_ARRAY_STRIDE</constant>, a single integer identifying the
+            stride between array elements of the top-level shader storage block member
+            containing the active variable is written to <parameter>params</parameter>.  For top-level
+            block members declared as arrays, the value written is the difference, in
+            basic machine units, between the offsets of the active variable for
+            consecutive elements in the top-level array.  For top-level block members
+            not declared as an array, zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_LOCATION</constant>, a single integer identifying the assigned
+            location for an active uniform, input, output, or subroutine uniform
+            variable is written to <parameter>params</parameter>.  For input, output, or uniform variables
+            with locations specified by a layout qualifier, the specified location is
+            used.  For vertex shader input or fragment shader output variables without
+            a layout qualifier, the location assigned when a program is linked is
+            written to <parameter>params</parameter>.  For all other input and output variables, the value
+            -1 is written to <parameter>params</parameter>.  For uniforms in uniform blocks, the value -1
+            is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_LOCATION_INDEX</constant>, a single integer identifying the fragment
+            color index of an active fragment shader output variable is written to
+            <parameter>params</parameter>.  If the active variable is an output for a non-fragment shader,
+            the value -1 will be written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_IS_PER_PATCH</constant>, a single integer identifying whether the
+            input or output is a per-patch attribute.  If the active variable is a
+            per-patch attribute (declared with the <code>patch</code> qualifier), the value one
+            is written to <parameter>params</parameter>; otherwise, the value zero is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_LOCATION_COMPONENT</constant>, a single integer indicating the first
+            component of the location assigned to an active input or output variable
+            is written to <parameter>params</parameter>.  For input and output variables with a component
+            specified by a <code>layout</code> qualifier, the specified component is written.
+            For all other input and output variables, the value zero is written.
+        </para>
+        <para>
+            For the property <constant>GL_TRANSFORM_FEEDBACK_BUFFER_INDEX</constant>, a single integer
+            identifying the index of the active transform feedback buffer associated
+            with an active variable is written to <parameter>params</parameter>.  For variables
+            corresponding to the special names <code>"gl_NextBuffer"</code>, <code>"gl_SkipComponents1"</code>,
+            <code>"gl_SkipComponents2"</code>, <code>"gl_SkipComponents3"</code>, and <code>"gl_SkipComponents4"</code>, -1
+            is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            For the property <constant>GL_TRANSFORM_FEEDBACK_BUFFER_STRIDE</constant>, a single integer
+            identifying the stride, in basic machine units, between consecutive
+            vertices written to the transform feedback buffer is written to <parameter>params</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is
+            not the name of an existing program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>propCount</parameter> is
+            zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>programInterface</parameter>
+            is not one of the accepted interface types.
+        </para>
+        <para>
+            <constant>GL_INVLALID_ENUM</constant> is generated if any value in <parameter>props</parameter>
+            is not one of the accepted tokens for the interface <parameter>programInterface</parameter>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramResourceiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramResourceName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceLocation</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceLocationIndex</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

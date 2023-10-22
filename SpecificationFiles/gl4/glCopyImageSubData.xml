@@ -1,0 +1,382 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCopyImageSubData">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCopyImageSubData</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCopyImageSubData</refname>
+        <refpurpose>perform a raw data copy between two images</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCopyImageSubData</function></funcdef>
+                <paramdef>GLuint <parameter>srcName</parameter></paramdef>
+                <paramdef>GLenum <parameter>srcTarget</parameter></paramdef>
+                <paramdef>GLint <parameter>srcLevel</parameter></paramdef>
+                <paramdef>GLint <parameter>srcX</parameter></paramdef>
+                <paramdef>GLint <parameter>srcY</parameter></paramdef>
+                <paramdef>GLint <parameter>srcZ</parameter></paramdef>
+                <paramdef>GLuint <parameter>dstName</parameter></paramdef>
+                <paramdef>GLenum <parameter>dstTarget</parameter></paramdef>
+                <paramdef>GLint <parameter>dstLevel</parameter></paramdef>
+                <paramdef>GLint <parameter>dstX</parameter></paramdef>
+                <paramdef>GLint <parameter>dstY</parameter></paramdef>
+                <paramdef>GLint <parameter>dstZ</parameter></paramdef>
+                <paramdef>GLsizei <parameter>srcWidth</parameter></paramdef>
+                <paramdef>GLsizei <parameter>srcHeight</parameter></paramdef>
+                <paramdef>GLsizei <parameter>srcDepth</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>srcName</parameter></term>
+            <listitem>
+                <para>
+                    The name of a texture or renderbuffer object from which to copy.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcTarget</parameter></term>
+            <listitem>
+                <para>
+                    The target representing the namespace of the source name <parameter>srcName</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcLevel</parameter></term>
+            <listitem>
+                <para>
+                    The mipmap level to read from the source.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcX</parameter></term>
+            <listitem>
+                <para>
+                    The X coordinate of the left edge of the souce region to copy.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcY</parameter></term>
+            <listitem>
+                <para>
+                    The Y coordinate of the top edge of the souce region to copy.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcZ</parameter></term>
+            <listitem>
+                <para>
+                    The Z coordinate of the near edge of the souce region to copy.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstName</parameter></term>
+            <listitem>
+                <para>
+                    The name of a texture or renderbuffer object to which to copy.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstTarget</parameter></term>
+            <listitem>
+                <para>
+                    The target representing the namespace of the destination name <parameter>dstName</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstX</parameter></term>
+            <listitem>
+                <para>
+                    The X coordinate of the left edge of the destination region.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstY</parameter></term>
+            <listitem>
+                <para>
+                    The Y coordinate of the top edge of the destination region.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstZ</parameter></term>
+            <listitem>
+                <para>
+                    The Z coordinate of the near edge of the destination region.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcWidth</parameter></term>
+            <listitem>
+                <para>
+                    The width of the region to be copied.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcHeight</parameter></term>
+            <listitem>
+                <para>
+                    The height of the region to be copied.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcDepth</parameter></term>
+            <listitem>
+                <para>
+                    The depth of the region to be copied.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCopyImageSubData</function> may be used to copy data from
+            one image (i.e. texture or renderbuffer) to another. <function>glCopyImageSubData</function>
+            does not perform general-purpose conversions
+            such as scaling, resizing, blending, color-space, or format
+            conversions. It should be considered to operate in a manner
+            similar to a CPU memcpy. CopyImageSubData can copy between
+            images with different internal formats, provided
+            the formats are compatible.
+        </para>
+        <para>
+            <function>glCopyImageSubData</function> also allows copying between certain
+            types of compressed and uncompressed internal formats. This copy does not perform on-the-fly compression
+            or decompression. When copying from an uncompressed internal format
+            to a compressed internal format, each texel of uncompressed data
+            becomes a single block of compressed data. When copying from a
+            compressed internal format to an uncompressed internal format,
+            a block of compressed data becomes a single texel of uncompressed
+            data. The texel size of the uncompressed format must be the same
+            size the block size of the compressed formats. Thus it is permitted
+            to copy between a 128-bit uncompressed format and a compressed
+            format which uses 8-bit 4x4 blocks, or between a 64-bit uncompressed
+            format and a compressed format which uses 4-bit 4x4 blocks.
+        </para>
+        <para>
+            The source object is identified by <parameter>srcName</parameter> and
+            <parameter>srcTarget</parameter> and the destination object is identified
+            by <parameter>dstName</parameter> and <parameter>dstTarget</parameter>.
+            The interpretation of the name depends on the value
+            of the corresponding <parameter>target</parameter> parameter.
+            If <parameter>target</parameter> is
+            <constant>GL_RENDERBUFFER</constant>, the name is interpreted as the name of a
+            renderbuffer object.  If the target parameter is a texture target,
+            the name is interpreted as a texture object.  All non-proxy
+            texture targets are accepted, with the exception of <constant>GL_TEXTURE_BUFFER</constant>
+            and the cubemap face selectors.
+        </para>
+        <para>
+            <parameter>srcLevel</parameter> and <parameter>dstLevel</parameter> identify the source and destination
+            level of detail.  For textures, this must be a valid level of
+            detail in the texture object.  For renderbuffers, this value must
+            be zero.
+        </para>
+        <para>
+            <parameter>srcX</parameter>, <parameter>srcY</parameter>, and <parameter>srcZ</parameter> specify the lower left texel
+            coordinates of a <parameter>srcWidth</parameter>-wide by <parameter>srcHeight</parameter>-high by
+            <parameter>srcDepth</parameter>-deep rectangular subregion of the source texel array.
+            Similarly, <parameter>dstX</parameter>, <parameter>dstY</parameter> and <parameter>dstZ</parameter> specify the coordinates of a subregion of the
+            destination texel array.  The source and destination subregions
+            must be contained entirely within the specified level of the
+            corresponding image objects.
+        </para>
+        <para>
+            The dimensions are always specified in texels, even for compressed
+            texture formats. However, it should be noted that if only one of the
+            source and destination textures is compressed then the number of
+            texels touched in the compressed image will be a factor of the
+            block size larger than in the uncompressed image.
+        </para>
+        <para>
+            Slices of a <constant>GL_TEXTURE_1D_ARRAY</constant>, <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>
+            <constant>GL_TEXTURE_3D</constant> and faces of <constant>GL_TEXTURE_CUBE_MAP</constant> are all compatible provided
+            they share a compatible internal format, and multiple slices or faces
+            may be copied between these objects with a single call by specifying the
+            starting slice with <parameter>srcZ</parameter> and <parameter>dstZ</parameter>, and the number of slices to
+            be copied with <parameter>srcDepth</parameter>.  Cubemap textures always have six faces
+            which are selected by a zero-based face index.
+        </para>
+        <para>
+            For the purposes of CopyImageSubData, two internal formats are considered compatible if
+            any of the following conditions are met:
+
+            <itemizedlist>
+               <listitem>
+                    <para>
+                        the formats are the same,
+                    </para>
+               </listitem>
+               <listitem>
+                    <para>
+                        the formats are considered compatible according
+                        to the compatibility rules used for texture
+                        views as defined in section 3.9.X. In
+                        particular, if both internal formats are listed
+                        in the same entry of Table 3.X.2, they are
+                        considered compatible, or
+                    </para>
+               </listitem>
+               <listitem>
+                    <para>
+                        one format is compressed and the other is
+                        uncompressed and Table 4.X.1 lists the two
+                        formats in the same row.
+                    </para>
+               </listitem>
+            </itemizedlist>
+
+            If the formats are not compatible, an INVALID_OPERATION error is generated.
+        </para>
+<table><title>Sized Internal Formats</title>
+<tgroup cols="3" align="left">
+    <colspec colwidth="1*"/>
+    <colspec colwidth="2*"/>
+    <colspec colwidth="4*"/>
+    <thead>
+        <row>
+            <entry>
+                <emphasis role="bold"> Texel / Block Size </emphasis>
+            </entry>
+            <entry>
+                <emphasis role="bold"> Uncompressed Internal Format </emphasis>
+            </entry>
+            <entry>
+                <emphasis role="bold"> Compressed Internal Format(s) </emphasis>
+            </entry>
+        </row>
+    </thead>
+    <tbody>
+        <row>
+            <entry>64-bit</entry>
+            <entry><constant>GL_RGBA32UI</constant>, <constant>GL_RGBA32I</constant>, <constant>GL_RGBA32F</constant></entry>
+            <entry><constant>GL_COMPRESSED_RGBA_S3TC_DXT3_EXT</constant>,
+                   <constant>GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT</constant>,
+                   <constant>GL_COMPRESSED_RGBA_S3TC_DXT5_EXT</constant>,
+                   <constant>GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT</constant>,
+                   <constant>GL_COMPRESSED_RG_RGTC2</constant>,
+                   <constant>GL_COMPRESSED_SIGNED_RG_RGTC2</constant>,
+                   <constant>GL_COMPRESSED_RGBA_BPTC_UNORM</constant>,
+                   <constant>GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM</constant>,
+                   <constant>GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT</constant>,
+                   <constant>GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT</constant></entry>
+        </row>
+        <row>
+            <entry>128-bit</entry>
+            <entry><constant>GL_RGBA16UI</constant>,
+                   <constant>GL_RGBA16I</constant>,
+                   <constant>GL_RGBA16F</constant>,
+                   <constant>GL_RG32F</constant>,
+                   <constant>GL_RG32UI</constant>,
+                   <constant>GL_RG32I</constant>,
+                   <constant>GL_RGBA16</constant>,
+                   <constant>GL_RGBA16_SNORM</constant></entry>
+            <entry><constant>GL_COMPRESSED_RGB_S3TC_DXT1_EXT</constant>,
+                   <constant>GL_COMPRESSED_SRGB_S3TC_DXT1_EXT</constant>,
+                   <constant>GL_COMPRESSED_RGBA_S3TC_DXT1_EXT</constant>,
+                   <constant>GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT</constant>,
+                   <constant>GL_COMPRESSED_RED_RGTC1</constant>,
+                   <constant>GL_COMPRESSED_SIGNED_RED_RGTC1</constant></entry>
+        </row>
+    </tbody>
+</tgroup>
+</table>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the texel size of
+            the uncompressed image is not equal to the block size of the
+            compressed image.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if either target parameter is not <constant>GL_RENDERBUFFER</constant>,
+            a valid non-proxy texture target other than <constant>GL_TEXTURE_BUFFER</constant>, or is one
+            of the cubemap face selectors.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> does not match the type of the object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if either object is a texture and the texture is
+            not complete.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the source and
+            destination internal formats are not compatible, or if the number of samples do not match.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either name does not correspond to a
+            valid renderbuffer or texture object according to the corresponding
+            target parameter.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the specified level of either the source or destination is not
+            a valid level for the corresponding image.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the
+            dimensions of the either subregion exceeds the boundaries of the
+            corresponding image object, or if the image format is compressed
+            and the dimensions of the subregion fail to meet the alignment
+            constraints of the format.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_COMPUTE_WORK_GROUP_COUNT</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCopyImageSubData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDispatchComputeIndirect</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

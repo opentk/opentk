@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Enums
 {
     /// <summary>
     /// Context related client API attribute.
@@ -17,9 +17,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     {
         /// <summary>
         /// Indicates the client API provided by the window's context;
-        /// either <see cref="GraphicsLibraryFramework.ClientApi.OpenGlApi"/>,
-        /// <see cref="GraphicsLibraryFramework.ClientApi.OpenGlEsApi"/> or
-        /// <see cref="GraphicsLibraryFramework.ClientApi.NoApi"/>.
+        /// either <see cref="Enums.ClientApi.OpenGlApi"/>,
+        /// <see cref="Enums.ClientApi.OpenGlEsApi"/> or
+        /// <see cref="Enums.ClientApi.NoApi"/>.
         /// </summary>
         ClientApi = 0x00022001,
     }

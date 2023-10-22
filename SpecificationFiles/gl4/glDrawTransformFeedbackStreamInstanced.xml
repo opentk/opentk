@@ -1,0 +1,156 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawTransformFeedbackStreamInstanced">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawTransformFeedbackStreamInstanced</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawTransformFeedbackStreamInstanced</refname>
+        <refpurpose>render multiple instances of primitives using a count derived from a specifed stream of a transform feedback object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawTransformFeedbackStreamInstanced</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLuint <parameter>stream</parameter></paramdef>
+                <paramdef>GLsizei <parameter>instancecount</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, and
+                    <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a transform feedback object from which to retrieve a primitive count.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stream</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the transform feedback stream from which to retrieve a primitive count.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>instancecount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of instances of the geometry to render.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDrawTransformFeedbackStreamInstanced</function> draws multiple copies of a range of primitives of a type specified by <parameter>mode</parameter> using
+            a count retrieved from the transform feedback stream specified by <parameter>stream</parameter> of the transform feedback object
+            specified by <parameter>id</parameter>. Calling <function>glDrawTransformFeedbackStreamInstanced</function>
+            is equivalent to calling <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry> with <parameter>mode</parameter>
+            and <parameter>instancecount</parameter> as specified, <parameter>first</parameter> set to zero, and <parameter>count</parameter> set to the number of vertices captured
+            on vertex stream <parameter>stream</parameter> the last time transform feedback was active on the transform feedback object named
+            by <parameter>id</parameter>.
+        </para>
+        <para>
+            Calling <citerefentry><refentrytitle>glDrawTransformFeedbackInstanced</refentrytitle></citerefentry> is equivalent to calling <function>glDrawTransformFeedbackStreamInstanced</function>
+            with <parameter>stream</parameter> set to zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>id</parameter> is not the name of a transform feedback
+            object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>stream</parameter> is greater than or equal to
+            the value of <constant>GL_MAX_VERTEX_STREAMS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mode</parameter> is <constant>GL_PATCHES</constant>
+            and no tessellation control shader is active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>
+            has never been called while the transform feedback object named by <parameter>id</parameter> was bound.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDrawTransformFeedbackStreamInstanced</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='42']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawTransformFeedbackStream</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

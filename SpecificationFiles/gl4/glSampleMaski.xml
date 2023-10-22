@@ -1,0 +1,102 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glSampleMaski">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glSampleMaski</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glSampleMaski</refname>
+        <refpurpose>set the value of a sub-word of the sample mask</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSampleMaski</function></funcdef>
+                <paramdef>GLuint <parameter>maskNumber</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>maskNumber</parameter></term>
+            <listitem>
+                <para>
+                    Specifies which 32-bit sub-word of the sample mask to update.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mask</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the new value of the mask sub-word.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glSampleMaski</function> sets one 32-bit sub-word of the multi-word sample mask, <constant>GL_SAMPLE_MASK_VALUE</constant>.
+        </para>
+        <para>
+            <parameter>maskIndex</parameter> specifies which 32-bit sub-word of the sample mask to update, and <parameter>mask</parameter> specifies
+            the new value to use for that sub-word. <parameter>maskIndex</parameter> must be less than the value of
+            <constant>GL_MAX_SAMPLE_MASK_WORDS</constant>. Bit <emphasis>B</emphasis> of mask word <emphasis>M</emphasis> corresponds to sample
+            32 x <emphasis>M</emphasis> + <emphasis>B</emphasis>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glSampleMaski</function> is available only if the GL version is 3.2 or greater, or if the <code>ARB_texture_multisample</code>
+            extension is supported.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>maskIndex</parameter> is greater than or equal to the value
+            of <constant>GL_MAX_SAMPLE_MASK_WORDS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glSampleMaski</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorageMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteRenderbuffers</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,103 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexArrayElementBuffer">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexArrayElementBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexArrayElementBuffer</refname>
+        <refpurpose>configures element array buffer binding of a vertex array object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glVertexArrayElementBuffer</function></funcdef>
+                <paramdef>GLuint <parameter>vaobj</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>vaobj</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies the name of the vertex array object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>buffer</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies the name of the buffer object to use for the element array buffer binding.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glVertexArrayElementBuffer</function> binds a buffer object with id <parameter>buffer</parameter>
+            to the element array buffer bind point of a vertex array object with id <parameter>vaobj</parameter>.
+            If <parameter>buffer</parameter> is zero, any existing element array buffer binding to <parameter>vaobj</parameter>
+            is removed.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+    <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>.
+    </para>
+    <para>
+        <citerefentry><refentrytitle>glGetVertexArrayiv</refentrytitle></citerefentry>
+        with argument <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>.
+    </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> error is generated if <parameter>vaobj</parameter> is not the name
+            of an existing vertex array object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> error is generated if <parameter>buffer</parameter> is not zero or
+            the name of an existing buffer object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexArrayElementBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetVertexArrayiv</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

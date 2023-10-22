@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,9 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.X11.XScreenSaver;
 
 namespace OpenTK.Platform.Native.X11
@@ -112,7 +114,7 @@ namespace OpenTK.Platform.Native.X11
                             break;
                         case "Full\n":
                             break;
-                        default: 
+                        default:
                             // We couldn't read the status or the status is not one that we recognize.
                             break;
                     }
@@ -143,7 +145,7 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     string? timeToEmptyNowStr = ReadPowerFile(dir, "time_to_empty_now");
-                    if (timeToEmptyNowStr != null && 
+                    if (timeToEmptyNowStr != null &&
                         int.TryParse(timeToEmptyNowStr, out int timeToEmptyNow))
                     {
                         batteryTime = timeToEmptyNow;
@@ -177,7 +179,7 @@ namespace OpenTK.Platform.Native.X11
 
             static string? ReadPowerFile(string name, string key)
             {
-                try 
+                try
                 {
                     return File.ReadAllText(Path.Combine("/sys/class/power_supply/",  name, key));
                 }

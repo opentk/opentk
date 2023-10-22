@@ -1,7 +1,5 @@
 * text eol=auto
-*.fs text
 *.cs text
-*.fsproj text
 *.csproj text
 *.sln text
 *.config text

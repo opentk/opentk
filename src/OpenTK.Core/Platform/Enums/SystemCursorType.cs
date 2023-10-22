@@ -1,4 +1,4 @@
-﻿namespace OpenTK.Core.Platform
+﻿namespace OpenTK.Core.Platform.Enums
 {
     // FIXME: Better documentation string.
     // FIXME: Maybe start the enum values at 0?

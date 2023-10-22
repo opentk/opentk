@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glRotate">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glRotate</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refdescriptor>glRotate</refdescriptor>
+	<refname>glRotatef</refname>
+	<refname>glRotatex</refname>
+	<refpurpose>multiply the current matrix by a rotation matrix</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glRotatef</function></funcdef>
+		<paramdef>GLfloat <parameter>angle</parameter></paramdef>
+		<paramdef>GLfloat <parameter>x</parameter></paramdef>
+		<paramdef>GLfloat <parameter>y</parameter></paramdef>
+		<paramdef>GLfloat <parameter>z</parameter></paramdef>
+	    </funcprototype>
+	    <funcprototype>
+		<funcdef>void <function>glRotatex</function></funcdef>
+		<paramdef>GLfixed <parameter>angle</parameter></paramdef>
+		<paramdef>GLfixed <parameter>x</parameter></paramdef>
+		<paramdef>GLfixed <parameter>y</parameter></paramdef>
+		<paramdef>GLfixed <parameter>z</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		    <parameter>angle</parameter>
+		</term>
+
+		<listitem>
+		    <para>Specifies the angle of rotation, in degrees.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		<parameter>x</parameter>,
+		<parameter>y</parameter>,
+		<parameter>z</parameter>
+		</term>
+
+		<listitem>
+		    <para>Specify the
+		    <parameter>x</parameter>,
+		    <parameter>y</parameter>, and
+		    <parameter>z</parameter>
+		    coordinates of a vector, respectively.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para><function>glRotate</function> produces a rotation of
+	<parameter>angle</parameter> degrees around the vector
+	<inlineequation><mml:math>
+	    <mml:mfenced><mml:mi>x</mml:mi><mml:mi>y</mml:mi><mml:mi>z</mml:mi></mml:mfenced>
+	</mml:math></inlineequation>.
+	The current matrix (see
+	<citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>)
+	is multiplied by a rotation matrix with the product replacing
+	the current matrix, as if
+	<citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry>
+	were called with the following matrix as its argument:</para>
+
+	<informalequation><mml:math>
+	    <mml:mrow>
+		<mml:mo>(</mml:mo>
+		<mml:mtable class="matrix">
+		    <mml:mtr>
+			<mml:mtd>
+			    <mml:msup><mml:mi>x</mml:mi><mml:mn>2</mml:mn></mml:msup>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>c</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:mi>x</mml:mi><mml:mn>y</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo><mml:mi>z</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:mi>x</mml:mi><mml:mn>z</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>y</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+		    </mml:mtr>
+		    <mml:mtr>
+			<mml:mtd>
+			    <mml:mi>x</mml:mi><mml:mn>y</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>z</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:msup><mml:mi>y</mml:mi><mml:mn>2</mml:mn></mml:msup>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>c</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:mi>y</mml:mi><mml:mn>z</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo><mml:mi>x</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+		    </mml:mtr>
+		    <mml:mtr>
+			<mml:mtd>
+			    <mml:mi>x</mml:mi><mml:mn>z</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo><mml:mi>y</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:mi>y</mml:mi><mml:mn>z</mml:mn>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>x</mml:mi><mml:mi>s</mml:mi>
+			</mml:mtd>
+			<mml:mtd>
+			    <mml:msup><mml:mi>z</mml:mi><mml:mn>2</mml:mn></mml:msup>
+			    <mml:mo>(</mml:mo><mml:mn>1</mml:mn><mml:mo>-</mml:mo><mml:mi>c</mml:mi><mml:mo>)</mml:mo>
+			    <mml:mo>+</mml:mo><mml:mi>c</mml:mi>
+			</mml:mtd>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+		    </mml:mtr>
+		    <mml:mtr>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+			<mml:mtd><mml:mn>0</mml:mn></mml:mtd>
+			<mml:mtd><mml:mn>1</mml:mn></mml:mtd>
+		    </mml:mtr>
+		</mml:mtable>
+		<mml:mo>)</mml:mo>
+	    </mml:mrow>
+	</mml:math></informalequation>
+
+	<para>Where
+	<inlineequation><mml:math>
+	    <mml:mi>c</mml:mi><mml:mo>=</mml:mo><mml:mo>cos</mml:mo><mml:mfenced><mml:mi>angle</mml:mi></mml:mfenced>
+	</mml:math></inlineequation>,
+	<inlineequation><mml:math>
+	    <mml:mi>s</mml:mi><mml:mo>=</mml:mo><mml:mo>sin</mml:mo><mml:mfenced><mml:mi>angle</mml:mi></mml:mfenced>
+	</mml:math></inlineequation>,
+	and
+	<inlineequation><mml:math>
+	    <mml:mo>||</mml:mo><mml:mfenced><mml:mi>x</mml:mi><mml:mi>y</mml:mi><mml:mi>z</mml:mi></mml:mfenced><mml:mo>||</mml:mo>
+	    <mml:mo>=</mml:mo><mml:mn>1</mml:mn>
+	</mml:math></inlineequation>,
+	(if not, the GL will normalize this vector).</para>
+	<para>If the matrix mode is either <constant>GL_MODELVIEW</constant> or
+	<constant>GL_PROJECTION</constant>, all objects drawn after
+	<function>glRotate</function> is called are rotated. Use
+	<citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>
+	and
+	<citerefentry><refentrytitle>glPopMatrix</refentrytitle></citerefentry>
+	to save and restore the unrotated coordinate system.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+	<para>This rotation follows the right-hand rule, so if the vector
+	<inlineequation><mml:math>
+	    <mml:mfenced><mml:mi>x</mml:mi><mml:mi>y</mml:mi><mml:mi>z</mml:mi></mml:mfenced>
+	</mml:math></inlineequation>
+	points toward the user, the rotation will be counterclockwise.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MODELVIEW_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROJECTION_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_MATRIX</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	<citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glScale</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glTranslate</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>

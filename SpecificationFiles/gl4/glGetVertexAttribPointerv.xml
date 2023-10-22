@@ -1,0 +1,117 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetVertexAttribPointerv">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetVertexAttribPointerv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetVertexAttribPointerv</refname>
+        <refpurpose>return the address of the specified generic vertex attribute pointer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glGetVertexAttribPointerv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+        <paramdef>void **<parameter>pointer</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>index</parameter></term>
+        <listitem>
+            <para>Specifies the generic vertex attribute
+            parameter to be returned.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>pname</parameter></term>
+        <listitem>
+            <para>Specifies the symbolic name of the generic
+            vertex attribute parameter to be returned. Must be
+            <constant>GL_VERTEX_ATTRIB_ARRAY_POINTER</constant>.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>pointer</parameter></term>
+        <listitem>
+            <para>Returns the pointer value.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glGetVertexAttribPointerv</function> returns
+    pointer information. <parameter>index</parameter> is the generic
+    vertex attribute to be queried, <parameter>pname</parameter> is
+    a symbolic constant indicating the pointer to be returned, and
+    <parameter>params</parameter> is a pointer to a location in
+    which to place the returned data.</para>
+
+    <para>The <parameter>pointer</parameter> returned is a byte offset into the data store of the buffer object
+    that was bound to the <constant>GL_ARRAY_BUFFER</constant> target
+    (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) when the desired pointer was previously specified.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para>The state returned is retrieved from the currently bound vertex array object.</para>
+    <para>The initial value for each pointer is 0.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if no vertex array object is currently bound.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant>
+    is generated if <parameter>index</parameter>
+    is greater than or equal to <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant>
+    is generated if <parameter>pname</parameter>
+    is not an accepted value.</para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_MAX_VERTEX_ATTRIBS</constant></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetVertexAttribPointerv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

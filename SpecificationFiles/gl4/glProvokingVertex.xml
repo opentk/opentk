@@ -1,0 +1,237 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glProvokingVertex">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glProvokingVertex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glProvokingVertex</refname>
+        <refpurpose>specifiy the vertex to be used as the source of data for flat shaded varyings</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glProvokingVertex</function></funcdef>
+                <paramdef>GLenum <parameter>provokeMode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>provokeMode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the vertex to be used as the source of data for flat shaded varyings.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <emphasis>Flatshading</emphasis> a vertex shader varying output means to assign all vetices of the primitive the same value
+            for that output. The vertex from which these values is derived is known as the <emphasis>provoking vertex</emphasis> and
+            <function>glProvokingVertex</function> specifies which vertex is to be used as the source of data for flat shaded varyings.
+        </para>
+        <para>
+            <parameter>provokeMode</parameter> must be either <constant>GL_FIRST_VERTEX_CONVENTION</constant> or
+            <constant>GL_LAST_VERTEX_CONVENTION</constant>, and controls the selection of the vertex whose values are assigned to flatshaded
+            varying outputs. The interpretation of these values for the supported primitive types is:
+            <informaltable>
+                <tgroup cols="3" align="left">
+                    <colspec colwidth="1.1*"/>
+                    <colspec colwidth="1*"/>
+                    <colspec colwidth="1*"/>
+                    <thead>
+                        <row>
+                            <entry>
+                                <emphasis role="bold"> Primitive Type of Polygon <emphasis>i</emphasis> </emphasis>
+                            </entry>
+                                <entry><emphasis role="bold"> First Vertex Convention </emphasis>
+                            </entry>
+                            <entry>
+                                <emphasis role="bold"> Last Vertex Convention </emphasis>
+                            </entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>
+                                point
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis>
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                independent line
+                            </entry>
+                            <entry>
+                                2<emphasis>i</emphasis> - 1
+                            </entry>
+                            <entry>
+                                2<emphasis>i</emphasis>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                line loop
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis>
+                            </entry>
+                            <entry>
+                                <para>
+                                <emphasis>i</emphasis> + 1, if <emphasis>i</emphasis> &lt; <emphasis>n</emphasis>
+                                </para>
+                                <para>
+                                1, if <emphasis>i</emphasis> = <emphasis>n</emphasis>
+                                </para>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                line strip
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis>
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 1
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                independent triangle
+                            </entry>
+                            <entry>
+                                3<emphasis>i</emphasis> - 2
+                            </entry>
+                            <entry>
+                                3<emphasis>i</emphasis>
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                triangle strip
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis>
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 2
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                triangle fan
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 1
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 2
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                line adjacency
+                            </entry>
+                            <entry>
+                                4<emphasis>i</emphasis> - 2
+                            </entry>
+                            <entry>
+                                4<emphasis>i</emphasis> - 1
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                line strip adjacency
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 1
+                            </entry>
+                            <entry>
+                                <emphasis>i</emphasis> + 2
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                triangle adjacency
+                            </entry>
+                            <entry>
+                                6<emphasis>i</emphasis> - 5
+                            </entry>
+                            <entry>
+                                6<emphasis>i</emphasis> - 1
+                            </entry>
+                        </row>
+                        <row>
+                            <entry>
+                                triangle strip adjacency
+                            </entry>
+                            <entry>
+                                2<emphasis>i</emphasis> - 1
+                            </entry>
+                            <entry>
+                                2<emphasis>i</emphasis> + 3
+                            </entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </informaltable>
+        </para>
+        <para>
+            If a vertex or geometry shader is active, user-defined varying outputs may be flatshaded by using the
+            <code>flat</code> qualifier when declaring the output.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glProvokingVertex</function> is available only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>provokeMode</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glProvokingVertex</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

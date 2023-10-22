@@ -1,0 +1,258 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBeginQueryIndexed">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBeginQueryIndexed, glEndQueryIndexed</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBeginQueryIndexed, glEndQueryIndexed</refname>
+        <refpurpose>delimit the boundaries of a query object on an indexed target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBeginQueryIndexed</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEndQueryIndexed</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters for <function>glBeginQueryIndexed</function></title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target type of query object established between
+                    <function>glBeginQueryIndexed</function> and the subsequent <!-- FIX: link to glBeginQueryIndexed --> <function>glEndQueryIndexed</function>.
+                    The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
+                    <constant>GL_TIME_ELAPSED</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the query target upon which to begin the query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a query object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="parameters2"><title>Parameters for <function>glEndQueryIndexed</function></title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target type of query object to be concluded.
+                    The symbolic constant must be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>,
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or
+                    <constant>GL_TIME_ELAPSED</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the query target upon which to end the query.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBeginQueryIndexed</function> and <!-- FIX: link to glBeginQueryIndexed --> <function>glEndQueryIndexed</function> delimit the
+            boundaries of a query object.  <parameter>query</parameter> must be a name previously returned from a call to
+            <citerefentry><refentrytitle>glGenQueries</refentrytitle></citerefentry>. If a query object with name <parameter>id</parameter>
+            does not yet exist it is created with the type determined by <parameter>target</parameter>. <parameter>target</parameter> must
+            be one of <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>, <constant>GL_PRIMITIVES_GENERATED</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, or <constant>GL_TIME_ELAPSED</constant>. The behavior of the query
+            object depends on its type and is as follows.
+        </para>
+        <para>
+            <parameter>index</parameter> specifies the index of the query target and must be between a <parameter>target</parameter>-specific
+            maximum.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>id</parameter> must be an unused name,
+            or the name of an existing occlusion query object.
+            When <function>glBeginQueryIndexed</function> is executed, the query object's samples-passed counter is reset to 0.  Subsequent
+            rendering will increment the counter for every sample that passes the depth test.  If the value of <constant>GL_SAMPLE_BUFFERS</constant>
+            is 0, then the samples-passed count is incremented by 1 for each fragment. If the value of <constant>GL_SAMPLE_BUFFERS</constant>
+            is 1, then the samples-passed count is incremented by the number of samples whose coverage bit is set. However, implementations, at their
+            discression may instead increase the samples-passed count by the value of <constant>GL_SAMPLES</constant> if any sample in the fragment
+            is covered. When <function>glEndQueryIndexed</function>
+            is executed, the samples-passed counter is assigned to the query object's result value.  This value can be queried by
+            calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+            When <parameter>target</parameter> is <constant>GL_SAMPLES_PASSED</constant>, <parameter>index</parameter> must be zero.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>id</parameter> must be an unused name,
+            or the name of an existing boolean occlusion query object.
+            When <function>glBeginQueryIndexed</function> is executed, the query object's samples-passed flag is reset to <constant>GL_FALSE</constant>.
+            Subsequent rendering causes the flag to be set to <constant>GL_TRUE</constant> if any sample passes the depth test.  When
+            <function>glEndQueryIndexed</function> is executed, the samples-passed flag is assigned to the query object's result value.  This value can
+            be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+            When <parameter>target</parameter> is <constant>GL_ANY_SAMPLES_PASSED</constant>, <parameter>index</parameter> must be zero.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>id</parameter> must be an unused
+            name, or the name of an existing primitive query object previously bound to the <constant>GL_PRIMITIVES_GENERATED</constant> query binding.
+            When <function>glBeginQueryIndexed</function> is executed, the query object's primitives-generated counter is reset to 0.  Subsequent
+            rendering will increment the counter once for every vertex that is emitted from the geometry shader to the stream given by <parameter>index</parameter>,
+            or from the vertex shader if <parameter>index</parameter> is zero and no geometry shader is present.
+            When <function>glEndQueryIndexed</function> is executed, the primitives-generated counter for stream <parameter>index</parameter> is assigned to
+            the query object's result value.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry>
+            with <parameter>pname</parameter> <constant>GL_QUERY_RESULT</constant>.
+            When <parameter>target</parameter> is <constant>GL_PRIMITIVES_GENERATED</constant>, <parameter>index</parameter> must be
+            less than the value of <constant>GL_MAX_VERTEX_STREAMS</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>id</parameter> must be
+            an unused name, or the name of an existing primitive query object previously bound to the <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>
+            query binding. When <function>glBeginQueryIndexed</function> is executed, the query object's primitives-written counter for the stream specified by
+            <parameter>index</parameter> is reset to 0.  Subsequent rendering will increment the counter once for every vertex that is written into the bound
+            transform feedback buffer(s) for stream <parameter>index</parameter>.  If transform feedback
+            mode is not activated between the call to <function>glBeginQueryIndexed</function> and <function>glEndQueryIndexed</function>, the counter will not be
+            incremented.  When <function>glEndQueryIndexed</function> is executed, the primitives-written counter for stream <parameter>index</parameter> is assigned to
+            the query object's result value.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+            When <parameter>target</parameter> is <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>, <parameter>index</parameter> must be
+            less than the value of <constant>GL_MAX_VERTEX_STREAMS</constant>.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>id</parameter> must be
+            an unused name, or the name of an existing timer query object previously bound to the <constant>GL_TIME_ELAPSED</constant>
+            query binding. When <function>glBeginQueryIndexed</function> is executed, the query object's time counter is reset to 0.  When <function>glEndQueryIndexed</function>
+            is executed, the elapsed server time that has passed since the call to <function>glBeginQueryIndexed</function> is written into the query object's
+            time counter.  This value can be queried by calling <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry> with <parameter>pname</parameter>
+            <constant>GL_QUERY_RESULT</constant>.
+            When <parameter>target</parameter> is <constant>GL_TIME_ELAPSED</constant>, <parameter>index</parameter> must be zero.
+        </para>
+        <para>
+            Querying the <constant>GL_QUERY_RESULT</constant> implicitly flushes the GL pipeline until the rendering delimited by the
+            query object has completed and the result is available.  <constant>GL_QUERY_RESULT_AVAILABLE</constant> can be queried to
+            determine if the result is immediately available or if the rendering is not yet complete.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If the query target's count exceeds the maximum value representable in the number of available bits, as reported by
+            <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry> with <parameter>target</parameter> set to the
+            appropriate query target and <parameter>pname</parameter>
+            <constant>GL_QUERY_COUNTER_BITS</constant>, the count becomes undefined.
+        </para>
+        <para>
+            An implementation may support 0 bits in its counter, in which case query results are always undefined
+            and essentially useless.
+        </para>
+        <para>
+            When <constant>GL_SAMPLE_BUFFERS</constant> is 0, the samples-passed counter of an occlusion query will increment once for each
+            fragment that passes the depth test.  When <constant>GL_SAMPLE_BUFFERS</constant> is 1, an implementation may either increment
+            the samples-passed counter individually for each sample of a fragment that passes the depth test, or it may choose to increment
+            the counter for all samples of a fragment if any one of them passes the depth test.
+        </para>
+        <para>
+            Calling <citerefentry><refentrytitle>glBeginQuery</refentrytitle></citerefentry> or
+            <!-- FIX: link to glBeginQuery --> <function>glEndQuery</function> is equivalent to
+            calling <citerefentry><refentrytitle>glBeginQueryIndexed</refentrytitle></citerefentry> or
+            <!-- FIX: link to glBeginQueryIndexed --> <function>glEndQueryIndexed</function> with
+            <parameter>index</parameter> set to zero, respectively.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the accepted tokens.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater than the
+            query target-specific maximum.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBeginQueryIndexed</function> is executed while
+            a query object of the same <parameter>target</parameter> is already active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <!-- FIX: link to glBeginQueryIndexed --> <function>glEndQueryIndexed</function>
+            is executed when a query object of the same <parameter>target</parameter> is not active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of an already active query object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> refers to an existing query object whose type
+            does not does not match <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBeginQueryIndexed</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glEndQueryIndexed</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBeginQuery</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteQueries</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginQuery --> <function>glEndQuery</function>,
+            <citerefentry><refentrytitle>glGenQueries</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsQuery</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,124 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glStencilMaskSeparate">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glStencilMaskSeparate</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glStencilMaskSeparate</refname>
+        <refpurpose>control the front and/or back writing of individual bits in the stencil planes</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glStencilMaskSeparate</function></funcdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+                <paramdef>GLuint <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>face</parameter></term>
+            <listitem>
+                <para>
+                    Specifies whether the front and/or back stencil writemask is updated.
+                    Three symbolic constants are valid:
+                    <constant>GL_FRONT</constant>,
+                    <constant>GL_BACK</constant>, and
+                    <constant>GL_FRONT_AND_BACK</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mask</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a bit mask to enable and disable writing of individual bits
+                    in the stencil planes.
+                    Initially, the mask is all 1's.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glStencilMaskSeparate</function> controls the writing of individual bits in the stencil planes.
+            The least significant
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            bits of <parameter>mask</parameter>,
+            where
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            is the number of bits in the stencil buffer,
+            specify a mask.
+            Where a 1 appears in the mask,
+            it's possible to write to the corresponding bit in the stencil buffer.
+            Where a 0 appears,
+            the corresponding bit is write-protected.
+            Initially, all bits are enabled for writing.
+        </para>
+        <para>
+            There can be two separate <parameter>mask</parameter> writemasks; one affects back-facing polygons, and the other
+            affects front-facing polygons as well as other non-polygon primitives.
+            <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry> sets both front
+            and back stencil writemasks to the same values, as if
+            <citerefentry><refentrytitle>glStencilMaskSeparate</refentrytitle></citerefentry> were called
+            with <parameter>face</parameter> set to <constant>GL_FRONT_AND_BACK</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>face</parameter> is not one of the accepted tokens.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_STENCIL_WRITEMASK</constant>, <constant>GL_STENCIL_BACK_WRITEMASK</constant>,
+            or <constant>GL_STENCIL_BITS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glStencilMaskSeparate</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFuncSeparate</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOpSeparate</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2006 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

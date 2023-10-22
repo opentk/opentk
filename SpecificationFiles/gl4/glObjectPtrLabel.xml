@@ -1,0 +1,115 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glObjectPtrLabel">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glObjectPtrLabel</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glObjectPtrLabel</refname>
+        <refpurpose>label a sync object identified by a pointer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glObjectPtrLabel</function></funcdef>
+                <paramdef>void * <parameter>ptr</parameter></paramdef>
+                <paramdef>GLsizei <parameter>length</parameter></paramdef>
+                <paramdef>const char * <parameter>label</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>ptr</parameter></term>
+            <listitem>
+                <para>
+                    A pointer identifying a sync object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The length of the label to be used for the object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>label</parameter></term>
+            <listitem>
+                <para>
+                    The address of a string containing the label to assign to the object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glObjectPtrLabel</function> labels the sync object identified by
+            <parameter>ptr</parameter>.
+        </para>
+        <para>
+            <parameter>label</parameter> is the address of a string that will be used to label the object.
+            <parameter>length</parameter> contains the number of characters in <parameter>label</parameter>.
+            If <parameter>length</parameter> is negative, it is implied that
+            <parameter>label</parameter> contains a null-terminated string. If <parameter>label</parameter>
+            is NULL, any debug label is effectively removed from the object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>ptr</parameter> is not
+            a valid sync object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the number of characters in
+            <parameter>label</parameter>, excluding the null terminator when <parameter>length</parameter>
+            is negative, is greater than the value of <constant>GL_MAX_LABEL_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_LABEL_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glObjectPtrLabel</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPushDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPopDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectLabel</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native
 {

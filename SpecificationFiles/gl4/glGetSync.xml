@@ -1,0 +1,143 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetSync">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetSynciv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetSynciv</refname>
+        <refpurpose>query the properties of a sync object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetSynciv</function></funcdef>
+                <paramdef>GLsync <parameter>sync</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLint *<parameter>values</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sync</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the sync object whose properties to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the parameter whose value to retrieve from the sync object specified in <parameter>sync</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the buffer whose address is given in <parameter>values</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an variable to receive the number of integers placed in <parameter>values</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>values</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array to receive the values of the queried parameter.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetSynciv</function> retrieves properties of a sync object. <parameter>sync</parameter> specifies the name of the sync
+            object whose properties to retrieve.
+        </para>
+        <para>
+            On success, <function>glGetSynciv</function> replaces up to <parameter>bufSize</parameter> integers in <parameter>values</parameter> with the
+            corresponding property values of the object being queried.  The actual number of integers replaced is returned in the variable whose address is
+            specified in <parameter>length</parameter>. If <parameter>length</parameter> is <code>NULL</code>, no length is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_OBJECT_TYPE</constant>, a single value representing the specific type of the sync object is
+            placed in <parameter>values</parameter>. The only type supported is <constant>GL_SYNC_FENCE</constant>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SYNC_STATUS</constant>, a single value representing the status of the sync object
+            (<constant>GL_SIGNALED</constant> or <constant>GL_UNSIGNALED</constant>) is placed in <parameter>values</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SYNC_CONDITION</constant>, a single value representing the condition of the sync object
+            is placed in <parameter>values</parameter>. The only condition supported is <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SYNC_FLAGS</constant>, a single value representing the flags with which the sync object
+            was created is placed in <parameter>values</parameter>. No flags are currently supported<footnote><para><parameter>flags</parameter> is
+            expected to be used in future extensions to the sync objects.</para></footnote>.
+        </para>
+        <para>
+            If an error occurs, nothing will be written to <parameter>values</parameter> or <parameter>length</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sync</parameter> is not the name of a sync object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one of the accepted tokens.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetSynciv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

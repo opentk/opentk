@@ -13,6 +13,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Core;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Enums;
+using OpenTK.Windowing.Common.Events;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace OpenTK.Windowing.Desktop

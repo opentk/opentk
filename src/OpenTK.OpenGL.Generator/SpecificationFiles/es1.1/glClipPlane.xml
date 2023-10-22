@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+"http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glClipPlane">
+  <refmeta>
+    <refmetainfo>
+      <copyright>
+        <year>2003-2004</year>
+
+        <holder>Silicon Graphics, Inc.</holder>
+      </copyright>
+    </refmetainfo>
+
+    <refentrytitle>glClipPlane</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+	<refdescriptor>glClipPlane</refdescriptor>
+    <refname>glClipPlanef</refname>
+    <refname>glClipPlanex</refname>
+
+    <refpurpose>specify a plane against which all geometry is
+    clipped</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glClipPlanef</function></funcdef>
+
+        <paramdef>GLenum <parameter>plane</parameter></paramdef>
+
+        <paramdef>const GLfloat *<parameter>equation</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glClipPlanex</function></funcdef>
+
+        <paramdef>GLenum <parameter>plane</parameter></paramdef>
+
+        <paramdef>const GLfixed *<parameter>equation</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id="parameters"><title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>plane</parameter></term>
+
+        <listitem>
+          <para>Specifies which clipping plane is being positioned. Symbolic
+          names of the form <constant>GL_CLIP_PLANE</constant><emphasis>i</emphasis>, 
+          where <emphasis>i</emphasis> is an integer
+          between 0 and <constant>GL_MAX_CLIP_PLANES</constant>
+          <inlineequation>
+              <mml:math>
+                <!-- eqn: - 1:-->
+
+                <mml:mn>-1</mml:mn>
+              </mml:math>
+            </inlineequation>, are accepted.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>equation</parameter></term>
+
+        <listitem>
+          <para>Specifies the address of an array of four fixed-point or
+          floating-point values. These are the coefficients of a plane
+          equation in object coordinates: <emphasis>p1</emphasis>,
+          <emphasis>p2</emphasis>, <emphasis>p3</emphasis>, and
+          <emphasis>p4</emphasis>, in that order.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id="description"><title>Description</title>
+
+    <para>Geometry is always clipped against the boundaries of a six-plane
+    frustum in x, y, and z. <function>glClipPlane</function> allows the
+    specification of additional planes, not necessarily perpendicular to the
+    x, y, or z axis, against which all geometry is clipped. To determine the
+    maximum number of additional clipping planes, call <citerefentry>
+        <refentrytitle>glGet</refentrytitle>
+      </citerefentry> with argument <constant>GL_MAX_CLIP_PLANES</constant>.
+    All implementations support at least one such clipping plane. Because the
+    resulting clipping region is the intersection of the defined half-spaces,
+    it is always convex.</para>
+
+    <para><function>glClipPlane</function> specifies a half-space using a
+    four-component plane equation. When <function>glClipPlane</function> is
+    called, the coefficients given by <parameter>equation</parameter> are
+    transformed by the inverse of the modelview matrix and stored in the
+    resulting eye coordinates. The resulting plane equation is undefined, if
+    the model-view matrix <emphasis>M</emphasis> is singular and it may be
+    inaccurate, if <emphasis>M</emphasis> is poorly conditioned. Subsequent
+    changes to the modelview matrix have no effect on the stored
+    plane-equation coefficients. If the dot product of the eye coordinates of
+    a vertex with the stored plane equation components is positive or zero,
+    the vertex is <constant>in</constant> with respect to that clipping plane.
+    Otherwise, it is <constant>out</constant>.</para>
+
+    <para>To enable and disable clipping planes, call <citerefentry>
+        <refentrytitle>glEnable</refentrytitle>
+      </citerefentry> and <function>glDisable</function> with the argument
+    <constant>GL_CLIP_PLANEi</constant>, where <constant>i</constant> is the
+    plane number.</para>
+
+    <para>All clipping planes are initially defined as <constant>(0, 0, 0,
+    0)</constant> in eye coordinates and are disabled.</para>
+  </refsect1>
+
+  <refsect1 id="notes"><title>Notes</title>
+
+    <para>It is always the case that <inlineequation>
+        <mml:math>
+           
+
+          <mml:mi>GL_CLIP_PLANEi</mml:mi>
+
+           
+
+          <mml:mo>=</mml:mo>
+
+           
+
+          <mml:mi>GL_CLIP_PLANE0</mml:mi>
+
+           
+
+          <mml:mo>+</mml:mo>
+
+           
+
+          <constant>i</constant>
+
+           . 
+        </mml:math>
+      </inlineequation></para>
+  </refsect1>
+
+  <refsect1 id="errors"><title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>plane</parameter> is not an accepted value.</para>
+  </refsect1>
+
+  <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+    <para><citerefentry>
+        <refentrytitle>glGetClipPlane</refentrytitle>
+      </citerefentry>, <citerefentry>
+        <refentrytitle>glIsEnabled</refentrytitle>
+      </citerefentry> with argument
+    <constant>GL_CLIP_PLANEi</constant>.</para>
+  </refsect1>
+
+  <refsect1 id="seealso"><title>See Also</title>
+
+    <para><citerefentry>
+        <refentrytitle>glGetClipPlane</refentrytitle>
+      </citerefentry>, <citerefentry>
+        <refentrytitle>glGet</refentrytitle>
+      </citerefentry>, <citerefentry>
+        <refentrytitle>glEnable</refentrytitle>
+      </citerefentry></para>
+  </refsect1>
+
+  <refsect1 id="copyright"><title>Copyright</title>
+
+    <para>Copyright <trademark class="copyright"></trademark> 2003-2004
+    Silicon Graphics, Inc. This document is licensed under the SGI Free
+    Software B License. For details, see <ulink
+    url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.</para>
+  </refsect1>
+</refentry>

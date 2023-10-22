@@ -1,7 +1,6 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.X11;
 using System;
@@ -10,6 +9,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Tests
 {
@@ -215,7 +218,7 @@ namespace OpenTK.Platform.Tests
                     //image[index + 2] = (byte)(ccx * 16);
 
                     int index = (ccy * 16 + ccx) * 4;
-                    
+
                     image[index + 0] = (byte)(ccx * 16);
                     image[index + 1] = (byte)(ccx * 16);
                     image[index + 2] = (byte)(ccx * 16);
@@ -262,10 +265,10 @@ namespace OpenTK.Platform.Tests
                     if (cursor > SystemCursorType.ArrowUp)
                         cursor = SystemCursorType.Default;
                 }
-                
+
                 //mouseComp.GetPosition(null, out int x, out int y);
                 //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
-                
+
                 GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -281,7 +284,7 @@ namespace OpenTK.Platform.Tests
                 for (int ccy = 0; ccy < 16; ccy++)
                 {
                     int index = (ccy * 16 + ccx) * 4;
-                    
+
                     image16[index + 0] = (byte)(ccx * 16);
                     image16[index + 1] = (byte)(ccx * 16);
                     image16[index + 2] = (byte)(ccy * 16);
@@ -295,7 +298,7 @@ namespace OpenTK.Platform.Tests
                 for (int ccy = 0; ccy < 128; ccy++)
                 {
                     int index = (ccy * 128 + ccx) * 4;
-                    
+
                     image128[index + 0] = (byte)((ccx / 128f) * 255);
                     image128[index + 1] = (byte)((ccx / 128f) * 255);
                     image128[index + 2] = (byte)((ccy / 128f) * 255);

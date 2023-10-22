@@ -1,0 +1,297 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexAttribPointer">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexAttribPointer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexAttribPointer</refname>
+        <refpurpose>define an array of generic vertex attribute data</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribPointer</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>size</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+        <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+        <paramdef>const void * <parameter>pointer</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribIPointer</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>size</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+        <paramdef>const void * <parameter>pointer</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribLPointer</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>size</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+        <paramdef>const void * <parameter>pointer</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>index</parameter></term>
+        <listitem>
+            <para>Specifies the index of the generic vertex
+            attribute to be modified.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>size</parameter></term>
+        <listitem>
+            <para>Specifies the number of components per
+            generic vertex attribute. Must
+            be 1, 2, 3, 4. Additionally, the symbolic constant <constant>GL_BGRA</constant>
+            is accepted by <function>glVertexAttribPointer</function>. The initial value is 4.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>type</parameter></term>
+        <listitem>
+            <para>Specifies the data type of each component in
+            the array. The symbolic constants
+            <constant>GL_BYTE</constant>,
+            <constant>GL_UNSIGNED_BYTE</constant>,
+            <constant>GL_SHORT</constant>,
+            <constant>GL_UNSIGNED_SHORT</constant>,
+            <constant>GL_INT</constant>, and
+            <constant>GL_UNSIGNED_INT</constant> are accepted by <function>glVertexAttribPointer</function> and <function>glVertexAttribIPointer</function>. Additionally
+            <constant>GL_HALF_FLOAT</constant>,
+            <constant>GL_FLOAT</constant>,
+            <constant>GL_DOUBLE</constant>,
+            <constant>GL_FIXED</constant>,
+            <constant>GL_INT_2_10_10_10_REV</constant>,
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant> and
+            <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> are accepted by <function>glVertexAttribPointer</function>.
+            <constant>GL_DOUBLE</constant> is also accepted by <function>glVertexAttribLPointer</function> and is
+            the only token accepted by the <parameter>type</parameter> parameter for that function.
+            The initial value is <constant>GL_FLOAT</constant>.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>normalized</parameter></term>
+        <listitem>
+            <para>For <function>glVertexAttribPointer</function>, specifies whether fixed-point data values
+            should be normalized (<constant>GL_TRUE</constant>)
+            or converted directly as fixed-point values
+            (<constant>GL_FALSE</constant>) when they are
+            accessed.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>stride</parameter></term>
+        <listitem>
+            <para>Specifies the byte offset between consecutive
+            generic vertex attributes. If <parameter>stride</parameter>
+            is 0, the generic vertex attributes are
+            understood to be tightly packed in the
+            array. The initial value is 0.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>pointer</parameter></term>
+        <listitem>
+            <para>Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the
+            buffer currently bound to the <constant>GL_ARRAY_BUFFER</constant> target. The initial value is 0.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glVertexAttribPointer</function>, <function>glVertexAttribIPointer</function> and <function>glVertexAttribLPointer</function>
+            specify the
+            location and data format of the array of generic vertex attributes at index <parameter>index</parameter>
+            to use when rendering. <parameter>size</parameter> specifies the number of components per attribute and
+            must be 1, 2, 3, 4, or <constant>GL_BGRA</constant>. <parameter>type</parameter> specifies the data type
+            of each component, and <parameter>stride</parameter> specifies the byte stride from one attribute to the next,
+            allowing vertices and attributes to be packed into a single array or stored in separate arrays.
+        </para>
+        <para>
+            For <function>glVertexAttribPointer</function>, if <parameter>normalized</parameter> is set to <constant>GL_TRUE</constant>,
+            it indicates that values stored in an integer format are to be mapped to the range [-1,1] (for signed values) or [0,1] (for
+            unsigned values) when they are accessed and converted to floating point. Otherwise, values will
+            be converted to floats directly without normalization.
+        </para>
+        <para>
+            For <function>glVertexAttribIPointer</function>, only the integer types <constant>GL_BYTE</constant>,
+            <constant>GL_UNSIGNED_BYTE</constant>, <constant>GL_SHORT</constant>, <constant>GL_UNSIGNED_SHORT</constant>,
+            <constant>GL_INT</constant>, <constant>GL_UNSIGNED_INT</constant> are accepted. Values are always left as integer values.
+        </para>
+        <para>
+            <function>glVertexAttribLPointer</function> specifies state for a generic vertex attribute array associated
+            with a shader attribute variable declared with 64-bit double precision components. <parameter>type</parameter>
+            must be <constant>GL_DOUBLE</constant>. <parameter>index</parameter>, <parameter>size</parameter>, and
+            <parameter>stride</parameter> behave as described for <function>glVertexAttribPointer</function> and
+            <function>glVertexAttribIPointer</function>.
+        </para>
+        <para>
+            If <parameter>pointer</parameter> is not <code>NULL</code>, a non-zero named buffer object must be bound to the
+            <constant>GL_ARRAY_BUFFER</constant> target (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>),
+            otherwise an error is generated. <parameter>pointer</parameter> is treated as a byte offset into the buffer object's data store.
+            The buffer object binding (<constant>GL_ARRAY_BUFFER_BINDING</constant>) is saved as generic vertex attribute array
+            state (<constant>GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING</constant>) for index <parameter>index</parameter>.
+        </para>
+        <para>
+            When a generic vertex attribute array is specified,
+            <parameter>size</parameter>, <parameter>type</parameter>,
+            <parameter>normalized</parameter>,
+            <parameter>stride</parameter>, and
+            <parameter>pointer</parameter> are saved as vertex array
+            state, in addition to the current vertex array buffer object binding.
+        </para>
+
+        <para>
+            To enable and disable a generic vertex attribute array, call
+            <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry> and
+            <!-- FIX: link to glEnableVertexAttribArray --> <function>glDisableVertexAttribArray</function> with <parameter>index</parameter>.
+            If enabled, the generic vertex attribute array is used when <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>, or  <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>
+            is called.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Each generic vertex attribute array is initially disabled and isn't accessed when
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>
+            is called.
+        </para>
+        <para>
+            <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> is accepted for <parameter>type</parameter>
+            only if the GL version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>index</parameter> is greater than or equal to
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>size</parameter> is not 1, 2, 3, 4 or (for <function>glVertexAttribPointer</function>),
+    <constant>GL_BGRA</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>type</parameter> is not an accepted value.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>stride</parameter> is negative.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if <parameter>size</parameter>
+    is <constant>GL_BGRA</constant> and <parameter>type</parameter> is not <constant>GL_UNSIGNED_BYTE</constant>,
+    <constant>GL_INT_2_10_10_10_REV</constant> or <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter>
+    is <constant>GL_INT_2_10_10_10_REV</constant> or <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+    and <parameter>size</parameter> is not 4 or <constant>GL_BGRA</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter>
+    is <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> and <parameter>size</parameter>
+    is not 3.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by <function>glVertexAttribPointer</function>
+    if <parameter>size</parameter> is <constant>GL_BGRA</constant> and <parameter>normalized</parameter>
+    is <constant>GL_FALSE</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if zero is bound to the
+    <constant>GL_ARRAY_BUFFER</constant> buffer object binding point and the
+    <parameter>pointer</parameter> argument is not <constant>NULL</constant>.</para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_MAX_VERTEX_ATTRIBS</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_ENABLED</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_SIZE</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_TYPE</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_NORMALIZED</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_STRIDE</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and <constant>GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING</constant></para>
+
+        <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+        <constant>GL_ARRAY_BUFFER_BINDING</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttribPointerv</refentrytitle></citerefentry>
+    with arguments <parameter>index</parameter> and
+    <constant>GL_VERTEX_ATTRIB_ARRAY_POINTER</constant></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexAttribIPointer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribLPointer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribPointer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+        <citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+        <!-- FIX: link to glEnableVertexAttribArray --> <function>glDisableVertexAttribArray</function>,
+        <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>
+    </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

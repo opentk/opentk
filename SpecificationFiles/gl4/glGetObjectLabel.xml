@@ -1,0 +1,149 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetObjectLabel">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetObjectLabel</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetObjectLabel</refname>
+        <refpurpose>retrieve the label of a named object identified within a namespace</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetObjectLabel</function></funcdef>
+                <paramdef>GLenum <parameter>identifier</parameter></paramdef>
+                <paramdef>GLuint <parameter>name</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei * <parameter>length</parameter></paramdef>
+                <paramdef>char * <parameter>label</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>identifier</parameter></term>
+            <listitem>
+                <para>
+                    The namespace from which the name of the object is allocated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    The name of the object whose label to retrieve.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    The length of the buffer whose address is in <parameter>label</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The address of a variable to receive the length of the object label.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>label</parameter></term>
+            <listitem>
+                <para>
+                    The address of a string that will receive the object label.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetObjectLabel</function> retrieves the label of the object identified by
+            <parameter>name</parameter> within the namespace given by <parameter>identifier</parameter>.
+            <parameter>identifier</parameter> must be one of <constant>GL_BUFFER</constant>, <constant>GL_SHADER</constant>,
+            <constant>GL_PROGRAM</constant>, <constant>GL_VERTEX_ARRAY</constant>, <constant>GL_QUERY</constant>,
+            <constant>GL_PROGRAM_PIPELINE</constant>, <constant>GL_TRANSFORM_FEEDBACK</constant>, <constant>GL_SAMPLER</constant>,
+            <constant>GL_TEXTURE</constant>, <constant>GL_RENDERBUFFER</constant>, <constant>GL_FRAMEBUFFER</constant>,
+            to indicate the namespace containing the names of buffers, shaders, programs, vertex array objects, query objects,
+            program pipelines, transform feedback objects, samplers, textures, renderbuffers and frame
+            buffers, respectively.
+        </para>
+        <para>
+            <parameter>label</parameter> is the address of a string that will be used to store the object label.
+            <parameter>bufSize</parameter> specifies the number of characters in the array identified by <parameter>label</parameter>.
+            <parameter>length</parameter> contains the address of a variable which will receive the number of characters in the object label.
+            If <parameter>length</parameter> is NULL, then it is ignored and no data is written. Likewise, if <parameter>label</parameter>
+            is NULL, or if <parameter>bufSize</parameter> is zero then no data is written to <parameter>label</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>identifier</parameter>
+            is not one of the accepted object types.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>name</parameter>
+            is not the name of an existing object of the type specified by <parameter>identifier</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>bufSize</parameter> is
+            zero.
+        </para>
+        <para>
+            If not NULL, <parameter>length</parameter> and <parameter>label</parameter> should be addresses
+            to which the client has write access, otherwise undefined behavior, including process termination
+            may occur.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_LABEL_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetObjectLabel</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPushDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPopDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectLabel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetObjectPtrLabel</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

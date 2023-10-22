@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -225,7 +228,7 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         /// <remarks>
         /// <para>This icon will have a dynamic resolution.</para>
-        /// 
+        ///
         /// To use this function you need to create and include a resource file in your exe.
         /// To do this, first create a .rc resource definition file and include your icon.
         /// Then you need to compile that file into a .res file using rc.exe, the resource compiler.
@@ -371,7 +374,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         // FIXME: Overflow?
                         bmInfo.bmiHeader.biHeight = -bmInfo.bmiHeader.biHeight;
-                        
+
                         // A negative height means we have a top-down bitmap.
                         // For consistency we need to flip this image vertically.
                         for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)

@@ -1,0 +1,281 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glViewportIndexed">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glViewportIndexed</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glViewportIndexed</refname>
+        <refpurpose>set a specified viewport</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glViewportIndexedf</function></funcdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+                <paramdef>GLfloat <parameter>w</parameter></paramdef>
+                <paramdef>GLfloat <parameter>h</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glViewportIndexedfv</function></funcdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>const GLfloat *<parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                   Specify the first viewport to set.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>x</parameter></term>
+            <term><parameter>y</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glViewportIndexedf</function>, specifies the lower left corner of
+                    the viewport rectangle, in pixels. The initial value is (0,0).
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>w</parameter></term>
+            <term><parameter>h</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glViewportIndexedf</function>, specifies the width and height
+                    of the viewport.
+                    When a GL context is first attached to a window,
+                    <parameter>w</parameter> and <parameter>h</parameter> are set to the dimensions of that
+                    window.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>v</parameter></term>
+            <listitem>
+                <para>
+                   For <function>glViewportIndexedfv</function>, specifies the address of an array containing the viewport parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glViewportIndexedf</function> and <function>glViewportIndexedfv</function>
+            specify the parameters for a single viewport.
+            <parameter>index</parameter> specifies the index of the viewport
+            to modify.
+            <parameter>index</parameter> must be less than the value of <constant>GL_MAX_VIEWPORTS</constant>.
+            For <function>glViewportIndexedf</function>, <parameter>x</parameter>, <parameter>y</parameter>,
+            <parameter>w</parameter>, and <parameter>h</parameter> specify the left, bottom, width and height
+            of the viewport in pixels, respectively.
+            For <function>glViewportIndexedfv</function>, <parameter>v</parameter> contains the address of an array of floating
+            point values specifying the
+            left (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>),
+            bottom (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>),
+            width (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>),
+            and height (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>)
+            of each viewport, in that order. <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation> give
+            the location of the viewport's lower left corner, and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">w</mml:mi></mml:math></inlineequation>
+            and <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">h</mml:mi></mml:math></inlineequation>
+            give the width and height of the viewport, respectively.
+            The viewport specifies the affine transformation of
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            from
+            normalized device coordinates to window coordinates.
+            Let
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (x sub nd, y sub nd): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">nd</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">nd</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            be normalized device coordinates.
+            Then the window coordinates
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (x sub w, y sub w): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            are computed as follows:
+        </para>
+        <para>
+            <informalequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: x sub w  =  ( x sub nd  +  1 ) left ( width over 2 right )  +  x: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                                <mml:mi mathvariant="italic">nd</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">width</mml:mi>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:mfenced>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">x</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            <informalequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: y sub w  =  ( y sub nd  +  1 ) left ( height over 2 right )  +  y: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                    <mml:mi mathvariant="italic">w</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                                <mml:mi mathvariant="italic">nd</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">height</mml:mi>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:mfenced>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">y</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            The location of the viewport's bottom left corner, given by
+            (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>, <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>)
+            is clamped to be within the implementaiton-dependent viewport bounds range.
+            The viewport bounds range [<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">min</mml:mi></mml:math></inlineequation>, <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>]
+            can be determined by calling <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_VIEWPORT_BOUNDS_RANGE</constant>.
+            Viewport width and height are silently clamped
+            to a range that depends on the implementation.
+            To query this range, call <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+            <constant>GL_MAX_VIEWPORT_DIMS</constant>.
+        </para>
+        <para>
+            The precision with which the GL interprets the floating point viewport bounds is implementation-dependent
+            and may be determined by querying the impementation-defined constant <constant>GL_VIEWPORT_SUBPIXEL_BITS</constant>.
+        </para>
+        <para>
+            Calling <function>glViewportIndexedfv</function> is equivalent to calling <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>
+            with <parameter>first</parameter> set to <parameter>index</parameter>, <parameter>count</parameter> set to
+            1 and <parameter>v</parameter> passsed directly. <function>glViewportIndexedf</function> is equivalent
+            to:
+        </para>
+<programlisting>    void glViewportIndexedf(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h) {
+        const float v[4]  = { x, y, w, h };
+        glViewportArrayv(index, 1, v);
+    }</programlisting>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater than or equal to
+            the value of <constant>GL_MAX_VIEWPORTS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either <parameter>w</parameter> or <parameter>h</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_VIEWPORT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_VIEWPORT_DIMS</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_VIEWPORT_BOUNDS_RANGE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_VIEWPORT_SUBPIXEL_BITS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glViewportIndexedf</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glViewportIndexedfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Enums
 {
     /// <summary>
     /// Enumeration for all available platform abstraction layer components.

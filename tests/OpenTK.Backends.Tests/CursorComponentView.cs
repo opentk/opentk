@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
 
 namespace OpenTK.Backends.Tests
 {

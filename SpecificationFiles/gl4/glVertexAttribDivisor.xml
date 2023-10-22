@@ -1,0 +1,100 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexAttribDivisor">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexAttribDivisor</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexAttribDivisor</refname>
+        <refpurpose>modify the rate at which generic vertex attributes advance during instanced rendering</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glVertexAttribDivisor</function></funcdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLuint <parameter>divisor</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specify the index of the generic vertex attribute.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>divisor</parameter></term>
+            <listitem>
+                <para>
+                    Specify the number of instances that will pass between updates of the generic attribute at slot <parameter>index</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glVertexAttribDivisor</function> modifies the rate at which generic vertex attributes advance when rendering
+            multiple instances of primitives in a single draw call. If <parameter>divisor</parameter> is zero, the attribute at slot
+            <parameter>index</parameter> advances once per vertex. If <parameter>divisor</parameter> is non-zero, the attribute advances
+            once per <parameter>divisor</parameter> instances of the set(s) of vertices being rendered.  An attribute
+            is referred to as instanced if its <constant>GL_VERTEX_ATTRIB_ARRAY_DIVISOR</constant> value is non-zero.
+        </para>
+        <para>
+            <parameter>index</parameter> must be less than the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glVertexAttribDivisor</function> is available only if the GL version is 3.3 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
+            than or equal to the value of <constant>GL_MAX_VERTEX_ATTRIBS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexAttribDivisor</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry>,
+            <!-- FIX: link to glEnableVertexAttribArray --> <function>glDisableVertexAttribArray</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

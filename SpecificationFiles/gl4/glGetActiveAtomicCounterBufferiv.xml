@@ -1,0 +1,170 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetActiveAtomicCounterBufferiv">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetActiveAtomicCounterBufferiv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetActiveAtomicCounterBufferiv</refname>
+        <refpurpose>retrieve information about the set of active atomic counter buffers for a program</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetActiveAtomicCounterBufferiv</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLuint <parameter>bufferIndex</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of a program object from which to retrieve information.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufferIndex</parameter></term>
+            <listitem>
+                <para>
+                    Specifies index of an active atomic counter buffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies which parameter of the atomic counter buffer to retrieve.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a variable into which to write the retrieved information.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetActiveAtomicCounterBufferiv</function> retrieves information about the set of active
+            atomic counter buffers for a program object. <parameter>program</parameter> is the name of a program
+            object for which the command <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+            has been issued in the past. It is not necessary for <parameter>program</parameter> to have been linked
+            successfully. The link may have failed because the number of active atomic counters exceeded the limits.
+        </para>
+        <para>
+            <parameter>bufferIndex</parameter> specifies the index of an active atomic counter buffer and must be in
+            the range zero to the value of <constant>GL_ACTIVE_ATOMIC_COUNTER_BUFFERS</constant> minus one. The value
+            of <constant>GL_ACTIVE_ATOMIC_COUNTER_BUFFERS</constant> for <parameter>program</parameter> indicates the
+            number of active atomic counter buffer and can be queried with
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If no error occurs, the parameter(s) specified by <parameter>pname</parameter> are returned in <parameter>params</parameter>.
+            If an error is generated, the contents of <parameter>params</parameter> are not modified.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ATOMIC_COUNTER_BUFFER_BINDING</constant>, then the index of the
+            counter buffer binding point associated with the active atomic counter buffer <parameter>bufferIndex</parameter>
+            for <parameter>program</parameter> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ATOMIC_COUNTER_BUFFER_DATA_SIZE</constant>, then the implementation-dependent
+            minimum total buffer object size, in baseic machine units, required to hold all active atomic counters in the
+            atomic counter binding point identified by <parameter>bufferIndex</parameter> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS</constant>, then the number of active
+            atomic counters for the atomic counter buffer identified by <parameter>bufferIndex</parameter> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTER_INDICES</constant>,
+            then a list of the active atomic counter indices for the atomic counter buffer identified by <parameter>bufferIndex</parameter>
+            is returned. The number of elements that will be written into <parameter>params</parameter> is the value of
+            <constant>GL_ATOMIC_COUNTER_BUFFER_ACTIVE_ATOMIC_COUNTERS</constant> for <parameter>bufferIndex</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_VERTEX_SHADER</constant>,
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_CONTROL_SHADER</constant>,
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TESS_EVALUATION_SHADER</constant>,
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_GEOMETRY_SHADER</constant>,
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_FRAGMENT_SHADER</constant>,
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER</constant> then a boolean value indicating
+            whether the atomic counter buffer identified by <parameter>bufferIndex</parameter> is referenced by the vertex,
+            tessellation control, tessellation evaluation, geometry, fragment or compute processing stages of <parameter>program</parameter>,
+            respectively, is returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glGetActiveAtomicCounterBufferiv</function> is available only if the
+            GL version is 4.2 or higher.
+        </para>
+        <para>
+            <constant>GL_ATOMIC_COUNTER_BUFFER_REFERENCED_BY_COMPUTE_SHADER</constant> is available
+            only of the GL version is 4.3 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is not the name of a program
+            object for which <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> has been called in the past.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>bufferIndex</parameter> is greater than or equal to
+            the value of <constant>GL_ACTIVE_ATOMIC_COUNTER_BUFFERS</constant> for <parameter>program</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one of the accepted tokens.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetActiveAtomicCounterBufferiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='42']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniform</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniformName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

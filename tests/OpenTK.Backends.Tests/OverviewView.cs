@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Numerics;
 using ImGuiNET;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Backends.Tests
 {

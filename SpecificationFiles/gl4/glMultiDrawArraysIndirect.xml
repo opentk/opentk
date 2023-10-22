@@ -1,0 +1,199 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMultiDrawArraysIndirect">
+    <info>
+        <copyright>
+            <year>2012-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMultiDrawArraysIndirect</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMultiDrawArraysIndirect</refname>
+        <refpurpose>render multiple sets of primitives from array data, taking parameters from memory</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultiDrawArraysIndirect</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>const void *<parameter>indirect</parameter></paramdef>
+                <paramdef>GLsizei <parameter>drawcount</parameter></paramdef>
+                <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, and
+                    <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indirect</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of structures containing the draw parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>drawcount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of elements in the array of draw parameter structures.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stride</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the distance in basic machine units between elements of the draw parameter array.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMultiDrawArraysIndirect</function> specifies multiple geometric primitives
+            with very few subroutine calls. <function>glMultiDrawArraysIndirect</function> behaves
+            similarly to a multitude of calls to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>,
+            execept that the parameters to each call to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>
+            are stored in an array in memory at the address given by <parameter>indirect</parameter>, separated
+            by the stride, in basic machine units, specified by <parameter>stride</parameter>. If <parameter>stride</parameter>
+            is zero, then the array is assumed to be tightly packed in memory.
+        </para>
+        <para>
+            The parameters addressed by <parameter>indirect</parameter> are packed into an array of structures,
+            each element of which takes the form (in C):
+            <programlisting>    typedef  struct {
+        uint  count;
+        uint  instanceCount;
+        uint  first;
+        uint  baseInstance;
+    } DrawArraysIndirectCommand;</programlisting>
+        </para>
+        <para>
+            A single call to <function>glMultiDrawArraysIndirect</function> is equivalent, assuming no errors
+            are generated to:
+            <programlisting>    GLsizei n;
+    for (n = 0; n &lt; drawcount; n++) {
+        const DrawArraysIndirectCommand *cmd;
+        if (stride != 0) {
+            cmd = (const DrawArraysIndirectCommand  *)((uintptr)indirect + n * stride);
+        } else  {
+            cmd = (const DrawArraysIndirectCommand  *)indirect + n;
+        }
+
+        glDrawArraysInstancedBaseInstance(mode, cmd-&gt;first, cmd-&gt;count, cmd-&gt;instanceCount, cmd-&gt;baseInstance);
+    }</programlisting>
+        </para>
+        <para>
+            If a buffer is bound to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding at the time
+            of a call to <function>glMultiDrawArraysIndirect</function>, <parameter>indirect</parameter>
+            is interpreted as an offset, in basic machine units, into that buffer and the parameter
+            data is read from the buffer rather than from client memory.
+        </para>
+        <para>
+            In contrast to <citerefentry><refentrytitle>glDrawArraysInstancedBaseInstance</refentrytitle></citerefentry>,
+            the <code>first</code> member of the parameter structure is unsigned, and out-of-range indices
+            do not generate an error.
+        </para>
+        <para>
+            Vertex attributes that are modified by <function>glMultiDrawArraysIndirect</function> have an
+            unspecified value after <function>glMultiDrawArraysIndirect</function> returns. Attributes that aren't
+            modified remain well defined.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <parameter>baseInstance</parameter> member of the <parameter>DrawArraysIndirectCommand</parameter>
+            structure is defined only if the GL version is 4.2 or greater. For versions of the GL less than 4.2,
+            this parameter is present but is reserved and should be set to zero. On earlier versions of the GL,
+            behavior is undefined if it is non-zero.
+        </para>
+        <para>
+            <function>glMultiDrawArraysIndirect</function> is available only if the GL version is 4.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>stride</parameter> is not a multiple
+            of four.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>drawcount</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array or to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>mode</parameter> is <constant>GL_PATCHES</constant>
+            and no tessellation control shader is active.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMultiDrawArraysIndirect</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysIndirect</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElementsIndirect</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2012-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

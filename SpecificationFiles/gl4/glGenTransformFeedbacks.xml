@@ -1,0 +1,97 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGenTransformFeedbacks">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGenTransformFeedbacks</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGenTransformFeedbacks</refname>
+        <refpurpose>reserve transform feedback object names</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGenTransformFeedbacks</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLuint *<parameter>ids</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>n</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of transform feedback object names to reserve.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>ids</parameter></term>
+            <listitem>
+                <para>
+                    Specifies an array of into which the reserved names will be written.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGenTransformFeedbacks</function> returns <parameter>n</parameter> previously unused
+            transform feedback object names in <parameter>ids</parameter>. These names are marked as used,
+            for the purposes of <function>glGenTransformFeedbacks</function> only, but they
+            acquire transform feedback state only when they are first bound.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsTransformFeedback</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGenTransformFeedbacks</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPauseTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glResumeTransformFeedback</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glBegin">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glBegin</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBegin</refname>
+        <refpurpose>delimit the vertices of a primitive or a group of like primitives</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBegin</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the primitive or primitives that will be created from vertices
+                    presented between <function>glBegin</function> and the subsequent <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+                    Ten symbolic constants are accepted:
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_QUADS</constant>,
+                    <constant>GL_QUAD_STRIP</constant>, and
+                    <constant>GL_POLYGON</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEnd</function></funcdef>
+                <paramdef><parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glBegin</function> and <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry> delimit the vertices that define a primitive or
+            a group of like primitives.
+            <function>glBegin</function> accepts a single argument that specifies in which of ten ways the
+            vertices are interpreted.
+            Taking 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+            as an integer count starting at one,
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+            as the total number of vertices specified,
+            the interpretations are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_POINTS</constant></term>
+                <listitem>
+                    <para>
+                        Treats each vertex as a single point.
+                        Vertex 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                        defines point 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        points are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LINES</constant></term>
+                <listitem>
+                    <para>
+                        Treats each pair of vertices as an independent line segment.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n - 1:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define line 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N/2:-->
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        lines are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LINE_STRIP</constant></term>
+                <listitem>
+                    <para>
+                        Draws a connected group of line segments from the first vertex
+                        to the last.
+                        Vertices 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define line 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N - 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        lines are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LINE_LOOP</constant></term>
+                <listitem>
+                    <para>
+                        Draws a connected group of line segments from the first vertex
+                        to the last,
+                        then back to the first.
+                        Vertices 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define line 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        The last line, however, is defined by vertices 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1:-->
+                            <mml:mn>1</mml:mn>
+                        </mml:math></inlineequation>.
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        lines are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TRIANGLES</constant></term>
+                <listitem>
+                    <para>
+                        Treats each triplet of vertices as an independent triangle.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 3n - 2:-->
+                            <mml:mrow>
+                                <mml:mn>3</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: 3n - 1:-->
+                            <mml:mrow>
+                                <mml:mn>3</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 3n:-->
+                            <mml:mrow>
+                                <mml:mn>3</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define triangle 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N/3:-->
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mn>3</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        triangles are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TRIANGLE_STRIP</constant></term>
+                <listitem>
+                    <para>
+                        Draws a connected group of triangles.  One triangle is defined for each
+                        vertex presented after the first two vertices.  For odd 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>,
+                        vertices
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 2:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define triangle 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        For even 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>,
+                        vertices
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 2:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define triangle 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N - 2:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        triangles are
+                        drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TRIANGLE_FAN</constant></term>
+                <listitem>
+                    <para>
+                        Draws a connected group of triangles.
+                        One triangle is defined for each vertex presented after the first two vertices.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1:-->
+                            <mml:mn>1</mml:mn>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: n + 2:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define triangle 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N - 2:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        triangles are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUADS</constant></term>
+                <listitem>
+                    <para>
+                        Treats each group of four vertices as an independent quadrilateral.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 4n - 3:-->
+                            <mml:mrow>
+                                <mml:mn>4</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>3</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: 4n - 2:-->
+                            <mml:mrow>
+                                <mml:mn>4</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: 4n - 1:-->
+                            <mml:mrow>
+                                <mml:mn>4</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 4n:-->
+                            <mml:mrow>
+                                <mml:mn>4</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define quadrilateral 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N/4:-->
+                            <mml:mfrac>
+                                <mml:mi mathvariant="italic">N</mml:mi>
+                                <mml:mn>4</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        quadrilaterals are drawn.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUAD_STRIP</constant></term>
+                <listitem>
+                    <para>
+                        Draws a connected group of quadrilaterals.
+                        One quadrilateral is defined for each pair of vertices presented
+                        after the first pair.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n - 1:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n + 2:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>2</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 2n + 1:-->
+                            <mml:mrow>
+                                <mml:mn>2</mml:mn>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        define quadrilateral 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+                        <inlineequation><mml:math>
+                            <!-- eqn: N/2 - 1:-->
+                            <mml:mrow>
+                                <mml:mfrac>
+                                    <mml:mi mathvariant="italic">N</mml:mi>
+                                    <mml:mn>2</mml:mn>
+                                </mml:mfrac>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        quadrilaterals are drawn.
+                        Note that the order in which vertices are used to construct a quadrilateral
+                        from strip data is different from that used with independent data.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_POLYGON</constant></term>
+                <listitem>
+                    <para>
+                        Draws a single,
+                        convex polygon.
+                        Vertices 
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1:-->
+                            <mml:mn>1</mml:mn>
+                        </mml:math></inlineequation>
+                        through 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        define this polygon.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            Only a subset of GL commands can be used between <function>glBegin</function> and <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            The commands are
+            <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSecondaryColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalPoint</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glEdgeFlag</refentrytitle></citerefentry>.
+            Also,
+            it is acceptable to use
+            <citerefentry><refentrytitle>glCallList</refentrytitle></citerefentry> or
+            <citerefentry><refentrytitle>glCallLists</refentrytitle></citerefentry> to execute
+            display lists that include only the preceding commands.
+            If any other GL command is executed between <function>glBegin</function> and <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>,
+            the error flag is set and the command is ignored.
+        </para>
+        <para>
+            Regardless of the value chosen for <parameter>mode</parameter>,
+            there is no limit to the number of vertices that can be defined
+            between <function>glBegin</function> and <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+            Lines,
+            triangles,
+            quadrilaterals,
+            and polygons that are incompletely specified are not drawn.
+            Incomplete specification results when either too few vertices are
+            provided to specify even a single primitive or when an incorrect multiple
+            of vertices is specified. The incomplete primitive is ignored; the rest are drawn.
+        </para>
+        <para>
+            The minimum specification of vertices
+            for each primitive is as follows:
+            1 for a point,
+            2 for a line,
+            3 for a triangle,
+            4 for a quadrilateral,
+            and 3 for a polygon.
+            Modes that require a certain multiple of vertices are
+            <constant>GL_LINES</constant> (2),
+            <constant>GL_TRIANGLES</constant> (3),
+            <constant>GL_QUADS</constant> (4),
+            and <constant>GL_QUAD_STRIP</constant> (2).
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is set to an unaccepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBegin</function> is executed between a
+            <function>glBegin</function>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry> is executed without being
+            preceded by a <function>glBegin</function>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a command other than
+            <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSecondaryColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalPoint</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEdgeFlag</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCallList</refentrytitle></citerefentry>, or
+            <citerefentry><refentrytitle>glCallLists</refentrytitle></citerefentry> is executed between
+            the execution of <function>glBegin</function> and the corresponding
+            execution <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Execution of
+            <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDisableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEdgeFlagPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSecondaryColorPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndexPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInterleavedArrays</refentrytitle></citerefentry>, or
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry> is not allowed after a call to <function>glBegin</function> and before
+            the corresponding call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>,
+            but an error may or may not be generated.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCallList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCallLists</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEdgeFlag</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalPoint</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSecondaryColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

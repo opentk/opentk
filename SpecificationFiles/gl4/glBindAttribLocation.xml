@@ -1,0 +1,211 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindAttribLocation">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindAttribLocation</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindAttribLocation</refname>
+        <refpurpose>Associates a generic vertex attribute index with a named attribute variable</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glBindAttribLocation</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLchar *<parameter>name</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>program</parameter></term>
+        <listitem>
+            <para>Specifies the handle of the program object in
+            which the association is to be made.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>index</parameter></term>
+        <listitem>
+            <para>Specifies the index of the generic vertex
+            attribute to be bound.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>name</parameter></term>
+        <listitem>
+            <para>Specifies a null terminated string containing
+            the name of the vertex shader attribute variable to
+            which <parameter>index</parameter> is to be
+            bound.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glBindAttribLocation</function> is used to
+    associate a user-defined attribute variable in the program
+    object specified by <parameter>program</parameter> with a
+    generic vertex attribute index. The name of the user-defined
+    attribute variable is passed as a null terminated string in
+    <parameter>name</parameter>. The generic vertex attribute index
+    to be bound to this variable is specified by
+    <parameter>index</parameter>. When
+    <parameter>program</parameter> is made part of current state,
+    values provided via the generic vertex attribute
+    <parameter>index</parameter> will modify the value of the
+    user-defined attribute variable specified by
+    <parameter>name</parameter>.</para>
+
+    <para>If <parameter>name</parameter> refers to a matrix
+    attribute variable, <parameter>index</parameter> refers to the
+    first column of the matrix. Other matrix columns are then
+    automatically bound to locations <parameter>index+1</parameter>
+    for a matrix of type <function>mat2</function>; <parameter>index+1</parameter> and
+    <parameter>index+2</parameter> for a matrix of type <function>mat3</function>; and
+    <parameter>index+1</parameter>, <parameter>index+2</parameter>,
+    and <parameter>index+3</parameter> for a matrix of type
+    <function>mat4</function>.</para>
+
+    <para>This command makes it possible for vertex shaders to use
+    descriptive names for attribute variables rather than generic
+    variables that are numbered from zero to the value of
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant> minus one. The values sent
+    to each generic attribute index are part of current state.
+    If a different program object is made current by calling
+    <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+    the generic vertex attributes are tracked in such a way that the
+    same values will be observed by attributes in the new program
+    object that are also bound to
+    <parameter>index</parameter>.</para> <para>Attribute variable
+    name-to-generic attribute index bindings for a program object
+    can be explicitly assigned at any time by calling
+    <function>glBindAttribLocation</function>. Attribute bindings do
+    not go into effect until
+    <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+    is called. After a program object has been linked successfully,
+    the index values for generic attributes remain fixed (and their
+    values can be queried) until the next link command
+    occurs.</para>
+
+    <para>Any attribute binding that occurs after the program object has been linked will not take effect
+    until the next time the program object is linked.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para><function>glBindAttribLocation</function> can be called
+    before any vertex shader objects are bound to the specified
+    program object. It is also permissible to bind a generic
+    attribute index to an attribute variable name that is never used
+    in a vertex shader.</para>
+
+    <para>If <parameter>name</parameter> was bound previously, that
+    information is lost. Thus you cannot bind one user-defined
+    attribute variable to multiple indices, but you can bind
+    multiple user-defined attribute variables to the same
+    index.</para>
+
+    <para>Applications are allowed to bind more than one
+    user-defined attribute variable to the same generic vertex
+    attribute index. This is called <emphasis>aliasing</emphasis>,
+    and it is allowed only if just one of the aliased attributes is
+    active in the executable program, or if no path through the
+    shader consumes more than one attribute of a set of attributes
+    aliased to the same location. The compiler and linker are
+    allowed to assume that no aliasing is done and are free to
+    employ optimizations that work only in the absence of aliasing.
+    OpenGL implementations are not required to do error checking to
+    detect aliasing.</para>
+
+    <para>Active attributes that are not explicitly bound will be
+    bound by the linker when
+    <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+    is called. The locations assigned can be queried by calling
+    <citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>.</para>
+
+    <para>OpenGL copies the <parameter>name</parameter> string when
+    <function>glBindAttribLocation</function> is called, so an
+    application may free its copy of the <parameter>name</parameter>
+    string immediately after the function returns.</para>
+
+    <para>Generic attribute locations may be specified in the shader source
+    text using a <function>location</function> layout qualifier. In this case,
+    the location of the attribute specified in the shader's source takes precedence
+    and may be queried by calling <citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>.
+    </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>index</parameter> is greater than or equal to
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>name</parameter> starts with the reserved prefix
+    &quot;gl_&quot;.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>program</parameter> is not a value generated by
+    OpenGL.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>program</parameter> is not a program object.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with argument <constant>GL_MAX_VERTEX_ATTRIBS</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and
+    <parameter>name</parameter></para>
+
+    <para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindAttribLocation</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><!-- FIX: link to glEnableVertexAttribArray --> <function>glDisableVertexAttribArray</function>,
+    <citerefentry><refentrytitle>glEnableVertexAttribArray</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttrib</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

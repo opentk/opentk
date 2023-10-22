@@ -1,0 +1,185 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetDebugMessageLog">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetDebugMessageLog</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetDebugMessageLog</refname>
+        <refpurpose>retrieve messages from the debug message log</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLuint <function>glGetDebugMessageLog</function></funcdef>
+                <paramdef>GLuint <parameter>count</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLenum *<parameter>sources</parameter></paramdef>
+                <paramdef>GLenum *<parameter>types</parameter></paramdef>
+                <paramdef>GLuint *<parameter>ids</parameter></paramdef>
+                <paramdef>GLenum *<parameter>severities</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>lengths</parameter></paramdef>
+                <paramdef>GLchar *<parameter>messageLog</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    The number of debug messages to retrieve from the log.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    The size of the buffer whose address is given by <parameter>messageLog</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>sources</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of variables to receive the sources of the retrieved messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>types</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of variables to receive the types of the retrieved messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>ids</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of unsigned integers to receive the ids of the retrieved messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>severities</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of variables to receive the severites of the retrieved messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>lengths</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of variables to receive the lengths of the received messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>messageLog</parameter></term>
+            <listitem>
+                <para>
+                    The address of an array of characters that will receive the messages.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetDebugMessageLog</function> retrieves messages from the debug message log. A maximum of
+            <parameter>count</parameter> messages are retrieved from the log. If <parameter>sources</parameter>
+            is not NULL then the source of each message is written into up to <parameter>count</parameter> elements
+            of the array. If <parameter>types</parameter>
+            is not NULL then the type of each message is written into up to <parameter>count</parameter> elements
+            of the array. If <parameter>id</parameter>
+            is not NULL then the identifier of each message is written into up to <parameter>count</parameter> elements
+            of the array. If <parameter>severities</parameter>
+            is not NULL then the severity of each message is written into up to <parameter>count</parameter> elements
+            of the array. If <parameter>lengths</parameter>
+            is not NULL then the length of each message is written into up to <parameter>count</parameter> elements
+            of the array.
+        </para>
+        <para>
+            <parameter>messageLog</parameter> specifies the address of a character array into which the debug messages
+            will be written. Each message will be concatenated onto the array starting at the first element of <parameter>messageLog</parameter>.
+            <parameter>bufSize</parameter> specifies the size of the array <parameter>messageLog</parameter>. If a message will not
+            fit into the remaining space in <parameter>messageLog</parameter> then the function terminates and returns the number
+            of messages written so far, which may be zero.
+        </para>
+        <para>
+            If <function>glGetDebugMessageLog</function> returns zero then no messages are present in the debug log, or there
+            was not enough space in <parameter>messageLog</parameter> to retrieve the first message in the queue. If <parameter>messageLog</parameter>
+            is NULL then no messages are written and the value of <parameter>bufSize</parameter> is ignored.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Although debug messages may be enabled in a non-debug context, the quantity and detail of such messages may be substantially
+            inferior to those in a debug context. In particular, a valid implementation of the debug message queue in a non-debug context
+            may produce no messages at all.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> or <parameter>bufSize</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEBUG_LOGGED_MESSAGES</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEBUG_NEXT_LOGGED_MESSAGE_LENGTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_DEBUG_LOGGED_MESSAGES</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetDebugMessageLog</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDebugMessageInsert</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDebugMessageCallback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDebugMessageControl</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

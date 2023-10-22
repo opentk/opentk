@@ -1,0 +1,106 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindFramebuffer">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindFramebuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindFramebuffer</refname>
+        <refpurpose>bind a framebuffer to a framebuffer target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindFramebuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the framebuffer target of the binding operation.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object to bind.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindFramebuffer</function> binds the framebuffer object with name <parameter>framebuffer</parameter> to the framebuffer target specified
+            by <parameter>target</parameter>. <parameter>target</parameter> must be either <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or <constant>GL_FRAMEBUFFER</constant>. If a framebuffer object is bound to
+            <constant>GL_DRAW_FRAMEBUFFER</constant> or <constant>GL_READ_FRAMEBUFFER</constant>, it becomes the target for
+            rendering or readback operations, respectively, until it is deleted or another framebuffer is bound to the corresponding bind point.
+            Calling <function>glBindFramebuffer</function> with <parameter>target</parameter> set to <constant>GL_FRAMEBUFFER</constant> binds
+            <parameter>framebuffer</parameter> to both the read and draw framebuffer targets. <parameter>framebuffer</parameter> is the name of a framebuffer
+            object previously returned from a call to <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>, or zero to break the existing
+            binding of a framebuffer object to <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or <constant>GL_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>framebuffer</parameter> is not zero or the name of a framebuffer
+            previously returned from a call to <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindFramebuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture1D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture2D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture3D</function>,
+            <citerefentry><refentrytitle>glFramebufferTextureLayer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsFramebuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

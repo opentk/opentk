@@ -1,0 +1,174 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFlushMappedBufferRange">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFlushMappedBufferRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFlushMappedBufferRange</refname>
+        <refname>glFlushMappedNamedBufferRange</refname>
+        <refpurpose>indicate modifications to a range of a mapped buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFlushMappedBufferRange</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glFlushMappedNamedBufferRange</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound
+                    for <function>glFlushMappedBufferRange</function>, which
+                    must be one of the buffer binding targets in the
+                    following table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object for
+                    <function>glFlushMappedNamedBufferRange</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the start of the buffer subrange, in basic machine units.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the length of the buffer subrange, in basic machine units.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glFlushMappedBufferRange</function> indicates that
+            modifications have been made to a range of a mapped buffer
+            object. The buffer object must previously have been mapped with
+            the <constant>GL_MAP_FLUSH_EXPLICIT_BIT</constant> flag.
+        </para>
+        <para>
+            <parameter>offset</parameter> and <parameter>length</parameter>
+            indicate the modified subrange of the mapping, in basic machine
+            units. The specified subrange to flush is relative to the start
+            of the currently mapped range of the buffer. These commands may
+            be called multiple times to indicate distinct subranges of the
+            mapping which require flushing.
+        </para>
+        <para>
+            If a buffer range is mapped with both
+            <constant>GL_MAP_PERSISTENT_BIT</constant> and
+            <constant>GL_MAP_FLUSH_EXPLICIT_BIT</constant> set, then these
+            commands may be called to ensure that data written by the client
+            into the flushed region becomes visible to the server. Data
+            written to a coherent store will always become visible to the
+            server after an unspecified period of time.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and
+            <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are
+            available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available
+            only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glFlushMappedBufferRange</function> if
+            <parameter>target</parameter> is not one of the buffer binding
+            targets listed above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glFlushMappedBufferRange</function> if zero is bound
+            to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glFlushMappedNamedBufferRange</function> if
+            <parameter>buffer</parameter> is not the name of an existing
+            buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>offset</parameter> or <parameter>length</parameter>
+            is negative, or if <parameter>offset</parameter> +
+            <parameter>length</parameter> exceeds the size of the mapping.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the
+            buffer object is not mapped, or is mapped without the
+            <constant>GL_MAP_FLUSH_EXPLICIT_BIT</constant> flag.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFlushMappedBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glFlushMappedNamedBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

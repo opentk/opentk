@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetColorTable">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetColorTable</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetColorTable</refname>
+        <refpurpose>retrieve contents of a color lookup table</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetColorTable</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>void * <parameter>table</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Must be <constant>GL_COLOR_TABLE</constant>,
+                    <constant>GL_POST_CONVOLUTION_COLOR_TABLE</constant>,
+                    or
+                    <constant>GL_POST_COLOR_MATRIX_COLOR_TABLE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    The format of the pixel data in <parameter>table</parameter>.
+                    The possible values are
+                    <constant>GL_RED</constant>,
+                    <constant>GL_GREEN</constant>,
+                    <constant>GL_BLUE</constant>,
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_BGR</constant>,
+                    <constant>GL_RGBA</constant>, and
+                    <constant>GL_BGRA</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the pixel data in <parameter>table</parameter>.
+                    Symbolic constants
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_BITMAP</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+                    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+                    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>table</parameter></term>
+            <listitem>
+                <para>
+                    Pointer to a one-dimensional array of pixel data containing the contents
+                    of the color table.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetColorTable</function> returns in <parameter>table</parameter> the contents of the color table specified
+            by <parameter>target</parameter>. No pixel transfer operations are performed, but pixel
+            storage modes that are applicable to
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry> are performed.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a histogram table is
+            requested, <parameter>table</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            Color components that are requested in
+            the specified <parameter>format</parameter>, but which are not included in the internal
+            format of the color lookup table, are returned as zero.  The
+            assignments of internal color components to the components
+            requested by <parameter>format</parameter> are
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Internal Component
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Resulting Component
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        Red
+                        </entry>
+                        <entry align="left">
+                        Red
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        Green
+                        </entry>
+                        <entry align="left">
+                        Green
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        Blue
+                        </entry>
+                        <entry align="left">
+                        Blue
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        Alpha
+                        </entry>
+                        <entry align="left">
+                        Alpha
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        Luminance
+                        </entry>
+                        <entry align="left">
+                        Red
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        Intensity
+                        </entry>
+                        <entry align="left">
+                        Red
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glGetColorTable</function> is present only if <code>ARB_imaging</code> is returned when <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+            is called with an argument of <constant>GL_EXTENSIONS</constant>.
+        </para>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
+            <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is one of
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+            and <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
+            object such that the memory writes required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and <parameter>table</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetColorTable</function> is executed
+            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetColorTableParameter</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorTable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorTableParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

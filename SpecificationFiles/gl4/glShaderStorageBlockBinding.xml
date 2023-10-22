@@ -1,0 +1,114 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glShaderStorageBlockBinding">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glShaderStorageBlockBinding</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glShaderStorageBlockBinding</refname>
+        <refpurpose>change an active shader storage block binding</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glShaderStorageBlockBinding</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLuint <parameter>storageBlockIndex</parameter></paramdef>
+                <paramdef>GLuint <parameter>storageBlockBinding</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of the program containing the block whose binding to change.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>storageBlockIndex</parameter></term>
+            <listitem>
+                <para>
+                    The index storage block within the program.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>storageBlockBinding</parameter></term>
+            <listitem>
+                <para>
+                    The index storage block binding to associate with the specified storage block.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glShaderStorageBlockBinding</function>, changes the active
+            shader storage block with an assigned index of <parameter>storageBlockIndex</parameter>
+            in program object <parameter>program</parameter>.  <parameter>storageBlockIndex</parameter> must be an active shader storage block
+            index in <parameter>program</parameter>. <parameter>storageBlockBinding</parameter> must be less than the value of <constant>GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS</constant>.
+            If successful, <function>glShaderStorageBlockBinding</function> specifies that <parameter>program</parameter> will use the data store of
+            the buffer object bound to the binding point <parameter>storageBlockBinding</parameter> to read
+            and write the values of the buffer variables in the shader storage block identified by <parameter>storageBlockIndex</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is not the name of either a program or shader object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is the name of a shader object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>storageBlockIndex</parameter> is not an active shader storage block index in <parameter>program</parameter>, or if <parameter>storageBlockBinding</parameter> is greater than or equal to the value of <constant>MAX_SHADER_STORAGE_BUFFER_BINDINGS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with arguments <constant>GL_SHADER_STORAGE_BUFFER_BINDING</constant>,
+            <constant>GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS</constant>, <constant>GL_MAX_VERTEX_SHADER_STORAGE_BLOCKS</constant>,
+            <constant>GL_MAX_TESS_CONTROL_SHADER_STORAGE_BLOCKS</constant>, <constant>GL_MAX_TESS_EVALUATION_SHADER_STORAGE_BLOCKS</constant>,
+            <constant>GL_MAX_GEOMETRY_SHADER_STORAGE_BLOCKS</constant>, <constant>GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS</constant>,
+            <constant>GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS</constant> or <constant>GL_MAX_COMBINED_SHADER_STORAGE_BLOCKS</constant>,
+            <constant>GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS</constant>, or <constant>GL_MAX_COMBINED_SHADER_OUTPUT_RESOURCES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glShaderStorageBlockBinding</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

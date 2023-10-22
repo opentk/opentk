@@ -1,9 +1,30 @@
 <Project>
   <PropertyGroup>
-    <!--<PathMap>$(MSBuildThisFileDirectory)src\=.</PathMap>-->
-    <LangVersion Condition="$(MSBuildProjectExtension.EndsWith('.csproj'))">11.0</LangVersion>
-    <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <OpenTKSolutionRoot>$(MSBuildThisFileDirectory)</OpenTKSolutionRoot>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Authors>The OpenTK team.</Authors>
+    <Copyright>Copyright (c) 2006 - 2018 Stefanos Apostolopoulos (stapostol@gmail.com) for the Open Toolkit library.</Copyright>
+    <PackageIconUrl>https://raw.githubusercontent.com/opentk/opentk/master/docs/files/img/logo.png</PackageIconUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageReleaseNotes>Initial 4.0 release.</PackageReleaseNotes>
+    <PackageTags>opentk;opengl;cross-platform;openal;csharp;fsharp;vb;dotnet;mono;graphics;game;scientific;science;3d;2d;math;input;gamepad;joystick</PackageTags>
+    <PackageProjectUrl>https://github.com/opentk/opentk</PackageProjectUrl>
+    <PackageOutputPath>$(OpenTKSolutionRoot)\nuget</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <Version>4.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsDebug)'=='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsDebug)'!='true'">
+    <OutputPath>$(MSBuildThisFileDirectory)bin\Release\</OutputPath>
   </PropertyGroup>
 </Project>

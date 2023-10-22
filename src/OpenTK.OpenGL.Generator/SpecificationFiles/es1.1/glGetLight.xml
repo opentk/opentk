@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGetLight">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetLight</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glGetLight</refdescriptor>
+        <refname>glGetLightfv</refname>
+        <refname>glGetLightxv</refname>
+        <refpurpose>return light source parameter values</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetLightfv</function></funcdef>
+                <paramdef>GLenum <parameter>light</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetLightxv</function></funcdef>
+                <paramdef>GLenum <parameter>light</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfixed * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>light</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies a light source. The number of possible
+                    lights depends on the implementation, but at least
+                    eight lights are supported. They
+                    are identified by symbolic names of the form
+                    <inlineequation><mml:math>
+                    <mml:mi>GL_LIGHTi</mml:mi> where
+                    <mml:mi>0</mml:mi><mml:mo>&lt;</mml:mo><mml:mi>i</mml:mi><mml:mo>&lt;</mml:mo>
+                    <mml:mi>GL_MAX_LIGHTS</mml:mi>
+                    </mml:math></inlineequation>
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>pname</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies a light source parameter for light.
+                    Accepted symbolic names are
+                    <constant>GL_AMBIENT</constant>,
+                    <constant>GL_DIFFUSE</constant>,
+                    <constant>GL_SPECULAR</constant>,
+                    <constant>GL_POSITION</constant>,
+                    <constant>GL_SPOT_DIRECTION</constant>,
+                    <constant>GL_SPOT_EXPONENT</constant>,
+                    <constant>GL_SPOT_CUTOFF</constant>,
+                    <constant>GL_CONSTANT_ATTENUATION</constant>,
+                    <constant>GL_LINEAR_ATTENUATION</constant>, and
+                    <constant>GL_QUADRATIC_ATTENUATION</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>params</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Returns the requested data.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glGetLight</function>
+        returns in <parameter>params</parameter> the value or values of a light
+        source parameter.
+        <parameter>light</parameter> names the light and is a symbolic
+        name of the form
+        <inlineequation><mml:math>
+        <mml:mi>GL_LIGHTi</mml:mi> for
+        <mml:mi>0</mml:mi><mml:mo>&lt;</mml:mo><mml:mi>i</mml:mi><mml:mo>&lt;</mml:mo>
+        <mml:mi>GL_MAX_LIGHTS</mml:mi>
+        </mml:math></inlineequation>
+        where <constant>GL_MAX_LIGHTS</constant> is an
+        implementation dependent constant that
+        is greater than or equal to eight.
+        <parameter>pname</parameter> specifies one of
+        ten light source parameters, again by symbolic name.
+        </para>
+
+        <para>The ten light parameters are defined:</para>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_AMBIENT</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the ambient RGBA intensity of the light. Both
+                    fixed-point and floating-point values are mapped
+                    directly. Neither fixed-point nor floating-point values
+                    are clamped.
+                    The initial ambient light intensity is (0, 0, 0, 1).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_DIFFUSE</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the diffuse RGBA intensity of the light. Both
+                    fixed-point and floating-point values are mapped
+                    directly. Neither fixed-point nor floating-point values
+                    are clamped.
+                    The initial value for <constant>GL_LIGHT0</constant>
+                    is (1, 1, 1, 1).
+                    For other lights, the initial value is (0, 0, 0, 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SPECULAR</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the specular RGBA intensity of the light. Both
+                    fixed-point and floating-point values are mapped
+                    directly. Neither fixed-point nor floating-point values
+                    are clamped.
+                    The initial value for <constant>GL_LIGHT0</constant>
+                    is (1, 1, 1, 1).
+                    For other lights, the initial value is (0, 0, 0, 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_POSITION</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns four fixed-point or floating-point values representing the
+                        position of the light source.
+                        Both fixed-point and floating-point values are mapped
+                        directly.
+                        The returned values are those maintained in eye coordinates.
+                        They will not be equal to the values specified using <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+                        unless the modelview matrix was identity at the time <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry> was
+                        called. The initial value is (0, 0, 1, 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SPOT_DIRECTION</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns three fixed-point or floating-point values that
+                    specify the direction of the light in homogeneous object
+                    coordinates. Both fixed-point and floating-point values
+                    are mapped directly. Neither fixed-point nor
+                    floating-point values are clamped.
+                    The initial direction is (0, 0, -1).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SPOT_EXPONENT</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns a single fixed-point or floating-point value that
+                    specifies the intensity distribution of the light.
+                    Fixed-point and floating-point values are mapped
+                    directly. Only values in the range [0, 128] are
+                    accepted.
+                    The initial spot exponent is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SPOT_CUTOFF</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns a single fixed-point or floating-point value that
+                    specifies the maximum spread angle of a light source.
+                    Fixed-point and floating-point values are mapped
+                    directly. Only values in the range [0, 90] and the special
+                    value 180 are accepted. If the angle between the
+                    direction of the light and the direction from the light
+                    to the vertex being lighted is greater than the spot
+                    cutoff angle, the light is completely masked.
+                    Otherwise, its intensity is controlled by the spot
+                    exponent and the attenuation factors. The initial spot
+                    cutoff is 180.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_CONSTANT_ATTENUATION</constant>,
+                    <constant>GL_LINEAR_ATTENUATION</constant>,
+                    <constant>GL_QUADRATIC_ATTENUATION</constant>
+                </term>
+
+                <listitem>
+                    <para><parameter>params</parameter>
+                    returns a single fixed-point or floating-point value that
+                    specifies one of the three light attenuation factors.
+                    Fixed-point and floating-point values are mapped
+                    directly. Only nonnegative values are accepted. If the
+                    light is positional, rather than directional, its
+                    intensity is attenuated by the reciprocal of the sum of
+                    the constant factor, the linear factor times the distance
+                    between the light and the vertex being lighted, and the
+                    quadratic factor times the square of the same distance.
+                    The initial attenuation factors are (1, 0, 0).</para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+        It is always the case that
+        <inlineequation><mml:math>
+        <mml:mi>GL_LIGHTi</mml:mi><mml:mo>=</mml:mo>
+        <mml:mi>GL_LIGHT0</mml:mi><mml:mo>+</mml:mo><constant>i</constant>.
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        If an error is generated, no change is made to the contents
+        of <parameter>params</parameter>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>light</parameter> or <parameter>pname</parameter>
+        is not an accepted value.
+        </para>
+    </refsect1>
+
+        <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

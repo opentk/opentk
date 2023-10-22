@@ -1,0 +1,107 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMinSampleShading">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMinSampleShading</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMinSampleShading</refname>
+        <refpurpose>specifies minimum rate at which sample shading takes place</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMinSampleShading</function></funcdef>
+                <paramdef>GLfloat <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>value</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the rate at which samples are shaded within each covered pixel.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMinSampleShading</function> specifies the rate at which samples are shaded within
+            a covered pixel. Sample-rate shading is enabled by calling <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+            with the parameter <constant>GL_SAMPLE_SHADING</constant>. If <constant>GL_MULTISAMPLE</constant>
+            or <constant>GL_SAMPLE_SHADING</constant> is disabled, sample shading has no effect.
+            Otherwise, an implementation must provide at least as many unique color values for
+            each covered fragment as specified by <parameter>value</parameter> times <parameter>samples</parameter> where
+            <parameter>samples</parameter> is the value of <constant>GL_SAMPLES</constant> for the current
+            framebuffer. At least 1 sample for each covered fragment is generated.
+        </para>
+        <para>
+            A <parameter>value</parameter> of 1.0 indicates that each sample in the framebuffer should be
+            independently shaded. A <parameter>value</parameter> of 0.0 effectively allows the GL to ignore
+            sample rate shading. Any value between 0.0 and 1.0 allows the GL to shade only a subset
+            of the total samples within each covered fragment. Which samples are shaded and the algorithm
+            used to select that subset of the fragment's samples is implementation dependent.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>value</parameter> parameter was
+            changed from GLclampf to GLfloat. This change is transparent
+            to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            None.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MIN_SAMPLE_SHADING</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SAMPLES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMinSampleShading</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

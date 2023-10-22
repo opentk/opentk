@@ -4,8 +4,11 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenTK.Core.Platform;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 

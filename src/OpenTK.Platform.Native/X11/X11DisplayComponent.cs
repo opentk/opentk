@@ -1,13 +1,16 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.XRandR.XRandR;
 using static OpenTK.Platform.Native.X11.LibX11;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
@@ -52,7 +55,7 @@ namespace OpenTK.Platform.Native.X11
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 // FIXME: Handle screen rotation!
-                
+
                 // FIXME: Should we use crtc size or output size?
 
                 int x = crtcInfo->x;
@@ -129,7 +132,7 @@ namespace OpenTK.Platform.Native.X11
                     return true;
                 }
 
-                // We are changing mode. 
+                // We are changing mode.
                 // If there is no old mode, set it.
                 if (handle.OldMode == RRMode.None)
                 {
@@ -138,9 +141,9 @@ namespace OpenTK.Platform.Native.X11
 
                 // Keep everything the same except the mode.
                 RRConfigStatus status = XRRSetCrtcConfig(
-                    X11.Display, resources, 
+                    X11.Display, resources,
                     handle.Crtc,
-                    XTime.CurrentTime, 
+                    XTime.CurrentTime,
                     crtcInfo->x, crtcInfo->y,
                     bestMode->ModeId,
                     crtcInfo->rotation,
@@ -157,7 +160,7 @@ namespace OpenTK.Platform.Native.X11
                 XRRFreeScreenResources(resources);
                 return true;
             }
-            else 
+            else
             {
                 comp.Logger?.LogWarning($"No mode matched '{mode}' out of {outputInfo->nmode} modes.");
                 XRRFreeOutputInfo(outputInfo);
@@ -178,9 +181,9 @@ namespace OpenTK.Platform.Native.X11
             XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, handle.Output);
 
             RRConfigStatus status = XRRSetCrtcConfig(
-                X11.Display, resources, 
+                X11.Display, resources,
                 handle.Crtc,
-                XTime.CurrentTime, 
+                XTime.CurrentTime,
                 crtcInfo->x, crtcInfo->y,
                 handle.OldMode,
                 crtcInfo->rotation,
@@ -342,14 +345,14 @@ namespace OpenTK.Platform.Native.X11
                             XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.OutputChangeNotifyMask);
                         }
                     }
-                
+
                     HasRANDR = true;
                     Logger?.LogInfo("Using XRANDR for display component.");
                 }
 
                 // FIXME: Error message for when this fails?
             }
-            else 
+            else
             {
                 HasRANDR = false;
                 Logger?.LogError("Could not find XRANDR extension. The display component will not work.");
@@ -568,7 +571,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP] != XAtom.None)
             {
                 XGetWindowProperty(
-                    X11.Display, 
+                    X11.Display,
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_WORKAREA],
                     0, long.MaxValue,
@@ -580,7 +583,7 @@ namespace OpenTK.Platform.Native.X11
                     out long _,
                     out IntPtr workAreasPtr);
 
-                XGetWindowProperty(X11.Display, 
+                XGetWindowProperty(X11.Display,
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
                     0, long.MaxValue,
@@ -591,9 +594,9 @@ namespace OpenTK.Platform.Native.X11
                     out long items,
                     out _,
                     out IntPtr desktopPtr);
-                
+
                 if (items > 0)
-                unsafe 
+                unsafe
                 {
                     int desktop = *(int*)desktopPtr;
 
@@ -609,7 +612,7 @@ namespace OpenTK.Platform.Native.X11
                         area = Box2i.Intersect(area, new Box2i(x, y, x + w, y + h));
                     }
                 }
-            
+
                 if (workAreasPtr != IntPtr.Zero)
                     XFree(workAreasPtr);
 

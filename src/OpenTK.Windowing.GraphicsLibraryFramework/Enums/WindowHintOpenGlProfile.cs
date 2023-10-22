@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Enums
 {
     /// <summary>
     /// Used to set the OpenGlProfile attribute.
@@ -17,9 +17,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     {
         /// <summary>
         /// Indicates the OpenGL profile used by the context.
-        /// This is <see cref="GraphicsLibraryFramework.OpenGlProfile.Core"/>
-        /// or <see cref="GraphicsLibraryFramework.OpenGlProfile.Compat"/>
-        /// if the context uses a known profile, or <see cref="GraphicsLibraryFramework.OpenGlProfile.Any"/>
+        /// This is <see cref="Enums.OpenGlProfile.Core"/>
+        /// or <see cref="Enums.OpenGlProfile.Compat"/>
+        /// if the context uses a known profile, or <see cref="Enums.OpenGlProfile.Any"/>
         /// if the OpenGL profile is unknown or the context is an OpenGL ES context.
         /// Note that the returned profile may not match the profile bits of the context flags,
         /// as GLFW will try other means of detecting the profile when no bits are set.

@@ -1,0 +1,152 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDebugMessageInsert">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDebugMessageInsert</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDebugMessageInsert</refname>
+        <refpurpose>inject an application-supplied message into the debug message queue</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDebugMessageInsert</function></funcdef>
+                <paramdef>GLenum <parameter>source</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>severity</parameter></paramdef>
+                <paramdef>GLsizei <parameter>length</parameter></paramdef>
+                <paramdef>const char *<parameter>message</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>source</parameter></term>
+            <listitem>
+                <para>
+                    The source of the debug message to insert.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the debug message insert.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    The user-supplied identifier of the message to insert.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>severity</parameter></term>
+            <listitem>
+                <para>
+                    The severity of the debug messages to insert.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The length string contained in the character array whose address is given by <parameter>message</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>message</parameter></term>
+            <listitem>
+                <para>
+                    The address of a character array containing the message to insert.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDebugMessageInsert</function> inserts a user-supplied message into the
+            debug output queue. <parameter>source</parameter> specifies the source that will be
+            used to classify the message and must be <constant>GL_DEBUG_SOURCE_APPLICATION</constant>
+            or <constant>GL_DEBUG_SOURCE_THIRD_PARTY</constant>. All other sources are reserved for
+            use by the GL implementation. <parameter>type</parameter> indicates the type of the message
+            to be inserted and may be one of <constant>GL_DEBUG_TYPE_ERROR</constant>, <constant>GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR</constant>,
+            <constant>GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR</constant>, <constant>GL_DEBUG_TYPE_PORTABILITY</constant>,
+            <constant>GL_DEBUG_TYPE_PERFORMANCE</constant>, <constant>GL_DEBUG_TYPE_MARKER</constant>, <constant>GL_DEBUG_TYPE_PUSH_GROUP</constant>, <constant>GL_DEBUG_TYPE_POP_GROUP</constant>, or <constant>GL_DEBUG_TYPE_OTHER</constant>.
+            <parameter>severity</parameter> indicates the severity of the message and may be <constant>GL_DEBUG_SEVERITY_LOW</constant>,
+            <constant>GL_DEBUG_SEVERITY_MEDIUM</constant>, <constant>GL_DEBUG_SEVERITY_HIGH</constant> or <constant>GL_DEBUG_SEVERITY_NOTIFICATION</constant>.
+            <parameter>id</parameter> is available for application defined use and may be any value. This value
+            will be recorded and used to identify the message.
+        </para>
+        <para>
+            <parameter>length</parameter> contains a count of the characters in the character array
+            whose address is given in <parameter>message</parameter>. If <parameter>length</parameter>
+            is negative then <parameter>message</parameter> is treated as a null-terminated string.
+            The length of the message, whether specified explicitly or implicitly, must be less than
+            or equal to the implementation defined constant <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_DEBUG_TYPE_MARKER</constant>, <constant>GL_DEBUG_TYPE_PUSH_GROUP</constant>, <constant>GL_DEBUG_TYPE_POP_GROUP</constant>, and <constant>GL_DEBUG_SEVERITY_NOTIFICATION</constant>
+            are available only if the GL version is 4.3 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if any of <parameter>source</parameter>, <parameter>type</parameter>
+            or <parameter>severity</parameter> is not one of the accepted interface types.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the length of the message is greater than the
+            value of <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDebugMessageInsert</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDebugMessageControl</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDebugMessageCallback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetDebugMessageLog</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

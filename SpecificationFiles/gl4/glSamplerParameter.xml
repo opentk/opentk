@@ -1,0 +1,1167 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glSamplerParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>KhronosGroup</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glSamplerParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glSamplerParameter</refname>
+        <refpurpose>set sampler parameters</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterf</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameteri</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+            <!-- Vector commands -->
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterfv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterIiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSamplerParameterIuiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sampler</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the sampler object whose parameter to modify.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a sampler parameter.
+                    <parameter>pname</parameter> can be one of the
+                    following:
+                    <constant>GL_TEXTURE_WRAP_S</constant>,
+                    <constant>GL_TEXTURE_WRAP_T</constant>,
+                    <constant>GL_TEXTURE_WRAP_R</constant>,
+                    <constant>GL_TEXTURE_MIN_FILTER</constant>,
+                    <constant>GL_TEXTURE_MAG_FILTER</constant>,
+                    <constant>GL_TEXTURE_BORDER_COLOR</constant>,
+                    <constant>GL_TEXTURE_MIN_LOD</constant>,
+                    <constant>GL_TEXTURE_MAX_LOD</constant>,
+                    <constant>GL_TEXTURE_LOD_BIAS</constant>
+                    <constant>GL_TEXTURE_COMPARE_MODE</constant>, or
+                    <constant>GL_TEXTURE_COMPARE_FUNC</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>param</parameter></term>
+            <listitem>
+                <para>
+                    For the scalar commands, specifies the value of
+                    <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    For the vector commands
+                    (<function>glSamplerParameter*v</function>), specifies a
+                    pointer to an array where the value or values of
+                    <parameter>pname</parameter> are stored.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glSamplerParameter</function> assigns the value or values in <parameter>params</parameter> to the sampler parameter
+            specified as <parameter>pname</parameter>.
+            <parameter>sampler</parameter> specifies the sampler object to be modified, and must be the name of a sampler object previously
+            returned from a call to <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>.
+            The following symbols are accepted in <parameter>pname</parameter>:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MIN_FILTER</constant></term>
+                <listitem>
+                    <para>
+                        The texture minifying function is used whenever the pixel being textured
+                        maps to an area greater than one texture element.
+                        There are six defined minifying functions.
+                        Two of them use the nearest one or nearest four texture elements
+                        to compute the texture value.
+                        The other four use mipmaps.
+                    </para>
+                    <para>
+                        A mipmap is an ordered set of arrays representing the same image
+                        at progressively lower resolutions.
+                        If the texture has dimensions
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup n  times  2 sup m: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msup>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">m</mml:mi>
+                                </mml:msup>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        there are
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: max ( n, m ) + 1: -->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">max</mml:mi>
+                                    <mml:mo>&af;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mi mathvariant="italic">n</mml:mi>
+                                        <mml:mi mathvariant="italic">m</mml:mi>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        mipmaps.
+                        The first mipmap is the original texture,
+                        with dimensions
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup n  times  2 sup m: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                </mml:msup>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">m</mml:mi>
+                                </mml:msup>
+                            </mml:mrow>
+                        </mml:math></inlineequation>.
+                        Each subsequent mipmap has dimensions
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup { k - 1 }  times  2 sup { l - 1 }: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                </mml:msup>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">l</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                </mml:msup>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        where
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup k  times  2 sup l: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">k</mml:mi>
+                                </mml:msup>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mi mathvariant="italic">l</mml:mi>
+                                </mml:msup>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        are the dimensions of the previous mipmap,
+                        until either
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: k  =  0: -->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mo>=</mml:mo>
+                                <mml:mn>0</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        or
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: l = 0: -->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">l</mml:mi>
+                                <mml:mo>=</mml:mo>
+                                <mml:mn>0</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>.
+                        At that point,
+                        subsequent mipmaps have dimension
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  times  2 sup { l - 1 }: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">l</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                </mml:msup>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        or
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup { k - 1}  times  1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                </mml:msup>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        until the final mipmap,
+                        which has dimension
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  times  1: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>.
+                        To define the mipmaps, call <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>
+                        with the <emphasis>level</emphasis> argument indicating the order of the mipmaps.
+                        Level 0 is the original texture;
+                        level
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: max ( n, m ): -->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">max</mml:mi>
+                                <mml:mo>&af;</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mi mathvariant="italic">n</mml:mi>
+                                    <mml:mi mathvariant="italic">m</mml:mi>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        is the final
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  times  1: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        mipmap.
+                    </para>
+                    <para>
+                        <parameter>params</parameter> supplies a function for minifying the texture as one of the
+                        following:
+                        <variablelist>
+                            <varlistentry>
+                                <term><constant>GL_NEAREST</constant></term>
+                                <listitem>
+                                    <para>
+                                        Returns the value of the texture element that is nearest
+                                        (in Manhattan distance)
+                                        to the center of the pixel being textured.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_LINEAR</constant></term>
+                                <listitem>
+                                    <para>
+                                        Returns the weighted average of the four texture elements
+                                        that are closest to the center of the pixel being textured.
+                                        These can include border texture elements,
+                                        depending on the values of <constant>GL_TEXTURE_WRAP_S</constant> and <constant>GL_TEXTURE_WRAP_T</constant>,
+                                        and on the exact mapping.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_NEAREST_MIPMAP_NEAREST</constant></term>
+                                <listitem>
+                                    <para>
+                                        Chooses the mipmap that most closely matches the size of the pixel
+                                        being textured and uses the <constant>GL_NEAREST</constant> criterion
+                                        (the texture element nearest to the center of the pixel)
+                                        to produce a texture value.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_LINEAR_MIPMAP_NEAREST</constant></term>
+                                <listitem>
+                                    <para>
+                                        Chooses the mipmap that most closely matches the size of the pixel
+                                        being textured and uses the <constant>GL_LINEAR</constant> criterion
+                                        (a weighted average of the four texture elements that are closest
+                                        to the center of the pixel)
+                                        to produce a texture value.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_NEAREST_MIPMAP_LINEAR</constant></term>
+                                <listitem>
+                                    <para>
+                                        Chooses the two mipmaps that most closely match the size of the pixel
+                                        being textured and uses the <constant>GL_NEAREST</constant> criterion
+                                        (the texture element nearest to the center of the pixel)
+                                        to produce a texture value from each mipmap.
+                                        The final texture value is a weighted average of those two values.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_LINEAR_MIPMAP_LINEAR</constant></term>
+                                <listitem>
+                                    <para>
+                                        Chooses the two mipmaps that most closely match the size of the pixel
+                                        being textured and uses the <constant>GL_LINEAR</constant> criterion
+                                        (a weighted average of the four texture elements that are closest
+                                        to the center of the pixel)
+                                        to produce a texture value from each mipmap.
+                                        The final texture value is a weighted average of those two values.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                        </variablelist>
+                    </para>
+                    <para>
+                        As more texture elements are sampled in the minification process,
+                        fewer aliasing artifacts will be apparent.
+                        While the <constant>GL_NEAREST</constant> and <constant>GL_LINEAR</constant> minification functions can be
+                        faster than the other four,
+                        they sample only one or four texture elements to determine the texture value
+                        of the pixel being rendered and can produce moire patterns
+                        or ragged transitions.
+                        The initial value of <constant>GL_TEXTURE_MIN_FILTER</constant> is
+                        <constant>GL_NEAREST_MIPMAP_LINEAR</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MAG_FILTER</constant></term>
+                <listitem>
+                    <para>
+                        The texture magnification function is used when the pixel being textured
+                        maps to an area less than or equal to one texture element.
+                        It sets the texture magnification function to either <constant>GL_NEAREST</constant>
+                        or <constant>GL_LINEAR</constant> (see below). <constant>GL_NEAREST</constant> is generally faster
+                        than <constant>GL_LINEAR</constant>,
+                        but it can produce textured images with sharper edges
+                        because the transition between texture elements is not as smooth.
+                        The initial value of <constant>GL_TEXTURE_MAG_FILTER</constant> is <constant>GL_LINEAR</constant>.
+                        <variablelist>
+                            <varlistentry>
+                                <term><constant>GL_NEAREST</constant></term>
+                                <listitem>
+                                    <para>
+                                        Returns the value of the texture element that is nearest
+                                        (in Manhattan distance)
+                                        to the center of the pixel being textured.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_LINEAR</constant></term>
+                                <listitem>
+                                    <para>
+                                        Returns the weighted average of the four texture elements
+                                        that are closest to the center of the pixel being textured.
+                                        These can include border texture elements,
+                                        depending on the values of <constant>GL_TEXTURE_WRAP_S</constant> and <constant>GL_TEXTURE_WRAP_T</constant>,
+                                        and on the exact mapping.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                        </variablelist>
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MIN_LOD</constant></term>
+                <listitem>
+                    <para>
+                        Sets the minimum level-of-detail parameter.  This floating-point value
+                        limits the selection of highest resolution mipmap (lowest mipmap
+                        level). The initial value is -1000.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MAX_LOD</constant></term>
+                <listitem>
+                    <para>
+                        Sets the maximum level-of-detail parameter.  This floating-point value
+                        limits the selection of the lowest resolution mipmap (highest mipmap
+                        level). The initial value is 1000.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_S</constant></term>
+                <listitem>
+                    <para>
+                        Sets the wrap parameter for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  <constant>GL_CLAMP_TO_BORDER</constant> causes the
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be clamped to the range
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: left [ {-1 over 2N}, 1 + {1 over 2N} right ]: -->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mfrac>
+                                            <mml:mn>-1</mml:mn>
+                                            <mml:mrow>
+                                                <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                            </mml:mrow>
+                                        </mml:mfrac>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mrow>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:mfenced open="" close="">
+                                        <mml:mrow>
+                                            <mml:mfrac>
+                                                <mml:mn>1</mml:mn>
+                                                <mml:mrow>
+                                                    <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                                </mml:mrow>
+                                            </mml:mfrac>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>,
+                        where
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        is the size of the texture in the direction of
+                        clamping.<constant>GL_CLAMP_TO_EDGE</constant> causes
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinates to be clamped to the
+                        range
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: left [ {1 over 2N}, 1 - {1 over 2N} right ]: -->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mfrac>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mrow>
+                                                <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                            </mml:mrow>
+                                        </mml:mfrac>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mrow>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mo>-</mml:mo>
+                                    <mml:mfenced open="" close="">
+                                        <mml:mrow>
+                                            <mml:mfrac>
+                                                <mml:mn>1</mml:mn>
+                                                <mml:mrow>
+                                                    <mml:mn>2</mml:mn><mml:mi mathvariant="italic">N</mml:mi>
+                                                </mml:mrow>
+                                            </mml:mfrac>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>,
+                        where
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">N</mml:mi></mml:math></inlineequation>
+                        is the size
+                        of the texture in the direction of clamping.  <constant>GL_REPEAT</constant> causes the
+                        integer part of the
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be ignored; the GL uses only the
+                        fractional part, thereby creating a repeating pattern.
+                        <constant>GL_MIRRORED_REPEAT</constant> causes the
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be set to the
+                        fractional part of the texture coordinate if the integer part of
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        is
+                        even; if the integer part of
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        is odd, then the
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        texture coordinate is
+                        set to
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1 - frac(s): -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">frac</mml:mi>
+                                    <mml:mo>&af;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>,
+                        where
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: frac(s): -->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">frac</mml:mi>
+                                <mml:mo>&af;</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        represents the fractional part of
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>.
+                        <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> causes the <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+                        coordinate to be repeated as for <constant>GL_MIRRORED_REPEAT</constant> for one repetition of the texture,
+                        at which point the coordinate to be clamped as in <constant>GL_CLAMP_TO_EDGE</constant>.
+                        Initially, <constant>GL_TEXTURE_WRAP_S</constant> is set to <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_T</constant></term>
+                <listitem>
+                    <para>
+                        Sets the wrap parameter for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        Initially, <constant>GL_TEXTURE_WRAP_T</constant> is set to <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_R</constant></term>
+                <listitem>
+                    <para>
+                        Sets the wrap parameter for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
+                        to either <constant>GL_CLAMP_TO_EDGE</constant>, <constant>GL_MIRRORED_REPEAT</constant>,
+                        <constant>GL_REPEAT</constant>, or <constant>GL_MIRROR_CLAMP_TO_EDGE</constant>.  See the discussion under <constant>GL_TEXTURE_WRAP_S</constant>.
+                        Initially, <constant>GL_TEXTURE_WRAP_R</constant> is set to <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_BORDER_COLOR</constant></term>
+                <listitem>
+                    <para>
+                        The data in <parameter>params</parameter> specifies four values that define the border values that
+                        should be used for border texels. If a texel is sampled from the border of the texture, the
+                        values of <constant>GL_TEXTURE_BORDER_COLOR</constant> are interpreted as an RGBA color to match the
+                        texture's internal format and substituted for the non-existent texel data. If the texture contains depth
+                        components, the first component of <constant>GL_TEXTURE_BORDER_COLOR</constant> is interpreted as a depth value.
+                        The initial value is
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
+                                        <mml:mo>,</mml:mo>
+                                        <mml:mn>0.0</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_COMPARE_MODE</constant></term>
+                <listitem>
+                    <para>
+                        Specifies the texture comparison mode for currently bound textures.
+                        That is, a texture whose internal format is <constant>GL_DEPTH_COMPONENT_*</constant>; see
+                        <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>)
+                        Permissible values are:
+                        <variablelist>
+                            <varlistentry>
+                                <term><constant>GL_COMPARE_REF_TO_TEXTURE</constant></term>
+                                <listitem>
+                                    <para>
+                                        Specifies that the interpolated and clamped
+                                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
+                                        texture coordinate should
+                                        be compared to the value in the currently bound texture.  See the
+                                        discussion of <constant>GL_TEXTURE_COMPARE_FUNC</constant> for details of how the comparison
+                                        is evaluated.  The result of the comparison is assigned to the red channel.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                            <varlistentry>
+                                <term><constant>GL_NONE</constant></term>
+                                <listitem>
+                                    <para>
+                                        Specifies that the red channel should be assigned the
+                                        appropriate value from the currently bound texture.
+                                    </para>
+                                </listitem>
+                            </varlistentry>
+                        </variablelist>
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_COMPARE_FUNC</constant></term>
+                <listitem>
+                    <para>
+                        Specifies the comparison operator used when <constant>GL_TEXTURE_COMPARE_MODE</constant> is
+                        set to <constant>GL_COMPARE_REF_TO_TEXTURE</constant>.  Permissible values are:
+                        <informaltable>
+                            <tgroup cols="2" align="left">
+                                <colspec/>
+                                <colspec/>
+                                <thead>
+                                    <row>
+                                        <entry>
+                                            <emphasis role="bold"> Texture Comparison Function </emphasis>
+                                        </entry>
+                                        <entry>
+                                            <emphasis role="bold"> Computed result </emphasis>
+                                        </entry>
+                                    </row>
+                                </thead>
+                                <tbody>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_LEQUAL</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&lt;=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&gt;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_GEQUAL</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&gt;=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&lt;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_LESS</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&lt;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&gt;=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_GREATER</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&gt;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&lt;=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_EQUAL</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&ne;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_NOTEQUAL</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <!-- eqn: result  =  left {   cpile {1.0 above 0.0}        lpile {r <= {D sub t} above r > {D sub t}}: -->
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mfenced open="{" close="">
+                                                        <mml:mrow>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>1.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mn>0.0</mml:mn>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                            <mml:mo>&it;&nbsp;&nbsp;</mml:mo>
+                                                            <mml:mtable>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>&ne;</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                                <mml:mtr><mml:mtd>
+                                                                    <mml:mrow>
+                                                                        <mml:mi mathvariant="italic">r</mml:mi>
+                                                                        <mml:mo>=</mml:mo>
+                                                                        <mml:mfenced open="" close="">
+                                                                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                                                                            <mml:mi mathvariant="italic">t</mml:mi>
+                                                                            </mml:msub>
+                                                                        </mml:mfenced>
+                                                                    </mml:mrow>
+                                                                </mml:mtd></mml:mtr>
+                                                            </mml:mtable>
+                                                        </mml:mrow>
+                                                    </mml:mfenced>
+                                                </mml:mrow>
+                                            </mml:math></inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_ALWAYS</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation>
+                                                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mi>1.0</mml:mi>
+                                                </mml:mrow>
+                                                </mml:math>
+                                            </inlineequation>
+                                        </entry>
+                                    </row>
+                                    <row>
+                                        <entry>
+                                        <constant>GL_NEVER</constant>
+                                        </entry>
+                                        <entry>
+                                            <inlineequation>
+                                                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                                                <mml:mrow>
+                                                    <mml:mi mathvariant="italic">result</mml:mi>
+                                                    <mml:mo>=</mml:mo>
+                                                    <mml:mi>0.0</mml:mi>
+                                                </mml:mrow>
+                                                </mml:math>
+                                            </inlineequation>
+                                        </entry>
+                                    </row>
+                                </tbody>
+                            </tgroup>
+                        </informaltable>
+                        where <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
+                        is the current interpolated texture coordinate, and
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: D sub t: -->
+                            <mml:msub><mml:mi mathvariant="italic">D</mml:mi>
+                            <mml:mi mathvariant="italic">t</mml:mi>
+                            </mml:msub>
+                        </mml:math></inlineequation>
+                        is the texture value sampled from the currently bound texture.
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">result</mml:mi></mml:math></inlineequation>
+                        is assigned to
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: R sub t: -->
+                            <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                            <mml:mi mathvariant="italic">t</mml:mi>
+                            </mml:msub>
+                        </mml:math></inlineequation>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glSamplerParameter</function> is available only if the GL version is 3.3 or higher.
+        </para>
+        <para>
+            If a sampler object is bound to a texture unit and that unit is used to sample from a texture, the parameters in the sampler
+            are used to sample from the texture, rather than the equivalent parameters in the texture object bound to that unit. This
+            introduces the possibility of sampling from the same texture object with different sets of sampler state, which may lead to
+            a condition where a texture is <emphasis>incomplete</emphasis> with respect to one sampler object and not with respect to
+            another. Thus, completeness can be considered a function of a sampler object and a texture object bound to a single
+            texture unit, rather than a property of the texture object itself.
+        </para>
+        <para>
+            <constant>GL_MIRROR_CLAMP_TO_EDGE</constant> is available only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sampler</parameter> is not the name of a sampler object previously
+            returned from a call to <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>params</parameter> should have a defined
+            constant value (based on the value of <parameter>pname</parameter>) and does not.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetSamplerParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glSamplerParameterIiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glSamplerParameterIuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glSamplerParameterf</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glSamplerParameterfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glSamplerParameteri</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glSamplerParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindSampler</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsSampler</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

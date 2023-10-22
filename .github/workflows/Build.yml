@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  push:
+  release:
+    types: [created]
+
+jobs:
+  Build:
+    strategy:
+      matrix:
+        project: [
+          OpenTK.OpenAL,
+          OpenTK.Compute,
+          OpenTK.Core,
+          OpenTK.OpenGL,
+          OpenTK.Input,
+          OpenTK.Mathematics,
+          OpenTK.Platform.Native,
+          OpenTK.Windowing.Common,
+          OpenTK.Windowing.Desktop,
+          OpenTK.Windowing.GraphicsLibraryFramework,
+        ]
+        os: [ubuntu, windows]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Build
+        run: dotnet publish --configuration Release ./src/${{ matrix.project }}/${{ matrix.project }}.csproj
+      - name: Upload binaries
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 7
+          name: ${{ matrix.project }}-${{ matrix.os }}
+          path: ./bin/Release/publish/*
+  
+  Test:
+    strategy:
+      matrix:
+        os: [ubuntu, windows]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - name: Test
+      run: dotnet test
+
+
+  Publish:
+    if: github.ref == 'refs/heads/main' && contains(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    needs: [Build]
+    strategy:
+      matrix:
+        project: [
+          OpenTK.OpenAL,
+          OpenTK.Compute,
+          OpenTK.Core,
+          OpenTK.OpenGL,
+          OpenTK.Input,
+          OpenTK.Mathematics,
+          OpenTK.Platform.Native,
+          OpenTK.Windowing.Common,
+          OpenTK.Windowing.Desktop,
+          OpenTK.Windowing.GraphicsLibraryFramework,
+          ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+      - name: Dotnet pack
+        run: |
+          dotnet pack -c Release ${{ matrix.package }}
+      - name: Push packages
+        run: dotnet nuget push **/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate

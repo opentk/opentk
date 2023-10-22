@@ -1,0 +1,498 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetInternalformat">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetInternalformat</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetInternalformat</refname>
+        <refpurpose>retrieve information about implementation-dependent support for internal formats</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetInternalformativ</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetInternalformati64v</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLint64 *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Indicates the usage of the internal format. <parameter>target</parameter> must be <constant>GL_TEXTURE_1D</constant>, <constant>GL_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_2D_ARRAY</constant>, <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP</constant>, <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>, <constant>GL_TEXTURE_RECTANGLE</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_RENDERBUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the internal format about which to retrieve information.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of information to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the maximum number of integers of the specified width that may be written to <parameter>params</parameter> by the function.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a variable into which to write the retrieved information.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetInternalformativ</function> and <function>glGetInternalformati64v</function> retrieve information about implementation-dependent support for
+            internal formats. <parameter>target</parameter> indicates the target with which the internal format will
+            be used and must be one of <constant>GL_RENDERBUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+            or <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>, corresponding to usage as a renderbuffer, two-dimensional
+            multisample texture or two-dimensional multisample array texture, respectively.
+        </para>
+        <para>
+            <parameter>internalformat</parameter> specifies the internal format about which to retrieve information and
+            must be a color-renderable, depth-renderable or stencil-renderable format.
+        </para>
+        <para>
+            The information retrieved will be written to memory addressed by the pointer specified in <parameter>params</parameter>. No
+            more than <parameter>bufSize</parameter> integers will be written to this memory.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_NUM_SAMPLE_COUNTS</constant>, the number of sample counts that would be
+            returned by querying <constant>GL_SAMPLES</constant> will be returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SAMPLES</constant>, the sample counts supported for <parameter>internalformat</parameter>
+            and <parameter>target</parameter> are written into <parameter>params</parameter> in descending numeric order. Only positive values are returned.
+            Querying <constant>GL_SAMPLES</constant> with <parameter>bufSize</parameter> of one will return just the maximum supported number of
+            samples for this format. The maximum value in <constant>GL_SAMPLES</constant> is guaranteed to be at least the lowest of the following:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_INTEGER_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a signed or
+                        unsigned integer format.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_DEPTH_TEXTURE_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a depth- or
+                        stencil-renderable format and
+                        <parameter>target</parameter> is
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        The value of
+                        <constant>GL_MAX_COLOR_TEXTURE_SAMPLES</constant> if
+                        <parameter>internalformat</parameter> is a
+                        color-renderable format and
+                        <parameter>target</parameter> is
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+                        <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>The value of <constant>GL_MAX_SAMPLES</constant>.</para>
+                </listitem>
+
+            </itemizedlist>
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_INTERNALFORMAT_SUPPORTED</constant>, <parameter>params</parameter> is set to <constant>GL_TRUE</constant> if <parameter>internalformat</parameter>
+            is a supported internal format for <parameter>target</parameter> and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_INTERNALFORMAT_PREFERRED</constant>, <parameter>params</parameter> is set to <constant>GL_TRUE</constant> if <parameter>internalformat</parameter>
+            is an format for <parameter>target</parameter> that is preferred by the implementation and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_INTERNALFORMAT_RED_SIZE</constant>, <constant>GL_INTERNALFORMAT_GREEN_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_BLUE_SIZE</constant>, <constant>GL_INTERNALFORMAT_ALPHA_SIZE</constant>, <constant>GL_INTERNALFORMAT_DEPTH_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_STENCIL_SIZE</constant>, or <constant>GL_INTERNALFORMAT_SHARED_SIZE</constant> then
+            <parameter>params</parameter> is set to the actual resolutions that would be used for storing image array components
+            for the resource for the red, green, blue, alpha, depth, stencil and shared channels respectively. If <parameter>internalformat</parameter>
+            is a compressed internal format, then <parameter>params</parameter> is set to the component resolution of an uncompressed internal format that produces
+            an image of roughly the same quality as the compressed algorithm. If the internal format is unsupported, or if a particular component is
+            not present in the format, 0 is written to <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_INTERNALFORMAT_RED_TYPE</constant>, <constant>GL_INTERNALFORMAT_GREEN_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_BLUE_TYPE</constant>, <constant>GL_INTERNALFORMAT_ALPHA_TYPE</constant>, <constant>GL_INTERNALFORMAT_DEPTH_TYPE</constant>,
+            or <constant>GL_INTERNALFORMAT_STENCIL_TYPE</constant> then <parameter>params</parameter> is set to a token identifying the data type used
+            to store the respective component. If the <parameter>internalformat</parameter> represents a compressed internal format then
+            the types returned specify how components are interpreted after decompression.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_MAX_WIDTH</constant>, <constant>GL_MAX_HEIGHT</constant>, <constant>GL_MAX_DEPTH</constant>,
+            or <constant>GL_MAX_LAYERS</constant> then <parameter>pname</parameter> is filled with the maximum width, height, depth or layer count
+            for textures with internal format <parameter>internalformat</parameter>, respectively. If <parameter>pname</parameter> is <constant>GL_MAX_COMBINED_DIMENSIONS</constant>
+            then <parameter>pname</parameter> is filled with the maximum combined dimensions of a texture of the specified internal format.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_COLOR_COMPONENTS</constant> then <parameter>params</parameter> is set to the value <constant>GL_TRUE</constant>
+            if the internal format contains any color component (i.e., red, green, blue or alpha) and to <constant>GL_FALSE</constant> otherwise. If
+            <parameter>pname</parameter> is <constant>GL_DEPTH_COMPONENTS</constant> or <constant>GL_STENCIL_COMPONENTS</constant> then <parameter>params</parameter>
+            is set to <constant>GL_TRUE</constant> if the internal format contains a depth or stencil component, respectively, and to <constant>GL_FALSE</constant>
+            otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_COLOR_RENDERABLE</constant>, <constant>GL_DEPTH_RENDERABLE</constant> or <constant>GL_STENCIL_RENDERABLE</constant>
+            then <parameter>params</parameter> is set to <constant>GL_TRUE</constant> if the specified internal format is color, depth or stencil renderable, respectively,
+            and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_FRAMEBUFFER_RENDERABLE</constant> or <constant>GL_FRAMEBUFFER_RENDERABLE_LAYERED</constant>
+            then <parameter>params</parameter> is set to one of <constant>GL_FULL_SUPPORT</constant>,
+            <constant>GL_CAVEAT_SUPPORT</constant> or <constant>GL_NONE</constant> to indicate that framebuffer attachments (layered attachments in the
+            case of <constant>GL_FRAMEBUFFER_RENDERABLE_LAYERED</constant>) with that internal format are either
+            renderable with no restrictions, renderable with some restrictions or not renderable at all.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_FRAMEBUFFER_BLEND</constant>, <parameter>params</parameter> is set to <constant>GL_TRUE</constant>
+            to indicate that the internal format is supported for blending operations when attached to a framebuffer, and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_READ_PIXELS</constant> then <parameter>params</parameter> is set to <constant>GL_FULL_SUPPORT</constant>,
+            <constant>GL_CAVEAT_SUPPORT</constant> or <constant>GL_NONE</constant> to that either full support, limited support or no support at all is supplied
+            for reading pixels from framebuffer attachments in the specified internal format.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_READ_PIXELS_FORMAT</constant> or <constant>GL_READ_PIXELS_TYPE</constant> then <parameter>params</parameter>
+            is filled with the format or type, respectively, most recommended to obtain the highest image quality and performance. For
+            <constant>GL_READ_PIXELS_FORMAT</constant>, the value returned in <parameter>params</parameter> is a token that is accepted for
+            the <parameter>format</parameter> argument to <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>. For
+            <constant>GL_READ_PIXELS_TYPE</constant>, the value returned in <parameter>params</parameter> is a token that is accepted for
+            the <parameter>type</parameter> argument to <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_IMAGE_FORMAT</constant> or <constant>GL_TEXTURE_IMAGE_TYPE</constant> then
+            <parameter>params</parameter> is filled with the implementation-recommended format or type to be used in calls to
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> and other similar functions. For <constant>GL_TEXTURE_IMAGE_FORMAT</constant>,
+            <parameter>params</parameter> is filled with a token suitable for use as the <parameter>format</parameter> argument to
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>. For <constant>GL_TEXTURE_IMAGE_TYPE</constant>,
+            <parameter>params</parameter> is filled with a token suitable for use as the <parameter>type</parameter> argument to
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_GET_TEXTURE_IMAGE_FORMAT</constant> or <constant>GL_GET_TEXTURE_IMAGE_TYPE</constant> then
+            <parameter>params</parameter> is filled with the implementation-recommended format or type to be used in calls to
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry> and other similar functions. For <constant>GL_GET_TEXTURE_IMAGE_FORMAT</constant>,
+            <parameter>params</parameter> is filled with a token suitable for use as the <parameter>format</parameter> argument to
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>. For <constant>GL_GET_TEXTURE_IMAGE_TYPE</constant>,
+            <parameter>params</parameter> is filled with a token suitable for use as the <parameter>type</parameter> argument to
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_MIPMAP</constant> then <parameter>pname</parameter> is set to <constant>GL_TRUE</constant>
+            to indicate that the specified internal format supports mipmaps and to <constant>GL_FALSE</constant> otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_GENERATE_MIPMAP</constant> or <constant>GL_AUTO_GENERATE_MIPMAP</constant> then <parameter>params</parameter>
+            is indicates the level of support for manual or automatic mipmap generation for the specified internal format, respectively. Returned values
+            may be one of <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant> and <constant>GL_NONE</constant> to indicate
+            either full support, limited support or no support at all.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_COLOR_ENCODING</constant> then the color encoding for the resource is returned in
+            <parameter>params</parameter>. Possible values for color buffers are <constant>GL_LINEAR</constant> or <constant>GL_SRGB</constant>,
+            for linear or sRGB-encoded color components, respectively. For non-color
+            formats (such as depth or stencil), or for unsupported resources,
+            the value <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SRGB_READ</constant>, or <constant>GL_SRGB_WRITE</constant> then <parameter>params</parameter>
+            indicates the level of support for reading and writing to sRGB encoded images, respectively. For <constant>GL_SRGB_READ</constant>,
+            support for converting from sRGB colorspace on read operations is returned in <parameter>params</parameter> and for <constant>GL_SRGB_WRITE</constant>,
+            support for converting to sRGB colorspace on write operations to the resource is returned in <parameter>params</parameter>. <parameter>params</parameter> may be
+            set to <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all, respecitively.
+        </para>
+        <para>
+             If <parameter>pname</parameter> is <constant>GL_FILTER</constant> the <parameter>params</parameter> is set to either <constant>GL_TRUE</constant>
+             or <constant>GL_FALSE</constant> to indicate support or lack thereof for filter modes other than <constant>GL_NEAREST</constant> or <constant>GL_NEAREST_MIPMAP</constant>
+             for the specified internal format.
+         </para>
+         <para>
+            If <parameter>pname</parameter> is <constant>GL_VERTEX_TEXTURE</constant>, <constant>GL_TESS_CONTROL_TEXTURE</constant>, <constant>GL_TESS_EVALUATION_TEXTURE</constant>,
+            <constant>GL_GEOMETRY_TEXTURE</constant>, <constant>GL_FRAGMENT_TEXTURE</constant>, or <constant>GL_COMPUTE_TEXTURE</constant>, then the value
+            written to <parameter>params</parameter> indicates support for use of the resource as a source of texturing in the vertex, tessellation control,
+            tessellation evaluation, geometry, fragment and compute shader stages, respectively. <parameter>params</parameter> may be set to
+            <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant> or <constant>GL_NONE</constant> to indicate full support,
+            limited support or no support at all, respectively.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_SHADOW</constant>, <constant>GL_TEXTURE_GATHER</constant> or <constant>GL_TEXTURE_GATHER_SHADOW</constant> then the value written to
+            <parameter>params</parameter> indicates the level of support for using the resource with a shadow sampler, in gather operations or as a shadow sampler in gather operations, respectively. Returned values
+            may be <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant> or <constant>GL_NONE</constant> to indicate full support,
+            limited support or no support at all, respectively.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SHADER_IMAGE_LOAD</constant>, <constant>GL_SHADER_IMAGE_STORE</constant> or <constant>GL_SHADER_IMAGE_ATOMIC</constant>
+            then the value returned in <parameter>params</parameter> indicates the level of support for image loads, stores and atomics for resources of the specified internal
+            format. Returned values
+            may be <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant> or <constant>GL_NONE</constant> to indicate full support,
+            limited support or no support at all, respectively.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_IMAGE_TEXEL_SIZE</constant> then the size of a texel when the resource when used as
+            an image texture is returned in <parameter>params</parameter>. If the resource is not supported for image
+            textures zero is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_IMAGE_COMPATIBILITY_CLASS</constant> then the compatibility class of the resource when
+            used as an image texture is returned in <parameter>params</parameter>. The possible values
+            returned are <constant>GL_IMAGE_CLASS_4_X_32</constant>, <constant>GL_IMAGE_CLASS_2_X_32</constant>, <constant>GL_IMAGE_CLASS_1_X_32</constant>,
+            <constant>GL_IMAGE_CLASS_4_X_16</constant>, <constant>GL_IMAGE_CLASS_2_X_16</constant>, <constant>GL_IMAGE_CLASS_1_X_16</constant>,
+            <constant>GL_IMAGE_CLASS_4_X_8</constant>, <constant>GL_IMAGE_CLASS_2_X_8</constant>, <constant>GL_IMAGE_CLASS_1_X_8</constant>,
+            <constant>GL_IMAGE_CLASS_11_11_10</constant>, and <constant>GL_IMAGE_CLASS_10_10_10_2</constant>, which correspond to
+            the 4x32, 2x32, 1x32, 4x16, 2x16, 1x16, 4x8, 2x8, 1x8, the class
+            (a) 11/11/10 packed floating-point format, and the class (b)
+            10/10/10/2 packed formats, respectively.
+            If the resource is not supported for image textures, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_IMAGE_PIXEL_FORMAT</constant> or <constant>GL_IMAGE_PIXEL_TYPE</constant> then
+            the pixel format or type of the resource when used as an image texture is returned in <parameter>params</parameter>, respectively.
+            In either case, the resource is not supported for image textures <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_IMAGE_FORMAT_COMPATIBILITY_TYPE</constant>, the matching criteria use for the
+            resource when used as an image textures is returned in <parameter>params</parameter>. Possible values returned in <parameter>params</parameter> are
+            <constant>GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE</constant> or <constant>GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS</constant>.
+            If the resource is not supported for image textures, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST</constant> or <constant>GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST</constant>,
+            support for using the resource both as a source for texture sampling while it is bound as a buffer for depth or stencil test, respectively, is written to <parameter>params</parameter>.
+            Possible values returned are <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all. If the resource or operation is not supported, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE</constant> or <constant>GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE</constant>,
+            support for using the resource both as a source for texture sampling while performing depth or stencil writes to the resources, respectively, is written to <parameter>params</parameter>.
+            Possible values returned are <constant>GL_FULL_SUPPORT</constant>, <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all. If the resource or operation is not supported, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_COMPRESSED</constant> then <constant>GL_TRUE</constant> is returned in <parameter>params</parameter>
+            if <parameter>internalformat</parameter> is a compressed internal format. <constant>GL_FALSE</constant> is returned in <parameter>params</parameter>
+            otherwise.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_COMPRESSED_BLOCK_WIDTH</constant>, <constant>GL_TEXTURE_COMPRESSED_BLOCK_HEIGHT</constant> or
+            <constant>GL_TEXTURE_COMPRESSED_BLOCK_SIZE</constant> then the width, height or total size, respectively of a block (in basic machine units) is returned in
+            <parameter>params</parameter>. If the internal format is not compressed, or the resource is not supported, 0 is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_CLEAR_BUFFER</constant>, the level of support for using the resource with <citerefentry><refentrytitle>glClearBufferData</refentrytitle></citerefentry>
+            and <citerefentry><refentrytitle>glClearBufferSubData</refentrytitle></citerefentry> is returned in <parameter>params</parameter>. Possible values returned are <constant>GL_FULL_SUPPORT</constant>,
+            <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all, respectively. If the resource or operation is not supported, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_VIEW</constant>, the level of support for using the resource with the <citerefentry><refentrytitle>glTextureView</refentrytitle></citerefentry>
+            command is returned in <parameter>params</parameter>. Possible values returned are <constant>GL_FULL_SUPPORT</constant>,
+            <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all, respectively. If the resource or operation is not supported, <constant>GL_NONE</constant> is returned.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_VIEW_COMPATIBILITY_CLASS</constant> then the compatibility class of the resource when
+            used as a texture view is returned in <parameter>params</parameter>. The possible values
+            returned are <constant>GL_VIEW_CLASS_128_BITS</constant>, <constant>GL_VIEW_CLASS_96_BITS</constant>,
+            <constant>GL_VIEW_CLASS_64_BITS</constant>, <constant>GL_VIEW_CLASS_48_BITS</constant>, <constant>GL_VIEW_CLASS_32_BITS</constant>,
+            <constant>GL_VIEW_CLASS_24_BITS</constant>, <constant>GL_VIEW_CLASS_16_BITS</constant>, <constant>GL_VIEW_CLASS_8_BITS</constant>,
+            <constant>GL_VIEW_CLASS_S3TC_DXT1_RGB</constant>, <constant>GL_VIEW_CLASS_S3TC_DXT1_RGBA</constant>,
+            <constant>GL_VIEW_CLASS_S3TC_DXT3_RGBA</constant>, <constant>GL_VIEW_CLASS_S3TC_DXT5_RGBA</constant>,
+            <constant>GL_VIEW_CLASS_RGTC1_RED</constant>, <constant>GL_VIEW_CLASS_RGTC2_RG</constant>, <constant>GL_VIEW_CLASS_BPTC_UNORM</constant>, and
+            <constant>GL_VIEW_CLASS_BPTC_FLOAT</constant>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_CLEAR_TEXTURE</constant> then the presence of support for using the
+            <citerefentry><refentrytitle>glClearTexImage</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glClearTexSubImage</refentrytitle></citerefentry>
+            commands with the resource is written to <parameter>params</parameter>. Possible values written are  <constant>GL_FULL_SUPPORT</constant>,
+            <constant>GL_CAVEAT_SUPPORT</constant>, or <constant>GL_NONE</constant> to indicate
+            full support, limited support or no support at all, respectively. If the resource or operation is not supported, <constant>GL_NONE</constant> is returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glGetInternalformativ</function> is available only if the
+            GL version is 4.2 or higher.
+        </para>
+        <para>
+            The tokens
+            <constant>GL_INTERNALFORMAT_SUPPORTED</constant>,
+            <constant>GL_INTERNALFORMAT_PREFERRED</constant>,
+            <constant>GL_INTERNALFORMAT_RED_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_GREEN_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_BLUE_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_ALPHA_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_DEPTH_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_STENCIL_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_SHARED_SIZE</constant>,
+            <constant>GL_INTERNALFORMAT_RED_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_GREEN_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_BLUE_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_ALPHA_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_DEPTH_TYPE</constant>,
+            <constant>GL_INTERNALFORMAT_STENCIL_TYPE</constant>,
+            <constant>GL_MAX_WIDTH</constant>,
+            <constant>GL_MAX_HEIGHT</constant>,
+            <constant>GL_MAX_DEPTH</constant>,
+            <constant>GL_MAX_LAYERS</constant>,
+            <constant>GL_MAX_COMBINED_DIMENSIONS</constant>,
+            <constant>GL_COLOR_COMPONENTS</constant>,
+            <constant>GL_DEPTH_COMPONENTS</constant>,
+            <constant>GL_STENCIL_COMPONENTS</constant>,
+            <constant>GL_COLOR_RENDERABLE</constant>,
+            <constant>GL_DEPTH_RENDERABLE</constant>,
+            <constant>GL_STENCIL_RENDERABLE</constant>,
+            <constant>GL_FRAMEBUFFER_RENDERABLE</constant>,
+            <constant>GL_FRAMEBUFFER_RENDERABLE_LAYERED</constant>,
+            <constant>GL_FRAMEBUFFER_BLEND</constant>,
+            <constant>GL_READ_PIXELS</constant>,
+            <constant>GL_READ_PIXELS_FORMAT</constant>,
+            <constant>GL_READ_PIXELS_TYPE</constant>,
+            <constant>GL_TEXTURE_IMAGE_FORMAT</constant>,
+            <constant>GL_TEXTURE_IMAGE_TYPE</constant>,
+            <constant>GL_GET_TEXTURE_IMAGE_FORMAT</constant>,
+            <constant>GL_GET_TEXTURE_IMAGE_TYPE</constant>,
+            <constant>GL_MIPMAP</constant>,
+            <constant>GL_GENERATE_MIPMAP</constant>,
+            <constant>GL_AUTO_GENERATE_MIPMAP</constant>,
+            <constant>GL_COLOR_ENCODING</constant>,
+            <constant>GL_SRGB_READ</constant>,
+            <constant>GL_SRGB_WRITE</constant>,
+            <constant>GL_SRGB_DECODE_ARB</constant>,
+            <constant>GL_FILTER</constant>,
+            <constant>GL_VERTEX_TEXTURE</constant>,
+            <constant>GL_TESS_CONTROL_TEXTURE</constant>,
+            <constant>GL_TESS_EVALUATION_TEXTURE</constant>,
+            <constant>GL_GEOMETRY_TEXTURE</constant>,
+            <constant>GL_FRAGMENT_TEXTURE</constant>,
+            <constant>GL_COMPUTE_TEXTURE</constant>,
+            <constant>GL_TEXTURE_SHADOW</constant>,
+            <constant>GL_TEXTURE_GATHER</constant>,
+            <constant>GL_TEXTURE_GATHER_SHADOW</constant>,
+            <constant>GL_SHADER_IMAGE_LOAD</constant>,
+            <constant>GL_SHADER_IMAGE_STORE</constant>,
+            <constant>GL_SHADER_IMAGE_ATOMIC</constant>,
+            <constant>GL_IMAGE_TEXEL_SIZE</constant>,
+            <constant>GL_IMAGE_COMPATIBILITY_CLASS</constant>,
+            <constant>GL_IMAGE_PIXEL_FORMAT</constant>,
+            <constant>GL_IMAGE_PIXEL_TYPE</constant>,
+            <constant>GL_IMAGE_FORMAT_COMPATIBILITY_TYPE</constant>,
+            <constant>GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_TEST</constant>,
+            <constant>GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_TEST</constant>,
+            <constant>GL_SIMULTANEOUS_TEXTURE_AND_DEPTH_WRITE</constant>,
+            <constant>GL_SIMULTANEOUS_TEXTURE_AND_STENCIL_WRITE</constant>,
+            <constant>GL_TEXTURE_COMPRESSED</constant>,
+            <constant>GL_TEXTURE_COMPRESSED_BLOCK_WIDTH</constant>,
+            <constant>GL_TEXTURE_COMPRESSED_BLOCK_HEIGHT</constant>,
+            <constant>GL_TEXTURE_COMPRESSED_BLOCK_SIZE</constant>,
+            <constant>GL_CLEAR_BUFFER</constant>,
+            <constant>GL_TEXTURE_VIEW</constant>, and
+            <constant>GL_VIEW_COMPATIBILITY_CLASS</constant> are supported only if the GL
+            version is 4.3 or higher.
+        </para>
+        <para>
+            The <constant>GL_CLEAR_TEXTURE</constant> token is accepted for <parameter>pname</parameter> only
+            if the GL version is 4.4 or higher.
+        </para>
+        </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>bufSize</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not <constant>GL_SAMPLES</constant> or <constant>GL_NUM_SAMPLE_COUNTS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalformat</parameter> is not color-, depth-, or stencil-renderable.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> or <constant>GL_RENDERBUFFER</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetInternalformati64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetInternalformativ</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='42']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2018 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

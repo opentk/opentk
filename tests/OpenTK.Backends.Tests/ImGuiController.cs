@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native;
-using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
+using ErrorCode = OpenTK.OpenGL.OpenGL.ErrorCode;
 using System.Linq;
+using OpenTK.Core.Platform.Enums;
 
 namespace OpenTK.Backends.Tests
 {

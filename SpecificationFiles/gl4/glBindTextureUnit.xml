@@ -1,0 +1,117 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent;]>
+ <refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindTextureUnit">
+  <info>
+    <copyright>
+      <year>2014</year>
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+  <refmeta>
+    <refentrytitle>glBindTextureUnit</refentrytitle>
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>glBindTextureUnit</refname>
+    <refpurpose>bind an existing texture object to the specified texture unit </refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>C Specification</title>
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glBindTextureUnit</function></funcdef>
+        <paramdef>GLuint <parameter>unit</parameter></paramdef>
+        <paramdef>GLuint <parameter>texture</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+    <variablelist>
+      <varlistentry>
+        <term>
+          <parameter>unit</parameter>
+        </term>
+        <listitem>
+          <para>
+Specifies the texture unit, to which the texture object should be bound to.
+                    </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          <parameter>texture</parameter>
+        </term>
+        <listitem>
+          <para>
+Specifies the name of a texture.                    </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+  <refsect1 xml:id="description">
+    <title>Description</title>
+    <para><function>glBindTextureUnit</function> binds an existing texture object to the texture unit numbered <parameter>unit</parameter>.</para>
+    <para><parameter>texture</parameter> must be zero or the name of an existing texture object. When <parameter>texture</parameter> is the name of an existing texture object, that object is bound to the target, in the corresponding texture unit, that was specified when the object was created. When <parameter>texture</parameter> is zero, each of the targets enumerated at the beginning of this section is reset to its default texture for the corresponding texture image unit.       </para>
+  </refsect1>
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+    <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_TEXTURE_BINDING_1D</constant>,
+        <constant>GL_TEXTURE_BINDING_2D</constant>,
+        <constant>GL_TEXTURE_BINDING_3D</constant>,
+        <constant>GL_TEXTURE_BINDING_1D_ARRAY</constant>,
+        <constant>GL_TEXTURE_BINDING_2D_ARRAY</constant>,
+        <constant>GL_TEXTURE_BINDING_RECTANGLE</constant>,
+        <constant>GL_TEXTURE_BINDING_BUFFER</constant>,
+        <constant>GL_TEXTURE_BINDING_CUBE_MAP</constant>,
+        <constant>GL_TEXTURE_BINDING_CUBE_MAP_ARRAY</constant>,
+        <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE</constant> or
+        <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY</constant>.
+    </para>
+  </refsect1>
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if <parameter>texture</parameter> is not zero or the name of an existing texture object.
+        </para>
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindTextureUnit</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso">
+    <title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright">
+    <title>Copyright</title>
+    <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

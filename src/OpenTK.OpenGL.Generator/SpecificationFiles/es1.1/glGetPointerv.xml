@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGetPointerv">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetPointerv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glGetPointerv</refname>
+        <refpurpose>return the address of the specified pointer</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetPointerv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>void ** <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>pname</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the array or buffer pointer to be returned.
+                    Accepted symbolic names are
+                    <constant>GL_COLOR_ARRAY_POINTER</constant>,
+                    <constant revision="OES_matrix_palette">GL_MATRIX_INDEX_ARRAY_POINTER_OES</constant><phrase revision="OES_matrix_palette">,</phrase>
+                    <constant>GL_NORMAL_ARRAY_POINTER</constant>,
+                    <constant revision="es1.1">GL_POINT_SIZE_ARRAY_POINTER_OES</constant><phrase revision="es1.1">,</phrase>
+                    <constant>GL_TEXTURE_COORD_ARRAY_POINTER</constant>,<phrase revision="not-OES_matrix_palette"> and</phrase>
+                    <constant>GL_VERTEX_ARRAY_POINTER</constant><phrase revision="not-OES_matrix_palette">.</phrase><phrase revision="OES_matrix_palette">, and</phrase>
+                    <constant revision="OES_matrix_palette">GL_WEIGHT_ARRAY_POINTER_OES</constant><phrase revision="OES_matrix_palette">.</phrase>
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>params</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Returns the pointer value specified by <parameter>pname</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glGetPointerv</function>
+        returns pointer information.
+        <parameter>pname</parameter> is a
+        symbolic constant indicating the pointer to be returned, and
+        <parameter>params</parameter> is a pointer to a
+        location in which to place the returned data.
+        </para>
+
+	<para>
+	Querying the GL_TEXTURE_COORD_ARRAY_POINTER returns the value for
+	the active client texture unit.
+	</para>
+
+	<para>
+	If a non-zero
+	named buffer object was bound to the GL_ARRAY_BUFFER target
+	(see
+	<citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>)
+	when the desired pointer was previously specified, the pointer
+	returned is a byte offset into the buffer object's data store.
+	</para>
+
+
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+	<para revision="es1.1"> 
+	<function>glGetPointerv</function> is only supported
+	if the OpenGL ES version number is 1.1 or greater. 
+	</para> 
+
+        <para>
+        The pointers are all client-side state.
+        </para>
+
+        <para>
+        The initial value for each pointer is 0.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>pname</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>,
+        <citerefentry revision="es1.1"><refentrytitle>glPointSizePointerOES</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry><phrase revision="OES_matrix_palette">,</phrase>
+        <citerefentry revision="OES_matrix_palette"><refentrytitle>glWeightPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,4 +1,4 @@
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Enums
 {
     /// <summary>
     /// Initialization hints are set before <see cref="GLFW.Init"/> and affect how the library behaves until termination.

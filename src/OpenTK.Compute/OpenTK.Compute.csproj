@@ -3,8 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>OpenTK.Compute</RootNamespace>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <LangVersion>9</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -14,8 +12,4 @@
     <PropertyGroup>
       <NoWarn>1591</NoWarn>
     </PropertyGroup>
-    
-    <Import Project="..\..\props\common.props" />
-    <Import Project="..\..\props\nuget-common.props" />
-    <Import Project="..\..\props\stylecop.props" />
 </Project>

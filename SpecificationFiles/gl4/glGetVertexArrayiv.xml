@@ -1,0 +1,130 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetVertexArrayiv">
+  <info>
+    <copyright>
+      <year>2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetVertexArrayiv</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glGetVertexArrayiv</refname>
+
+    <refpurpose>retrieve parameters of a vertex array object</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetVertexArrayiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>vaobj</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>vaobj</parameter></term>
+
+        <listitem>
+          <para>specifies the name of the vertex array object to use for the
+          query.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pname</parameter></term>
+
+        <listitem>
+          <para>Name of the property to use for the query. Must be
+          <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>param</parameter></term>
+
+        <listitem>
+          <para>Returns the requested value.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para>This function provides a mean of querying properties of an existing
+    vertex array object. The vertex array object does not have to be bound to
+    the rendering context at the time of the call, but must have been bound at
+    least once prior to this call.</para>
+
+    <para><function>glGetVertexArrayiv</function> can be used to retrieve ID
+    of a buffer object that will be bound to the
+    <constant>GL_ELEMENT_ARRAY_BUFFER</constant> binding point whenever the
+    queried vertex array object is bound to the rendering context. The binding
+    can be changed for an active vertex array object with a
+    <function>glBindBuffer</function> call.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if
+    <parameter>vaobj</parameter> is not the name of an existing vertex array
+    object.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> error is generated if
+    <parameter>pname</parameter> is not
+    <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>.</para>
+  </refsect1>
+  <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetVertexArrayiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+  </refsect1>
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindVertexArray</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    </para>
+  </refsect1>
+
+  <refsect1 xml:id="Copyright">
+    <title>Copyright</title>
+
+    <para>Copyright <trademark class="copyright"/> 2014 Khronos Group. This
+    material may be distributed subject to the terms and conditions set forth
+    in the Open Publication License, v 1.0, 8 June 1999. <link
+    xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.</para>
+  </refsect1>
+</refentry>

@@ -1,0 +1,95 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateProgramPipelines">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateProgramPipelines</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateProgramPipelines</refname>
+        <refpurpose>create program pipeline objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCreateProgramPipelines</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLuint *<parameter>pipelines</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>n</parameter></term>
+                <listitem>
+                    <para>
+                        Number of program pipeline objects to create.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>pipelines</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies an array in which names of the new program
+                        pipeline objects are stored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCreateProgramPipelines</function>
+            returns <parameter>n</parameter> previously unused program pipeline
+            names in <parameter>pipelines</parameter>, each representing
+            a new program pipeline object initialized to the default state.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>n</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateProgramPipelines</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindProgramPipeline</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCreateShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsProgramPipeline</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

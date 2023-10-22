@@ -1,0 +1,156 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramResourceLocation">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramResourceLocation</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramResourceLocation</refname>
+        <refpurpose>query the location of a named resource within a program</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLint <function>glGetProgramResourceLocation</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>programInterface</parameter></paramdef>
+                <paramdef>const char * <parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of a program object whose resources to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>programInterface</parameter></term>
+            <listitem>
+                <para>
+                    A token identifying the interface within <parameter>program</parameter> containing the resource named <parameter>name</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    The name of the resource to query the location of.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetProgramResourceLocation</function> returns the location assigned
+            to the variable named <parameter>name</parameter> in interface <parameter>programInterface</parameter> of program
+            object <parameter>program</parameter>.  <parameter>program</parameter> must be the name of a program that has been
+            linked successfully. <parameter>programInterface</parameter> must
+            be one of <constant>GL_UNIFORM</constant>, <constant>GL_PROGRAM_INPUT</constant>, <constant>GL_PROGRAM_OUTPUT</constant>,
+            <constant>GL_VERTEX_SUBROUTINE_UNIFORM</constant>, <constant>GL_TESS_CONTROL_SUBROUTINE_UNIFORM</constant>,
+            <constant>GL_TESS_EVALUATION_SUBROUTINE_UNIFORM</constant>, <constant>GL_GEOMETRY_SUBROUTINE_UNIFORM</constant>,
+            <constant>GL_FRAGMENT_SUBROUTINE_UNIFORM</constant>, <constant>GL_COMPUTE_SUBROUTINE_UNIFORM</constant>, or <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>.
+       </para>
+       <para>
+            The value -1 will be returned if an error occurs, if <parameter>name</parameter> does not identify an active variable on
+            <parameter>programInterface</parameter>, or if <parameter>name</parameter> identifies an active variable that does
+            not have a valid location assigned, as described above.  The locations
+            returned by these commands are the same locations returned when querying
+            the <constant>GL_LOCATION</constant> and <constant>GL_LOCATION_INDEX</constant> resource properties.
+        </para>
+        <para>
+            A string provided to <function>glGetProgramResourceLocation</function> is considered to match an active variable if:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    the string exactly matches the name of the active variable
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    if the string identifies the base name of an active array, where the
+                    string would exactly match the name of the variable if the suffix
+                    "[0]" were appended to the string
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    if the string identifies an active element of the array, where the
+                    string ends with the concatenation of the "[" character, an integer
+                    <emphasis>with no "+" sign, extra leading zeroes, or whitespace</emphasis> identifying an
+                    array element, and the "]" character, the integer is less than the
+                    number of active elements of the array variable, and where the string
+                    would exactly match the enumerated name of the array if the decimal
+                    integer were replaced with zero.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            Any other string is considered not to identify an active variable.  If the
+            string specifies an element of an array variable,
+            <function>glGetProgramResourceLocation</function> returns the
+            location assigned to that element.  If it
+            specifies the base name of an array, it identifies the resources
+            associated with the first element of the array.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter>
+            is not the name of an existing program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>programInterface</parameter>
+            is not one of the accepted interface types.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter>
+            has not been linked successfully.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramResourceLocation</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramResourceName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceIndex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResource</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramResourceLocationIndex</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

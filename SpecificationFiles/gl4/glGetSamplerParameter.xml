@@ -1,0 +1,279 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetSamplerParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetSamplerParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetSamplerParameter</refname>
+        <refpurpose>return sampler parameter values</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetSamplerParameterfv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetSamplerParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetSamplerParameterIiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetSamplerParameterIuiv</function></funcdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLuint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sampler</parameter></term>
+            <listitem>
+                <para>
+                    Specifies name of the sampler object from which to retrieve parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a sampler parameter.
+                    <constant>GL_TEXTURE_MAG_FILTER</constant>,
+                    <constant>GL_TEXTURE_MIN_FILTER</constant>,
+                    <constant>GL_TEXTURE_MIN_LOD</constant>,
+                    <constant>GL_TEXTURE_MAX_LOD</constant>,
+                    <constant>GL_TEXTURE_LOD_BIAS</constant>,
+                    <constant>GL_TEXTURE_WRAP_S</constant>,
+                    <constant>GL_TEXTURE_WRAP_T</constant>,
+                    <constant>GL_TEXTURE_WRAP_R</constant>,
+                    <constant>GL_TEXTURE_BORDER_COLOR</constant>,
+                    <constant>GL_TEXTURE_COMPARE_MODE</constant>, and
+                    <constant>GL_TEXTURE_COMPARE_FUNC</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the sampler parameters.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetSamplerParameter</function> returns in <parameter>params</parameter> the value or values of the sampler parameter
+            specified as <parameter>pname</parameter>.
+            <parameter>sampler</parameter> defines the target sampler, and must be the name of an existing sampler object, returned from a previous call
+            to <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>.
+            <parameter>pname</parameter> accepts the same symbols as <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>,
+            with the same interpretations:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MAG_FILTER</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued texture magnification filter,
+                        a symbolic constant. The initial value is <constant>GL_LINEAR</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MIN_FILTER</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued texture minification filter,
+                        a symbolic constant. The initial value is <constant>GL_NEAREST_MIPMAP_LINEAR</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MIN_LOD</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued texture minimum level-of-detail value.  The
+                        initial value is
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: -1000: -->
+                            <mml:mn>-1000</mml:mn>
+                        </mml:math></inlineequation>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_MAX_LOD</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued texture maximum level-of-detail value. The
+                        initial value is 1000.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_S</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued wrapping function for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>,
+                        a symbolic constant. The initial value is <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_T</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued wrapping function for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>,
+                        a symbolic constant. The initial value is <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_WRAP_R</constant></term>
+                <listitem>
+                    <para>
+                        Returns the single-valued wrapping function for texture coordinate
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>,
+                        a symbolic constant. The initial value is <constant>GL_REPEAT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_BORDER_COLOR</constant></term>
+                <listitem>
+                    <para>
+                        Returns four integer or floating-point numbers that comprise the RGBA color
+                        of the texture border.
+                        Floating-point values are returned in the range
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: [0,1]: -->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>.
+                        Integer values are returned as a linear mapping of the internal floating-point
+                        representation such that 1.0 maps to the most positive representable
+                        integer and
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: -1.0: -->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>
+                        maps to the most negative representable
+                        integer. The initial value is (0, 0, 0, 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_COMPARE_MODE</constant></term>
+                <listitem>
+                    <para>
+                        Returns a single-valued texture comparison mode, a symbolic constant.  The
+                        initial value is <constant>GL_NONE</constant>. See <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_COMPARE_FUNC</constant></term>
+                <listitem>
+                    <para>
+                        Returns a single-valued texture comparison function, a symbolic constant.  The
+                        initial value is <constant>GL_LEQUAL</constant>. See <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter>.
+        </para>
+        <para>
+            <function>glGetSamplerParameter</function> is available only if the GL version is 3.3 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sampler</parameter> is not the name of a sampler object returned from
+            a previous call to <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetSamplerParameterIiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetSamplerParameterIuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetSamplerParameterfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetSamplerParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

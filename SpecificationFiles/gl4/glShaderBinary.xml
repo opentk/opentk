@@ -1,0 +1,145 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glShaderBinary">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glShaderBinary</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glShaderBinary</refname>
+        <refpurpose>load pre-compiled shader binaries</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glShaderBinary</function></funcdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>shaders</parameter></paramdef>
+                <paramdef>GLenum <parameter>binaryFormat</parameter></paramdef>
+                <paramdef>const void *<parameter>binary</parameter></paramdef>
+                <paramdef>GLsizei <parameter>length</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+            <para>
+                Specifies the number of shader object handles contained in <parameter>shaders</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>shaders</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of an array of shader handles into which to load pre-compiled shader binaries.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binaryFormat</parameter></term>
+            <listitem>
+            <para>
+                Specifies the format of the shader binaries contained in <parameter>binary</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binary</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of an array of bytes containing pre-compiled binary shader code.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+            <para>
+                Specifies the length of the array whose address is given in <parameter>binary</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glShaderBinary</function> loads pre-compiled shader binary code into the <parameter>count</parameter>
+            shader objects whose handles are given in <parameter>shaders</parameter>. <parameter>binary</parameter>
+            points to <parameter>length</parameter> bytes of binary shader code stored in client memory.
+            <parameter>binaryFormat</parameter> specifies the format of the pre-compiled code.
+        </para>
+        <para>
+            The binary image contained in <parameter>binary</parameter> will be decoded according to the extension
+            specification defining the specified <parameter>binaryFormat</parameter> token. OpenGL
+            does not define any specific binary formats, but it does provide a mechanism to obtain token
+            vaues for such formats provided by such extensions.
+        </para>
+        <para>
+            Depending on the types of the shader objects in <parameter>shaders</parameter>, <function>glShaderBinary</function>
+            will individually load binary vertex or fragment shaders, or load an executable binary that contains an optimized
+            pair of vertex and fragment shaders stored in the same binary.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if more than one of the handles in
+            <parameter>shaders</parameter> refers to the same shader object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>binaryFormat</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the data pointed to by <parameter>binary</parameter>
+            does not match the format specified by <parameter>binaryFormat</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with parameter <constant>GL_NUM_SHADER_BINARY_FORMATS</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with parameter <constant>GL_SHADER_BINARY_FORMATS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glShaderBinary</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glProgramBinary</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

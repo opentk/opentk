@@ -1,4 +1,4 @@
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Enums
 {
     /// <summary>
     /// An enumeration of OpenTK window modes.

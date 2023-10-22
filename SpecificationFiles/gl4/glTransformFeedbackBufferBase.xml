@@ -1,0 +1,122 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glTransformFeedbackBufferBase">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glTransformFeedbackBufferBase</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTransformFeedbackBufferBase</refname>
+        <refpurpose>bind a buffer object to a transform feedback buffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTransformFeedbackBufferBase</function></funcdef>
+                <paramdef>GLuint <parameter>xfb</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>xfb</parameter></term>
+                <listitem>
+                    <para>
+                        Name of the transform feedback buffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>index</parameter></term>
+                <listitem>
+                    <para>
+                        Index of the binding point within
+                        <parameter>xfb</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>buffer</parameter></term>
+                <listitem>
+                    <para>
+                        Name of the buffer object to bind to the specified
+                        binding point.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glTransformFeedbackBufferBase</function> binds the
+            buffer object <parameter>buffer</parameter> to the binding point
+            at index <parameter>index</parameter> of the transform feedback
+            object <parameter>xfb</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Calling <function>glTransformFeedbackBufferBase</function> is
+            equivalent to calling
+            <citerefentry><refentrytitle>glTransformFeedbackBufferRange</refentrytitle></citerefentry>
+            with <parameter>offset</parameter> zero and
+            <parameter>size</parameter> equal to the size of
+            <parameter>buffer</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>xfb</parameter> is not the name of an existing
+            transform feedback object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if in
+            <parameter>buffer</parameter> is not zero or the name of an
+            existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>index</parameter> is greater than or equal to the
+            number of transform feedback buffer binding points (the value of
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>).
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glTransformFeedbackBufferBase</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTransformFeedbackBufferRange</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,480 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMemoryBarrier">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMemoryBarrier</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMemoryBarrier</refname>
+        <refpurpose>defines a barrier ordering memory transactions</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMemoryBarrier</function></funcdef>
+                <paramdef>GLbitfield <parameter>barriers</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glMemoryBarrierByRegion</function></funcdef>
+                <paramdef>GLbitfield <parameter>barriers</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>barriers</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the barriers to insert.
+                </para>
+                <para>
+                    For <function>glMemoryBarrier</function>, must be a
+                    bitwise combination of any of
+                    <constant>GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT</constant>,
+                    <constant>GL_ELEMENT_ARRAY_BARRIER_BIT</constant>,
+                    <constant>GL_UNIFORM_BARRIER_BIT</constant>,
+                    <constant>GL_TEXTURE_FETCH_BARRIER_BIT</constant>,
+                    <constant>GL_SHADER_IMAGE_ACCESS_BARRIER_BIT</constant>,
+                    <constant>GL_COMMAND_BARRIER_BIT</constant>,
+                    <constant>GL_PIXEL_BUFFER_BARRIER_BIT</constant>,
+                    <constant>GL_TEXTURE_UPDATE_BARRIER_BIT</constant>,
+                    <constant>GL_BUFFER_UPDATE_BARRIER_BIT</constant>,
+                    <constant>GL_FRAMEBUFFER_BARRIER_BIT</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BARRIER_BIT</constant>,
+                    <constant>GL_ATOMIC_COUNTER_BARRIER_BIT</constant>, or
+                    <constant>GL_SHADER_STORAGE_BARRIER_BIT</constant>.
+                </para>
+                <para>
+                    For <function>glMemoryBarrier</function>, must be a
+                    bitwise combination of any of
+                    <constant>GL_ATOMIC_COUNTER_BARRIER_BIT</constant>, or
+                    <constant>GL_FRAMEBUFFER_BARRIER_BIT</constant>,
+                    <constant>GL_SHADER_IMAGE_ACCESS_BARRIER_BIT</constant>,
+                    <constant>GL_SHADER_STORAGE_BARRIER_BIT</constant>.
+                    <constant>GL_TEXTURE_FETCH_BARRIER_BIT</constant>, or
+                    <constant>GL_UNIFORM_BARRIER_BIT</constant>.
+                </para>
+                <para>
+                    If the special value
+                    <constant>GL_ALL_BARRIER_BITS</constant> is specified,
+                    all supported barriers for the corresponding command
+                    will be inserted.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description for <function>glMemoryBarrier</function></title>
+        <para>
+            <function>glMemoryBarrier</function> defines a barrier ordering
+            the memory transactions issued prior to the command relative to
+            those issued after the barrier. For the purposes of this
+            ordering, memory transactions performed by shaders are
+            considered to be issued by the rendering command that triggered
+            the execution of the shader. <parameter>barriers</parameter> is
+            a bitfield indicating the set of operations that are
+            synchronized with shader stores; the bits used in
+            <parameter>barriers</parameter> are as follows:
+        </para>
+        <para>
+            <variablelist>
+                <varlistentry>
+                    <term><constant>GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        If set, vertex data sourced from
+                        buffer objects after the barrier will reflect data written by shaders
+                        prior to the barrier.  The set of buffer objects affected by this bit
+                        is derived from the buffer object bindings used for
+                        generic vertex attributes derived from the <constant>GL_VERTEX_ATTRIB_ARRAY_BUFFER</constant> bindings.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_ELEMENT_ARRAY_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        If set, vertex array indices sourced from
+                        buffer objects after the barrier will reflect data written by shaders
+                        prior to the barrier.  The buffer objects affected by this bit are
+                        derived from the <constant>GL_ELEMENT_ARRAY_BUFFER</constant> binding.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_UNIFORM_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Shader uniforms sourced from buffer objects after the barrier will reflect data
+                        written by shaders prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_TEXTURE_FETCH_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Texture fetches from shaders, including
+                        fetches from buffer object memory via buffer textures, after the
+                        barrier will reflect data written by shaders prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_SHADER_IMAGE_ACCESS_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Memory accesses using shader image
+                        load, store, and atomic built-in functions issued after the barrier
+                        will reflect data written by shaders prior to the barrier.
+                        Additionally, image stores and atomics issued after the barrier will
+                        not execute until all memory accesses (e.g., loads, stores, texture
+                        fetches, vertex fetches) initiated prior to the barrier complete.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_COMMAND_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Command data sourced from buffer objects by
+                        Draw*Indirect commands after the barrier will reflect data written by
+                        shaders prior to the barrier.  The buffer objects affected by this bit
+                        are derived from the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding.
+                     </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_PIXEL_BUFFER_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Reads and writes of buffer objects via the
+                        <constant>GL_PIXEL_PACK_BUFFER</constant> and
+                        <constant>GL_PIXEL_UNPACK_BUFFER</constant> bindings
+                        (via
+                        <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+                        etc.) after the barrier will reflect data written by
+                        shaders prior to the barrier. Additionally, buffer
+                        object writes issued after the barrier will wait on
+                        the completion of all shader writes initiated prior
+                        to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_TEXTURE_UPDATE_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Writes to a texture via <function>glTex(Sub)Image*</function>,
+                        <function>glCopyTex(Sub)Image*</function>, <function>glCompressedTex(Sub)Image*</function>, and reads via
+                        <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry> after the barrier will reflect data written by shaders
+                        prior to the barrier.  Additionally, texture writes from these
+                        commands issued after the barrier will not execute until all shader
+                        writes initiated prior to the barrier complete.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_BUFFER_UPDATE_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Reads or writes via <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>,
+                        or <citerefentry><refentrytitle>glGetBufferSubData</refentrytitle></citerefentry>, or
+                        to buffer object memory mapped by <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>
+                        or <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry> after the barrier
+                        will reflect data written by shaders prior to the barrier.
+                        Additionally, writes via these commands issued after the barrier will
+                        wait on the completion of any shader writes to the same memory
+                        initiated prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Access by the client to persistent mapped regions of buffer objects
+                        will reflect data written by shaders prior to the barrier. Note that
+                        this may cause additional synchronization operations.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_FRAMEBUFFER_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Reads and writes via framebuffer object
+                        attachments after the barrier will reflect data written by shaders
+                        prior to the barrier.  Additionally, framebuffer writes issued after
+                        the barrier will wait on the completion of all shader writes issued
+                        prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_TRANSFORM_FEEDBACK_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Writes via transform feedback
+                        bindings after the barrier will reflect data written by shaders prior
+                        to the barrier.  Additionally, transform feedback writes issued after
+                        the barrier will wait on the completion of all shader writes issued
+                        prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_ATOMIC_COUNTER_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Accesses to atomic counters after the
+                        barrier will reflect writes prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_SHADER_STORAGE_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Accesses to shader storage blocks after the
+                        barrier will reflect writes prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
+                    <term><constant>GL_QUERY_BUFFER_BARRIER_BIT</constant></term>
+                    <listitem>
+                    <para>
+                        Writes of buffer objects via the <constant>GL_QUERY_BUFFER</constant>
+                        binding after the barrier will reflect data written
+                        by shaders prior to the barrier. Additionally, buffer object writes
+                        issued after the barrier will wait on the completion of all shader
+                        writes initiated prior to the barrier.
+                    </para>
+                    </listitem>
+                </varlistentry>
+            </variablelist>
+        </para>
+        <para>
+            If <parameter>barriers</parameter> is
+            <constant>GL_ALL_BARRIER_BITS</constant>, shader memory accesses
+            will be synchronized relative to all the operations described
+            above.
+        </para>
+        <para>
+            Implementations may cache buffer object and texture image memory that
+            could be written by shaders in multiple caches; for example, there may be
+            separate caches for texture, vertex fetching, and one or more caches for
+            shader memory accesses.  Implementations are not required to keep these
+            caches coherent with shader memory writes.  Stores issued by one
+            invocation may not be immediately observable by other pipeline stages or
+            other shader invocations because the value stored may remain in a cache
+            local to the processor executing the store, or because data overwritten by
+            the store is still in a cache elsewhere in the system. When
+            <function>glMemoryBarrier</function> is called, the GL flushes
+            and/or invalidates any caches relevant to the operations
+            specified by the <parameter>barriers</parameter> parameter to
+            ensure consistent ordering of operations across the barrier.
+        </para>
+        <para>
+            To allow for independent shader invocations to communicate by reads and
+            writes to a common memory address, image variables in the OpenGL Shading
+            Language may be declared as "coherent".  Buffer object or texture image
+            memory accessed through such variables may be cached only if caches are
+            automatically updated due to stores issued by any other shader invocation.
+            If the same address is accessed using both coherent and non-coherent
+            variables, the accesses using variables declared as coherent will observe
+            the results stored using coherent variables in other invocations.  Using
+            variables declared as "coherent" guarantees only that the results of
+            stores will be immediately visible to shader invocations using
+            similarly-declared variables; calling
+            <function>glMemoryBarrier</function> is required to ensure that
+            the stores are visible to other operations.
+        </para>
+        <para>
+            The following guidelines may be helpful in choosing when to use coherent
+            memory accesses and when to use barriers.
+        </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Data that are read-only or constant may be accessed
+                        without using coherent variables or calling
+                        <function>MemoryBarrier</function>(). Updates to the
+                        read-only data via API calls such as
+                        <function>glBufferSubData</function> will invalidate
+                        shader caches implicitly as required.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Data that are shared between shader invocations at a
+                        fine granularity (e.g., written by one invocation,
+                        consumed by another invocation) should use coherent
+                        variables to read and write the shared data.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Data written by one shader invocation and consumed
+                        by other shader invocations launched as a result of
+                        its execution (&quot;dependent invocations&quot;)
+                        should use coherent variables in the producing
+                        shader invocation and call
+                        <function>memoryBarrier</function>() after the last
+                        write. The consuming shader invocation should also
+                        use coherent variables.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Data written to image variables in one rendering
+                        pass and read by the shader in a later pass need not
+                        use coherent variables or memoryBarrier(). Calling
+                        <function>glMemoryBarrier</function> with the
+                        SHADER_IMAGE_ACCESS_BARRIER_BIT set in
+                        <parameter>barriers</parameter> between passes is
+                        necessary.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Data written by the shader in one rendering pass and
+                        read by another mechanism (e.g., vertex or index
+                        buffer pulling) in a later pass need not use
+                        coherent variables or
+                        <function>memoryBarrier</function>(). Calling
+                        <function>glMemoryBarrier</function> with the
+                        appropriate bits set in
+                        <parameter>barriers</parameter> between passes is
+                        necessary.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="description2"><title>Description for <function>glMemoryBarrierByRegion</function></title>
+        <para>
+            <function>glMemoryBarrierByRegion</function> behaves as
+            described above for <function>glMemoryBarrier</function>, with
+            two differences:
+        </para>
+        <para>
+            First, it narrows the region under consideration so that only
+            reads and writes of prior fragment shaders that are invoked for
+            a smaller region of the framebuffer will be completed/reflected
+            prior to subsequent reads and writes of following fragment
+            shaders. The size of the region is implementation-dependent and
+            may be as small as one framebuffer pixel.
+        </para>
+        <para>
+            Second, it only applies to memory transactions that may be read
+            by or written by a fragment shader. Therefore, only the barrier
+            bits
+                <itemizedlist>
+                    <listitem>
+                        <para><constant>GL_ATOMIC_COUNTER_BARRIER_BIT</constant></para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>GL_FRAMEBUFFER_BARRIER_BIT</constant></para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>GL_SHADER_IMAGE_ACCESS_BARRIER_BIT</constant></para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>GL_SHADER_STORAGE_BARRIER_BIT</constant></para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>GL_TEXTURE_FETCH_BARRIER_BIT</constant></para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>GL_UNIFORM_BARRIER_BIT</constant></para>
+                    </listitem>
+                </itemizedlist>
+            are supported.
+        </para>
+        <para>
+            When <parameter>barriers</parameter> is
+            <constant>GL_ALL_BARRIER_BITS</constant>, shader memory accesses
+            will be synchronized relative to all these barrier bits, but not
+            to other barrier bits specific to
+            <function>glMemoryBarrier</function>. This implies that reads
+            and writes for scatter/gather-like algorithms may or may not be
+            completed/reflected after a
+            <function>glMemoryBarrierByRegion</function> command. However,
+            for uses such as deferred shading, where a linked list of
+            visible surfaces with the head at a framebuffer address may be
+            constructed, and the entirety of the list is only dependent on
+            previous executions at that framebuffer address,
+            <function>glMemoryBarrierByRegion</function> may be
+            significantly more efficient than
+            <function>glMemoryBarrier</function>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_SHADER_STORAGE_BARRIER_BIT</constant> is available only if the GL version is 4.3 or higher.
+        </para>
+        <para>
+            <constant>GL_QUERY_BUFFER_BARRIER_BIT</constant> is available only if the GL version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>barriers</parameter> is not the special value
+            <constant>GL_ALL_BARRIER_BITS</constant>, and has any bits set
+            other than those described above for
+            <function>glMemoryBarrier</function> or
+            <function>glMemoryBarrierByRegion</function> respectively.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMemoryBarrier</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='42']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glMemoryBarrierByRegion</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindImageTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFlushMappedBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>memoryBarrier</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

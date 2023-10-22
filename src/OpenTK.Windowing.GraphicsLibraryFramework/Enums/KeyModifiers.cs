@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Enums
 {
     /// <summary>
     /// Key modifiers, such as Shift or CTRL.

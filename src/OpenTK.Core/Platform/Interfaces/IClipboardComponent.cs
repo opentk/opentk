@@ -1,12 +1,9 @@
-﻿using System;
+﻿#nullable enable
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK.Core.Platform.Enums;
 
-#nullable enable
-
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Interface for drivers which provide the clipboard component of the platform abstraction layer.

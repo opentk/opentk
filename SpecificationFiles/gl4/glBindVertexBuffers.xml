@@ -1,0 +1,219 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindVertexBuffers">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindVertexBuffers</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindVertexBuffers</refname>
+        <refname>glVertexArrayVertexBuffers</refname>
+        <refpurpose>attach multiple buffer objects to a vertex array object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindVertexBuffers</function></funcdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>buffers</parameter></paramdef>
+                <paramdef>const GLintptr *<parameter>offsets</parameter></paramdef>
+                <paramdef>const GLsizei *<parameter>strides</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glVertexArrayVertexBuffers</function></funcdef>
+                <paramdef>GLuint <parameter>vaobj</parameter></paramdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>buffers</parameter></paramdef>
+                <paramdef>const GLintptr *<parameter>offsets</parameter></paramdef>
+                <paramdef>const GLsizei *<parameter>strides</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>vaobj</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the vertex array object for
+                    <function>glVertexArrayVertexBuffers</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the first vertex buffer binding point to which
+                    a buffer object is to be bound.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of buffers to bind.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffers</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of names of existing
+                    buffer objects.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offsets</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of offsets to
+                    associate with the binding points.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffers</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of strides to
+                    associate with the binding points.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindVertexBuffers</function> and
+            <function>glVertexArrayVertexBuffers</function> bind storage
+            from an array of existing buffer objects to a specified number
+            of consecutive vertex buffer binding points units in a vertex
+            array object. For <function>glBindVertexBuffers</function>, the
+            vertex array object is the currently bound vertex array object.
+            For <function>glVertexArrayVertexBuffers</function>,
+            <parameter>vaobj</parameter> is the name of the vertex array
+            object.
+        </para>
+        <para>
+            <parameter>count</parameter> existing buffer objects are bound
+            to vertex buffer binding points numbered $first$ through $first
+            + count - 1$. If <parameter>buffers</parameter> is not NULL, it
+            specifies an array of <parameter>count</parameter> values, each
+            of which must be zero or the name of an existing buffer object.
+            <parameter>offsets</parameter> and
+            <parameter>strides</parameter> specify arrays of
+            <parameter>count</parameter> values indicating the offset of the
+            first element and stride between elements in each buffer,
+            respectively. If <parameter>buffers</parameter> is NULL, each
+            affected vertex buffer binding point from $first$ through $first
+            + count - 1$ will be reset to have no bound buffer object. In
+            this case, the offsets and strides associated with the binding
+            points are set to default values, ignoring
+            <parameter>offsets</parameter> and
+            <parameter>strides</parameter>.
+        </para>
+        <para>
+            <function>glBindVertexBuffers</function> is equivalent (assuming no errors
+            are generated) to:
+<programlisting>    for (i = 0; i &lt; count; i++) {
+        if (buffers == NULL) {
+            glBindVertexBuffer(first + i, 0, 0, 16);
+        } else {
+            glBindVertexBuffer(first + i, buffers[i], offsets[i], strides[i]);
+        }
+    }</programlisting>
+            except that buffers will not be created if they do not exist.
+        </para>
+        <para>
+            <function>glVertexArrayVertexBuffers</function> is equivalent to
+            the pseudocode above, but replacing
+            <function>glBindVertexBuffers</function>(args) with
+            <function>glVertexArrayVertexBuffers</function>(vaobj, args).
+        </para>
+        <para>
+            The values specified in <parameter>buffers</parameter>,
+            <parameter>offsets</parameter>, and
+            <parameter>strides</parameter> will be checked separately for
+            each vertex buffer binding point. When a value for a specific
+            vertex buffer binding point is invalid, the state for that
+            binding point will be unchanged and an error will be generated.
+            However, state for other vertex buffer binding points will still
+            be changed if their corresponding values are valid.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated
+            by <function>glBindVertexBuffers</function> if no vertex array
+            object is bound.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glVertexArrayVertexBuffers</function> if
+            <parameter>vaobj</parameter> is not the name of the vertex array
+            object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if $first
+            + count$ is greater than the value of
+            <constant>GL_MAX_VERTEX_ATTRIB_BINDINGS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if any
+            value in <constant>buffers</constant> is not zero or the name of
+            an existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any value
+            in <parameter>offsets</parameter> or
+            <parameter>strides</parameter> is negative, or if a value is
+            <parameter>stride</parameter> is greater than the value of
+            <constant>GL_MAX_VERTEX_ATTRIB_STRIDE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindVertexBuffers</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='44']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexArrayVertexBuffers</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

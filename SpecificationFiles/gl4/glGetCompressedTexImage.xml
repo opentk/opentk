@@ -1,0 +1,295 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetCompressedTexImage">
+  <info>
+    <copyright>
+      <year>1991-2006</year>
+
+      <holder>Silicon Graphics, Inc.</holder>
+    </copyright>
+
+    <copyright>
+      <year>2010-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetCompressedTexImage</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refdescriptor>glGetCompressedTexImage</refdescriptor>
+
+    <refname>glGetCompressedTexImage</refname>
+
+    <refname>glGetnCompressedTexImage</refname>
+
+    <refname>glGetCompressedTextureImage</refname>
+
+    <refpurpose>return a compressed texture image</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetCompressedTexImage</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>void * <parameter>pixels</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetnCompressedTexImage</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>void *<parameter>pixels</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetCompressedTextureImage</function></funcdef>
+
+        <paramdef>GLuint <parameter>texture</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>void *<parameter>pixels</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>Specifies the target to which the texture is bound for
+          <function>glGetCompressedTexImage</function> and
+          <function>glGetnCompressedTexImage</function> functions.
+          <constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, and
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>,
+          <constant>GL_TEXTURE_RECTANGLE</constant> are accepted.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>texture</parameter></term>
+
+        <listitem>
+          <para>Specifies the texture object name for
+          <function>glGetCompressedTextureImage</function> function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>level</parameter></term>
+
+        <listitem>
+          <para>Specifies the level-of-detail number of the desired image.
+          Level 0 is the base image level. Level $n$ is the $n$-th mipmap reduction image.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>bufSize</parameter></term>
+
+        <listitem>
+          <para>Specifies the size of the buffer <parameter>pixels</parameter>
+          for <function>glGetCompressedTextureImage</function> and
+          <function>glGetnCompressedTexImage</function> functions.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pixels</parameter></term>
+
+        <listitem>
+          <para>Returns the compressed texture image.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glGetCompressedTexImage</function> and
+    <function>glGetnCompressedTexImage</function> return the compressed
+    texture image associated with <parameter>target</parameter> and
+    <parameter>lod</parameter> into <parameter>pixels</parameter>.
+    <function>glGetCompressedTextureImage</function> serves the same purpose,
+    but instead of taking a texture target, it takes the ID of the texture
+    object. <parameter>pixels</parameter> should be an array of
+    <parameter>bufSize</parameter> bytes for
+    <function>glGetnCompresedTexImage</function> and
+    <function>glGetCompressedTextureImage</function> functions, and of
+    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant> bytes in case of
+    <function>glGetCompressedTexImage</function>. If the actual data takes
+    less space than <parameter>bufSize</parameter>, the remaining bytes will
+    not be touched. <parameter>target</parameter> specifies the texture
+    target, to which the texture the data the function should extract the data
+    from is bound to. <parameter>lod</parameter> specifies the level-of-detail
+    number of the desired image.</para>
+
+    <para>If a non-zero named buffer object is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target (see
+    <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is requested,
+    <parameter>pixels</parameter> is treated as a byte offset into the buffer
+    object's data store.</para>
+
+    <para>To minimize errors, first verify that the texture is compressed by
+    calling <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_COMPRESSED</constant>. If the texture is compressed,
+    you can determine the amount of memory required to store the compressed
+    texture by calling <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>. Finally, retrieve
+    the internal format of the texture by calling <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>. To store the texture for
+    later use, associate the internal format and size with the retrieved
+    texture image. These data can be used by the respective texture or
+    subtexture loading routine used for loading <parameter>target</parameter>
+    textures.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glGetCompressedTextureImage</function> if
+    <parameter>texture</parameter> is not the name of an existing texture
+    object.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>level</parameter> is less than zero or greater than the maximum
+    number of LODs permitted by the implementation.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <function>glGetCompressedTexImage</function>,
+    <function>glGetnCompressedTexImage</function>, and
+    <function>glGetCompressedTextureImage</function> is used to retrieve a
+    texture that is in an uncompressed internal format.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target, the buffer storage was
+    not initialized with <function>glBufferStorage</function> using
+    <constant>GL_MAP_PERSISTENT_BIT</constant> flag, and the buffer object's
+    data store is currently mapped.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be
+    packed to the buffer object such that the memory writes required would
+    exceed the data store size.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para><citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_COMPRESSED</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument
+    <constant>GL_TEXTURE_INTERNAL_FORMAT</constant></para>
+
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument
+    <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant></para>
+  </refsect1>
+
+  <refsect1 xml:id="versions"><title>Version Support</title>
+    <informaltable>
+    <tgroup cols="13" align="left">
+      <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+      <tbody>
+          <row>
+            <entry><function>glGetCompressedTexImage</function></entry>
+
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                        href="apiversion.xml"
+                        xpointer="xpointer(/*/*[@role='20']/*)"/>
+          </row>
+
+          <row>
+            <entry><function>glGetCompressedTextureImage</function></entry>
+
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                        href="apiversion.xml"
+                        xpointer="xpointer(/*/*[@role='45']/*)"/>
+          </row>
+
+          <row>
+            <entry><function>glGetnCompressedTexImage</function></entry>
+
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+                        href="apiversion.xml"
+                        xpointer="xpointer(/*/*[@role='45']/*)"/>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+    </para>
+  </refsect1>
+
+  <refsect1 xml:id="Copyright">
+    <title>Copyright</title>
+
+    <para>Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics,
+    Inc. Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+    This document is licensed under the SGI Free Software B License. For
+    details, see
+    <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+    </para>
+  </refsect1>
+</refentry>

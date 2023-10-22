@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using OpenTK.Backends.Tests.TestApps;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Backends.Tests
 {

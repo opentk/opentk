@@ -2,16 +2,19 @@
 
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native.Windows;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using System.Text;
 using System.Diagnostics;
-using OpenTK.Core.Utility;
 using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace LocalTestProject
 {
@@ -101,7 +104,7 @@ namespace LocalTestProject
                     modeCount = dispComp.GetSupportedVideoModes(secondaryHandle).Length;
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
-                
+
                 Console.WriteLine();
             }
 
@@ -261,7 +264,7 @@ namespace LocalTestProject
             {
                 IconHandle2 = (iconComp as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
                                 iconComp.Create(SystemIconType.Default);
-                
+
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
 
@@ -396,7 +399,7 @@ namespace LocalTestProject
                 Console.WriteLine($"Input: {input.Text}");
 
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
-                
+
                 vks.Clear();
             }
             else if (type == PlatformEventType.MouseEnter)
@@ -527,7 +530,7 @@ namespace LocalTestProject
                             b[index + 3] = 255;
                         }
                     }
-                    
+
                     Bitmap bitmap = new Bitmap(W, H, b);
 
                     ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
@@ -608,7 +611,7 @@ namespace LocalTestProject
                     dispComp.GetRefreshRate(disp, out float refreshRate);
 
                     string name = dispComp.GetName(disp);
-                    
+
                     Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
                 }
                 else if (keyDown.Key == Key.S)
@@ -635,7 +638,7 @@ namespace LocalTestProject
                 }
                 else if (keyDown.Key == Key.M)
                 {
-                    
+
 
                     var style = windowComp.GetBorderStyle(WindowHandle);
                     Console.WriteLine($"Before: {style}");
@@ -766,7 +769,7 @@ void main()
         {
             int size = ((IconComponent)iconComp).GetBitmapByteSize(handle);
             byte[] data = new byte[size];
-            
+
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
             ((IconComponent)iconComp).GetBitmapData(handle, data);
 
@@ -824,7 +827,7 @@ void main()
 
             cursor_tex = GetCursorImage(ImageCursorHandle);
             icon_tex = GetIconImage(IconHandle2);
-            
+
             CheckError("get cursor tex");
 
             glComp.SetCurrentContext(Window2Context);
@@ -1007,7 +1010,7 @@ void main()
                 {
                     Console.WriteLine($"Supports FFB: {(joystickComponent as JoystickComponent)?.SupportsForceFeedback(handle)}");
                 }
-                
+
                 joystickComponent.SetVibration(handle, triggerLeft, triggerRight);
 
                 joystickComponent.Close(handle);

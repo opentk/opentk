@@ -1,0 +1,145 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindSamplers">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindSamplers</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindSamplers</refname>
+        <refpurpose>bind one or more named sampler objects to a sequence of consecutive sampler units</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindSamplers</function></funcdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>samplers</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the first sampler unit to which a sampler object is to be bound.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of samplers to bind.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>samplers</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of names of existing sampler objects.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindSamplers</function> binds samplers from an array of existing sampler objects to a specified
+            number of consecutive sampler units. <parameter>count</parameter> specifies the number of sampler
+            objects whose names are stored in the array <parameter>samplers</parameter>. That number
+            of sampler names is read from the array and bound to the <parameter>count</parameter> consecutive
+            sampler units starting from <parameter>first</parameter>.
+        </para>
+        <para>
+            If the name zero appears in the <parameter>samplers</parameter> array, any existing binding
+            to the sampler unit is reset. Any non-zero entry in <parameter>samplers</parameter> must be the
+            name of an existing sampler object. When a non-zero entry in <parameter>samplers</parameter> is
+            present, that sampler object is bound to the corresponding sampler unit.
+            If <parameter>samplers</parameter> is <constant>NULL</constant> then it is as
+            if an appropriately sized array containing only zeros had been specified.
+        </para>
+        <para>
+            <function>glBindSamplers</function> is equivalent to the following pseudo code:
+        </para>
+<programlisting>    for (i = 0; i &lt; count; i++) {
+        if (samplers == NULL) {
+            glBindSampler(first + i, 0);
+        } else {
+            glBindSampler(first + i, samplers[i]);
+        }
+    }</programlisting>
+    <para>
+        Each entry in <parameter>samplers</parameter> will be checked individually and if found
+        to be invalid, the state for that sampler unit will not be changed and an error will be
+        generated. However, the state for other sampler units referenced by the command will still
+        be updated.
+    </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glBindSamplers</function> is available only if the GL version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>first</parameter> + <parameter>count</parameter> is greater
+            than the number of sampler units supported by the implementation.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if any value in <parameter>samplers</parameter> is
+            not zero or the name of an existing sampler object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SAMPLER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindSamplers</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='44']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindSampler</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetSamplerParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

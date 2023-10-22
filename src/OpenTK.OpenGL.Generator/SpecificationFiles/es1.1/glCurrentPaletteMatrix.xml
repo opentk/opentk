@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glCurrentPaletteMatrix">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glCurrentPaletteMatrix</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glCurrentPaletteMatrix</refdescriptor>
+        <refname>glCurrentPaletteMatrixOES</refname>
+        <refpurpose>
+        defines which of the palette's matrices is affected by
+        subsequent matrix operations
+        </refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCurrentPaletteMatrixOES</function></funcdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>index</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    specifies the index into the palette's matrices.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glCurrentPaletteMatrixOES</function>
+        defines which of the palette's matrices is affected by
+        subsequent matrix operations when the current matrix mode is
+        <constant>GL_MATRIX_PALETTE_OES</constant>.
+        </para>
+
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+        <constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>index</parameter> is not between
+        <constant>0</constant> and
+        <constant>GL_MAX_PALETTE_MATRICES_OES</constant> - <constant>1</constant>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glLoadPaletteFromModelViewMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

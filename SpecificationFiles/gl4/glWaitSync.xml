@@ -1,0 +1,116 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glWaitSync">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glWaitSync</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glWaitSync</refname>
+        <refpurpose>instruct the GL server to block until the specified sync object becomes signaled</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glWaitSync</function></funcdef>
+                <paramdef>GLsync <parameter>sync</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>flags</parameter></paramdef>
+                <paramdef>GLuint64 <parameter>timeout</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sync</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the sync object whose status to wait on.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>flags</parameter></term>
+            <listitem>
+                <para>
+                    A bitfield controlling the command flushing behavior. <parameter>flags</parameter> may be zero.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>timeout</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the timeout that the server should wait before continuing. <parameter>timeout</parameter> must be <constant>GL_TIMEOUT_IGNORED</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glWaitSync</function> causes the GL server to block and wait until <parameter>sync</parameter> becomes signaled. <parameter>sync</parameter>
+            is the name of an existing sync object upon which to wait. <parameter>flags</parameter> and <parameter>timeout</parameter> are currently not used and
+            must be set to zero and the special value <constant>GL_TIMEOUT_IGNORED</constant>, respectively<footnote><para><parameter>flags</parameter> and
+            <parameter>timeout</parameter> are placeholders for anticipated future extensions of sync object capabilities. They must have these reserved values in
+            order that existing code calling <function>glWaitSync</function> operate properly in the presence of such extensions.</para></footnote>. <function>glWaitSync</function> will always wait no longer than an implementation-dependent timeout. The
+            duration of this timeout in nanoseconds may be queried by calling <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with the
+            parameter <constant>GL_MAX_SERVER_WAIT_TIMEOUT</constant>. There is currently no way to determine whether <function>glWaitSync</function> unblocked
+            because the timeout expired or because the sync object being waited on was signaled.
+        </para>
+        <para>
+            If an error occurs, <function>glWaitSync</function> does not cause the GL server to block.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glWaitSync</function> is available only if the GL version is 3.2 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sync</parameter> is not the name of a sync object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>flags</parameter> is not zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>timeout</parameter> is not <constant>GL_TIMEOUT_IGNORED</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glWaitSync</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

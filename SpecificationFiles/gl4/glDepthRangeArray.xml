@@ -1,0 +1,175 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDepthRangeArray">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDepthRangeArray</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDepthRangeArray</refname>
+        <refpurpose>specify mapping of depth values from normalized device coordinates to window coordinates for a specified set of viewports</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDepthRangeArrayv</function></funcdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the first viewport whose depth range to update.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of viewports whose depth range to update.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>v</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array containing the near and far values for the
+                    depth range of each modified viewport.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            After clipping and division by <emphasis>w</emphasis>,
+            depth coordinates range from
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: -1: -->
+                <mml:mn>-1</mml:mn>
+            </mml:math></inlineequation>
+            to 1,
+            corresponding to the near and far clipping planes.
+            Each viewport has an independent depth range specified as a linear mapping of the normalized
+            depth coordinates in this range to window depth coordinates.
+            Regardless of the actual depth buffer implementation,
+            window coordinate depth values are treated as though they range
+            from 0 through 1 (like color components).
+            <function>glDepthRangeArray</function> specifies a linear mapping of the normalized depth coordinates
+            in this range to window depth coordinates for each viewport in the range [<parameter>first</parameter>,
+            <parameter>first</parameter> + <parameter>count</parameter>).
+            Thus,
+            the values accepted by <function>glDepthRangeArray</function> are both clamped to this range
+            before they are accepted.
+        </para>
+        <para>
+            The <parameter>first</parameter> parameter specifies the index of the first viewport whose depth
+            range to modify and must be less than the value of <constant>GL_MAX_VIEWPORTS</constant>.
+            <parameter>count</parameter> specifies the number of viewports whose depth range to modify.
+            <parameter>first</parameter> + <parameter>count</parameter> must be less than or equal to
+            the value of <constant>GL_MAX_VIEWPORTS</constant>. <parameter>v</parameter> specifies the address of an
+            array of pairs of double precision floating point values representing the near and far values of the
+            depth range for each viewport, in that order.
+        </para>
+        <para>
+            The setting of (0,1) maps the near plane to 0 and
+            the far plane to 1.
+            With this mapping,
+            the depth buffer range is fully utilized.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            It is not necessary that the near plane distance be less than the far plane distance.
+            Reverse mappings such as
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: nearVal  =  1: -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">near</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: farVal  =  0: -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">far</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mn>0</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            are acceptable.
+        </para>
+        <para>
+            The type of the <parameter>v</parameter> parameter was
+            changed from GLclampd to GLdouble. This change is
+            transparent to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>first</parameter> is greater than or equal to
+            the value of <constant>GL_MAX_VIEWPORTS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>first</parameter> + <parameter>count</parameter>
+            is greater than or equal to the value of <constant>GL_MAX_VIEWPORTS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_RANGE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDepthRangeArrayv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthRangeIndexed</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

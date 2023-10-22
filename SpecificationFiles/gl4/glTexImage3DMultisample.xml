@@ -1,0 +1,177 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glTexImage3DMultisample">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glTexImage3DMultisample</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexImage3DMultisample</refname>
+        <refpurpose>establish the data storage, format, dimensions, and number of samples of a multisample texture's image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexImage3DMultisample</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLsizei <parameter>samples</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLsizei <parameter>depth</parameter></paramdef>
+                <paramdef>GLboolean <parameter>fixedsamplelocations</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target of the operation. <parameter>target</parameter> must be <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> or <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>samples</parameter></term>
+            <listitem>
+                <para>
+                    The number of samples in the multisample texture's image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    The internal format to be used to store the multisample texture's image. <parameter>internalformat</parameter> must specify a color-renderable, depth-renderable, or stencil-renderable format.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    The width of the multisample texture's image, in texels.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    The height of the multisample texture's image, in texels.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>fixedsamplelocations</parameter></term>
+            <listitem>
+                <para>
+                    Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not
+                    depend on the internal format or size of the image.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glTexImage3DMultisample</function> establishes the data storage, format, dimensions and number of samples of a multisample texture's image.
+        </para>
+        <para>
+            <parameter>target</parameter> must be
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> or
+            <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+            <parameter>width</parameter> and
+            <parameter>height</parameter>are the dimensions in texels of the
+            texture, and must be in the range zero to the value of
+            <constant>GL_MAX_TEXTURE_SIZE</constant> minus one.
+            <parameter>depth</parameter> is the number of array slices in
+            the array texture's image. <parameter>samples</parameter>
+            specifies the number of samples in the image and must be in the
+            range zero to the value of <constant>GL_MAX_SAMPLES</constant>
+            minus one.
+        </para>
+        <para>
+            <parameter>internalformat</parameter> must be a color-renderable, depth-renderable, or stencil-renderable format.
+        </para>
+        <para>
+            If <parameter>fixedsamplelocations</parameter> is <constant>GL_TRUE</constant>, the image will use identical sample locations and the same
+            number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image.
+        </para>
+        <para>
+            When a multisample texture is accessed in a shader, the access takes one vector of integers describing which texel to fetch and an integer
+            corresponding to the sample numbers describing which sample within the texel to fetch. No standard sampling instructions are allowed on the
+            multisample texture targets.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glTexImage2DMultisample</function> is available only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>internalformat</parameter> is a depth- or stencil-renderable format and <parameter>samples</parameter>
+            is greater than the value of <constant>GL_MAX_DEPTH_TEXTURE_SAMPLES</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>internalformat</parameter> is a color-renderable format and <parameter>samples</parameter> is
+            greater than the value of <constant>GL_MAX_COLOR_TEXTURE_SAMPLES</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>internalformat</parameter> is a signed or unsigned integer format and <parameter>samples</parameter>
+            is greater than the value of <constant>GL_MAX_INTEGER_SAMPLES</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if either <parameter>width</parameter> or <parameter>height</parameter> negative or is greater than <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>depth</parameter> is negative or is greater than <constant>GL_MAX_ARRAY_TEXTURE_LAYERS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>samples</parameter> is zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>samples</parameter> is greater than the
+            maximum number of samples supported for this <parameter>target</parameter> and <parameter>internalformat</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glTexImage3DMultisample</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

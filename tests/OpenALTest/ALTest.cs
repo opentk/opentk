@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using OpenTK.OpenAL;
 
-namespace OpenTK.Audio.OpenAL
+namespace OpenALTest
 {
     internal class ALTest
     {

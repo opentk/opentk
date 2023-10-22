@@ -1,4 +1,4 @@
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// Base interface for drivers which implement the mouse component.

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glCallLists">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glCallLists</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCallLists</refname>
+        <refpurpose>execute a list of display lists</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCallLists</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>lists</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>n</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of display lists to be executed.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of values in <parameter>lists</parameter>.
+                    Symbolic constants
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_2_BYTES</constant>,
+                    <constant>GL_3_BYTES</constant>, and
+                    <constant>GL_4_BYTES</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>lists</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of name offsets in the display list.
+                    The pointer type is void because the offsets can be bytes,
+                    shorts,
+                    ints,
+                    or floats,
+                    depending on the value of <parameter>type</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glCallLists</function> causes each display list in the list of names passed as <parameter>lists</parameter>
+            to be executed.
+            As a result,
+            the commands saved in each display list are executed in order,
+            just as if they were called without using a display list.
+            Names of display lists that have not been defined are ignored.
+        </para>
+        <para>
+            <function>glCallLists</function> provides an efficient means for executing more than one display list.
+            <parameter>type</parameter> allows lists with various name formats to be accepted.
+            The formats are as
+            follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_BYTE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of signed bytes,
+                        each in the range 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -128:-->
+                            <mml:mn>-128</mml:mn>
+                        </mml:math></inlineequation>
+                        through 127.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_UNSIGNED_BYTE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned bytes,
+                        each in the range 0 through 255.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SHORT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of signed two-byte integers,
+                        each in the range 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -32768:-->
+                            <mml:mn>-32768</mml:mn>
+                        </mml:math></inlineequation>
+                        through 32767.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_UNSIGNED_SHORT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned two-byte integers,
+                        each in the range 0 through 65535.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_INT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of signed four-byte integers.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_UNSIGNED_INT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned four-byte integers.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FLOAT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of four-byte floating-point values.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_2_BYTES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned bytes.
+                        Each pair of bytes specifies a single display-list name.
+                        The value of the pair is computed as 256 times the unsigned value
+                        of the first byte plus the unsigned value of the second byte.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_3_BYTES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned bytes.
+                        Each triplet of bytes specifies a single display-list name.
+                        The value of the triplet is computed as 65536 times the unsigned value
+                        of the first byte,
+                        plus 256 times the unsigned value of the second byte,
+                        plus the unsigned value of the third byte.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_4_BYTES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>lists</parameter> is treated as an array of unsigned bytes.
+                        Each quadruplet of bytes specifies a single display-list name.
+                        The value of the quadruplet is computed as 16777216 times the unsigned value
+                        of the first byte,
+                        plus 65536 times the unsigned value of the second byte,
+                        plus 256 times the unsigned value of the third byte,
+                        plus the unsigned value of the fourth byte.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The list of display-list names is not null-terminated.
+            Rather,
+            <parameter>n</parameter> specifies how many names are to be taken from <parameter>lists</parameter>.
+        </para>
+        <para>
+            An additional level of indirection is made available with the
+            <citerefentry><refentrytitle>glListBase</refentrytitle></citerefentry> command,
+            which specifies an unsigned offset that is added to each display-list
+            name specified in <parameter>lists</parameter> before that display list is executed.
+        </para>
+        <para>
+            <function>glCallLists</function> can appear inside a display list.
+            To avoid the possibility of infinite recursion resulting from display lists
+            calling one another,
+            a limit is placed on the nesting level of display
+            lists during display-list execution.
+            This limit must be at least 64, and it depends on the implementation.
+        </para>
+        <para>
+            GL state is not saved and restored across a call to <function>glCallLists</function>.
+            Thus,
+            changes made to GL state during the execution of the display lists
+            remain after execution is completed.
+            Use <citerefentry><refentrytitle>glPushAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>,
+            and <citerefentry><refentrytitle>glPopMatrix</refentrytitle></citerefentry> to preserve GL state across <function>glCallLists</function> calls.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Display lists can be executed between a call to <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>,
+            as long as the display list includes only commands that are allowed
+            in this interval.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>n</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not one of
+            <constant>GL_BYTE</constant>,
+            <constant>GL_UNSIGNED_BYTE</constant>,
+            <constant>GL_SHORT</constant>,
+            <constant>GL_UNSIGNED_SHORT</constant>,
+            <constant>GL_INT</constant>,
+            <constant>GL_UNSIGNED_INT</constant>,
+            <constant>GL_FLOAT</constant>,
+            <constant>GL_2_BYTES</constant>,
+            <constant>GL_3_BYTES</constant>,
+            <constant>GL_4_BYTES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_LIST_BASE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_LIST_NESTING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsList</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCallList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteLists</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenLists</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glListBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNewList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

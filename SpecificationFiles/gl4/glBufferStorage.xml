@@ -1,0 +1,374 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBufferStorage">
+  <info>
+    <copyright>
+      <year>2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glBufferStorage</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glBufferStorage</refname>
+
+    <refname>glNamedBufferStorage</refname>
+
+    <refpurpose>creates and initializes a buffer object's immutable data
+    store</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glBufferStorage</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+
+        <paramdef>const void * <parameter>data</parameter></paramdef>
+
+        <paramdef>GLbitfield <parameter>flags</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glNamedBufferStorage</function></funcdef>
+
+        <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+
+        <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+
+        <paramdef>const void *<parameter>data</parameter></paramdef>
+
+        <paramdef>GLbitfield <parameter>flags</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>
+            Specifies the target to which the buffer object is bound for
+            <function>glBufferStorage</function>, which must be one of the
+            buffer binding targets in the following table:
+          </para>
+          <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>buffer</parameter></term>
+
+        <listitem>
+          <para>Specifies the name of the buffer object for
+          <function>glNamedBufferStorage</function> function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>size</parameter></term>
+
+        <listitem>
+          <para>Specifies the size in bytes of the buffer object's new data
+          store.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>data</parameter></term>
+
+        <listitem>
+          <para>Specifies a pointer to data that will be copied into the data
+          store for initialization, or <constant>NULL</constant> if no data is
+          to be copied.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>flags</parameter></term>
+
+        <listitem>
+          <para>Specifies the intended usage of the buffer's data store. Must
+          be a bitwise combination of the following flags.
+          <constant>GL_DYNAMIC_STORAGE_BIT</constant>,
+          <constant>GL_MAP_READ_BIT</constant>
+          <constant>GL_MAP_WRITE_BIT</constant>,
+          <constant>GL_MAP_PERSISTENT_BIT</constant>,
+          <constant>GL_MAP_COHERENT_BIT</constant>, and
+          <constant>GL_CLIENT_STORAGE_BIT</constant>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glBufferStorage</function> and
+    <function>glNamedBufferStorage</function> create a new immutable data
+    store. For <function>glBufferStorage</function>, the buffer object
+    currently bound to <parameter>target</parameter> will be initialized. For
+    <function>glNamedBufferStorage</function>, <parameter>buffer</parameter>
+    is the name of the buffer object that will be configured. The size of the
+    data store is specified by <parameter>size</parameter>. If an initial data
+    is available, its address may be supplied in <parameter>data</parameter>.
+    Otherwise, to create an uninitialized data store,
+    <parameter>data</parameter> should be <constant>NULL</constant>.</para>
+
+    <para>The <parameter>flags</parameter> parameters specifies the intended
+    usage of the buffer's data store. It must be a bitwise combination of a
+    subset of the following flags: <variablelist>
+        <varlistentry>
+          <term><constant>GL_DYNAMIC_STORAGE_BIT</constant></term>
+
+          <listitem>
+            <para>The contents of the data store may be updated after creation
+            through calls to
+            <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>.
+            If this bit is not set, the buffer content may
+            not be directly updated by the client. The data argument may be
+            used to specify the initial content of the buffer's data store
+            regardless of the presence of the
+            <constant>GL_DYNAMIC_STORAGE_BIT</constant>. Regardless of the
+            presence of this bit, buffers may always be updated with
+            server-side calls such as
+            <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>
+            and
+            <citerefentry><refentrytitle>glClearBufferSubData</refentrytitle></citerefentry>.
+            </para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><constant>GL_MAP_READ_BIT</constant></term>
+
+          <listitem>
+            <para>The data store may be mapped by the client for read access
+            and a pointer in the client's address space obtained that may be
+            read from.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><constant>GL_MAP_WRITE_BIT</constant></term>
+
+          <listitem>
+            <para>The data store may be mapped by the client for write access
+            and a pointer in the client's address space obtained that may be
+            written through.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><constant>GL_MAP_PERSISTENT_BIT</constant></term>
+
+          <listitem>
+            <para>The client may request that the server read from or write to
+            the buffer while it is mapped. The client's pointer to the data
+            store remains valid so long as the data store is mapped, even
+            during execution of drawing or dispatch commands.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><constant>GL_MAP_COHERENT_BIT</constant></term>
+
+          <listitem>
+            <para>Shared access to buffers that are simultaneously mapped for
+            client access and are used by the server will be coherent, so long
+            as that mapping is performed using
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>.
+            That is, data written to the store by either
+            the client or server will be immediately visible to the other with
+            no further action taken by the application. In particular,</para>
+
+            <itemizedlist>
+              <listitem>
+                <para>If <constant>GL_MAP_COHERENT_BIT</constant> is not set
+                and the client performs a write followed by a call to the
+                <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
+                command with the
+                <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set,
+                then in subsequent commands the server will see the
+                writes.</para>
+              </listitem>
+
+              <listitem>
+                <para>If <constant>GL_MAP_COHERENT_BIT</constant> is set and
+                the client performs a write, then in subsequent commands the
+                server will see the writes.</para>
+              </listitem>
+
+              <listitem>
+                <para>If <constant>GL_MAP_COHERENT_BIT</constant> is not set
+                and the server performs a write, the application must call
+                <citerefentry><refentrytitle>glMemoryBarrier</refentrytitle></citerefentry>
+                with the <constant>GL_CLIENT_MAPPED_BUFFER_BARRIER_BIT</constant> set
+                and then call
+                <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry>
+                with <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or <function>glFinish</function>). Then the CPU will see the writes after the sync is complete.</para>
+              </listitem>
+
+              <listitem>
+                <para>If <constant>GL_MAP_COHERENT_BIT</constant> is set and
+                the server does a write, the app must call <function>glFenceSync</function> with
+                <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant> (or
+                <citerefentry><refentrytitle>glFinish</refentrytitle></citerefentry>).
+                Then the CPU will see the writes after the
+                sync is complete.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term><constant>GL_CLIENT_STORAGE_BIT</constant></term>
+
+          <listitem>
+            <para>When all other criteria for the buffer storage allocation
+            are met, this bit may be used by an implementation to determine
+            whether to use storage that is local to the server or to the
+            client to serve as the backing store for the buffer.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist></para>
+
+    <para>The allowed combinations of flags are subject to certain
+    restrictions. They are as follows: <itemizedlist>
+        <listitem>
+          <para>If <parameter>flags</parameter> contains
+          <constant>GL_MAP_PERSISTENT_BIT</constant>, it must also contain at
+          least one of <constant>GL_MAP_READ_BIT</constant> or
+          <constant>GL_MAP_WRITE_BIT</constant>.</para>
+        </listitem>
+
+        <listitem>
+          <para>If <parameter>flags</parameter> contains
+          <constant>GL_MAP_COHERENT_BIT</constant>, it must also contain
+          <constant>GL_MAP_PERSISTENT_BIT</constant>.</para>
+        </listitem>
+      </itemizedlist></para>
+  </refsect1>
+
+  <refsect1 xml:id="notes">
+    <title>Notes</title>
+
+    <para><function>glBufferStorage</function> is available only if the GL
+    version is 4.4 or greater.</para>
+
+    <para><function>glNamedBufferStorage</function> is available only if the
+    GL version is 4.5 or greater.</para>
+
+    <para>If <parameter>data</parameter> is <constant>NULL</constant>, a data
+    store of the specified size is still created, but its contents remain
+    uninitialized and thus undefined.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated by
+    <function>glBufferStorage</function> if <parameter>target</parameter> is
+    not one of the accepted buffer targets.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glNamedBufferStorage</function> if buffer is not the name of an
+    existing buffer object.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>size</parameter> is less than or equal to zero.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glBufferStorage</function> if the reserved buffer object name 0
+    is bound to <parameter>target</parameter>.</para>
+
+    <para><constant>GL_OUT_OF_MEMORY</constant> is generated if the GL is
+    unable to create a data store with the properties requested in
+    <parameter>flags</parameter>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>flags</parameter> has any bits set other than those defined
+    above.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated if
+    <parameter>flags</parameter> contains
+    <constant>GL_MAP_PERSISTENT_BIT</constant> but does not contain at least
+    one of <constant>GL_MAP_READ_BIT</constant> or
+    <constant>GL_MAP_WRITE_BIT</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>flags</parameter> contains
+    <constant>GL_MAP_COHERENT_BIT</constant>, but does not also contain
+    <constant>GL_MAP_PERSISTENT_BIT</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glBufferStorage</function> if the
+    <constant>GL_BUFFER_IMMUTABLE_STORAGE</constant> flag of the buffer bound
+    to <parameter>target</parameter> is <constant>GL_TRUE</constant>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para>
+        <citerefentry><refentrytitle>glGetBufferSubData</refentrytitle></citerefentry>
+    </para>
+
+    <para><citerefentry><refentrytitle>glGetBufferParameter</refentrytitle></citerefentry>
+    with argument <constant>GL_BUFFER_SIZE</constant> or
+    <constant>GL_BUFFER_USAGE</constant></para>
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBufferStorage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='44']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glNamedBufferStorage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+    </para>
+  </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+  </refsect1>
+</refentry>

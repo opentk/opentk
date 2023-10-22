@@ -9,7 +9,7 @@
 
 using OpenTK.Mathematics;
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Common.Events
 {
     /// <summary>
     /// Defines the event data for <see cref="NativeWindow.MouseMove"/> events.

@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 using static OpenTK.Platform.Native.SDL.SDL;
 using static System.Formats.Asn1.AsnWriter;
 

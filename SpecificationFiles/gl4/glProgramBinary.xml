@@ -1,0 +1,152 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glProgramBinary">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glProgramBinary</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glProgramBinary</refname>
+        <refpurpose>load a program object with a program binary</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glProgramBinary</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>binaryFormat</parameter></paramdef>
+                <paramdef>const void *<parameter>binary</parameter></paramdef>
+                <paramdef>GLsizei <parameter>length</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of a program object into which to load a program binary.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binaryFormat</parameter></term>
+            <listitem>
+            <para>
+                Specifies the format of the binary data in binary.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binary</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address an array containing the binary to be loaded into <parameter>program</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+            <para>
+                Specifies the number of bytes contained in <parameter>binary</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glProgramBinary</function> loads a program object with a program binary previously
+            returned from <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>.
+            <parameter>binaryFormat</parameter> and <parameter>binary</parameter> must be those returned
+            by a previous call to <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>,
+            and <parameter>length</parameter> must be the length returned by
+            <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>, or by
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry> when called with
+            <parameter>pname</parameter> set to <constant>GL_PROGRAM_BINARY_LENGTH</constant>.
+            If these conditions are not met, loading the program binary will fail and <parameter>program</parameter>'s
+            <constant>GL_LINK_STATUS</constant> will be set to <constant>GL_FALSE</constant>.
+        </para>
+        <para>
+            A program object's program binary is replaced by calls to
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> or
+            <function>glProgramBinary</function>. When linking success or failure is concerned, <function>glProgramBinary</function>
+            can be considered to perform an implicit linking operation.
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> and <function>glProgramBinary</function>
+            both set the program object's <constant>GL_LINK_STATUS</constant> to <constant>GL_TRUE</constant>
+            or <constant>GL_FALSE</constant>.
+        </para>
+        <para>
+            A successful call to <function>glProgramBinary</function> will reset all uniform variables to their
+            initial values. The initial value is either the value of the variable's initializer as specified in the
+            original shader source, or zero if no initializer was present. Additionally, all vertex shader input
+            and fragment shader output assignments that were in effect when the program was linked before saving are
+            restored with <function>glProgramBinary</function> is called.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is not the
+            name of an existing program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>binaryFormat</parameter> is not a
+            value recognized by the implementation.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            A program binary may fail to load if the implementation determines that there has been a
+            change in hardware or software configuration from when the program binary was produced such
+            as having been compiled with an incompatible or outdated version of the compiler.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry> with argument <constant>GL_PROGRAM_BINARY_LENGTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_NUM_PROGRAM_BINARY_FORMATS</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROGRAM_BINARY_FORMATS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glProgramBinary</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

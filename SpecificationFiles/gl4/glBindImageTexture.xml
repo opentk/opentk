@@ -1,0 +1,386 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindImageTexture">
+    <info>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindImageTexture</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindImageTexture</refname>
+        <refpurpose>bind a level of a texture to an image unit</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindImageTexture</function></funcdef>
+                <paramdef>GLuint <parameter>unit</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLboolean <parameter>layered</parameter></paramdef>
+                <paramdef>GLint <parameter>layer</parameter></paramdef>
+                <paramdef>GLenum <parameter>access</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>unit</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the image unit to which to bind the texture
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the texture to bind to the image unit.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the level of the texture that is to be bound.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>layered</parameter></term>
+            <listitem>
+                <para>
+                    Specifies whether a layered texture binding is to be established.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>layer</parameter></term>
+            <listitem>
+                <para>
+                    If <parameter>layered</parameter> is <constant>GL_FALSE</constant>, specifies the layer of <parameter>texture</parameter> to be bound to the image unit. Ignored otherwise.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>access</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a token indicating the type of access that will be performed on the image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the format that the elements of the image will be treated as for the purposes of formatted stores.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindImageTexture</function> binds a single level of a texture to an image unit for the purpose of
+            reading and writing it from shaders. <parameter>unit</parameter> specifies the zero-based index of the image
+            unit to which to bind the texture level. <parameter>texture</parameter> specifies the name of an existing texture
+            object to bind to the image unit. If <parameter>texture</parameter> is zero, then any existing binding to
+            the image unit is broken. <parameter>level</parameter> specifies the level of the texture to bind to the image
+            unit.
+        </para>
+        <para>
+            If <parameter>texture</parameter> is the name of a one-, two-, or three-dimensional array texture, a cube map
+            or cube map array texture, or a two-dimensional multisample array texture, then it is possible to bind either
+            the entire array, or only a single layer of the array to the image unit. In such cases, if <parameter>layered</parameter>
+            is <constant>GL_TRUE</constant>, the entire array is attached to the image unit and <parameter>layer</parameter>
+            is ignored. However, if <parameter>layered</parameter> is <constant>GL_FALSE</constant> then <parameter>layer</parameter>
+            specifies the layer of the array to attach to the image unit.
+        </para>
+        <para>
+            <parameter>access</parameter> specifies the access types to be performed by shaders and may be set to
+            <constant>GL_READ_ONLY</constant>, <constant>GL_WRITE_ONLY</constant>, or <constant>GL_READ_WRITE</constant>
+            to indicate read-only, write-only or read-write access, respectively. Violation of the access type specified in <parameter>access</parameter>
+            (for example, if a shader writes to an image bound with <parameter>access</parameter> set to <constant>GL_READ_ONLY</constant>)
+            will lead to undefined results, possibly including program termination.
+        </para>
+        <para>
+            <parameter>format</parameter> specifies the format that is to be used when performing formatted stores into the
+            image from shaders. <parameter>format</parameter> must be compatible with the texture's internal format and must
+            be one of the formats listed in the following table.
+        </para>
+        <para>
+            <table>
+            <title>Internal Image Formats</title>
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold"> Image Unit Format </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Format Qualifier </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><constant>GL_RGBA32F</constant></entry>
+                        <entry><code>rgba32f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA16F</constant></entry>
+                        <entry><code>rgba16f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG32F</constant></entry>
+                        <entry><code>rg32f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG16F</constant></entry>
+                        <entry><code>rg16f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R11F_G11F_B10F</constant></entry>
+                        <entry><code>r11f_g11f_b10f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R32F</constant></entry>
+                        <entry><code>r32f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R16F</constant></entry>
+                        <entry><code>r16f</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA32UI</constant></entry>
+                        <entry><code>rgba32ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA16UI</constant></entry>
+                        <entry><code>rgba16ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGB10_A2UI</constant></entry>
+                        <entry><code>rgb10_a2ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA8UI</constant></entry>
+                        <entry><code>rgba8ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG32UI</constant></entry>
+                        <entry><code>rg32ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG16UI</constant></entry>
+                        <entry><code>rg16ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG8UI</constant></entry>
+                        <entry><code>rg8ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R32UI</constant></entry>
+                        <entry><code>r32ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R16UI</constant></entry>
+                        <entry><code>r16ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R8UI</constant></entry>
+                        <entry><code>r8ui</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA32I</constant></entry>
+                        <entry><code>rgba32i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA16I</constant></entry>
+                        <entry><code>rgba16i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA8I</constant></entry>
+                        <entry><code>rgba8i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG32I</constant></entry>
+                        <entry><code>rg32i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG16I</constant></entry>
+                        <entry><code>rg16i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG8I</constant></entry>
+                        <entry><code>rg8i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R32I</constant></entry>
+                        <entry><code>r32i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R16I</constant></entry>
+                        <entry><code>r16i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R8I</constant></entry>
+                        <entry><code>r8i</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA16</constant></entry>
+                        <entry><code>rgba16</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGB10_A2</constant></entry>
+                        <entry><code>rgb10_a2</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA8</constant></entry>
+                        <entry><code>rgba8</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG16</constant></entry>
+                        <entry><code>rg16</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG8</constant></entry>
+                        <entry><code>rg8</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R16</constant></entry>
+                        <entry><code>r16</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R8</constant></entry>
+                        <entry><code>r8</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA16_SNORM</constant></entry>
+                        <entry><code>rgba16_snorm</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RGBA8_SNORM</constant></entry>
+                        <entry><code>rgba8_snorm</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG16_SNORM</constant></entry>
+                        <entry><code>rg16_snorm</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_RG8_SNORM</constant></entry>
+                        <entry><code>rg8_snorm</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R16_SNORM</constant></entry>
+                        <entry><code>r16_snorm</code></entry>
+                    </row>
+                    <row>
+                        <entry><constant>GL_R8_SNORM</constant></entry>
+                        <entry><code>r8_snorm</code></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+            </table>
+        </para>
+        <para>
+            When a texture is bound to an image unit, the <parameter>format</parameter> parameter for the image
+            unit need not exactly match the texture internal format as long as the formats are
+            considered compatible as defined in the OpenGL Specification. The matching criterion used
+            for a given texture may be determined by calling <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>
+            with <parameter>value</parameter>
+            set to <constant>GL_IMAGE_FORMAT_COMPATIBILITY_TYPE</constant>, with return values of <constant>GL_IMAGE_FORMAT_COMPATIBILITY_BY_SIZE</constant>
+            and <constant>GL_IMAGE_FORMAT_COMPATIBILITY_BY_CLASS</constant>, specifying matches by size and class, respectively.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <function>glBindImageTexture</function> is available only if the GL version is 4.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>unit</parameter> greater than or equal to the
+            value of <constant>GL_MAX_IMAGE_UNITS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>texture</parameter> is not the name of
+            an existing texture object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> or <parameter>layer</parameter>
+            is less than zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>access</parameter> or <parameter>format</parameter>
+            is not one of the supported tokens.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_NAME</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_LEVEL</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_LAYERED</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_LAYER</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_ACCESS</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_IMAGE_BINDING_FORMAT</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindImageTexture</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='42']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexStorage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexStorage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexStorage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

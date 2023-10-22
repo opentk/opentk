@@ -1,0 +1,99 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindProgramPipeline">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindProgramPipeline</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindProgramPipeline</refname>
+        <refpurpose>bind a program pipeline to the current context</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindProgramPipeline</function></funcdef>
+                <paramdef>GLuint <parameter>pipeline</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pipeline</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of the pipeline object to bind to the context.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindProgramPipeline</function> binds a program pipeline object to the current
+            context. <parameter>pipeline</parameter> must be a name previously returned from a call
+            to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>. If
+            no program pipeline exists with name <parameter>pipeline</parameter> then a new pipeline object
+            is created with that name and initialized to the default state vector.
+        </para>
+        <para>
+            When a program pipeline object is bound using <function>glBindProgramPipeline</function>, any previous
+            binding is broken and is replaced with a binding to the specified pipeline object. If <parameter>pipeline</parameter>
+            is zero, the previous binding is broken and is not replaced, leaving no pipeline object bound.
+            If no current program object has been established by <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+            the program objects used for each stage and for uniform updates are taken from the bound program
+            pipeline object, if any. If there is a current program object established by <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+            the bound program pipeline object has no effect on rendering or uniform updates. When a bound program
+            pipeline object is used for rendering, individual shader executables are taken from its program objects.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pipeline</parameter> is not zero or
+            a name previously returned from a call to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>
+            or if such a name has been deleted by a call to
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindProgramPipeline</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCreateShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsProgramPipeline</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

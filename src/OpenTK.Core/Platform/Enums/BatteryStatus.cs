@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OpenTK.Core.Platform
+﻿namespace OpenTK.Core.Platform.Enums
 {
     /// <summary>
     /// Whether the computer has a battery or if it doesn't, or if the computers battery status is unknown.

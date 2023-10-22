@@ -1,0 +1,146 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetActiveUniformBlockName">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetActiveUniformBlockName</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetActiveUniformBlockName</refname>
+        <refpurpose>retrieve the name of an active uniform block</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetActiveUniformBlockName</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLuint <parameter>uniformBlockIndex</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLchar *<parameter>uniformBlockName</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a program containing the uniform block.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>uniformBlockIndex</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the uniform block within <parameter>program</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the buffer addressed by <parameter>uniformBlockName</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+                <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of a variable to receive the number of characters that were written to <parameter>uniformBlockName</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>uniformBlockName</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address an array of characters to receive the name of the uniform block at <parameter>uniformBlockIndex</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetActiveUniformBlockName</function> retrieves the name of the active uniform block at <parameter>uniformBlockIndex</parameter>
+            within <parameter>program</parameter>.
+        </para>
+        <para>
+            <parameter>program</parameter> must be the name of a program object for which the command
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> must have been called in the past, although it is not required that
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> must have succeeded. The link could have failed because the number
+            of active uniforms exceeded the limit.
+        </para>
+        <para>
+            <parameter>uniformBlockIndex</parameter> is an active uniform block index of <parameter>program</parameter>, and must be less than the value
+            of <constant>GL_ACTIVE_UNIFORM_BLOCKS</constant>.
+        </para>
+        <para>
+            Upon success, the name of the uniform block identified by <parameter>unifomBlockIndex</parameter> is returned into
+            <parameter>uniformBlockName</parameter>. The name is nul-terminated. The actual number of characters written into <parameter>uniformBlockName</parameter>,
+            excluding the nul terminator, is returned in <parameter>length</parameter>. If <parameter>length</parameter> is <code>NULL</code>, no length is returned.
+        </para>
+        <para>
+            <parameter>bufSize</parameter> contains the maximum number of characters (including the nul terminator) that will be written into
+            <parameter>uniformBlockName</parameter>.
+        </para>
+        <para>
+            If an error occurs, nothing will be written to <parameter>uniformBlockName</parameter> or <parameter>length</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is not the name of a program object for which
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> has been called in the past.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>uniformBlockIndex</parameter> is greater than or equal to the value
+            of <constant>GL_ACTIVE_UNIFORM_BLOCKS</constant> or is not the index of an active uniform block in <parameter>program</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glGetActiveUniformBlockName</function> is available only if the GL version is 3.1 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetActiveUniformBlockName</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetActiveUniformBlock</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetUniformBlockIndex</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

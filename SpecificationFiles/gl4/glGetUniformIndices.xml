@@ -1,0 +1,131 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetUniformIndices">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetUniformIndices</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetUniformIndices</refname>
+        <refpurpose>retrieve the index of a named uniform block</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetUniformIndices</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLsizei <parameter>uniformCount</parameter></paramdef>
+                <paramdef>const GLchar **<parameter>uniformNames</parameter></paramdef>
+                <paramdef>GLuint *<parameter>uniformIndices</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a program containing uniforms whose indices to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>uniformCount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of uniforms whose indices to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>uniformNames</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array of pointers to buffers containing the names of the queried uniforms.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>uniformIndices</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array that will receive the indices of the uniforms.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetUniformIndices</function> retrieves the indices of a number of uniforms within <parameter>program</parameter>.
+        </para>
+        <para>
+            <parameter>program</parameter> must be the name of a program object for which the command
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> must have been called in the past, although it is not required that
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> must have succeeded. The link could have failed because the number
+            of active uniforms exceeded the limit.
+        </para>
+        <para>
+            <parameter>uniformCount</parameter> indicates both the number of elements in the array of names <parameter>uniformNames</parameter> and the
+            number of indices that may be written to <parameter>uniformIndices</parameter>.
+        </para>
+        <para>
+            <parameter>uniformNames</parameter> contains a list of <parameter>uniformCount</parameter> name strings identifying the uniform names to be
+            queried for indices. For each name string in <parameter>uniformNames</parameter>, the index assigned to the active uniform of that name will
+            be written to the corresponding element of <parameter>uniformIndices</parameter>. If a string in <parameter>uniformNames</parameter> is not
+            the name of an active uniform, the special value <constant>GL_INVALID_INDEX</constant> will be written to the corresponding element of
+            <parameter>uniformIndices</parameter>.
+        </para>
+        <para>
+            If an error occurs, nothing is written to <parameter>uniformIndices</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is not the name of a program object for which
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry> has been called in the past.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glGetUniformIndices</function> is available only if the GL version is 3.1 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetUniformIndices</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveUniformName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

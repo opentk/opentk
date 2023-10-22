@@ -1,0 +1,717 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glProgramUniform">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glProgramUniform</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+    <refdescriptor>glProgramUniform</refdescriptor>
+        <refname>glProgramUniform1f</refname>
+        <refname>glProgramUniform2f</refname>
+        <refname>glProgramUniform3f</refname>
+        <refname>glProgramUniform4f</refname>
+        <refname>glProgramUniform1i</refname>
+        <refname>glProgramUniform2i</refname>
+        <refname>glProgramUniform3i</refname>
+        <refname>glProgramUniform4i</refname>
+        <refname>glProgramUniform1ui</refname>
+        <refname>glProgramUniform2ui</refname>
+        <refname>glProgramUniform3ui</refname>
+        <refname>glProgramUniform4ui</refname>
+        <refname>glProgramUniform1fv</refname>
+        <refname>glProgramUniform2fv</refname>
+        <refname>glProgramUniform3fv</refname>
+        <refname>glProgramUniform4fv</refname>
+        <refname>glProgramUniform1iv</refname>
+        <refname>glProgramUniform2iv</refname>
+        <refname>glProgramUniform3iv</refname>
+        <refname>glProgramUniform4iv</refname>
+        <refname>glProgramUniform1uiv</refname>
+        <refname>glProgramUniform2uiv</refname>
+        <refname>glProgramUniform3uiv</refname>
+        <refname>glProgramUniform4uiv</refname>
+        <refname>glProgramUniformMatrix2fv</refname>
+        <refname>glProgramUniformMatrix3fv</refname>
+        <refname>glProgramUniformMatrix4fv</refname>
+        <refname>glProgramUniformMatrix2x3fv</refname>
+        <refname>glProgramUniformMatrix3x2fv</refname>
+        <refname>glProgramUniformMatrix2x4fv</refname>
+        <refname>glProgramUniformMatrix4x2fv</refname>
+        <refname>glProgramUniformMatrix3x4fv</refname>
+        <refname>glProgramUniformMatrix4x3fv</refname>
+        <refpurpose>Specify the value of a uniform variable for a specified program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1f</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2f</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3f</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4f</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v2</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1i</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2i</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3i</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        <paramdef>GLint <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4i</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        <paramdef>GLint <parameter>v2</parameter></paramdef>
+        <paramdef>GLint <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1ui</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2ui</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3ui</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4ui</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
+        <paramdef>GLuint <parameter>v3</parameter></paramdef>
+        </funcprototype>
+            <!-- Vector commands -->
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1iv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2iv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3iv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4iv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform1uiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform2uiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform3uiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniform4uiv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>value</parameter></paramdef>
+        </funcprototype>
+            <!-- Matrix commands -->
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix2fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix3fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix4fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix2x3fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix3x2fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix2x4fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix4x2fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix3x4fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glProgramUniformMatrix4x3fv</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+        <paramdef>GLsizei <parameter>count</parameter></paramdef>
+        <paramdef>GLboolean <parameter>transpose</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>value</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>program</parameter></term>
+        <listitem>
+            <para>Specifies the handle of the program containing the uniform
+            variable to be modified.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>location</parameter></term>
+        <listitem>
+            <para>Specifies the location of the uniform variable
+            to be modified.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>count</parameter></term>
+        <listitem>
+            <para>
+                For the vector commands
+                (<function>glProgramUniform*v</function>), specifies the
+                number of elements that are to be modified. This should be 1
+                if the targeted uniform variable is not an array, and 1 or
+                more if it is an array.
+            </para>
+            <para>
+                For the matrix commands
+                (<function>glProgramUniformMatrix*</function>), specifies
+                the number of matrices that are to be modified. This should
+                be 1 if the targeted uniform variable is not an array of
+                matrices, and 1 or more if it is an array of matrices.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>transpose</parameter></term>
+        <listitem>
+            <para>
+                For the matrix commands, specifies whether to transpose the
+                matrix as the values are loaded into the uniform variable.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term>
+            <parameter>v0</parameter>,
+            <parameter>v1</parameter>,
+            <parameter>v2</parameter>,
+            <parameter>v3</parameter>
+        </term>
+        <listitem>
+            <para>
+                For the scalar commands, specifies the new values to be used
+                for the specified uniform variable.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>value</parameter></term>
+        <listitem>
+            <para>
+                For the vector and matrix commands, specifies a pointer to
+                an array of <parameter>count</parameter> values that will be
+                used to update the specified uniform variable.
+            </para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glProgramUniform</function> modifies the value of a
+    uniform variable or a uniform variable array. The location of
+    the uniform variable to be modified is specified by
+    <parameter>location</parameter>, which should be a value
+    returned by
+    <citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>.
+    <function>glProgramUniform</function> operates on the program object
+    specified by <parameter>program</parameter>.</para>
+
+    <para>The commands <function>glProgramUniform{1|2|3|4}{f|i|ui}</function>
+    are used to change the value of the uniform variable specified
+    by <parameter>location</parameter> using the values passed as
+    arguments. The number specified in the command should match the
+    number of components in the data type of the specified uniform
+    variable (e.g., <function>1</function> for <code>float</code>, <code>int</code>, <code>unsigned int</code>, <code>bool</code>;
+    <function>2</function> for <code>vec2</code>, <code>ivec2</code>, <code>uvec2</code>, <code>bvec2</code>, etc.). The suffix
+    <function>f</function> indicates that floating-point values are
+    being passed; the suffix <function>i</function> indicates that
+    integer values are being passed; the suffix <function>ui</function> indicates that
+    unsigned integer values are being passed, and this type should also match
+    the data type of the specified uniform variable. The
+    <function>i</function> variants of this function should be used
+    to provide values for uniform variables defined as <code>int</code>, <code>ivec2</code>,
+    <code>ivec3</code>, <code>ivec4</code>, or arrays of these. The
+    <function>ui</function> variants of this function should be used
+    to provide values for uniform variables defined as <code>unsigned int</code>, <code>uvec2</code>,
+    <code>uvec3</code>, <code>uvec4</code>, or arrays of these. The <function>f</function>
+    variants should be used to provide values for uniform variables
+    of type <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, or arrays of these. Either the
+    <function>i</function>, <function>ui</function> or <function>f</function> variants
+    may be used to provide values for uniform variables of type
+    <code>bool</code>, <code>bvec2</code>, <code>bvec3</code>, <code>bvec4</code>, or arrays of these. The uniform
+    variable will be set to <code>false</code> if the input value is 0 or 0.0f,
+    and it will be set to <code>true</code> otherwise.</para>
+
+    <para>All active uniform variables defined in a program object
+    are initialized to 0 when the program object is linked
+    successfully. They retain the values assigned to them by a call
+    to <function>glProgramUniform</function> until the next successful
+    link operation occurs on the program object, when they are once
+    again initialized to 0.</para>
+
+    <para>The commands <function>glProgramUniform{1|2|3|4}{f|i|ui}v</function>
+    can be used to modify a single uniform variable or a uniform
+    variable array. These commands pass a count and a pointer to the
+    values to be loaded into a uniform variable or a uniform
+    variable array. A count of 1 should be used if modifying the
+    value of a single uniform variable, and a count of 1 or greater
+    can be used to modify an entire array or part of an array. When
+    loading <emphasis>n</emphasis> elements starting at an arbitrary
+    position <emphasis>m</emphasis> in a uniform variable array,
+    elements <emphasis>m</emphasis> + <emphasis>n</emphasis> - 1 in
+    the array will be replaced with the new values. If
+    <parameter>m</parameter> + <parameter>n</parameter> - 1 is
+    larger than the size of the uniform variable array, values for
+    all array elements beyond the end of the array will be ignored.
+    The number specified in the name of the command indicates the
+    number of components for each element in
+    <parameter>value</parameter>, and it should match the number of
+    components in the data type of the specified uniform variable
+    (e.g., <function>1</function> for <code>float</code>, <code>int</code>, <code>bool</code>;
+    <function>2</function> for <code>vec2</code>, <code>ivec2</code>, <code>bvec2</code>, etc.). The data
+    type specified in the name of the command must match the data
+    type for the specified uniform variable as described previously
+    for <function>glProgramUniform{1|2|3|4}{f|i|ui}</function>.</para>
+
+    <para>For uniform variable arrays, each element of the array is
+    considered to be of the type indicated in the name of the
+    command (e.g., <function>glProgramUniform3f</function> or
+    <function>glProgramUniform3fv</function> can be used to load a uniform
+    variable array of type vec3). The number of elements of the
+    uniform variable array to be modified is specified by
+    <parameter>count</parameter></para>
+
+    <para>The commands
+    <function>glProgramUniformMatrix{2|3|4|2x3|3x2|2x4|4x2|3x4|4x3}fv</function>
+        are used to modify a matrix or an array of matrices. The numbers in the
+    command name are interpreted as the dimensionality of the matrix.
+    The number <function>2</function> indicates a 2 &#215; 2 matrix
+    (i.e., 4 values), the number <function>3</function> indicates a
+    3 &#215; 3 matrix (i.e., 9 values), and the number
+    <function>4</function> indicates a 4 &#215; 4 matrix (i.e., 16
+    values). Non-square matrix dimensionality is explicit, with the first
+        number representing the number of columns and the second number
+        representing the number of rows.  For example,
+        <function>2x4</function> indicates a 2 &#215; 4 matrix with 2 columns
+        and 4 rows (i.e., 8 values).
+        If <parameter>transpose</parameter> is
+    <constant>GL_FALSE</constant>, each matrix is assumed to be
+    supplied in column major order. If
+    <parameter>transpose</parameter> is
+    <constant>GL_TRUE</constant>, each matrix is assumed to be
+    supplied in row major order. The <parameter>count</parameter>
+    argument indicates the number of matrices to be passed. A count
+    of 1 should be used if modifying the value of a single matrix,
+    and a count greater than 1 can be used to modify an array of
+    matrices.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para><function>glProgramUniform1i</function> and
+    <function>glProgramUniform1iv</function> are the only two functions
+    that may be used to load uniform variables defined as sampler
+    types. Loading samplers with any other function will result in a
+    <constant>GL_INVALID_OPERATION</constant> error.</para>
+
+    <para>If <parameter>count</parameter> is greater than 1 and the
+    indicated uniform variable is not an array, a
+    <constant>GL_INVALID_OPERATION</constant> error is generated and the
+    specified uniform variable will remain unchanged.</para>
+
+    <para>Other than the preceding exceptions, if the type and size
+    of the uniform variable as defined in the shader do not match
+    the type and size specified in the name of the command used to
+    load its value, a <constant>GL_INVALID_OPERATION</constant> error will
+    be generated and the specified uniform variable will remain
+    unchanged.</para>
+
+    <para>If <parameter>location</parameter> is a value other than
+    -1 and it does not represent a valid uniform variable location
+    in within <parameter>program</parameter>, an error will be generated, and
+    no changes will be made to the uniform variable storage of
+    <parameter>program</parameter>. If <parameter>location</parameter> is
+    equal to -1, the data passed in will be silently ignored and the
+    specified uniform variable will not be changed.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>program</parameter> does not refer to a program object owned
+    by the GL.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if the
+    size of the uniform variable declared in the shader does not
+    match the size indicated by the <function>glProgramUniform</function>
+    command.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if one of
+    the signed or unsigned integer variants of this function is used to load a uniform
+    variable of type <code>float</code>, <code>vec2</code>, <code>vec3</code>, <code>vec4</code>, or an array of these,
+    or if one of the floating-point variants of this function is
+    used to load a uniform variable of type <code>int</code>, <code>ivec2</code>, <code>ivec3</code>,
+    <code>ivec4</code>, <code>unsigned int</code>, <code>uvec2</code>, <code>uvec3</code>,
+    <code>uvec4</code>, or an array of these.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if one of
+    the signed integer variants of this function is used to load a uniform
+    variable of type <code>unsigned int</code>, <code>uvec2</code>, <code>uvec3</code>,
+    <code>uvec4</code>, or an array of these.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if one of
+    the unsigned integer variants of this function is used to load a uniform
+    variable of type <code>int</code>, <code>ivec2</code>, <code>ivec3</code>,
+    <code>ivec4</code>, or an array of these.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>location</parameter> is an invalid uniform location
+    for <parameter>program</parameter> and
+    <parameter>location</parameter> is not equal to -1.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>count</parameter> is less than 0.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>count</parameter> is greater than 1 and the indicated
+    uniform variable is not an array variable.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a
+    sampler is loaded using a command other than
+    <function>glProgramUniform1i</function> and
+    <function>glProgramUniform1iv</function>.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>
+    with the handle of a program object and the index of an active uniform variable</para>
+
+    <para><citerefentry><refentrytitle>glGetUniform</refentrytitle></citerefentry>
+    with the handle of a program object and the location of a
+    uniform variable</para>
+
+    <para><citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+    with the handle of a program object and the name of a uniform
+    variable</para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glProgramUniform1f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform1fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform1i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform1iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform1ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform1uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform2uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform3uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniform4uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix2fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix2x3fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix2x4fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix3fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix3x2fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix3x4fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix4fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix4x2fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glProgramUniformMatrix4x3fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

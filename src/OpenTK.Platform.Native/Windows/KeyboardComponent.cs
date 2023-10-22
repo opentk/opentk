@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +11,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
+using OpenTK.Core;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -532,7 +535,7 @@ namespace OpenTK.Platform.Native.Windows
             Scancode code;
             if (extended)
             {
-                code = ScancodeLookupExt[winScancode]; 
+                code = ScancodeLookupExt[winScancode];
             }
             else
             {

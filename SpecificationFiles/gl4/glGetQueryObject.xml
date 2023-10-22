@@ -1,0 +1,315 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetQueryObject">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetQueryObject</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetQueryObject</refname>
+        <refname>glGetQueryBufferObject</refname>
+        <refpurpose>return parameters of a query object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjectiv</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjectuiv</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLuint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjecti64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint64 * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryObjectui64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLuint64 * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryBufferObjectiv</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryBufferObjectuiv</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryBufferObjecti64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryBufferObjectui64v</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a query object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a buffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a query object
+                    parameter.  Accepted values are
+                    <constant>GL_QUERY_RESULT</constant>,
+                    <constant>GL_QUERY_RESULT_AVAILABLE</constant>,
+                    <constant>GL_QUERY_RESULT_NO_WAIT</constant>, or
+                    <constant>GL_QUERY_TARGET</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    If a buffer is bound to the <constant>GL_QUERY_RESULT_BUFFER</constant> target, then <parameter>params</parameter>
+                    is treated as an offset to a location within that buffer's data store to receive the result of the query. If
+                    no buffer is bound to <constant>GL_QUERY_RESULT_BUFFER</constant>, then <parameter>params</parameter> is
+                    treated as an address in client memory of a variable to receive the resulting data.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the byte offset into <parameter>buffer</parameter>'s data store
+                    where the queried result will be written.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            These commands return a selected parameter of the query object specified by <parameter>id</parameter>.
+            <function>glGetQueryObject</function> returns in <parameter>params</parameter> a selected parameter of the query object specified by <parameter>id</parameter>.
+            <function>glGetQueryBufferObject</function> returns in <parameter>buffer</parameter> a selected parameter of the query object specified by <parameter>id</parameter>,
+            by writing it to <parameter>buffer</parameter>'s data store at the byte offset specified by <parameter>offset</parameter>.
+        </para>
+        <para>
+            <parameter>pname</parameter> names a specific query object parameter.  <parameter>pname</parameter> can be as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_QUERY_RESULT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> or <parameter>buffer</parameter> returns the value of the query object's passed samples counter.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUERY_RESULT_NO_WAIT</constant></term>
+                <listitem>
+                    <para>
+                        If the result of the query is available (that is, a query of <constant>GL_QUERY_RESULT_AVAILABLE</constant> would
+                        return non-zero), then <parameter>params</parameter> or <parameter>buffer</parameter> returns the value of the query object's passed samples counter,
+                        otherwise, the data referred to by <parameter>params</parameter> or <parameter>buffer</parameter> is not modified.
+                        The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUERY_RESULT_AVAILABLE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> or <parameter>buffer</parameter> returns whether the passed samples counter is immediately available.
+                        If a delay would occur waiting for the query result, <constant>GL_FALSE</constant> is returned.
+                        Otherwise, <constant>GL_TRUE</constant> is returned, which also indicates that the results of all
+                        previous queries are available as well.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_QUERY_TARGET</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> or <parameter>buffer</parameter> returns the query object's target.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter> or <parameter>buffer</parameter>.
+        </para>
+        <para>
+            <function>glGetQueryObject</function> and <function>glGetQueryBufferObject</function> implicitly flush the GL pipeline so that any incomplete rendering
+            delimited by the occlusion query completes in finite time.
+        </para>
+        <para>
+            If multiple queries are issued using the same query object <parameter>id</parameter> before calling
+            <function>glGetQueryObject</function> or <function>glGetQueryBufferObject</function>,
+            the results of the most recent query will be returned.  In this case,
+            when issuing a new query, the results of the previous query are discarded.
+        </para>
+        <para>
+            <function>glGetQueryObjecti64v</function> and <function>glGetQueryObjectui64v</function> are available only
+            if the GL version is 3.3 or greater.
+        </para>
+        <para>
+            <constant>GL_QUERY_RESULT_NO_WAIT</constant> is accepted for <parameter>pname</parameter> only if the
+            GL version is 4.4 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_RESULT_BUFFER</constant> target is available only if the GL version is 4.4 or higher.
+            On earlier versions of the GL, <parameter>params</parameter> is always an address in client memory.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is not the name of a query object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetQueryBufferObject</function>
+            if <parameter>buffer</parameter> is not the name of an already created buffer object.
+	</para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is the name of a currently active
+            query object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetQueryObject</function> if a buffer is currently bound to the
+            <constant>GL_QUERY_RESULT_BUFFER</constant> target and the command would cause data to be written beyond the bounds
+            of that buffer's data store.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glGetQueryBufferObject</function>
+            if the command would cause data to be written beyond the bounds of <parameter>buffer</parameter>'s data store.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by <function>glGetQueryBufferObject</function> if <parameter>offset</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetQueryObjecti64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryObjectiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryObjectui64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryObjectuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryBufferObjecti64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryBufferObjectiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryBufferObjectui64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetQueryBufferObjectuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBeginQuery</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginQuery --> <function>glEndQuery</function>,
+            <citerefentry><refentrytitle>glGetQueryiv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsQuery</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glQueryCounter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

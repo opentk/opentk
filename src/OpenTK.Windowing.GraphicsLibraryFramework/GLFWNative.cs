@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
+using OpenTK.Windowing.GraphicsLibraryFramework.Input;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {

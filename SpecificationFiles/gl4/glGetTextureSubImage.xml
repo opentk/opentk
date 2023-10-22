@@ -1,0 +1,372 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetTextureSubImage">
+  <info>
+    <copyright>
+      <year>2014</year>
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetTextureSubImage</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glGetTextureSubImage</refname>
+
+    <refpurpose>retrieve a sub-region of a texture image from a texture
+    object</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetTextureSubImage</function></funcdef>
+        <paramdef>GLuint <parameter>texture</parameter></paramdef>
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+        <paramdef>GLint <parameter>xoffset</parameter></paramdef>
+        <paramdef>GLint <parameter>yoffset</parameter></paramdef>
+        <paramdef>GLint <parameter>zoffset</parameter></paramdef>
+        <paramdef>GLsizei <parameter>width</parameter></paramdef>
+        <paramdef>GLsizei <parameter>height</parameter></paramdef>
+        <paramdef>GLsizei <parameter>depth</parameter></paramdef>
+        <paramdef>GLenum <parameter>format</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+        <paramdef>void *<parameter>pixels</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>texture</parameter></term>
+
+        <listitem>
+          <para>Specifies the name of the source texture object. Must be
+          <constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant> or
+          <constant>GL_TEXTURE_RECTANGLE</constant>. In specific, buffer and
+          multisample textures are not permitted.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>level</parameter></term>
+
+        <listitem>
+          <para>Specifies the level-of-detail number. Level 0 is the base
+          image level. Level $n$ is the $n$th mipmap reduction image.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>xoffset</parameter></term>
+
+        <listitem>
+          <para>Specifies a texel offset in the x direction within the texture
+          array.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>yoffset</parameter></term>
+
+        <listitem>
+          <para>Specifies a texel offset in the y direction within the texture
+          array.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>zoffset</parameter></term>
+
+        <listitem>
+          <para>Specifies a texel offset in the z direction within the texture
+          array.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>width</parameter></term>
+
+        <listitem>
+          <para>Specifies the width of the texture subimage.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>height</parameter></term>
+
+        <listitem>
+          <para>Specifies the height of the texture subimage.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>depth</parameter></term>
+
+        <listitem>
+          <para>Specifies the depth of the texture subimage.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>format</parameter></term>
+
+        <listitem>
+          <para>Specifies the format of the pixel data. The following symbolic
+          values are accepted: <constant>GL_RED</constant>,
+          <constant>GL_RG</constant>, <constant>GL_RGB</constant>,
+          <constant>GL_BGR</constant>, <constant>GL_RGBA</constant>,
+          <constant>GL_BGRA</constant>,
+          <constant>GL_DEPTH_COMPONENT</constant> and
+          <constant>GL_STENCIL_INDEX</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>type</parameter></term>
+
+        <listitem>
+          <para>Specifies the data type of the pixel data. The following
+          symbolic values are accepted: <constant>GL_UNSIGNED_BYTE</constant>,
+          <constant>GL_BYTE</constant>,
+          <constant>GL_UNSIGNED_SHORT</constant>,
+          <constant>GL_SHORT</constant>, <constant>GL_UNSIGNED_INT</constant>,
+          <constant>GL_INT</constant>, <constant>GL_FLOAT</constant>,
+          <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+          <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+          <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+          <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+          <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>bufSize</parameter></term>
+
+        <listitem>
+          <para>Specifies the size of the buffer to receive the retrieved
+          pixel data.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pixels</parameter></term>
+
+        <listitem>
+          <para>Returns the texture subimage. Should be a pointer to an array
+          of the type specified by <parameter>type</parameter>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glGetTextureSubImage</function> returns a texture subimage
+    into pixels.</para>
+
+    <para><parameter>texture</parameter> is the name of the source texture
+    object and must not be a buffer or multisample texture. The effective
+    <parameter>target</parameter> parameter is the value of
+    <constant>GL_TEXTURE_TARGET</constant> for texture.
+    <parameter>Level</parameter>, <parameter>format</parameter>,
+    <parameter>type</parameter> and <parameter>pixels</parameter> have the
+    same meaning as for <function>glGetTexImage</function>.
+    <parameter>bufSize</parameter> is the size of the buffer to receive the
+    retrieved pixel data.</para>
+
+    <para>For cube map textures, the behavior is as though
+    <function>GetTextureImage</function> were called, but only texels from the
+    requested cube map faces (selected by <parameter>zoffset</parameter> and
+    <parameter>depth</parameter>, as described below) were returned.</para>
+
+    <para><parameter>xoffset</parameter>, <parameter>yoffset</parameter> and
+    <parameter>zoffset</parameter> values indicate the position of the
+    subregion to return. <parameter>width</parameter>,
+    <parameter>height</parameter> and <parameter>depth</parameter> indicate
+    the size of the region to return. These parameters have the same meaning
+    as for <function>glTexSubImage3D</function>, though for one- and
+    two-dimensional textures there are extra restrictions, described in the
+    errors section below.</para>
+
+    <para>For one-dimensional array textures, <parameter>yoffset</parameter>
+    is interpreted as the first layer to access and
+    <parameter>height</parameter> is the number of layers to access.</para>
+
+    <para>For two-dimensional array textures, <parameter>zoffset</parameter>
+    is interpreted as the first layer to access and
+    <parameter>depth</parameter> is the number of layers to access.</para>
+
+    <para>Cube map textures are treated as an array of six slices in the
+    z-dimension, where the value of <parameter>zoffset</parameter> is
+    interpreted as specifying the cube map face for the corresponding layer
+    (as presented in the table below) and <parameter>depth</parameter> is the
+    number of faces to access:</para>
+
+    <para><informaltable>
+        <tgroup cols="2">
+          <tbody>
+            <row>
+              <entry>Layer number</entry>
+
+              <entry>Cube Map Face</entry>
+            </row>
+
+            <row>
+              <entry>0</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_X</entry>
+            </row>
+
+            <row>
+              <entry>1</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</entry>
+            </row>
+
+            <row>
+              <entry>2</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</entry>
+            </row>
+
+            <row>
+              <entry>3</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</entry>
+            </row>
+
+            <row>
+              <entry>4</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</entry>
+            </row>
+
+            <row>
+              <entry>5</entry>
+
+              <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable></para>
+
+    <para>
+        For cube map array textures, <parameter>zoffset</parameter> is the
+        first layer-face to access, and <parameter>depth</parameter> is the
+        number of layer-faces to access. A layer-face described by $k$ is
+        translated into an array layer and face according to
+            $$ layer = \left\lfloor { layer \over 6 } \right\rfloor$$
+        and
+            $$ face = k \bmod 6. $$
+    </para>
+
+    <para>Component groups from the specified sub-region are packed and placed
+    into memory as described for <function>glGetTextureImage</function>,
+    starting with the texel at (<parameter>xoffset</parameter>,
+    <parameter>yoffset</parameter>, <parameter>zoffset</parameter>).</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated if
+    <parameter>texture</parameter> is not the name of an existing texture
+    object.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if
+    <parameter>texture</parameter> is the name of a buffer or multisample
+    texture.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>xoffset</parameter>, <parameter>yoffset</parameter> or
+    <parameter>zoffset</parameter> are negative.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>xoffset</parameter> + <parameter>width</parameter> is greater
+    than the texture's width, <parameter>yoffset</parameter> +
+    <parameter>height</parameter> is greater than the texture's height, or
+    <parameter>zoffset</parameter> + <parameter>depth</parameter> is greater
+    than the texture's depth.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated if the
+    effective target is <constant>GL_TEXTURE_1D</constant> and either
+    <parameter>yoffset</parameter> is not zero, or
+    <parameter>height</parameter> is not one.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated if the
+    effective target is <constant>GL_TEXTURE_1D</constant>,
+    <constant>GL_TEXTURE_1D_ARRAY</constant>,
+    <constant>GL_TEXTURE_2D</constant> or
+    <constant>GL_TEXTURE_RECTANGLE</constant> and either
+    <parameter>zoffset</parameter> is not zero, or
+    <parameter>depth</parameter> is not one.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if the
+    buffer size required to store the requested data is greater than
+    <parameter>bufSize</parameter>.</para>
+  </refsect1>
+
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetTextureSubImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>,
+        <!-- FIX: link to glGetTexImage --> <function>glGetTextureImage</function>,
+        <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+    </para>
+  </refsect1>
+
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

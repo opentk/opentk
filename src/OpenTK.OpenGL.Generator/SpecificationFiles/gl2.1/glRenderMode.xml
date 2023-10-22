@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glRenderMode">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glRenderMode</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glRenderMode</refname>
+        <refpurpose>set rasterization mode</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLint <function>glRenderMode</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the rasterization mode.
+                    Three values are accepted:
+                    <constant>GL_RENDER</constant>,
+                    <constant>GL_SELECT</constant>, and
+                    <constant>GL_FEEDBACK</constant>.
+                    The initial value is <constant>GL_RENDER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glRenderMode</function> sets the rasterization mode.
+            It takes one argument,
+            <parameter>mode</parameter>,
+            which can assume one of three predefined values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_RENDER</constant></term>
+                <listitem>
+                    <para>
+                        Render mode. Primitives are rasterized,
+                        producing pixel fragments,
+                        which are written into the frame buffer.
+                        This is the normal mode
+                        and also the default mode.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SELECT</constant></term>
+                <listitem>
+                    <para>
+                        Selection mode.
+                        No pixel fragments are produced,
+                        and no change to the frame buffer contents is made.
+                        Instead,
+                        a record of the names of primitives that would have been drawn
+                        if the render mode had been <constant>GL_RENDER</constant> is returned in a select buffer,
+                        which must be created (see <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry>) before selection mode
+                        is entered.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FEEDBACK</constant></term>
+                <listitem>
+                    <para>
+                        Feedback mode.
+                        No pixel fragments are produced,
+                        and no change to the frame buffer contents is made.
+                        Instead,
+                        the coordinates and attributes of vertices that would have been drawn
+                        if the render mode had been <constant>GL_RENDER</constant> is returned in a feedback buffer,
+                        which must be created (see <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry>) before feedback mode
+                        is entered.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The return value of <function>glRenderMode</function> is determined by the render mode at the time
+            <function>glRenderMode</function> is called,
+            rather than by <parameter>mode</parameter>.
+            The values returned for the three render modes are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_RENDER</constant></term>
+                <listitem>
+                    <para>
+                        0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SELECT</constant></term>
+                <listitem>
+                    <para>
+                        The number of hit records transferred to the select buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FEEDBACK</constant></term>
+                <listitem>
+                    <para>
+                        The number of values (not vertices) transferred to the feedback buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            See the <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry> reference pages for
+            more details concerning selection and feedback operation.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            <function>glRenderMode</function> returns 0 regardless of the current render mode.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not one of the three
+            accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry> is called
+            while the render mode is <constant>GL_SELECT</constant>,
+            or if <function>glRenderMode</function> is called with argument <constant>GL_SELECT</constant> before
+            <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry> is called at least once.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry> is called
+            while the render mode is <constant>GL_FEEDBACK</constant>,
+            or if <function>glRenderMode</function> is called with argument <constant>GL_FEEDBACK</constant> before
+            <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry> is called at least once.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glRenderMode</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_RENDER_MODE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInitNames</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPassThrough</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

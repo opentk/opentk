@@ -1,4 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -7,6 +7,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common.Enums;
+using OpenTK.Windowing.Common.Events;
 
 namespace LocalTest
 {

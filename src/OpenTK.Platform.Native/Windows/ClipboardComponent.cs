@@ -7,8 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Core;
 using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Interfaces;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -306,7 +308,7 @@ namespace OpenTK.Platform.Native.Windows
         // because someone else is either reading or writing from it.
         // So we need to handle that when opening the clipboard.
 
-        /// 
+        ///
         public unsafe void SetClipboardAudio(AudioData data)
         {
             int bytes = sizeof(wav_header) + data.Audio.Length * sizeof(short);
@@ -332,7 +334,7 @@ namespace OpenTK.Platform.Native.Windows
 
             header.fmt_chunk_size = 16;
             header.audio_format = 1; // 1 for PCM. FIXME: Find the valid constants!
-            
+
             header.num_channels = (short)(data.Stereo ? 2 : 1);
             header.sample_rate = data.SampleRate;
             header.byte_rate = header.sample_rate * header.num_channels * sizeof(short);
@@ -404,7 +406,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.CloseClipboard();
         }
 
-        /// 
+        ///
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
             // We don't need to consider alignment as 32bpp image data will always align to DWORDs

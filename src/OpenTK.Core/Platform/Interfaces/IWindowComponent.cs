@@ -1,11 +1,13 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenTK.Core.Platform.Enums;
+using OpenTK.Core.Platform.Handles;
 using OpenTK.Mathematics;
 
-#nullable enable
-
-namespace OpenTK.Core.Platform
+namespace OpenTK.Core.Platform.Interfaces
 {
     /// <summary>
     /// A delegate for hit testing.

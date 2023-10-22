@@ -7,7 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Windowing.GraphicsLibraryFramework
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
+
+namespace OpenTK.Windowing.GraphicsLibraryFramework.Input
 {
     /// <summary>
     /// This describes the input state of a gamepad.

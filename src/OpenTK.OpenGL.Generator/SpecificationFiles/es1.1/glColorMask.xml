@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glColorMask">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glColorMask</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glColorMask</refname>
+        <refpurpose>enable and disable writing of color buffer
+        components</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorMask</function></funcdef>
+                <paramdef>GLboolean <parameter>red</parameter></paramdef>
+                <paramdef>GLboolean <parameter>green</parameter></paramdef>
+                <paramdef>GLboolean <parameter>blue</parameter></paramdef>
+                <paramdef>GLboolean <parameter>alpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                <parameter>red</parameter>,
+                <parameter>green</parameter>,
+                <parameter>blue</parameter>,
+                <parameter>alpha</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify whether red, green, blue, and alpha can or
+                    cannot be written into the color buffer. The initial
+                    values are all <constant>GL_TRUE</constant>,
+                    indicating that all color components can be written.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glColorMask</function>
+        specifies whether the individual components in the color
+        buffer can or cannot be written. If <parameter>red</parameter> is
+        <constant>GL_FALSE</constant>,
+        for example, no change is made to the red component of any
+        pixel in the color buffer, regardless of the drawing operation
+        attempted, including
+        <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>.
+        </para>
+
+        <para>Changes to individual bits of components cannot be
+        controlled. Rather, changes are either enabled or disabled for
+        entire color components.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

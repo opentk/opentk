@@ -7,9 +7,9 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
 
-namespace OpenTK.Windowing.Common
+namespace OpenTK.Windowing.Desktop.Events
 {
     /// <summary>
     /// Defines the event data for <see cref="INativeWindow.MouseDown" />

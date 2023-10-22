@@ -1,0 +1,121 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFenceSync">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFenceSync</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFenceSync</refname>
+        <refpurpose>create a new sync object and insert it into the GL command stream</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLsync <function>glFenceSync</function></funcdef>
+                <paramdef>GLenum <parameter>condition</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>flags</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>condition</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the condition that must be met to set the sync object's state to signaled. <parameter>condition</parameter>
+                    must be <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>flags</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined
+                    for this operation and <parameter>flags</parameter> must be zero.<footnote><para>
+                        <parameter>flags</parameter> is a placeholder for anticipated future extensions of fence sync object capabilities.
+                        </para>
+                    </footnote>
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glFenceSync</function> creates a new fence sync object, inserts a fence command into the GL command stream and
+            associates it with that sync object, and returns a non-zero name corresponding to the sync object.
+        </para>
+        <para>
+            When the specified <parameter>condition</parameter> of the sync object is satisfied by the fence command, the sync object
+            is signaled by the GL, causing any <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry> commands blocking in <parameter>sync</parameter>
+            to <emphasis>unblock</emphasis>. No other state is affected by <function>glFenceSync</function> or by the execution
+            of the associated fence command.
+        </para>
+        <para>
+            <parameter>condition</parameter> must be <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant>. This condition is satisfied by
+            completion of the fence command corresponding to the sync object and all preceding commands in the same command stream.
+            The sync object will not be signaled until all effects from these commands on GL client and server state and the
+            framebuffer are fully realized. Note that completion of the fence command occurs once the state of the corresponding sync
+            object has been changed, but commands waiting on that sync object may not be unblocked until after the fence command completes.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glFenceSync</function> is only supported if the GL version is 3.2 or greater, or if
+            the <code>ARB_sync</code> extension is supported.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>condition</parameter> is not
+            <constant>GL_SYNC_GPU_COMMANDS_COMPLETE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>flags</parameter> is not zero.
+        </para>
+        <para>
+            Additionally, if <function>glFenceSync</function> fails, it will return zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFenceSync</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

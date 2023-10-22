@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenTK.Core;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {

@@ -1,0 +1,78 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glIsTransformFeedback">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glIsTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glIsTransformFeedback</refname>
+        <refpurpose>determine if a name corresponds to a transform feedback object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glIsTransformFeedback</function></funcdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a value that may be the name of a transform feedback object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glIsTransformFeedback</function> returns <constant>GL_TRUE</constant> if <parameter>id</parameter> is currently the name of a transform feedback
+            object. If <parameter>id</parameter> is zero, or if <constant>id</constant> is not the name of a transform feedback object, or if an error
+            occurs, <function>glIsTransformFeedback</function> returns <constant>GL_FALSE</constant>. If <parameter>id</parameter> is a name returned by
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>, but that has not yet been bound through a call to
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>, then the name is not a transform feedback object and <function>glIsTransformFeedback</function>
+            returns <constant>GL_FALSE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glIsTransformFeedback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

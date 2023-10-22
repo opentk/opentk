@@ -1,0 +1,311 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetUniform">
+    <info>
+    <copyright>
+      <year>2003-2005</year>
+
+      <holder>3Dlabs Inc. Ltd.</holder>
+    </copyright>
+
+    <copyright>
+      <year>2010-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetUniform</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refdescriptor>glGetUniform</refdescriptor>
+
+    <refname>glGetUniformfv</refname>
+
+    <refname>glGetUniformiv</refname>
+
+    <refpurpose>Returns the value of a uniform variable</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetUniformfv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLfloat *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetUniformiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetUniformuiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLuint *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetUniformdv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLdouble *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <!-- robustness commands -->
+
+      <funcprototype>
+        <funcdef>void <function>glGetnUniformfv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>GLfloat *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetnUniformiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetnUniformuiv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>GLuint *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetnUniformdv</function></funcdef>
+
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+
+        <paramdef>GLint <parameter>location</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>GLdouble *<parameter>params</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>program</parameter></term>
+
+        <listitem>
+          <para>Specifies the program object to be queried.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>location</parameter></term>
+
+        <listitem>
+          <para>Specifies the location of the uniform variable to be
+          queried.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>bufSize</parameter></term>
+
+        <listitem>
+          <para>Specifies the size of the buffer
+          <parameter>params</parameter>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>params</parameter></term>
+
+        <listitem>
+          <para>Returns the value of the specified uniform variable.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glGetUniform</function> and
+    <function>glGetnUniform</function> return in <parameter>params</parameter>
+    the value(s) of the specified uniform variable. The type of the uniform
+    variable specified by <parameter>location</parameter> determines the
+    number of values returned. If the uniform variable is defined in the
+    shader as a boolean, int, or float, a single value will be returned. If it
+    is defined as a vec2, ivec2, or bvec2, two values will be returned. If it
+    is defined as a vec3, ivec3, or bvec3, three values will be returned, and
+    so on. To query values stored in uniform variables declared as arrays,
+    call <function>glGetUniform</function> for each element of the array. To
+    query values stored in uniform variables declared as structures, call
+    <function>glGetUniform</function> for each field in the structure. The
+    values for uniform variables declared as a matrix will be returned in
+    column major order.</para>
+
+    <para>The locations assigned to uniform variables are not known until the
+    program object is linked. After linking has occurred, the command
+    <citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+    can be used to obtain the location of a uniform variable. This location
+    value can then be passed to <function>glGetUniform</function> or
+    <function>glGetnUniform</function> in order to query the current value
+    of the uniform variable. After a program object has been linked
+    successfully, the index values for uniform variables remain fixed until
+    the next link command occurs. The uniform variable values can only be
+    queried after a link if the link was successful.</para>
+
+    <para>The only difference between <function>glGetUniform</function> and
+    <function>glGetnUniform</function> is that
+    <function>glGetnUniform</function> will generate an error if size of the
+    <parameter>params</parameter> buffer,as described by
+    <parameter>bufSize</parameter>, is not large enough to hold the result
+    data.</para>
+  </refsect1>
+
+  <refsect1 xml:id="notes">
+    <title>Notes</title>
+
+    <para>If an error is generated, no change is made to the contents of
+    <parameter>params</parameter>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>program</parameter> is not a value generated by OpenGL.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>program</parameter> is not a program object.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>program</parameter> has not been successfully linked.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>location</parameter> does not correspond to a valid uniform
+    variable location for the specified program object.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glGetnUniform</function> if the buffer size required to store
+    the requested data is greater than <parameter>bufSize</parameter>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para><citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the index of an active
+    uniform variable</para>
+
+    <para><citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and
+    <constant>GL_ACTIVE_UNIFORMS</constant> or
+    <constant>GL_ACTIVE_UNIFORM_MAX_LENGTH</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the name of a uniform
+    variable</para>
+
+    <para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry></para>
+
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetUniformdv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetUniformfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetUniformiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetUniformuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetnUniformdv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetnUniformfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetnUniformiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetnUniformuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glUniform</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

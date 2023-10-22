@@ -9,6 +9,8 @@
 
 using System;
 using System.Runtime.InteropServices;
+using OpenTK.Windowing.GraphicsLibraryFramework.Enums;
+using OpenTK.Windowing.GraphicsLibraryFramework.Input;
 using static OpenTK.Windowing.GraphicsLibraryFramework.GLFWNative;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework

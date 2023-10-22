@@ -7,6 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
-    <ProjectReference Include="..\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+    <ProjectReference Include="..\OpenTK.OpenGL\OpenTK.OpenGL.csproj" />
   </ItemGroup>
 </Project>

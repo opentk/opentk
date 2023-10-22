@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenTK
+namespace OpenTK.Core
 {
     /// <summary>
     /// Provides methods for querying available functions in a bindings context.

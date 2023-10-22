@@ -1,0 +1,173 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetGraphicsResetStatus">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetGraphicsResetStatus</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetGraphicsResetStatus</refname>
+        <refpurpose>check if the rendering context has not been lost due to software or hardware issues</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLenum <function>glGetGraphicsResetStatus</function></funcdef>
+                <paramdef><parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Certain events can result in a reset of the GL context. Such a reset causes
+            all context state to be lost and requires the application to recreate all
+            objects in the affected context.
+        </para>
+        <para>
+            <function>glGetGraphicsResetStatus</function> can return one of the following
+            constants:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_NO_ERROR</constant></term>
+                <listitem>
+                    <para>
+                        Indicates that the GL context has not been in a reset state since
+                        the last call.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GUILTY_CONTEXT_RESET</constant></term>
+                <listitem>
+                    <para>
+                        Indicates that a reset has been detected that is attributable to
+                        the current GL context.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_INNOCENT_CONTEXT_RESET</constant></term>
+                <listitem>
+                    <para>
+                        Indicates a reset has been detected that is not attributable to
+                        the current GL context.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_UNKNOWN_CONTEXT_RESET</constant></term>
+                <listitem>
+                    <para>
+                        Indicates a detected graphics reset whose cause is unknown.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            If a reset status other than <constant>GL_NO_ERROR</constant> is returned
+            and subsequent calls return <constant>GL_NO_ERROR</constant>, the context
+            reset was encountered and completed. If a reset status is repeatedly
+            returned, the context may be in the process of resetting.
+        </para>
+        <para>
+            Reset notification behavior is determined at context creation time, and
+            may be queried by calling <function>GetIntegerv</function> with the
+            symbolic constant <constant>GL_RESET_NOTIFICATION_STRATEGY</constant>.
+        </para>
+        <para>
+            If the reset notification behavior is
+            <constant>GL_NO_RESET_NOTIFICATION</constant>, then the
+            implementation will never deliver notification of reset events,
+            and <function>glGetGraphicsResetStatus</function> will always
+            return <constant>GL_NO_ERROR</constant>.
+        </para>
+        <para>
+            If the behavior is <constant>GL_LOSE_CONTEXT_ON_RESET</constant>, a graphics reset
+            will result in the loss of all context state, requiring the recreation of all
+            associated objects. In this case <function>glGetGraphicsResetStatus</function>
+            may return any of the values described above.
+        </para>
+        <para>
+            If a graphics reset notification occurs in a context, a notification must also occur
+            in all other contexts which share objects with that context.
+        </para>
+        <para>
+            After a graphics reset has occurred on a context, subsequent GL commands on that
+            context (or any context which shares with that context) will generate a
+            <constant>GL_CONTEXT_LOST</constant> error. Such commands will not have
+            side effects (in particular, they will not modify memory passed by pointer
+            for query results), and will not block indefinitely or cause termination
+            of the application. There are two important exceptions to this behavior:
+        </para>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <function>glGetError</function> and <function>glGetGraphicsResetStatus</function>
+                        behave normally following a graphics reset, so that the application can
+                        determine a reset has occurred, and when it is safe to destroy and re-create
+                        the context.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Any commands which might cause a polling application to block indefinitely
+                        will generate a <constant>GL_CONTEXT_LOST</constant> error, but will also return
+                        a value indicating completion to the application. Such commands include:
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <function>glGetSynciv</function> with pname <constant>GL_SYNC_STATUS</constant>
+                                    ignores the other parameters and returns <constant>GL_SIGNALED</constant> in
+                                    <parameter>values</parameter>.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <function>glGetQueryObjectuiv</function> with pname <constant>GL_QUERY_RESULT_AVAILABLE</constant>
+                                    ignores the other parameters and returns <constant>TRUE</constant> in <parameter>params</parameter>.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetGraphicsResetStatus</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>
+            <!-- FIX: link to glGet --> <function>glGetIntegerv</function>,
+            <!-- FIX: link to glGetQueryiv --> <function>glGetQueryObjectuiv</function>
+            <!-- FIX: link to glGetSync --> <function>glGetSynciv</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

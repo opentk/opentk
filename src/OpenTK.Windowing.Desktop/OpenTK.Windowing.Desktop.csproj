@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <TargetFrameworks>net7.0</TargetFrameworks>
+      <TargetFramework>net7.0</TargetFramework>
       <RootNamespace>OpenTK.Windowing.Desktop</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -11,13 +11,5 @@
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
-    </ItemGroup>
-
-    <Import Project="..\..\props\common.props" />
-    <Import Project="..\..\props\nuget-common.props" />
-    <Import Project="..\..\props\stylecop.props" />
-
-    <ItemGroup>
-      <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
     </ItemGroup>
 </Project>

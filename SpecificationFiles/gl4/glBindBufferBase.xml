@@ -1,0 +1,132 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindBufferBase">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindBufferBase</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindBufferBase</refname>
+        <refpurpose>bind a buffer object to an indexed buffer target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindBufferBase</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specify the target of the bind operation. <parameter>target</parameter> must be
+                    one of <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+                    <constant>GL_SHADER_STORAGE_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specify the index of the binding point within the array specified by <parameter>target</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    The name of a buffer object to bind to the specified binding point.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindBufferBase</function> binds the buffer object <parameter>buffer</parameter>
+            to the binding point at index <parameter>index</parameter> of the array of targets specified
+            by <parameter>target</parameter>. Each <parameter>target</parameter> represents an indexed
+            array of buffer binding points, as well as a single general binding point that can be used by
+            other buffer manipulation functions such as <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>. In addition to binding
+            <parameter>buffer</parameter> to the indexed buffer binding target, <function>glBindBufferBase</function>
+            also binds <parameter>buffer</parameter> to the generic buffer binding point specified by <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Calling <function>glBindBufferBase</function> is equivalent to calling
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry> with <parameter>offset</parameter>
+            zero and <parameter>size</parameter> equal to the size of the buffer.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is available only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_SHADER_STORAGE_BUFFER</constant> target is available only if the GL version is 4.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+            <constant>GL_SHADER_STORAGE_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater
+            than or equal to the number of <parameter>target</parameter>-specific indexed binding points.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> does
+            not have an associated data store, or if the size of that store is zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindBufferBase</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>
