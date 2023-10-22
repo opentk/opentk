@@ -1,0 +1,127 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glIsProgram">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glIsProgram</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glIsProgram</refname>
+        <refpurpose>Determines if a name corresponds to a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>GLboolean <function>glIsProgram</function></funcdef>
+        <paramdef>GLuint <parameter>program</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>program</parameter></term>
+        <listitem>
+            <para>Specifies a potential program object.</para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para><function>glIsProgram</function> returns
+    <constant>GL_TRUE</constant> if <parameter>program</parameter>
+    is the name of a program object previously created with
+        <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>
+        and not yet deleted with <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>.
+    If <parameter>program</parameter> is zero or a non-zero value that
+    is not the name of a program object, or if an error occurs,
+        <function>glIsProgram</function> returns <constant>GL_FALSE</constant>.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para>No error is generated if <parameter>program</parameter> is
+    not a valid program object name.</para>
+
+    <para>A program object marked for deletion with <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>
+        but still in use as part of current rendering state is still considered
+        a program object and <function>glIsProgram</function> will return <constant>GL_TRUE</constant>.</para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with the argument <constant>GL_CURRENT_PROGRAM</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the index of
+    an active attribute variable</para>
+
+    <para><citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the index of
+    an active uniform variable</para>
+
+    <para><citerefentry><refentrytitle>glGetAttachedShaders</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the name of an
+    attribute variable</para>
+
+    <para><citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the parameter
+    to be queried</para>
+
+    <para><citerefentry><refentrytitle>glGetProgramInfoLog</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter></para>
+
+    <para><citerefentry><refentrytitle>glGetUniform</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the location
+    of a uniform variable</para>
+
+    <para><citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+    with arguments <parameter>program</parameter> and the name of a
+    uniform variable</para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glIsProgram</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glAttachShader</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glDetachShader</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glUniform</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glValidateProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

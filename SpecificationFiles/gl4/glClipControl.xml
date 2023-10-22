@@ -1,0 +1,167 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glClipControl">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glClipControl</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClipControl</refname>
+        <refpurpose>control clip coordinate to window coordinate behavior</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClipControl</function></funcdef>
+                <paramdef>GLenum <parameter>origin</parameter></paramdef>
+                <paramdef>GLenum <parameter>depth</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>origin</parameter></term>
+                <listitem>
+                    <para>
+                         Specifies the clip control origin. Must be one of
+                         <constant>GL_LOWER_LEFT</constant> or
+                         <constant>GL_UPPER_LEFT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>depth</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies the clip control depth mode. Must be one
+                        of <constant>GL_NEGATIVE_ONE_TO_ONE</constant> or
+                        <constant>GL_ZERO_TO_ONE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glClipControl</function> controls the clipping volume
+            behavior and the clip coordinate to window coordinate
+            transformation behavior.
+        </para>
+        <para>
+            The view volume is defined by
+                $$z_{min} \leq z_c \leq w_c$$
+            where $z_{min} = -w_c$ when <parameter>depth</parameter> is
+            <constant>GL_NEGATIVE_ONE_TO_ONE</constant>, and $z_{min} = 0$
+            when <parameter>depth</parameter> is
+            <constant>GL_ZERO_TO_ONE</constant>.
+        </para>
+        <para>
+            The normalized device coordinate $y_d$ is given by
+                $$y_d = { { f \times y_c } \over w_c }$$
+            where $f = 1$ when <parameter>origin</parameter> is
+            <constant>GL_LOWER_LEFT</constant>, and $f = -1$ when
+            <parameter>origin</parameter> is
+            <constant>GL_UPPER_LEFT</constant>.
+        </para>
+        <para>
+            The window coordinate $z_w$ is given by
+                $$z_w = s \times z_d + b$$
+            where $s = { { f - n } \over 2 }$ and $b = { {n + f} \over 2 }$ when
+            <parameter>depth</parameter> is
+            <constant>GL_NEGATIVE_ONE_TO_ONE</constant>, and $s = f - n$ and
+            $b = n$ when <parameter>depth</parameter> is
+            <constant>GL_ZERO_TO_ONE</constant>. $n$ and $f$ are the near
+            and far depth range values set with
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Finally, the polygon area computation defined by
+            <citerefentry><refentrytitle>gl_FrontFacing</refentrytitle></citerefentry>
+            to determine if a polygon is front- or back-facing has its sign
+            negated when <parameter>origin</parameter> is
+            <constant>GL_UPPER_LEFT</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The default GL clip volume definition is for a
+            <parameter>origin</parameter> of
+            <constant>GL_LOWER_LEFT</constant> and a
+            <parameter>depth</parameter> of
+            <constant>GL_NEGATIVE_ONE_TO_ONE</constant>.
+        </para>
+        <para>
+            An <parameter>origin</parameter> of
+            <constant>GL_UPPER_LEFT</constant> and a
+            <parameter>depth</parameter> of
+            <constant>GL_ZERO_TO_ONE</constant> corresponds to Direct3D's
+            clip volume definition.
+        </para>
+        <para>
+            An <parameter>origin</parameter> of
+            <constant>GL_UPPER_LEFT</constant> and a
+            <parameter>depth</parameter> of
+            <constant>GL_NEGATIVE_ONE_TO_ONE</constant> corresponds to the
+            upper-left origin of the window coordinate system of Microsoft
+            Windows and the X Window System.
+        </para>
+        <para>
+            There is extensive discussion of the uses and further
+            consequences of the different clip volume settings in the
+            <code>GL_ARB_clip_control</code> extension specification in the
+            OpenGL Registry at URL <link
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xlink:href="http://www.opengl.org/registry/">http://www.opengl.org/registry/</link>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            An <constant>GL_INVALID_ENUM</constant> error is generated if
+            <parameter>origin</parameter> is not
+            <constant>GL_LOWER_LEFT</constant> or
+            <constant>GL_UPPER_LEFT</constant>.
+        </para>
+        <para>
+            An <constant>GL_INVALID_ENUM</constant> error is generated if
+            <parameter>depth</parameter> is not
+            <constant>GL_NEGATIVE_ONE_TO_ONE</constant> or
+            <constant>GL_ZERO_TO_ONE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glClipControl</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>gl_ClipDistance</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>gl_CullDistance</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>gl_FrontFacing</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

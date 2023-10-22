@@ -1,0 +1,246 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCopyBufferSubData">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCopyBufferSubData</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCopyBufferSubData</refname>
+        <refname>glCopyNamedBufferSubData</refname>
+        <refpurpose>copy all or part of the data store of a buffer object to the data store of another buffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCopyBufferSubData</function></funcdef>
+                <paramdef>GLenum <parameter>readTarget</parameter></paramdef>
+                <paramdef>GLenum <parameter>writeTarget</parameter></paramdef>
+                <paramdef>GLintptr <parameter>readOffset</parameter></paramdef>
+                <paramdef>GLintptr <parameter>writeOffset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glCopyNamedBufferSubData</function></funcdef>
+                <paramdef>GLuint <parameter>readBuffer</parameter></paramdef>
+                <paramdef>GLuint <parameter>writeBuffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>readOffset</parameter></paramdef>
+                <paramdef>GLintptr <parameter>writeOffset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>readTarget</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the source buffer object
+                    is bound for <function>glCopyBufferSubData</function>
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>writeTarget</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the destination buffer
+                    object is bound for
+                    <function>glCopyBufferSubData</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>readBuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the source buffer object for
+                    <function>glCopyNamedBufferSubData</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>writeBuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the destination buffer object for
+                    <function>glCopyNamedBufferSubData</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>readOffset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the offset, in basic machine units, within the
+                    data store of the source buffer object at which data
+                    will be read.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>writeOffset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the offset, in basic machine units, within the
+                    data store of the destination buffer object at which
+                    data will be written.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size, in basic machine units, of the data
+                    to be copied from the source buffer object to the
+                    destination buffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCopyBufferSubData</function> and
+            <function>glCopyNamedBufferSubData</function> copy part of the
+            data store attached to a source buffer object to the data store
+            attached to a destination buffer object. The number of basic
+            machine units indicated by <parameter>size</parameter> is copied
+            from the source at offset <parameter>readOffset</parameter> to
+            the destination at <parameter>writeOffset</parameter>.
+            <parameter>readOffset</parameter>,
+            <parameter>writeOffset</parameter> and
+            <parameter>size</parameter> are in terms of basic machine units.
+        </para>
+        <para>
+            For <function>glCopyBufferSubData</function>,
+            <parameter>readTarget</parameter> and
+            <parameter>writeTarget</parameter> specify the targets to which
+            the source and destination buffer objects are bound, and must
+            each be one of the buffer binding targets in the following
+            table:
+        </para>
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+        <para>
+            Any of these targets may be used, but the targets
+            <constant>GL_COPY_READ_BUFFER</constant> and
+            <constant>GL_COPY_WRITE_BUFFER</constant> are provided
+            specifically to allow copies between buffers without disturbing
+            other GL state.
+        </para>
+        <para>
+            <parameter>readOffset</parameter>,
+            <parameter>writeOffset</parameter> and
+            <parameter>size</parameter> must all be greater than or equal to
+            zero. Furthermore, $readOffset+size$ must not exceeed the size
+            of the source buffer object, and $writeOffset+size$ must not
+            exceeed the size of the buffer bound to
+            <parameter>writeTarget</parameter>. If the source and
+            destination are the same buffer object, then the source and
+            destination ranges must not overlap.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and
+            <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are
+            available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available
+            only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glCopyBufferSubData</function> if
+            <parameter>readTarget</parameter> or
+            <parameter>writeTarget</parameter> is not one of the buffer
+            binding targets listed above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glCopyBufferSubData</function> if zero is bound to
+            <parameter>readTarget</parameter> or
+            <parameter>writeTarget</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glCopyNamedBufferSubData</function> if
+            <parameter>readBuffer</parameter> or
+            <parameter>writeBuffer</parameter> is not the name of an
+            existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any of
+            <parameter>readOffset</parameter>,
+            <parameter>writeOffset</parameter> or
+            <parameter>size</parameter> is negative, if $readOffset + size$
+            is greater than the size of the source buffer object (its value
+            of <constant>GL_BUFFER_SIZE</constant>), or if $writeOffset +
+            size$ is greater than the size of the destination buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the source
+            and destination are the same buffer object, and the ranges
+            $[readOffset,readOffset+size)$ and
+            $[writeOffset,writeOffset+size)$ overlap.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if either
+            the source or destination buffer object is mapped with
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>
+            or
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            unless they were mapped with the
+            <constant>GL_MAP_PERSISTENT</constant> bit set in the
+            <function>glMapBufferRange</function>
+            <parameter>access</parameter> flags.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCopyBufferSubData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='31']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glCopyNamedBufferSubData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

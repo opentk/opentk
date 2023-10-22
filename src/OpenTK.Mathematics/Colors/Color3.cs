@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 
 #pragma warning disable SA1649
-namespace OpenTK.Mathematics.Colors
+namespace OpenTK.Mathematics
 {
     /// <summary>
     /// Interface for ColorSpace phantom types with 3 elements.

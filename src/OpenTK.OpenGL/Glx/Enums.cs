@@ -1,7 +1,7 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 
-namespace OpenTK.Graphics.Glx
+namespace OpenTK.OpenGL.Glx
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

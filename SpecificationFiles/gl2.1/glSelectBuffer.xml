@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glSelectBuffer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glSelectBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glSelectBuffer</refname>
+        <refpurpose>establish a buffer for selection mode values</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSelectBuffer</function></funcdef>
+                <paramdef>GLsizei <parameter>size</parameter></paramdef>
+                <paramdef>GLuint * <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of <parameter>buffer</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Returns the selection data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glSelectBuffer</function> has two arguments:
+            <parameter>buffer</parameter> is a pointer to an array of unsigned integers,
+            and <parameter>size</parameter> indicates the size of the array.
+            <parameter>buffer</parameter> returns values from the name stack
+            (see <citerefentry><refentrytitle>glInitNames</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glLoadName</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glPushName</refentrytitle></citerefentry>)
+            when the rendering mode is <constant>GL_SELECT</constant> (see <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry>).
+            <function>glSelectBuffer</function> must be issued before selection mode is enabled,
+            and it must not be issued while the rendering mode is <constant>GL_SELECT</constant>.
+        </para>
+        <para>
+            A programmer can use selection to determine which primitives
+            are drawn into some region of a window.
+            The region is defined by the current modelview and perspective matrices.
+        </para>
+        <para>
+            In selection mode, no pixel fragments are produced from rasterization.
+            Instead,
+            if a primitive or a raster position intersects the clipping
+            volume defined by the viewing frustum
+            and the user-defined clipping planes,
+            this primitive causes a selection hit.
+            (With polygons, no hit occurs if the polygon is culled.)
+            When a change is made to the name stack,
+            or when <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called,
+            a hit record is copied to <parameter>buffer</parameter> if any hits have occurred since the
+            last such event
+            (name stack change or
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> call).
+            The hit record consists of the number of names in the name stack at the
+            time of the event, followed by the minimum and maximum depth values
+            of all vertices that hit since the previous event,
+            followed by the name stack contents,
+            bottom name first.
+        </para>
+        <para>
+            Depth values (which are in the range [0,1]) are multiplied by 
+            <inlineequation><mml:math>
+                <!-- eqn: 2 sup 32 - 1:-->
+                <mml:mrow>
+                    <mml:msup><mml:mn>2</mml:mn>
+                    <mml:mn>32</mml:mn>
+                    </mml:msup>
+                    <mml:mo>-</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            before being placed in the hit record.
+        </para>
+        <para>
+            An internal index into <parameter>buffer</parameter> is reset to 0 whenever selection mode
+            is entered.
+            Each time a hit record is copied into <parameter>buffer</parameter>,
+            the index is incremented to point to the cell just past the end
+            of the block of names\(emthat is, to the next available cell
+            If the hit record is larger than the number of remaining locations in <parameter>buffer</parameter>,
+            as much data as can fit is copied,
+            and the overflow flag is set.
+            If the name stack is empty when a hit record is copied,
+            that record consists of 0 followed by the minimum and maximum depth values.
+        </para>
+        <para>
+            To exit selection mode, call <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> with an argument
+            other than <constant>GL_SELECT</constant>.
+            Whenever <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called while the render mode is <constant>GL_SELECT</constant>,
+            it returns the number of hit records copied to <parameter>buffer</parameter>,
+            resets the overflow flag and the selection buffer pointer,
+            and initializes the name stack to be empty.
+            If the overflow bit was set when <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> was called,
+            a negative hit record count is returned.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            The contents of <parameter>buffer</parameter> is undefined until <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called
+            with an argument other than <constant>GL_SELECT</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>/<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry> primitives and calls to <citerefentry><refentrytitle>glRasterPos</refentrytitle></citerefentry>
+            can result in hits.  <citerefentry><refentrytitle>glWindowPos</refentrytitle></citerefentry> will always generate a selection hit.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>size</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glSelectBuffer</function> is called while the
+            render mode is <constant>GL_SELECT</constant>,
+            or if <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called with argument <constant>GL_SELECT</constant> before
+            <function>glSelectBuffer</function> is called at least once.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glSelectBuffer</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_NAME_STACK_DEPTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SELECTION_BUFFER_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetPointerv</refentrytitle></citerefentry> with argument <constant>GL_SELECTION_BUFFER_POINTER</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInitNames</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

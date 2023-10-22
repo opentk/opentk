@@ -1,0 +1,96 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateBuffers">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateBuffers</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateBuffers</refname>
+        <refpurpose>create buffer objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCreateBuffers</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLuint *<parameter>buffers</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>n</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies the number of buffer objects to create.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>buffers</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies an array in which names of the new buffer
+                        objects are stored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCreateBuffers</function> returns
+            <parameter>n</parameter> previously unused buffer names in
+            <parameter>buffers</parameter>, each representing a new buffer
+            object initialized as if it had been bound to an unspecified
+            target.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>n</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateBuffers</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

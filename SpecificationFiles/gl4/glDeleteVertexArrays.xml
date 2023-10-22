@@ -1,0 +1,90 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDeleteVertexArrays">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDeleteVertexArrays</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDeleteVertexArrays</refname>
+        <refpurpose>delete vertex array objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDeleteVertexArrays</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>arrays</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>n</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of vertex array objects to be deleted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>arrays</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array containing the <parameter>n</parameter> names of the objects to be deleted.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDeleteVertexArrays</function> deletes <parameter>n</parameter> vertex array objects whose names are stored in the
+            array addressed by <parameter>arrays</parameter>. Once a vertex array object is deleted it has no contents and its name is
+            again unused. If a vertex array object that is currently bound is deleted, the binding for that object reverts to zero
+            and the default vertex array becomes current. Unused names in <parameter>arrays</parameter> are silently ignored, as is the value zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>n</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDeleteVertexArrays</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenVertexArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsVertexArray</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindVertexArray</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

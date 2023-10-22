@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPushClientAttrib">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPushClientAttrib</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPushClientAttrib</refname>
+        <refpurpose>push and pop the client attribute stack</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPushClientAttrib</function></funcdef>
+                <paramdef>GLbitfield <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mask</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a mask that indicates which attributes to save.  Values for
+                    <parameter>mask</parameter> are listed below.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPopClientAttrib</function></funcdef>
+                <paramdef> <parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPushClientAttrib</function> takes one argument,
+            a mask that indicates which groups of client-state variables
+            to save on the client attribute stack.
+            Symbolic constants are used to set bits in the mask.
+            <parameter>mask</parameter>
+            is typically constructed by specifying the bitwise-or of several 
+	    of these constants together.
+            The special mask
+            <constant>GL_CLIENT_ALL_ATTRIB_BITS</constant>
+            can be used to save all stackable client state.
+        </para>
+        <para>
+            The symbolic mask constants and their associated GL client state are as follows
+            (the second column lists which attributes are saved):
+        </para>
+        <para>
+            <constant>GL_CLIENT_PIXEL_STORE_BIT</constant>	Pixel storage modes
+            <constant>GL_CLIENT_VERTEX_ARRAY_BIT</constant>	Vertex arrays (and enables)
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glPopClientAttrib</refentrytitle></citerefentry> restores the values of the client-state variables
+            saved with the last <function>glPushClientAttrib</function>.
+            Those not saved are left unchanged.
+        </para>
+        <para>
+            It is an error to push attributes onto a full client attribute stack
+            or to pop attributes off an empty stack.
+            In either case, the error flag is set,
+            and no other change is made to GL state.
+        </para>
+        <para>
+            Initially, the client attribute stack is empty.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glPushClientAttrib</function> is available only if the GL version is 1.1 or greater.
+        </para>
+        <para>
+            Not all values for GL client state can be saved on the attribute stack.
+            For example, select and feedback state cannot be saved.
+        </para>
+        <para>
+            The depth of the attribute stack depends on the implementation,
+            but it must be at least 16.
+        </para>
+        <para>
+            Use <citerefentry><refentrytitle>glPushAttrib</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry> to push and restore
+            state that is kept on the server. Only pixel storage modes and
+            vertex array state may be pushed and popped with
+            <function>glPushClientAttrib</function> and <citerefentry><refentrytitle>glPopClientAttrib</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, pushing and
+            popping client vertex array state applies to all supported texture units,
+            and the active client texture state.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_STACK_OVERFLOW</constant> is generated if <function>glPushClientAttrib</function> is called while
+            the attribute stack is full.
+        </para>
+        <para>
+            <constant>GL_STACK_UNDERFLOW</constant> is generated if <citerefentry><refentrytitle>glPopClientAttrib</refentrytitle></citerefentry> is called while
+            the attribute stack is empty.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ATTRIB_STACK_DEPTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_CLIENT_ATTRIB_STACK_DEPTH</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDisableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEdgeFlagPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndexPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNewList</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

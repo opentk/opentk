@@ -1,0 +1,138 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramBinary">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramBinary</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramBinary</refname>
+        <refpurpose>return a binary representation of a program object's compiled and linked executable source</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetProgramBinary</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLenum *<parameter>binaryFormat</parameter></paramdef>
+                <paramdef>void *<parameter>binary</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of a program object whose binary representation to retrieve.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+            <para>
+                Specifies the size of the buffer whose address is given by <parameter>binary</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of a variable to receive the number of bytes written into <parameter>binary</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binaryFormat</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>binary</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address an array into which the GL will return <parameter>program</parameter>'s binary representation.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetProgramBinary</function> returns a binary representation of the compiled
+            and linked executable for <parameter>program</parameter> into the array of bytes whose
+            address is specified in <parameter>binary</parameter>. The maximum number of bytes that
+            may be written into <parameter>binary</parameter> is specified by <parameter>bufSize</parameter>.
+            If the program binary is greater in size than <parameter>bufSize</parameter> bytes,
+            then an error is generated, otherwise the actual number of bytes written into <parameter>binary</parameter>
+            is returned in the variable whose address is given by <parameter>length</parameter>. If
+            <parameter>length</parameter> is <constant>NULL</constant>, then no length is returned.
+        </para>
+        <para>
+            The format of the program binary written into <parameter>binary</parameter> is returned in
+            the variable whose address is given by <parameter>binaryFormat</parameter>, and may be implementation dependent. The binary produced
+            by the GL may subsequently be returned to the GL by calling <citerefentry><refentrytitle>glProgramBinary</refentrytitle></citerefentry>,
+            with <parameter>binaryFormat</parameter> and <parameter>length</parameter> set to the values
+            returned by <function>glGetProgramBinary</function>, and passing the returned binary data
+            in the <parameter>binary</parameter> parameter.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>bufSize</parameter> is less than
+            the size of <constant>GL_PROGRAM_BINARY_LENGTH</constant> for <parameter>program</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <constant>GL_LINK_STATUS</constant> for the
+            program object is false.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry> with argument <constant>GL_PROGRAM_BINARY_LENGTH</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramBinary</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glProgramBinary</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

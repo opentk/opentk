@@ -1,0 +1,115 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetSubroutineIndex">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetSubroutineIndex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetSubroutineIndex</refname>
+        <refpurpose>retrieve the index of a subroutine uniform of a given shader stage within a program</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLuint <function>glGetSubroutineIndex</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>shadertype</parameter></paramdef>
+                <paramdef>const GLchar *<parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the program containing shader stage.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>shadertype</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the shader stage from which to query for subroutine uniform index.
+                    <parameter>shadertype</parameter>
+                    must be one of <constant>GL_VERTEX_SHADER</constant>, <constant>GL_TESS_CONTROL_SHADER</constant>,
+                    <constant>GL_TESS_EVALUATION_SHADER</constant>, <constant>GL_GEOMETRY_SHADER</constant> or
+                    <constant>GL_FRAGMENT_SHADER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the subroutine uniform whose index to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetSubroutineIndex</function> returns the index of a subroutine uniform within a shader stage attached to a program object.
+            <parameter>program</parameter> contains the name of the program to which the shader is attached. <parameter>shadertype</parameter>
+            specifies the stage from which to query shader subroutine index. <parameter>name</parameter> contains the null-terminated
+            name of the subroutine uniform whose name to query.
+        </para>
+        <para>
+            If <parameter>name</parameter> is not the name of a subroutine uniform in the shader stage, <constant>GL_INVALID_INDEX</constant>
+            is returned, but no error is generated. If <parameter>name</parameter> is the name of a subroutine uniform in the shader stage,
+            a value between zero and the value of <constant>GL_ACTIVE_SUBROUTINES</constant> minus one will be returned. Subroutine indices
+            are assigned using consecutive integers in the range from zero to the value of <constant>GL_ACTIVE_SUBROUTINES</constant> minus
+            one for the shader stage.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>shadertype</parameter> or <parameter>pname</parameter>
+            is not one of the accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is not the name of an
+            existing program object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetSubroutineIndex</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniform</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniformName</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

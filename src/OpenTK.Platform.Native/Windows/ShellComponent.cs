@@ -14,7 +14,7 @@ using OpenTK.Core;
 using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Platform.Handles;
 using OpenTK.Core.Platform.Interfaces;
-using OpenTK.Mathematics.Colors;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Native.Windows
 {

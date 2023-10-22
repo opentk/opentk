@@ -1,7 +1,7 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 
-namespace OpenTK.Graphics.OpenGLES1
+namespace OpenTK.OpenGL.OpenGLES1
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -1722,12 +1722,9 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     public enum ScalarType : uint
     {
-        Byte = 5120,
         UnsignedByte = 5121,
-        Short = 5122,
         UnsignedShort = 5123,
         UnsignedInt = 5125,
-        Float = 5126,
     }
     public enum SecondaryColorPointerTypeIBM : uint
     {
@@ -1978,9 +1975,9 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     public enum TextureWrapMode : uint
     {
+        LinearMipmapLinear = 9987,
         Repeat = 10497,
         ClampToEdge = 33071,
-        MirroredRepeatOes = 33648,
     }
     ///<summary>Used in <see cref="GL.CullFace" />, <see cref="GL.GetMaterialfv" />, <see cref="GL.GetMaterialxv" />, ...</summary>
     public enum TriangleFace : uint

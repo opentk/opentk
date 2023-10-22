@@ -1,14 +1,13 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:49 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
-using OpenTK.Graphics;
-using OpenTK.Graphics.Wgl;
-using OpenTK.Graphics.Glx;
-using OpenTK.Mathematics.Colors;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.Wgl;
+using OpenTK.OpenGL.Glx;
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.OpenGL.OpenGL
 {
     public static unsafe partial class GL
     {

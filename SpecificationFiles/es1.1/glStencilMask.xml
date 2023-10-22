@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glStencilMask">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glStencilMask</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glStencilMask</refname>
+        <refpurpose>control the writing of individual bits in the
+        stencil planes</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glStencilMask</function></funcdef>
+                <paramdef>GLuint <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>mask</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies a bit mask to enable and disable writing
+                    of individual bits in the stencil planes. The initial value
+                    is all 1's.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para><function>glStencilMask</function>
+        controls the writing of individual bits in the stencil planes.
+        The least significant <replaceable>n</replaceable>
+        bits of <parameter>mask</parameter>, where
+        <replaceable>n</replaceable>
+        is the number of bits in the stencil buffer, specify a mask.
+        Where a 1 appears in the mask, it's possible to write to the
+        corresponding bit in the stencil buffer. Where a 0 appears, the
+        corresponding bit is write-protected. Initially, all bits are
+        enabled for writing.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_STENCIL_WRITEMASK</constant> or 
+        <constant>GL_STENCIL_BITS</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

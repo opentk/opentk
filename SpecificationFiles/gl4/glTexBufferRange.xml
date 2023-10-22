@@ -1,0 +1,235 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glTexBufferRange">
+    <info>
+        <copyright>
+            <year>2012-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glTexBufferRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexBufferRange</refname>
+        <refname>glTextureBufferRange</refname>
+        <refpurpose>attach a range of a buffer object's data store to a buffer texture object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexBufferRange</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>size</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glTextureBufferRange</function></funcdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizei <parameter>size</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the texture object is
+                    bound for <function>glTexBufferRange</function>. Must be
+                    <constant>GL_TEXTURE_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the texture object name for
+                    <function>glTextureBufferRange</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the internal format of the data in the store
+                    belonging to <parameter>buffer</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object whose storage to
+                    attach to the active buffer texture.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the offset of the start of the range of the
+                    buffer's data store to attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the range of the buffer's data
+                    store to attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glTexBufferRange</function> and
+            <function>glTextureBufferRange</function> attach a range of the
+            data store of a specified buffer object to a specified texture
+            object, and specify the storage format for the texture image
+            found in the buffer object. The texture object must be a
+            buffer texture.
+        </para>
+        <para>
+            If <parameter>buffer</parameter> is zero, any buffer object
+            attached to the buffer texture is detached and no new buffer
+            object is attached. If <parameter>buffer</parameter> is
+            non-zero, it must be the name of an existing buffer object.
+        </para>
+        <para>
+            The start and size of the range are specified by
+            <parameter>offset</parameter> and <parameter>size</parameter>
+            respectively, both measured in basic machine units.
+            <parameter>offset</parameter> must be greater than or equal to
+            zero, <parameter>size</parameter> must be greater than zero, and
+            the sum of <parameter>offset</parameter> and
+            <parameter>size</parameter> must not exceed the value of
+            <constant>GL_BUFFER_SIZE</constant> for
+            <parameter>buffer</parameter>. Furthermore,
+            <parameter>offset</parameter> must be an integer multiple of the
+            value of
+            <constant>GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT</constant>.
+        </para>
+        <para>
+            <parameter>internalformat</parameter> specifies the storage
+            format, and must be one of the following sized internal formats:
+        </para>
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="texboformattable.xml"/>
+        <para>
+            When a range of a buffer object is attached to a buffer texture,
+            the specified range of the buffer object's data store is taken
+            as the texture's texel array. The number of texels in the buffer
+            texture's texel array is given by
+                $$ \left\lfloor { size \over { components \times sizeof(base\_type) } } \right\rfloor $$
+            where $components$ and $base\_type$ are the element count and
+            base data type for elements, as specified in the table above.
+            The number of texels in the texel array is then clamped to the
+            value of the implementation-dependent limit
+            <constant>GL_MAX_TEXTURE_BUFFER_SIZE</constant>. When a buffer
+            texture is accessed in a shader, the results of a texel fetch
+            are undefined if the specified texel coordinate is negative, or
+            greater than or equal to the clamped number of texels in the
+            texel array.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glTexBufferRange</function> if
+            <parameter>target</parameter> is not
+            <constant>GL_TEXTURE_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glTextureBufferRange</function> if
+            <parameter>texture</parameter> is not the name of an existing
+            texture object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glTextureBufferRange</function> if the effective
+            target of <parameter>texture</parameter> is not
+            <constant>GL_TEXTURE_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>internalformat</parameter> is not one of the sized
+            internal formats described above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>buffer</parameter> is not zero and is not the name of
+            an existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>offset</parameter> is negative, if
+            <parameter>size</parameter> is less than or equal to zero, or if
+            <parameter>offset</parameter> + <parameter>size</parameter> is
+            greater than the value of <constant>GL_BUFFER_SIZE</constant>
+            for <parameter>buffer</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>offset</parameter> is not an integer multiple of the
+            value of
+            <constant>GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            with argument
+            <constant>GL_TEXTURE_BUFFER_OFFSET_ALIGNMENT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>
+            with arguments <constant>GL_TEXTURE_BUFFER_OFFSET</constant> or
+            <constant>GL_TEXTURE_BUFFER_SIZE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glTexBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glTextureBufferRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glTexBuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2012-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

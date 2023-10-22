@@ -1,7 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
@@ -14,7 +14,6 @@ using OpenTK.Core;
 using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Platform.Handles;
 using OpenTK.Core.Platform.Interfaces;
-using OpenTK.Mathematics.Colors;
 
 namespace OpenTK.Backends.Tests
 {

@@ -1,0 +1,96 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindRenderbuffer">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindRenderbuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindRenderbuffer</refname>
+        <refpurpose>bind a renderbuffer to a renderbuffer target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindRenderbuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the renderbuffer target of the binding operation. <parameter>target</parameter> must be <constant>GL_RENDERBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>renderbuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the renderbuffer object to bind.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindRenderbuffer</function> binds the renderbuffer object with name <parameter>renderbuffer</parameter> to the renderbuffer target specified
+            by <parameter>target</parameter>. <parameter>target</parameter> must be <constant>GL_RENDERBUFFER</constant>. <parameter>renderbuffer</parameter>
+            is the name of a renderbuffer object previously returned from a call to <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            or zero to break the existing binding of a renderbuffer object to <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>renderbuffer</parameter> is not zero or the name of a renderbuffer
+            previously returned from a call to <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindRenderbuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorageMultisample</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

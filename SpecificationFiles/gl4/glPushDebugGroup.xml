@@ -1,0 +1,129 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glPushDebugGroup">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glPushDebugGroup</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPushDebugGroup</refname>
+        <refpurpose>push a named debug group into the command stream</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPushDebugGroup</function></funcdef>
+                <paramdef>GLenum <parameter>source</parameter></paramdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+                <paramdef>GLsizei <parameter>length</parameter></paramdef>
+                <paramdef>const char * <parameter>message</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>source</parameter></term>
+            <listitem>
+                <para>
+                    The source of the debug message.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    The identifier of the message.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The length of the message to be sent to the debug output stream.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>message</parameter></term>
+            <listitem>
+                <para>
+                    The a string containing the message to be sent to the debug output stream.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glPushDebugGroup</function> pushes a debug group described by the string
+            <parameter>message</parameter> into the command stream. The value of
+            <parameter>id</parameter> specifies the ID of messages generated. The parameter
+            <parameter>length</parameter> contains the number of characters in <parameter>message</parameter>.
+            If <parameter>length</parameter> is negative, it is implied that <parameter>message</parameter>
+            contains a null terminated string. The message has the specified <parameter>source</parameter>
+            and <parameter>id</parameter>, the <parameter>type</parameter> <constant>GL_DEBUG_TYPE_PUSH_GROUP</constant>, and <parameter>severity</parameter>
+            <constant>GL_DEBUG_SEVERITY_NOTIFICATION</constant>. The GL will put a new debug group
+            on top of the debug group stack which inherits the control of the
+            volume of debug output of the debug group previously residing on the
+            top of the debug group stack. Because debug groups are strictly
+            hierarchical, any additional control of the debug output volume will
+            only apply within the active debug group and the debug groups pushed
+            on top of the active debug group.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if the value of <parameter>source</parameter> is
+            neither <constant>GL_DEBUG_SOURCE_APPLICATION</constant> nor <constant>GL_DEBUG_SOURCE_THIRD_PARTY</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>length</parameter> is negative
+            and the number of characters in <parameter>message</parameter>, excluding the null-terminator,
+            is not less than the value of <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_DEBUG_MESSAGE_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glPushDebugGroup</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPopDebugGroup</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectLabel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glObjectPtrLabel</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

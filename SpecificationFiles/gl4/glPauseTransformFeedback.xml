@@ -1,0 +1,72 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glPauseTransformFeedback">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glPauseTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPauseTransformFeedback</refname>
+        <refpurpose>pause transform feedback operations</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPauseTransformFeedback</function></funcdef>
+                <paramdef>void</paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glPauseTransformFeedback</function> pauses transform feedback operations on the currently active transform feedback
+            object. When transform feedback operations are paused, transform feedback is still considered active and changing most
+            transform feedback state related to the object results in an error. However, a new transform feedback object may be bound
+            while transform feedback is paused.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the currently bound transform feedback object is not active or is paused.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glPauseTransformFeedback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glResumeTransformFeedback</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>,
+            <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

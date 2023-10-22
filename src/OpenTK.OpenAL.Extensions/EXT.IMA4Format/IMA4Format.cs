@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System.Runtime.CompilerServices;
 using OpenTK.OpenAL.Extensions.EXT.IMA4Format.Enums;
 using OpenTK.OpenAL.Extensions.EXT.IMA4Format.Interfaces;
 

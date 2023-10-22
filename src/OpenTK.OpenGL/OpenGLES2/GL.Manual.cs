@@ -2,9 +2,8 @@ using System;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Native;
 using OpenTK.Mathematics;
-using OpenTK.Mathematics.Colors;
 
-namespace OpenTK.Graphics.OpenGLES2
+namespace OpenTK.OpenGL.OpenGLES2
 {
     /// <summary>
     /// OpenGL ES 2+

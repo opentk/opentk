@@ -1,0 +1,205 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFramebufferTexture">
+    <info>
+        <copyright>
+            <year>2010-2015</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFramebufferTexture</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFramebufferTexture</refname>
+        <refpurpose>attach a level of a texture object as a logical buffer of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTexture</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer is bound.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachment</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the attachment point of the framebuffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of an existing texture object to
+                    attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the mipmap level of the texture object to
+                    attach. 
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glFramebufferTexture</function> attaches a selected mipmap level or image of a
+            texture object as one of the logical buffers of the framebuffer object
+            bound to the specified target. Textures cannot be attached to the default
+            draw and read framebuffer, so they are not valid targets of
+            these commands.
+        </para>
+        <para>
+            The framebuffer
+            object is that bound to <parameter>target</parameter>, which
+            must be <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant>, or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            <parameter>attachment</parameter> specifies the logical
+            attachment of the framebuffer and must be
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant> or
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
+            <emphasis>i</emphasis> in
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>
+            may range from zero to the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
+            Attaching a level of a texture to
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> is equivalent
+            to attaching that level to both the
+            <constant>GL_DEPTH_ATTACHMENT</constant>
+            <emphasis>and</emphasis> the
+            <constant>GL_STENCIL_ATTACHMENT</constant> attachment points
+            simultaneously.
+        </para>
+        <para>
+            If <parameter>texture</parameter> is non-zero, the specified
+            <parameter>level</parameter> of the texture object named
+            <parameter>texture</parameter> is attached to the framebuffer
+            attachment point named by <parameter>attachment</parameter>.
+        </para>
+        <para>
+            If <parameter>texture</parameter> is a multisampled texture, then
+            <parameter>level</parameter> must be zero.
+        </para>
+        <para>
+            If <parameter>texture</parameter> is a 3D texture, then
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_3D_TEXTURE_SIZE</constant>. 
+        </para>
+        <para>
+            If <parameter>texture</parameter> is a cube-mapped texture, then
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_CUBE_MAP_TEXTURE_SIZE</constant>. 
+        </para>
+        <para>
+            For all other texture types,
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            If
+            <parameter>texture</parameter> is the name of a
+            three-dimensional, cube map array, cube map, 
+            two-dimensional array, or two-dimensional multisample array
+            texture, the specified texture level is an array of images, and
+            the framebuffer attachment is considered to be
+            <emphasis>layered</emphasis> and 
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_LAYERED</constant> is set to true.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if 
+            <parameter>target</parameter> if
+            it is not <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant>, or
+            <constant>GL_FRAMEBUFFER</constant>
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if zero
+            is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>attachment</parameter> is not one of the accepted
+            attachment points.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>texture</parameter> is not zero or the name of an
+            existing texture object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>texture</parameter> is not zero and
+            <parameter>level</parameter> is not a supported texture level
+            for <parameter>texture</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by 
+            if <parameter>texture</parameter> is a buffer texture.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="5" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFramebufferTexture</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='es32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTextureLayer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture2D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2015 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,270 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetVertexArrayIndexed">
+  <info>
+    <copyright>
+      <year>2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetVertexArrayIndexed</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glGetVertexArrayIndexed</refname>
+
+    <refpurpose>retrieve parameters of an attribute of a vertex array
+    object</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+	<funcdef>void <function>glGetVertexArrayIndexed64iv</function></funcdef>
+
+	<paramdef>GLuint <parameter>vaobj</parameter></paramdef>
+
+	<paramdef>GLuint <parameter>index</parameter></paramdef>
+
+	<paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+	<paramdef>GLint64 *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+
+    <funcsynopsis>
+      <funcprototype>
+	<funcdef>void <function>glGetVertexArrayIndexediv</function></funcdef>
+
+	<paramdef>GLuint <parameter>vaobj</parameter></paramdef>
+
+	<paramdef>GLuint <parameter>index</parameter></paramdef>
+
+	<paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+	<paramdef>GLint *<parameter>param</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+	<term><parameter>vaobj</parameter></term>
+
+	<listitem>
+	  <para>Specifies the name of a vertex array object.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><parameter>index</parameter></term>
+
+	<listitem>
+	  <para>Specifies the index of the vertex array object attribute. Must
+	  be a number between 0 and
+	  (<constant>GL_MAX_VERTEX_ATTRIBS</constant> - 1).</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><parameter>pname</parameter></term>
+
+	<listitem>
+	  <para>Specifies the property to be used for the query. For
+	  <function>glGetVertexArrayIndexediv</function>, it must be one of
+	  the following values:
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_ENABLED</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_SIZE</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_STRIDE</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_TYPE</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_NORMALIZED</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_INTEGER</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_LONG</constant>,
+	  <constant>GL_VERTEX_ATTRIB_ARRAY_DIVISOR</constant>, or
+	  <constant>GL_VERTEX_ATTRIB_RELATIVE_OFFSET</constant>. For
+	  <function>glGetVertexArrayIndexed64v</function>, it must be equal to
+	  <constant>GL_VERTEX_BINDING_OFFSET</constant>.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><parameter>param</parameter></term>
+
+	<listitem>
+	  <para>Returns the requested value.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glGetVertexArrayIndexediv</function> and
+    <function>glGetVertexArrayIndexed64iv</function> provide a way of querying
+    parameters of an attribute at an user-specified index of a vertex array
+    object. The vertex array object does not have to be bound to the rendering
+    context at the time of the call, but must have been bound at least once
+    prior to this call.</para>
+
+    <para>The following parameter values can be retrieved with
+    <function>glGetVertexArrayIndexediv</function> for each of the attributes
+    defined for a vertex array object:</para>
+
+    <para><itemizedlist>
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_ENABLED</constant>:
+	  <parameter>param</parameter> returns a value that is non-zero (true)
+	  if the vertex attribute array for index is enabled and 0 (false) if
+	  it is disabled. The initial value is
+	  <constant>GL_FALSE</constant>.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_SIZE</constant>:
+	  <parameter>param</parameter> returns a single value, the size of the
+	  vertex attribute array for index. The size is the number of values
+	  for each element of the vertex attribute array, and it will be 1, 2,
+	  3 or 4. The initial value is 4.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_STRIDE</constant>:
+	  <parameter>param</parameter> returns a single value, the array
+	  stride for (number of bytes between successive elements in) the
+	  vertex attribute array for index. A value of 0 indicates the array
+	  elements are stored sequentially in memory. The initial value is
+	  0.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_TYPE</constant>:
+	  <parameter>param</parameter> returns a single value, a symbolic
+	  constant indicating the array type for the vertex attribute array
+	  for index. Possible values are <constant>GL_BYTE</constant>,
+	  <constant>GL_DOUBLE</constant>, <constant>GL_FIXED</constant>,
+	  <constant>GL_FLOAT</constant>, <constant>GL_HALF_FLOAT</constant>,
+	  <constant>GL_INT</constant>,
+	  <constant>GL_INT_2_10_10_10_REV</constant>,
+	  <constant>GL_SHORT</constant>,
+	  <constant>GL_UNSIGNED_BYTE</constant>,
+	  <constant>GL_UNSIGNED_SHORT</constant>,
+	  <constant>GL_UNSIGNED_INT</constant>,
+	  <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, and
+	  <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> . The initial
+	  value is <constant>GL_FLOAT</constant>.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_NORMALIZED</constant>:
+	  <parameter>param</parameter> returns a single value that is non-zero
+	  (true) if fixed-point data types for the vertex attribute array
+	  indicated by index are normalized when they are converted to
+	  floating-point, and 0 (false) otherwise. The initial value is
+	  <constant>GL_FALSE</constant>.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_INTEGER</constant>:
+	  <parameter>param</parameter> returns a single value that is non-zero
+	  (true) if fixed-point data types for the vertex attribute array
+	  indicated by index have integer data type, and 0 (false) otherwise.
+	  The initial value is 0 (<constant>GL_FALSE</constant>).</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_LONG</constant>:
+	  <parameter>param</parameter> returns a single value that is non-zero
+	  (true) if a vertex attribute is stored as an unconverted double, and
+	  0 (false) otherwise. The initial value is 0
+	  (<constant>GL_FALSE</constant>).</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_ARRAY_DIVISOR</constant>:
+	  <parameter>param</parameter> returns a single value that is the
+	  frequency divisor used for instanced rendering. See
+	  glVertexAttribDivisor. The initial value is 0.</para>
+	</listitem>
+
+	<listitem>
+	  <para><constant>GL_VERTEX_ATTRIB_RELATIVE_OFFSET</constant>:
+	  <parameter>param</parameter> returns a single value that is the byte
+	  offset of the first element relative to the start of the vertex
+	  buffer binding specified attribute fetches from. The initial value
+	  is 0.</para>
+	</listitem>
+      </itemizedlist><function>glGetVertexArrayIndexed64iv</function> can be
+    used to retrieve <constant>GL_VERTEX_BINDING_OFFSET</constant> parameter
+    value for any of the attributes defined for a vertex array object. When
+    <parameter>pname</parameter> is set to
+    <constant>GL_VERTEX_BINDING_OFFSET</constant>,
+    <parameter>param</parameter> returns a single value that is the byte
+    offset of the first element in the bound buffer's data store. The initial
+    value for this parameter is 0.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_OPERATION</constant> error is generated if
+    <parameter>vaobj</parameter> is not the name of an existing vertex array
+    object.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> error is generated if index is
+    greater than or equal to the value of
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> error is generated if
+    <parameter>pname</parameter> is not one of the valid values. For more
+    details, please see above.</para>
+  </refsect1>
+
+  <refsect1 xml:id="versions"><title>Version Support</title>
+	<informaltable>
+	    <tgroup cols="13" align="left">
+		<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+		<tbody>
+		    <row>
+			<entry><function>glGetVertexArrayIndexed64iv</function></entry>
+			<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+		    </row>
+		    <row>
+			<entry><function>glGetVertexArrayIndexediv</function></entry>
+			<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+		    </row>
+		</tbody>
+	    </tgroup>
+	</informaltable>
+    </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>,
+      <citerefentry><refentrytitle>glVertexAttribBinding</refentrytitle></citerefentry>,
+      <!-- FIX: link to glVertexAttribPointer --> <function>glVertexAttribIPointer</function>,
+      <!-- FIX: link to glVertexAttribPointer --> <function>glVertexAttribLPointer</function>,
+      <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry></para>
+  </refsect1>
+
+  <refsect1 xml:id="Copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"/> 2014 Khronos Group.
+	    This material may be distributed subject to the terms and conditions set forth in
+	    the Open Publication License, v 1.0, 8 June 1999.
+	    <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+	</para>
+    </refsect1>
+
+</refentry>

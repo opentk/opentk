@@ -1,0 +1,464 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetTexLevelParameter">
+  <info>
+    <copyright>
+      <year>2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glGetTexLevelParameter</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glGetTexLevelParameter</refname>
+
+    <refpurpose>return texture parameter values for a specific level of
+    detail</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetTexLevelParameterfv</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetTexLevelParameteriv</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLint * <parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetTextureLevelParameterfv</function></funcdef>
+
+        <paramdef>GLuint <parameter>texture</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLfloat *<parameter>params</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glGetTextureLevelParameteriv</function></funcdef>
+
+        <paramdef>GLuint <parameter>texture</parameter></paramdef>
+
+        <paramdef>GLint <parameter>level</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>pname</parameter></paramdef>
+
+        <paramdef>GLint *<parameter>params</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>Specifies the target to which the texture is bound for
+          <function>glGetTexLevelParameterfv</function> and
+          <function>glGetTexLevelParameteriv</function> functions. Must be one
+          of the following values: <constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_RECTANGLE</constant>,
+          <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>,
+          <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>,
+          <constant>GL_PROXY_TEXTURE_1D</constant>,
+          <constant>GL_PROXY_TEXTURE_2D</constant>,
+          <constant>GL_PROXY_TEXTURE_3D</constant>,
+          <constant>GL_PROXY_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_PROXY_TEXTURE_RECTANGLE</constant>,
+          <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE</constant>,
+          <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>,
+          <constant>GL_PROXY_TEXTURE_CUBE_MAP</constant>, or
+          <constant>GL_TEXTURE_BUFFER</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>texture</parameter></term>
+
+        <listitem>
+          <para>Specifies the texture object name for
+          <function>glGetTextureLevelParameterfv</function> and
+          <function>glGetTextureLevelParameteriv</function> functions.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>level</parameter></term>
+
+            <listitem>
+                <para>
+                    Specifies the level-of-detail number of the desired image.
+                    Level 0 is the base image level.
+                    Level
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                    is the
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                    mipmap reduction image.
+                </para>
+            </listitem>
+        </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pname</parameter></term>
+
+        <listitem>
+          <para>Specifies the symbolic name of a texture parameter.
+          <constant>GL_TEXTURE_WIDTH</constant>,
+          <constant>GL_TEXTURE_HEIGHT</constant>,
+          <constant>GL_TEXTURE_DEPTH</constant>,
+          <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>,
+          <constant>GL_TEXTURE_RED_SIZE</constant>,
+          <constant>GL_TEXTURE_GREEN_SIZE</constant>,
+          <constant>GL_TEXTURE_BLUE_SIZE</constant>,
+          <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
+          <constant>GL_TEXTURE_DEPTH_SIZE</constant>,
+          <constant>GL_TEXTURE_COMPRESSED</constant>,
+          <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>, and
+          <constant>GL_TEXTURE_BUFFER_OFFSET</constant> are accepted.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>params</parameter></term>
+
+        <listitem>
+          <para>Returns the requested data.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glGetTexLevelParameterfv</function>,
+    <function>glGetTexLevelParameteriv</function>,
+    <function>glGetTextureLevelParameterfv</function> and
+    <function>glGetTextureLevelParameteriv</function> return in
+    <parameter>params</parameter> texture parameter values for a specific
+    level-of-detail value, specified as <parameter>level</parameter>. For the
+    first two functions, <parameter>target</parameter> defines the target
+    texture, either <constant>GL_TEXTURE_1D</constant>,
+    <constant>GL_TEXTURE_2D</constant>, <constant>GL_TEXTURE_3D</constant>,
+    <constant>GL_PROXY_TEXTURE_1D</constant>,
+    <constant>GL_PROXY_TEXTURE_2D</constant>,
+    <constant>GL_PROXY_TEXTURE_3D</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+    <constant>GL_PROXY_TEXTURE_CUBE_MAP</constant>. The remaining two take a
+    <parameter>texture</parameter> argument which specifies the name of the
+    texture object.</para>
+
+    <para><constant>GL_MAX_TEXTURE_SIZE</constant>, and
+    <constant>GL_MAX_3D_TEXTURE_SIZE</constant> are not really descriptive
+    enough. It has to report the largest square texture image that can be
+    accommodated with mipmaps but a long skinny texture, or a texture without
+    mipmaps may easily fit in texture memory. The proxy targets allow the user
+    to more accurately query whether the GL can accommodate a texture of a
+    given configuration. If the texture cannot be accommodated, the texture
+    state variables, which may be queried with
+    <function>glGetTexLevelParameter</function> and
+    <function>glGetTextureLevelParameter</function>, are set to 0. If the
+    texture can be accommodated, the texture state values will be set as they
+    would be set for a non-proxy target.</para>
+
+    <para><parameter>pname</parameter> specifies the texture parameter whose
+    value or values will be returned.</para>
+
+    <para>The accepted parameter names are as follows:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term><constant>GL_TEXTURE_WIDTH</constant></term>
+
+        <listitem>
+          <para><parameter>params</parameter> returns a single value, the
+          width of the texture image. The initial value is 0.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_HEIGHT</constant></term>
+
+        <listitem>
+          <para><parameter>params</parameter> returns a single value, the
+          height of the texture image. The initial value is 0.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_DEPTH</constant></term>
+
+        <listitem>
+          <para><parameter>params</parameter> returns a single value, the
+          depth of the texture image. The initial value is 0.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_INTERNAL_FORMAT</constant></term>
+
+        <listitem>
+          <para><parameter>params</parameter> returns a single value, the
+          internal format of the texture image.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_RED_TYPE</constant>,
+        <constant>GL_TEXTURE_GREEN_TYPE</constant>,
+        <constant>GL_TEXTURE_BLUE_TYPE</constant>,
+        <constant>GL_TEXTURE_ALPHA_TYPE</constant>,
+        <constant>GL_TEXTURE_DEPTH_TYPE</constant></term>
+
+        <listitem>
+          <para>The data type used to store the component. The types
+          <constant>GL_NONE</constant>,
+          <constant>GL_SIGNED_NORMALIZED</constant>,
+          <constant>GL_UNSIGNED_NORMALIZED</constant>,
+          <constant>GL_FLOAT</constant>, <constant>GL_INT</constant>, and
+          <constant>GL_UNSIGNED_INT</constant> may be returned to indicate
+          signed normalized fixed-point, unsigned normalized fixed-point,
+          floating-point, integer unnormalized, and unsigned integer
+          unnormalized components, respectively.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_RED_SIZE</constant>,
+        <constant>GL_TEXTURE_GREEN_SIZE</constant>,
+        <constant>GL_TEXTURE_BLUE_SIZE</constant>,
+        <constant>GL_TEXTURE_ALPHA_SIZE</constant>,
+        <constant>GL_TEXTURE_DEPTH_SIZE</constant></term>
+
+        <listitem>
+          <para/>
+
+          <para>
+            The internal storage resolution of an individual component. The
+            resolution chosen by the GL will be a close match for the
+            resolution requested by the user with the component argument of
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            and
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>.
+            The initial value is 0.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_COMPRESSED</constant></term>
+
+        <listitem>
+          <para/>
+
+          <para><parameter>params</parameter> returns a single boolean value
+          indicating if the texture image is stored in a compressed internal
+          format. The initiali value is <constant>GL_FALSE</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant></term>
+
+        <listitem>
+          <para/>
+
+          <para>
+            <parameter>params</parameter> returns a single integer value,
+            the number of unsigned bytes of the compressed texture image
+            that would be returned from
+            <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_BUFFER_OFFSET</constant></term>
+
+        <listitem>
+          <para/>
+
+          <para><parameter>params</parameter> returns a single integer value,
+            the offset into the data store of the buffer bound to a buffer
+            texture.
+            <citerefentry><refentrytitle>glTexBufferRange</refentrytitle></citerefentry>.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><constant>GL_TEXTURE_BUFFER_SIZE</constant></term>
+
+        <listitem>
+          <para/>
+
+          <para><parameter>params</parameter> returns a single integer value,
+            the size of the range of a data store of the buffer bound to a
+            buffer texture.
+            <citerefentry><refentrytitle>glTexBufferRange</refentrytitle></citerefentry>.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="notes">
+    <title>Notes</title>
+
+    <para>If an error is generated, no change is made to the contents of
+    <parameter>params</parameter>.</para>
+
+    <para><function>glGetTexLevelParameter</function> returns the texture
+    level parameters for the active texture unit.</para>
+
+    <para><constant>GL_TEXTURE_BUFFER_OFFSET</constant> and
+    <constant>GL_TEXTURE_BUFFER_SIZE</constant> are available only if the GL
+    version is 4.3 or greater.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glGetTextureLevelParameterfv</function> and
+    <function>glGetTextureLevelParameteriv</function> functions if
+    <parameter>texture</parameter> is not the name of an existing texture
+    object.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated by
+    <function>glGetTexLevelParameterfv</function> and
+    <function>glGetTexLevelParameteriv</function> functions if
+    <parameter>target</parameter> or <parameter>pname</parameter> is not an
+    accepted value.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>level</parameter> is less than 0.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> may be generated if
+    <parameter>level</parameter> is greater than <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+          <!-- eqn: log sub 2: -->
+
+          <mml:msub>
+            <mml:mi mathvariant="italic">log</mml:mi>
+
+            <mml:mn>2</mml:mn>
+          </mml:msub>
+        </mml:math>
+      </inlineequation> <emphasis>max</emphasis>, where
+    <emphasis>max</emphasis> is the returned value of
+    <constant>GL_MAX_TEXTURE_SIZE</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>target</parameter> is <constant>GL_TEXTURE_BUFFER</constant>
+    and <parameter>level</parameter> is not zero.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant> is queried on
+    texture images with an uncompressed internal format or on proxy
+    targets.</para>
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetTexLevelParameterfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetTexLevelParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetTextureLevelParameterfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetTextureLevelParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006
+            Silicon Graphics, Inc. Copyright <trademark class="copyright"/> 2010-2014
+            Khronos Group. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,128 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glUniformSubroutines">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glUniformSubroutines</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glUniformSubroutines</refname>
+        <refpurpose>load active subroutine uniforms</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glUniformSubroutinesuiv</function></funcdef>
+                <paramdef>GLenum <parameter>shadertype</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>indices</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>shadertype</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the shader stage from which to query for subroutine uniform index.
+                    <parameter>shadertype</parameter>
+                    must be one of <constant>GL_VERTEX_SHADER</constant>, <constant>GL_TESS_CONTROL_SHADER</constant>,
+                    <constant>GL_TESS_EVALUATION_SHADER</constant>, <constant>GL_GEOMETRY_SHADER</constant> or
+                    <constant>GL_FRAGMENT_SHADER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of uniform indices stored in <parameter>indices</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indices</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array holding the indices to load into the shader subroutine variables.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glUniformSubroutines</function> loads all active subroutine uniforms for shader stage
+            <parameter>shadertype</parameter> of the current program with subroutine indices from <parameter>indices</parameter>,
+            storing <parameter>indices[i]</parameter> into the uniform at location <parameter>i</parameter>.
+            <parameter>count</parameter> must be equal to the value of <constant>GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS</constant>
+            for the program currently in use at shader stage <parameter>shadertype</parameter>. Furthermore, all values in
+            <parameter>indices</parameter> must be less than the value of <constant>GL_ACTIVE_SUBROUTINES</constant>
+            for the shader stage.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if no program object is current.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is not equal to the value
+            of <constant>GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS</constant> for the shader stage <parameter>shadertype</parameter>
+            of the current program.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any value in <parameter>indices</parameter> is geater
+            than or equal to the value of <constant>GL_ACTIVE_SUBROUTINES</constant> for the shader stage <parameter>shadertype</parameter>
+            of the current program.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>shadertype</parameter> is not one of the accepted values.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramStage</refentrytitle></citerefentry> with argument <constant>GL_ACTIVE_SUBROUTINES</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramStage</refentrytitle></citerefentry> with argument <constant>GL_ACTIVE_SUBROUTINE_UNIFORM_LOCATIONS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glUniformSubroutinesuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniform</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetActiveSubroutineUniformName</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramStage</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

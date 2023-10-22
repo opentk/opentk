@@ -1,0 +1,288 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glLogicOp">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glLogicOp</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glLogicOp</refname>
+        <refpurpose>specify a logical pixel operation for rendering</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLogicOp</function></funcdef>
+                <paramdef>GLenum <parameter>opcode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>opcode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant that selects a logical operation.
+                    The following symbols are accepted:
+                    <constant>GL_CLEAR</constant>,
+                    <constant>GL_SET</constant>,
+                    <constant>GL_COPY</constant>,
+                    <constant>GL_COPY_INVERTED</constant>,
+                    <constant>GL_NOOP</constant>,
+                    <constant>GL_INVERT</constant>,
+                    <constant>GL_AND</constant>,
+                    <constant>GL_NAND</constant>,
+                    <constant>GL_OR</constant>,
+                    <constant>GL_NOR</constant>,
+                    <constant>GL_XOR</constant>,
+                    <constant>GL_EQUIV</constant>,
+                    <constant>GL_AND_REVERSE</constant>,
+                    <constant>GL_AND_INVERTED</constant>,
+                    <constant>GL_OR_REVERSE</constant>, and
+                    <constant>GL_OR_INVERTED</constant>. The initial value is <constant>GL_COPY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glLogicOp</function> specifies a logical operation that,
+            when enabled,
+            is applied between the incoming RGBA color
+            and the RGBA color at the corresponding location in the
+            frame buffer.
+            To enable or disable the logical operation, call
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <!-- FIX: link to glEnable --> <function>glDisable</function>
+            using the symbolic constant <constant>GL_COLOR_LOGIC_OP</constant>. The initial value is
+            disabled.
+        </para>
+        <para>
+        </para>
+        <informaltable>
+            <tgroup cols="2">
+                <colspec align="left"/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold"> Opcode </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Resulting Operation </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <constant>GL_CLEAR</constant>
+                        </entry>
+                        <entry>
+                            0
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SET</constant>
+                        </entry>
+                        <entry>
+                            1
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_COPY</constant>
+                        </entry>
+                        <entry>
+                            s
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_COPY_INVERTED</constant>
+                        </entry>
+                        <entry>
+                            ~s
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_NOOP</constant>
+                        </entry>
+                        <entry>
+                            d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_INVERT</constant>
+                        </entry>
+                        <entry>
+                            ~d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_AND</constant>
+                        </entry>
+                        <entry>
+                            s &amp; d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_NAND</constant>
+                        </entry>
+                        <entry>
+                            ~(s &amp; d)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_OR</constant>
+                        </entry>
+                        <entry>
+                            s | d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_NOR</constant>
+                        </entry>
+                        <entry>
+                            ~(s | d)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_XOR</constant>
+                        </entry>
+                        <entry>
+                            s ^ d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_EQUIV</constant>
+                        </entry>
+                        <entry>
+                            ~(s ^ d)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_AND_REVERSE</constant>
+                        </entry>
+                        <entry>
+                            s &amp; ~d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_AND_INVERTED</constant>
+                        </entry>
+                        <entry>
+                            ~s &amp; d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_OR_REVERSE</constant>
+                        </entry>
+                        <entry>
+                            s | ~d
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_OR_INVERTED</constant>
+                        </entry>
+                        <entry>
+                            ~s | d
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            <parameter>opcode</parameter> is a symbolic constant chosen from the list above.
+            In the explanation of the logical operations,
+            <emphasis>s</emphasis> represents the incoming color and
+            <emphasis>d</emphasis> represents the color in the frame buffer.
+            Standard C-language operators are used.
+            As these bitwise operators suggest,
+            the logical operation is applied independently to each bit pair of the
+            source and destination colors.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            When more than one RGBA color buffer is enabled for drawing,
+            logical operations are performed separately for each enabled buffer,
+            using for the destination value the contents of that buffer
+            (see <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            Logic operations have no effect on floating point draw buffers. However, if
+            <constant>GL_COLOR_LOGIC_OP</constant> is enabled, blending is still disabled
+            in this case.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>opcode</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_LOGIC_OP_MODE</constant>.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_COLOR_LOGIC_OP</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glLogicOp</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,160 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMultiDrawElements">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMultiDrawElements</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMultiDrawElements</refname>
+        <refpurpose>render multiple sets of primitives by specifying indices of array data elements</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultiDrawElements</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>const GLsizei * <parameter>count</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * const * <parameter>indices</parameter></paramdef>
+                <paramdef>GLsizei <parameter>drawcount</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant> and <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Points to an array of the elements counts.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the type of the values in <parameter>indices</parameter>. Must be one of
+                    <constant>GL_UNSIGNED_BYTE</constant>, <constant>GL_UNSIGNED_SHORT</constant>, or
+                    <constant>GL_UNSIGNED_INT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>indices</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the location where the indices are stored.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>drawcount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the size of the <parameter>count</parameter> and <parameter>indices</parameter> arrays.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMultiDrawElements</function> specifies multiple sets of geometric primitives with very few subroutine
+            calls. Instead of calling a GL function to pass each individual vertex,
+            normal, texture coordinate, edge flag, or color, you can prespecify
+            separate arrays of vertices, normals, and so on, and use them to construct a
+            sequence of primitives with a single call to <function>glMultiDrawElements</function>.
+        </para>
+        <para>
+            <function>glMultiDrawElements</function> is identical in operation to <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry> except that
+            <parameter>drawcount</parameter> separate lists of elements are specified.
+        </para>
+        <para>
+            Vertex attributes that are modified by <function>glMultiDrawElements</function> have an
+            unspecified value after <function>glMultiDrawElements</function> returns. Attributes that aren't
+            modified maintain their previous values.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+            <constant>GL_LINES_ADJACENCY</constant>,
+            <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant> and
+            <constant>GL_TRIANGLES_ADJACENCY</constant>
+            are available only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>drawcount</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array or the element array and the buffer object's data store is currently mapped.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMultiDrawElements</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006
+            Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014
+            Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

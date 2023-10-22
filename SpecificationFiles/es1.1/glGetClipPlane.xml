@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+"http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGetClipPlane">
+  <refmeta>
+    <refmetainfo>
+      <copyright>
+        <year>2003-2004</year>
+
+        <holder>Silicon Graphics, Inc.</holder>
+      </copyright>
+    </refmetainfo>
+
+    <refentrytitle>glGetClipPlane</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+	<refdescriptor>glGetClipPlane</refdescriptor>
+    <refname>glGetClipPlanef</refname>
+    <refname>glGetClipPlanex</refname>
+
+    <refpurpose>return the coefficients of the specified clipping
+    plane</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetClipPlanef</function></funcdef>
+
+        <paramdef>GLenum <parameter>plane</parameter></paramdef>
+
+        <paramdef>GLfloat *<parameter>equation</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glGetClipPlanex</function></funcdef>
+
+        <paramdef>GLenum <parameter>plane</parameter></paramdef>
+
+        <paramdef>GLfixed *<parameter>equation</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id="parameters"><title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>plane</parameter></term>
+
+        <listitem>
+          <para>Specifies a clipping plane. The number of clipping planes
+          depends on the implementation, but at least six clipping planes are
+          supported. Symbolic names of the form
+          <constant>GL_CLIP_PLANE</constant> <emphasis>i</emphasis>, where
+          <emphasis>i</emphasis> is an integer between 0 and
+          <constant>GL_MAX_CLIP_PLANES</constant> <inlineequation>
+              <mml:math>
+                <!-- eqn: - 1:-->
+
+                <mml:mn>-1</mml:mn>
+              </mml:math>
+            </inlineequation>, are accepted.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>equation</parameter></term>
+
+        <listitem>
+          <para>Returns four fixed-point or floating-point values that are the
+          coefficients of the plane equation of <parameter>plane</parameter>
+          in eye coordinates in the order <emphasis>p1</emphasis>,
+          <emphasis>p2</emphasis>, <emphasis>p3</emphasis>, and
+          <emphasis>p4</emphasis>. The initial value is (0, 0, 0, 0).</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id="description"><title>Description</title>
+
+    <para><function>glGetClipPlane</function> returns in
+    <parameter>equation</parameter> the four coefficients of the plane
+    equation for <parameter>plane</parameter>. The coefficients are in eye
+    coordinates and are returned in the order <emphasis>p1</emphasis>,
+    <emphasis>p2</emphasis>, <emphasis>p3</emphasis>, and
+    <emphasis>p4</emphasis>.</para>
+  </refsect1>
+
+  <refsect1 id="notes"><title>Notes</title>
+
+    <para>It is always the case that <inlineequation>
+        <mml:math>
+           
+
+          <mml:mi>GL_CLIP_PLANEi</mml:mi>
+
+          <mml:mo>=</mml:mo>
+
+           
+
+          <mml:mi>GL_CLIP_PLANE0</mml:mi>
+
+          <mml:mo>+</mml:mo>
+
+          <constant>i</constant>
+
+          . 
+        </mml:math>
+      </inlineequation></para>
+
+    <para>If an error is generated, no change is made to the contents of
+    <parameter>equation</parameter>.</para>
+  </refsect1>
+
+  <refsect1 id="errors"><title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>plane</parameter> is not an accepted value.</para>
+  </refsect1>
+
+  <refsect1 id="seealso"><title>See Also</title>
+
+    <para><citerefentry>
+        <refentrytitle>glClipPlane</refentrytitle>
+      </citerefentry></para>
+  </refsect1>
+
+  <refsect1 id="copyright"><title>Copyright</title>
+
+    <para>Copyright <trademark class="copyright"></trademark> 2003-2004
+    Silicon Graphics, Inc. This document is licensed under the SGI Free
+    Software B License. For details, see <ulink
+    url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.</para>
+  </refsect1>
+</refentry>

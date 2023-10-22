@@ -1,0 +1,215 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glInvalidateFramebuffer">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glInvalidateFramebuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInvalidateFramebuffer</refname>
+        <refname>glInvalidateNamedFramebufferData</refname>
+        <refpurpose>invalidate the content of some or all of a framebuffer's attachments</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateFramebuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLsizei <parameter>numAttachments</parameter></paramdef>
+                <paramdef>const GLenum * <parameter>attachments</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateNamedFramebufferData</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLsizei <parameter>numAttachments</parameter></paramdef>
+                <paramdef>const GLenum *<parameter>attachments</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer object is
+                    attached for
+                    <function>glInvalidateFramebuffer</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glInvalidateNamedFramebufferData</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>numAttachments</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of entries in the
+                    <parameter>attachments</parameter> array.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachments</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to an array identifying the
+                    attachments to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glInvalidateFramebuffer</function> and
+            <function>glInvalidateNamedFramebufferData</function> invalidate
+            the entire contents of a specified set of attachments of a
+            framebuffer.
+        </para>
+        <para>
+            For <function>glInvalidateFramebuffer</function>, the
+            framebuffer object is that bound to
+            <parameter>target</parameter>. <parameter>target</parameter>
+            must be <constant>GL_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>. Default framebuffers
+            may also be invalidated if bound to
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            For <function>glInvalidateNamedFramebufferData</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object. If <parameter>framebuffer</parameter> is
+            zero, the default draw framebuffer is affected.
+        </para>
+        <para>
+            The set of attachments whose contents are to be invalidated are
+            specified in the <parameter>attachments</parameter> array, which
+            contains <parameter>numAttachments</parameter> elements.
+        </para>
+        <para>
+            If the specified framebuffer is a framebuffer object, each
+            element of <parameter>attachments</parameter> must be one of
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant>
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>, or
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            where <emphasis>i</emphasis> is between zero and the value of
+            <constant>GL_MAX_FRAMEBUFFER_ATTACHMENTS</constant> minus one.
+        </para>
+        <para>
+            If the specified framebuffer is a default framebuffer, each
+            element of <parameter>attachments</parameter> must be one of
+            <constant>GL_FRONT_LEFT</constant>,
+            <constant>GL_FRONT_RIGHT</constant>,
+            <constant>GL_BACK_LEFT</constant>,
+            <constant>GL_BACK_RIGHT</constant>,
+            <constant>GL_AUX</constant><emphasis>i</emphasis>,
+            <constant>GL_ACCUM</constant>, <constant>GL_COLOR</constant>,
+            <constant>GL_DEPTH</constant>, or
+            <constant>GL_STENCIL</constant>. <constant>GL_COLOR</constant>,
+            is treated as <constant>GL_BACK_LEFT</constant> for a
+            double-buffered context and <constant>GL_FRONT_LEFT</constant>
+            for a single-buffered context. The other attachments identify
+            the corresponding specific buffer.
+        </para>
+        <para>
+            The entire contents of each specified attachment become
+            undefined after execution of
+            <function>glInvalidateFramebuffer</function> or
+            <function>glInvalidateNamedFramebufferData</function>.
+        </para>
+        <para>
+            If the framebuffer object is not complete,
+            <function>glInvalidateFramebuffer</function> and
+            <function>glInvalidateNamedFramebufferData</function> may be
+            ignored. This is not an error.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glInvalidateFramebuffer</function> if
+            <parameter>target</parameter> is not one of the accepted
+            framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glInvalidateNamedFramebufferData</function> if
+            <parameter>framebuffer</parameter> is not zero or the name of an
+            existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>numAttachments</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if any element
+            of <parameter>attachments</parameter> is not one of the accepted
+            framebuffer attachment points, as described above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            element of <parameter>attachments</parameter> is
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>m</emphasis>
+            where <emphasis>m</emphasis> is greater than or equal to the
+            value of <constant>GL_MAX_COLOR_ATTACHMENTS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            with argument <constant>GL_MAX_COLOR_ATTACHMENTS</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glInvalidateFramebuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glInvalidateNamedFramebufferData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glInvalidateTexSubImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateSubFramebuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

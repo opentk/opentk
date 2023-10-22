@@ -2,9 +2,8 @@ using System;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Native;
 using OpenTK.Mathematics;
-using OpenTK.Mathematics.Colors;
 
-namespace OpenTK.Graphics.OpenGL.Compatibility
+namespace OpenTK.OpenGL.OpenGL.Compatibility
 {
     /// <summary>
     /// OpenGL 1.0+

@@ -1,0 +1,94 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDeleteSync">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDeleteSync</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDeleteSync</refname>
+        <refpurpose>delete a sync object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDeleteSync</function></funcdef>
+                <paramdef>GLsync <parameter>sync</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>sync</parameter></term>
+            <listitem>
+                <para>
+                    The sync object to be deleted.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDeleteSync</function> deletes the sync object specified by <parameter>sync</parameter>. If the fence command
+            corresponding to the specified sync object has completed, or if no <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry> commands are blocking on <parameter>sync</parameter>,
+            the object is deleted immediately. Otherwise, <parameter>sync</parameter> is flagged for deletion and will be deleted when
+            it is no longer associated with any fence command and is no longer blocking any <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry> command. In either case, after
+            <function>glDeleteSync</function> returns, the name <parameter>sync</parameter> is invalid and can no longer be used to
+            refer to the sync object.
+        </para>
+        <para>
+            <function>glDeleteSync</function> will silently ignore a <parameter>sync</parameter> value of zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glSync</function> is only supported if the GL version is 3.2 or greater, or if
+            the <code>ARB_sync</code> extension is supported.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>sync</parameter> is neither zero or the name of a sync object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDeleteSync</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFenceSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWaitSync</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientWaitSync</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

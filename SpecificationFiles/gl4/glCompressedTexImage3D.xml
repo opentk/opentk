@@ -1,0 +1,392 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCompressedTexImage3D">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2011-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCompressedTexImage3D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCompressedTexImage3D</refname>
+        <refpurpose>specify a three-dimensional texture image in a compressed format</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCompressedTexImage3D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLsizei <parameter>depth</parameter></paramdef>
+                <paramdef>GLint <parameter>border</parameter></paramdef>
+                <paramdef>GLsizei <parameter>imageSize</parameter></paramdef>
+                <paramdef>const void * <parameter>data</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target texture.
+                    Must be <constant>GL_TEXTURE_3D</constant>, <constant>GL_PROXY_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant> or <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the level-of-detail number.
+                    Level 0 is the base image level.
+                    Level <emphasis>n</emphasis> is the <emphasis>n</emphasis>th mipmap reduction image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the format of the compressed image data stored at address <parameter>data</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the width of the texture image.
+                    All implementations support 3D texture images that are at least 16 texels wide.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the height of the texture image.
+                    All implementations support 3D texture images that are at least 16 texels
+                    high.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>depth</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the depth of the texture image.
+                    All implementations support 3D texture images that are at least 16 texels
+                    deep.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>border</parameter></term>
+            <listitem>
+                <para>
+                    This value must be 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>imageSize</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of unsigned bytes of image data starting at the
+                    address specified by <parameter>data</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the compressed image data in memory.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Texturing allows elements of an image array to be read by shaders.
+        </para>
+        <para>
+            <function>glCompressedTexImage3D</function> loads a previously defined, and retrieved, compressed three-dimensional
+            texture image if <parameter>target</parameter> is <constant>GL_TEXTURE_3D</constant> (see <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>).
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_TEXTURE_2D_ARRAY</constant>, <parameter>data</parameter> is
+            treated as an array of compressed 2D textures.
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_PROXY_TEXTURE_3D</constant> or <constant>GL_PROXY_TEXTURE_2D_ARRAY</constant>,
+            no data is read from <parameter>data</parameter>, but
+            all of the texture image state is recalculated, checked for consistency,
+            and checked against the implementation's capabilities.  If the
+            implementation cannot handle a texture of the requested texture size, it
+            sets all of the image state to 0, but does not generate an error (see
+            <citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>). To query for an entire mipmap array, use an image array level
+            greater than or equal to 1.
+        </para>
+        <para>
+            <parameter>internalformat</parameter> must be a known compressed image format (such as <constant>GL_RGTC</constant>)
+            or an extension-specified compressed-texture format.
+            When a texture is loaded with <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry> using a generic compressed
+            texture format (e.g., <constant>GL_COMPRESSED_RGB</constant>), the GL selects from one of
+            its extensions supporting compressed textures.  In order to load the
+            compressed texture image using <function>glCompressedTexImage3D</function>, query the compressed texture image's
+            size and format using <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a texture image is
+            specified, <parameter>data</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+        <para>
+            If the compressed data are arranged into fixed-size blocks of texels, the pixel
+            storage modes can be used to select a sub-rectangle from a larger containing rectangle.
+            These pixel storage modes operate in the same way as they do for <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>.
+            In the following description, denote by
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>, and
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            the values of pixel storage modes <constant>GL_UNPACK_COMPRESSED_BLOCK_SIZE</constant>,
+            <constant>GL_UNPACK_COMPRESSED_BLOCK_WIDTH</constant>, <constant>GL_UNPACK_COMPRESSED_BLOCK_HEIGHT</constant>,
+            and <constant>GL_UNPACK_COMPRESSED_BLOCK_DEPTH</constant>, respectively.
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            is the compressed block size in bytes;
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>,
+            and
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            are the compressed block width, height, and depth in pixels.
+        </para>
+        <para>
+            By default the pixel storage modes <constant>GL_UNPACK_ROW_LENGTH</constant>,
+            <constant>GL_UNPACK_SKIP_ROWS</constant>, <constant>GL_UNPACK_SKIP_PIXELS</constant>,
+            <constant>GL_UNPACK_IMAGE_HEIGHT</constant> and <constant>GL_UNPACK_SKIP_IMAGES</constant>
+            are ignored for compressed images. To enable <constant>GL_UNPACK_SKIP_PIXELS</constant>
+            and <constant>GL_UNPACK_ROW_LENGTH</constant>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            and
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            must both be non-zero.
+            To also enable <constant>GL_UNPACK_SKIP_ROWS</constant> and <constant>GL_UNPACK_IMAGE_HEIGHT</constant>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>h</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            must be non-zero.
+            To also enable <constant>GL_UNPACK_SKIP_IMAGES</constant>,
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>d</mml:mi></mml:msub></mml:mrow></mml:math>
+            </inlineequation>
+            must be non-zero. All parameters must be consistent with the compressed format to produce the desired results.
+        </para>
+        <para>
+            When selecting a sub-rectangle from a compressed image:
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        the value of <constant>GL_UNPACK_SKIP_PIXELS</constant> must be a multiple of
+                        <inlineequation>
+                            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+                        </inlineequation>;
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        the value of <constant>GL_UNPACK_SKIP_ROWS</constant> must be a multiple of
+                        <inlineequation>
+                            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+                        </inlineequation>;
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        the value of <constant>GL_UNPACK_SKIP_IMAGES</constant> must be a multiple of
+                        <inlineequation>
+                            <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:math>
+                        </inlineequation>.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <parameter>imageSize</parameter> must be equal to:
+        </para>
+        <para>
+            <inlineequation>
+                <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="block" overflow="scroll">
+                  <mml:mrow>
+                    <mml:msub>
+                      <mml:mi>b</mml:mi>
+                      <mml:mi>s</mml:mi>
+                    </mml:msub>
+                    <mml:mo lspace="2px" rspace="2px">&times;</mml:mo>
+                    <mml:mfenced open="&lceil;" close="&rceil;">
+                      <mml:mfrac>
+                        <mml:mi>width</mml:mi>
+                        <mml:msub>
+                          <mml:mi>b</mml:mi>
+                          <mml:mi>w</mml:mi>
+                        </mml:msub>
+                      </mml:mfrac>
+                    </mml:mfenced>
+                    <mml:mo lspace="2px" rspace="2px">&times;</mml:mo>
+                    <mml:mfenced open="&lceil;" close="&rceil;">
+                      <mml:mfrac>
+                        <mml:mi>height</mml:mi>
+                        <mml:msub>
+                          <mml:mi>b</mml:mi>
+                          <mml:mi>h</mml:mi>
+                        </mml:msub>
+                      </mml:mfrac>
+                    </mml:mfenced>
+                    <mml:mo lspace="2px" rspace="2px">&times;</mml:mo>
+                    <mml:mfenced open="&lceil;" close="&rceil;">
+                      <mml:mfrac>
+                        <mml:mi>depth</mml:mi>
+                        <mml:msub>
+                          <mml:mi>b</mml:mi>
+                          <mml:mi>d</mml:mi>
+                        </mml:msub>
+                      </mml:mfrac>
+                    </mml:mfenced>
+                  </mml:mrow>
+                </mml:math>
+            </inlineequation>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+          <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalformat</parameter> is not one of the generic
+          compressed internal formats:
+          <constant>GL_COMPRESSED_RED</constant>,
+          <constant>GL_COMPRESSED_RG</constant>,
+          <constant>GL_COMPRESSED_RGB</constant>,
+          <constant>GL_COMPRESSED_RGBA</constant>.
+          <constant>GL_COMPRESSED_SRGB</constant>, or
+          <constant>GL_COMPRESSED_SRGB_ALPHA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>imageSize</parameter> is not consistent with
+            the format, dimensions, and contents of the specified compressed image data.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>border</parameter> is not 0.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if parameter combinations are not
+            supported by the specific compressed internal format as specified in the
+            specific texture compression extension.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            Undefined results, including abnormal program termination, are generated if <parameter>data</parameter> is not encoded in a manner consistent with the extension specification defining the internal compression format.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_COMPRESSED</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with arguments <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>
+            and <constant>GL_TEXTURE_COMPRESSED_IMAGE_SIZE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCompressedTexImage3D</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2011-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

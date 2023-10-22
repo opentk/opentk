@@ -1,0 +1,138 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateShaderProgram">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateShaderProgram</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateShaderProgramv</refname>
+        <refpurpose>create a stand-alone program from an array of null-terminated source code strings</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLuint <function>glCreateShaderProgramv</function></funcdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const char **<parameter>strings</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+            <para>
+                Specifies the type of shader to create.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+            <para>
+                Specifies the number of source code strings in the array <parameter>strings</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>strings</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of an array of pointers to source code strings from which to create the program object.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCreateShaderProgram</function> creates a program object containing compiled and linked
+            shaders for a single stage specified by <parameter>type</parameter>. <parameter>strings</parameter>
+            refers to an array of <parameter>count</parameter> strings from which to create the shader executables.
+       </para>
+       <para>
+            <function>glCreateShaderProgram</function> is equivalent (assuming no errors are generated) to:
+       </para>
+<programlisting>    const GLuint shader = glCreateShader(type);
+    if (shader) {
+        glShaderSource(shader, count, strings, NULL);
+        glCompileShader(shader);
+        const GLuint program = glCreateProgram();
+        if (program) {
+            GLint compiled = GL_FALSE;
+            glGetShaderiv(shader, GL_COMPILE_STATUS, &amp;compiled);
+            glProgramParameteri(program, GL_PROGRAM_SEPARABLE, GL_TRUE);
+            if (compiled) {
+                glAttachShader(program, shader);
+                glLinkProgram(program);
+                glDetachShader(program, shader);
+            }
+            /* append-shader-info-log-to-program-info-log */
+        }
+        glDeleteShader(shader);
+        return program;
+    } else {
+        return 0;
+    }</programlisting>
+    <para>
+        The program object created by <function>glCreateShaderProgram</function> has its <constant>GL_PROGRAM_SEPARABLE</constant>
+        status set to <constant>GL_TRUE</constant>.
+    </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not
+            an accepted shader type.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is
+            negative.
+        </para>
+        <para>
+            Other errors are generated if the supplied shader code fails to compile
+            and link, as described for the commands in the pseudocode sequence above,
+            but all such errors are generated without any side effects of executing those
+            commands.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateShaderProgramv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCreateShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

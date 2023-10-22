@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetTexEnv">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetTexEnv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetTexEnv</refname>
+        <refpurpose>return texture environment parameters</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetTexEnvfv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <para></para>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetTexEnviv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a texture environment. May be
+                    <constant>GL_TEXTURE_ENV</constant>,
+                    <constant>GL_TEXTURE_FILTER_CONTROL</constant>, or
+                    <constant>GL_POINT_SPRITE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a texture environment parameter.
+                    Accepted values are <constant>GL_TEXTURE_ENV_MODE</constant>, <constant>GL_TEXTURE_ENV_COLOR</constant>,
+                    <constant>GL_TEXTURE_LOD_BIAS</constant>,
+                    <constant>GL_COMBINE_RGB</constant>,
+                    <constant>GL_COMBINE_ALPHA</constant>,
+                    <constant>GL_SRC0_RGB</constant>,
+                    <constant>GL_SRC1_RGB</constant>,
+                    <constant>GL_SRC2_RGB</constant>,
+                    <constant>GL_SRC0_ALPHA</constant>,
+                    <constant>GL_SRC1_ALPHA</constant>,
+                    <constant>GL_SRC2_ALPHA</constant>,
+                    <constant>GL_OPERAND0_RGB</constant>,
+                    <constant>GL_OPERAND1_RGB</constant>,
+                    <constant>GL_OPERAND2_RGB</constant>,
+                    <constant>GL_OPERAND0_ALPHA</constant>,
+                    <constant>GL_OPERAND1_ALPHA</constant>,
+                    <constant>GL_OPERAND2_ALPHA</constant>,
+                    <constant>GL_RGB_SCALE</constant>,
+                    <constant>GL_ALPHA_SCALE</constant>, or
+                    <constant>GL_COORD_REPLACE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the requested data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetTexEnv</function> returns in <parameter>params</parameter> selected values of a texture environment that
+            was specified with <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>.
+            <parameter>target</parameter> specifies a texture environment.
+        </para>
+        <para>
+            When <parameter>target</parameter> is <constant>GL_TEXTURE_FILTER_CONTROL</constant>,
+            <parameter>pname</parameter> must be <constant>GL_TEXTURE_LOD_BIAS</constant>.  
+            When <parameter>target</parameter> is <constant>GL_POINT_SPRITE</constant>,
+            <parameter>pname</parameter> must be <constant>GL_COORD_REPLACE</constant>.
+            When <parameter>target</parameter> is
+            <constant>GL_TEXTURE_ENV</constant>, <parameter>pname</parameter> can be <constant>GL_TEXTURE_ENV_MODE</constant>,
+            <constant>GL_TEXTURE_ENV_COLOR</constant>, <constant>GL_COMBINE_RGB</constant>, <constant>GL_COMBINE_ALPHA</constant>,
+            <constant>GL_RGB_SCALE</constant>, <constant>GL_ALPHA_SCALE</constant>, 
+            <constant>GL_SRC0_RGB</constant>, <constant>GL_SRC1_RGB</constant>, <constant>GL_SRC2_RGB</constant>,
+            <constant>GL_SRC0_ALPHA</constant>, <constant>GL_SRC1_ALPHA</constant>, or <constant>GL_SRC2_ALPHA</constant>.
+        </para>
+        <para>
+            <parameter>pname</parameter> names a specific texture environment parameter, as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_ENV_MODE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the single-valued texture environment mode,
+                        a symbolic constant. The initial value is <constant>GL_MODULATE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_ENV_COLOR</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns four integer or floating-point values that are the
+                        texture environment color.
+                        Integer values,
+                        when requested,
+                        are linearly mapped from the internal floating-point representation
+                        such that 1.0 maps to the most positive representable integer,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -1.0:-->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>
+                        maps to the most negative representable integer. The initial
+                        value is (0, 0, 0, 0).
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_LOD_BIAS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single floating-point value that is the texture
+                        level-of-detail bias.  The initial value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_COMBINE_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the current
+                        RGB combine mode.  The initial value is <constant>GL_MODULATE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_COMBINE_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the current
+                        alpha combine mode.  The initial value is <constant>GL_MODULATE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC0_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner zero's RGB source.  The initial value is <constant>GL_TEXTURE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC1_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner one's RGB source.  The initial value is <constant>GL_PREVIOUS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC2_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner two's RGB source.  The initial value is <constant>GL_CONSTANT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC0_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner zero's alpha source.  The initial value is <constant>GL_TEXTURE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC1_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner one's alpha source.  The initial value is <constant>GL_PREVIOUS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SRC2_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner two's alpha source.  The initial value is <constant>GL_CONSTANT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND0_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner zero's RGB operand.  The initial value is <constant>GL_SRC_COLOR</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND1_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner one's RGB operand.  The initial value is <constant>GL_SRC_COLOR</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND2_RGB</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner two's RGB operand.  The initial value is <constant>GL_SRC_ALPHA</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND0_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner zero's alpha operand.  The initial value is <constant>GL_SRC_ALPHA</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND1_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner one's alpha operand.  The initial value is <constant>GL_SRC_ALPHA</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_OPERAND2_ALPHA</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single symbolic constant value representing the texture
+                        combiner two's alpha operand.  The initial value is <constant>GL_SRC_ALPHA</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGB_SCALE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single floating-point value representing the current RGB
+                        texture combiner scaling factor.  The initial value is 1.0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ALPHA_SCALE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single floating-point value representing the current alpha
+                        texture combiner scaling factor.  The initial value is 1.0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_COORD_REPLACE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value representing the current point sprite
+                        texture coordinate replacement enable state.  The initial value is <constant>GL_FALSE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter>.
+        </para>
+        <para>
+            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, <function>glGetTexEnv</function> returns
+            the texture environment parameters for the active texture unit.
+        </para>
+        <para>
+            <constant>GL_COMBINE_RGB</constant>,
+            <constant>GL_COMBINE_ALPHA</constant>,
+            <constant>GL_SRC0_RGB</constant>,
+            <constant>GL_SRC1_RGB</constant>,
+            <constant>GL_SRC2_RGB</constant>,
+            <constant>GL_SRC0_ALPHA</constant>,
+            <constant>GL_SRC1_ALPHA</constant>,
+            <constant>GL_SRC2_ALPHA</constant>,
+            <constant>GL_OPERAND0_RGB</constant>,
+            <constant>GL_OPERAND1_RGB</constant>,
+            <constant>GL_OPERAND2_RGB</constant>,
+            <constant>GL_OPERAND0_ALPHA</constant>,
+            <constant>GL_OPERAND1_ALPHA</constant>,
+            <constant>GL_OPERAND2_ALPHA</constant>,
+            <constant>GL_RGB_SCALE</constant>, and
+            <constant>GL_ALPHA_SCALE</constant> are available only if the GL version is 1.3 or greater.
+        </para>
+        <para>
+            <constant>GL_TEXTURE_FILTER_CONTROL</constant> and <constant>GL_TEXTURE_LOD_BIAS</constant> are available
+            only if the GL version is 1.4 or greater.
+        </para>
+        <para>
+            <constant>GL_POINT_SPRITE</constant> and <constant>GL_COORD_REPLACE</constant> are available
+            only if the GL version is 2.0 or greater.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> or <parameter>pname</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetTexEnv</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

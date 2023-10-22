@@ -1,0 +1,137 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glScissorArray">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glScissorArray</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glScissorArray</refname>
+        <refpurpose>define the scissor box for multiple viewports</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glScissorArrayv</function></funcdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLint *<parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+            <para>
+                Specifies the index of the first viewport whose scissor box to modify.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+            <para>
+                Specifies the number of scissor boxes to modify.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>v</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of an array containing the left, bottom, width and height of each
+                scissor box, in that order.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glScissorArrayv</function> defines rectangles, called scissor boxes,
+            in window coordinates for each viewport.
+            <parameter>first</parameter> specifies the index of the first scissor box to modify and
+            <parameter>count</parameter> specifies the number of scissor boxes to modify. <parameter>first</parameter>
+            must be less than the value of <constant>GL_MAX_VIEWPORTS</constant>, and <parameter>first</parameter> +
+            <parameter>count</parameter> must be less than or equal to the value of <constant>GL_MAX_VIEWPORTS</constant>.
+            <parameter>v</parameter> specifies the address of an array containing integers specifying the
+            lower left corner of the scissor boxes, and the width and height of the scissor boxes, in that order.
+        </para>
+        <para>
+            To enable and disable the scissor test, call
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <!-- FIX: link to glEnable --> <function>glDisable</function> with argument
+            <constant>GL_SCISSOR_TEST</constant>. The test is initially disabled for all viewports.
+            While the test is enabled, only pixels that lie within the scissor box
+            can be modified by drawing commands.
+            Window coordinates have integer values at the shared corners of
+            frame buffer pixels.
+            <code>glScissor(0,0,1,1)</code> allows modification of only the lower left
+            pixel in the window, and <code>glScissor(0,0,0,0)</code> doesn't allow
+            modification of any pixels in the window.
+        </para>
+        <para>
+            When the scissor test is disabled,
+            it is as though the scissor box includes the entire window.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>first</parameter> is greater than or equal to
+            the value of <constant>GL_MAX_VIEWPORTS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>first</parameter> + <parameter>count</parameter>
+            is greater than or equal to the value of <constant>GL_MAX_VIEWPORTS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any width or height specified in the array <parameter>v</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SCISSOR_BOX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_SCISSOR_TEST</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glScissorArrayv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewportIndexed</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewportArray</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

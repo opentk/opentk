@@ -1,0 +1,205 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glHint">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glHint</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glHint</refname>
+        <refpurpose>specify implementation-specific hints</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glHint</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant indicating the behavior to be controlled.
+                    <constant>GL_LINE_SMOOTH_HINT</constant>,
+                    <constant>GL_POLYGON_SMOOTH_HINT</constant>,
+                    <constant>GL_TEXTURE_COMPRESSION_HINT</constant>, and
+                    <constant>GL_FRAGMENT_SHADER_DERIVATIVE_HINT</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant indicating the desired behavior.
+                    <constant>GL_FASTEST</constant>,
+                    <constant>GL_NICEST</constant>, and
+                    <constant>GL_DONT_CARE</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Certain aspects of GL behavior,
+            when there is room for interpretation,
+            can be controlled with hints.
+            A hint is specified with two arguments.
+            <parameter>target</parameter> is a symbolic
+            constant indicating the behavior to be controlled,
+            and <parameter>mode</parameter> is another symbolic constant indicating the desired
+            behavior. The initial value for each <parameter>target</parameter> is <constant>GL_DONT_CARE</constant>.
+            <parameter>mode</parameter> can be one of the following:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_FASTEST</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        The most efficient option should be chosen.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_NICEST</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        The most correct,
+                        or highest quality,
+                        option should be chosen.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DONT_CARE</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        No preference.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            Though the implementation aspects that can be hinted are well defined,
+            the interpretation of the hints depends on the implementation.
+            The hint aspects that can be specified with <parameter>target</parameter>,
+            along with suggested semantics,
+            are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_FRAGMENT_SHADER_DERIVATIVE_HINT</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        Indicates the accuracy of the derivative calculation for the GL shading language fragment processing built-in functions:
+                        <constant>dFdx</constant>, <constant>dFdy</constant>, and <constant>fwidth</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LINE_SMOOTH_HINT</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        Indicates the sampling quality of antialiased lines.
+                        If a larger filter function is applied, hinting <constant>GL_NICEST</constant> can
+                        result in more pixel fragments being generated during rasterization.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_POLYGON_SMOOTH_HINT</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        Indicates the sampling quality of antialiased polygons.
+                        Hinting <constant>GL_NICEST</constant> can result in more pixel fragments being generated
+                        during rasterization,
+                        if a larger filter function is applied.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE_COMPRESSION_HINT</constant></term>
+                <listitem>
+                    <para>
+                    </para>
+                    <para>
+                        Indicates the quality and performance of the compressing texture images.
+                        Hinting <constant>GL_FASTEST</constant> indicates that texture images should be compressed
+                        as quickly as possible, while <constant>GL_NICEST</constant> indicates that texture images
+                        should be compressed with as little image quality loss as possible.
+                        <constant>GL_NICEST</constant> should be selected if the texture is to be retrieved by
+                        <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry> for reuse.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The interpretation of hints depends on the implementation.
+            Some implementations ignore <function>glHint</function> settings.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if either <parameter>target</parameter> or <parameter>mode</parameter> is not
+            an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glHint</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

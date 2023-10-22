@@ -1,0 +1,125 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDispatchComputeIndirect">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDispatchComputeIndirect</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDispatchComputeIndirect</refname>
+        <refpurpose>launch one or more compute work groups using parameters stored in a buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDispatchComputeIndirect</function></funcdef>
+                <paramdef>GLintptr <parameter>indirect</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>indirect</parameter></term>
+            <listitem>
+                <para>
+                    The offset into the buffer object currently bound to the
+                    <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> buffer target at
+                    which the dispatch parameters are stored.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDispatchComputeIndirect</function> launches one or more compute
+            work groups using parameters stored in the buffer object currently bound
+            to the <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> target.
+            Each work group is processed by the active program object for the compute
+            shader stage. While the individual shader invocations within a work group are
+            executed as a unit, work groups are executed completely independently and in
+            unspecified order. <parameter>indirect</parameter> contains the offset
+            into the data store of the buffer object bound to the <constant>GL_DISPATCH_INDIRECT_BUFFER</constant>
+            target at which the parameters are stored.
+        </para>
+        <para>
+            The parameters addressed by <parameter>indirect</parameter> are packed a structure,
+            which takes the form (in C):
+            <programlisting>    typedef  struct {
+        uint  num_groups_x;
+        uint  num_groups_y;
+        uint  num_groups_z;
+    } DispatchIndirectCommand;</programlisting>
+        </para>
+        <para>
+            A call to <function>glDispatchComputeIndirect</function> is equivalent, assuming no
+            errors are generated, to:
+            <programlisting>    cmd = (const DispatchIndirectCommand  *)indirect;
+    glDispatchCompute(cmd-&gt;num_groups_x, cmd-&gt;num_groups_y, cmd-&gt;num_groups_z);</programlisting>
+        </para>
+        <para>
+            Unlike <citerefentry><refentrytitle>glDispatchCompute</refentrytitle></citerefentry>,
+            no error is generated if any of the <code>num_groups_x</code>,
+            <code>num_groups_y</code> or <code>num_groups_z</code> members
+            of the <code>DispatchIndirectCommand</code> is larger than the
+            value of <constant>GL_MAX_COMPUTE_WORK_GROUP_COUNT</constant> for the
+            corresponding dimension. In such circumstances, behavior is undefined and
+            may lead to application termination.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if there is no active program
+            for the compute shader stage.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>indirect</parameter> is
+            less than zero or not a multiple of four.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if no buffer is bound to the
+            <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> target or if the command would
+            source data beyond the end of the buffer object's data store.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_COMPUTE_WORK_GROUP_COUNT</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDispatchComputeIndirect</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDispatchCompute</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

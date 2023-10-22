@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glMatrixMode">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glMatrixMode</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMatrixMode</refname>
+        <refpurpose>specify which matrix is the current matrix</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMatrixMode</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies which matrix stack is the target
+                    for subsequent matrix operations.
+                    Three values are accepted:
+                    <constant>GL_MODELVIEW</constant>,
+                    <constant>GL_PROJECTION</constant>, and
+                    <constant>GL_TEXTURE</constant>.
+                    The initial value is <constant>GL_MODELVIEW</constant>.
+                    Additionally, if the <code>ARB_imaging</code> extension is supported,
+                    <constant>GL_COLOR</constant> is also accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glMatrixMode</function> sets the current matrix mode.
+            <parameter>mode</parameter> can assume one of four values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_MODELVIEW</constant></term>
+                <listitem>
+                    <para>
+                        Applies subsequent matrix operations to the modelview matrix stack.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_PROJECTION</constant></term>
+                <listitem>
+                    <para>
+                        Applies subsequent matrix operations to the projection matrix stack.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_TEXTURE</constant></term>
+                <listitem>
+                    <para>
+                        Applies subsequent matrix operations to the texture matrix stack.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_COLOR</constant></term>
+                <listitem>
+                    <para>
+                        Applies subsequent matrix operations to the color matrix stack.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            To find out which matrix stack is currently the target of all matrix
+            operations, call <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>. The initial
+            value is <constant>GL_MODELVIEW</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glMatrixMode</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLoadMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPopMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

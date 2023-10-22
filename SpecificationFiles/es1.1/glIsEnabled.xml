@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glIsEnabled">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glIsEnabled</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glIsEnabled</refdescriptor>
+        <refname>glIsEnabled</refname>
+        <refpurpose>test whether a capability is enabled</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glIsEnabled</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>cap</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies a symbolic constant indicating a GL capability.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glIsEnabled</function>
+        returns <constant>GL_TRUE</constant> if cap is an enabled
+        capability and returns <constant>GL_FALSE</constant> otherwise.
+        </para>
+
+        <para>
+        The following capabilities are accepted for <parameter>cap</parameter>:
+        </para>
+
+        <informaltable frame="none">
+            <tgroup cols="3" align="left">
+                <colspec colname="c1" align="left"/>
+                <colspec colname="c2" align="left"/>
+                <colspec colname="c3" align="left"/>
+                <thead>
+                    <row>
+                        <entry><constant>Constant</constant></entry>
+                        <entry></entry>
+                        <entry><constant>See function:</constant></entry>
+                    </row>
+                    <row>
+                    <entry></entry>
+                    <entry></entry>
+                    <entry></entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row rowsep="1">
+                        <entry><constant>GL_ALPHA_TEST</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_BLEND</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry>
+                        <constant>GL_CLIP_PLANE<inlineequation><mml:math><mml:mi>i</mml:mi></mml:math></inlineequation>
+                        </constant>
+                        </entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glClipPlane</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_COLOR_ARRAY</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_COLOR_LOGIC_OP</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_COLOR_MATERIAL</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_CULL_FACE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_DEPTH_TEST</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_DITHER</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_FOG</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry>
+                        <constant>GL_LIGHT<inlineequation><mml:math><mml:mi>i</mml:mi></mml:math></inlineequation>
+                        </constant>
+                        </entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_LIGHTING</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_LINE_SMOOTH</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1" revision="OES_matrix_palette">
+                        <entry><constant>GL_MATRIX_INDEX_ARRAY_OES</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1" revision="OES_matrix_palette">
+                        <entry><constant>GL_MATRIX_PALETTE_OES</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_MULTISAMPLE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_NORMAL_ARRAY</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_NORMALIZE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1" revision="es1.1">
+                        <entry><constant>GL_POINT_SIZE_ARRAY_OES</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_POINT_SMOOTH</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_POINT_SPRITE_OES</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_POLYGON_OFFSET_FILL</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_RESCALE_NORMAL</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_SAMPLE_ALPHA_TO_ONE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_SAMPLE_COVERAGE</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_SCISSOR_TEST</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_STENCIL_TEST</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+                        <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_TEXTURE_2D</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_TEXTURE_COORD_ARRAY</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1">
+                        <entry><constant>GL_VERTEX_ARRAY</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row rowsep="1" revision="OES_matrix_palette">
+                        <entry><constant>GL_WEIGHT_ARRAY_OES</constant></entry>
+                        <entry></entry>
+                        <entry>
+                        <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </informaltable>
+
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+        If an error is generated,
+        <function>glIsEnabled</function> returns 0.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>cap</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

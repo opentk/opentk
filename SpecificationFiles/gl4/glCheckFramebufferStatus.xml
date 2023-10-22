@@ -1,0 +1,232 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCheckFramebufferStatus">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCheckFramebufferStatus</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCheckFramebufferStatus</refname>
+        <refname>glCheckNamedFramebufferStatus</refname>
+        <refpurpose>check the completeness status of a framebuffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLenum <function>glCheckFramebufferStatus</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>GLenum <function>glCheckNamedFramebufferStatus</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specify the target to which the framebuffer is bound for
+                    <function>glCheckFramebufferStatus</function>, and the
+                    target against which framebuffer completeness of
+                    <parameter>framebuffer</parameter> is checked for
+                    <function>glCheckNamedFramebufferStatus</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object
+                    for <function>glCheckNamedFramebufferStatus</function>
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCheckFramebufferStatus</function> and
+            <function>glCheckNamedFramebufferStatus</function> return the
+            completeness status of a framebuffer object when treated as a
+            read or draw framebuffer, depending on the value of
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            For <function>glCheckFramebufferStatus</function>, the
+            framebuffer checked is that bound to
+            <parameter>target</parameter>, which must be
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            For <function>glCheckNamedFramebufferStatus</function>,
+            <parameter>framebuffer</parameter> is zero or the name of the
+            framebuffer object to check. If
+            <parameter>framebuffer</parameter> is zero, then the status of
+            the default read or draw framebuffer, as determined by
+            <parameter>target</parameter>, is returned.
+        </para>
+        <para>
+            The return value is <constant>GL_FRAMEBUFFER_COMPLETE</constant>
+            if the specified framebuffer is complete. Otherwise, the return
+            value is determined as follows:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_UNDEFINED</constant> is
+                        returned if the specified framebuffer is the default
+                        read or draw framebuffer, but the default
+                        framebuffer does not exist.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT</constant>
+                        is returned if any of the framebuffer attachment
+                        points are framebuffer incomplete.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT</constant>
+                        is returned if the framebuffer does not have at
+                        least one image attached to it.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER</constant>
+                         is returned if the value of
+                         <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>
+                         is <constant>GL_NONE</constant> for any color
+                         attachment point(s) named by
+                         <constant>GL_DRAW_BUFFERi</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER</constant>
+                        is returned if <constant>GL_READ_BUFFER</constant>
+                        is not <constant>GL_NONE</constant> and the value of
+                        <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>
+                        is <constant>GL_NONE</constant> for the color
+                        attachment point named by
+                        <constant>GL_READ_BUFFER</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_UNSUPPORTED</constant> is
+                        returned if the combination of internal formats of
+                        the attached images violates an
+                        implementation-dependent set of restrictions.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE</constant>
+                        is returned if the value of
+                        <constant>GL_RENDERBUFFER_SAMPLES</constant> is not
+                        the same for all attached renderbuffers; if the
+                        value of <constant>GL_TEXTURE_SAMPLES</constant> is
+                        the not same for all attached textures; or, if the
+                        attached images are a mix of renderbuffers and
+                        textures, the value of
+                        <constant>GL_RENDERBUFFER_SAMPLES</constant> does
+                        not match the value of
+                        <constant>GL_TEXTURE_SAMPLES</constant>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE</constant>
+                        is also returned if the value of
+                        <constant>GL_TEXTURE_FIXED_SAMPLE_LOCATIONS</constant>
+                        is not the same for all attached textures; or, if
+                        the attached images are a mix of renderbuffers and
+                        textures, the value of
+                        <constant>GL_TEXTURE_FIXED_SAMPLE_LOCATIONS</constant>
+                        is not <constant>GL_TRUE</constant> for all attached
+                        textures.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS</constant>
+                        is returned if any framebuffer attachment is
+                        layered, and any populated attachment is not
+                        layered, or if all populated color attachments are
+                        not from textures of the same target.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            Additionally, if an error occurs, zero is returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>target</parameter> is not
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glCheckNamedFramebufferStatus</function> if
+            <parameter>framebuffer</parameter> is not zero or the name of an
+            existing framebuffer object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCheckFramebufferStatus</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glCheckNamedFramebufferStatus</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteFramebuffers</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

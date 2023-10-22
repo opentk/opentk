@@ -1,0 +1,273 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindBuffer">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindBuffer</refname>
+        <refpurpose>bind a named buffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindBuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is
+                    bound, which must be one of the buffer binding targets
+                    in the following table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a buffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindBuffer</function> binds a buffer object to the specified buffer binding point. Calling <function>glBindBuffer</function> with
+            <parameter>target</parameter> set to one of the accepted symbolic constants and <parameter>buffer</parameter> set to the name
+            of a buffer object binds that buffer object name to the target. If no buffer object with name <parameter>buffer</parameter>
+            exists, one is created with that name. When a buffer object is bound to a target, the previous binding for that
+            target is automatically broken.
+        </para>
+        <para>
+            Buffer object names are unsigned integers. The value zero is reserved, but
+            there is no default buffer object for each buffer object target. Instead, <parameter>buffer</parameter> set to zero
+            effectively unbinds any buffer object previously bound, and restores client memory usage for that buffer object target (if supported for that target).
+            Buffer object names and the corresponding buffer object contents are local to
+            the shared object space of the current
+            GL rendering context;
+            two rendering contexts share buffer object names only if they
+            explicitly enable sharing between contexts through the appropriate GL windows interfaces functions.
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry> must be used to generate a set of unused buffer object names.
+        </para>
+        <para>
+            The state of a buffer object immediately after it is first bound is an unmapped zero-sized memory buffer with
+            <constant>GL_READ_WRITE</constant> access and <constant>GL_STATIC_DRAW</constant> usage.
+        </para>
+        <para>
+            While a non-zero buffer object name is bound, GL operations on the target to which it is
+            bound affect the bound buffer object, and queries of the target to which it is bound return state
+            from the bound buffer object. While buffer object name zero is bound, as in the initial state,
+            attempts to modify or query state on the target to which it is bound generates an
+            <constant>GL_INVALID_OPERATION</constant> error.
+        </para>
+        <para>
+            When a non-zero buffer object is bound to the <constant>GL_ARRAY_BUFFER</constant> target,
+            the vertex array pointer parameter is interpreted as an offset within the
+            buffer object measured in basic machine units.
+        </para>
+        <para>
+            When a non-zero buffer object is bound to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> target,
+            parameters for draws issued through <citerefentry><refentrytitle>glDrawArraysIndirect</refentrytitle></citerefentry>
+            and <citerefentry><refentrytitle>glDrawElementsIndirect</refentrytitle></citerefentry> are sourced
+            from the specified offset in that buffer object's data store.
+        </para>
+        <para>
+            When a non-zero buffer object is bound to the <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> target,
+            the parameters for compute dispatches issued through <citerefentry><refentrytitle>glDispatchComputeIndirect</refentrytitle></citerefentry>
+            are sourced from the specified offset in that buffer object's data store.
+        </para>
+        <para>
+            While a non-zero buffer object is bound to the <constant>GL_ELEMENT_ARRAY_BUFFER</constant> target,
+            the indices parameter of <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>, or
+            <citerefentry><refentrytitle>glMultiDrawElementsBaseVertex</refentrytitle></citerefentry> is interpreted as an
+            offset within the buffer object measured in basic machine units.
+        </para>
+        <para>
+            While a non-zero buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target,
+            the following commands are affected: <citerefentry><refentrytitle>glGetCompressedTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>. The pointer parameter is
+            interpreted as an offset within the buffer object measured in basic machine units.
+        </para>
+        <para>
+            While a non-zero buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target,
+            the following commands are affected:
+            <citerefentry><refentrytitle>glCompressedTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCompressedTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>, and
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>. The pointer parameter is
+            interpreted as an offset within the buffer object measured in basic machine units.
+        </para>
+        <para>
+            The buffer targets <constant>GL_COPY_READ_BUFFER</constant> and <constant>GL_COPY_WRITE_BUFFER</constant>
+            are provided to allow <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>
+            to be used without disturbing the state of other bindings. However, <citerefentry><refentrytitle>glCopyBufferSubData</refentrytitle></citerefentry>
+            may be used with any pair of buffer binding points.
+        </para>
+        <para>
+            The <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> buffer binding point may be passed to <function>glBindBuffer</function>,
+            but will not directly affect transform feedback state. Instead, the indexed <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>
+            bindings must be used through a call to <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>. This will affect the generic
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant> binding.
+        </para>
+        <para>
+            Likewise, the <constant>GL_UNIFORM_BUFFER</constant>, <constant>GL_ATOMIC_COUNTER_BUFFER</constant> and <constant>GL_SHADER_STORAGE_BUFFER</constant>
+            buffer binding points may
+            be used, but do not directly affect uniform buffer, atomic counter buffer or shader storage buffer state, respectively.
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>
+            or <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry> must be used to bind a buffer to
+            an indexed uniform buffer, atomic counter buffer or shader storage buffer binding point.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> binding point is used to specify a buffer object that is to
+            receive the results of query objects through calls to the <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry>
+            family of commands.
+        </para>
+        <para>
+            A buffer object binding created with <function>glBindBuffer</function> remains active until a different
+            buffer object name is bound to the same target, or until the bound buffer object is
+            deleted with <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Once created, a named buffer object may be re-bound to any target as often as needed. However,
+            the GL implementation may make choices about how to optimize the storage of a buffer object based
+            on its initial binding target.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_COPY_READ_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> and
+            <constant>GL_TEXTURE_BUFFER</constant> targets are available only if the GL version is 3.1 or greater.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is available only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> is not a name previously returned
+            from a call to <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ATOMIC_COUNTER_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COPY_READ_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COPY_WRITE_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DRAW_INDIRECT_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DISPATCH_INDIRECT_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SHADER_STORAGE_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_UNIFORM_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

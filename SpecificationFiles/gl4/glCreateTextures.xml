@@ -1,0 +1,131 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateTextures">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateTextures</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateTextures</refname>
+        <refpurpose>create texture objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCreateTextures</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLuint *<parameter>textures</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>target</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies the effective texture target
+                        of each created texture.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>n</parameter></term>
+                <listitem>
+                    <para>
+                        Number of texture objects to create.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>textures</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies an array in which names of the new texture
+                        objects are stored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCreateTextures</function>
+            returns <parameter>n</parameter> previously unused texture names
+            in <parameter>textures</parameter>, each representing a new
+            texture object of the dimensionality and type specified by
+            <parameter>target</parameter> and initialized to the default values
+            for that texture type.
+        </para>
+        <para>
+            <parameter>target</parameter> must be one of
+            <constant>GL_TEXTURE_1D</constant>,
+            <constant>GL_TEXTURE_2D</constant>,
+            <constant>GL_TEXTURE_3D</constant>,
+            <constant>GL_TEXTURE_1D_ARRAY</constant>,
+            <constant>GL_TEXTURE_2D_ARRAY</constant>,
+            <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+            <constant>GL_TEXTURE_BUFFER</constant>,
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>n</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateTextures</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

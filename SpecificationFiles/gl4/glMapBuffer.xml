@@ -1,0 +1,267 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glMapBuffer">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Addison-Wesley Group</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glMapBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glMapBuffer</refname>
+        <refname>glMapNamedBuffer</refname>
+        <refpurpose>map all of a buffer object's data store into the client's address space</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void *<function>glMapBuffer</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>access</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void *<function>glMapNamedBuffer</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>access</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound
+                    for <function>glMapBuffer</function>, which must be one
+                    of the buffer binding targets in the following table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object for
+                    <function>glMapNamedBuffer</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>access</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the access policy for
+                    <function>glMapBuffer</function> and
+                    <function>glMapNamedBuffer</function>, indicating
+                    whether it will be possible to read from, write to, or
+                    both read from and write to the buffer object's mapped
+                    data store. The symbolic constant must be
+                    <constant>GL_READ_ONLY</constant>,
+                    <constant>GL_WRITE_ONLY</constant>, or
+                    <constant>GL_READ_WRITE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glMapBuffer</function> and
+            <function>glMapNamedBuffer</function> map the entire data store
+            of a specified buffer object into the client's address space.
+            The data can then be directly read and/or written relative to
+            the returned pointer, depending on the specified
+            <parameter>access</parameter> policy.
+        </para>
+        <para>
+            A pointer to the beginning of the mapped range is returned once
+            all pending operations on that buffer object have completed, and
+            may be used to modify and/or query the corresponding range of
+            the data store according to the value of
+            <parameter>access</parameter>:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <constant>GL_READ_ONLY</constant> indicates that
+                        the returned pointer may be used to read buffer
+                        object data.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_WRITE_ONLY</constant> indicates that
+                        the returned pointer may be used to modify buffer
+                        object data.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <constant>GL_READ_WRITE</constant> indicates that
+                        the returned pointer may be used to read and to
+                        modify buffer object data.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            If an error is generated, a <code>NULL</code> pointer is
+            returned.
+        </para>
+        <para>
+            If no error occurs, the returned pointer will reflect an
+            allocation aligned to the value of
+            <constant>GL_MIN_MAP_BUFFER_ALIGNMENT</constant> basic machine
+            units.
+        </para>
+        <para>
+            The returned pointer values may not be passed as parameter
+            values to GL commands. For example, they may not be used to
+            specify array pointers, or to specify or query pixel or texture
+            image data; such actions produce undefined results, although
+            implementations may not check for such behavior for performance
+            reasons.
+        </para>
+        <para>
+            No GL error is generated if the returned pointer is accessed in
+            a way inconsistent with <parameter>access</parameter> (e.g. used
+            to read from a mapping made with <parameter>access</parameter>
+            <constant>GL_WRITE_ONLY</constant> or write to a mapping made
+            with <parameter>access</parameter>
+            <constant>GL_READ_ONLY</constant>), but the result is undefined
+            and system errors (possibly including program termination) may
+            occur.
+        </para>
+        <para>
+            Mappings to the data stores of buffer objects may have
+            nonstandard performance characteristics. For example, such
+            mappings may be marked as uncacheable regions of memory, and in
+            such cases reading from them may be very slow. To ensure optimal
+            performance, the client should use the mapping in a fashion
+            consistent with the values of
+            <constant>GL_BUFFER_USAGE</constant> for the buffer object and
+            of <parameter>access</parameter>. Using a mapping in a fashion
+            inconsistent with these values is liable to be multiple orders
+            of magnitude slower than using normal memory.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Alignment of the returned pointer is guaranteed only if the
+            version of the GL version is 4.2 or greater. Also, the
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is accepted
+            only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and
+            <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are
+            available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available
+            only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glMapBuffer</function> if
+            <parameter>target</parameter> is not one of the buffer binding
+            targets listed above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glMapBuffer</function> if zero is bound to
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glMapNamedBuffer</function> if
+            <parameter>buffer</parameter> is not the name of an existing
+            buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>access</parameter> is not
+            <constant>GL_READ_ONLY</constant>,
+            <constant>GL_WRITE_ONLY</constant>, or
+            <constant>GL_READ_WRITE</constant>.
+        </para>
+        <para>
+            <constant>GL_OUT_OF_MEMORY</constant> is generated if the GL is
+            unable to map the buffer object's data store. This may occur for
+            a variety of system-specific reasons, such as the absence of
+            sufficient remaining virtual memory.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the
+            buffer object is in a mapped state.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetBufferPointerv</refentrytitle></citerefentry>
+            with argument <constant>GL_BUFFER_MAP_POINTER</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetBufferParameter</refentrytitle></citerefentry>
+            with argument <constant>GL_BUFFER_MAPPED</constant>,
+            <constant>GL_BUFFER_ACCESS</constant>, or
+            <constant>GL_BUFFER_USAGE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            with <parameter>pname</parameter>
+            <constant>GL_MIN_MAP_BUFFER_ALIGNMENT</constant>. The value must
+            be a power of two that is at least 64.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glMapBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glMapNamedBuffer</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

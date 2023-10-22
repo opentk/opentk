@@ -5,7 +5,9 @@ using OpenTK.Core.Platform;
 using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Platform.Handles;
 using OpenTK.Core.Platform.Interfaces;
-using OpenTK.Mathematics.Colors;
+using OpenTK.Mathematics;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.SDL;
 

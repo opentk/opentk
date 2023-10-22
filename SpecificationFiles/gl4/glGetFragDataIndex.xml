@@ -1,0 +1,95 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetFragDataIndex">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetFragDataIndex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetFragDataIndex</refname>
+        <refpurpose>query the bindings of color indices to user-defined varying out variables</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLint <function>glGetFragDataIndex</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>const char * <parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of the program containing varying out variable whose binding to query
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    The name of the user-defined varying out variable whose index to query
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetFragDataIndex</function> returns the index of the fragment color to which the variable <parameter>name</parameter>
+            was bound when the program object <parameter>program</parameter> was last linked. If <parameter>name</parameter> is not a varying out
+            variable of <parameter>program</parameter>, or if an error occurs, -1 will be returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glGetFragDataIndex</function> is available only if the GL version is 3.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is not the name of a program object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetFragDataIndex</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCreateProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFragDataLocation</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFragDataLocationIndexed</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetFragDataLocation</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

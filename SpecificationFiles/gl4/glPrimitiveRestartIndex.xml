@@ -1,0 +1,94 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glPrimitiveRestartIndex">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glPrimitiveRestartIndex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPrimitiveRestartIndex</refname>
+        <refpurpose>specify the primitive restart index</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPrimitiveRestartIndex</function></funcdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the value to be interpreted as the primitive restart index.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glPrimitiveRestartIndex</function> specifies a vertex array element that is treated specially when
+            primitive restarting is enabled. This is known as the primitive restart index.
+        </para>
+        <para>
+            When one of the <function>Draw*</function> commands transfers a set of generic attribute array elements to
+            the GL, if the index within the vertex arrays corresponding to that set is equal to the primitive restart
+            index, then the GL does not process those elements as a vertex. Instead, it is as if the drawing command
+            ended with the immediately preceding transfer, and another drawing command is immediately started with
+            the same parameters, but only transferring the immediately following element through the end of the
+            originally specified elements.
+        </para>
+        <para>
+            When either <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstancedBaseVertex</refentrytitle></citerefentry> or
+            <citerefentry><refentrytitle>glMultiDrawElementsBaseVertex</refentrytitle></citerefentry> is used, the primitive restart
+            comparison occurs before the basevertex offset is added to the array index.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glPrimitiveRestartIndex</function> is available only if the GL version is 3.1 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glPrimitiveRestartIndex</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsBaseVertex</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstancedBaseVertex</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

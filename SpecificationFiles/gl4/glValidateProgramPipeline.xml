@@ -1,0 +1,105 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glValidateProgramPipeline">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glValidateProgramPipeline</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glValidateProgramPipeline</refname>
+        <refpurpose>validate a program pipeline object against current GL state</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glValidateProgramPipeline</function></funcdef>
+                <paramdef>GLuint <parameter>pipeline</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pipeline</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of a program pipeline object to validate.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glValidateProgramPipeline</function> instructs the implementation to validate the
+            shader executables contained in <parameter>pipeline</parameter> against the current GL state.
+            The implementation may use this as an opportunity to perform any internal shader modifications
+            that may be required to ensure correct operation of the installed shaders given the
+            current GL state.
+        </para>
+        <para>
+            After a program pipeline has been validated, its validation status is set to <constant>GL_TRUE</constant>.
+            The validation status of a program pipeline object may be queried by calling
+            <citerefentry><refentrytitle>glGetProgramPipeline</refentrytitle></citerefentry> with
+            parameter <constant>GL_VALIDATE_STATUS</constant>.
+        </para>
+        <para>
+            If <parameter>pipeline</parameter> is a name previously returned from a call to
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry> but
+            that has not yet been bound by a call to <citerefentry><refentrytitle>glBindProgramPipeline</refentrytitle></citerefentry>,
+            a new program pipeline object is created with name <parameter>pipeline</parameter> and
+            the default state vector.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pipeline</parameter> is not
+            a name previously returned from a call to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>
+            or if such a name has been deleted by a call to
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgramPipeline</refentrytitle></citerefentry>
+            with parameter <constant>GL_VALIDATE_STATUS</constant>.
+        </para>
+    </refsect1>
+
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glValidateProgramPipeline</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindProgramPipeline</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

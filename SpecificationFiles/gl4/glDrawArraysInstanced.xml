@@ -1,0 +1,136 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawArraysInstanced">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawArraysInstanced</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawArraysInstanced</refname>
+        <refpurpose>draw multiple instances of a range of elements</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawArraysInstanced</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>GLsizei <parameter>instancecount</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render. Symbolic constants <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>, <constant>GL_LINE_LOOP</constant>, <constant>GL_LINES</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>, <constant>GL_TRIANGLE_FAN</constant>, <constant>GL_TRIANGLES</constant>
+                    <constant>GL_LINES_ADJACENCY</constant>, <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant>, <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant> and <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the starting index in the enabled arrays.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of indices to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>instancecount</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of instances of the specified range of indices to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDrawArraysInstanced</function> behaves identically to <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>
+            except that <parameter>instancecount</parameter> instances of the range of elements are executed and the value of the internal counter
+            <parameter>instanceID</parameter> advances for each iteration. <parameter>instanceID</parameter> is an internal 32-bit integer counter
+            that may be read by a vertex shader as <constant>gl_InstanceID</constant>.
+        </para>
+        <para>
+            <function>glDrawArraysInstanced</function> has the same effect as:
+            <programlisting>    if ( mode or count is invalid )
+        generate appropriate error
+    else {
+        for (int i = 0; i &lt; instancecount ; i++) {
+            instanceID = i;
+            glDrawArrays(mode, first, count);
+        }
+        instanceID = 0;
+    }</programlisting>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not one of
+            the accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> or <parameter>instancecount</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array and the buffer object's data store is currently mapped.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDrawArraysInstanced</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='31']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElementsInstanced</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

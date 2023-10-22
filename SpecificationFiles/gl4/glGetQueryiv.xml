@@ -1,0 +1,122 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetQueryiv">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetQueryiv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetQueryiv</refname>
+        <refpurpose>return parameters of a query object target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetQueryiv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a query object target.
+                    Must be <constant>GL_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED</constant>, <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant>
+                    <constant>GL_PRIMITIVES_GENERATED</constant>, <constant>GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN</constant>,
+                    <constant>GL_TIME_ELAPSED</constant>, or <constant>GL_TIMESTAMP</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a query object target parameter.
+                    Accepted values are <constant>GL_CURRENT_QUERY</constant> or <constant>GL_QUERY_COUNTER_BITS</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the requested data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetQueryiv</function> returns in <parameter>params</parameter> a selected parameter of the query object target
+            specified by <parameter>target</parameter>.
+        </para>
+        <para>
+            <parameter>pname</parameter> names a specific query object target parameter.  When <parameter>pname</parameter> is
+            <constant>GL_CURRENT_QUERY</constant>, the name of the currently active query for <parameter>target</parameter>,
+            or zero if no query is active, will be placed in <parameter>params</parameter>.
+            If <parameter>pname</parameter> is <constant>GL_QUERY_COUNTER_BITS</constant>, the implementation-dependent number
+            of bits used to hold the result of queries for <parameter>target</parameter> is returned in <parameter>params</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The target <constant>GL_ANY_SAMPLES_PASSED_CONSERVATIVE</constant> is available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>params</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> or <parameter>pname</parameter> is not an
+            accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetQueryiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetQueryObject</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsQuery</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

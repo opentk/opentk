@@ -1,0 +1,251 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFramebufferParameteri">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFramebufferParameteri</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFramebufferParameteri</refname>
+        <refname>glNamedFramebufferParameteri</refname>
+        <refpurpose>set a named parameter of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferParameteri</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glNamedFramebufferParameteri</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer is bound
+                    for <function>glFramebufferParameteri</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glNamedFramebufferParameteri</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the framebuffer parameter to be modified.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>param</parameter></term>
+            <listitem>
+                <para>
+                    The new value for the parameter named
+                    <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glFramebufferParameteri</function> and
+            <function>glNamedFramebufferParameteri</function> modify the
+            value of the parameter named <parameter>pname</parameter> in the
+            specified framebuffer object. There are no modifiable parameters
+            of the default draw and read framebuffer, so they are not valid
+            targets of these commands.
+        </para>
+        <para>
+            For <function>glFramebufferParameteri</function>,
+            the framebuffer object is that bound to
+            <parameter>target</parameter>, which must be
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            For <function>glNamedFramebufferParameteri</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object.
+        </para>
+        <para>
+            <parameter>pname</parameter> specifies the parameter to be
+            modified. The following values are accepted:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_WIDTH</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> specifies the assumed with for a framebuffer object with no attachments. If a
+                        framebuffer has attachments then the width of those attachments is used, otherwise
+                        the value of <constant>GL_FRAMEBUFFER_DEFAULT_WIDTH</constant> is used for the
+                        framebuffer. <parameter>param</parameter> must be greater than or equal to zero and less than
+                        or equal to the value of <constant>GL_MAX_FRAMEBUFFER_WIDTH</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_HEIGHT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> specifies the assumed height for a framebuffer object with no attachments. If a
+                        framebuffer has attachments then the height of those attachments is used, otherwise
+                        the value of <constant>GL_FRAMEBUFFER_DEFAULT_HEIGHT</constant> is used for the
+                        framebuffer. <parameter>param</parameter> must be greater than or equal to zero and less than
+                        or equal to the value of <constant>GL_MAX_FRAMEBUFFER_HEIGHT</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_LAYERS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> specifies the assumed number of layers for a framebuffer object with no attachments. If a
+                        framebuffer has attachments then the layer count of those attachments is used, otherwise
+                        the value of <constant>GL_FRAMEBUFFER_DEFAULT_LAYERS</constant> is used for the
+                        framebuffer. <parameter>param</parameter> must be greater than or equal to zero and less than
+                        or equal to the value of <constant>GL_MAX_FRAMEBUFFER_LAYERS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_SAMPLES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> specifies the assumed number of samples in a framebuffer object with no attachments. If a
+                        framebuffer has attachments then the sample count of those attachments is used, otherwise
+                        the value of <constant>GL_FRAMEBUFFER_DEFAULT_SAMPLES</constant> is used for the
+                        framebuffer. <parameter>param</parameter> must be greater than or equal to zero and less than
+                        or equal to the value of <constant>GL_MAX_FRAMEBUFFER_SAMPLE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_FRAMEBUFFER_DEFAULT_FIXED_SAMPLE_LOCATIONS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>param</parameter> specifies whether the framebuffer should assume identical sample locations and
+                        the same number of samples for all texels in the virtual image. If <parameter>param</parameter> is zero,
+                        then the implementation may vary the position or the count of samples within the virtual image from
+                        pixel to pixel, otherwise it will use the same sample position and count for all pixels in the virtual image.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glFramebufferParameteri</function> if
+            <parameter>target</parameter> is not one of the accepted
+            framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glFramebufferParameteri</function> if the default
+            framebuffer is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glNamedFramebufferParameteri</function> if
+            <parameter>framebuffer</parameter> is not the name of an
+            existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_DEFAULT_WIDTH</constant> and
+            <parameter>param</parameter> is less than zero or greater than
+            the value of <constant>GL_MAX_FRAMEBUFFER_WIDTH</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_DEFAULT_HEIGHT</constant> and
+            <parameter>param</parameter> is less than zero or greater than
+            the value of <constant>GL_MAX_FRAMEBUFFER_HEIGHT</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_DEFAULT_LAYERS</constant> and
+            <parameter>param</parameter> is less than zero or greater than
+            the value of <constant>GL_MAX_FRAMEBUFFER_LAYERS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_DEFAULT_SAMPLES</constant> and
+            <parameter>param</parameter> is less than zero or greater than
+            the value of <constant>GL_MAX_FRAMEBUFFER_SAMPLES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <!-- FIX: link to glGetFramebufferParameter --> <function>glGetFramebufferParameteriv</function>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFramebufferParameteri</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glNamedFramebufferParameteri</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCreateFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetFramebufferParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

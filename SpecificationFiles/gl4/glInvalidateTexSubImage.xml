@@ -1,0 +1,187 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glInvalidateTexSubImage">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glInvalidateTexSubImage</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInvalidateTexSubImage</refname>
+        <refpurpose>invalidate a region of a texture image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateTexSubImage</function></funcdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLint <parameter>xoffset</parameter></paramdef>
+                <paramdef>GLint <parameter>yoffset</parameter></paramdef>
+                <paramdef>GLint <parameter>zoffset</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLsizei <parameter>depth</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    The name of a texture object a subregion of which to invalidate.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    The level of detail of the texture object within which the region resides.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>xoffset</parameter></term>
+            <listitem>
+                <para>
+                    The X offset of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>yoffset</parameter></term>
+            <listitem>
+                <para>
+                    The Y offset of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>zoffset</parameter></term>
+            <listitem>
+                <para>
+                    The Z offset of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    The width of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    The height of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>depth</parameter></term>
+            <listitem>
+                <para>
+                    The depth of the region to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glInvalidateTexSubImage</function> invalidates all or part of
+            a texture image. <parameter>texture</parameter> and <parameter>level</parameter> indicated
+            which texture image is being invalidated. After this command, data in that subregion have undefined
+            values. <parameter>xoffset</parameter>, <parameter>yoffset</parameter>, <parameter>zoffset</parameter>, <parameter>width</parameter>, <parameter>height</parameter>, and <parameter>depth</parameter>
+            are interpreted as they are in <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>. For texture targets that
+            don't have certain dimensions, this command treats those dimensions as
+            having a size of 1. For example, to invalidate a portion of a two-
+            dimensional texture, the application would use <parameter>zoffset</parameter> equal to zero and
+            <parameter>depth</parameter> equal to one. Cube map textures are treated as an array of six
+            slices in the z-dimension, where a value of <parameter>zoffset</parameter> is interpreted as
+            specifying face <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant> + <parameter>zoffset</parameter>.
+        </para>
+        <para>
+            <parameter>level</parameter> must be greater than or equal to zero and be
+            less than the base 2 logarithm of the maximum texture width, height, or depth.
+            <parameter>xoffset</parameter>, <parameter>yoffset</parameter> and <parameter>zoffset</parameter>
+            must be greater than or equal to zero and be less than the width, height or depth
+            of the image, respectively. Furthermore, <parameter>xoffset</parameter> + <parameter>width</parameter>,
+            <parameter>yoffset</parameter> + <parameter>height</parameter>, and
+            <parameter>zoffset</parameter> + <parameter>depth</parameter> must be less
+            than or equal to the width, height or depth of the image, respectively.
+        </para>
+        <para>
+            For textures of targets <constant>GL_TEXTURE_RECTANGLE</constant>, <constant>GL_TEXTURE_BUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>, level must be zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>xoffset</parameter>,
+            <parameter>yoffset</parameter> or <parameter>zoffset</parameter> is less than zero,
+            or if any of them is greater than the size of the image in the corresponding dimension.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is
+            less than zero or if it is greater or equal to the base 2 logarithm of the maximum texture width, height, or depth.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the target of <parameter>texture</parameter>
+            is any of <constant>GL_TEXTURE_RECTANGLE</constant>, <constant>GL_TEXTURE_BUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> and <parameter>level</parameter> is not zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>texture</parameter> is not the
+            name of an existing texture object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_TEXTURE_SIZE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glInvalidateTexSubImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glInvalidateTexImage</refentrytitle></citerefentry>,,
+            <citerefentry><refentrytitle>glInvalidateBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateSubFramebuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

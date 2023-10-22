@@ -1,11 +1,11 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:49 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
-using OpenTK.Graphics;
-using OpenTK.Graphics.Wgl;
-using OpenTK.Graphics.Glx;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.Wgl;
+using OpenTK.OpenGL.Glx;
 
-namespace OpenTK.Graphics.OpenGL
+namespace OpenTK.OpenGL.OpenGL
 {
     public static unsafe partial class GL
     {
@@ -1821,7 +1821,7 @@ namespace OpenTK.Graphics.OpenGL
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetProgramiv</c>]</b><br/> Returns a parameter from a program object. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
-        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
+        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE, GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgram.xhtml" /></remarks>
         public static void GetProgramiv(int program, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
@@ -1895,7 +1895,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjecti64v</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjecti64v(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjecti64v_fnptr(id, buffer, (uint)pname, offset);
@@ -1903,7 +1903,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectiv</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectiv(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectiv_fnptr(id, buffer, (uint)pname, offset);
@@ -1911,7 +1911,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectui64v</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectui64v(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectui64v_fnptr(id, buffer, (uint)pname, offset);
@@ -1919,7 +1919,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectuiv</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectuiv(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectuiv_fnptr(id, buffer, (uint)pname, offset);
@@ -1941,28 +1941,28 @@ namespace OpenTK.Graphics.OpenGL
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> <b>[entry point: <c>glGetQueryObjecti64v</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjecti64v(int id, QueryObjectParameterName pname, long* parameters) => GLPointers._glGetQueryObjecti64v_fnptr(id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetQueryObjectiv</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectiv(int id, QueryObjectParameterName pname, int* parameters) => GLPointers._glGetQueryObjectiv_fnptr(id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> <b>[entry point: <c>glGetQueryObjectui64v</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectui64v(int id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._glGetQueryObjectui64v_fnptr(id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetQueryObjectuiv</c>]</b><br/> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectuiv(int id, QueryObjectParameterName pname, uint* parameters) => GLPointers._glGetQueryObjectuiv_fnptr(id, (uint)pname, parameters);
@@ -6557,7 +6557,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjecti64v</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjecti64v(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjecti64v_fnptr(id, buffer, (uint)pname, offset);
@@ -6565,7 +6565,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectiv</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectiv(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectiv_fnptr(id, buffer, (uint)pname, offset);
@@ -6573,7 +6573,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectui64v</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectui64v(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectui64v_fnptr(id, buffer, (uint)pname, offset);
@@ -6581,7 +6581,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetQueryBufferObjectuiv</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="offset"> Specifies the byte offset into buffer&apos;s data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectuiv(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectuiv_fnptr(id, buffer, (uint)pname, offset);
@@ -6599,7 +6599,7 @@ namespace OpenTK.Graphics.OpenGL
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> <b>[entry point: <c>glGetQueryObjecti64v</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryObjecti64v(int id, QueryObjectParameterName pname, long* parameters) => GLPointers._glGetQueryObjecti64v_fnptr(id, (uint)pname, parameters);
@@ -6609,7 +6609,7 @@ namespace OpenTK.Graphics.OpenGL
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> <b>[entry point: <c>glGetQueryObjectui64v</c>]</b><br/> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
             /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer&apos;s data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryObjectui64v(int id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._glGetQueryObjectui64v_fnptr(id, (uint)pname, parameters);

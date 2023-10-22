@@ -1,0 +1,115 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glInvalidateTexImage">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glInvalidateTexImage</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInvalidateTexImage</refname>
+        <refpurpose>invalidate the entirety a texture image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateTexImage</function></funcdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    The name of a texture object to invalidate.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    The level of detail of the texture object to invalidate.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glInvalidateTexSubImage</function> invalidates all of
+            a texture image. <parameter>texture</parameter> and <parameter>level</parameter> indicated
+            which texture image is being invalidated. After this command, data in the texture image has undefined
+            values.
+        </para>
+        <para>
+            <parameter>level</parameter> must be greater than or equal to zero and be
+            less than the base 2 logarithm of the maximum texture width, height, or depth.
+        </para>
+        <para>
+            For textures of targets <constant>GL_TEXTURE_RECTANGLE</constant>, <constant>GL_TEXTURE_BUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>, level must be zero.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>level</parameter> is
+            less than zero or if it is greater or equal to the base 2 logarithm of the maximum texture width, height, or depth.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the target of <parameter>texture</parameter>
+            is any of <constant>GL_TEXTURE_RECTANGLE</constant>, <constant>GL_TEXTURE_BUFFER</constant>, <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> and <parameter>level</parameter> is not zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>texture</parameter> is not the
+            name of an existing texture object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_TEXTURE_SIZE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glInvalidateTexImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glInvalidateTexSubImage</refentrytitle></citerefentry>,,
+            <citerefentry><refentrytitle>glInvalidateBufferSubData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateSubFramebuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

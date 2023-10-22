@@ -1,0 +1,211 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glTexStorage2DMultisample">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glTexStorage2DMultisample</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexStorage2DMultisample</refname>
+        <refname>glTextureStorage2DMultisample</refname>
+        <refpurpose>specify storage for a two-dimensional multisample texture</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexStorage2DMultisample</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLsizei <parameter>samples</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLboolean <parameter>fixedsamplelocations</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glTextureStorage2DMultisample</function></funcdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLsizei <parameter>samples</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLboolean <parameter>fixedsamplelocations</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the texture object is
+                    bound for
+                    <function>glTexStorage2DMultisample</function>. Must be
+                    one of <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+                    <constant>GL_PROXY_TEXTURE_2D_MULTISAMPLE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the texture object name for
+                    <function>glTextureStorage2DMultisample</function>. The
+                    effective target of <parameter>texture</parameter> must
+                    be one of the valid non-proxy
+                    <parameter>target</parameter> values above.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>samples</parameter></term>
+            <listitem>
+                <para>
+                    Specify the number of samples in the texture.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the sized internal format to be used to store texture image data.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the width of the texture, in texels.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the height of the texture, in texels.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>fixedsamplelocations</parameter></term>
+            <listitem>
+                <para>
+                    Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not
+                    depend on the internal format or size of the image.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glTexStorage2DMultisample</function> and
+            <function>glTextureStorage2DMultisample</function> specify the
+            storage requirements for
+            a two-dimensional multisample texture. Once a texture is specified with this
+            command, its format and dimensions become immutable unless it is a proxy
+            texture. The contents of the image may still be modified, however, its storage requirements
+            may not change. Such a texture is referred to as an <emphasis>immutable-format</emphasis>
+            texture.
+        </para>
+        <para>
+            <parameter>samples</parameter> specifies the number of samples to be used for the texture
+            and must be greater than zero and less than or equal to the value of <constant>GL_MAX_SAMPLES</constant>.
+            <parameter>internalformat</parameter> must be a color-renderable, depth-renderable, or stencil-renderable format.
+            <parameter>width</parameter> and <parameter>height</parameter> specify the width and height,
+            respectively, of the texture. If <parameter>fixedsamplelocations</parameter> is <constant>GL_TRUE</constant>,
+            the image will use identical sample locations and the same number of samples for all texels in the image,
+            and the sample locations will not depend on the internal format or size of the image.
+        </para>
+        <para>
+            <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="internalformattable.xml"/>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glTexStorage2DMultisample</function> if zero is bound to
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glTextureStorage2DMultisample</function> if
+            <parameter>texture</parameter> is not the name of an existing
+            texture object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalformat</parameter> is not a
+            valid color-renderable, depth-renderable or stencil-renderable format.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>target</parameter> or the effective target of
+            <parameter>texture</parameter> is not one of the accepted
+            targets described above.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter> or <parameter>height</parameter>
+            are less than 1 or greater than the value of <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>levels</parameter> is less than 1.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>samples</parameter> is zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>samples</parameter> is greater than the
+            maximum number of samples supported for this <parameter>target</parameter> and <parameter>internalformat</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the value of <constant>GL_TEXTURE_IMMUTABLE_FORMAT</constant>
+            for the texture bound to <parameter>target</parameter> is not <constant>GL_FALSE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glTexStorage2DMultisample</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glTextureStorage2DMultisample</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexStorage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexStorage3D</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

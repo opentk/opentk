@@ -1,0 +1,137 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glUseProgramStages">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glUseProgramStages</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glUseProgramStages</refname>
+        <refpurpose>bind stages of a program object to a program pipeline</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glUseProgramStages</function></funcdef>
+                <paramdef>GLuint <parameter>pipeline</parameter></paramdef>
+                <paramdef>GLbitfield <parameter>stages</parameter></paramdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pipeline</parameter></term>
+            <listitem>
+            <para>
+                Specifies the program pipeline object to which to bind stages from <parameter>program</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stages</parameter></term>
+            <listitem>
+            <para>
+                Specifies a set of program stages to bind to the program pipeline object.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+            <para>
+                Specifies the program object containing the shader executables to use in <parameter>pipeline</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glUseProgramStages</function> binds executables from a program object
+            associated with a specified set of shader stages to the program pipeline object given
+            by <parameter>pipeline</parameter>.
+            <parameter>pipeline</parameter> specifies the program pipeline object to which to bind
+            the executables. <parameter>stages</parameter> contains a logical combination of bits
+            indicating the shader stages to use within <parameter>program</parameter> with the program
+            pipeline object <parameter>pipeline</parameter>. <parameter>stages</parameter> must be
+            a logical combination of <constant>GL_VERTEX_SHADER_BIT</constant>,
+            <constant>GL_TESS_CONTROL_SHADER_BIT</constant>, <constant>GL_TESS_EVALUATION_SHADER_BIT</constant>,
+            <constant>GL_GEOMETRY_SHADER_BIT</constant>, <constant>GL_FRAGMENT_SHADER_BIT</constant> and <constant>GL_COMPUTE_SHADER_BIT</constant>.
+            Additionally, the special value <constant>GL_ALL_SHADER_BITS</constant> may be specified to
+            indicate that all executables contained in <parameter>program</parameter> should be
+            installed in <parameter>pipeline</parameter>.
+        </para>
+        <para>
+            If <parameter>program</parameter> refers to a program object with a valid shader attached for
+            an indicated shader stage, <function>glUseProgramStages</function> installs the executable
+            code for that stage in the indicated program pipeline object <parameter>pipeline</parameter>.
+            If <parameter>program</parameter> is zero, or refers to a program object with no valid shader
+            executable for a given stage, it is as if the pipeline object has no programmable stage configured
+            for the indicated shader stages. If <parameter>stages</parameter> contains bits other than those
+            listed above, and is not equal to <constant>GL_ALL_SHADER_BITS</constant>, an error is generated.
+       </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_COMPUTE_SHADER_BIT</constant> bit is available only if the GL version is 4.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>shaders</parameter> contains
+            set bits that are not recognized, and is not the reserved value <constant>GL_ALL_SHADER_BITS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> refers
+            to a program object that was not linked with its <constant>GL_PROGRAM_SEPARABLE</constant> status set.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> refers
+            to a program object that has not been successfully linked.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pipeline</parameter> is not
+            a name previously returned from a call to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>
+            or if such a name has been deleted by a call to
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glUseProgramStages</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsProgramPipeline</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,7 +1,7 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 
-namespace OpenTK.Graphics.OpenGL.Compatibility
+namespace OpenTK.OpenGL.OpenGL.Compatibility
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -9202,14 +9202,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     ///<summary>Used in <see cref="GL.ATI.ArrayObjectATI" />, <see cref="GL.EXT.SetInvariantEXT" />, <see cref="GL.EXT.SetLocalConstantEXT" />, ...</summary>
     public enum ScalarType : uint
     {
-        Byte = 5120,
         UnsignedByte = 5121,
-        Short = 5122,
         UnsignedShort = 5123,
-        Int = 5124,
         UnsignedInt = 5125,
-        Float = 5126,
-        Double = 5130,
     }
     ///<summary>Used in <see cref="GL.IBM.SecondaryColorPointerListIBM" /></summary>
     public enum SecondaryColorPointerTypeIBM : uint
@@ -10033,6 +10028,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     }
     public enum TextureWrapMode : uint
     {
+        LinearMipmapLinear = 9987,
         Clamp = 10496,
         Repeat = 10497,
         ClampToBorder = 33069,
@@ -10041,8 +10037,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ClampToEdge = 33071,
         ClampToEdgeSgis = 33071,
         MirroredRepeat = 33648,
-        MirroredRepeatArb = 33648,
-        MirroredRepeatIbm = 33648,
     }
     ///<summary>Used in <see cref="GL.TransformFeedbackVaryings" />, <see cref="GL.EXT.TransformFeedbackVaryingsEXT" />, <see cref="GL.NV.TransformFeedbackVaryingsNV" /></summary>
     public enum TransformFeedbackBufferMode : uint

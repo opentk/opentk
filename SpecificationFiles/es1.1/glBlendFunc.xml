@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glBlendFunc">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glBlendFunc</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refname>glBlendFunc</refname>
+	<refpurpose>specify pixel arithmetic</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glBlendFunc</function></funcdef>
+		<paramdef>GLenum <parameter>sfactor</parameter></paramdef>
+		<paramdef>GLenum <parameter>dfactor</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		    <parameter>sfactor</parameter>
+		</term>
+
+		<listitem>
+		    <para>
+		    Specifies how the red, green, blue, and alpha
+		    source blending factors are computed. The following
+		    symbolic constants are accepted:
+		    <constant>GL_ZERO</constant>,
+		    <constant>GL_ONE</constant>,
+		    <constant>GL_DST_COLOR</constant>,
+		    <constant>GL_ONE_MINUS_DST_COLOR</constant>,
+		    <constant>GL_SRC_ALPHA</constant>,
+		    <constant>GL_ONE_MINUS_SRC_ALPHA</constant>,
+		    <constant>GL_DST_ALPHA</constant>,
+		    <constant>GL_ONE_MINUS_DST_ALPHA</constant>, and
+		    <constant>GL_SRC_ALPHA_SATURATE</constant>.
+		    The initial value is <constant>GL_ONE</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <parameter>dfactor</parameter>
+		</term>
+
+		<listitem>
+		    <para>Specifies how the red, green, blue, and alpha
+		    destination blending factors are computed. Eight symbolic
+		    constants are accepted:
+		    <constant>GL_ZERO</constant>,
+		    <constant>GL_ONE</constant>,
+		    <constant>GL_SRC_COLOR</constant>,
+		    <constant>GL_ONE_MINUS_SRC_COLOR</constant>,
+		    <constant>GL_SRC_ALPHA</constant>,
+		    <constant>GL_ONE_MINUS_SRC_ALPHA</constant>,
+		    <constant>GL_DST_ALPHA</constant>, and
+		    <constant>GL_ONE_MINUS_DST_ALPHA</constant>. The initial value is
+		    <constant>GL_ZERO</constant>.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para>Pixels can be drawn using a function that blends the
+	incoming (source) values with the values that are already in
+	the color buffer (the destination values). Use
+	<citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and
+	<citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+	with argument <constant>GL_BLEND</constant>
+	to enable and disable blending.
+	Blending is initially disabled.
+	</para>
+
+	<para>
+	<function>glBlendFunc</function>
+	defines the operation of blending when it is enabled.
+	<parameter>sfactor</parameter>
+	specifies which of eleven methods is used to scale the source color components.
+	<parameter>dfactor</parameter>
+	specifies which of ten methods is used to scale the destination color components.
+	The eleven possible methods are described in the following table.
+	Each method defines four scale factors, one each for red, green, blue, and alpha.
+	</para>
+
+	<para>In the table and in subsequent equations, source and
+	destination color components are referred to as
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>R</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>G</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>B</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+	and
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>.
+	They are understood to have integer values between 0 and
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>,
+	where</para>
+
+	<informalequation>
+	<mml:math>
+	    <mml:msub><mml:mi>k</mml:mi><mml:mi>c</mml:mi></mml:msub>
+	    <mml:mo>=</mml:mo>
+	    <mml:msup><mml:mn>2</mml:mn><mml:msub><mml:mi>m</mml:mi><mml:mi>c</mml:mi></mml:msub></mml:msup>
+	    <mml:mo>-</mml:mo>
+	    <mml:mn>1</mml:mn>
+	</mml:math>
+	</informalequation>
+
+	<para> and
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>m</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>m</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>m</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>m</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+	is the number of red, green, blue, and alpha bitplanes.</para>
+
+	<para>Source and destination scale factors are referred to as
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>s</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>s</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>s</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>s</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+	and
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>d</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>d</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>d</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>d</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>.
+
+	The scale factors described in the table, denoted
+	<inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+	    <mml:msub><mml:mi>f</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>f</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>f</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+	    <mml:msub><mml:mi>f</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	<mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>,
+	represent either source or destination factors. All scale
+	factors have range [0, 1].</para>
+
+	<informaltable pgwide='0' frame='none'>
+	    <tgroup cols='2' align='center'>
+		<colspec align="left"/>
+		<colspec align="center"/>
+
+		<thead>
+		    <row rowsep='1'>
+			<entry>Parameter</entry>
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>f</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>f</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>f</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>f</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+		</thead>
+
+		<tbody>
+		    <row>
+			<entry>
+			    <constant>GL_ZERO</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:mn>0</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>0</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>0</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>0</mml:mn>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_ONE</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_SRC_COLOR</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>R</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>G</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>B</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow>
+			    <mml:mo>(</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo>
+			    <mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>R</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>G</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>B</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_DST_COLOR</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_ONE_MINUS_DST_COLOR</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow>
+			    <mml:mo>(</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo>
+			    <mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_SRC_ALPHA</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow>
+			    <mml:mo>(</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo>
+			    <mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_DST_ALPHA</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_ONE_MINUS_DST_ALPHA</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow>
+			    <mml:mo>(</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo>
+			    <mml:mo>-</mml:mo>
+			    <mml:mo>(</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+				<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+
+		    <row>
+			<entry>
+			    <constant>GL_SRC_ALPHA_SATURATE</constant>
+			</entry>
+
+			<entry>
+			    <inlineequation><mml:math><mml:mrow><mml:mo>(</mml:mo>
+				<mml:mi>i</mml:mi><mml:mo>,</mml:mo>
+				<mml:mi>i</mml:mi><mml:mo>,</mml:mo>
+				<mml:mi>i</mml:mi><mml:mo>,</mml:mo>
+				<mml:mn>1</mml:mn>
+			    <mml:mo>)</mml:mo></mml:mrow></mml:math></inlineequation>
+			</entry>
+		    </row>
+		</tbody>
+	    </tgroup>
+	</informaltable>
+
+	<para>In the table,</para>
+
+	<informalequation>
+	    <mml:math><mml:mrow>
+		<mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mo>min</mml:mo><mml:mo>(</mml:mo>
+		    <mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub><mml:mo>,</mml:mo>
+		    <mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>-</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		    <mml:mo>)</mml:mo>
+		    <mml:mo>/</mml:mo>
+		    <mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub>
+	    </mml:mrow></mml:math>
+	</informalequation>
+
+	<para>To determine the blended values of a pixel, the system
+	uses the following equations:</para>
+
+	<informalequation><mml:math><mml:mtable>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>min</mml:mo><mml:mo>(</mml:mo>
+		<mml:msub><mml:mi>k</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>,</mml:mo>
+		<mml:msub><mml:mi>R</mml:mi><mml:mi>s</mml:mi></mml:msub>
+		<mml:msub><mml:mi>s</mml:mi><mml:mi>R</mml:mi></mml:msub><mml:mo>+</mml:mo>
+		<mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:msub><mml:mi>d</mml:mi><mml:mi>R</mml:mi></mml:msub>
+		<mml:mo>)</mml:mo>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>min</mml:mo><mml:mo>(</mml:mo>
+		<mml:msub><mml:mi>k</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>,</mml:mo>
+		<mml:msub><mml:mi>G</mml:mi><mml:mi>s</mml:mi></mml:msub>
+		<mml:msub><mml:mi>s</mml:mi><mml:mi>G</mml:mi></mml:msub><mml:mo>+</mml:mo>
+		<mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:msub><mml:mi>d</mml:mi><mml:mi>G</mml:mi></mml:msub>
+		<mml:mo>)</mml:mo>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>min</mml:mo><mml:mo>(</mml:mo>
+		<mml:msub><mml:mi>k</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>,</mml:mo>
+		<mml:msub><mml:mi>B</mml:mi><mml:mi>s</mml:mi></mml:msub>
+		<mml:msub><mml:mi>s</mml:mi><mml:mi>B</mml:mi></mml:msub><mml:mo>+</mml:mo>
+		<mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:msub><mml:mi>d</mml:mi><mml:mi>B</mml:mi></mml:msub>
+		<mml:mo>)</mml:mo>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:mo>min</mml:mo><mml:mo>(</mml:mo>
+		<mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>,</mml:mo>
+		<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub>
+		<mml:msub><mml:mi>s</mml:mi><mml:mi>A</mml:mi></mml:msub><mml:mo>+</mml:mo>
+		<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:msub><mml:mi>d</mml:mi><mml:mi>A</mml:mi></mml:msub>
+		<mml:mo>)</mml:mo>
+	    </mml:mtd></mml:mtr>
+	</mml:mtable></mml:math></informalequation>
+
+	<para>Despite the apparent precision of the above equations,
+	blending arithmetic is not exactly specified, because blending
+	operates with imprecise integer color values. However, a blend
+	factor that should be equal to 1 is guaranteed not to modify
+	its multiplicand, and a blend factor equal to 0 reduces its
+	multiplicand to 0. For example, when <parameter>sfactor</parameter>
+	is <constant>GL_SRC_ALPHA</constant>,
+	<parameter>dfactor</parameter> is
+	<constant>GL_ONE_MINUS_SRC_ALPHA</constant>, and
+	<inlineequation><mml:math><mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub></mml:math></inlineequation>
+	is equal to
+	<inlineequation><mml:math><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub></mml:math></inlineequation>,
+	the equations reduce to simple replacement:</para>
+
+	<informalequation><mml:math><mml:mtable>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>R</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:msub><mml:mi>R</mml:mi><mml:mi>s</mml:mi></mml:msub>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>G</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:msub><mml:mi>G</mml:mi><mml:mi>s</mml:mi></mml:msub>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>B</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:msub><mml:mi>B</mml:mi><mml:mi>s</mml:mi></mml:msub>
+	    </mml:mtd></mml:mtr>
+	    <mml:mtr><mml:mtd>
+		<mml:msub><mml:mi>A</mml:mi><mml:mi>d</mml:mi></mml:msub>
+		<mml:mgroupalign/>
+		<mml:mo>=</mml:mo>
+		<mml:mgroupalign/>
+		<mml:msub><mml:mi>A</mml:mi><mml:mi>s</mml:mi></mml:msub>
+	    </mml:mtd></mml:mtr>
+	</mml:mtable></mml:math></informalequation>
+
+	<para>
+	<function>glBlendFunc</function> operates on all pixel write operations,
+	including the scan conversion of points, lines, and polygons.
+	<function>glBlendFunc</function> does not affect
+	<citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>.
+	</para>
+    </refsect1>
+
+    <refsect1 id="examples"><title>Examples</title>
+
+	<para>Transparency is best implemented using
+	<function>glBlendFunc</function>(<constant>GL_SRC_ALPHA</constant>,
+	<constant>GL_ONE_MINUS_SRC_ALPHA</constant>)
+	with primitives sorted from farthest to nearest. Note that
+	this transparency calculation does not require the presence of
+	alpha bitplanes in the color buffer.</para>
+
+	<para><function>glBlendFunc</function>(<constant>GL_SRC_ALPHA</constant>,
+	<constant>GL_ONE_MINUS_SRC_ALPHA</constant>)
+	is also useful for rendering antialiased points and lines.
+	</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+	<para>Incoming (source) alpha is correctly thought of as a
+	material opacity, ranging from 1.0
+	(<inlineequation><mml:math><mml:msub><mml:mi>k</mml:mi><mml:mi>A</mml:mi></mml:msub></mml:math></inlineequation>),
+	representing complete opacity, to 0.0 (0), representing
+	complete transparency.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+	<para><constant>GL_INVALID_ENUM</constant> is generated if either
+	<parameter>sfactor</parameter> or <parameter>dfactor</parameter>
+	is not an accepted value.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	    <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
+	    <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,143 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateProgram">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateProgram</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateProgram</refname>
+        <refpurpose>Creates a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLuint <function>glCreateProgram</function></funcdef>
+                <paramdef><parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para><function>glCreateProgram</function> creates an empty
+        program object and returns a non-zero value by which it can be
+        referenced. A program object is an object to which shader
+        objects can be attached. This provides a mechanism to specify
+        the shader objects that will be linked to create a program. It
+        also provides a means for checking the compatibility of the
+        shaders that will be used to create a program (for instance,
+        checking the compatibility between a vertex shader and a
+        fragment shader). When no longer needed as part of a program
+        object, shader objects can be detached.</para>
+
+        <para>One or more executables are created in a program object by
+        successfully attaching shader objects to it with
+        <citerefentry><refentrytitle>glAttachShader</refentrytitle></citerefentry>,
+        successfully compiling the shader objects with
+        <citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
+        and successfully linking the program object with
+        <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>.
+        These executables are made part of current state when
+        <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>
+        is called. Program objects can be deleted by calling
+        <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>.
+        The memory associated with the program object will be deleted
+        when it is no longer part of current rendering state for any
+        context.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>Like buffer and texture objects, the name space for
+        program objects may be shared across a set of contexts, as long
+        as the server sides of the contexts share the same address
+        space. If the name space is shared across contexts, any attached
+        objects and the data associated with those attached objects are
+        shared as well.</para>
+
+        <para>Applications are responsible for providing the
+        synchronization across API calls when objects are accessed from
+        different execution threads.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>This function returns 0 if an error occurs creating the program object.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with the argument <constant>GL_CURRENT_PROGRAM</constant></para>
+
+        <para><citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>
+        with a valid program object and the index of an active attribute
+        variable</para>
+
+        <para><citerefentry><refentrytitle>glGetActiveUniform</refentrytitle></citerefentry>
+        with a valid program object and the index of an active uniform
+        variable</para>
+
+        <para><citerefentry><refentrytitle>glGetAttachedShaders</refentrytitle></citerefentry>
+        with a valid program object</para>
+
+        <para><citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>
+        with a valid program object and the name of an attribute
+        variable</para>
+
+        <para><citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+        with a valid program object and the parameter to be queried</para>
+
+        <para><citerefentry><refentrytitle>glGetProgramInfoLog</refentrytitle></citerefentry>
+        with a valid program object</para>
+
+        <para><citerefentry><refentrytitle>glGetUniform</refentrytitle></citerefentry>
+        with a valid program object and the location of a uniform
+        variable</para>
+
+        <para><citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
+        with a valid program object and the name of a uniform
+        variable</para>
+
+        <para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateProgram</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para><citerefentry><refentrytitle>glAttachShader</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCreateShader</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDeleteProgram</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDetachShader</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glUniform</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glUseProgram</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glValidateProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

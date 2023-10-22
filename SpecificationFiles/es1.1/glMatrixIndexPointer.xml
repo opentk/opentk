@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glMatrixIndexPointer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glMatrixIndexPointer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glMatrixIndexPointer</refdescriptor>
+        <refname>glMatrixIndexPointerOES</refname>
+        <refpurpose>define an array of matrix indices</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMatrixIndexPointerOES</function></funcdef>
+                <paramdef>GLint <parameter>size</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+                <paramdef>const void * <parameter>pointer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>size</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the number of matrix indices per vertex.
+                    Must be is less than or equal to
+                    <constant>GL_MAX_VERTEX_UNITS_OES</constant>.
+                    The initial value is <constant>0</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>type</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the data type of each matrix index in the
+                    array. Symbolic constant
+                    <constant>GL_UNSIGNED_BYTE</constant> is accepted.
+                    The initial value is
+                    <constant>GL_UNSIGNED_BYTE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>stride</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the byte offset between consecutive
+                    matrix indices. If <parameter>stride</parameter>
+                    is 0, the matrix indices are understood to be tightly packed in
+                    the array. The initial value is <constant>0</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>pointer</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies a pointer to the first matrix index of the
+                    first vertex in the array. The initial value is <constant>0</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glMatrixIndexPointer</function>
+        specifies the location and data of an array of matrix indices
+        to use when rendering. <parameter>size</parameter>
+        specifies the number of matrix indices per vertex and
+        <parameter>type</parameter> the data type of the coordinates.
+        <parameter>stride</parameter>
+        specifies the byte stride from one matrix index to the next, allowing
+        vertices and attributes to be packed into a single array or
+        stored in separate arrays. (Single-array storage may be more
+        efficient on some implementations.)
+        </para>
+
+        <para>
+        These matrices indices are used to blend corresponding matrices for a given vertex.
+        </para>
+
+        <para>
+        When a matrix index array is
+        specified,
+        <parameter>size</parameter>,
+        <parameter>type</parameter>,
+        <parameter>stride</parameter>, and
+        <parameter>pointer</parameter> are saved as client-side state.
+        </para>
+
+        <para>
+        If the matrix index array is enabled, it is used when
+        <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+        or
+        <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>
+        is called.
+        To enable and disable the matrix index array, call
+        <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>
+        and
+        <citerefentry><refentrytitle>glDisableClientState</refentrytitle></citerefentry>
+        with the argument
+        <constant>GL_MATRIX_INDEX_ARRAY_OES</constant>.
+        The matrix index array is initially disabled and isn't accessed when
+        <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> or
+        <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>
+        is called.
+        </para>
+
+        <para>
+        Use
+        <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>
+        to construct a sequence of primitives (all of the same type)
+        from prespecified vertex and vertex attribute arrays. Use
+        <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>
+        to construct a sequence of primitives by indexing vertices and
+        vertex attributes.
+        </para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+        <function>glMatrixIndexPointer</function>
+        is typically implemented on the client side.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+        <constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>size</parameter> is greater than
+        <constant>GL_MAX_VERTEX_UNITS_OES</constant>.
+        </para>
+
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>type</parameter> is not an accepted value.
+        </para>
+
+        <para>
+        <constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>stride</parameter> is negative.
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glCurrentPaletteMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadPaletteFromModelViewMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

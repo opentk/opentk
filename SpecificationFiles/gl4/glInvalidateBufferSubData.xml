@@ -1,0 +1,118 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glInvalidateBufferSubData">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glInvalidateBufferSubData</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glInvalidateBufferSubData</refname>
+        <refpurpose>invalidate a region of a buffer object's data store</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glInvalidateBufferSubData</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLintptr <parameter>offset</parameter></paramdef>
+                <paramdef>GLsizeiptr <parameter>length</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    The name of a buffer object, a subrange of whose data store to invalidate.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>offset</parameter></term>
+            <listitem>
+                <para>
+                    The offset within the buffer's data store of the start of the range to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The length of the range within the buffer's data store to be invalidated.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glInvalidateBufferSubData</function> invalidates all or part of the
+            content of the data store of a buffer object. After invalidation, the content
+            of the specified range of the buffer's data store becomes undefined. The
+            start of the range is given by <parameter>offset</parameter> and its size
+            is given by <parameter>length</parameter>, both measured in basic machine units.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>offset</parameter> or
+            <parameter>length</parameter> is negative, or if <parameter>offset</parameter> +
+            <parameter>length</parameter> is greater than the value of <constant>GL_BUFFER_SIZE</constant>
+            for <parameter>buffer</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>buffer</parameter> is not the
+            name of an existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if any part of <parameter>buffer</parameter>
+            is currently mapped.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetBufferParameter</refentrytitle></citerefentry> with argument <constant>GL_BUFFER_SIZE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glInvalidateBufferSubData</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glInvalidateTexSubImage</refentrytitle></citerefentry>,,
+            <citerefentry><refentrytitle>glInvalidateTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInvalidateSubFramebuffer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

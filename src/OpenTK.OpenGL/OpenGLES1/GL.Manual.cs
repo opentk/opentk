@@ -1,9 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Mathematics;
-using OpenTK.Mathematics.Colors;
 
-namespace OpenTK.Graphics.OpenGLES1
+namespace OpenTK.OpenGL.OpenGLES1
 {
     /// <summary>
     /// OpenGL ES 1

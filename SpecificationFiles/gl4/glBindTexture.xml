@@ -1,0 +1,200 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindTexture">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindTexture</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindTexture</refname>
+        <refpurpose>bind a named texture to a texturing target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindTexture</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the texture is bound.
+                    Must be one of
+                    <constant>GL_TEXTURE_1D</constant>,
+                    <constant>GL_TEXTURE_2D</constant>,
+                    <constant>GL_TEXTURE_3D</constant>,
+                    <constant>GL_TEXTURE_1D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_2D_ARRAY</constant>,
+                    <constant>GL_TEXTURE_RECTANGLE</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP</constant>,
+                    <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+                    <constant>GL_TEXTURE_BUFFER</constant>,
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+                    <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a texture.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindTexture</function> lets you create or use a named texture. Calling <function>glBindTexture</function> with
+            <parameter>target</parameter> set to
+            <constant>GL_TEXTURE_1D</constant>,
+            <constant>GL_TEXTURE_2D</constant>,
+            <constant>GL_TEXTURE_3D</constant>,
+            <constant>GL_TEXTURE_1D_ARRAY</constant>,
+            <constant>GL_TEXTURE_2D_ARRAY</constant>,
+            <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+            <constant>GL_TEXTURE_BUFFER</constant>,
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>
+            and <parameter>texture</parameter> set to the name of the new texture binds the texture name to the target.
+            When a texture is bound to a target, the previous binding for that target is automatically broken.
+        </para>
+        <para>
+            Texture names are unsigned integers. The value zero is reserved to
+            represent the default texture for each texture target.
+            Texture names and the corresponding texture contents are local to
+            the shared object space of the current GL rendering context;
+            two rendering contexts share texture names only if they
+            explicitly enable sharing between contexts through the appropriate GL windows interfaces functions.
+        </para>
+        <para>
+            You must use <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry> to generate a set of new texture names.
+        </para>
+        <para>
+            When a texture is first bound, it assumes the specified target:
+            A texture first bound to <constant>GL_TEXTURE_1D</constant> becomes one-dimensional texture, a
+            texture first bound to <constant>GL_TEXTURE_2D</constant> becomes two-dimensional texture, a
+            texture first bound to <constant>GL_TEXTURE_3D</constant> becomes three-dimensional texture, a
+            texture first bound to <constant>GL_TEXTURE_1D_ARRAY</constant> becomes one-dimensional array texture, a
+            texture first bound to <constant>GL_TEXTURE_2D_ARRAY</constant> becomes two-dimensional array texture, a
+            texture first bound to <constant>GL_TEXTURE_RECTANGLE</constant> becomes rectangle texture, a
+            texture first bound to <constant>GL_TEXTURE_CUBE_MAP</constant> becomes a cube-mapped texture, a
+            texture first bound to <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant> becomes a cube-mapped array texture, a
+            texture first bound to <constant>GL_TEXTURE_BUFFER</constant> becomes a buffer texture, a
+            texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> becomes a two-dimensional multisampled texture, and a
+            texture first bound to <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> becomes a two-dimensional multisampled array texture.
+            The state of a one-dimensional texture immediately after it is first bound is equivalent to the state of the
+            default <constant>GL_TEXTURE_1D</constant> at GL initialization, and similarly for the other texture types.
+        </para>
+        <para>
+            While a texture is bound, GL operations on the target to which it is
+            bound affect the bound texture, and queries of the target to which it
+            is bound return state from the bound texture.
+            In effect, the texture targets become aliases for the textures currently
+            bound to them, and the texture name zero refers to the default textures
+            that were bound to them at initialization.
+        </para>
+        <para>
+            A texture binding created with <function>glBindTexture</function> remains active until a different
+            texture is bound to the same target, or until the bound texture is
+            deleted with <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Once created, a named texture may be re-bound to its same original target as often as needed.
+            It is usually much faster to use <function>glBindTexture</function> to bind an existing named
+            texture to one of the texture targets than it is to reload the texture image
+            using <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry> or another similar function.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_TEXTURE_2D_MULTISAMPLE</constant> and <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant> targets are available
+            only if the GL version is 3.2 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>texture</parameter> is not a name returned from
+            a previous call to <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>texture</parameter> was previously created with a target
+            that doesn't match that of <parameter>target</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_BINDING_1D</constant>,
+            <constant>GL_TEXTURE_BINDING_2D</constant>, <constant>GL_TEXTURE_BINDING_3D</constant>, <constant>GL_TEXTURE_BINDING_1D_ARRAY</constant>,
+            <constant>GL_TEXTURE_BINDING_2D_ARRAY</constant>, <constant>GL_TEXTURE_BINDING_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_BINDING_BUFFER</constant>, <constant>GL_TEXTURE_BINDING_CUBE_MAP</constant>,
+            <constant>GL_TEXTURE_BINDING_CUBE_MAP_ARRAY</constant>,
+            <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE</constant>,
+            or <constant>GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindTexture</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3DMultisample</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,7 +1,7 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-22 09:56:27 GMT+02:00
 using System;
 
-namespace OpenTK.Graphics.OpenGLES2
+namespace OpenTK.OpenGL.OpenGLES2
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -1132,6 +1132,7 @@ namespace OpenTK.Graphics.OpenGLES2
         MotionEstimationSearchBlockYQcom = 35985,
         AtcRgbAmd = 35986,
         AtcRgbaExplicitAlphaAmd = 35987,
+        TextureLodBiasQcom = 35990,
         LowerLeftExt = 36001,
         UpperLeftExt = 36002,
         StencilBackRef = 36003,
@@ -4505,13 +4506,9 @@ namespace OpenTK.Graphics.OpenGLES2
     }
     public enum ScalarType : uint
     {
-        Byte = 5120,
         UnsignedByte = 5121,
-        Short = 5122,
         UnsignedShort = 5123,
-        Int = 5124,
         UnsignedInt = 5125,
-        Float = 5126,
     }
     public enum SecondaryColorPointerTypeIBM : uint
     {
@@ -5058,11 +5055,10 @@ namespace OpenTK.Graphics.OpenGLES2
     }
     public enum TextureWrapMode : uint
     {
+        LinearMipmapLinear = 9987,
         Repeat = 10497,
         ClampToBorder = 33069,
-        ClampToBorderExt = 33069,
         ClampToBorderNv = 33069,
-        ClampToBorderOes = 33069,
         ClampToEdge = 33071,
         MirroredRepeat = 33648,
     }

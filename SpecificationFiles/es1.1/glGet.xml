@@ -1,0 +1,2181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGet">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glGet</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refdescriptor>glGet</refdescriptor>
+	<refname>glGetBooleanv</refname>
+	<refname>glGetFixedv</refname>
+	<refname>glGetFloatv</refname>
+	<refname>glGetIntegerv</refname>
+	<refpurpose>return the value or values of a selected parameter</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGetBooleanv</function></funcdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLboolean * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGetFixedv</function></funcdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLfixed * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGetFloatv</function></funcdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLfloat * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGetIntegerv</function></funcdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLint * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+
+
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+
+	    <varlistentry>
+		<term>
+		    <parameter>pname</parameter>
+		</term>
+		<listitem>
+		    <para>Specifies the parameter value to be returned. The
+		    symbolic constants in the list below are accepted.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <parameter>params</parameter>
+		</term>
+
+		<listitem>
+		    <para>Returns the value or values of the specified parameter.</para>
+		</listitem>
+	    </varlistentry>
+
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para>
+	    These commands return values for static state variables in GL.
+	    <parameter>pname</parameter>
+	    is a symbolic constant indicating the static state variable to
+	    be returned, and <parameter>params</parameter>
+	    is a pointer to an array of the indicated type in which to place the
+	    returned data.</para>
+
+	<para>
+	If a Get command is issued that returns value types different from the type of the
+	value being obtained, a type conversion is performed.
+	If GetBooleanv is called, a floating-point or integer value converts to <constant>GL_FALSE</constant>
+	if and only if it is <constant>zero</constant> (otherwise it converts to <constant>GL_TRUE</constant>).
+	If GetIntegerv is called, a boolean value is interpreted as either <constant>1</constant>
+	or <constant>0</constant>, and a floating-point value is rounded to the nearest integer,
+	unless the value is an RGBA color component, a DepthRange value, a depth buffer clear value, or a normal coordinate.
+	In these cases, the Get command  does a linear mapping that maps <constant>1.0</constant> to the most positive representable
+	integer value, and <constant>-1.0</constant> to the most negative representable integer value.
+	If GetFloatv is called, a boolean value is interpreted as either <constant>1.0</constant> or <constant>0.0</constant>, an integer
+	is coerced to floating-point. If a value is so large in magnitude that it cannot be represented with
+	the requested type, then the nearest value representable using the requested type is returned.
+	</para>
+
+	<para>The following symbolic constants are accepted by
+	<parameter>pname</parameter>:</para>
+
+	<variablelist>
+            <varlistentry>
+                <term><constant>GL_ACTIVE_TEXTURE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single value indicating the active multitexture unit.
+                        The initial value is <constant>GL_TEXTURE0</constant>.
+                        See <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALIASED_POINT_SIZE_RANGE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns two values,
+		    the smallest and largest supported sizes for
+		    aliased points. The range must include <constant>1</constant>.
+		    See <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALIASED_LINE_WIDTH_RANGE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns two values,
+		    the smallest and largest supported widths for
+		    aliased lines. The range must include <constant>1</constant>.
+		    See <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALPHA_BITS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of alpha bitplanes in the
+		    color buffer.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALPHA_TEST</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether alpha
+            testing of fragments is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALPHA_TEST_FUNC</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the symbolic name of the alpha test function.
+		    See <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_ALPHA_TEST_REF</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the reference value for the alpha test.
+		    An integer value, if requested, is linearly mapped from
+		    the internal floating-point representation such that <constant>1.0</constant>
+		    returns the most positive representable integer value, and <constant>-1.0</constant>
+		    returns the most negative representable integer value.
+		    See <citerefentry><refentrytitle>glAlphaFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_ARRAY_BUFFER_BINDING</constant></term>
+                <listitem>
+			  <para>
+			  </para>
+                    <para>
+                        <parameter>params</parameter> returns a single value, the name of the buffer object
+                        currently bound to the target <constant>GL_ARRAY_BUFFER</constant>. If no buffer object
+                        is bound to this target, <constant>0</constant> is returned.  The initial value is <constant>0</constant>.
+                        See <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_BLEND</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            blending of fragments is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry> and
+		    <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_BLEND_DST</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the symbolic constant identifying the destination blend function.
+		    See <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_BLEND_SRC</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the symbolic constant identifying the source blend function.
+		    See <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_BLUE_BITS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of blue bitplanes in the
+		    color buffer.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CLIENT_ACTIVE_TEXTURE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single value indicating the current
+                        client active multitexture unit.
+                        The initial value is <constant>GL_TEXTURE0</constant>.
+                        See <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_CLIP_PLANE</constant><emphasis>i</emphasis>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether the
+            <emphasis>i</emphasis>th user clipping plane is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glClipPlane</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_ARRAY</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            the color array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_ARRAY_BUFFER_BINDING</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the color array buffer binding.
+		    See <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_ARRAY_SIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of components per color in the color array.
+		    See <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_ARRAY_STRIDE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between consecutive colors in the color array.
+		    See <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_ARRAY_TYPE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    returns the data type of each component in the color array.
+		    See <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_CLEAR_VALUE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four values:
+		    the <parameter>red</parameter>, <parameter>green</parameter>,
+		    <parameter>blue</parameter>, and <parameter>alpha</parameter>
+		    values used to clear the color buffers.
+		    See <citerefentry><refentrytitle>glClearColor</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_LOGIC_OP</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            logical operation on color values is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_MATERIAL</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            color material tracking is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COLOR_WRITEMASK</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four boolean values:
+		    the <parameter>red</parameter>, <parameter>green</parameter>,
+		    <parameter>blue</parameter>, and <parameter>alpha</parameter>
+		    write enables for the color buffers.
+		    See <citerefentry><refentrytitle>glColorMask</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_COMPRESSED_TEXTURE_FORMATS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter> returns
+		    <constant>GL_NUM_COMPRESSED_TEXTURE_FORMATS</constant>
+		    values, the supported compressed texture formats.
+		    See
+		    <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>
+		    and
+		    <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CULL_FACE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value indicating whether polygon culling
+                        is enabled. The initial value is <constant>GL_FALSE</constant>.
+                        See <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CULL_FACE_MODE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns one value,
+                        a symbolic constant indicating which polygon faces are to be
+                        culled. The initial value is <constant>GL_BACK</constant>.
+                        See <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CURRENT_COLOR</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns four values:
+                        the red, green, blue, and alpha values of the current color.
+                        Integer values,
+                        if requested,
+                        are linearly mapped from the internal floating-point representation such
+                        that 1.0 returns the most positive representable integer value,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -1.0:-->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>
+                        returns the most negative representable integer value.
+                        The initial value is (1, 1, 1, 1).
+                        See <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CURRENT_NORMAL</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns three values:
+                        the <emphasis>x</emphasis>, <emphasis>y</emphasis>, and <emphasis>z</emphasis> values of the current normal.
+                        Integer values,
+                        if requested,
+                        are linearly mapped from the internal floating-point representation such
+                        that 1.0 returns the most positive representable integer value,
+                        and 
+                        <inlineequation><mml:math>
+                            <!-- eqn: -1.0:-->
+                            <mml:mn>-1.0</mml:mn>
+                        </mml:math></inlineequation>
+                        returns the most negative representable integer value.
+                        The initial value is (0, 0, 1).
+                        See <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_CURRENT_TEXTURE_COORDS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns four values:
+                        the <emphasis>s</emphasis>, <emphasis>t</emphasis>, <emphasis>r</emphasis>, and <emphasis>q</emphasis> current texture
+                        coordinates. The initial value is (0, 0, 0, 1).
+                        See <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_BITS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the number of bitplanes in the depth
+		    buffer.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_CLEAR_VALUE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the value that is used to clear the depth buffer.
+		    See <citerefentry><refentrytitle>glClearDepth</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_FUNC</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the symbolic name of the depth comparison function.
+		    See <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_RANGE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns two values:
+		    the near and far mapping limits for the depth buffer.
+		    See <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_TEST</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether depth testing
+            of fragments is enabled. The initial value is <constant>GL_FALSE</constant>.
+            See <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DEPTH_WRITEMASK</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns a single boolean value
+		    indicating if the depth buffer is enabled for writing.
+		    See <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_DITHER</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether dithering of
+            fragment colors and indices is enabled. The initial value is <constant>GL_TRUE</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ELEMENT_ARRAY_BUFFER_BINDING</constant></term>
+                <listitem>
+			  <para>
+			  </para>
+                    <para>
+                        <parameter>params</parameter> returns a single value, the name of the buffer object
+                        currently bound to the target <constant>GL_ELEMENT_ARRAY_BUFFER</constant>. If no buffer object
+                        is bound to this target, 0 is returned.  The initial value is <constant>0</constant>.
+                        See <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether fog
+            is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_COLOR</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four values:
+		    the <parameter>red</parameter>, <parameter>green</parameter>,
+		    <parameter>blue</parameter>, and <parameter>alpha</parameter>
+		    components of the fog color.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_DENSITY</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the fog density parameter.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_END</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the end factor for the linear fog equation.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_HINT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating the mode of the fog hint.
+		    See <citerefentry><refentrytitle>glHint</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_MODE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating which fog equation is selected.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FOG_START</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the start factor for the linear fog equation.
+		    See <citerefentry><refentrytitle>glFog</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_FRONT_FACE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating whether clockwise or
+		    counterclockwise polygon winding is treated as front-facing.
+		    See <citerefentry><refentrytitle>glFrontFace</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_GREEN_BITS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the number of green bitplanes in the
+		    color buffer.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the preferred format for pixel read back. See
+		    <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the preferred type for pixel read back. See
+		    <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LIGHT_MODEL_AMBIENT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four values:
+		    the <parameter>red</parameter>, <parameter>green</parameter>,
+		    <parameter>blue</parameter>, and <parameter>alpha</parameter>
+		    components of the ambient intensity of the entire scene.
+		    See <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LIGHT_MODEL_TWO_SIDE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns a single boolean value
+		    indicating whether separate materials are used to compute
+		    lighting for front and back facing polygons.
+		    See <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LIGHT</constant><emphasis>i</emphasis>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether the
+            <emphasis>i</emphasis>th light is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry> and
+		    <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LIGHTING</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether lighting
+            is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+		    <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>, and
+		    <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LINE_SMOOTH</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether line
+            antialiasing is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LINE_SMOOTH_HINT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating the mode of the line antialiasing hint.
+		    See <citerefentry><refentrytitle>glHint</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LINE_WIDTH</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the line width as specified with
+		    <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_LOGIC_OP_MODE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating the selected logic operation mode.
+		    See <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the matrix index array buffer binding.
+		    See <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_INDEX_ARRAY_SIZE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of matrix indices per vertex.
+		    See <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_INDEX_ARRAY_STRIDE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between matrix indices.
+		    See <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_INDEX_ARRAY_TYPE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the data type of each matrix index in the matrix indices array.
+		    See <citerefentry><refentrytitle>glMatrixIndexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MATRIX_MODE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating which matrix stack is currently the
+		    target of all matrix operations.
+		    See <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_INDEX_ARRAY_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether the matrix
+            index array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MATRIX_PALETTE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether matrix
+            palette is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_CLIP_PLANES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the maximum number of application defined clipping planes.
+		    The value must be at least <constant>6</constant>.
+		    See <citerefentry><refentrytitle>glClipPlane</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_LIGHTS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the maximum number of lights. The
+		    value must be at least 8. See
+		    <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_MODELVIEW_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the maximum supported depth of the
+		    modelview matrix stack.
+		    The value must be at least <constant>16</constant>.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MAX_PALETTE_MATRICES_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns the size of the matrix palette.
+		    The initial value is <constant>9</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_PROJECTION_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the maximum supported depth of the
+		    projection matrix stack. The value must be at least 2.
+		    See
+		    <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_TEXTURE_SIZE</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value. The value gives a rough estimate of the largest
+		    texture that the GL can handle. The value must be at least 64.
+		    See
+		    <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+		    <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>, and
+		    <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_TEXTURE_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the maximum supported depth of the
+		    texture matrix stack. The value must be at least 2. See
+		    <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_TEXTURE_UNITS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns a single value indicating the number of texture
+		    units supported. The value must be at least 1. See
+		    <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+		    <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>
+		    and
+		    <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_MAX_VERTEX_UNITS_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns the number of matrices per vertex.
+		    The initial value is <constant>3</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MAX_VIEWPORT_DIMS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns two values: the maximum supported width and
+		    height of the viewport. These must be at least as large
+		    as the visible dimensions of the display being rendered
+		    to. See
+		    <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MODELVIEW_MATRIX</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns sixteen values:
+		    the modelview matrix on the top of the modelview matrix stack.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MODELVIEW_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of matrices on the modelview matrix stack.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_MULTISAMPLE</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether multisampling
+            is enabled. The initial value is <constant>GL_TRUE</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NORMAL_ARRAY</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            the normal array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NORMAL_ARRAY_BUFFER_BINDING</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the normal array buffer binding.
+		    See <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NORMAL_ARRAY_STRIDE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between consective normals in the normal array.
+		    See <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NORMAL_ARRAY_TYPE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the data type of each normal in the normal array.
+		    See <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NORMALIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            normalization of normals is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_NUM_COMPRESSED_TEXTURE_FORMATS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of supportex compressed
+		    texture formats.
+		    The value must be at least <constant>10</constant>.
+		    See
+		    <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>
+		    and
+		    <citerefentry><refentrytitle>glCompressedTexSubImage2D</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_PACK_ALIGNMENT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte alignment used for writing pixel data to memory.
+		    See <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_PERSPECTIVE_CORRECTION_HINT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating the mode of the perspective correction hint.
+		    See <citerefentry><refentrytitle>glHint</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_DISTANCE_ATTENUATION</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns three values, the distance attenuation function coefficients <emphasis>a</emphasis>,
+            <emphasis>b</emphasis>, and <emphasis>c</emphasis>. The initial value is (1, 0, 0).  See
+		    <citerefentry><refentrytitle>glPointParameter</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_FADE_THRESHOLD_SIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value, the point fade threshold. The initial value is <constant>1</constant>.  See
+		    <citerefentry><refentrytitle>glPointParameter</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_SIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the point size as specified by
+		    <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="es1.1">
+		<term>
+		    <constant>GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the point size array buffer binding.
+		    See <citerefentry><refentrytitle>glPointSizePointerOES</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="es1.1">
+		<term>
+		    <constant>GL_POINT_SIZE_ARRAY_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether the point
+            size array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glPointSizePointerOES</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="es1.1">
+		<term>
+		    <constant>GL_POINT_SIZE_ARRAY_STRIDE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between consecutive point sizes in the point size array.
+		    See <citerefentry><refentrytitle>glPointSizePointerOES</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="es1.1">
+		<term>
+		    <constant>GL_POINT_SIZE_ARRAY_TYPE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the data type of each point size in the point array.
+		    See <citerefentry><refentrytitle>glPointSizePointerOES</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_SIZE_MAX</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+            the upper bound to which the derived point size is
+            clamped. The initial value is the maximum of the implementation dependent max
+            aliased and smooth point sizes. See
+		    <citerefentry><refentrytitle>glPointParameter</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_SIZE_MIN</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+            the lower bound to which the derived point size is
+            clamped. The initial value is <constant>0</constant>. See
+		    <citerefentry><refentrytitle>glPointParameter</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_SMOOTH</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether point
+            antialiasing is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POINT_SMOOTH_HINT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating the mode of the point antialiasing hint.
+		    See <citerefentry><refentrytitle>glHint</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="es1.1">
+		<term>
+		    <constant>GL_POINT_SPRITE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether point
+            sprites are enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POLYGON_OFFSET_FACTOR</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the scaling factor used to determine the variable offset that is added
+		    to the depth value of each fragment generated when a polygon is rasterized.
+		    See <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POLYGON_OFFSET_FILL</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether polygon offset
+            is enabled for polygons in fill mode. The initial value is <constant>GL_FALSE</constant>.
+            See <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_POLYGON_OFFSET_UNITS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value.
+		    This value is multiplied by an implementation-specific value and
+		    then added to the depth value of each fragment generated when a
+		    polygon is rasterized.
+		    See <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_PROJECTION_MATRIX</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns sixteen values:
+		    the projection matrix on the top of the projection matrix stack.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_PROJECTION_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of matrices on the projection matrix stack.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_RED_BITS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of red bitplanes in each color buffer.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_RESCALE_NORMAL</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            rescaling of normals is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value indicating if the 
+                        fragment coverage value should be ANDed with a temporary coverage value based
+                        on the fragment's alpha value. The initial value is <constant>GL_FALSE</constant>.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term><constant>GL_SAMPLE_ALPHA_TO_ONE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value indicating if the 
+                        fragment's alpha value should be replaced by the maximum representable alpha value
+                        after coverage determination. The initial value is <constant>GL_FALSE</constant>.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            
+            <varlistentry>
+                <term><constant>GL_SAMPLE_BUFFERS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single integer value indicating the number of sample buffers
+                        associated with the currently bound framebuffer.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_SAMPLE_COVERAGE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value indicating if the 
+                        fragment coverage value should be ANDed with a temporary coverage value based
+                        on the current sample coverage value. The initial value is <constant>GL_FALSE</constant>.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_SAMPLE_COVERAGE_INVERT</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single boolean value indicating if the temporary
+                        coverage value should be inverted.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_SAMPLE_COVERAGE_VALUE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single positive floating-point value indicating the
+                        current sample coverage value.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><constant>GL_SAMPLES</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a single integer value 
+                        indicating the coverage mask size of the currently bound framebuffer.
+                        See <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_SCISSOR_BOX</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four values:
+		    the <parameter>x</parameter> and <parameter>y</parameter> window coordinates of the scissor box,
+		    followed by its <parameter>width</parameter> and <parameter>height</parameter>.
+		    See <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_SCISSOR_TEST</constant></term>
+        <listitem>
+            <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether scissoring is
+            enabled. The initial value is <constant>GL_FALSE</constant>.
+            See <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>.
+            </para>
+        </listitem>
+        </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_SHADE_MODEL</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating whether the shading mode is
+		    flat or smooth.
+		    See <citerefentry><refentrytitle>glShadeModel</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_SMOOTH_LINE_WIDTH_RANGE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+
+		    returns two values, the smallest and largest supported
+		    widths for antialiased lines. The range must include 1. See
+		    <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_SMOOTH_POINT_SIZE_RANGE</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns two values, the smallest and largest supported
+		    widths for antialiased points. The range must include 1. See
+		    <citerefentry><refentrytitle>glPointSize</refentrytitle></citerefentry>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_BITS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, the number of bitplanes in the stencil
+		    buffer.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_CLEAR_VALUE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the index to which the stencil bitplanes are cleared.
+		    See <citerefentry><refentrytitle>glClearStencil</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_FAIL</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating what action is taken when the stencil test fails.
+		    See <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_FUNC</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating what function is used to compare the
+		    stencil reference value with the stencil buffer value.
+		    See <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_PASS_DEPTH_FAIL</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating what action is taken when the stencil
+		    test passes, but the depth test fails.
+		    See <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_PASS_DEPTH_PASS</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    a symbolic constant indicating what action is taken when the stencil
+		    test passes, and the depth test passes.
+		    See <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_REF</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the reference value that is compared with the contents of the stencil buffer.
+		    See <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_STENCIL_TEST</constant></term>
+        <listitem>
+            <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether stencil testing
+            of fragments is enabled. The initial value is <constant>GL_FALSE</constant>.
+            See <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>.
+            </para>
+        </listitem>
+        </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_VALUE_MASK</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the mask that is used to mask both the stencil reference value and the
+		    stencil buffer value before they are compared.
+		    See <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_STENCIL_WRITEMASK</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the mask that controls writing of the stencil bitplanes.
+		    See <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_SUBPIXEL_BITS</constant>
+		</term>
+		<listitem>
+		    <para><parameter>params</parameter>
+		    returns one value, an estimate of the number of bits of
+		    subpixel resolution that are used to position rasterized
+		    geometry in window coordinates. The value must be at
+		    least 4.</para>
+		</listitem>
+	    </varlistentry>
+
+        <varlistentry>
+        <term><constant>GL_TEXTURE_2D</constant></term>
+        <listitem>
+            <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether 2D
+            texturing is enabled. The initial value is <constant>GL_FALSE</constant>.
+            See <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>.
+            </para>
+        </listitem>
+        </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_BINDING_2D</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the name of the texture currently bound to the target <constant>GL_TEXTURE_2D</constant>.
+		    See <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_COORD_ARRAY</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            the texture coordinate array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_COORD_ARRAY_BUFFER_BINDING</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the texture coordinate array buffer binding.
+		    See <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_COORD_ARRAY_SIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of coordinates per element in the texture coordinate array.
+		    See <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_COORD_ARRAY_STRIDE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between consecutive elements in the texture coordinate array.
+		    See <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_COORD_ARRAY_TYPE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    returns the data type of each coordinate in the texture coordinate array.
+		    See <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_MATRIX</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns sixteen values:
+		    the texture matrix on the top of the texture matrix stack.
+		    See <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_STACK_DEPTH</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of matrices on the texture matrix stack.
+		    See <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_UNPACK_ALIGNMENT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte alignment used for reading pixel data from memory.
+		    See <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VIEWPORT</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns four values:,
+		    the <parameter>x</parameter> and <parameter>y</parameter> window coordinates of the viewport,
+		    followed by its <parameter>width</parameter> and <parameter>height</parameter>.
+		    See <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VERTEX_ARRAY</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether
+            the vertex array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VERTEX_ARRAY_BUFFER_BINDING</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the vertex array buffer binding.
+		    See <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VERTEX_ARRAY_SIZE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    number of coordinates per vertex in the vertex array.
+		    See <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VERTEX_ARRAY_STRIDE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between consecutive vertexes in the vertex array.
+		    See <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_VERTEX_ARRAY_TYPE</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    returns the data type of each coordinate in the vertex array.
+		    See <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_WEIGHT_ARRAY_BUFFER_BINDING_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the weight array buffer binding.
+		    See <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_WEIGHT_ARRAY_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+            <parameter>params</parameter> returns a single boolean value indicating whether the weight
+            array is enabled. The initial value is <constant>GL_FALSE</constant>.
+		    See <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_WEIGHT_ARRAY_SIZE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the number of weights per vertex.
+		    See <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_WEIGHT_ARRAY_STRIDE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the byte offset between weights per vertex.
+		    See <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry revision="OES_matrix_palette">
+		<term>
+		    <constant>GL_WEIGHT_ARRAY_TYPE_OES</constant>
+		</term>
+		<listitem>
+		    <para>
+		    <parameter>params</parameter>
+		    returns one value,
+		    the data type of each weight in the weight array.
+		    See <citerefentry><refentrytitle>glWeightPointer</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="notes" revision="es1.1">
+        <title>Notes</title>
+
+	<para> 
+	<constant>GL_POINT_SIZE_ARRAY_BUFFER_BINDING_OES</constant>, 
+        <constant>GL_POINT_SIZE_ARRAY_STRIDE_OES</constant>, and 
+        <constant>GL_POINT_SIZE_ARRAY_TYPE_OES</constant> are only accepted
+	if the OpenGL ES version number is 1.1 or greater. 
+	</para> 
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>pname</parameter> is not an accepted value.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	<citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>

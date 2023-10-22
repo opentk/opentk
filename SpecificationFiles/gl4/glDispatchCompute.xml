@@ -1,0 +1,111 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDispatchCompute">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDispatchCompute</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDispatchCompute</refname>
+        <refpurpose>launch one or more compute work groups</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDispatchCompute</function></funcdef>
+                <paramdef>GLuint <parameter>num_groups_x</parameter></paramdef>
+                <paramdef>GLuint <parameter>num_groups_y</parameter></paramdef>
+                <paramdef>GLuint <parameter>num_groups_z</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>num_groups_x</parameter></term>
+            <listitem>
+                <para>
+                    The number of work groups to be launched in the X dimension.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>num_groups_y</parameter></term>
+            <listitem>
+                <para>
+                    The number of work groups to be launched in the Y dimension.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>num_groups_z</parameter></term>
+            <listitem>
+                <para>
+                    The number of work groups to be launched in the Z dimension.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDispatchCompute</function> launches one or more compute
+            work groups. Each work group is processed by the active program object for the compute
+            shader stage. While the individual shader invocations within a work group are
+            executed as a unit, work groups are executed completely independently and in
+            unspecified order. <parameter>num_groups_x</parameter>, <parameter>num_groups_y</parameter>
+            and <parameter>num_groups_z</parameter> specify the number of local
+            work groups that will be dispatched in the X, Y and Z dimensions, respectively.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if there is no active program
+            for the compute shader stage.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any of <parameter>num_groups_x</parameter>,
+            <parameter>num_groups_y</parameter>, or <parameter>num_groups_z</parameter> is greater than or
+            equal to the maximum work-group count for the corresponding dimension.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_COMPUTE_WORK_GROUP_COUNT</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDispatchCompute</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDispatchComputeIndirect</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

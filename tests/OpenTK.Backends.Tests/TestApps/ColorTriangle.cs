@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using OpenTK.Core.Platform.Handles;
 using OpenTK.Mathematics;
-using OpenTK.Mathematics.Colors;
+using OpenTK.OpenGL.OpenGL;
 
 namespace OpenTK.Backends.Tests.TestApps
 {

@@ -1,0 +1,97 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glCreateFramebuffers">
+    <info>
+        <copyright>
+            <year>2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glCreateFramebuffers</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glCreateFramebuffers</refname>
+        <refpurpose>create framebuffer objects</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCreateFramebuffers</function></funcdef>
+                <paramdef>GLsizei <parameter>n</parameter></paramdef>
+                <paramdef>GLuint *<parameter>framebuffers</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>n</parameter></term>
+                <listitem>
+                    <para>
+                        Number of framebuffer objects to create.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>framebuffers</parameter></term>
+                <listitem>
+                    <para>
+                        Specifies an array in which names of the new
+                        framebuffer objects are stored.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glCreateFramebuffers</function>
+            returns <parameter>n</parameter> previously unused framebuffer
+            names in <parameter>framebuffers</parameter>, each representing
+            a new framebuffer object initialized to the default state.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>n</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glCreateFramebuffers</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture1D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture2D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture3D</function>,
+            <citerefentry><refentrytitle>glFramebufferTextureLayer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsFramebuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

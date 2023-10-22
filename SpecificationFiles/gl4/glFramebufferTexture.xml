@@ -1,0 +1,372 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFramebufferTexture">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFramebufferTexture</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFramebufferTexture</refname>
+        <refpurpose>attach a level of a texture object as a logical buffer of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTexture</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTexture1D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>textarget</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTexture2D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>textarget</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glFramebufferTexture3D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>textarget</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLint <parameter>layer</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glNamedFramebufferTexture</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer is bound
+                    for all commands <emphasis>except</emphasis>
+                    <function>glNamedFramebufferTexture</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glNamedFramebufferTexture</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachment</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the attachment point of the framebuffer.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>textarget</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glFramebufferTexture1D</function>,
+                    <function>glFramebufferTexture2D</function> and
+                    <function>glFramebufferTexture3D</function>, specifies
+                    what type of texture is expected in the
+                    <parameter>texture</parameter> parameter, or for cube
+                    map textures, which face is to be attached.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of an existing texture object to
+                    attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the mipmap level of the texture object to
+                    attach.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            These commands attach a selected mipmap level or image of a
+            texture object as one of the logical buffers of the specified
+            framebuffer object. Textures cannot be attached to the default
+            draw and read framebuffer, so they are not valid targets of
+            these commands.
+        </para>
+        <para>
+            For all commands <emphasis>except</emphasis>
+            <function>glNamedFramebufferTexture</function>, the framebuffer
+            object is that bound to <parameter>target</parameter>, which
+            must be <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant>, or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>.
+        </para>
+        <para>
+            For <function>glNamedFramebufferTexture</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object.
+        </para>
+        <para>
+            <parameter>attachment</parameter> specifies the logical
+            attachment of the framebuffer and must be
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant> or
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>.
+            <emphasis>i</emphasis> in
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>
+            may range from zero to the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
+            Attaching a level of a texture to
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> is equivalent
+            to attaching that level to both the
+            <constant>GL_DEPTH_ATTACHMENT</constant>
+            <emphasis>and</emphasis> the
+            <constant>GL_STENCIL_ATTACHMENT</constant> attachment points
+            simultaneously.
+        </para>
+        <para>
+            For <function>glFramebufferTexture1D</function>,
+            <function>glFramebufferTexture2D</function> and
+            <function>glFramebufferTexture3D</function>,
+            <parameter>textarget</parameter> specifies what type of texture
+            is named by <parameter>texture</parameter>, and for cube map
+            textures, specifies the face that is to be attached. If
+            <parameter>texture</parameter> is not zero, it must be the name
+            of an existing texture object with effective target
+            <parameter>textarget</parameter> unless it is a cube map
+            texture, in which case <parameter>textarget</parameter> must be
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, or
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+        </para>
+        <para>
+            If <parameter>texture</parameter> is non-zero, the specified
+            <parameter>level</parameter> of the texture object named
+            <parameter>texture</parameter> is attached to the framebuffer
+            attachment point named by <parameter>attachment</parameter>. For
+            <function>glFramebufferTexture1D</function>,
+            <function>glFramebufferTexture2D</function>, and
+            <function>glFramebufferTexture3D</function>,
+            <parameter>texture</parameter> must be zero or the name of an
+            existing texture with an effective target of
+            <parameter>textarget</parameter>, or
+            <parameter>texture</parameter> must be the name of an existing
+            cube-map texture and <parameter>textarget</parameter> must be
+            one of <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>, or
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>.
+        </para>
+        <para>
+            If <parameter>textarget</parameter> is
+            <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE_ARRAY</constant>, then
+            <parameter>level</parameter> must be zero.
+        </para>
+        <para>
+            If <parameter>textarget</parameter> is
+            <constant>GL_TEXTURE_3D</constant>, then
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_3D_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            If <parameter>textarget</parameter> is one of
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>, or
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, then
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_CUBE_MAP_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            For all other values of <parameter>textarget</parameter>,
+            <parameter>level</parameter> must be greater than or equal to
+            zero and less than or equal to $log_2$ of the value of
+            <constant>GL_MAX_TEXTURE_SIZE</constant>.
+        </para>
+        <para>
+            <parameter>layer</parameter> specifies the layer of a
+            2-dimensional image within a 3-dimensional texture.
+        </para>
+        <para>
+            For <function>glFramebufferTexture1D</function>, if
+            <parameter>texture</parameter> is not zero, then
+            <parameter>textarget</parameter> must be
+            <constant>GL_TEXTURE_1D</constant>. For
+            <function>glFramebufferTexture2D</function>, if
+            <parameter>texture</parameter> is not zero,
+            <parameter>textarget</parameter> must be one of
+            <constant>GL_TEXTURE_2D</constant>,
+            <constant>GL_TEXTURE_RECTANGLE</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+            <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, or
+            <constant>GL_TEXTURE_2D_MULTISAMPLE</constant>. For
+            <function>glFramebufferTexture3D</function>, if
+            <parameter>texture</parameter> is not zero, then
+            <parameter>textarget</parameter> must be
+            <constant>GL_TEXTURE_3D</constant>.
+        </para>
+        <para>
+            For <function>glFramebufferTexture</function> and
+            <function>glNamedFramebufferTexture</function>, if
+            <parameter>texture</parameter> is the name of a
+            three-dimensional, cube map array, cube map, one- or
+            two-dimensional array, or two-dimensional multisample array
+            texture, the specified texture level is an array of images, and
+            the framebuffer attachment is considered to be
+            <emphasis>layered</emphasis>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by all
+            commands accepting a <parameter>target</parameter> parameter if
+            it is not one of the accepted framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by all
+            commands accepting a <parameter>target</parameter> parameter if
+            zero is bound to that target.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glNamedFramebufferTexture</function> if
+            <parameter>framebuffer</parameter> is not the name of an
+            existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>attachment</parameter> is not one of the accepted
+            attachment points.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>texture</parameter> is not zero or the name of an
+            existing texture object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if
+            <parameter>texture</parameter> is not zero and
+            <parameter>level</parameter> is not a supported texture level
+            for <parameter>texture</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by
+            <function>glFramebufferTexture3D</function> if
+            <parameter>texture</parameter> is not zero and
+            <parameter>layer</parameter> is larger than the value of
+            <constant>GL_MAX_3D_TEXTURE_SIZE</constant> minus one.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by all
+            commands accepting a <parameter>textarget</parameter> parameter
+            if <parameter>texture</parameter> is not zero, and
+            <parameter>textarget</parameter> and the effective target of
+            <parameter>texture</parameter> are not compatible.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            if <parameter>texture</parameter> is a buffer texture.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFramebufferTexture</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glFramebufferTexture1D</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glFramebufferTexture2D</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glFramebufferTexture3D</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glNamedFramebufferTexture</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferTexture</refentrytitle></citerefentry>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture1D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture2D</function>,
+            <!-- FIX: link to glFramebufferTexture --> <function>glFramebufferTexture3D</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

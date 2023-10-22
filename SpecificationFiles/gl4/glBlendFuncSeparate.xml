@@ -1,0 +1,1498 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBlendFuncSeparate">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBlendFuncSeparate</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBlendFuncSeparate</refname>
+        <refpurpose>specify pixel arithmetic for RGB and alpha components separately</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBlendFuncSeparate</function></funcdef>
+                <paramdef>GLenum <parameter>srcRGB</parameter></paramdef>
+                <paramdef>GLenum <parameter>dstRGB</parameter></paramdef>
+                <paramdef>GLenum <parameter>srcAlpha</parameter></paramdef>
+                <paramdef>GLenum <parameter>dstAlpha</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glBlendFuncSeparatei</function></funcdef>
+                <paramdef>GLuint <parameter>buf</parameter></paramdef>
+                <paramdef>GLenum <parameter>srcRGB</parameter></paramdef>
+                <paramdef>GLenum <parameter>dstRGB</parameter></paramdef>
+                <paramdef>GLenum <parameter>srcAlpha</parameter></paramdef>
+                <paramdef>GLenum <parameter>dstAlpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>buf</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glBlendFuncSeparatei</function>, specifies the index of the draw
+                    buffer for which to set the blend functions.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcRGB</parameter></term>
+            <listitem>
+                <para>
+                    Specifies how the red, green, and blue blending factors are computed.
+                    The initial value is <constant>GL_ONE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstRGB</parameter></term>
+            <listitem>
+                <para>
+                    Specifies how the red, green, and blue destination blending factors are
+                    computed.
+                    The initial value is <constant>GL_ZERO</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>srcAlpha</parameter></term>
+            <listitem>
+                <para>
+                    Specified how the alpha source blending factor is computed.
+                    The initial value is <constant>GL_ONE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>dstAlpha</parameter></term>
+            <listitem>
+                <para>
+                    Specified how the alpha destination blending factor is computed.
+                    The initial value is <constant>GL_ZERO</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Pixels can be drawn using a function that blends
+            the incoming (source) RGBA values with the RGBA values
+            that are already in the frame buffer (the destination values).
+            Blending is initially disabled.
+            Use <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <!-- FIX: link to glEnable --> <function>glDisable</function> with argument <constant>GL_BLEND</constant>
+            to enable and disable blending.
+        </para>
+        <para>
+            <function>glBlendFuncSeparate</function> defines the operation of blending for all draw buffers when it is enabled.
+            <function>glBlendFuncSeparatei</function> defines the operation of blending for a single draw buffer
+            specified by <parameter>buf</parameter> when enabled for that draw buffer.
+            <parameter>srcRGB</parameter> specifies which method is used to scale the
+            source RGB-color components.
+            <parameter>dstRGB</parameter> specifies which method is used to scale the
+            destination RGB-color components.
+            Likewise, <parameter>srcAlpha</parameter> specifies which method is used to scale the source alpha
+            color component, and <parameter>dstAlpha</parameter> specifies which method is used to scale the
+            destination alpha component.
+            The possible methods are described in the following table.
+            Each method defines four scale factors,
+            one each for red, green, blue, and alpha.
+        </para>
+        <para>
+            In the table and in subsequent equations, first source, second source and destination
+            color components are referred to as
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( R sub s0 , G sub s0 , B sub s0 , A sub s0 ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">s0</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">s0</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">s0</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">s0</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( R sub s1 , G sub s1 , B sub s1 , A sub s1 ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">s1</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">s1</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">s1</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">s1</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( R sub d , G sub d , B sub d , A sub d ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>, respectively.
+            The color specified by <citerefentry><refentrytitle>glBlendColor</refentrytitle></citerefentry> is referred to as
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( R sub c , G sub c , B sub c , A sub c ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+            They are understood to have integer values between 0 and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( k sub R , k sub G , k sub B , k sub A ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">R</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">G</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">B</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">A</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>,
+            where
+        </para>
+        <para>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: k sub c  =  2 sup {m sub c} - 1: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                    <mml:mi mathvariant="italic">c</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:msup><mml:mn>2</mml:mn>
+                        <mml:mfenced open="" close="">
+                            <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                            <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:msub>
+                        </mml:mfenced>
+                        </mml:msup>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>1</mml:mn>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( m sub R , m sub G , m sub B , m sub A ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mi mathvariant="italic">R</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mi mathvariant="italic">G</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mi mathvariant="italic">B</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mi mathvariant="italic">A</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            is the number of red,
+            green,
+            blue,
+            and alpha bitplanes.
+        </para>
+        <para>
+            Source and destination scale factors are referred to as
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( s sub R , s sub G , s sub B , s sub A ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mi mathvariant="italic">R</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mi mathvariant="italic">G</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mi mathvariant="italic">B</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mi mathvariant="italic">A</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: ( d sub R , d sub G , d sub B , d sub A ): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                    <mml:mi mathvariant="italic">R</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                    <mml:mi mathvariant="italic">G</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                    <mml:mi mathvariant="italic">B</mml:mi>
+                    </mml:msub>
+                    <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                    <mml:mi mathvariant="italic">A</mml:mi>
+                    </mml:msub>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+            All scale factors have range
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: [0,1]: -->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+        <para>
+        </para>
+        <informaltable>
+            <tgroup cols="3" align="left">
+                <colspec colwidth="3*"/>
+                <colspec colwidth="2*"/>
+                <colspec colwidth="1*"/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold"> Parameter </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> RGB Factor </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Alpha Factor </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry> <constant>GL_ZERO</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 0,  0,  0 ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>0</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 0: -->
+                            <mml:mn>0</mml:mn>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mn>1</mml:mn>
+                                <mml:mn>1</mml:mn>
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1: -->
+                            <mml:mn>1</mml:mn>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_SRC_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( R sub s0 / k sub R ,  G sub s0 / k sub G ,  B sub s0 / k sub B ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">R</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">G</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">B</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub s0 / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s0</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_SRC_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( R sub s0 / k sub R ,  G sub s0 / k sub G ,  B sub 0s / k sub B ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">R</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">G</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">B</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  - A sub s0 / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_DST_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( R sub d / k sub R ,  G sub d / k sub G ,  B sub d / k sub B ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">R</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">G</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">B</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub d / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_DST_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( R sub d / k sub R ,  G sub d / k sub G ,  B sub d / k sub B ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">R</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">G</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">B</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1 - A sub d / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_SRC_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub s / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s0</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_SRC_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( A sub s0 / k sub A ,  A sub s0 / k sub A ,  A sub s0 / k sub A ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s0</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1 - A sub s / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s0</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_DST_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub d / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_DST_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( A sub d / k sub A ,  A sub d / k sub A ,  A sub d / k sub A ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">d</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1 - A sub d / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_CONSTANT_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( R sub c,  G sub c,  B sub c ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub c: -->
+                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                            <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:msub>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_CONSTANT_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( R sub c,  G sub c,  B sub c ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  -  A sub c: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_CONSTANT_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( A sub c,  A sub c,  A sub c ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub c: -->
+                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                            <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:msub>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_CONSTANT_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( A sub c,  A sub c,  A sub c ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  -  A sub c: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_SRC_ALPHA_SATURATE</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( i,  i,  i ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mi mathvariant="italic">i</mml:mi>
+                                <mml:mi mathvariant="italic">i</mml:mi>
+                                <mml:mi mathvariant="italic">i</mml:mi>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1: -->
+                            <mml:mn>1</mml:mn>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_SRC1_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( R sub s1 / k sub R ,  G sub s1 / k sub G ,  B sub s1 / k sub B ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">R</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">G</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">B</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub s0 / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s1</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_SRC1_COLOR</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1,  1 )  -  ( R sub s1 / k sub R ,  G sub s1 / k sub G ,  B sub s1 / k sub B ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">R</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">G</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">B</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1  - A sub s0 / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_SRC1_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ): -->
+                            <mml:mfenced open="(" close=")">
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: A sub s1 / k sub A: -->
+                            <mml:mfrac>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s1</mml:mi>
+                                </mml:msub>
+                                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_ONE_MINUS_SRC1_ALPHA</constant> </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: ( 1,  1,  1 )  -  ( A sub s1 / k sub A ,  A sub s1 / k sub A ,  A sub s1 / k sub A ): -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mfenced>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                    <mml:mfrac>
+                                        <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                        <mml:mi mathvariant="italic">s1</mml:mi>
+                                        </mml:msub>
+                                        <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                        <mml:mi mathvariant="italic">A</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfrac>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 1 - A sub s1 / k sub A: -->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfrac>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s1</mml:mi>
+                                    </mml:msub>
+                                    <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                                    <mml:mi mathvariant="italic">A</mml:mi>
+                                    </mml:msub>
+                                </mml:mfrac>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            In the table,
+        </para>
+        <para>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: i  =   min (A sub s , 1 - {A sub d}): -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                            <mml:mi mathvariant="italic">s</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">d</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            To determine the blended RGBA values of a pixel,
+            the system uses the following equations:
+        </para>
+        <para>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: R sub d  =      min ( k sub R,  R sub s s sub R + R sub d d sub R ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">R</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                                <mml:mi mathvariant="italic">R</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">R</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: G sub d  =    min ( k sub G,  G sub s s sub G + G sub d d sub G ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">G</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                                <mml:mi mathvariant="italic">G</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">G</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: B sub d  =    min ( k sub B,  B sub s s sub B + B sub d d sub B ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">B</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                                <mml:mi mathvariant="italic">B</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">B</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: A sub d  =    min ( k sub A,  A sub s s sub A + A sub d d sub A ): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">min</mml:mi>
+                        <mml:mo>&af;</mml:mo>
+                        <mml:mfenced open="(" close=")">
+                            <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                            <mml:mi mathvariant="italic">A</mml:mi>
+                            </mml:msub>
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">s</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                                <mml:mo>+</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">d</mml:mi>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">d</mml:mi>
+                                <mml:mi mathvariant="italic">A</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            Despite the apparent precision of the above equations, blending arithmetic
+            is not exactly specified, because blending operates with imprecise integer
+            color values.  However, a blend factor that should be equal to 1 is
+            guaranteed not to modify its multiplicand, and a blend factor equal to 0
+            reduces its multiplicand to 0.  For example, when <parameter>srcRGB</parameter> is
+            <constant>GL_SRC_ALPHA</constant>, <parameter>dstRGB</parameter> is <constant>GL_ONE_MINUS_SRC_ALPHA</constant>, and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: A sub s: -->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">s</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            is
+            equal to
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: k sub A: -->
+                <mml:msub><mml:mi mathvariant="italic">k</mml:mi>
+                <mml:mi mathvariant="italic">A</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            the equations reduce to simple replacement:
+        </para>
+        <para>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: R sub d  =      R sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: G sub d  =    G sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: B sub d  =    B sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: A sub d  =    A sub s: -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">d</mml:mi>
+                    </mml:msub>
+                    <mml:mo>=</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Incoming (source) alpha is correctly thought of as a material opacity,
+            ranging from 1.0
+            (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: K sub A: -->
+                <mml:msub><mml:mi mathvariant="italic">K</mml:mi>
+                <mml:mi mathvariant="italic">A</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>),
+            representing complete opacity,
+            to 0.0 (0), representing complete
+            transparency.
+        </para>
+        <para>
+            When more than one color buffer is enabled for drawing,
+            the GL performs blending separately for each enabled buffer,
+            using the contents of that buffer for destination color.
+            (See <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>.)
+        </para>
+        <para>
+            When dual source blending is enabled (i.e., one of the blend factors requiring
+            the second color input is used), the maximum number of enabled draw buffers
+            is given by <constant>GL_MAX_DUAL_SOURCE_DRAW_BUFFERS</constant>, which may
+            be lower than <constant>GL_MAX_DRAW_BUFFERS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if either <parameter>srcRGB</parameter> or <parameter>dstRGB</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by <function>glBlendFuncSeparatei</function> if <parameter>buf</parameter> is greater
+            than or equal to the value of <constant>GL_MAX_DRAW_BUFFERS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_BLEND_SRC_RGB</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_BLEND_SRC_ALPHA</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_BLEND_DST_RGB</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_BLEND_DST_ALPHA</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_BLEND</constant>
+        </para>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBlendFuncSeparate</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glBlendFuncSeparatei</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBlendColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBlendEquation</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2018 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

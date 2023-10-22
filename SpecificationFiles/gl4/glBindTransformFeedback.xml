@@ -1,0 +1,125 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindTransformFeedback">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindTransformFeedback</refname>
+        <refpurpose>bind a transform feedback object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindTransformFeedback</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>id</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which to bind the transform feedback object <parameter>id</parameter>. <parameter>target</parameter>
+                    must be <constant>GL_TRANSFORM_FEEDBACK</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>id</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a transform feedback object reserved by <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindTransformFeedback</function> binds the transform feedback object with name <parameter>id</parameter> to the current
+            GL state. <parameter>id</parameter> must be a name previously returned from a call to
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>. If <parameter>id</parameter> has not
+            previously been bound, a new transform feedback object with name <parameter>id</parameter> and initialized with the
+            default transform state vector is created.
+        </para>
+        <para>
+            In the initial state, a default transform feedback object is bound and treated as
+            a transform feedback object with a name of zero. If the name zero is subsequently bound, the default
+            transform feedback object is again bound to the GL state.
+        </para>
+        <para>
+            While a transform feedback buffer object is bound, GL operations on the target
+            to which it is bound affect the bound transform feedback object, and queries of the
+            target to which a transform feedback object is bound return state from the bound
+            object. When buffer objects are bound for transform feedback, they are attached to
+            the currently bound transform feedback object. Buffer objects are used for trans-
+            form feedback only if they are attached to the currently bound transform feedback
+            object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not <constant>GL_TRANSFORM_FEEDBACK</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the transform feedback operation is
+            active on the currently bound transform feedback object, and that operation is not paused.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>id</parameter> is not
+            zero or the name of a transform feedback object returned from a previous call to
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>, or
+            if such a name has been deleted by <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindTransformFeedback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTransformFeedbacks</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPauseTransformFeedback</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glResumeTransformFeedback</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

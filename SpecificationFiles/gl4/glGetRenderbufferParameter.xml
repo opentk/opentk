@@ -1,0 +1,197 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetRenderbufferParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetRenderbufferParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetRenderbufferParameteriv</refname>
+        <refname>glGetNamedRenderbufferParameteriv</refname>
+        <refpurpose>query a named parameter of a renderbuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetRenderbufferParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetNamedRenderbufferParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the renderbuffer object is
+                    bound for
+                    <function>glGetRenderbufferParameteriv</function>.
+                    <parameter>target</parameter> must be
+                    <constant>GL_RENDERBUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>renderbuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the renderbuffer object for
+                    <function>glGetNamedRenderbufferParameteriv</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the parameter of the renderbuffer object to
+                    query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the value of parameter
+                    <parameter>pname</parameter> for the renderbuffer object.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetRenderbufferParameteriv</function> and
+            <function>glGetNamedRenderbufferParameteriv</function> query
+            parameters of a specified renderbuffer object.
+        </para>
+        <para>
+            For <function>glGetRenderbufferParameteriv</function>, the
+            renderbuffer object is that bound to
+            <parameter>target</parameter>, which must be
+            <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            For <function>glGetNamedRenderbufferParameteriv</function>,
+            <parameter>renderbuffer</parameter> is the name of the
+            renderbuffer object.
+        </para>
+        <para>
+            Upon successful return, <parameter>param</parameter> will
+            contain the value of the renderbuffer parameter specified by
+            <parameter>pname</parameter>, as described below.
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <constant>GL_RENDERBUFFER_WIDTH</constant>,
+                    <constant>GL_RENDERBUFFER_HEIGHT</constant>,
+                    <constant>GL_RENDERBUFFER_INTERNAL_FORMAT</constant> or
+                    <constant>GL_RENDERBUFFER_SAMPLES</constant>
+                </term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the width in
+                        pixels, the height in pixels, internal format, or
+                        the number of samples, respectively, of the image of
+                        the specified renderbuffer object.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>
+                    <constant>GL_RENDERBUFFER_RED_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_GREEN_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_BLUE_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_ALPHA_SIZE</constant>,
+                    <constant>GL_RENDERBUFFER_DEPTH_SIZE</constant> or
+                    <constant>GL_RENDERBUFFER_STENCIL_SIZE</constant>
+                </term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the actual
+                        resolution in bits (not the resolution specified
+                        when the image was defined) for the red, green,
+                        blue, alpha, depth or stencil components,
+                        respectively, of the image of the renderbuffer
+                        object.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glGetRenderbufferParameteriv</function> if
+            <parameter>target</parameter> is not
+            <constant>GL_RENDERBUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetRenderbufferParameteriv</function> if
+            zero is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetNamedRenderbufferParameteriv</function>
+            if <parameter>renderbuffer</parameter> is not the name of an
+            existing renderbuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>pname</parameter> is not one of the accepted
+            parameter names described above.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetNamedRenderbufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetRenderbufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindRenderbuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderbufferStorageMultisample</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

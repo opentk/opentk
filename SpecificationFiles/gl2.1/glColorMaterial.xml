@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glColorMaterial">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glColorMaterial</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glColorMaterial</refname>
+        <refpurpose>cause a material color to track the current color</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorMaterial</function></funcdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>face</parameter></term>
+            <listitem>
+                <para>
+                    Specifies whether front,
+                    back,
+                    or both front and back material parameters should track the current color.
+                    Accepted values are
+                    <constant>GL_FRONT</constant>,
+                    <constant>GL_BACK</constant>,
+                    and <constant>GL_FRONT_AND_BACK</constant>.
+                    The initial value is <constant>GL_FRONT_AND_BACK</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies which of several material parameters track the current color.
+                    Accepted values are
+                    <constant>GL_EMISSION</constant>,
+                    <constant>GL_AMBIENT</constant>,
+                    <constant>GL_DIFFUSE</constant>,
+                    <constant>GL_SPECULAR</constant>,
+                    and <constant>GL_AMBIENT_AND_DIFFUSE</constant>.
+                    The initial value is <constant>GL_AMBIENT_AND_DIFFUSE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glColorMaterial</function> specifies which material parameters track the current color.
+            When <constant>GL_COLOR_MATERIAL</constant> is enabled,
+            the material parameter or parameters specified by <parameter>mode</parameter>,
+            of the material or materials specified by <parameter>face</parameter>,
+            track the current color at all times.
+        </para>
+        <para>
+            To enable and disable <constant>GL_COLOR_MATERIAL</constant>, call
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATERIAL</constant>.
+            <constant>GL_COLOR_MATERIAL</constant> is initially disabled.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glColorMaterial</function> makes it possible to change a subset of material parameters for each
+            vertex using only the <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry> command,
+            without calling <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>.
+            If only such a subset of parameters is to be specified for each
+            vertex, calling <function>glColorMaterial</function> is preferable to calling <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Call <function>glColorMaterial</function> before enabling <constant>GL_COLOR_MATERIAL</constant>.
+        </para>
+        <para>
+            Calling <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>
+            may leave the current color indeterminate, if the color array is enabled.
+            If
+            <function>glColorMaterial</function> is enabled while the current color is indeterminate, the
+            lighting material state specified by <parameter>face</parameter> and <parameter>mode</parameter> is also indeterminate.
+        </para>
+        <para>
+            If the GL version is 1.1 or greater, and <constant>GL_COLOR_MATERIAL</constant> is
+            enabled, evaluated color values affect the results of the lighting
+            equation as if the current color were being modified, but no change is
+            made to the tracking lighting parameter of the current color.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>face</parameter> or <parameter>mode</parameter> is not an
+            accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glColorMaterial</function> is executed between
+            the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATERIAL</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATERIAL_PARAMETER</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATERIAL_FACE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLightModel</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

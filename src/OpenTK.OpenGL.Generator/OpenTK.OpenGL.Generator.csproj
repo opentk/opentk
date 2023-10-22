@@ -6,6 +6,5 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <StartupObject>Generator.Program</StartupObject>
   </PropertyGroup>
 </Project>

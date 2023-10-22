@@ -1,0 +1,176 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetTransformFeedbackVarying">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetTransformFeedbackVarying</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetTransformFeedbackVarying</refname>
+        <refpurpose>retrieve information about varying variables selected for transform feedback</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetTransformFeedbackVarying</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>size</parameter></paramdef>
+                <paramdef>GLenum *<parameter>type</parameter></paramdef>
+                <paramdef>char *<parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+                <para>
+                    The name of the target program object.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    The index of the varying variable whose information to retrieve.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>bufSize</parameter></term>
+            <listitem>
+                <para>
+                    The maximum number of characters, including the null terminator, that may be written into <parameter>name</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>length</parameter></term>
+            <listitem>
+                <para>
+                    The address of a variable which will receive the number of characters written into <parameter>name</parameter>,
+                    excluding the null-terminator. If <parameter>length</parameter> is <constant>NULL</constant> no length is returned.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    The address of a variable that will receive the size of the varying.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The address of a variable that will receive the type of the varying.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    The address of a buffer into which will be written the name of the varying.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Information about the set of varying variables in a linked program that will be captured
+            during transform feedback may be retrieved by calling <function>glGetTransformFeedbackVarying</function>.
+            <function>glGetTransformFeedbackVarying</function> provides information about the varying
+            variable selected by <parameter>index</parameter>. An <parameter>index</parameter> of 0 selects
+            the first varying variable specified in the <parameter>varyings</parameter> array passed
+            to <citerefentry><refentrytitle>glTransformFeedbackVaryings</refentrytitle></citerefentry>, and
+            an <parameter>index</parameter> of the value of
+            <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant> minus one selects
+            the last such variable.
+        </para>
+        <para>
+            The name of the selected varying is returned as a null-terminated string in
+            <parameter>name</parameter>. The actual number of characters written into <parameter>name</parameter>,
+            excluding the null terminator, is returned in <parameter>length</parameter>. If <parameter>length</parameter>
+            is NULL, no length is returned. The maximum number of characters that may be written into <parameter>name</parameter>,
+            including the null terminator, is specified by <parameter>bufSize</parameter>.
+        </para>
+        <para>
+            The length of the longest varying name in program is given by <constant>GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH</constant>,
+            which can be queried with <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            For the selected varying variable, its type is returned into <parameter>type</parameter>. The size of
+            the varying is returned into <parameter>size</parameter>. The value in <parameter>size</parameter> is
+            in units of the type returned in <parameter>type</parameter>. The type returned can be any of the
+            scalar, vector, or matrix attribute types returned by <citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>.
+            If an error occurred, the return parameters <parameter>length</parameter>, <parameter>size</parameter>,
+            <parameter>type</parameter> and <parameter>name</parameter> will be unmodified. This command will return as much
+            information about the varying variables as possible. If no information is available, <parameter>length</parameter>
+            will be set to zero and <parameter>name</parameter> will be an empty string. This situation could
+            arise if <function>glGetTransformFeedbackVarying</function> is called after a failed link.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>program</parameter> is not
+            the name of a program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater or equal to
+            the value of <constant>GL_TRANSFORM_FEEDBACK_VARYINGS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated <parameter>program</parameter> has not been linked.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry> with argument <constant>GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetTransformFeedbackVarying</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBeginTransformFeedback</refentrytitle></citerefentry>,
+            <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>,
+            <citerefentry><refentrytitle>glTransformFeedbackVaryings</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+        </para>
+    </refsect1>    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

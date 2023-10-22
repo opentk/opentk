@@ -1,6 +1,6 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OpenTK.OpenGL;
+using OpenTK.OpenGL.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.X11;
 using System;
@@ -13,7 +13,6 @@ using OpenTK.Core;
 using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Platform.Handles;
 using OpenTK.Core.Platform.Interfaces;
-using OpenTK.Mathematics.Colors;
 
 namespace OpenTK.Platform.Tests
 {

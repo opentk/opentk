@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glTexGen">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glTexGen</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexGen</refname>
+        <refpurpose>control the generation of texture coordinates</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGeni</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGenf</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGend</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLdouble <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>coord</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a texture coordinate.
+                    Must be one of <constant>GL_S</constant>, <constant>GL_T</constant>, <constant>GL_R</constant>, or <constant>GL_Q</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of the texture-coordinate generation function.
+                    Must be <constant>GL_TEXTURE_GEN_MODE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>param</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a single-valued texture generation parameter,
+                    one of <constant>GL_OBJECT_LINEAR</constant>, <constant>GL_EYE_LINEAR</constant>, <constant>GL_SPHERE_MAP</constant>,
+                    <constant>GL_NORMAL_MAP</constant>, or <constant>GL_REFLECTION_MAP</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGeniv</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGenfv</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexGendv</function></funcdef>
+                <paramdef>GLenum <parameter>coord</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLdouble * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>coord</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a texture coordinate.
+                    Must be one of <constant>GL_S</constant>, <constant>GL_T</constant>, <constant>GL_R</constant>, or <constant>GL_Q</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of the texture-coordinate generation function
+                    or function parameters.
+                    Must be
+                    <constant>GL_TEXTURE_GEN_MODE</constant>,
+                    <constant>GL_OBJECT_PLANE</constant>, or
+                    <constant>GL_EYE_PLANE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to an array of texture generation parameters.
+                    If <parameter>pname</parameter> is <constant>GL_TEXTURE_GEN_MODE</constant>,
+                    then the array must contain a single symbolic constant,
+                    one of
+                    <constant>GL_OBJECT_LINEAR</constant>,
+                    <constant>GL_EYE_LINEAR</constant>,
+                    <constant>GL_SPHERE_MAP</constant>,
+                    <constant>GL_NORMAL_MAP</constant>, or
+                    <constant>GL_REFLECTION_MAP</constant>.
+                    Otherwise,
+                    <parameter>params</parameter> holds the coefficients for the texture-coordinate generation function
+                    specified by <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glTexGen</function> selects a texture-coordinate generation function
+            or supplies coefficients for one of the functions.
+            <parameter>coord</parameter> names one of the (<emphasis>s</emphasis>, <emphasis>t</emphasis>, <emphasis>r</emphasis>, <emphasis>q</emphasis>) texture
+            coordinates; it must be one of the symbols
+            <constant>GL_S</constant>,
+            <constant>GL_T</constant>,
+            <constant>GL_R</constant>, or
+            <constant>GL_Q</constant>.
+            <parameter>pname</parameter> must be one of three symbolic constants:
+            <constant>GL_TEXTURE_GEN_MODE</constant>,
+            <constant>GL_OBJECT_PLANE</constant>, or
+            <constant>GL_EYE_PLANE</constant>.
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_GEN_MODE</constant>,
+            then <parameter>params</parameter> chooses a mode,
+            one of
+            <constant>GL_OBJECT_LINEAR</constant>,
+            <constant>GL_EYE_LINEAR</constant>,
+            <constant>GL_SPHERE_MAP</constant>,
+            <constant>GL_NORMAL_MAP</constant>, or
+            <constant>GL_REFLECTION_MAP</constant>.
+            If <parameter>pname</parameter> is either <constant>GL_OBJECT_PLANE</constant> or <constant>GL_EYE_PLANE</constant>,
+            <parameter>params</parameter> contains coefficients for the corresponding
+            texture generation function.
+        </para>
+        <para>
+            If the texture generation function is <constant>GL_OBJECT_LINEAR</constant>,
+            the function
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: g  =  p sub 1 * x sub o  +  p sub 2 * y sub o  +  p sub 3 * z sub o  +  p sub 4 * w sub o:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">g</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                            <mml:mn>1</mml:mn>
+                            </mml:msub>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                            <mml:mi mathvariant="italic">o</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                            <mml:mn>2</mml:mn>
+                            </mml:msub>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                            <mml:mi mathvariant="italic">o</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                            <mml:mn>3</mml:mn>
+                            </mml:msub>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">z</mml:mi>
+                            <mml:mi mathvariant="italic">o</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                            <mml:mn>4</mml:mn>
+                            </mml:msub>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">w</mml:mi>
+                            <mml:mi mathvariant="italic">o</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            is used, where 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">g</mml:mi></mml:math></inlineequation>
+            is the value computed for the coordinate named in <parameter>coord</parameter>,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 3:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>3</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 4:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>4</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the four values supplied in <parameter>params</parameter>, and
+            <inlineequation><mml:math>
+                <!-- eqn: x sub o:-->
+                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                <mml:mi mathvariant="italic">o</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: y sub o:-->
+                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                <mml:mi mathvariant="italic">o</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: z sub o:-->
+                <mml:msub><mml:mi mathvariant="italic">z</mml:mi>
+                <mml:mi mathvariant="italic">o</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: w sub o:-->
+                <mml:msub><mml:mi mathvariant="italic">w</mml:mi>
+                <mml:mi mathvariant="italic">o</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the object coordinates of the vertex.
+            This function can be used, for example, to texture-map terrain using sea level
+            as a reference plane
+            (defined by 
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 3:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>3</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and 
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 4:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>4</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>).
+            The altitude of a terrain vertex is computed by the <constant>GL_OBJECT_LINEAR</constant>
+            coordinate generation function as its distance from sea level;
+            that altitude can then be used to index the texture image to map white snow
+            onto peaks and green grass onto foothills.
+        </para>
+        <para>
+            If the texture generation function is <constant>GL_EYE_LINEAR</constant>, the function
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: g  =      {p sub 1} sup prime * x sub e  +      {p sub 2} sup prime * y sub e  +      {p sub 3} sup prime * z sub e  +      {p sub 4} sup prime * w sub e:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">g</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mrow>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>1</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                            <mml:mi mathvariant="italic">e</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>2</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                            <mml:mi mathvariant="italic">e</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>3</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">z</mml:mi>
+                            <mml:mi mathvariant="italic">e</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                        <mml:mo>+</mml:mo>
+                        <mml:mrow>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>4</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&times;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">w</mml:mi>
+                            <mml:mi mathvariant="italic">e</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            is used, where
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left (   {p sub 1} sup prime   {p sub 2} sup prime   {p sub 3} sup prime   {p sub 4} sup prime right )  =  left ( p sub 1   p sub 2   p sub 3   p sub 4 right )  M sup -1:-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mrow>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>1</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&it;</mml:mo>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>2</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&it;</mml:mo>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>3</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                            <mml:mo>&it;</mml:mo>
+                            <mml:msup><mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>4</mml:mn>
+                                </mml:msub>
+                            </mml:mfenced>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                        </mml:mrow>
+                    </mml:mfenced>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>1</mml:mn>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>2</mml:mn>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>3</mml:mn>
+                                </mml:msub>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                                <mml:mn>4</mml:mn>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:msup><mml:mi mathvariant="italic">M</mml:mi>
+                        <mml:mn>-1</mml:mn>
+                        </mml:msup>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: x sub e:-->
+                <mml:msub><mml:mi mathvariant="italic">x</mml:mi>
+                <mml:mi mathvariant="italic">e</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: y sub e:-->
+                <mml:msub><mml:mi mathvariant="italic">y</mml:mi>
+                <mml:mi mathvariant="italic">e</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: z sub e:-->
+                <mml:msub><mml:mi mathvariant="italic">z</mml:mi>
+                <mml:mi mathvariant="italic">e</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: w sub e:-->
+                <mml:msub><mml:mi mathvariant="italic">w</mml:mi>
+                <mml:mi mathvariant="italic">e</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the eye coordinates of the vertex,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 3:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>3</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: p sub 4:-->
+                <mml:msub><mml:mi mathvariant="italic">p</mml:mi>
+                <mml:mn>4</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the values supplied in <parameter>params</parameter>, and
+            <inlineequation><mml:math><mml:mi mathvariant="italic">M</mml:mi></mml:math></inlineequation>
+            is the modelview matrix when <function>glTexGen</function> is invoked.
+            If 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">M</mml:mi></mml:math></inlineequation>
+            is poorly conditioned or singular,
+            texture coordinates generated by the resulting function may be inaccurate
+            or undefined.
+        </para>
+        <para>
+            Note that the values in <parameter>params</parameter> define a reference plane in eye coordinates.
+            The modelview matrix that is applied to them may not be the same one
+            in effect when the polygon vertices are transformed.
+            This function establishes a field of texture coordinates
+            that can produce dynamic contour lines on moving objects.
+        </para>
+        <para>
+            If the texture generation function is <constant>GL_SPHERE_MAP</constant> and <parameter>coord</parameter> is either
+            <constant>GL_S</constant> or
+            <constant>GL_T</constant>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
+            texture coordinates are generated as follows.
+            Let <emphasis>u</emphasis> be the unit vector pointing from the origin to the polygon vertex
+            (in eye coordinates).
+            Let <emphasis>n</emphasis> sup prime be the current normal,
+            after transformation to eye coordinates.
+            Let
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: f  =  ( f sub x  f sub y  f sub z ) sup T:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">f</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:msup><mml:mfenced open="(" close=")">
+                        <mml:mrow>
+                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                            <mml:mi mathvariant="italic">x</mml:mi>
+                            </mml:msub>
+                            <mml:mo>&it;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                            <mml:mi mathvariant="italic">y</mml:mi>
+                            </mml:msub>
+                            <mml:mo>&it;</mml:mo>
+                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                            <mml:mi mathvariant="italic">z</mml:mi>
+                            </mml:msub>
+                        </mml:mrow>
+                    </mml:mfenced>
+                    <mml:mi mathvariant="italic">T</mml:mi>
+                    </mml:msup>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            be the reflection vector such that
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: f  =   u  -  2 n sup prime {n sup prime} sup T u:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">f</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                        <mml:mo>-</mml:mo>
+                        <mml:mn>2</mml:mn>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:msup><mml:mi mathvariant="italic">n</mml:mi>
+                        <mml:mo>&Prime;</mml:mo>
+                        </mml:msup>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:msup><mml:mfenced open="" close="">
+                            <mml:msup><mml:mi mathvariant="italic">n</mml:mi>
+                            <mml:mo>&Prime;</mml:mo>
+                            </mml:msup>
+                        </mml:mfenced>
+                        <mml:mi mathvariant="italic">T</mml:mi>
+                        </mml:msup>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            Finally, let 
+            <inlineequation><mml:math>
+                <!-- eqn: m  =  2 sqrt ({f sub x} sup 2  +  {f sub y} sup 2  +  (f sub z  +  1) sup 2):-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">m</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mn>2</mml:mn>
+                        <mml:mo>&it;</mml:mo>
+                        <mml:msqrt>
+                            <mml:mfenced open="(" close=")">
+                                <mml:mrow>
+                                    <mml:msup><mml:mfenced open="" close="">
+                                        <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                        <mml:mi mathvariant="italic">x</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfenced>
+                                    <mml:mn>2</mml:mn>
+                                    </mml:msup>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msup><mml:mfenced open="" close="">
+                                        <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                        <mml:mi mathvariant="italic">y</mml:mi>
+                                        </mml:msub>
+                                    </mml:mfenced>
+                                    <mml:mn>2</mml:mn>
+                                    </mml:msup>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msup><mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                                            <mml:mi mathvariant="italic">z</mml:mi>
+                                            </mml:msub>
+                                            <mml:mo>+</mml:mo>
+                                            <mml:mn>1</mml:mn>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mn>2</mml:mn>
+                                    </mml:msup>
+                                </mml:mrow>
+                            </mml:mfenced>
+                        </mml:msqrt>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>.
+            Then the values assigned to the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
+            texture coordinates are
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: s  =  f sub x over m  +  1 over 2:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfrac>
+                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                            <mml:mi mathvariant="italic">x</mml:mi>
+                            </mml:msub>
+                            <mml:mi mathvariant="italic">m</mml:mi>
+                        </mml:mfrac>
+                        <mml:mo>+</mml:mo>
+                        <mml:mfrac>
+                            <mml:mn>1</mml:mn>
+                            <mml:mn>2</mml:mn>
+                        </mml:mfrac>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            <inlineequation><mml:math>
+                <!-- eqn: t  =  f sub y over m  +  1 over 2:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">t</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mrow>
+                        <mml:mfrac>
+                            <mml:msub><mml:mi mathvariant="italic">f</mml:mi>
+                            <mml:mi mathvariant="italic">y</mml:mi>
+                            </mml:msub>
+                            <mml:mi mathvariant="italic">m</mml:mi>
+                        </mml:mfrac>
+                        <mml:mo>+</mml:mo>
+                        <mml:mfrac>
+                            <mml:mn>1</mml:mn>
+                            <mml:mn>2</mml:mn>
+                        </mml:mfrac>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            To enable or disable a texture-coordinate generation function, call
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> or <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+            with one of the symbolic texture-coordinate names
+            (<constant>GL_TEXTURE_GEN_S</constant>,
+            <constant>GL_TEXTURE_GEN_T</constant>,
+            <constant>GL_TEXTURE_GEN_R</constant>, or
+            <constant>GL_TEXTURE_GEN_Q</constant>) as the argument.
+            When enabled,
+            the specified texture coordinate is computed
+            according to the generating function associated with that coordinate.
+            When disabled,
+            subsequent vertices take the specified texture coordinate
+            from the current set of texture coordinates. Initially, all texture
+            generation functions are set to <constant>GL_EYE_LINEAR</constant> and are disabled.
+            Both 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            plane equations are (1, 0, 0, 0),
+            both 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">t</mml:mi></mml:math></inlineequation>
+            plane equations are (0, 1, 0, 0),
+            and all 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">r</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">q</mml:mi></mml:math></inlineequation>
+            plane equations are (0, 0, 0, 0).
+        </para>
+        <para>
+            When the <code>ARB_multitexture</code> extension is supported, <function>glTexGen</function> sets the
+            texture generation parameters for the currently active texture unit,
+            selected with <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated when <parameter>coord</parameter> or <parameter>pname</parameter> is not an
+            accepted defined value,
+            or when <parameter>pname</parameter> is <constant>GL_TEXTURE_GEN_MODE</constant> and <parameter>params</parameter> is not an
+            accepted defined value.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated when <parameter>pname</parameter> is <constant>GL_TEXTURE_GEN_MODE</constant>,
+            <parameter>params</parameter> is <constant>GL_SPHERE_MAP</constant>,
+            and <parameter>coord</parameter> is either <constant>GL_R</constant> or <constant>GL_Q</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glTexGen</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetTexGen</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_GEN_S</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_GEN_T</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_GEN_R</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_GEN_Q</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

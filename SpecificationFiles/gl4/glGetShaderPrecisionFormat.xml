@@ -1,0 +1,124 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetShaderPrecisionFormat">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetShaderPrecisionFormat</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetShaderPrecisionFormat</refname>
+        <refpurpose>retrieve the range and precision for numeric formats supported by the shader compiler</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetShaderPrecisionFormat</function></funcdef>
+                <paramdef>GLenum <parameter>shaderType</parameter></paramdef>
+                <paramdef>GLenum <parameter>precisionType</parameter></paramdef>
+                <paramdef>GLint *<parameter>range</parameter></paramdef>
+                <paramdef>GLint *<parameter>precision</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>shaderType</parameter></term>
+            <listitem>
+            <para>
+                Specifies the type of shader whose precision to query. <parameter>shaderType</parameter>
+                must be <constant>GL_VERTEX_SHADER</constant> or <constant>GL_FRAGMENT_SHADER</constant>.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>precisionType</parameter></term>
+            <listitem>
+            <para>
+                Specifies the numeric format whose precision and range to query.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>range</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of array of two integers into which encodings of the implementation's
+                numeric range are returned.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>precision</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of an integer into which the numeric precision of the implementation
+                is written.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetShaderPrecisionFormat</function> retrieves the numeric range and precision for
+            the implementation's representation of quantities in different numeric formats in specified
+            shader type. <parameter>shaderType</parameter> specifies the type of shader for which the numeric
+            precision and range is to be retrieved and must be one of <constant>GL_VERTEX_SHADER</constant>
+            or <constant>GL_FRAGMENT_SHADER</constant>. <parameter>precisionType</parameter> specifies the
+            numeric format to query and must be one of <constant>GL_LOW_FLOAT</constant>, <constant>GL_MEDIUM_FLOAT</constant>
+            <constant>GL_HIGH_FLOAT</constant>, <constant>GL_LOW_INT</constant>, <constant>GL_MEDIUM_INT</constant>,
+            or <constant>GL_HIGH_INT</constant>.
+        </para>
+        <para>
+            <parameter>range</parameter> points to an array of two integers into which the format's numeric range
+            will be returned. If min and max are the smallest values representable in the format, then the values
+            returned are defined to be: <parameter>range</parameter>[0] = floor(log2(|min|)) and
+            <parameter>range</parameter>[1] = floor(log2(|max|)).
+        </para>
+        <para>
+            <parameter>precision</parameter> specifies the address of an integer into which will be written
+            the log2 value of the number of bits of precision of the format. If the smallest representable
+            value greater than 1 is 1 + <emphasis>eps</emphasis>, then the integer addressed by <parameter>precision</parameter>
+            will contain floor(-log2(eps)).
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>shaderType</parameter> or
+            <parameter>precisionType</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetShaderPrecisionFormat</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

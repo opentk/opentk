@@ -1,7 +1,7 @@
 using System;
 using OpenTK.Core;
 
-namespace OpenTK.Graphics
+namespace OpenTK.OpenGL
 {
     /// <summary>
     /// Used to load the OpenGL bindings.

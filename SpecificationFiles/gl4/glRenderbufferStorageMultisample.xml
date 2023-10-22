@@ -1,0 +1,230 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glRenderbufferStorageMultisample">
+  <info>
+    <copyright>
+      <year>2010-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glRenderbufferStorageMultisample</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glRenderbufferStorageMultisample</refname>
+
+    <refname>glNamedRenderbufferStorageMultisample</refname>
+
+    <refpurpose>establish data storage, format, dimensions and sample count of
+    a renderbuffer object's image</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glRenderbufferStorageMultisample</function></funcdef>
+
+        <paramdef>GLenum <parameter>target</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>samples</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>width</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>height</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glNamedRenderbufferStorageMultisample</function></funcdef>
+
+        <paramdef>GLuint <parameter>renderbuffer</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>samples</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>width</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>height</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>Specifies a binding target of the allocation for
+          <function>glRenderbufferStorageMultisample</function> function. Must
+          be <constant>GL_RENDERBUFFER</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>renderbuffer</parameter></term>
+
+        <listitem>
+          <para>Specifies the name of the renderbuffer object for
+          <function>glNamedRenderbufferStorageMultisample</function>
+          function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>samples</parameter></term>
+
+        <listitem>
+          <para>Specifies the number of samples to be used for the
+          renderbuffer object's storage.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>internalformat</parameter></term>
+
+        <listitem>
+          <para>Specifies the internal format to use for the renderbuffer
+          object's image.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>width</parameter></term>
+
+        <listitem>
+          <para>Specifies the width of the renderbuffer, in pixels.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>height</parameter></term>
+
+        <listitem>
+          <para>Specifies the height of the renderbuffer, in pixels.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glRenderbufferStorageMultisample</function> and
+    <function>glNamedRenderbufferStorageMultisample</function> establish the
+    data storage, format, dimensions and number of samples of a renderbuffer
+    object's image.</para>
+
+    <para>For <function>glRenderbufferStorageMultisample</function>, the
+    target of the operation, specified by <parameter>target</parameter> must
+    be <constant>GL_RENDERBUFFER</constant>. For
+    <function>glNamedRenderbufferStorageMultisample</function>,
+    <parameter>renderbuffer</parameter> must be an ID of an existing
+    renderbuffer object. <parameter>internalformat</parameter> specifies the
+    internal format to be used for the renderbuffer object's storage and must
+    be a color-renderable, depth-renderable, or stencil-renderable format.
+    <parameter>width</parameter> and <parameter>height</parameter> are the
+    dimensions, in pixels, of the renderbuffer. Both
+    <parameter>width</parameter> and <parameter>height</parameter> must be
+    less than or equal to the value of
+    <constant>GL_MAX_RENDERBUFFER_SIZE</constant>.
+    <parameter>samples</parameter> specifies the number of samples to be used
+    for the renderbuffer object's image, and must be less than or equal to the
+    value of <constant>GL_MAX_SAMPLES</constant>. If
+    <parameter>internalformat</parameter> is a signed or unsigned integer
+    format then <parameter>samples</parameter> must be less than or equal to
+    the value of <constant>GL_MAX_INTEGER_SAMPLES</constant>.</para>
+
+    <para>Upon success, <function>glRenderbufferStorageMultisample</function>
+    and <function>glNamedRenderbufferStorageMultisample</function> delete any
+    existing data store for the renderbuffer image and the contents of the
+    data store after calling either of the functions are undefined.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated by
+    <function>glRenderbufferStorageMultisample</function> function if
+    <parameter>target</parameter> is not
+    <constant>GL_RENDERBUFFER</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glNamedRenderbufferStorageMultisample</function> function if
+    <parameter>renderbuffer</parameter> is not the name of an existing
+    renderbuffer object.</para>
+
+	<para>
+		<constant>GL_INVALID_OPERATION</constant> is generated if <parameter>samples</parameter> is greater than the maximum number of samples
+					supported for <parameter>internalformat</parameter>.
+	</para>
+		
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>internalformat</parameter> is not a color-renderable,
+    depth-renderable, or stencil-renderable format.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>internalformat</parameter> is a signed or unsigned integer
+    format and <parameter>samples</parameter> is greater than the value of
+    <constant>GL_MAX_INTEGER_SAMPLES</constant></para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if either of
+    <parameter>width</parameter> or <parameter>height</parameter> is negative,
+    or greater than the value of
+    <constant>GL_MAX_RENDERBUFFER_SIZE</constant>.</para>
+
+    <para><constant>GL_OUT_OF_MEMORY</constant> is generated if the GL is
+    unable to create a data store of the requested size.</para>
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glNamedRenderbufferStorageMultisample</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glRenderbufferStorageMultisample</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+
+  <refsect1 xml:id="seealso">
+    <title>See Also</title>
+
+    <para>
+        <citerefentry><refentrytitle>glGenRenderbuffers</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindRenderbuffer</refentrytitle></citerefentry>,
+        <!-- FIX: link to glRenderbufferStorage --> <function>glNamedRenderbufferStorage</function>,
+        <citerefentry><refentrytitle>glRenderbufferStorage</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glFramebufferRenderbuffer</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glDeleteRenderbuffers</refentrytitle></citerefentry>
+    </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

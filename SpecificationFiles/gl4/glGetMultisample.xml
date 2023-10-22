@@ -1,0 +1,115 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetMultisample">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetMultisamplefv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetMultisamplefv</refname>
+        <refpurpose>retrieve the location of a sample</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMultisamplefv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+                <paramdef>GLfloat *<parameter>val</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the sample parameter name. <parameter>pname</parameter> must be <constant>GL_SAMPLE_POSITION</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the sample whose position to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>val</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array to receive the position of the sample.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetMultisamplefv</function> queries the location of
+            a given sample. <parameter>pname</parameter> specifies the
+            sample parameter to retrieve and must be
+            <constant>GL_SAMPLE_POSITION</constant>.
+            <parameter>index</parameter> corresponds to the sample for which
+            the location should be returned. The sample location is returned
+            as two floating-point values in <parameter>val[0]</parameter>
+            and <parameter>val[1]</parameter>, each between 0 and 1,
+            corresponding to the <parameter>x</parameter> and
+            <parameter>y</parameter> locations respectively in the GL pixel
+            space of that sample. (0.5, 0.5) this corresponds to the pixel
+            center. <parameter>index</parameter> must be between zero and
+            the value of <constant>GL_SAMPLES</constant> minus one.
+        </para>
+        <para>
+            If the multisample mode does not have fixed sample locations, the returned values may only reflect the locations of samples
+            within some pixels.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one <constant>GL_SAMPLE_POSITION</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>index</parameter> is greater than or equal to the value of
+            <constant>GL_SAMPLES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetMultisamplefv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

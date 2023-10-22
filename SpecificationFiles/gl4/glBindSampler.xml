@@ -1,0 +1,117 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindSampler">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindSampler</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindSampler</refname>
+        <refpurpose>bind a named sampler to a texturing target</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindSampler</function></funcdef>
+                <paramdef>GLuint <parameter>unit</parameter></paramdef>
+                <paramdef>GLuint <parameter>sampler</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>unit</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the texture unit to which the sampler is bound.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>sampler</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of a sampler.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindSampler</function> binds <parameter>sampler</parameter> to the texture unit at index <parameter>unit</parameter>.
+            <parameter>sampler</parameter> must be zero or the name of a sampler object previously returned from a call to
+            <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>. <parameter>unit</parameter> must be less than the value
+            of <constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant>.
+        </para>
+        <para>
+            When a sampler object is bound to a texture unit, its state supersedes that of
+            the texture object bound to that texture unit. If the sampler name zero is bound to
+            a texture unit, the currently bound texture's sampler state becomes active. A single
+            sampler object may be bound to multiple texture units simultaneously.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glBindSampler</function> is available only if the GL version is 3.3 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>unit</parameter> is greater than or equal to the value of
+            <constant>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>sampler</parameter> is not zero or a name previously
+            returned from a call to <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>, or if such a name has
+            been deleted by a call to <citerefentry><refentrytitle>glDeleteSamplers</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_SAMPLER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindSampler</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteSamplers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSamplerParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetSamplerParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGenTextures</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteTextures</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

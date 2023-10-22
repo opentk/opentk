@@ -1,0 +1,141 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramPipeline">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramPipeline</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramPipeline</refname>
+        <refpurpose>retrieve properties of a program pipeline object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetProgramPipelineiv</function></funcdef>
+                <paramdef>GLuint <parameter>pipeline</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pipeline</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of a program pipeline object whose parameter retrieve.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of the parameter to retrieve.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+            <para>
+                Specifies the address of a variable into which will be written the value or values
+                of <parameter>pname</parameter> for <parameter>pipeline</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetProgramPipelineiv</function> retrieves the value of a property of the program
+            pipeline object <parameter>pipeline</parameter>. <parameter>pname</parameter> specifies the
+            name of the parameter whose value to retrieve. The value of the parameter is written to
+            the variable whose address is given by <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_ACTIVE_PROGRAM</constant>, the name of the
+            active program object of the program pipeline object is returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_VERTEX_SHADER</constant>, the name of the
+            current program object for the vertex shader type of the program pipeline object is
+            returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TESS_CONTROL_SHADER</constant>, the name of the
+            current program object for the tessellation control shader type of the program pipeline object is
+            returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TESS_EVALUATION_SHADER</constant>, the name of the
+            current program object for the tessellation evaluation shader type of the program pipeline object is
+            returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_GEOMETRY_SHADER</constant>, the name of the
+            current program object for the geometry shader type of the program pipeline object is
+            returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_FRAGMENT_SHADER</constant>, the name of the
+            current program object for the fragment shader type of the program pipeline object is
+            returned in <parameter>params</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_INFO_LOG_LENGTH</constant>, the length of the
+            info log, including the null terminator, is returned in <parameter>params</parameter>. If there
+            is no info log, zero is returned.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>pipeline</parameter> is not zero or
+            a name previously returned from a call to <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>
+            or if such a name has been deleted by a call to
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one
+            of the accepted values.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramPipelineiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenProgramPipelines</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindProgramPipeline</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteProgramPipelines</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

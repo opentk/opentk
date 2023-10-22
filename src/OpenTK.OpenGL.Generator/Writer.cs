@@ -14,7 +14,7 @@ namespace OpenTK.OpenGL.Generator
     internal static class Writer
     {
         private const string BaseNamespace = "OpenTK";
-        private const string GraphicsNamespace = BaseNamespace + ".Graphics";
+        private const string GraphicsNamespace = BaseNamespace + ".OpenGL";
 
         // FIXME: This needs to change for WGL and GLX!
         private const string LoaderClass = "GLLoader";
@@ -25,7 +25,7 @@ namespace OpenTK.OpenGL.Generator
             // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
-                "..", "..", "..", "..", GraphicsNamespace);
+                "..", "..", "..", "src", GraphicsNamespace);
 
             foreach (Pointers pointers in data.Pointers)
             {
@@ -105,7 +105,7 @@ namespace OpenTK.OpenGL.Generator
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine("using OpenTK.Graphics;");
+            writer.WriteLine($"using {GraphicsNamespace};");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
 
@@ -254,12 +254,12 @@ namespace OpenTK.OpenGL.Generator
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
-            writer.WriteLine("using OpenTK.Graphics;");
+            writer.WriteLine($"using {GraphicsNamespace};");
 
             // FIXME: This is messy.
-            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            if (apiNamespace != "OpenGL") writer.WriteLine($"using {GraphicsNamespace}.OpenGL;");
+            if (apiNamespace != "Wgl") writer.WriteLine($"using {GraphicsNamespace}.Wgl;");
+            if (apiNamespace != "Glx") writer.WriteLine($"using {GraphicsNamespace}.Glx;");
 
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
@@ -348,12 +348,12 @@ namespace OpenTK.OpenGL.Generator
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Mathematics;");
-            writer.WriteLine("using OpenTK.Graphics;");
+            writer.WriteLine($"using {GraphicsNamespace};");
 
             // FIXME: This is messy.
-            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            if (apiNamespace != "OpenGL") writer.WriteLine($"using {GraphicsNamespace}.OpenGL;");
+            if (apiNamespace != "Wgl") writer.WriteLine($"using {GraphicsNamespace}.Wgl;");
+            if (apiNamespace != "Glx") writer.WriteLine($"using {GraphicsNamespace}.Glx;");
 
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");

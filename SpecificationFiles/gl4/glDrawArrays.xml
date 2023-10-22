@@ -1,0 +1,152 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDrawArrays">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDrawArrays</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDrawArrays</refname>
+        <refpurpose>render primitives from array data</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawArrays</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies what kind of primitives to render.
+                    Symbolic constants
+                    <constant>GL_POINTS</constant>,
+                    <constant>GL_LINE_STRIP</constant>,
+                    <constant>GL_LINE_LOOP</constant>,
+                    <constant>GL_LINES</constant>,
+                    <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_LINES_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLE_STRIP</constant>,
+                    <constant>GL_TRIANGLE_FAN</constant>,
+                    <constant>GL_TRIANGLES</constant>,
+                    <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+                    <constant>GL_TRIANGLES_ADJACENCY</constant> and <constant>GL_PATCHES</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the starting index in the enabled arrays.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of indices to be rendered.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDrawArrays</function> specifies multiple geometric primitives
+            with very few subroutine calls. Instead of calling a GL procedure
+            to pass each individual vertex, normal, texture coordinate, edge
+            flag, or color, you can prespecify
+            separate arrays of vertices, normals, and colors and use them to
+            construct a sequence of primitives with a single
+            call to <function>glDrawArrays</function>.
+        </para>
+        <para>
+            When <function>glDrawArrays</function> is called, it uses <parameter>count</parameter> sequential elements from each
+            enabled array to construct a sequence of geometric primitives,
+            beginning with element <parameter>first</parameter>. <parameter>mode</parameter> specifies what kind of
+            primitives are constructed and how the array elements
+            construct those primitives.
+        </para>
+        <para>
+            Vertex attributes that are modified by <function>glDrawArrays</function> have an
+            unspecified value after <function>glDrawArrays</function> returns. Attributes that aren't
+            modified remain well defined.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_LINE_STRIP_ADJACENCY</constant>,
+            <constant>GL_LINES_ADJACENCY</constant>,
+            <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant> and
+            <constant>GL_TRIANGLES_ADJACENCY</constant>
+            are available only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>count</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to an
+            enabled array and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a geometry shader is active and <parameter>mode</parameter>
+            is incompatible with the input primitive type of the geometry shader in the currently installed program object.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDrawArrays</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

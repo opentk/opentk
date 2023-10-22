@@ -1,0 +1,117 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDebugMessageCallback">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDebugMessageCallback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDebugMessageCallback</refname>
+        <refpurpose>specify a callback to receive debugging messages from the GL</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDebugMessageCallback</function></funcdef>
+                <paramdef>DEBUGPROC <parameter>callback</parameter></paramdef>
+                <paramdef>const void * <parameter>userParam</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>callback</parameter></term>
+            <listitem>
+                <para>
+                    The address of a callback function that will be called when a debug message is generated.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>userParam</parameter></term>
+            <listitem>
+                <para>
+                    A user supplied pointer that will be passed on each invocation of <parameter>callback</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDebugMessageCallback</function> sets the current debug output callback function to
+            the function whose address is given in <parameter>callback</parameter>. The callback function
+            should have the following prototype (in C), or be otherwise compatible with such a prototype:
+        </para>
+<programlisting>        typedef void (APIENTRY *DEBUGPROC)(GLenum source,
+            GLenum type,
+            GLuint id,
+            GLenum severity,
+            GLsizei length,
+            const GLchar *message,
+            const void *userParam);</programlisting>
+        <para>
+            This function is defined to have the same calling convention as
+            the GL API functions. In most cases this is defined as
+            <code>APIENTRY</code>, although it will vary depending on
+            platform, language and compiler.
+        </para>
+        <para>
+            Each time a debug message is generated the debug callback
+            function will be invoked with <parameter>source</parameter>,
+            <parameter>type</parameter>, <parameter>id</parameter>, and
+            <parameter>severity</parameter> associated with the message, and
+            <parameter>length</parameter> set to the length of debug message
+            whose character string is in the array pointed to by
+            <parameter>message</parameter>. <parameter>userParam</parameter>
+            will be set to the value passed in the
+            <parameter>userParam</parameter> parameter to the most recent
+            call to <function>glDebugMessageCallback</function>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            When the GL is in use remotely, the server may not be able to
+            call functions in the client's address space. In such cases, the
+            callback function may not be invoked and the user should
+            retrieve debug messages from the context's debug message log by
+            calling
+            <citerefentry><refentrytitle>glGetDebugMessageLog</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDebugMessageCallback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='43']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDebugMessageControl</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDebugMessageInsert</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetDebugMessageLog</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

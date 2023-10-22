@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Graphics
+namespace OpenTK.OpenGL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     namespace OpenGL

@@ -1,0 +1,321 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetBufferParameter">
+    <info>
+        <copyright>
+            <year>2005</year>
+            <holder>Sams Publishing</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetBufferParameteriv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refdescriptor>glGetBufferParameter</refdescriptor>
+        <refname>glGetBufferParameteriv</refname>
+        <refname>glGetBufferParameteri64v</refname>
+        <refname>glGetNamedBufferParameteriv</refname>
+        <refname>glGetNamedBufferParameteri64v</refname>
+        <refpurpose>return parameters of a buffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetBufferParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>value</parameter></paramdef>
+                <paramdef>GLint * <parameter>data</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetBufferParameteri64v</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>value</parameter></paramdef>
+                <paramdef>GLint64 * <parameter>data</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetNamedBufferParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetNamedBufferParameteri64v</function></funcdef>
+                <paramdef>GLuint <parameter>buffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint64 *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the buffer object is bound
+                    for <function>glGetBufferParameteriv</function> and
+                    <function>glGetBufferParameteri64v</function>. Must be
+                    one of the buffer binding targets in the following
+                    table:
+                </para>
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="bufferbindings.xml"/>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object for
+                    <function>glGetNamedBufferParameteriv</function> and
+                    <function>glGetNamedBufferParameteri64v</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>value</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the buffer object parameter to
+                    query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>data</parameter></term>
+            <listitem>
+                <para>
+                    Returns the requested parameter.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            These functions return in <parameter>data</parameter> a selected
+            parameter of the specified buffer object.
+        </para>
+        <para>
+            <parameter>pname</parameter> names a specific buffer object
+            parameter, as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_BUFFER_ACCESS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the access
+                        policy set while mapping the buffer object (the
+                        value of the <parameter>access</parameter> parameter
+                        enum passed to <function>glMapBuffer</function>). If
+                        the buffer was mapped with
+                        <function>glMapBufferRange</function>, the access
+                        policy is determined by translating the bits in that
+                        <parameter>access</parameter> parameter to one of
+                        the supported enums for
+                        <function>glMapBuffer</function> as described in the
+                        OpenGL Specification.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_ACCESS_FLAGS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the access
+                        policy set while mapping the buffer object (the
+                        value of the <parameter>access</parameter> parameter
+                        bitfield passed to
+                        <function>glMapBufferRange</function>). If the
+                        buffer was mapped with
+                        <function>glMapBuffer</function>, the access policy
+                        is determined by translating the enums in that
+                        <parameter>access</parameter> parameter to the
+                        corresponding bits for
+                        <function>glMapBufferRange</function> as described
+                        in the OpenGL Specification. The initial value is
+                        zero.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_IMMUTABLE_STORAGE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a boolean flag
+                        indicating whether the buffer object is immutable.
+                        The initial value is <constant>GL_FALSE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_MAPPED</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a flag
+                        indicating whether the buffer object is currently
+                        mapped. The initial value is
+                        <constant>GL_FALSE</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_MAP_LENGTH</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the length of
+                        the mapping into the buffer object established with
+                        <function>glMapBuffer*</function>. The
+                        <function>i64v</function> versions of these queries
+                        should be used for this parameter. The initial value
+                        is zero.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_MAP_OFFSET</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the offset of
+                        the mapping into the buffer object established with
+                        <function>glMapBuffer*</function>. The
+                        <function>i64v</function> versions of these queries
+                        should be used for this parameter. The initial value
+                        is zero.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_SIZE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the size of
+                        the buffer object, measured in bytes. The initial
+                        value is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_STORAGE_FLAGS</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns a bitfield
+                        indicating the storage flags for the buffer object.
+                        If the buffer object is immutable, the value
+                        returned will be that specified when the data store
+                        was established with
+                        <function>glBufferStorage</function>. If the data
+                        store was established with
+                        <function>glBufferData</function>, the value will be
+                        <constant>GL_MAP_READ_BIT</constant> |
+                        <constant>GL_MAP_WRITE_BIT</constant> |
+                        <constant>GL_DYNAMIC_STORAGE_BIT</constant> |
+                        <constant>GL_MAP_WRITE_BIT</constant>. The initial
+                        value is zero.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_BUFFER_USAGE</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>params</parameter> returns the buffer
+                        object's usage pattern. The initial value is
+                        <constant>GL_STATIC_DRAW</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated, no change is made to the contents of
+            <parameter>data</parameter>.
+        </para>
+        <para>
+            The <constant>GL_ATOMIC_COUNTER_BUFFER</constant> target is
+            available only if the GL version is 4.2 or greater.
+        </para>
+        <para>
+            The <constant>GL_DISPATCH_INDIRECT_BUFFER</constant> and
+            <constant>GL_SHADER_STORAGE_BUFFER</constant> targets are
+            available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            The <constant>GL_QUERY_BUFFER</constant> target is available
+            only if the GL version is 4.4 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glGetBufferParameter*</function> if
+            <parameter>target</parameter> is not one of the accepted buffer
+            targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetBufferParameter*</function> if
+            zero is bound to <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetNamedBufferParameter*</function> if
+            <parameter>buffer</parameter> is not the name of an existing
+            buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>pname</parameter> is not one of the buffer object
+            parameter names described above.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetBufferParameteri64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='32']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetBufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetNamedBufferParameteri64v</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetNamedBufferParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBufferData</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetBufferPointerv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2005 Addison-Wesley.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

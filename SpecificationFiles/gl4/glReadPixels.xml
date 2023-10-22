@@ -1,0 +1,1253 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glReadPixels">
+    <info>
+    <copyright>
+      <year>1991-2006</year>
+
+      <holder>Silicon Graphics, Inc.</holder>
+    </copyright>
+
+    <copyright>
+      <year>2010-2014</year>
+
+      <holder>Khronos Group</holder>
+    </copyright>
+  </info>
+
+  <refmeta>
+    <refentrytitle>glReadPixels</refentrytitle>
+
+    <manvolnum>3G</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>glReadPixels</refname>
+
+    <refname>glReadnPixels</refname>
+
+    <refpurpose>read a block of pixels from the frame buffer</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <title>C Specification</title>
+
+    <funcsynopsis>
+      <funcprototype>
+        <funcdef>void <function>glReadPixels</function></funcdef>
+
+        <paramdef>GLint <parameter>x</parameter></paramdef>
+
+        <paramdef>GLint <parameter>y</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>width</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>height</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>format</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+
+        <paramdef>void * <parameter>data</parameter></paramdef>
+      </funcprototype>
+
+      <funcprototype>
+        <funcdef>void <function>glReadnPixels</function></funcdef>
+
+        <paramdef>GLint <parameter>x</parameter></paramdef>
+
+        <paramdef>GLint <parameter>y</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>width</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>height</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>format</parameter></paramdef>
+
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+
+        <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+
+        <paramdef>void *<parameter>data</parameter></paramdef>
+      </funcprototype>
+    </funcsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>x</parameter></term>
+
+        <term><parameter>y</parameter></term>
+
+        <listitem>
+          <para>Specify the window coordinates of the first pixel that is read
+          from the frame buffer. This location is the lower left corner of a
+          rectangular block of pixels.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>width</parameter></term>
+
+        <term><parameter>height</parameter></term>
+
+        <listitem>
+          <para>Specify the dimensions of the pixel rectangle.
+          <parameter>width</parameter> and <parameter>height</parameter> of
+          one correspond to a single pixel.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>format</parameter></term>
+
+        <listitem>
+          <para>Specifies the format of the pixel data. The following symbolic
+          values are accepted: <constant>GL_STENCIL_INDEX</constant>,
+          <constant>GL_DEPTH_COMPONENT</constant>,
+          <constant>GL_DEPTH_STENCIL</constant>, <constant>GL_RED</constant>,
+          <constant>GL_GREEN</constant>, <constant>GL_BLUE</constant>,
+          <constant>GL_RGB</constant>, <constant>GL_BGR</constant>,
+          <constant>GL_RGBA</constant>, and
+          <constant>GL_BGRA</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>type</parameter></term>
+
+        <listitem>
+          <para>Specifies the data type of the pixel data. Must be one of
+          <constant>GL_UNSIGNED_BYTE</constant>, <constant>GL_BYTE</constant>,
+          <constant>GL_UNSIGNED_SHORT</constant>,
+          <constant>GL_SHORT</constant>, <constant>GL_UNSIGNED_INT</constant>,
+          <constant>GL_INT</constant>, <constant>GL_HALF_FLOAT</constant>,
+          <constant>GL_FLOAT</constant>,
+          <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+          <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+          <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+          <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
+          <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+          <constant>GL_UNSIGNED_INT_24_8</constant>,
+          <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>,
+          <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant>, or
+          <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>bufSize</parameter></term>
+
+        <listitem>
+          <para>Specifies the size of the buffer <parameter>data</parameter>
+          for <function>glReadnPixels</function> function.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>data</parameter></term>
+
+        <listitem>
+          <para>Returns the pixel data.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para><function>glReadPixels</function> and
+    <function>glReadnPixels</function> return pixel data from the frame
+    buffer, starting with the pixel whose lower left corner is at location
+    (<parameter>x</parameter>, <parameter>y</parameter>), into client memory
+    starting at location <parameter>data</parameter>. Several parameters
+    control the processing of the pixel data before it is placed into client
+    memory. These parameters are set with
+    <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>.
+    This reference page describes the effects on
+    <function>glReadPixels</function> and <function>glReadnPixels</function>
+    of most, but not all of the parameters specified by these three
+    commands.</para>
+
+    <para>If a non-zero named buffer object is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target (see
+    <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>)
+    while a block of pixels is requested, <parameter>data</parameter> is
+    treated as a byte offset into the buffer object's data store rather than
+    a pointer to client memory.</para>
+
+    <para><function>glReadPixels</function> and
+    <function>glReadnPixels</function> return values from each pixel with
+    lower left corner at <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (x + i, y + j): -->
+                <mml:mfenced open="(" close=")">
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">x</mml:mi>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">i</mml:mi>
+                    </mml:mrow>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">y</mml:mi>
+                        <mml:mo>+</mml:mo>
+                        <mml:mi mathvariant="italic">j</mml:mi>
+                    </mml:mrow>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            for
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: 0 <= i < width: -->
+                <mml:mrow>
+                    <mml:mn>0</mml:mn>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>&lt;</mml:mo>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: 0 <= j < height: -->
+                <mml:mrow>
+                    <mml:mn>0</mml:mn>
+                    <mml:mo>&lt;=</mml:mo>
+                    <mml:mi mathvariant="italic">j</mml:mi>
+                    <mml:mo>&lt;</mml:mo>
+                    <mml:mi mathvariant="italic">height</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>.
+            This pixel is said to be the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
+            pixel in the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
+            row.
+            Pixels are returned in row order from the lowest to the highest row,
+            left to right in each row.
+        </para>
+        <para>
+            <parameter>format</parameter> specifies the format for the returned pixel values;
+            accepted values are:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_STENCIL_INDEX</constant></term>
+                <listitem>
+                    <para>
+                        Stencil values are read from the stencil buffer.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DEPTH_COMPONENT</constant></term>
+                <listitem>
+                    <para>
+                        Depth values are read from the depth buffer.
+                        Each component is converted to floating point such that the minimum depth
+                        value maps to 0 and the maximum value maps to 1.
+                        Each component is clamped to the range
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: [0,1]: -->
+                            <mml:mfenced open="[" close="]">
+                                <mml:mn>0</mml:mn>
+                                <mml:mn>1</mml:mn>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DEPTH_STENCIL</constant></term>
+                <listitem>
+                    <para>
+                        Values are taken from both the depth and stencil buffers. The <parameter>type</parameter> parameter
+                        must be <constant>GL_UNSIGNED_INT_24_8</constant> or <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RED</constant>,
+                      <constant>GL_GREEN</constant>,
+                      <constant>GL_BLUE</constant>,
+                      <constant>GL_RGB</constant>,
+                      <constant>GL_BGR</constant>,
+                      <constant>GL_RGBA</constant>,
+                      <constant>GL_BGRA</constant></term>
+                <listitem>
+                    <para>Color values are taken from the color buffer.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            Finally, the indices or components
+            are converted to the proper format,
+            as specified by <parameter>type</parameter>.
+            If <parameter>format</parameter> is <constant>GL_STENCIL_INDEX</constant>
+            and <parameter>type</parameter> is not <constant>GL_FLOAT</constant>,
+            each index is masked with the mask value given in the following table.
+            If <parameter>type</parameter> is <constant>GL_FLOAT</constant>, then each integer index is converted to
+            single-precision floating-point format.
+        </para>
+        <para>
+            If <parameter>format</parameter> is
+            <constant>GL_RED</constant>,
+            <constant>GL_GREEN</constant>,
+            <constant>GL_BLUE</constant>,
+            <constant>GL_RGB</constant>,
+            <constant>GL_BGR</constant>,
+            <constant>GL_RGBA</constant>, or
+            <constant>GL_BGRA</constant> and <parameter>type</parameter> is not <constant>GL_FLOAT</constant>,
+            each component is multiplied by the multiplier shown in the following table.
+            If type is <constant>GL_FLOAT</constant>, then each component is passed as is
+            (or converted to the client's single-precision floating-point format if
+            it is different from the one used by the GL).
+        </para>
+        <para>
+        </para>
+        <informaltable>
+            <tgroup cols="3">
+                <colspec align="left"/>
+                <colspec align="center"/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry>
+                            <parameter>type</parameter>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Index Mask </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> Component Conversion </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_BYTE</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 8 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>8</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup 8 - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>8</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_BYTE</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 7 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>7</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: {(2 sup 8 - 1) c - 1} / 2: -->
+                            <mml:mfrac>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:msup><mml:mn>2</mml:mn>
+                                                <mml:mn>8</mml:mn>
+                                                </mml:msup>
+                                                <mml:mo>-</mml:mo>
+                                                <mml:mn>1</mml:mn>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>&it;</mml:mo>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 16 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>16</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup 16 - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>16</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_SHORT</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 15 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>15</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: {(2 sup 16 - 1) c - 1} / 2: -->
+                            <mml:mfrac>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:msup><mml:mn>2</mml:mn>
+                                                <mml:mn>16</mml:mn>
+                                                </mml:msup>
+                                                <mml:mo>-</mml:mo>
+                                                <mml:mn>1</mml:mn>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>&it;</mml:mo>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 32 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>32</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup 32 - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>32</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_INT</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup 31 - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>31</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: {(2 sup 32 - 1) c - 1} / 2: -->
+                            <mml:mfrac>
+                                <mml:mfenced open="" close="">
+                                    <mml:mrow>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:msup><mml:mn>2</mml:mn>
+                                                <mml:mn>32</mml:mn>
+                                                </mml:msup>
+                                                <mml:mo>-</mml:mo>
+                                                <mml:mn>1</mml:mn>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>&it;</mml:mo>
+                                        <mml:mi mathvariant="italic">c</mml:mi>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mn>2</mml:mn>
+                            </mml:mfrac>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_HALF_FLOAT</constant>
+                        </entry>
+                        <entry>
+                        none
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">c</mml:mi></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_FLOAT</constant>
+                        </entry>
+                        <entry>
+                        none
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">c</mml:mi></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_BYTE_3_3_2</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_5_6_5</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_8_8_8_8</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_10_10_10_2</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_24_8</constant>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: 2 sup N - 1: -->
+                            <mml:mrow>
+                                <mml:msup><mml:mn>2</mml:mn>
+                                <mml:mn>N</mml:mn>
+                                </mml:msup>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                            <!-- eqn: (2 sup N - 1) c: -->
+                            <mml:mrow>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:msup><mml:mn>2</mml:mn>
+                                        <mml:mn>N</mml:mn>
+                                        </mml:msup>
+                                        <mml:mo>-</mml:mo>
+                                        <mml:mn>1</mml:mn>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                                <mml:mo>&it;</mml:mo>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>
+                        </entry>
+                        <entry>
+                        --
+                        </entry>
+                        <entry>
+                        Special
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant>
+                        </entry>
+                        <entry>
+                        --
+                        </entry>
+                        <entry>
+                        Special
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                        <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>
+                        </entry>
+                        <entry>
+                        none
+                        </entry>
+                        <entry>
+                        <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">c</mml:mi></mml:math></inlineequation> (Depth Only)
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            Return values are placed in memory as follows.
+            If <parameter>format</parameter> is
+            <constant>GL_STENCIL_INDEX</constant>,
+            <constant>GL_DEPTH_COMPONENT</constant>,
+            <constant>GL_RED</constant>,
+            <constant>GL_GREEN</constant>, or
+            <constant>GL_BLUE</constant>,
+            a single value is returned and the data for the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>th
+            pixel in the
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>th
+            row
+            is placed in location
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: (j) width + i: -->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mi mathvariant="italic">j</mml:mi>
+                    </mml:mfenced>
+                    <mml:mo>&it;</mml:mo>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>. <constant>GL_RGB</constant> and
+    <constant>GL_BGR</constant> return three values,
+    <constant>GL_RGBA</constant> and <constant>GL_BGRA</constant> return four
+    values for each pixel, with all values corresponding to a single pixel
+    occupying contiguous space in <parameter>data</parameter>. Storage
+    parameters set by
+    <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+    such as <constant>GL_PACK_LSB_FIRST</constant> and
+    <constant>GL_PACK_SWAP_BYTES</constant>, affect the way that data is
+    written into memory. See
+    <citerefentry><refentrytitle>glPixelStore</refentrytitle>
+    </citerefentry> for a description.</para>
+
+    <para><function>glReadnPixels</function> function will only handle the
+    call if <parameter>bufSize</parameter> is at least of the size required to
+    store the requested data. Otherwise, it will generate a
+    <constant>GL_INVALID_OPERATION</constant> error.</para>
+  </refsect1>
+
+  <refsect1 xml:id="notes">
+    <title>Notes</title>
+
+    <para>Values for pixels that lie outside the window connected to the
+    current GL context are undefined.</para>
+
+    <para>If an error is generated, no change is made to the contents of
+    <parameter>data</parameter>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>format</parameter> or <parameter>type</parameter> is not an
+    accepted value.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if either
+    <parameter>width</parameter> or <parameter>height</parameter> is
+    negative.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>format</parameter> is <constant>GL_STENCIL_INDEX</constant> and
+    there is no stencil buffer.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>format</parameter> is <constant>GL_DEPTH_COMPONENT</constant>
+    and there is no depth buffer.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>format</parameter> is <constant>GL_DEPTH_STENCIL</constant> and
+    there is no depth buffer or if there is no stencil buffer.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>format</parameter> is <constant>GL_DEPTH_STENCIL</constant> and
+    <parameter>type</parameter> is not
+    <constant>GL_UNSIGNED_INT_24_8</constant> or
+    <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>type</parameter> is one of
+    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
+    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant> and
+    <parameter>format</parameter> is not <constant>GL_RGB</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>type</parameter> is one of
+    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
+    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant> and
+    <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor
+    <constant>GL_BGRA</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and the buffer object's
+    data store is currently mapped.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be
+    packed to the buffer object such that the memory writes required would
+    exceed the data store size.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and
+    <parameter>data</parameter> is not evenly divisible into the number of
+    bytes needed to store in memory a datum indicated by
+    <parameter>type</parameter>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <constant>GL_READ_FRAMEBUFFER_BINDING</constant> is non-zero, the read
+    framebuffer is complete, and the value of
+    <constant>GL_SAMPLE_BUFFERS</constant> for the read framebuffer is greater
+    than zero.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glReadnPixels</function> if the buffer size required to store
+    the requested data is greater than <parameter>bufSize</parameter>.</para>
+  </refsect1>
+
+  <refsect1 xml:id="associatedgets">
+    <title>Associated Gets</title>
+
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+    </para>
+  </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glReadPixels</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glReadnPixels</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

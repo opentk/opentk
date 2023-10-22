@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glFeedbackBuffer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glFeedbackBuffer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFeedbackBuffer</refname>
+        <refpurpose>controls feedback mode</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFeedbackBuffer</function></funcdef>
+                <paramdef>GLsizei <parameter>size</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>buffer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the maximum number of values that can be written into <parameter>buffer</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant that describes the information
+                    that will be returned for each vertex.
+                    <constant>GL_2D</constant>,
+                    <constant>GL_3D</constant>,
+                    <constant>GL_3D_COLOR</constant>,
+                    <constant>GL_3D_COLOR_TEXTURE</constant>, and
+                    <constant>GL_4D_COLOR_TEXTURE</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffer</parameter></term>
+            <listitem>
+                <para>
+                    Returns the feedback data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            The <function>glFeedbackBuffer</function> function controls feedback.
+            Feedback, like selection, is a GL mode.
+            The mode is selected by calling
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> with <constant>GL_FEEDBACK</constant>.
+            When the GL is in feedback mode,
+            no pixels are produced by rasterization.
+            Instead, information about primitives that would have been
+            rasterized is fed back to the application using the GL.
+        </para>
+        <para>
+            <function>glFeedbackBuffer</function> has three arguments:
+            <parameter>buffer</parameter> is a pointer to an array of floating-point values
+            into which feedback information is placed.
+            <parameter>size</parameter> indicates the size of the array.
+            <parameter>type</parameter> is a symbolic constant describing the information
+            that is fed back for each vertex.
+            <function>glFeedbackBuffer</function> must be issued before feedback mode is enabled
+            (by calling <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> with argument <constant>GL_FEEDBACK</constant>).
+            Setting <constant>GL_FEEDBACK</constant> without establishing the feedback buffer,
+            or calling <function>glFeedbackBuffer</function> while the GL is in feedback mode,
+            is an error.
+        </para>
+        <para>
+            When <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called while in feedback mode, it returns the number of entries
+            placed in the feedback array and resets the feedback array pointer to the base
+            of the feedback buffer. The returned value never exceeds <parameter>size</parameter>. If the feedback
+            data required more room than was available in <parameter>buffer</parameter>,
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> returns a negative value.
+            To take the GL out of feedback mode, call
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> with a parameter value other than <constant>GL_FEEDBACK</constant>.
+        </para>
+        <para>
+            While in feedback mode,
+            each primitive, bitmap, or pixel rectangle that would be rasterized
+            generates a block of values that are copied into the feedback array.
+            If doing so would cause the number of entries to exceed the maximum,
+            the block is partially written so as to fill the array
+            (if there is any room left at all),
+            and an overflow flag is set.
+            Each block begins with a code indicating the primitive type,
+            followed by values that describe the primitive's vertices and
+            associated data.
+            Entries are also written for bitmaps and pixel rectangles.
+            Feedback occurs after polygon culling and <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry> interpretation
+            of polygons has taken place,
+            so polygons that are culled are not returned in the feedback buffer.
+            It can also occur after polygons with more than three edges are broken up
+            into triangles,
+            if the GL implementation renders polygons by performing this decomposition.
+        </para>
+        <para>
+            The <citerefentry><refentrytitle>glPassThrough</refentrytitle></citerefentry> command can be used to insert a marker
+            into the feedback buffer.
+            See <citerefentry><refentrytitle>glPassThrough</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            Following is the grammar for the blocks of values written
+            into the feedback buffer.
+            Each primitive is indicated with a unique identifying value
+            followed by some number of vertices.
+            Polygon entries include an integer value indicating how many vertices follow.
+            A vertex is fed back as some number of floating-point values,
+            as determined by <parameter>type</parameter>.
+            Colors are fed back as four values in RGBA mode and one value
+            in color index mode.
+        </para>
+
+        <para>
+            <para>
+                feedbackList <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> feedbackItem feedbackList | feedbackItem
+            </para>
+            <para>
+                feedbackItem <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> point | lineSegment | polygon | bitmap | pixelRectangle | passThru
+            </para>
+            <para>
+                point <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_POINT_TOKEN</constant> vertex
+            </para>
+            <para>
+                lineSegment <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_LINE_TOKEN</constant> vertex vertex | <constant>GL_LINE_RESET_TOKEN</constant> vertex vertex
+            </para>
+            <para>
+                polygon <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_POLYGON_TOKEN</constant> n polySpec
+            </para>
+            <para>
+                polySpec <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> polySpec vertex | vertex vertex vertex
+            </para>
+            <para>
+                bitmap <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_BITMAP_TOKEN</constant> vertex
+            </para>
+            <para>
+                pixelRectangle <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_DRAW_PIXEL_TOKEN</constant> vertex | <constant>GL_COPY_PIXEL_TOKEN</constant> vertex
+            </para>
+            <para>
+                passThru <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> <constant>GL_PASS_THROUGH_TOKEN</constant> value
+            </para>
+            <para>
+                vertex <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> 2d | 3d | 3dColor | 3dColorTexture | 4dColorTexture
+            </para>
+            <para>
+                2d <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value
+            </para>
+            <para>
+                3d <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value
+            </para>
+            <para>
+                3dColor <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value color
+            </para>
+            <para>
+                3dColorTexture <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value color tex
+            </para>
+            <para>
+                4dColorTexture <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value value color tex
+            </para>
+            <para>
+                color <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> rgba | index
+            </para>
+            <para>
+                rgba <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value value
+            </para>
+            <para>
+                index <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value
+            </para>
+            <para>
+                tex <inlineequation><mml:math><mml:mrow><mml:mn>&#x2190;</mml:mn></mml:mrow></mml:math></inlineequation> value value value value
+            </para>
+            <para>
+            </para>
+        </para>
+        <para>
+            <emphasis>value</emphasis>
+            is a floating-point number,
+            and
+            <emphasis>n</emphasis>
+            is a floating-point integer giving the number of vertices in the polygon.
+            <constant>GL_POINT_TOKEN</constant>,
+            <constant>GL_LINE_TOKEN</constant>,
+            <constant>GL_LINE_RESET_TOKEN</constant>,
+            <constant>GL_POLYGON_TOKEN</constant>,
+            <constant>GL_BITMAP_TOKEN</constant>,
+            <constant>GL_DRAW_PIXEL_TOKEN</constant>,
+            <constant>GL_COPY_PIXEL_TOKEN</constant> and
+            <constant>GL_PASS_THROUGH_TOKEN</constant> are symbolic floating-point constants.
+            <constant>GL_LINE_RESET_TOKEN</constant> is returned whenever the line stipple pattern
+            is reset.
+            The data returned as a vertex depends on the feedback <parameter>type</parameter>.
+        </para>
+        <para>
+            The following table gives the correspondence between <parameter>type</parameter>
+            and the number of values per vertex.
+            <emphasis>k</emphasis> is 1 in color index mode and 4 in RGBA mode.
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="5" align="left">
+                <colspec colwidth="2.7*" />
+                <colspec colwidth="1.5*" />
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="2.5*" align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Type
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Coordinates
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Color
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Texture
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Total Number of Values
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_2D</constant>
+                        </entry>
+                        <entry align="left">
+                        <emphasis>x</emphasis>, <emphasis>y</emphasis>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        2
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_3D</constant>
+                        </entry>
+                        <entry align="left">
+                        <emphasis>x</emphasis>, <emphasis>y</emphasis>, <emphasis>z</emphasis>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        3
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_3D_COLOR</constant>
+                        </entry>
+                        <entry align="left">
+                        <emphasis>x</emphasis>, <emphasis>y</emphasis>, <emphasis>z</emphasis>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">k</mml:mi></mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 3  +  k:-->
+                            <mml:mrow>
+                                <mml:mn>3</mml:mn>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">k</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_3D_COLOR_TEXTURE</constant>
+                        </entry>
+                        <entry align="left">
+                        <emphasis>x</emphasis>, <emphasis>y</emphasis>, <emphasis>z</emphasis>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">k</mml:mi></mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        4
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 7  +  k:-->
+                            <mml:mrow>
+                                <mml:mn>7</mml:mn>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">k</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_4D_COLOR_TEXTURE</constant>
+                        </entry>
+                        <entry align="left">
+                        <emphasis>x</emphasis>, <emphasis>y</emphasis>, <emphasis>z</emphasis>, <emphasis>w</emphasis>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">k</mml:mi></mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        4
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 8  +  k:-->
+                            <mml:mrow>
+                                <mml:mn>8</mml:mn>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">k</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            Feedback vertex coordinates are in window coordinates,
+            except <emphasis>w</emphasis>,
+            which is in clip coordinates.
+            Feedback colors are lighted, if lighting is enabled.
+            Feedback texture coordinates are generated,
+            if texture coordinate generation is enabled.
+            They are always transformed by the texture matrix.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glFeedbackBuffer</function>, when used in a display list, is not compiled into the display list
+            but is executed immediately.
+        </para>
+        <para>
+            <function>glFeedbackBuffer</function> returns only the texture coordinate of texture unit <constant>GL_TEXTURE0</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>size</parameter> is negative.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glFeedbackBuffer</function> is called while the
+            render mode is <constant>GL_FEEDBACK</constant>,
+            or if <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> is called with argument <constant>GL_FEEDBACK</constant> before
+            <function>glFeedbackBuffer</function> is called at least once.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glFeedbackBuffer</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_RENDER_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_FEEDBACK_BUFFER_POINTER</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_FEEDBACK_BUFFER_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_FEEDBACK_BUFFER_TYPE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLineStipple</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPassThrough</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSelectBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

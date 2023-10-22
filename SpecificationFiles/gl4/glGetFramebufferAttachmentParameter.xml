@@ -1,0 +1,403 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetFramebufferAttachmentParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetFramebufferAttachmentParameteriv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetFramebufferAttachmentParameteriv</refname>
+        <refname>glGetNamedFramebufferAttachmentParameteriv</refname>
+        <refpurpose>retrieve information about attachments of a framebuffer object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetFramebufferAttachmentParameteriv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetNamedFramebufferAttachmentParameteriv</function></funcdef>
+                <paramdef>GLuint <parameter>framebuffer</parameter></paramdef>
+                <paramdef>GLenum <parameter>attachment</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint *<parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the target to which the framebuffer object is
+                    bound for
+                    <function>glGetFramebufferAttachmentParameteriv</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>framebuffer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the framebuffer object for
+                    <function>glGetNamedFramebufferAttachmentParameteriv</function>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>attachment</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the attachment of the framebuffer object to
+                    query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the parameter of
+                    <parameter>attachment</parameter> to query.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Returns the value of parameter
+                    <parameter>pname</parameter> for
+                    <parameter>attachment</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetFramebufferAttachmentParameteriv</function> and
+            <function>glGetNamedFramebufferAttachmentParameteriv</function>
+            return parameters of attachments of a specified framebuffer
+            object.
+        </para>
+        <para>
+            For <function>glGetFramebufferAttachmentParameteriv</function>,
+            the framebuffer object is that bound to
+            <parameter>target</parameter>, which must be one of
+            <constant>GL_DRAW_FRAMEBUFFER</constant>,
+            <constant>GL_READ_FRAMEBUFFER</constant> or
+            <constant>GL_FRAMEBUFFER</constant>.
+            <constant>GL_FRAMEBUFFER</constant> is equivalent to
+            <constant>GL_DRAW_FRAMEBUFFER</constant>. Buffers of default
+            framebuffers may also be queried if bound to
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            For
+            <function>glGetNamedFramebufferAttachmentParameteriv</function>,
+            <parameter>framebuffer</parameter> is the name of the
+            framebuffer object. If <parameter>framebuffer</parameter> is
+            zero, the default draw framebuffer is queried.
+        </para>
+        <para>
+            If the specified framebuffer is a framebuffer object,
+            <parameter>attachment</parameter> must be one of
+            <constant>GL_DEPTH_ATTACHMENT</constant>,
+            <constant>GL_STENCIL_ATTACHMENT</constant>
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>, or
+            <constant>GL_COLOR_ATTACHMENT</constant><emphasis>i</emphasis>,
+            where <emphasis>i</emphasis> is between zero and the value of
+            <constant>GL_MAX_COLOR_ATTACHMENTS</constant> minus one.
+        </para>
+        <para>
+            If the specified framebuffer is a default framebuffer,
+            <parameter>target</parameter>, <parameter>attachment</parameter>
+            must be one of <constant>GL_FRONT_LEFT</constant>,
+            <constant>GL_FRONT_RIGHT</constant>,
+            <constant>GL_BACK_LEFT</constant>,
+            <constant>GL_BACK_RIGHT</constant>,
+            <constant>GL_DEPTH</constant> or
+            <constant>GL_STENCIL</constant>, identifying the corresponding
+            buffer.
+        </para>
+        <para>
+            If <parameter>attachment</parameter> is
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant>, the same
+            object must be bound to both the depth and stencil attachment
+            points of the framebuffer object, and information about that
+            object is returned.
+        </para>
+        <para>
+            Upon successful return, if <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>, then
+            <parameter>params</parameter> will contain one of
+            <constant>GL_NONE</constant>,
+            <constant>GL_FRAMEBUFFER_DEFAULT</constant>,
+            <constant>GL_TEXTURE</constant>, or
+            <constant>GL_RENDERBUFFER</constant>, identifying the type of
+            object which contains the attached image. Other values accepted
+            for <parameter>pname</parameter> depend on the type of object,
+            as described below.
+        </para>
+        <para>
+            If the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is
+            <constant>GL_NONE</constant>, then either no framebuffer is
+            bound to <parameter>target</parameter>; or a default framebuffer
+            is queried, <parameter>attachment</parameter> is
+            <constant>GL_DEPTH</constant> or
+            <constant>GL_STENCIL</constant>, and the number of depth or
+            stencil bits, respectively, is zero. In this case querying
+            <parameter>pname</parameter>
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant> will
+            return zero, and all other queries will generate an error.
+        </para>
+        <para>
+            If the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is
+            not <constant>GL_NONE</constant>, these queries apply to all
+            other framebuffer types:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_RED_SIZE</constant>,
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_GREEN_SIZE</constant>,
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_BLUE_SIZE</constant>,
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE</constant>,
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE</constant>
+                    or
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE</constant>,
+                    then <parameter>params</parameter> will contain the
+                    number of bits in the corresponding red, green, blue,
+                    alpha, depth, or stencil component of the specified
+                    attachment. If the requested component is not present in
+                    the attachment, or if no data storage or texture image
+                    has been specified for the attachment, then
+                    <parameter>params</parameter> will contain zero.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE</constant>,
+                    then <parameter>params</parameter> will contain the
+                    format of components of the specified attachment, one of
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_SIGNED_NORMALIZED</constant>, or
+                    <constant>GL_UNSIGNED_NORMALIZED</constant> for
+                    floating-point, signed integer, unsigned integer, signed
+                    normalized fixed-point, or unsigned normalized
+                    fixed-point components respectively. Only color buffers
+                    may have integer components. If no data storage or
+                    texture image has been specified for the attachment,
+                    then <parameter>params</parameter> will contain
+                    <constant>GL_NONE</constant>. This query cannot be
+                    performed for a combined depth+stencil attachment, since
+                    it does not have a single format.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING</constant>,
+                    then <parameter>params</parameter> will contain the encoding
+                    of components of the specified attachment, one of
+                    <constant>GL_LINEAR</constant> or
+                    <constant>GL_SRGB</constant> for linear or sRGB-encoded
+                    components, respectively. Only color buffer components
+                    may be sRGB-encoded; such components are treated as
+                    described in the OpenGL Specification. For a default
+                    framebuffer, color encoding is determined by the
+                    implementation. For framebuffer objects, components are
+                    sRGB-encoded if the internal format of a color
+                    attachment is one of the color-renderable SRGB formats.
+                    If the attachment is not a color attachment, or if no
+                    data storage or texture image has been specified for the
+                    attachment, then <parameter>params</parameter> will
+                    contain <constant>GL_LINEAR</constant>.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            If the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is
+            <constant>GL_RENDERBUFFER</constant>, then
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>,
+                    <parameter>params</parameter> will contain the name of
+                    the renderbuffer object which contains the attached
+                    image.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            If the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is
+            <constant>GL_TEXTURE</constant>, then
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>,
+                    then <parameter>params</parameter> will contain the name
+                    of the texture object which contains the attached image.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL</constant>,
+                    then <parameter>params</parameter> will contain the
+                    mipmap level of the texture object which contains the
+                    attached image.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE</constant>
+                    and the value of
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>
+                    is the name of a cube map texture object, then
+                    <parameter>params</parameter> will contain the cube map
+                    face of the cubemap texture object which contains the
+                    attached image. Otherwise <parameter>params</parameter>
+                    will contain zero.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_LAYERED</constant>,
+                    then <parameter>params</parameter> will contain
+                    <constant>GL_TRUE</constant> if an entire level of a
+                    three-dimensional texture, cube map texture, or one-or
+                    two-dimensional array texture is attached. Otherwise,
+                    <parameter>params</parameter> will contain
+                    <constant>GL_FALSE</constant>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    If <parameter>pname</parameter> is
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER</constant>;
+                    the value of
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>
+                    is the name of a three-dimensional, or a one- or
+                    two-dimensional array texture; and the value of
+                    <constant>GL_FRAMEBUFFER_ATTACHMENT_LAYERED</constant>
+                    is <constant>GL_FALSE</constant>, then
+                    <parameter>params</parameter> will contain the texture
+                    layer which contains the attached image. Otherwise
+                    <parameter>params</parameter> will contain zero.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The <constant>GL_FRAMEBUFFER_ATTACHMENT_LAYERED</constant> query
+            is supported only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated by
+            <function>glGetFramebufferAttachmentParameteriv</function> if
+            <parameter>target</parameter> is not one of the accepted
+            framebuffer targets.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by
+            <function>glGetNamedFramebufferAttachmentParameteriv</function>
+            if <parameter>framebuffer</parameter> is not zero or the name of
+            an existing framebuffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>pname</parameter> is not valid for the value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>, as
+            described above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>attachment</parameter> is not one of the accepted
+            framebuffer attachment points, as described above.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if the
+            value of
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant> is
+            <constant>GL_NONE</constant> and <parameter>pname</parameter> is
+            not <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME</constant>
+            or <constant>GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>attachment</parameter> is
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> and different
+            objects are bound to the depth and stencil attachment points of
+            <parameter>target</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if
+            <parameter>attachment</parameter> is
+            <constant>GL_DEPTH_STENCIL_ATTACHMENT</constant> and
+            <parameter>pname</parameter> is
+            <constant>GL_FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetFramebufferAttachmentParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetNamedFramebufferAttachmentParameteriv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenFramebuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindFramebuffer</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glGetFramebufferParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,129 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glPatchParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group.</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glPatchParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPatchParameter</refname>
+        <refpurpose>specifies the parameters for patch primitives</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPatchParameteri</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPatchParameterfv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat *<parameter>values</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the name of the parameter to set. The symbolc constants <constant>GL_PATCH_VERTICES</constant>,
+                    <constant>GL_PATCH_DEFAULT_OUTER_LEVEL</constant>, and <constant>GL_PATCH_DEFAULT_INNER_LEVEL</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>value</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the new value for the parameter given by <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>values</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the address of an array containing the new values for the parameter given by <parameter>pname</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glPatchParameter</function> specifies the parameters that will be used for patch primitives. <parameter>pname</parameter>
+            specifies the parameter to modify and must be either <constant>GL_PATCH_VERTICES</constant>, <constant>GL_PATCH_DEFAULT_OUTER_LEVEL</constant>
+            or <constant>GL_PATCH_DEFAULT_INNER_LEVEL</constant>. For <function>glPatchParameteri</function>, <parameter>value</parameter> specifies
+            the new value for the parameter specified by <parameter>pname</parameter>. For <function>glPatchParameterfv</function>, <parameter>values</parameter>
+            specifies the address of an array containing the new values for the parameter specified by <parameter>pname</parameter>.
+        </para>
+        <para>
+            When <parameter>pname</parameter> is <constant>GL_PATCH_VERTICES</constant>, <parameter>value</parameter> specifies the number
+            of vertices that will be used to make up a single patch primitive. Patch primitives are consumed by the tessellation control
+            shader (if present) and subsequently used for tessellation. When primitives are specified using
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> or a similar function, each patch will be made
+            from <parameter>parameter</parameter> control points, each represented by a vertex taken from the enabeld vertex arrays.
+            <parameter>parameter</parameter> must be greater than zero, and less than or equal to the value of <constant>GL_MAX_PATCH_VERTICES</constant>.
+         </para>
+         <para>
+            When <parameter>pname</parameter> is <constant>GL_PATCH_DEFAULT_OUTER_LEVEL</constant> or <constant>GL_PATCH_DEFAULT_INNER_LEVEL</constant>,
+            <parameter>values</parameter> contains the address of an array contiaining the default outer or inner tessellation levels, respectively,
+            to be used when no tessellation control shader is present.
+         </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>pname</parameter> is <constant>GL_PATCH_VERTICES</constant>
+            and <parameter>value</parameter> is less than or equal to zero, or greater than the value of <constant>GL_MAX_PATCH_VERTICES</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glPatchParameterfv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glPatchParameteri</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='40']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArraysInstanced</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

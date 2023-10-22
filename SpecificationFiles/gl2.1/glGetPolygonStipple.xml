@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetPolygonStipple">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetPolygonStipple</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetPolygonStipple</refname>
+        <refpurpose>return the polygon stipple pattern</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetPolygonStipple</function></funcdef>
+                <paramdef>GLubyte * <parameter>pattern</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>pattern</parameter></term>
+            <listitem>
+                <para>
+                    Returns the stipple pattern. The initial value is all 1's.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glGetPolygonStipple</function> returns to <parameter>pattern</parameter> a 
+            <inlineequation><mml:math>
+                <!-- eqn: 32  times  32:-->
+                <mml:mrow>
+                    <mml:mn>32</mml:mn>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mn>32</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            polygon stipple pattern.
+            The pattern is packed into memory as if <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>
+            with both <emphasis>height</emphasis> and <emphasis>width</emphasis> of 32,
+            <emphasis>type</emphasis> of <constant>GL_BITMAP</constant>,
+            and <emphasis>format</emphasis> of <constant>GL_COLOR_INDEX</constant> were called,
+            and the stipple pattern were stored in an internal 
+            <inlineequation><mml:math>
+                <!-- eqn: 32  times  32:-->
+                <mml:mrow>
+                    <mml:mn>32</mml:mn>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mn>32</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            color
+            index buffer.
+            Unlike <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            however,
+            pixel transfer operations
+            (shift, offset, pixel map)
+            are not applied to the returned stipple image.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_PACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a polygon stipple pattern is
+            requested, <parameter>pattern</parameter> is treated as a byte offset into the buffer object's data store.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>pattern</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be packed to the buffer 
+            object such that the memory writes required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetPolygonStipple</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glPixelStore</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonStipple</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

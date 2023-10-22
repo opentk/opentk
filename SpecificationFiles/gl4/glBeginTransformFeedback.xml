@@ -1,0 +1,209 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBeginTransformFeedback">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBeginTransformFeedback</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBeginTransformFeedback</refname>
+        <refpurpose>start transform feedback operation</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBeginTransformFeedback</function></funcdef>
+                <paramdef>GLenum <parameter>primitiveMode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEndTransformFeedback</function></funcdef>
+                <paramdef><parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters for <function>glBeginTransformFeedback</function></title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>primitiveMode</parameter></term>
+            <listitem>
+                <para>
+                    Specify the output type of the primitives that will be recorded into the
+                    buffer objects that are bound for transform feedback.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            Transform feedback mode captures the values of varying variables written by the vertex shader (or, if active, the geometry shader).
+            Transform feedback is said to be active after a call to <function>glBeginTransformFeedback</function>
+            until a subsequent call to <!-- FIX: link to glBeginTransformFeedback --> <function>glEndTransformFeedback</function>.
+            Transform feedback commands must be paired.
+        </para>
+        <para>
+            If no geometry shader is present, while transform feedback is active the <parameter>mode</parameter> parameter to
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry> must match those specified
+            in the following table:
+        </para>
+        <informaltable>
+            <tgroup cols="2" align="left">
+                <colspec colwidth="1.1*"/>
+                <colspec colwidth="1*"/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold">
+                                Transform Feedback <parameter>primitiveMode</parameter>
+                            </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold">
+                                Allowed Render Primitive <parameter>modes</parameter>
+                            </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_LINES</constant> </entry>
+                        <entry>
+                            <constant>GL_LINES</constant>,
+                            <constant>GL_LINE_LOOP</constant>,
+                            <constant>GL_LINE_STRIP</constant>,
+                            <constant>GL_LINES_ADJACENCY</constant>,
+                            <constant>GL_LINE_STRIP_ADJACENCY</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_TRIANGLES</constant>
+                        </entry>
+                        <entry>
+                            <constant>GL_TRIANGLES</constant>,
+                            <constant>GL_TRIANGLE_STRIP</constant>,
+                            <constant>GL_TRIANGLE_FAN</constant>,
+                            <constant>GL_TRIANGLES_ADJACENCY</constant>,
+                            <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            If a geometry shader is present, the output primitive type from the geometry shader must match those
+            provided in the following table:
+        </para>
+        <informaltable>
+            <tgroup cols="2" align="left">
+                <colspec colwidth="1.1*"/>
+                <colspec colwidth="1*"/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold">
+                                Transform Feedback <parameter>primitiveMode</parameter>
+                            </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold">
+                                Allowed Geometry Shader Output Primitive Type
+                            </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry> <constant>GL_POINTS</constant> </entry>
+                        <entry> <constant>points</constant> </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_LINES</constant> </entry>
+                        <entry> <constant>line_strip</constant> </entry>
+                    </row>
+                    <row>
+                        <entry> <constant>GL_TRIANGLES</constant> </entry>
+                        <entry> <constant>triangle_strip</constant> </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Geometry shaders, and the <constant>GL_TRIANGLES_ADJACENCY</constant>, <constant>GL_TRIANGLE_STRIP_ADJACENCY</constant>,
+            <constant>GL_LINES_ADJACENCY</constant> and <constant>GL_LINE_STRIP_ADJACENCY</constant> primtive modes are available
+            only if the GL version is 3.2 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glBeginTransformFeedback</function> is executed
+            while transform feedback is active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glEndTransformFeedback</function> is executed
+            while transform feedback is not active.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>
+            if no geometry shader is present, transform feedback is active and <parameter>mode</parameter> is not one of the allowed modes.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>
+            if a geometry shader is present, transform feedback is active and the output primitive type of the geometry shader does not
+            match the transform feedback <parameter>primitiveMode</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glBeginTransformFeedback</function> if any binding
+            point used in transform feedback mode does not have a buffer object bound.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated by <function>glBeginTransformFeedback</function> if no binding
+            points would be used, either because no program object is active of because the active program object has specified
+            no varying variables to record.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBeginTransformFeedback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glEndTransformFeedback</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

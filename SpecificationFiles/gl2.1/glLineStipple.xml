@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glLineStipple">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glLineStipple</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glLineStipple</refname>
+        <refpurpose>specify the line stipple pattern</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLineStipple</function></funcdef>
+                <paramdef>GLint <parameter>factor</parameter></paramdef>
+                <paramdef>GLushort <parameter>pattern</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>factor</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a multiplier for each bit in the line stipple pattern.
+                    If <parameter>factor</parameter> is 3,
+                    for example,
+                    each bit in the pattern is used three times
+                    before the next bit in the pattern is used.
+                    <parameter>factor</parameter> is clamped to the range [1, 256] and defaults to 1.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pattern</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a 16-bit integer whose bit pattern determines
+                    which fragments of a line will be drawn when the line is rasterized.
+                    Bit zero is used first; the default pattern is all 1's.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            Line stippling masks out certain fragments produced by rasterization;
+            those fragments will not be drawn.
+            The masking is achieved by using three parameters:
+            the 16-bit line stipple pattern <parameter>pattern</parameter>,
+            the repeat count <parameter>factor</parameter>,
+            and an integer stipple counter 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>.
+        </para>
+        <para>
+            Counter 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            is reset to 0 whenever <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> is called
+            and before each line segment of a <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>(<constant>GL_LINES</constant>)/<citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>
+            sequence is generated.
+            It is incremented after each fragment of a unit width aliased line segment
+            is generated
+            or after each 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
+            fragments of an 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
+            width line segment are generated.
+            The 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>
+            fragments associated with count 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            are masked out if
+        </para>
+        <para>
+            <parameter>pattern</parameter> bit 
+            <inlineequation><mml:math>
+                <!-- eqn: (s  /  factor)  mod  16:-->
+                <mml:mrow>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mfrac>
+                            <mml:mi mathvariant="italic">s</mml:mi>
+                            <mml:mi mathvariant="italic">factor</mml:mi>
+                        </mml:mfrac>
+                    </mml:mfenced>
+                    <mml:mo>%</mml:mo>
+                    <mml:mn>16</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+        </para>
+        <para>
+            is 0, otherwise these fragments are sent to the frame buffer.
+            Bit zero of <parameter>pattern</parameter> is the least significant bit.
+        </para>
+        <para>
+            Antialiased lines are treated as a sequence of 
+            <inlineequation><mml:math>
+                <!-- eqn: 1 times width:-->
+                <mml:mrow>
+                    <mml:mn>1</mml:mn>
+                    <mml:mo>&times;</mml:mo>
+                    <mml:mi mathvariant="italic">width</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            rectangles
+            for purposes of stippling.
+            Whether rectangle 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            is rasterized or not depends on the fragment rule
+            described for aliased lines,
+            counting rectangles rather than groups of fragments.
+        </para>
+        <para>
+            To enable and disable line stippling, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+            with argument <constant>GL_LINE_STIPPLE</constant>.
+            When enabled,
+            the line stipple pattern is applied as described above.
+            When disabled,
+            it is as if the pattern were all 1's.
+            Initially, line stippling is disabled.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glLineStipple</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_LINE_STIPPLE_PATTERN</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_LINE_STIPPLE_REPEAT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_LINE_STIPPLE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonStipple</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,132 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glProgramParameter">
+    <info>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glProgramParameter</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glProgramParameter</refname>
+        <refpurpose>specify a parameter for a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glProgramParameteri</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>value</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>program</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of a program object whose parameter to modify.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+            <para>
+                Specifies the name of the parameter to modify.
+            </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>value</parameter></term>
+            <listitem>
+            <para>
+                Specifies the new value of the parameter specified by <parameter>pname</parameter> for <parameter>program</parameter>.
+            </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glProgramParameter</function> specifies a new value for the parameter nameed by
+            <parameter>pname</parameter> for the program object <parameter>program</parameter>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_PROGRAM_BINARY_RETRIEVABLE_HINT</constant>,
+            <parameter>value</parameter> should be <constant>GL_FALSE</constant> or <constant>GL_TRUE</constant>
+            to indicate to the implementation the intention of the application to retrieve the program's
+            binary representation with <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>.
+            The implementation may use this information to store information that may be useful for a future
+            query of the program's binary. It is recommended to set <constant>GL_PROGRAM_BINARY_RETRIEVABLE_HINT</constant>
+            for the program to <constant>GL_TRUE</constant> before calling
+            <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>, and
+            using the program at run-time if the binary is to be retrieved later.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_PROGRAM_SEPARABLE</constant>, <parameter>value</parameter>
+            must be <constant>GL_TRUE</constant> or <constant>GL_FALSE</constant> and indicates whether
+            <parameter>program</parameter> can be bound to individual pipeline stages via
+            <citerefentry><refentrytitle>glUseProgramStages</refentrytitle></citerefentry>. A program's
+            <constant>GL_PROGRAM_SEPARABLE</constant> parameter must be set to <constant>GL_TRUE</constant>
+            <emphasis>before</emphasis> <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>
+            is called in order for it to be usable with a program pipeline object. The initial state of
+            <constant>GL_PROGRAM_SEPARABLE</constant> is <constant>GL_FALSE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>program</parameter> is not the
+            name of an existing program object.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>pname</parameter> is not one
+            of the accepted values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>value</parameter> is not a valid
+            value for the parameter named by <parameter>pname</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glProgramParameteri</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetProgramBinary</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glProgramBinary</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,151 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetProgramInfoLog">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetProgramInfoLog</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetProgramInfoLog</refname>
+        <refpurpose>Returns the information log for a program object</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetProgramInfoLog</function></funcdef>
+                <paramdef>GLuint <parameter>program</parameter></paramdef>
+                <paramdef>GLsizei <parameter>maxLength</parameter></paramdef>
+                <paramdef>GLsizei *<parameter>length</parameter></paramdef>
+                <paramdef>GLchar *<parameter>infoLog</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+            <varlistentry>
+                <term><parameter>program</parameter></term>
+                <listitem>
+                    <para>Specifies the program object whose information
+                    log is to be queried.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>maxLength</parameter></term>
+                <listitem>
+                    <para>Specifies the size of the character buffer for
+                    storing the returned information log.</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>length</parameter></term>
+                <listitem>
+                    <para>Returns the length of the string returned in
+                    <parameter>infoLog</parameter> (excluding the null
+                    terminator).</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>infoLog</parameter></term>
+                <listitem>
+                    <para>Specifies an array of characters that is used
+                    to return the information log.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para><function>glGetProgramInfoLog</function> returns the
+        information log for the specified program object. The
+        information log for a program object is modified when the
+        program object is linked or validated. The string that is
+        returned will be null terminated.</para>
+
+        <para><function>glGetProgramInfoLog</function> returns in
+        <parameter>infoLog</parameter> as much of the information log as
+        it can, up to a maximum of <parameter>maxLength</parameter>
+        characters. The number of characters actually returned,
+        excluding the null termination character, is specified by
+        <parameter>length</parameter>. If the length of the returned
+        string is not required, a value of <constant>NULL</constant> can
+        be passed in the <parameter>length</parameter> argument. The
+        size of the buffer required to store the returned information
+        log can be obtained by calling
+        <citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+        with the value <constant>GL_INFO_LOG_LENGTH</constant>. </para>
+
+        <para>The information log for a program object is either an
+        empty string, or a string containing information about the last
+        link operation, or a string containing information about the
+        last validation operation. It may contain diagnostic messages,
+        warning messages, and other information. When a program object
+        is created, its information log will be a string of length
+        0.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>The information log for a program object is the OpenGL
+        implementer's primary mechanism for conveying information about
+        linking and validating. Therefore, the information log can be
+        helpful to application developers during the development
+        process, even when these operations are successful. Application
+        developers should not expect different OpenGL implementations to
+        produce identical information logs.</para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>program</parameter> is not a value generated by
+        OpenGL.</para>
+
+        <para><constant>GL_INVALID_OPERATION</constant> is generated if
+        <parameter>program</parameter> is not a program object.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>maxLength</parameter> is less than 0.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para><citerefentry><refentrytitle>glGetProgram</refentrytitle></citerefentry>
+        with argument <constant>GL_INFO_LOG_LENGTH</constant></para>
+
+        <para><citerefentry><refentrytitle>glIsProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetProgramInfoLog</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para><citerefentry><refentrytitle>glCompileShader</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGetShaderInfoLog</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glLinkProgram</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glValidateProgram</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

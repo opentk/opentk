@@ -1,0 +1,179 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glBindBuffersRange">
+    <info>
+        <copyright>
+            <year>2013-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glBindBuffersRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glBindBuffersRange</refname>
+        <refpurpose>bind ranges of one or more buffer objects to a sequence of indexed buffer targets</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glBindBuffersRange</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLuint <parameter>first</parameter></paramdef>
+                <paramdef>GLsizei <parameter>count</parameter></paramdef>
+                <paramdef>const GLuint *<parameter>buffers</parameter></paramdef>
+                <paramdef>const GLintptr *<parameter>offsets</parameter></paramdef>
+                <paramdef>const GLintptr *<parameter>sizes</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specify the target of the bind operation. <parameter>target</parameter> must be
+                    one of <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+                    <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+                    <constant>GL_SHADER_STORAGE_BUFFER</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>first</parameter></term>
+            <listitem>
+                <para>
+                    Specify the index of the first binding point within the array specified by <parameter>target</parameter>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>count</parameter></term>
+            <listitem>
+                <para>
+                    Specify the number of contiguous binding points to which to bind buffers.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>buffers</parameter></term>
+            <listitem>
+                <para>
+                    A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or <constant>NULL</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+            <varlistentry>
+                <term><parameter>offsets</parameter></term>
+                <listitem>
+                    <para>
+                        A pointer to an array of offsets into the corresponding buffer in <parameter>buffers</parameter> to
+                        bind, or <constant>NULL</constant> if <parameter>buffers</parameter> is <constant>NULL</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><parameter>sizes</parameter></term>
+                <listitem>
+                    <para>
+                        A pointer to an array of sizes of the corresponding buffer in <parameter>buffers</parameter> to
+                        bind, or <constant>NULL</constant> if <parameter>buffers</parameter> is <constant>NULL</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glBindBuffersRange</function> binds a set of <parameter>count</parameter> ranges from buffer objects whose names
+            are given in the array <parameter>buffers</parameter> to the <parameter>count</parameter> consecutive binding
+            points starting from index <parameter>first</parameter> of the array of targets specified
+            by <parameter>target</parameter>. <parameter>offsets</parameter> specifies the address of an array containing
+            <parameter>count</parameter> starting offsets within the buffers, and <parameter>sizes</parameter> specifies the
+            address of an array of <parameter>count</parameter> sizes of the ranges. If <parameter>buffers</parameter> is <constant>NULL</constant> then
+            <parameter>offsets</parameter> and <parameter>sizes</parameter> are ignored and <function>glBindBuffersRange</function> unbinds any
+            buffers that are currently bound to the referenced binding points. Assuming no errors are generated, it is equivalent to the following
+            pseudo-code, which calls <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            with the exception that the non-indexed <parameter>target</parameter> is not changed by <function>glBindBuffersRange</function>:</para>
+<programlisting>    for (i = 0; i &lt; count; i++) {
+        if (buffers != NULL) {
+            glBindBufferRange(target, first + i, buffers[i], offsets[i], sizes[i]);
+        } else {
+            glBindBufferRange(target, first + i, 0);
+        }
+    }</programlisting>
+        <para>
+            Each entry in <parameter>buffers</parameter>, <parameter>offsets</parameter>, and <parameter>sizes</parameter> will be
+            checked individually and if found to be invalid, the state for that buffer binding index will not be changed and an
+            error will be generated. However, the state for other buffer binding indices referenced by the command will
+            still be updated.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            <function>glBindBuffersBase</function> is available only if the GL version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            <constant>GL_ATOMIC_COUNTER_BUFFER</constant>,
+            <constant>GL_TRANSFORM_FEEDBACK_BUFFER</constant>, <constant>GL_UNIFORM_BUFFER</constant> or
+            <constant>GL_SHADER_STORAGE_BUFFER</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>first</parameter> + <parameter>count</parameter> is greater
+            than the number of target-specific indexed binding points.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if any value in <parameter>buffers</parameter> is not
+            zero or the name of an existing buffer object.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by if any value in <parameter>offsets</parameter> is less than zero or
+            if any value in <parameter>sizes</parameter> is less than zero.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if any pair of values in <parameter>offsets</parameter>
+            and <parameter>sizes</parameter> does not respectively satisfy the constraints described for those
+            parameters for the specified target.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glBindBuffersRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='44']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGenBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDeleteBuffers</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferBase</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBufferRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffersRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glUnmapBuffer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2013-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>

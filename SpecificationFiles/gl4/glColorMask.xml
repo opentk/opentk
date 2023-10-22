@@ -1,0 +1,127 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glColorMask">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glColorMask</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glColorMask, glColorMaski</refname>
+        <refpurpose>enable and disable writing of frame buffer color components</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorMask</function></funcdef>
+                <paramdef>GLboolean <parameter>red</parameter></paramdef>
+                <paramdef>GLboolean <parameter>green</parameter></paramdef>
+                <paramdef>GLboolean <parameter>blue</parameter></paramdef>
+                <paramdef>GLboolean <parameter>alpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorMaski</function></funcdef>
+                <paramdef>GLuint <parameter>buf</parameter></paramdef>
+                <paramdef>GLboolean <parameter>red</parameter></paramdef>
+                <paramdef>GLboolean <parameter>green</parameter></paramdef>
+                <paramdef>GLboolean <parameter>blue</parameter></paramdef>
+                <paramdef>GLboolean <parameter>alpha</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>buf</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glColorMaski</function>, specifies the index of the
+                    draw buffer whose color mask to set.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>red</parameter></term>
+            <term><parameter>green</parameter></term>
+            <term><parameter>blue</parameter></term>
+            <term><parameter>alpha</parameter></term>
+            <listitem>
+                <para>
+                    Specify whether red, green, blue, and alpha are to be written
+                    into the frame buffer.
+                    The initial values are all <constant>GL_TRUE</constant>,
+                    indicating that the color components are written.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glColorMask</function> and <function>glColorMaski</function> specify whether the individual color components in the frame buffer
+            can or cannot be written. <function>glColorMaski</function> sets the mask for a specific draw buffer, whereas
+            <function>glColorMask</function> sets the mask for all draw buffers.
+            If <parameter>red</parameter> is <constant>GL_FALSE</constant>,
+            for example,
+            no change is made to the red component of any pixel in any of the
+            color buffers,
+            regardless of the drawing operation attempted.
+        </para>
+        <para>
+            Changes to individual bits of components cannot be controlled.
+            Rather,
+            changes are either enabled or disabled for entire color components.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_WRITEMASK</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glColorMask</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glColorMaski</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDepthMask</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glStencilMask</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

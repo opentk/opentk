@@ -1,14 +1,13 @@
 ﻿using System;
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native.macOS;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Graphics;
+using OpenTK.OpenGL.OpenGL;
+using OpenTK.OpenGL;
 using OpenTK.Mathematics;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Platform.Handles;
-using OpenTK.Mathematics.Colors;
 
 namespace MacOSTestProject
 {

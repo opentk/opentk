@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Core.Platform.Handles;
+using OpenTK.OpenGL.OpenGL;
 
 namespace OpenTK.Backends.Tests.TestApps
 {

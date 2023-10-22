@@ -1,0 +1,113 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glFrontFace">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glFrontFace</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glFrontFace</refname>
+        <refpurpose>define front- and back-facing polygons</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFrontFace</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the orientation of front-facing polygons.
+                    <constant>GL_CW</constant> and <constant>GL_CCW</constant> are accepted.
+                    The initial value is <constant>GL_CCW</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            In a scene composed entirely of opaque closed surfaces,
+            back-facing polygons are never visible.
+            Eliminating these invisible polygons has the obvious benefit
+            of speeding up the rendering of the image.
+            To enable and disable elimination of back-facing polygons, call <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+            and <!-- FIX: link to glEnable --> <function>glDisable</function> with argument <constant>GL_CULL_FACE</constant>.
+        </para>
+        <para>
+            The projection of a polygon to window coordinates is said to have
+            clockwise winding if an imaginary object following the path
+            from its first vertex,
+            its second vertex,
+            and so on,
+            to its last vertex,
+            and finally back to its first vertex,
+            moves in a clockwise direction about the interior of the polygon.
+            The polygon's winding is said to be counterclockwise if the imaginary
+            object following the same path moves in a counterclockwise direction
+            about the interior of the polygon.
+            <function>glFrontFace</function> specifies whether polygons with clockwise winding in window coordinates,
+            or counterclockwise winding in window coordinates,
+            are taken to be front-facing.
+            Passing <constant>GL_CCW</constant> to <parameter>mode</parameter> selects counterclockwise polygons as
+            front-facing;
+            <constant>GL_CW</constant> selects clockwise polygons as front-facing.
+            By default, counterclockwise polygons are taken to be front-facing.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_FRONT_FACE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glFrontFace</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

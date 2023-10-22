@@ -1,0 +1,949 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glVertexAttrib">
+    <info>
+        <copyright>
+            <year>2003-2005</year>
+            <holder>3Dlabs Inc. Ltd.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glVertexAttrib</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glVertexAttrib</refname>
+        <refpurpose>Specifies the value of a generic vertex attribute</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+    <funcsynopsis>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1f</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1s</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLshort <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI1i</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI1ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2f</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2s</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLshort <parameter>v0</parameter></paramdef>
+        <paramdef>GLshort <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI2i</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI2ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3f</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3s</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLshort <parameter>v0</parameter></paramdef>
+        <paramdef>GLshort <parameter>v1</parameter></paramdef>
+        <paramdef>GLshort <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI3i</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        <paramdef>GLint <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI3ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4f</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v0</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v1</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v2</parameter></paramdef>
+        <paramdef>GLfloat <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4s</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLshort <parameter>v0</parameter></paramdef>
+        <paramdef>GLshort <parameter>v1</parameter></paramdef>
+        <paramdef>GLshort <parameter>v2</parameter></paramdef>
+        <paramdef>GLshort <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v2</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nub</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLubyte <parameter>v0</parameter></paramdef>
+        <paramdef>GLubyte <parameter>v1</parameter></paramdef>
+        <paramdef>GLubyte <parameter>v2</parameter></paramdef>
+        <paramdef>GLubyte <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4i</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLint <parameter>v0</parameter></paramdef>
+        <paramdef>GLint <parameter>v1</parameter></paramdef>
+        <paramdef>GLint <parameter>v2</parameter></paramdef>
+        <paramdef>GLint <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLuint <parameter>v0</parameter></paramdef>
+        <paramdef>GLuint <parameter>v1</parameter></paramdef>
+        <paramdef>GLuint <parameter>v2</parameter></paramdef>
+        <paramdef>GLuint <parameter>v3</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL1d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL2d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL3d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v2</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL4d</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v0</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v1</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v2</parameter></paramdef>
+        <paramdef>GLdouble <parameter>v3</parameter></paramdef>
+        </funcprototype>
+            <!-- Vector commands -->
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1fv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1sv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib1dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI1iv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI1uiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2fv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2sv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib2dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI2iv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI2uiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3fv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3sv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib3dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI3iv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI3uiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4fv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLfloat *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4sv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4iv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4bv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLbyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4ubv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLubyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4usv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLushort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4uiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nbv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLbyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nsv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Niv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nubv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLubyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nusv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLushort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttrib4Nuiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4bv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLbyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4ubv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLubyte *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4sv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLshort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4usv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLushort *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4iv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribI4uiv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLuint *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL1dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL2dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL3dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribL4dv</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>const GLdouble *<parameter>v</parameter></paramdef>
+        </funcprototype>
+            <!-- Packed commands -->
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribP1ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+        <paramdef>GLuint <parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribP2ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+        <paramdef>GLuint <parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribP3ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+        <paramdef>GLuint <parameter>value</parameter></paramdef>
+        </funcprototype>
+        <funcprototype>
+        <funcdef>void <function>glVertexAttribP4ui</function></funcdef>
+        <paramdef>GLuint <parameter>index</parameter></paramdef>
+        <paramdef>GLenum <parameter>type</parameter></paramdef>
+        <paramdef>GLboolean <parameter>normalized</parameter></paramdef>
+        <paramdef>GLuint <parameter>value</parameter></paramdef>
+        </funcprototype>
+    </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+    <variablelist>
+        <varlistentry>
+        <term><parameter>index</parameter></term>
+        <listitem>
+            <para>Specifies the index of the generic vertex
+            attribute to be modified.</para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term>
+            <parameter>v0</parameter>,
+            <parameter>v1</parameter>,
+            <parameter>v2</parameter>,
+            <parameter>v3</parameter>
+        </term>
+        <listitem>
+            <para>
+                For the scalar commands, specifies the new values to be used
+                for the specified vertex attribute.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>v</parameter></term>
+        <listitem>
+            <para>
+                For the vector commands
+                (<function>glVertexAttrib*v</function>), specifies a pointer
+                to an array of values to be used for the generic vertex
+                attribute.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>type</parameter></term>
+        <listitem>
+            <para>
+                For the packed commands
+                (<function>glVertexAttribP*</function>), specified the type
+                of packing used on the data. This parameter must be
+                <constant>GL_INT_2_10_10_10_REV</constant> or
+                <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, to
+                specify signed or unsigned data, respectively, or
+                <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> to
+                specify floating point data.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>normalized</parameter></term>
+        <listitem>
+            <para>
+                For the packed commands, if <constant>GL_TRUE</constant>,
+                then the values are to be converted to floating point values
+                by normalizing. Otherwise, they are converted directly to
+                floating-point values. If <parameter>type</parameter>
+                indicates a floating-pont format, then
+                <parameter>normalized</parameter> value must be
+                <constant>GL_FALSE</constant>.
+            </para>
+        </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>value</parameter></term>
+        <listitem>
+            <para>
+                For the packed commands, specifies the new packed value to
+                be used for the specified vertex attribute.
+            </para>
+        </listitem>
+        </varlistentry>
+    </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+    <para>The <function>glVertexAttrib</function> family of entry points
+    allows an application to pass generic vertex attributes in
+    numbered locations.</para>
+
+    <para>Generic attributes are defined as four-component values
+    that are organized into an array. The first entry of this array
+    is numbered 0, and the size of the array is specified by the
+    implementation-dependent constant
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>. Individual elements
+    of this array can be modified with a
+    <function>glVertexAttrib</function> call that specifies the
+    index of the element to be modified and a value for that
+    element.</para>
+
+    <para>These commands can be used to specify one, two, three, or
+    all four components of the generic vertex attribute specified by
+    <parameter>index</parameter>. A <function>1</function> in the
+    name of the command indicates that only one value is passed, and
+    it will be used to modify the first component of the generic
+    vertex attribute. The second and third components will be set to
+    0, and the fourth component will be set to 1. Similarly, a
+    <function>2</function> in the name of the command indicates that
+    values are provided for the first two components, the third
+    component will be set to 0, and the fourth component will be set
+    to 1. A <function>3</function> in the name of the command
+    indicates that values are provided for the first three
+    components and the fourth component will be set to 1, whereas a
+    <function>4</function> in the name indicates that values are
+    provided for all four components.</para>
+
+    <para>The letters <function>s</function>,
+    <function>f</function>, <function>i</function>,
+    <function>d</function>, <function>ub</function>,
+    <function>us</function>, and <function>ui</function> indicate
+    whether the arguments are of type short, float, int, double,
+    unsigned byte, unsigned short, or unsigned int. When
+    <function>v</function> is appended to the name, the commands can
+    take a pointer to an array of such values.</para>
+
+        <para>Additional capitalized letters can indicate further alterations
+        to the default behavior of the glVertexAttrib function:</para>
+
+        <para>
+            The commands containing <function>N</function> indicate that
+            the arguments will be passed as fixed-point values that are
+            scaled to a normalized range according to the component
+            conversion rules defined by the OpenGL specification. Signed
+            values are understood to represent fixed-point values in the
+            range [-1,1], and unsigned values are understood to represent
+            fixed-point values in the range [0,1].
+        </para>
+
+        <para>
+            The commands containing <function>I</function> indicate that
+            the arguments are extended to full signed or unsigned integers.
+        </para>
+
+        <para>
+            The commands containing <function>P</function> indicate that
+            the arguments are stored as packed components within a larger
+            natural type.
+        </para>
+
+        <para>
+            The commands containing <function>L</function> indicate that
+            the arguments are full 64-bit quantities and should be passed directly
+            to shader inputs declared as 64-bit double precision types.
+        </para>
+
+    <para>OpenGL Shading Language attribute variables are allowed to
+    be of type mat2, mat3, or mat4. Attributes of these types may be
+    loaded using the <function>glVertexAttrib</function> entry
+    points. Matrices must be loaded into successive generic
+    attribute slots in column major order, with one column of the
+    matrix in each generic attribute slot.</para>
+
+    <para>A user-defined attribute variable declared in a vertex
+    shader can be bound to a generic attribute index by calling
+    <citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>.
+    This allows an application to use more descriptive variable
+    names in a vertex shader. A subsequent change to the specified
+    generic vertex attribute will be immediately reflected as a
+    change to the corresponding attribute variable in the vertex
+    shader.</para>
+
+    <para>The binding between a generic vertex attribute index and a
+    user-defined attribute variable in a vertex shader is part of
+    the state of a program object, but the current value of the
+    generic vertex attribute is not. The value of each generic
+    vertex attribute is part of current state, just like standard
+    vertex attributes, and it is maintained even if a different
+    program object is used.</para>
+
+    <para>An application may freely modify generic vertex attributes
+    that are not bound to a named vertex shader attribute variable.
+    These values are simply maintained as part of current state and
+    will not be accessed by the vertex shader. If a generic vertex
+    attribute bound to an attribute variable in a vertex shader is
+    not updated while the vertex shader is executing, the vertex
+    shader will repeatedly use the current value for the generic
+    vertex attribute.</para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+    <para>Generic vertex attributes can be updated at any time.</para>
+
+    <para>It is possible for an application to bind more than one
+    attribute name to the same generic vertex attribute index. This
+    is referred to as aliasing, and it is allowed only if just one
+    of the aliased attribute variables is active in the vertex
+    shader, or if no path through the vertex shader consumes more
+    than one of the attributes aliased to the same location. OpenGL
+    implementations are not required to do error checking to detect
+    aliasing, they are allowed to assume that aliasing will not
+    occur, and they are allowed to employ optimizations that work
+    only in the absence of aliasing.</para>
+
+    <para>There is no provision for binding standard vertex
+    attributes; therefore, it is not possible to alias generic
+    attributes with standard attributes.</para>
+
+        <para>
+            <function>glVertexAttribL</function> versions are available only if the GL version is 4.1 or higher.
+        </para>
+
+        <para>
+            <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> is accepted for <parameter>type</parameter>
+            by <function>glVertexAttribP*</function> only if the GL version is 4.4 or higher.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>index</parameter> is greater than or equal to
+    <constant>GL_MAX_VERTEX_ATTRIBS</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <function>glVertexAttribP*</function> is used with a
+        <parameter>type</parameter> other than
+    <constant>GL_INT_2_10_10_10_REV</constant>,
+        <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+        or <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <function>glVertexAttribL</function> is used with a
+        <parameter>type</parameter> other than
+    <constant>GL_DOUBLE</constant>.</para>
+
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+    <para><citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+    with the argument <constant>GL_CURRENT_PROGRAM</constant></para>
+
+    <para><citerefentry><refentrytitle>glGetActiveAttrib</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter> and the index of an active
+    attribute variable</para>
+
+    <para><citerefentry><refentrytitle>glGetAttribLocation</refentrytitle></citerefentry>
+    with argument <parameter>program</parameter> and an attribute
+    variable name</para>
+
+    <para><citerefentry><refentrytitle>glGetVertexAttrib</refentrytitle></citerefentry>
+    with arguments <constant>GL_CURRENT_VERTEX_ATTRIB</constant> and
+    <parameter>index</parameter></para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glVertexAttrib1d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib1dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib1f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib1fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib1s</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib1sv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2s</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib2sv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3s</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib3sv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nbv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Niv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nsv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nub</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nubv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nuiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4Nusv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4bv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4f</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4fv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4s</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4sv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4ubv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttrib4usv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI1i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI1iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI1ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI1uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI2i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI2iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI2ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI2uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI3i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI3iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI3ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI3uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4bv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4i</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4iv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4sv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4ubv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4uiv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribI4usv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL1d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL1dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL2d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL2dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL3d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL3dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL4d</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribL4dv</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribP1ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribP2ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribP3ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glVertexAttribP4ui</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='33']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+    <para><citerefentry><refentrytitle>glBindAttribLocation</refentrytitle></citerefentry>,
+    <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry></para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 2003-2005 3Dlabs Inc. Ltd.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This material may be distributed subject to the terms and conditions set forth in
+            the Open Publication License, v 1.0, 8 June 1999.
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://opencontent.org/openpub/">https://opencontent.org/openpub/</link>.
+        </para>
+    </refsect1>
+</refentry>
