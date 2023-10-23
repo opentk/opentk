@@ -203,10 +203,10 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
-            var r = default(Vector2);
-            var c = 1 - t;
+            Vector2 r = default(Vector2);
+            float c = 1 - t;
             float temp;
-            var i = 0;
+            int i = 0;
 
             foreach (var pt in points)
             {
@@ -248,10 +248,10 @@ namespace OpenTK.Mathematics
         [Pure]
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
-            var r = default(Vector2);
-            var c = 1 - t;
+            Vector2 r = default(Vector2);
+            float c = 1 - t;
             float temp;
-            var i = 0;
+            int i = 0;
 
             foreach (var pt in points)
             {
