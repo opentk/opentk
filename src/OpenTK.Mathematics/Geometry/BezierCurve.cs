@@ -204,7 +204,7 @@ namespace OpenTK.Mathematics
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
             var r = default(Vector2);
-            var c = 1.0d - t;
+            var c = 1 - t;
             float temp;
             var i = 0;
 
@@ -212,7 +212,7 @@ namespace OpenTK.Mathematics
             {
                 temp = MathHelper.BinomialCoefficient
                 (
-                    points.Count - 1, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 1 - i)
+                    points.Count - 1, i) * (MathF.Pow(t, i) * MathF.Pow(c, points.Count - 1 - i)
                 );
 
                 r.X += temp * pt.X;
@@ -249,7 +249,7 @@ namespace OpenTK.Mathematics
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
             var r = default(Vector2);
-            var c = 1.0d - t;
+            var c = 1 - t;
             float temp;
             var i = 0;
 
@@ -257,7 +257,7 @@ namespace OpenTK.Mathematics
             {
                 temp = MathHelper.BinomialCoefficient
                 (
-                    points.Count - 2, i) * (float)(Math.Pow(t, i) * Math.Pow(c, points.Count - 2 - i)
+                    points.Count - 2, i) * (MathF.Pow(t, i) * MathF.Pow(c, points.Count - 2 - i)
                 );
 
                 r.X += temp * pt.X;

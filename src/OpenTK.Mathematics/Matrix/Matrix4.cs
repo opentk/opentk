@@ -1117,7 +1117,7 @@ namespace OpenTK.Mathematics
             out Matrix4 result
         )
         {
-            if (fovy <= 0 || fovy > Math.PI)
+            if (fovy <= 0 || fovy > MathF.PI)
             {
                 throw new ArgumentOutOfRangeException(nameof(fovy));
             }
