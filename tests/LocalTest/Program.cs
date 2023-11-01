@@ -85,6 +85,13 @@ namespace LocalTest
             base.OnResize(e);
         }
 
+        protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
+        {
+            base.OnFramebufferResize(e);
+
+            GL.Viewport(0, 0, e.Width, e.Height);
+        }
+
         protected override void OnMove(WindowPositionEventArgs e)
         {
             base.OnMove(e);
