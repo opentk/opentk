@@ -115,7 +115,7 @@ void main()
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
-            WindowComp.SetSize(WindowHandle, 800, 600);
+            WindowComp.SetClientSize(WindowHandle, 800, 600);
 
             WindowComp.SetMaxClientSize(WindowHandle, 1000, 1000);
             WindowComp.SetMinClientSize(WindowHandle, 100, 100);
@@ -261,7 +261,7 @@ void main()
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
                 
-                WindowComp.SwapBuffers(WindowHandle);
+                OpenGLComponent.SwapBuffers(ContextHandle);
             }
         }
 
