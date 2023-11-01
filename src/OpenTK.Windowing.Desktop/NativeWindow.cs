@@ -883,6 +883,7 @@ namespace OpenTK.Windowing.Desktop
             }
 
             // When WindowState is Normal on Wayland it freezes on calling GLFW.RestoreWindow(WindowPtr) before Context?.MakeCurrent()
+            // See https://github.com/opentk/opentk/pull/1656 and https://github.com/glfw/glfw/issues/2395
             if (settings.WindowState != WindowState.Fullscreen && _isVisible)
             {
                 // If we are starting the window maximized or minimized we need to set that here.
