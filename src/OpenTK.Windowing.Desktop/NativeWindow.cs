@@ -958,18 +958,18 @@ namespace OpenTK.Windowing.Desktop
 
             var provider = new GLFWBindingsContext();
 
-            Type type = assembly.GetType($"OpenTK.Graphics.GLLoader");
-            if (type != null)
+            var type = assembly.GetType($"OpenTK.Graphics.GLLoader");
+            if (type == null)
             {
-                MethodInfo load = type.GetMethod("LoadBindings");
-                load.Invoke(null, new object[] { provider });
-                if (load == null)
-                {
-                    throw new MissingMethodException($"OpenTK tried to auto-load the OpenGL bindings. We found the {$"OpenTK.Graphics.GLLoader"} class, but we could not find the 'LoadBindings' method. " +
-                        $"If you are trying to run a trimmed assembly please add a [DynamicDependency()] attribute to your program, or set NativeWindowSettings.AutoLoadBindings = false and load the OpenGL bindings manually.");
-                }
-                load?.Invoke(null, new object[] { provider });
+                return;
             }
+            var load = type.GetMethod("LoadBindings");
+            if (load == null)
+            {
+                throw new MissingMethodException($"OpenTK tried to auto-load the OpenGL bindings. We found the {$"OpenTK.Graphics.GLLoader"} class, but we could not find the 'LoadBindings' method. " +
+                        $"If you are trying to run a trimmed assembly please add a [DynamicDependency()] attribute to your program, or set NativeWindowSettings.AutoLoadBindings = false and load the OpenGL bindings manually.");
+            }
+            load.Invoke(null, new object[] { provider });
         }
 
         /// <summary>
