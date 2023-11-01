@@ -3,11 +3,13 @@
     <TargetFramework>net7.0</TargetFramework>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenTK.Input</RootNamespace>
+    <Description>Shared input functionality for the OpenTK library.</Description>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Description>Shared input functionality for the OpenTK library.</Description>
-  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />

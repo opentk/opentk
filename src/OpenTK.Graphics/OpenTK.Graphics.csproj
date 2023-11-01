@@ -4,13 +4,17 @@
         <Nullable>enable</Nullable>
         <RootNamespace>OpenTK.Graphics</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
+  
     <ItemGroup>
       <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
-        <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
+      <ProjectReference Include="../OpenTK.Core/OpenTK.Core.csproj" />
+      <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
     </ItemGroup>
 
   <Import Project="..\..\props\common.props" />
