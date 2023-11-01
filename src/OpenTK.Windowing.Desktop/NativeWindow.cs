@@ -488,7 +488,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2i? _maximumSize;
 
         /// <summary>
-        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="Vector2i" /> structure that contains the external size of this window.
         /// </summary>
         public unsafe Vector2i Size
         {
@@ -513,7 +513,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the client size of this window.
+        /// Gets or sets a <see cref="Vector2i" /> structure that contains the client size of this window.
         /// </summary>
         public unsafe Vector2i ClientSize
         {
@@ -526,6 +526,18 @@ namespace OpenTK.Windowing.Desktop
             set
             {
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Vector2i" /> structure that contains the framebuffer size of this window.
+        /// </summary>
+        public unsafe Vector2i FramebufferSize
+        {
+            get
+            {
+                GLFW.GetFramebufferSize(WindowPtr, out int width, out int height);
+                return (width, height);
             }
         }
 
@@ -1012,6 +1024,7 @@ namespace OpenTK.Windowing.Desktop
 
         private GLFWCallbacks.WindowPosCallback _windowPosCallback;
         private GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private GLFWCallbacks.FramebufferSizeCallback _framebufferSizeCallback;
         private GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
         private GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
         private GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
@@ -1032,6 +1045,7 @@ namespace OpenTK.Windowing.Desktop
 
             _windowPosCallback = WindowPosCallback;
             _windowSizeCallback = WindowSizeCallback;
+            _framebufferSizeCallback = FramebufferSizeCallback;
             _windowCloseCallback = WindowCloseCallback;
             _windowRefreshCallback = WindowRefreshCallback;
             _windowFocusCallback = WindowFocusCallback;
@@ -1054,6 +1068,7 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetFramebufferSizeCallback(WindowPtr, _framebufferSizeCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
             GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
             GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
@@ -1112,6 +1127,18 @@ namespace OpenTK.Windowing.Desktop
             try
             {
                 OnResize(new ResizeEventArgs(width, height));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void FramebufferSizeCallback(Window* window, int width, int height)
+        {
+            try
+            {
+                OnFramebufferResize(new FramebufferResizeEventArgs(width, height));
             }
             catch (Exception e)
             {
@@ -1501,6 +1528,11 @@ namespace OpenTK.Windowing.Desktop
         public event Action<ResizeEventArgs> Resize;
 
         /// <summary>
+        /// Occurs whenever the framebuffer is resized.
+        /// </summary>
+        public event Action<FramebufferResizeEventArgs> FramebufferResize;
+
+        /// <summary>
         /// Occurs whenever the window is refreshed.
         /// </summary>
         public event Action Refresh;
@@ -1722,6 +1754,15 @@ namespace OpenTK.Windowing.Desktop
         protected virtual void OnResize(ResizeEventArgs e)
         {
             Resize?.Invoke(e);
+        }
+
+        /// <summary>
+        /// Raises the FramebufferResize event.
+        /// </summary>
+        /// <param name="e">A <see cref="FramebufferResizeEventArgs"/> that contains the event data.</param>
+        protected virtual void OnFramebufferResize(FramebufferResizeEventArgs e)
+        {
+            FramebufferResize?.Invoke(e);
         }
 
         /// <summary>
