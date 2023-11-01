@@ -52,5 +52,11 @@ namespace OpenTK.Windowing.Desktop
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
         public double UpdateFrequency { get; set; } = 0.0;
+
+        /// <summary>
+        /// Gets or sets a value which controls whether the timer which drives <see cref="FrameEventArgs"/> is
+        /// suspended when the user begins dragging the window or window frame. Only applies to Windows applications.
+        /// </summary>
+        public bool Win32SuspendTimerOnDrag { get; set; } = false;
     }
 }

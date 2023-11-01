@@ -178,6 +178,10 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public int ExpectedSchedulerPeriod { get; set; } = 16;
 
+        private readonly bool _win32SuspendTimerOnDrag;
+
+        private Win32WindowProc _win32WndProc = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
@@ -192,6 +196,7 @@ namespace OpenTK.Windowing.Desktop
             : base(nativeWindowSettings)
         {
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
+            _win32SuspendTimerOnDrag = gameWindowSettings.Win32SuspendTimerOnDrag;
         }
 
         #region Win32 Function for timing
@@ -258,6 +263,14 @@ namespace OpenTK.Windowing.Desktop
 
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
+
+            // Hook the Win32 window message handler and wire up related events
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32SuspendTimerOnDrag)
+            {
+                _win32WndProc = new Win32WindowProc(WindowPtr);
+                _win32WndProc.OnModalSizeMoveBegin += Win32_OnModalSizeMoveBegin;
+                _win32WndProc.OnModalSizeMoveEnd += Win32_OnModalSizeMoveEnd;
+            }
 
             // Send the OnLoad event, to load all user code.
             OnLoad();
@@ -418,6 +431,42 @@ namespace OpenTK.Windowing.Desktop
         public void ResetTimeSinceLastUpdate()
         {
             _watchUpdate.Restart();
+        }
+
+        // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
+        private void Win32_OnModalSizeMoveBegin()
+        {
+            _watchUpdate.Stop();
+        }
+
+        // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
+        private void Win32_OnModalSizeMoveEnd()
+        {
+            _watchUpdate.Restart();
+        }
+
+        private bool _isDisposed = false;
+
+        /// <inheritdoc />
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32WndProc != null)
+            {
+                _win32WndProc.OnModalSizeMoveBegin -= Win32_OnModalSizeMoveBegin;
+                _win32WndProc.OnModalSizeMoveEnd -= Win32_OnModalSizeMoveEnd;
+                _win32WndProc.Dispose();
+                _win32WndProc = null;
+            }
+
+            GC.SuppressFinalize(this);
+            _isDisposed = true;
         }
     }
 }
