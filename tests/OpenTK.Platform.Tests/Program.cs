@@ -269,7 +269,7 @@ namespace OpenTK.Platform.Tests
                 GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(Window);
+                glComp.SwapBuffers(context);
             }
         }
 
@@ -303,24 +303,32 @@ namespace OpenTK.Platform.Tests
                 }
             }
 
-            X11IconComponent.IconImage[] images = new X11IconComponent.IconImage[]
+            if (OperatingSystem.IsWindows())
             {
-                new X11IconComponent.IconImage()
+                IconHandle icon = iconComp.Create(16, 16, image16);
+                windowComp.SetIcon(handle, icon);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                X11IconComponent.IconImage[] images = new X11IconComponent.IconImage[]
                 {
-                    Width = 128,
-                    Height = 128,
-                    Data = image128,
-                },
-                new X11IconComponent.IconImage()
-                {
-                    Width = 16,
-                    Height = 16,
-                    Data = image16,
-                },
-            };
+                    new X11IconComponent.IconImage()
+                    {
+                        Width = 128,
+                        Height = 128,
+                        Data = image128,
+                    },
+                    new X11IconComponent.IconImage()
+                    {
+                        Width = 16,
+                        Height = 16,
+                        Data = image16,
+                    },
+                };
 
-            var icon = (iconComp as X11IconComponent)?.Create(128, 128, images);
-            windowComp.SetIcon(handle, icon);
+                IconHandle icon = (iconComp as X11IconComponent)?.Create(128, 128, images) ?? throw new Exception("Could not create icon.");
+                windowComp.SetIcon(handle, icon);
+            }
         }
 
         static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
