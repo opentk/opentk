@@ -9,7 +9,7 @@ namespace OpenToolkit.OpenCL.Tests
 	{
 		static void Main(string[] args)
 		{
-			ToGrayscale.ConvertToGrayscale("image.jpg");
+			//ToGrayscale.ConvertToGrayscale("image.jpg");
 
 			//Get the ids of available opencl platforms
 
