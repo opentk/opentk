@@ -159,23 +159,27 @@ module Box3 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Inflate =
 
-        // See #1616 and PR 1662 -- it appears the test-runner generates F# 64-bit float inputs and
-        // C# 32-bit floats sometimes cause equivalency failures. Could possibly be fixed by updating
-        // Assertions.fs with Equal overloads that accept the precision argument, but per discussion on
-        // Discord the math tests may need re-thinking. In that case, how much variance is acceptable?
-        //[<Property>]
-        //let ``Box3.Inflate produces the expected min and max changes`` (b1 : Box3, v1 : Vector3) =
-        //    let size = Vector3.ComponentMax(v1, -b1.HalfSize);
-        //    let bx = Box3(b1.Min - size, b1.Max + size)
-        //    let mutable b = b1
-        //    b.Inflate(v1)
-        //    Assert.Equal(b, bx)
+        [<Property>]
+        let ``Box3.Inflate produces the expected min and max changes`` (b1 : Box3, v1 : Vector3) =
+            let size = Vector3.ComponentMax(v1, -b1.HalfSize);
+            let bx = Box3(b1.Min - size, b1.Max + size)
+            let mutable b = b1
+            b.Inflate(v1)
+            Assert.Equal(b, bx)
 
         [<Property>]
-        let ``Box3.Inflate is equivalent to Box3.Inflated`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Inflate is equivalent to Inflated`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
             b.Inflate(v1)
             Assert.Equal(b, b1.Inflated(v1))
+
+        [<Property>]
+        let ``Box3.Inflate correctly modifies the size of the box`` (b1 : Box3, v1 : Vector3) =
+            let b2 = b1.Inflated(v1)
+            let expected = Vector3.ComponentMax(b1.Size + (v1 * 2.0f), Vector3.Zero)
+            Assert.ApproximatelyEquivalent(expected, b2.Size)
+            Assert.AllComponentsPositiveOrZero(b2.Size)
+
             
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Extend =

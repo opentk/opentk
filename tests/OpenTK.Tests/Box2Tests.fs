@@ -157,20 +157,26 @@ module Box2 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Inflate =
         
-        // See comments on equivalent Box3 test.
-        //[<Property>]
-        //let ``Box2.Inflate produces the expected min and max changes`` (b1 : Box2, v1 : Vector2) =
-        //    let size = Vector2.ComponentMax(v1, -b1.HalfSize);
-        //    let bx = Box2(b1.Min - size, b1.Max + size)
-        //    let mutable b = b1
-        //    b.Inflate(v1)
-        //    Assert.Equal(b, bx)
+        [<Property>]
+        let ``Box2.Inflate produces the expected min and max changes`` (b1 : Box2, v1 : Vector2) =
+            let size = Vector2.ComponentMax(v1, -b1.HalfSize);
+            let bx = Box2(b1.Min - size, b1.Max + size)
+            let mutable b = b1
+            b.Inflate(v1)
+            Assert.Equal(b, bx)
 
         [<Property>]
-        let ``Box2.Inflate is equivalent to Box2.Inflated`` (b1 : Box2, v1 : Vector2) =
+        let ``Box2.Inflate is equivalent to Inflated`` (b1 : Box2, v1 : Vector2) =
             let mutable b = b1
             b.Inflate(v1)
             Assert.Equal(b, b1.Inflated(v1))
+
+        [<Property>]
+        let ``Box2.Inflate correctly modifies the size of the box`` (b1 : Box2, v1 : Vector2) =
+            let b2 = b1.Inflated(v1)
+            let expected = Vector2.ComponentMax(b1.Size + (v1 * 2.0f), Vector2.Zero)
+            Assert.ApproximatelyEquivalent(expected, b2.Size)
+            Assert.AllComponentsPositiveOrZero(b2.Size)
         
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Extend =

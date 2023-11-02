@@ -283,8 +283,10 @@ namespace OpenTK.Mathematics
         public void Inflate(Vector3 size)
         {
             size = Vector3.ComponentMax(size, -HalfSize);
-            _min -= size;
-            _max += size;
+            Vector3 newMin = _min - size;
+            Vector3 newMax = _max + size;
+            _min = Vector3.ComponentMin(newMin, newMax);
+            _max = Vector3.ComponentMax(newMin, newMax);
         }
 
         /// <summary>
