@@ -272,7 +272,7 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Inflates this Box2i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in earlier API versions.
+        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         public void Inflate(Vector2i size)
@@ -284,7 +284,7 @@ namespace OpenTK.Mathematics
 
         /// <summary>
         /// Inflates this Box2i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
-        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in earlier API versions.
+        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
         /// </summary>
         /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
