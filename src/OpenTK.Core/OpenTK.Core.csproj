@@ -5,16 +5,17 @@
     <RootNamespace>OpenTK.Core</RootNamespace>
     <Description>Core shared functionality for the OpenTK library.</Description>
     <OutputType>Library</OutputType>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Description>Core shared functionality for the OpenTK library.</Description>
-  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
-  
+
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />

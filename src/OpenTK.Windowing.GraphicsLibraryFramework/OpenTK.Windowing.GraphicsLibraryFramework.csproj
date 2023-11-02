@@ -4,8 +4,12 @@
       <TargetFrameworks>net7.0</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <LangVersion>8.0</LangVersion>
+      <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
