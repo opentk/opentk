@@ -31,7 +31,7 @@ namespace OpenTK.Mathematics
     /// Represents a double-precision Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaterniond : IEquatable<Quaterniond>
+    public struct Quaterniond : IEquatable<Quaterniond>, IFormattable
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
@@ -86,9 +86,9 @@ namespace OpenTK.Mathematics
             var s3 = Math.Sin(roll);
 
             W = (c1 * c2 * c3) - (s1 * s2 * s3);
-            Xyz.X = (s1 * s2 * c3) + (c1 * c2 * s3);
-            Xyz.Y = (s1 * c2 * c3) - (c1 * s2 * s3);
-            Xyz.Z = (c1 * s2 * c3) + (s1 * c2 * s3);
+            Xyz.X = (s1 * c2 * c3) + (c1 * s2 * s3);
+            Xyz.Y = (c1 * s2 * c3) - (s1 * c2 * s3);
+            Xyz.Z = (c1 * c2 * s3) + (s1 * s2 * c3);
         }
 
         /// <summary>
@@ -191,41 +191,41 @@ namespace OpenTK.Mathematics
         {
             /*
             reference
-            http://en.wikipedia.org/wiki/Conversion_between_qernions_and_Euler_angles
-            http://www.euclideanspace.com/maths/geometry/rotations/conversions/qernionToEuler/
+            http://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+            http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/
             */
 
             var q = this;
 
-            q.Normalize();
-
-            double singularityTest = (q.X * q.Y) - (q.W * q.Z);
-            double yawY = 2d * ((q.W * q.X) + (q.Y * q.Z));
-            double yawX = 1d - (2d * ((q.Z * q.Z) + (q.X * q.X)));
-
-            // Threshold for the singularities found at the north/south poles.
-            // TODO: Think about how this threshold should change with the added precision
-            const double SINGULARITY_THRESHOLD = 0.4999995d;
-
             Vector3d eulerAngles;
 
-            if (singularityTest < -SINGULARITY_THRESHOLD)
+            // Threshold for the singularities found at the north/south poles.
+            const double SINGULARITY_THRESHOLD = 0.4999995;
+
+            var sqw = q.W * q.W;
+            var sqx = q.X * q.X;
+            var sqy = q.Y * q.Y;
+            var sqz = q.Z * q.Z;
+            var unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+            var singularityTest = (q.X * q.Z) + (q.W * q.Y);
+
+            if (singularityTest > SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = -Math.PI / 2; // -90 degrees
-                eulerAngles.Y = Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(-eulerAngles.Y - (2d * Math.Atan2(q.Y, q.W)));
+                eulerAngles.Z = 2 * Math.Atan2(q.X, q.W);
+                eulerAngles.Y = MathHelper.PiOver2;
+                eulerAngles.X = 0;
             }
-            else if (singularityTest > SINGULARITY_THRESHOLD)
+            else if (singularityTest < -SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = Math.PI / 2; // 90 degrees
-                eulerAngles.Y = Math.Atan2(yawY, yawX);
-                eulerAngles.X = MathHelper.NormalizeRadians(eulerAngles.Y - (2d * Math.Atan2(q.Y, q.W)));
+                eulerAngles.Z = -2 * Math.Atan2(q.X, q.W);
+                eulerAngles.Y = -MathHelper.PiOver2;
+                eulerAngles.X = 0;
             }
             else
             {
-                eulerAngles.Z = Math.Asin(2d * singularityTest);
-                eulerAngles.X = Math.Atan2(yawY, yawX);
-                eulerAngles.Y = Math.Atan2(-2d * ((q.W * q.Y) + (q.Z * q.X)), 1d - (2d * ((q.Y * q.Y) + (q.Z * q.Z))));
+                eulerAngles.Z = Math.Atan2(2 * ((q.W * q.Z) - (q.X * q.Y)), sqw + sqx - sqy - sqz);
+                eulerAngles.Y = Math.Asin(2 * singularityTest / unit);
+                eulerAngles.X = Math.Atan2(2 * ((q.W * q.X) - (q.Y * q.Z)), sqw - sqx - sqy + sqz);
             }
 
             return eulerAngles;
@@ -818,7 +818,28 @@ namespace OpenTK.Mathematics
         /// <returns>A human-readable representation of the quaternion.</returns>
         public override string ToString()
         {
-            return $"V: {Xyz}{MathHelper.ListSeparator} W: {W}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var ls = MathHelper.GetListSeparator(formatProvider);
+            var xyz = Xyz.ToString(format, formatProvider);
+            var w = W.ToString(format, formatProvider);
+            return $"V: {xyz}{ls} W: {w}";
         }
     }
 }

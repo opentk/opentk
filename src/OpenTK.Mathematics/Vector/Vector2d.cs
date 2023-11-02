@@ -34,7 +34,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2d : IEquatable<Vector2d>
+    public struct Vector2d : IEquatable<Vector2d>, IFormattable
     {
         /// <summary>
         /// The X coordinate of this instance.
@@ -57,7 +57,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2d UnitY = new Vector2d(0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector2d.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2d Zero = new Vector2d(0, 0);
 
@@ -592,11 +592,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
         public static Vector2d Lerp(Vector2d a, Vector2d b, double blend)
@@ -607,16 +607,44 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector2d a, in Vector2d b, double blend, out Vector2d result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
             result.Y = (blend * (b.Y - a.Y)) + a.Y;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</returns>
+        [Pure]
+        public static Vector2d Lerp(Vector2d a, Vector2d b, Vector2d blend)
+        {
+            a.X = (blend.X * (b.X - a.X)) + a.X;
+            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
+        public static void Lerp(in Vector2d a, in Vector2d b, Vector2d blend, out Vector2d result)
+        {
+            result.X = (blend.X * (b.X - a.X)) + a.X;
+            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
         }
 
         /// <summary>
@@ -898,6 +926,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2d operator /(Vector2d vec, Vector2d scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Compares two instances for equality.
         /// </summary>
         /// <param name="left">The left instance.</param>
@@ -967,7 +1009,29 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc/>

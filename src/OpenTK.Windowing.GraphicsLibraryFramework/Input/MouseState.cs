@@ -92,16 +92,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
-        /// Gets a <see cref="bool" /> indicating whether this button is down.
-        /// </summary>
-        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
-        /// <returns><c>true</c> if the <paramref name="button"/> is down, otherwise <c>false</c>.</returns>
-        public bool IsButtonDown(MouseButton button)
-        {
-            return _buttons[(int)button];
-        }
-
-        /// <summary>
         /// Gets an integer representing the absolute x position of the pointer, in window pixel coordinates.
         /// </summary>
         public float X => Position.X;
@@ -156,13 +146,26 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return $"[X={X}, Y={Y}, Buttons={b}]";
         }
 
-        internal void Update()
+        internal unsafe void NewFrame(Window* windowPtr)
         {
             _buttonsPrevious.SetAll(false);
             _buttonsPrevious.Or(_buttons);
 
             PreviousPosition = Position;
             PreviousScroll = Scroll;
+
+            GLFW.GetCursorPos(windowPtr, out var x, out var y);
+            Position = new Vector2((float)x, (float)y);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="bool" /> indicating whether this button is down.
+        /// </summary>
+        /// <param name="button">The <see cref="MouseButton" /> to check.</param>
+        /// <returns><c>true</c> if the <paramref name="button"/> is down, otherwise <c>false</c>.</returns>
+        public bool IsButtonDown(MouseButton button)
+        {
+            return _buttons[(int)button];
         }
 
         /// <summary>
@@ -173,6 +176,32 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public bool WasButtonDown(MouseButton button)
         {
             return _buttonsPrevious[(int)button];
+        }
+
+        /// <summary>
+        /// Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
+        /// </remarks>
+        /// <param name="button">The <see cref="MouseButton">mouse button</see> to check.</param>
+        /// <returns>True if the mouse button is pressed in this frame, but not the last frame.</returns>
+        public bool IsButtonPressed(MouseButton button)
+        {
+            return _buttons[(int)button] && !_buttonsPrevious[(int)button];
+        }
+
+        /// <summary>
+        /// Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
+        /// </remarks>
+        /// <param name="button">The <see cref="MouseButton">mouse button</see> to check.</param>
+        /// <returns>True if the mouse button is released in this frame, but pressed the last frame.</returns>
+        public bool IsButtonReleased(MouseButton button)
+        {
+            return !_buttons[(int)button] && _buttonsPrevious[(int)button];
         }
 
         /// <summary>

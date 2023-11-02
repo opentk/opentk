@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     
     <ItemGroup>
-        <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
+        <ProjectReference Include="$(OpenTKSolutionRoot)\src\OpenAL\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj" />
     </ItemGroup>
 
     <ItemGroup>

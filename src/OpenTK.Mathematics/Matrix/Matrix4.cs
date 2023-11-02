@@ -20,10 +20,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
+// Polyfill for older SDKs
+#if NETCOREAPP3_1
+#define NETCOREAPP3_1_OR_GREATER
+#endif
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#if NETCOREAPP3_1_OR_GREATER
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
 
 namespace OpenTK.Mathematics
 {
@@ -33,7 +43,7 @@ namespace OpenTK.Mathematics
     /// <seealso cref="Matrix4d"/>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix4 : IEquatable<Matrix4>
+    public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     {
         /// <summary>
         /// Top row of the matrix.
@@ -1500,125 +1510,300 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(in Matrix4 mat, out Matrix4 result)
         {
-            int[] colIdx = { 0, 0, 0, 0 };
-            int[] rowIdx = { 0, 0, 0, 0 };
-            int[] pivotIdx = { -1, -1, -1, -1 };
-
-            // convert the matrix to an array for easy looping
-            float[,] inverse =
+#if NETCOREAPP3_1_OR_GREATER
+            if (Sse3.IsSupported)
             {
-                { mat.Row0.X, mat.Row0.Y, mat.Row0.Z, mat.Row0.W },
-                { mat.Row1.X, mat.Row1.Y, mat.Row1.Z, mat.Row1.W },
-                { mat.Row2.X, mat.Row2.Y, mat.Row2.Z, mat.Row2.W },
-                { mat.Row3.X, mat.Row3.Y, mat.Row3.Z, mat.Row3.W }
-            };
-            var icol = 0;
-            var irow = 0;
-            for (var i = 0; i < 4; i++)
+                InvertSse3(in mat, out result);
+            }
+            else
             {
-                // Find the largest pivot value
-                var maxPivot = 0.0f;
-                for (var j = 0; j < 4; j++)
-                {
-                    if (pivotIdx[j] != 0)
-                    {
-                        for (var k = 0; k < 4; ++k)
-                        {
-                            if (pivotIdx[k] == -1)
-                            {
-                                var absVal = Math.Abs(inverse[j, k]);
-                                if (absVal > maxPivot)
-                                {
-                                    maxPivot = absVal;
-                                    irow = j;
-                                    icol = k;
-                                }
-                            }
-                            else if (pivotIdx[k] > 0)
-                            {
-                                result = mat;
-                                return;
-                            }
-                        }
-                    }
-                }
+                InvertFallback(in mat, out result);
+            }
+#else
+            InvertFallback(in mat, out result);
+#endif
+        }
 
-                ++pivotIdx[icol];
+#if NETCOREAPP3_1_OR_GREATER
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
+        {
+#pragma warning disable SA1114 // Parameter list should follow declaration
+#pragma warning disable SA1312 // Variable names should begin with lower-case letter
+#pragma warning disable SA1512 // Single-line comments should not be followed by blank line
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
 
-                // Swap rows over so pivot is on diagonal
-                if (irow != icol)
-                {
-                    for (var k = 0; k < 4; ++k)
-                    {
-                        var f = inverse[irow, k];
-                        inverse[irow, k] = inverse[icol, k];
-                        inverse[icol, k] = f;
-                    }
-                }
+            // Original derivation and implementation can be found here:
+            // https://lxjk.github.io/2017/09/03/Fast-4x4-Matrix-Inverse-with-SSE-SIMD-Explained.html
 
-                rowIdx[i] = irow;
-                colIdx[i] = icol;
+            Vector128<float> row0;
+            Vector128<float> row1;
+            Vector128<float> row2;
+            Vector128<float> row3;
 
-                var pivot = inverse[icol, icol];
-
-                // check for singular matrix
-                if (pivot == 0.0f)
-                {
-                    throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
-                }
-
-                // Scale row so it has a unit diagonal
-                var oneOverPivot = 1.0f / pivot;
-                inverse[icol, icol] = 1.0f;
-                for (var k = 0; k < 4; ++k)
-                {
-                    inverse[icol, k] *= oneOverPivot;
-                }
-
-                // Do elimination of non-diagonal elements
-                for (var j = 0; j < 4; ++j)
-                {
-                    // check this isn't on the diagonal
-                    if (icol != j)
-                    {
-                        var f = inverse[j, icol];
-                        inverse[j, icol] = 0.0f;
-                        for (var k = 0; k < 4; ++k)
-                        {
-                            inverse[j, k] -= inverse[icol, k] * f;
-                        }
-                    }
-                }
+            fixed (float* m = &mat.Row0.X)
+            {
+                row0 = Sse.LoadVector128(m);
+                row1 = Sse.LoadVector128(m + 4);
+                row2 = Sse.LoadVector128(m + 8);
+                row3 = Sse.LoadVector128(m + 12);
             }
 
-            for (var j = 3; j >= 0; --j)
+            // __m128 A = VecShuffle_0101(inM.mVec[0], inM.mVec[1]);
+            var A = Sse.MoveLowToHigh(row0, row1);
+            // __m128 B = VecShuffle_2323(inM.mVec[0], inM.mVec[1]);
+            var B = Sse.MoveHighToLow(row1, row0);
+            // __m128 C = VecShuffle_0101(inM.mVec[2], inM.mVec[3]);
+            var C = Sse.MoveLowToHigh(row2, row3);
+            // __m128 D = VecShuffle_2323(inM.mVec[2], inM.mVec[3]);
+            var D = Sse.MoveHighToLow(row3, row2);
+
+            const byte Shuffle_0202 = 0b1000_1000;
+            const byte Shuffle_1313 = 0b1101_1101;
+            // __m128 detSub = _mm_sub_ps(
+            var detSub = Sse.Subtract(
+                // _mm_mul_ps(VecShuffle(inM.mVec[0], inM.mVec[2], 0, 2, 0, 2), VecShuffle(inM.mVec[1], inM.mVec[3], 1, 3, 1, 3)),
+                Sse.Multiply(
+                    Sse.Shuffle(row0, row2, Shuffle_0202),
+                    Sse.Shuffle(row1, row3, Shuffle_1313)),
+                // _mm_mul_ps(VecShuffle(inM.mVec[0], inM.mVec[2], 1, 3, 1, 3), VecShuffle(inM.mVec[1], inM.mVec[3], 0, 2, 0, 2)));
+                Sse.Multiply(
+                    Sse.Shuffle(row0, row2, Shuffle_1313),
+                    Sse.Shuffle(row1, row3, Shuffle_0202)));
+
+            const byte Shuffle_0000 = 0b0000_0000;
+            const byte Shuffle_1111 = 0b0101_0101;
+            const byte Shuffle_2222 = 0b1010_1010;
+            const byte Shuffle_3333 = 0b1111_1111;
+
+            // VecSwizzle1(detSub, 0);
+            // #define VecSwizzle1(vec, x)                VecSwizzleMask(vec, MakeShuffleMask(x,x,x,x))
+            // #define VecSwizzleMask(vec, mask)          _mm_castsi128_ps(_mm_shuffle_epi32(_mm_castps_si128(vec), mask))
+
+            // __m128 detA = VecSwizzle1(detSub, 0);
+            var detA = Sse2.Shuffle(detSub.AsInt32(), Shuffle_0000).AsSingle();
+            // __m128 detB = VecSwizzle1(detSub, 1);
+            var detB = Sse2.Shuffle(detSub.AsInt32(), Shuffle_1111).AsSingle();
+            // __m128 detC = VecSwizzle1(detSub, 2);
+            var detC = Sse2.Shuffle(detSub.AsInt32(), Shuffle_2222).AsSingle();
+            // __m128 detD = VecSwizzle1(detSub, 3);
+            var detD = Sse2.Shuffle(detSub.AsInt32(), Shuffle_3333).AsSingle();
+
+            const byte Shuffle_3300 = 0b0000_1111;
+            const byte Shuffle_1122 = 0b1010_0101;
+            const byte Shuffle_2301 = 0b0100_1110;
+
+            // __m128 D_C = Mat2AdjMul(D, C);
+            // Mat2AdjMul(vec1, vec2):
+            // _mm_sub_ps(
+            var D_C = Sse.Subtract(
+                // _mm_mul_ps(VecSwizzle(vec1, 3,3,0,0), vec2),
+                Sse.Multiply(Sse2.Shuffle(D.AsInt32(), Shuffle_3300).AsSingle(), C),
+                // _mm_mul_ps(
+                Sse.Multiply(
+                    // VecSwizzle(vec1, 1, 1, 2, 2),
+                    Sse2.Shuffle(D.AsInt32(), Shuffle_1122).AsSingle(),
+                    // VecSwizzle(vec2, 2, 3, 0, 1)));
+                    Sse2.Shuffle(C.AsInt32(), Shuffle_2301).AsSingle()));
+
+            // __m128 A_B = Mat2AdjMul(A, B);
+            var A_B = Sse.Subtract(
+                Sse.Multiply(Sse2.Shuffle(A.AsInt32(), Shuffle_3300).AsSingle(), B),
+                Sse.Multiply(
+                    Sse2.Shuffle(A.AsInt32(), Shuffle_1122).AsSingle(),
+                    Sse2.Shuffle(B.AsInt32(), Shuffle_2301).AsSingle()));
+
+            const byte Shuffle_0303 = 0b1100_1100;
+            const byte Shuffle_1032 = 0b1011_0001;
+            const byte Shuffle_2121 = 0b0110_0110;
+
+            // Mat2Mul(vec1, vec2):
+            // _mm_add_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 0, 3, 0, 3)),
+            //       _mm_mul_ps(VecSwizzle(vec1, 1, 0, 3, 2), VecSwizzle(vec2, 2, 1, 2, 1)));
+
+            // __m128 X_ = _mm_sub_ps(
+            var X_ = Sse.Subtract(
+                              // _mm_mul_ps(detD, A),
+                Sse.Multiply(detD, A),
+                // Mat2Mul(B, D_C));
+                // _mm_add_ps(
+                Sse.Add(
+                    // _mm_mul_ps(vec1, VecSwizzle(vec2, 0, 3, 0, 3)),
+                    Sse.Multiply(B, Sse2.Shuffle(D_C.AsInt32(), Shuffle_0303).AsSingle()),
+                    // _mm_mul_ps(
+                    Sse.Multiply(
+                        // VecSwizzle(vec1, 1, 0, 3, 2),
+                        Sse2.Shuffle(B.AsInt32(), Shuffle_1032).AsSingle(),
+                        // VecSwizzle(vec2, 2, 1, 2, 1)));
+                        Sse2.Shuffle(D_C.AsInt32(), Shuffle_2121).AsSingle())));
+
+            // __m128 W_ = _mm_sub_ps(_mm_mul_ps(detA, D), Mat2Mul(C, A_B));
+            var W_ = Sse.Subtract(
+                Sse.Multiply(detA, D),
+                Sse.Add(
+                    Sse.Multiply(C, Sse2.Shuffle(A_B.AsInt32(), Shuffle_0303).AsSingle()),
+                    Sse.Multiply(
+                        Sse2.Shuffle(C.AsInt32(), Shuffle_1032).AsSingle(),
+                        Sse2.Shuffle(A_B.AsInt32(), Shuffle_2121).AsSingle())));
+
+            // __m128 detM = _mm_mul_ps(detA, detD);
+            var detM = Sse.Multiply(detA, detD);
+
+            const byte Shuffle_3030 = 0b0011_0011;
+
+            // Mat2MulAdj(vec1, vec2):
+            // _mm_sub_ps(_mm_mul_ps(vec1, VecSwizzle(vec2, 3, 0, 3, 0)),
+            //       _mm_mul_ps(VecSwizzle(vec1, 1, 0, 3, 2), VecSwizzle(vec2, 2, 1, 2, 1)));
+
+            // __m128 Y_ = _mm_sub_ps(
+            var Y_ = Sse.Subtract(
+                // _mm_mul_ps(detB, C),
+                Sse.Multiply(detB, C),
+                // Mat2MulAdj(D, A_B));
+                // _mm_sub_ps(
+                Sse.Subtract(
+                    // _mm_mul_ps(vec1, VecSwizzle(vec2, 3, 0, 3, 0)),
+                    Sse.Multiply(D, Sse2.Shuffle(A_B.AsInt32(), Shuffle_3030).AsSingle()),
+                    // _mm_mul_ps(
+                    Sse.Multiply(
+                        // VecSwizzle(vec1, 1, 0, 3, 2),
+                        Sse2.Shuffle(D.AsInt32(), Shuffle_1032).AsSingle(),
+                        // VecSwizzle(vec2, 2, 1, 2, 1)));
+                        Sse2.Shuffle(A_B.AsInt32(), Shuffle_2121).AsSingle())));
+
+            // __m128 Z_ = _mm_sub_ps(_mm_mul_ps(detC, B), Mat2MulAdj(A, D_C));
+            var Z_ = Sse.Subtract(
+                Sse.Multiply(detC, B),
+                Sse.Subtract(
+                    Sse.Multiply(A, Sse2.Shuffle(D_C.AsInt32(), Shuffle_3030).AsSingle()),
+                    Sse.Multiply(
+                        Sse2.Shuffle(A.AsInt32(), Shuffle_1032).AsSingle(),
+                        Sse2.Shuffle(D_C.AsInt32(), Shuffle_2121).AsSingle())));
+
+            // detM = _mm_add_ps(detM, _mm_mul_ps(detB, detC));
+            detM = Sse.Add(detM, Sse.Multiply(detB, detC));
+
+            const byte Shuffle_0213 = 0b1101_1000;
+
+            // __m128 tr = _mm_mul_ps(A_B, VecSwizzle(D_C, 0,2,1,3));
+            var tr = Sse.Multiply(A_B, Sse2.Shuffle(D_C.AsInt32(), Shuffle_0213).AsSingle());
+            // tr = _mm_hadd_ps(tr, tr);
+            tr = Sse3.HorizontalAdd(tr, tr);
+            // tr = _mm_hadd_ps(tr, tr);
+            tr = Sse3.HorizontalAdd(tr, tr);
+
+            // detM = _mm_sub_ps(detM, tr);
+            detM = Sse.Subtract(detM, tr);
+
+            if (MathF.Abs(detM.GetElement(0)) < float.Epsilon)
             {
-                var ir = rowIdx[j];
-                var ic = colIdx[j];
-                for (var k = 0; k < 4; ++k)
-                {
-                    var f = inverse[k, ir];
-                    inverse[k, ir] = inverse[k, ic];
-                    inverse[k, ic] = f;
-                }
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
-            result.Row0.X = inverse[0, 0];
-            result.Row0.Y = inverse[0, 1];
-            result.Row0.Z = inverse[0, 2];
-            result.Row0.W = inverse[0, 3];
-            result.Row1.X = inverse[1, 0];
-            result.Row1.Y = inverse[1, 1];
-            result.Row1.Z = inverse[1, 2];
-            result.Row1.W = inverse[1, 3];
-            result.Row2.X = inverse[2, 0];
-            result.Row2.Y = inverse[2, 1];
-            result.Row2.Z = inverse[2, 2];
-            result.Row2.W = inverse[2, 3];
-            result.Row3.X = inverse[3, 0];
-            result.Row3.Y = inverse[3, 1];
-            result.Row3.Z = inverse[3, 2];
-            result.Row3.W = inverse[3, 3];
+            // const __m128 adjSignMask = _mm_setr_ps(1.f, -1.f, -1.f, 1.f);
+            var adjSignMask = Vector128.Create(1.0f, -1.0f, -1.0f, 1.0f);
+
+            // __m128 rDetM = _mm_div_ps(adjSignMask, detM);
+            var rDetM = Sse.Divide(adjSignMask, detM);
+
+            // X_ = _mm_mul_ps(X_, rDetM);
+            X_ = Sse.Multiply(X_, rDetM);
+            // Y_ = _mm_mul_ps(Y_, rDetM);
+            Y_ = Sse.Multiply(Y_, rDetM);
+            // Z_ = _mm_mul_ps(Z_, rDetM);
+            Z_ = Sse.Multiply(Z_, rDetM);
+            // W_ = _mm_mul_ps(W_, rDetM);
+            W_ = Sse.Multiply(W_, rDetM);
+
+            const byte Shuffle_3131 = 0b0111_0111;
+            const byte Shuffle_2020 = 0b0010_0010;
+
+            Unsafe.SkipInit(out result);
+
+            fixed (float* r = &result.Row0.X)
+            {
+                // r.mVec[0] = VecShuffle(X_, Y_, 3, 1, 3, 1);
+                Sse.Store(r + 0, Sse.Shuffle(X_, Y_, Shuffle_3131));
+                // r.mVec[1] = VecShuffle(X_, Y_, 2, 0, 2, 0);
+                Sse.Store(r + 4, Sse.Shuffle(X_, Y_, Shuffle_2020));
+                // r.mVec[2] = VecShuffle(Z_, W_, 3, 1, 3, 1);
+                Sse.Store(r + 8, Sse.Shuffle(Z_, W_, Shuffle_3131));
+                // r.mVec[3] = VecShuffle(Z_, W_, 2, 0, 2, 0);
+                Sse.Store(r + 12, Sse.Shuffle(Z_, W_, Shuffle_2020));
+            }
+#pragma warning restore SA1114 // Parameter list should follow declaration
+#pragma warning restore SA1312 // Variable names should begin with lower-case letter
+#pragma warning restore SA1512 // Single-line comments should not be followed by blank lines
+#pragma warning restore SA1515 // Single-line comment should be preceded by blank line
+        }
+#endif
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static unsafe void InvertFallback(in Matrix4 mat, out Matrix4 result)
+        {
+            // Original implementation can be found here:
+            // https://github.com/dotnet/runtime/blob/79ae74f5ca5c8a6fe3a48935e85bd7374959c570/src/libraries/System.Private.CoreLib/src/System/Numerics/Matrix4x4.cs#L1556
+#pragma warning disable SA1407 // Arithmetic expressions should declare precedence
+            float a = mat.M11, b = mat.M21, c = mat.M31, d = mat.M41;
+            float e = mat.M12, f = mat.M22, g = mat.M32, h = mat.M42;
+            float i = mat.M13, j = mat.M23, k = mat.M33, l = mat.M43;
+            float m = mat.M14, n = mat.M24, o = mat.M34, p = mat.M44;
+
+            float kp_lo = k * p - l * o;
+            float jp_ln = j * p - l * n;
+            float jo_kn = j * o - k * n;
+            float ip_lm = i * p - l * m;
+            float io_km = i * o - k * m;
+            float in_jm = i * n - j * m;
+
+            float a11 = +(f * kp_lo - g * jp_ln + h * jo_kn);
+            float a12 = -(e * kp_lo - g * ip_lm + h * io_km);
+            float a13 = +(e * jp_ln - f * ip_lm + h * in_jm);
+            float a14 = -(e * jo_kn - f * io_km + g * in_jm);
+
+            float det = a * a11 + b * a12 + c * a13 + d * a14;
+
+            if (MathF.Abs(det) < float.Epsilon)
+            {
+                throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
+            }
+
+            float invDet = 1.0f / det;
+
+            result.Row0 = new Vector4(a11, a12, a13, a14) * invDet;
+
+            result.Row1 = new Vector4(
+                -(b * kp_lo - c * jp_ln + d * jo_kn),
+                +(a * kp_lo - c * ip_lm + d * io_km),
+                -(a * jp_ln - b * ip_lm + d * in_jm),
+                +(a * jo_kn - b * io_km + c * in_jm)) * invDet;
+
+            float gp_ho = g * p - h * o;
+            float fp_hn = f * p - h * n;
+            float fo_gn = f * o - g * n;
+            float ep_hm = e * p - h * m;
+            float eo_gm = e * o - g * m;
+            float en_fm = e * n - f * m;
+
+            result.Row2 = new Vector4(
+                +(b * gp_ho - c * fp_hn + d * fo_gn),
+                -(a * gp_ho - c * ep_hm + d * eo_gm),
+                +(a * fp_hn - b * ep_hm + d * en_fm),
+                -(a * fo_gn - b * eo_gm + c * en_fm)) * invDet;
+
+            float gl_hk = g * l - h * k;
+            float fl_hj = f * l - h * j;
+            float fk_gj = f * k - g * j;
+            float el_hi = e * l - h * i;
+            float ek_gi = e * k - g * i;
+            float ej_fi = e * j - f * i;
+
+            result.Row3 = new Vector4(
+                -(b * gl_hk - c * fl_hj + d * fk_gj),
+                +(a * gl_hk - c * el_hi + d * ek_gi),
+                -(a * fl_hj - b * el_hi + d * ej_fi),
+                +(a * fk_gj - b * ek_gi + c * ej_fi)) * invDet;
+#pragma warning restore SA1407 // Arithmetic expressions should declare precedence
         }
 
         /// <summary>
@@ -1736,7 +1921,29 @@ namespace OpenTK.Mathematics
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
         {
-            return $"{Row0}\n{Row1}\n{Row2}\n{Row3}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var row0 = Row0.ToString(format, formatProvider);
+            var row1 = Row1.ToString(format, formatProvider);
+            var row2 = Row2.ToString(format, formatProvider);
+            var row3 = Row3.ToString(format, formatProvider);
+            return $"{row0}\n{row1}\n{row2}\n{row3}";
         }
 
         /// <summary>

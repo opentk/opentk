@@ -82,8 +82,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets or sets a value representing the current graphics profile flags.
+        /// Default value is <see cref="ContextFlags.ForwardCompatible"/> to work out of the box on macos.
         /// </summary>
-        public ContextFlags Flags { get; set; } = ContextFlags.Default;
+        public ContextFlags Flags { get; set; } = ContextFlags.ForwardCompatible;
 
         /// <summary>
         /// Gets or sets a value indicating whether or not OpenGL bindings should be automatically loaded
@@ -135,12 +136,13 @@ namespace OpenTK.Windowing.Desktop
         public bool StartVisible { get; set; } = true;
 
         /// <summary>
-        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowState"/> on the new window.
+        ///     Gets or sets the initial value for <see cref="NativeWindow.WindowState"/> on the new window.
+        ///     This setting is ignored if <c><see cref="StartVisible"/> = false</c>.
         /// </summary>
         public WindowState WindowState { get; set; } = WindowState.Normal;
 
         /// <summary>
-        ///     Gets or sets the initial value for <see cref="INativeWindow.WindowBorder"/> on the new window.
+        ///     Gets or sets the initial value for <see cref="NativeWindow.WindowBorder"/> on the new window.
         /// </summary>
         public WindowBorder WindowBorder { get; set; } = WindowBorder.Resizable;
 
@@ -158,8 +160,36 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i Size { get; set; } = new Vector2i(640, 360);
 
         /// <summary>
+        ///     Gets or sets the minimum size of the contents of the window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public Vector2i? MinimumSize { get; set; } = null;
+
+        /// <summary>
+        ///     Gets or sets the maximum size of the contents of the window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public Vector2i? MaximumSize { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the aspect ratio the window is locked to until changed.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public (int numerator, int denominator)? AspectRatio { get; set; } = null;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
         /// </summary>
+        [Obsolete("Use WindowState instead.", true)]
         public bool IsFullscreen { get; set; } = false;
 
         /// <summary>
@@ -170,5 +200,72 @@ namespace OpenTK.Windowing.Desktop
         /// otherwise multisampling is used if available. The actual number of samples is the closest matching the given number that is supported.
         /// </remarks>
         public int NumberOfSamples { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of stencil bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 8.
+        /// </remarks>
+        public int? StencilBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of depth bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 24.
+        /// </remarks>
+        public int? DepthBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of red bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 8.
+        /// </remarks>
+        public int? RedBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of green bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 8.
+        /// </remarks>
+        public int? GreenBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of blue bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 8.
+        /// </remarks>
+        public int? BlueBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the number of alpha bits used for OpenGL context creation.
+        /// </summary>
+        /// <remarks>
+        /// Default value is 8.
+        /// </remarks>
+        public int? AlphaBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the backbuffer should be sRGB capable.
+        /// </summary>
+        public bool SrgbCapable { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the framebuffer should be transparent or not.
+        /// <c>null</c> and <c>false</c> does not result in a transparent framebuffer while <c>true</c> will result in a transparent framebuffer.
+        /// </summary>
+        public bool? TransparentFramebuffer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the vsync mode to use.
+        /// A pure NativeWindow supports <see cref="VSyncMode.Off"/> and <see cref="VSyncMode.On"/>.
+        /// <see cref="GameWindow"/> adds support for <see cref="VSyncMode.Adaptive"/>,
+        /// if you are not using <see cref="GameWindow"/> you will have to handle adaptive vsync yourself.
+        /// </summary>
+        public VSyncMode Vsync { get; set; } = VSyncMode.Off;
     }
 }

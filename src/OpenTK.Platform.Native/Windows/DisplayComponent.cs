@@ -1,4 +1,6 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,11 +15,29 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class DisplayComponent : IDisplayComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32DisplayComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Display;
 
-        private static List<HMonitor> _displays = new List<HMonitor>();
+        /// <inheritdoc/>
+        public ILogger? Logger { get; set; }
+
+        private static readonly List<HMonitor> _displays = new List<HMonitor>();
+
+        internal static HMonitor? FindMonitor(IntPtr hMonitor)
+        {
+            foreach (HMonitor display in _displays)
+            {
+                if (display.Monitor == hMonitor)
+                {
+                    return display;
+                }
+            }
+
+            return null;
+        }
 
         private static IntPtr FindMonitorHandle(string adapterName)
         {
@@ -114,9 +134,9 @@ namespace OpenTK.Platform.Native.Windows
                     // Console.WriteLine($"  Monitor State Flags: {monitor.StateFlags}");
 
                     HMonitor? info = null;
-                    foreach (var display in _displays)
+                    foreach (HMonitor display in _displays)
                     {
-                        if (monitor.DeviceName == display.Name)
+                        if (monitor.DeviceName == display.DeviceName)
                         {
                             // This monitor already exists.
                             removedDisplays.Remove(display);
@@ -127,15 +147,26 @@ namespace OpenTK.Platform.Native.Windows
 
                     if (info == null)
                     {
+                        // FIXME: It seems DeviceString isn't great at actually getting a useful name
+                        // for the display itself. It often returns "Generic PnP Monitor".
+                        // It seems like there are some other APIs that can be used to query this information:
+                        // https://stackoverflow.com/questions/7767036/how-do-i-get-the-number-of-displays-in-windows/65013500#65013500
+                        // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-displayconfiggetdeviceinfo
+                        // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name
+                        // Seems like we have to enumerate these too and link them to the hmonitor we are working with...?
+                        // - Noggin_bops 2023-09-05
+
                         // This display didn't exist before, which means it's now conncted.
                         info = new HMonitor()
                         {
                             Monitor = hMonitor,
-                            Name = monitor.DeviceName,
+                            DeviceName = monitor.DeviceName,
+                            AdapterName = adapter.DeviceName,
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
                             RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            BitsPerPixel = (int)lpDevMode.dmBitsPerPel,
                             Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
                             DpiX = -1,
                             DpiY = -1,
@@ -148,13 +179,14 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         info.Monitor = hMonitor;
 
-                        Debug.Assert(info.Name == monitor.DeviceName);
+                        Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
                         info.Position = lpDevMode.dmPosition;
                         info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
                     }
@@ -166,26 +198,26 @@ namespace OpenTK.Platform.Native.Windows
             // Console.WriteLine();
             // Console.WriteLine();
 
-            foreach (var connected in newDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
-            }
+            // FIXME: Maybe we should just send all of the data at once to the user.
 
-            foreach (var removed in removedDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
-            }
-
-            foreach (var removed in removedDisplays)
+            foreach (HMonitor removed in removedDisplays)
             {
                 _displays.Remove(removed);
+
+                EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
-            _displays.AddRange(newDisplays);
+
+            foreach (HMonitor connected in newDisplays)
+            {
+                _displays.Add(connected);
+
+                EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+            }
 
             HMonitor? primary = null;
-            foreach (var display in _displays)
+            foreach (HMonitor display in _displays)
             {
                 if (display.IsPrimary)
                 {
@@ -212,6 +244,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Display)
@@ -260,12 +293,10 @@ namespace OpenTK.Platform.Native.Windows
             UpdateMonitors();
         }
 
-        public bool CanSetVideoMode => throw new NotImplementedException();
-
+        /// <inheritdoc/>
         public bool CanGetVirtualPosition => true;
 
-        public bool CanGetDisplaySize => throw new NotImplementedException();
-
+        /// <inheritdoc/>
         public int GetDisplayCount()
         {
             int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
@@ -277,8 +308,11 @@ namespace OpenTK.Platform.Native.Windows
             return count;
         }
 
-        // FIXME: You probably shouldn't "create" a monitor handle.
-        public DisplayHandle Create(int index)
+        // FIXME: Indices for monitors is ill defined.
+        // Need to look more into documentation for the monitor API.
+
+        /// <inheritdoc/>
+        public DisplayHandle Open(int index)
         {
             if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be negative. {index}");
             if (index >= _displays.Count) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be larger or equal to the number of displays. Index: {index}, Display count: {_displays.Count}");
@@ -286,7 +320,8 @@ namespace OpenTK.Platform.Native.Windows
             return _displays[index];
         }
 
-        public DisplayHandle CreatePrimary()
+        /// <inheritdoc/>
+        public DisplayHandle OpenPrimary()
         {
             for (int i = 0; i < _displays.Count; i++)
             {
@@ -296,61 +331,75 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            return null;
+            throw new PalException(this, "Could not find primary monitor!");
         }
 
-        // FIXME: You probably also don't Destroy a monitor
-        public void Destroy(DisplayHandle handle)
+        /// <inheritdoc/>
+        public void Close(DisplayHandle handle)
         {
             // We basically don't need to do anything here.
             // Just check that we got the right kind of handle back.
             HMonitor hmonitor = handle.As<HMonitor>(this);
         }
 
+        /// <inheritdoc/>
+        public bool IsPrimary(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.IsPrimary;
+        }
+
+        /// <inheritdoc/>
         public string GetName(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            return hmonitor.Name;
+            return hmonitor.PublicName;
         }
 
+        /// <inheritdoc/>
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            GetDisplayScale(handle, out float scaleX, out float scaleY);
-
-            // FIXME: DPI
             mode = new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
-                scaleX,
-                96);
+                hmonitor.BitsPerPixel);
         }
 
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
+        /// <inheritdoc/>
+        public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            // Unfortunately we don't know the size of the array we are going to create in advance
+            List<VideoMode> modes = new List<VideoMode>(32);
+
+            int modeIndex = 0;
+            Win32.DEVMODE lpDevMode = default;
+            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
+            {
+                // FIXME: What do we do with duplicated video modes?
+                // For now we keep them, but there is no possibility of
+                // differentiating them.
+                // Should we decide or should we pass platform specific info to the user?
+
+                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
+            }
+
+            return modes.ToArray();
         }
 
-        public int GetSupportedVideoModeCount(DisplayHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetDisplaySize(DisplayHandle handle, out float width, out float height)
-        {
-
-
-            throw new NotImplementedException();
-        }
-
+        /// <inheritdoc/>
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -359,6 +408,34 @@ namespace OpenTK.Platform.Native.Windows
             y = hmonitor.Position.Y;
         }
 
+        /// <inheritdoc/>
+        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            width = hmonitor.Resolution.ResolutionX;
+            height = hmonitor.Resolution.ResolutionY;
+        }
+
+        /// <inheritdoc/>
+        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            Win32.RECT workArea = hmonitor.WorkArea;
+
+            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+        }
+
+        /// <inheritdoc/>
+        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            refreshRate = hmonitor.RefreshRate;
+        }
+
+        /// <inheritdoc/>
         public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);

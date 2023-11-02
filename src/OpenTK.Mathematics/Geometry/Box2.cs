@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -18,7 +19,8 @@ namespace OpenTK.Mathematics
     /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box2 : IEquatable<Box2>
+    [Serializable]
+    public struct Box2 : IEquatable<Box2>, IFormattable
     {
         private Vector2 _min;
 
@@ -106,6 +108,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2 HalfSize
         {
             get => CenteredSize / 2;
@@ -115,6 +118,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2 Center
         {
             get => HalfSize + _min;
@@ -419,7 +423,32 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector2 point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector2 point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector2 point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y;
@@ -438,11 +467,12 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y;
+                return ContainsInclusive(point);
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
+            else
+            {
+                return ContainsExclusive(point);
+            }
         }
 
         /// <summary>
@@ -524,7 +554,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector2 point)
         {
             _min = Vector2.ComponentMin(_min, point);
@@ -534,14 +565,39 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box2 Inflated(Vector2 point)
         {
             // create a local copy of this box
             Box2 box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector2 point)
+        {
+            _min = Vector2.ComponentMin(_min, point);
+            _max = Vector2.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box2 Extended(Vector2 point)
+        {
+            // create a local copy of this box
+            Box2 box = this;
+            box.Extend(point);
             return box;
         }
 
@@ -563,6 +619,16 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Box2 left, Box2 right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Converts this <see cref="Box2i"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        [Pure]
+        public static explicit operator System.Drawing.RectangleF(Box2 box)
+        {
+            return new System.Drawing.RectangleF((System.Drawing.PointF)box.Min, (System.Drawing.SizeF)box.Size);
         }
 
         /// <inheritdoc/>
@@ -587,7 +653,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

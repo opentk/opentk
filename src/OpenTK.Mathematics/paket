@@ -2,7 +2,10 @@ type file
 id OpenTK.Mathematics
 description
     A basic mathematics library developed primarily for rendering in 3d and 2d.
+dependencies
+    framework: net7.0
+        System.Runtime.CompilerServices.Unsafe >= 5.0.0
 files
-    bin\Release\net5.0\OpenTK.Mathematics.dll ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Mathematics.xml ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Mathematics.pdb ==> lib\net5.0
+    bin\Release\net7.0\OpenTK.Mathematics.dll ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Mathematics.xml ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Mathematics.pdb ==> lib\net7.0

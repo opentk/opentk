@@ -11,15 +11,22 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (rectangular prism).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box3i : IEquatable<Box3i>
+    [Serializable]
+    public struct Box3i : IEquatable<Box3i>, IFormattable
     {
+        /// <summary>
+        /// An empty box with Min (0, 0, 0) and Max (0, 0, 0).
+        /// </summary>
+        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
+
         private Vector3i _min;
 
         /// <summary>
@@ -30,19 +37,7 @@ namespace OpenTK.Mathematics
             get => _min;
             set
             {
-                if (value.X > _max.X)
-                {
-                    _max.X = value.X;
-                }
-                if (value.Y > _max.Y)
-                {
-                    _max.Y = value.Y;
-                }
-                if (value.Z > _max.Z)
-                {
-                    _max.Z = value.Z;
-                }
-
+                _max = Vector3i.ComponentMax(_max, value);
                 _min = value;
             }
         }
@@ -57,19 +52,7 @@ namespace OpenTK.Mathematics
             get => _max;
             set
             {
-                if (value.X < _min.X)
-                {
-                    _min.X = value.X;
-                }
-                if (value.Y < _min.Y)
-                {
-                    _min.Y = value.Y;
-                }
-                if (value.Z < _min.Z)
-                {
-                    _min.Z = value.Z;
-                }
-
+                _min = Vector3i.ComponentMin(_min, value);
                 _max = value;
             }
         }
@@ -77,8 +60,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3i"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point in 3D space this box encloses.</param>
+        /// <param name="max">The maximum point in 3D space this box encloses.</param>
         public Box3i(Vector3i min, Vector3i max)
         {
             _min = Vector3i.ComponentMin(min, max);
@@ -110,6 +93,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3i HalfSize
         {
             get => CenteredSize / 2;
@@ -125,9 +109,10 @@ namespace OpenTK.Mathematics
         /// Gets a vector describing the center of the box.
         /// </summary>
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
+        [XmlIgnore]
         public Vector3 Center
         {
-            get => ((_min + _max).ToVector3() * 0.5f) + _min.ToVector3();
+            get => _min + ((_max - _min).ToVector3() * 0.5f);
         }
 
         // --
@@ -293,11 +278,6 @@ namespace OpenTK.Mathematics
                            && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
 
         /// <summary>
-        /// Gets a box with all components zero.
-        /// </summary>
-        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
-
-        /// <summary>
         /// Gets a box with a location 0,0,9 with the a size of 1.
         /// </summary>
         public static readonly Box3i UnitSquare = new Box3i(0, 0, 0, 1, 1, 1);
@@ -444,15 +424,42 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector3i point)
         {
             return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Z && point.Y < _max.Y &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
                    _min.Z < point.Z && point.Z < _max.Z;
         }
 
         /// <summary>
         /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector3i point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector3i point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
@@ -464,13 +471,12 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y &&
-                       _min.Z <= point.Z && point.Z <= _max.Z;
+                return ContainsInclusive(point);
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            else
+            {
+                return ContainsExclusive(point);
+            }
         }
 
         /// <summary>
@@ -494,11 +500,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public float DistanceToNearestEdge(Vector3i point)
         {
-            var distX = new Vector3(
+            var dist = new Vector3(
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
                 Math.Max(0f, Math.Max(_min.Y - point.Y, point.Y - _max.Y)),
                 Math.Max(0f, Math.Max(_min.Z - point.Z, point.Z - _max.Z)));
-            return distX.Length;
+            return dist.Length;
         }
 
         /// <summary>
@@ -555,6 +561,7 @@ namespace OpenTK.Mathematics
         /// Inflate this Box3i to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector3i point)
         {
             _min = Vector3i.ComponentMin(_min, point);
@@ -567,11 +574,36 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box3i Inflated(Vector3i point)
         {
             // create a local copy of this box
             Box3i box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box3i to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector3i point)
+        {
+            _min = Vector3i.ComponentMin(_min, point);
+            _max = Vector3i.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box3i to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box3i Extended(Vector3i point)
+        {
+            // create a local copy of this box
+            Box3i box = this;
+            box.Extend(point);
             return box;
         }
 
@@ -617,7 +649,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

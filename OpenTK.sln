@@ -5,8 +5,10 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		CONTRIBUTING.md = CONTRIBUTING.md
+		OpenTK.nuspec = OpenTK.nuspec
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 		stylecop.json = stylecop.json
@@ -22,6 +24,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A-02D3-4B94-B648-BDF421CC77EF}"
 	ProjectSection(SolutionItems) = preProject
 		props\common.props = props\common.props
+		Directory.Build.props = Directory.Build.props
 		props\jetbrains.props = props\jetbrains.props
 		props\netfx-mono.props = props\netfx-mono.props
 		props\nuget-common.props = props\nuget-common.props
@@ -30,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{DB4C8652-965F-44F9-998B-8918768DB6AA}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
@@ -44,21 +46,19 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests.Integration", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
 	ProjectSection(SolutionItems) = preProject
-		build.cmd = build.cmd
-		build.fsx = build.fsx
-		build.sh = build.sh
+		build.ps1 = build.ps1
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL", "src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Audio.OpenAL", "src\OpenAL\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions", "src\OpenAL\OpenTK.OpenAL.Extensions\OpenTK.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "src\OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "src\OpenAL\OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "src\OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "tests\OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Generator\Generator.csproj", "{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}"
 EndProject
@@ -70,18 +70,34 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Desktop", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Compute", "src\OpenTK.Compute\OpenTK.Compute.csproj", "{7E163837-DD68-40D0-8B7B-758F7B230D5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "tests\OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{83D53823-B146-442F-B650-EDE6664D38EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalTestProject", "LocalTestProject\LocalTestProject.csproj", "{1639B5D6-8111-41B0-AE52-D24EC5C42A91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X11TestProject", "tests\X11TestProject\X11TestProject.csproj", "{4736086B-634E-459B-BCC4-88BCCDD4B218}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X11TestProject", "tests\X11TestProject\X11TestProject.csproj", "{4736086B-634E-459B-BCC4-88BCCDD4B218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Platform.Native", "src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj", "{0EF16A44-F4CF-40F6-9AA4-296018E8D700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Platform.Native", "src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj", "{0EF16A44-F4CF-40F6-9AA4-296018E8D700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalTestProject", "tests\LocalTestProject\LocalTestProject.csproj", "{54F244EC-343E-4857-A7C2-8C1A703DB4A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Platform.Tests", "tests\OpenTK.Platform.Tests\OpenTK.Platform.Tests.csproj", "{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalTest", "tests\LocalTest\LocalTest.csproj", "{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDLTestProject", "tests\SDLTestProject\SDLTestProject.csproj", "{2F5DF5F3-AC58-476F-AF7D-89630407370D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PAL2ContextSharingTest", "tests\PAL2ContextSharingTest\PAL2ContextSharingTest.csproj", "{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Backends.Tests", "tests\OpenTK.Backends.Tests\OpenTK.Backends.Tests.csproj", "{3E6C9007-27B2-4B50-91F5-9FF658089997}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacOSTestProject", "tests\MacOSTestProject\MacOSTestProject.csproj", "{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANGLETestProject", "tests\ANGLETestProject\ANGLETestProject.csproj", "{7888FB56-FCBC-4240-B78F-691481A56AA1}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,10 +169,6 @@ Global
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -165,6 +177,42 @@ Global
 		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F5DF5F3-AC58-476F-AF7D-89630407370D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F5DF5F3-AC58-476F-AF7D-89630407370D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F5DF5F3-AC58-476F-AF7D-89630407370D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F5DF5F3-AC58-476F-AF7D-89630407370D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E6C9007-27B2-4B50-91F5-9FF658089997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E6C9007-27B2-4B50-91F5-9FF658089997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E6C9007-27B2-4B50-91F5-9FF658089997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E6C9007-27B2-4B50-91F5-9FF658089997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,8 +228,16 @@ Global
 		{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{1639B5D6-8111-41B0-AE52-D24EC5C42A91} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{4736086B-634E-459B-BCC4-88BCCDD4B218} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{54F244EC-343E-4857-A7C2-8C1A703DB4A8} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{B2A8C618-E2D7-45BD-B751-37CD7EA315B9} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{2F5DF5F3-AC58-476F-AF7D-89630407370D} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{3E6C9007-27B2-4B50-91F5-9FF658089997} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{7888FB56-FCBC-4240-B78F-691481A56AA1} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94} = {471E0D18-D620-4CBE-A471-F3DB470E6D49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

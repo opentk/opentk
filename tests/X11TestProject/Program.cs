@@ -1,91 +1,134 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks.Dataflow;
 using OpenTK;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics;
-using OpenTK.Platform.Native.X11;
-using static OpenTK.Platform.Native.X11.LibX11;
-using static OpenTK.Platform.Native.X11.XRandR;
+using OpenTK.Platform.Native;
 using OpenTK.Graphics.OpenGL;
 
 namespace X11TestProject
 {
     public class Program
     {
+        static IWindowComponent windowComp;
+        static IOpenGLComponent glComp;
+        static IDisplayComponent dispComp;
+
+        static WindowHandle window;
+        static OpenGLContextHandle context;
+
         public static void Main()
         {
-            X11AbstractionLayer layer = new X11AbstractionLayer();
-            layer.Initialize(PalComponents.Window | PalComponents.OpenGL | PalComponents.Display);
-            IWindowComponent windowComponent = layer;
-            XWindowHandle window = (XWindowHandle)layer.Create(new OpenGLGraphicsApiHints());
-            XOpenGLContextHandle context = (XOpenGLContextHandle)layer.CreateFromWindow(window);
-            layer.SetCurrentContext(context);
+            //MultiThreadExample.MultiThreadMain();
+            //return;
 
-            XSelectInput(
-                layer.Display, window.Window,
-                    XEventMask.StructureNotify |
-                    XEventMask.SubstructureNotify |
-                    XEventMask.VisibilityChanged
-                    );
+            EventQueue.EventRaised += EventQueue_EventRaised;
 
-            // XGC gc = XCreateGC(layer.Display, window.Window, 0, IntPtr.Zero);
-            // XSetBackground(layer.Display, gc, XWhitePixel(layer.Display, XDefaultScreen(layer.Display)));
-            // XSetForeground(layer.Display, gc, XBlackPixel(layer.Display, XDefaultScreen(layer.Display)));
-            //
-            // XClearWindow(layer.Display, window.Window);
-            XMapRaised(layer.Display, window.Window);
+            windowComp = PlatformComponents.CreateWindowComponent();
+            glComp = PlatformComponents.CreateOpenGLComponent();
+            dispComp = PlatformComponents.CreateDisplayComponent();
 
-            GLLoader.LoadBindings(new TestBindingsContext(layer, context));
+            windowComp.Initialize(PalComponents.Window);
+            glComp.Initialize(PalComponents.OpenGL);
+            dispComp.Initialize(PalComponents.Display);
+
+            window = windowComp.Create(new OpenGLGraphicsApiHints());
+            context = glComp.CreateFromWindow(window);
+            glComp.SetCurrentContext(context);
+
+            windowComp.SetClientSize(window, 800, 600);
+            windowComp.SetMode(window, WindowMode.Normal);
+
+            GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
             // DisplayHandle handle = layer.CreatePrimary();
-            XAtomDictionary dict = new XAtomDictionary(layer.Display);
 
-            XEvent ea = new XEvent();
-            int frames = 0;
-            for (;;)
+            EventQueue.EventRaised += (handle, type, args) =>
             {
-                while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                if (args is CloseEventArgs close)
                 {
-                    XNextEvent(layer.Display, out ea);
-                    // Console.WriteLine(ea.Type);
+                    Console.WriteLine("close!");
+                    windowComp.Destroy(window);
                 }
+            };
 
-                layer.GetClientSize(window, out int width, out int height);
+            int frames = 0;
+            while (windowComp.IsWindowDestroyed(window) == false)
+            {
+                windowComp.GetClientSize(window, out int width, out int height);
 
                 GL.Viewport(0, 0, width, height);
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                GLX.glXSwapBuffers(window.Display, window.Window);
+                GL.Enable(EnableCap.ScissorTest);
+                GL.Scissor(0, 0, 100, 100);
+                GL.ClearColor(1, 1, 0, 1);
+                GL.Clear(ClearBufferMask.ColorBufferBit);
+                GL.Disable(EnableCap.ScissorTest);
 
-                layer.GetSize(window, out int w, out int h);
-                layer.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
+                glComp.SwapBuffers(context);
+
+                windowComp.GetSize(window, out int w, out int h);
+                windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
-            }
 
-            layer.Destroy(window);
+                windowComp.ProcessEvents();
+            }
         }
 
-        public class TestBindingsContext : IBindingsContext
+        public static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            private IPalComponent pal;
-            private OpenGLContextHandle context;
-
-            public TestBindingsContext(IPalComponent pal, OpenGLContextHandle context)
+            if (args is KeyDownEventArgs keyDown)
             {
-                this.pal = pal;
-                this.context = context;
+                if (keyDown.Key == Key.F)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        windowComp.SetFullscreenDisplay(window, null);
+                        System.Console.WriteLine("Fullscreen");
+                    }
+                }
             }
-
-            public IntPtr GetProcAddress(string procName)
+            else if (args is MouseButtonDownEventArgs buttonDown)
             {
-                IntPtr retval = (pal as IOpenGLComponent).GetProcedureAddress(context, procName);
-                Debug.WriteLine("GetProcAddr {0} = {1}", procName, retval);
-                return retval;
+                if (buttonDown.Button == MouseButton.Button1)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        windowComp.SetFullscreenDisplay(window, null);
+                        System.Console.WriteLine("Windowed Fullscreen");
+                    }
+                }
+                else if (buttonDown.Button == MouseButton.Button2)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        var disp = windowComp.GetDisplay(window);
+                        var mode = new VideoMode(2560, 1440, 144, 24);
+                        windowComp.SetFullscreenDisplay(window, disp, mode);
+                        System.Console.WriteLine("Exlusive Fullscreen");
+                    }
+                }
+                else if (buttonDown.Button == MouseButton.Button3)
+                {
+                    windowComp.Destroy(window);
+                }
             }
         }
     }

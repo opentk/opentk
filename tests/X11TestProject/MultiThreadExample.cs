@@ -7,9 +7,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native.X11;
-using static OpenTK.Platform.Native.X11.LibX11;
-using static OpenTK.Platform.Native.X11.GLX;
+using OpenTK.Platform.Native;
 
 namespace X11TestProject
 {
@@ -22,21 +20,43 @@ namespace X11TestProject
         // MAIN THREAD:
         public static void MultiThreadMain()
         {
-            X11AbstractionLayer layer = new X11AbstractionLayer();
-            layer.Initialize(PalComponents.Window | PalComponents.OpenGL);
+            IWindowComponent windowComp = PlatformComponents.CreateWindowComponent();
+            IOpenGLComponent glComp = PlatformComponents.CreateOpenGLComponent();
+            IDisplayComponent dispComp = PlatformComponents.CreateDisplayComponent();
+            IShellComponent shellComp = PlatformComponents.CreateShellComponent();
+
+            windowComp.Initialize(PalComponents.Window);
+            glComp.Initialize(PalComponents.OpenGL);
+            dispComp.Initialize(PalComponents.Display);
+            shellComp.Initialize(PalComponents.Shell);
+
+            var memInfo = shellComp.GetSystemMemoryInformation();
+            Console.WriteLine($"Total RAM: {memInfo.TotalPhysicalMemory}");
+            Console.WriteLine($"Available RAM: {memInfo.AvailablePhysicalMemory}");
+
+            ComponentSet layer = new ComponentSet();
+
+            layer[PalComponents.Window] = windowComp;
+            layer[PalComponents.OpenGL] = glComp;
+            layer[PalComponents.Display] = dispComp;
 
             A = new WindowThread(layer, 0);
             B = new WindowThread(layer, MathF.PI);
 
             A.Start();
             B.Start();
-            for (;;)
+
+            EventQueue.EventRaised += (handle, type, args) =>
             {
-                while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                if (args is CloseEventArgs close)
                 {
-                    XNextEvent(layer.Display, out XEvent ea);
-                    EventQueue.Raise(null, (PlatformEventType)ea.Type, EventArgs.Empty);
+                    windowComp.Destroy(close.Window);
                 }
+            };
+
+            while(!A.Done || !B.Done)
+            {
+                windowComp.ProcessEvents();
 
                 if (XTasks.TryDequeue(out Task? task))
                 {
@@ -54,16 +74,18 @@ namespace X11TestProject
 
     public class WindowThread
     {
-        private readonly IPalComponent _layer;
-        private IWindowComponent WindowComponent => (IWindowComponent)_layer;
-        private IOpenGLComponent OpenGLComponent => (IOpenGLComponent)_layer;
+        private readonly ComponentSet _layer;
+        private IWindowComponent WindowComponent => _layer;
+        private IOpenGLComponent OpenGLComponent => _layer;
 
         private readonly Stopwatch _watch = new Stopwatch();
         private readonly float _phase;
 
         public Thread? Thread { get; private set; }
 
-        public WindowThread(IPalComponent layer, float phase)
+        public bool Done { get; private set; }
+
+        public WindowThread(ComponentSet layer, float phase)
         {
             _layer = layer;
             _phase = phase;
@@ -96,33 +118,31 @@ namespace X11TestProject
             {
                 window = WindowComponent.Create(new OpenGLGraphicsApiHints());
                 context = OpenGLComponent.CreateFromWindow(window);
-                X11AbstractionLayer layer = (X11AbstractionLayer)_layer;
-                XWindowHandle wnd = (XWindowHandle)window;
 
-                XSelectInput(layer.Display, wnd.Window, XEventMask.All);
-                XMapRaised(layer.Display, wnd.Window);
+                WindowComponent.SetSize(window, 800, 600);
+                WindowComponent.SetMode(window, WindowMode.Normal);
             });
 
             MultiThreadExample.XTasks.Enqueue(invokeX11Actions);
             await invokeX11Actions;
 
             OpenGLComponent.SetCurrentContext(context);
-            GLLoader.LoadBindings(new Program.TestBindingsContext(_layer, context));
+            GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(context!));
 
             _watch.Start();
-            for (;;)
+            while (WindowComponent.IsWindowDestroyed(window) == false)
             {
-                queue.DispatchEvents();
-
                 OpenGLComponent.SetCurrentContext(context);
                 Color4<Rgba> color = GetColor();
                 GL.ClearColor(color);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 await MultiThreadExample.Invoke(
-                    new Task(() => glXSwapBuffers((_layer as X11AbstractionLayer).Display, (window as XWindowHandle).Window))
+                    new Task(() => { if (WindowComponent.IsWindowDestroyed(window) == false) OpenGLComponent.SwapBuffers(context); })
                     );
             }
+
+            Done = true;
         }
     }
 }

@@ -11,14 +11,16 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (rectangular prism).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Box3d : IEquatable<Box3d>
+    [Serializable]
+    public struct Box3d : IEquatable<Box3d>, IFormattable
     {
         private Vector3d _min;
 
@@ -77,8 +79,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3d"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point in 3D space this box encloses.</param>
+        /// <param name="max">The maximum point in 3D space this box encloses.</param>
         public Box3d(Vector3d min, Vector3d max)
         {
             _min = Vector3d.ComponentMin(min, max);
@@ -116,6 +118,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3d HalfSize
         {
             get => CenteredSize / 2;
@@ -125,6 +128,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3d Center
         {
             get => HalfSize + _min;
@@ -495,15 +499,42 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector3d point)
         {
             return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Z && point.Y < _max.Y &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
                    _min.Z < point.Z && point.Z < _max.Z;
         }
 
         /// <summary>
         /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector3d point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector3d point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
@@ -515,13 +546,12 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y &&
-                       _min.Z <= point.Z && point.Z <= _max.Z;
+                return ContainsInclusive(point);
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            else
+            {
+                return ContainsExclusive(point);
+            }
         }
 
         /// <summary>
@@ -606,6 +636,7 @@ namespace OpenTK.Mathematics
         /// Inflate this Box3d to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector3d point)
         {
             _min = Vector3d.ComponentMin(_min, point);
@@ -618,11 +649,36 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box3d Inflated(Vector3d point)
         {
             // create a local copy of this box
             Box3d box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box3d to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector3d point)
+        {
+            _min = Vector3d.ComponentMin(_min, point);
+            _max = Vector3d.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box3d to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box3d Extended(Vector3d point)
+        {
+            // create a local copy of this box
+            Box3d box = this;
+            box.Extend(point);
             return box;
         }
 
@@ -668,7 +724,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

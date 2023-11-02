@@ -32,7 +32,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix2d : IEquatable<Matrix2d>
+    public struct Matrix2d : IEquatable<Matrix2d>, IFormattable
     {
         /// <summary>
         /// Top row of the matrix.
@@ -551,7 +551,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
         public static void Invert(in Matrix2d mat, out Matrix2d result)
         {
-            var det = mat.Determinant;
+            var det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
 
             if (det == 0)
             {
@@ -560,10 +560,15 @@ namespace OpenTK.Mathematics
 
             var invDet = 1f / det;
 
+            // Because the c# jit assumes alias for byref types we need to
+            // save this value as the write to result.Row0.X could change the
+            // value of mat.Row0.X.
+            var row0x = mat.Row0.X;
+
             result.Row0.X = mat.Row1.Y * invDet;
             result.Row0.Y = -mat.Row0.Y * invDet;
             result.Row1.X = -mat.Row1.X * invDet;
-            result.Row1.Y = mat.Row0.X * invDet;
+            result.Row1.Y = row0x * invDet;
         }
 
         /// <summary>
@@ -719,7 +724,27 @@ namespace OpenTK.Mathematics
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
         {
-            return $"{Row0}\n{Row1}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var row0 = Row0.ToString(format, formatProvider);
+            var row1 = Row1.ToString(format, formatProvider);
+            return $"{row0}\n{row1}";
         }
 
         /// <summary>

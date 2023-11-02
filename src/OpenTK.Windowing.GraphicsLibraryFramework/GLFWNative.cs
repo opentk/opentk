@@ -39,17 +39,27 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
 
             Func<string, string, string> libNameFormatter;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
-                libNameFormatter = (libName, ver) =>
-                    libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                string sessionType = Environment.GetEnvironmentVariable("XDG_SESSION_TYPE");
+                string useWayland = Environment.GetEnvironmentVariable("OPENTK_4_USE_WAYLAND");
+                if (sessionType == "wayland" && useWayland == "1")
+                {
+                    libNameFormatter = (libName, ver) =>
+                        libName + "-wayland.so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                }
+                else
+                {
+                    libNameFormatter = (libName, ver) =>
+                        libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                }
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (OperatingSystem.IsMacOS())
             {
                 libNameFormatter = (libName, ver) =>
                     libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            else if (OperatingSystem.IsWindows())
             {
                 libNameFormatter = (libName, ver) =>
                     libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
@@ -94,6 +104,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         [DllImport(LibraryName)]
         public static extern void glfwGetMonitorPos(Monitor* monitor, int* x, int* y);
+
+        [DllImport(LibraryName)]
+        public static extern void glfwGetMonitorWorkarea(Monitor* monitor, int* xpos, int* ypos, int* width, int* height);
 
         [DllImport(LibraryName)]
         public static extern void glfwGetMonitorPhysicalSize(Monitor* monitor, int* width, int* height);
@@ -273,6 +286,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern int glfwGetInputMode(Window* window, LockKeyModAttribute mode);
 
         [DllImport(LibraryName)]
+        public static extern int glfwGetInputMode(Window* window, RawMouseMotionAttribute mode);
+
+        [DllImport(LibraryName)]
         public static extern void glfwRestoreWindow(Window* window);
 
         [DllImport(LibraryName)]
@@ -384,6 +400,9 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern void glfwSetInputMode(Window* window, LockKeyModAttribute mode, int value);
 
         [DllImport(LibraryName)]
+        public static extern void glfwSetInputMode(Window* window, RawMouseMotionAttribute mode, int value);
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwSetJoystickCallback(GLFWCallbacks.JoystickCallback callback);
 
         [DllImport(LibraryName)]
@@ -480,10 +499,19 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         #region GLFW Native functions
 
         [DllImport(LibraryName)]
+        public static extern byte* glfwGetWin32Adapter(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern byte* glfwGetWin32Monitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWin32Window(Window* window);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetCocoaMonitor(Monitor* monitor);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetCocoaWindow(Window* window);
@@ -492,7 +520,22 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern IntPtr glfwGetNSGLContext(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern uint glfwGetX11Window(Window* window);
+        public static extern IntPtr glfwGetX11Display();
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Adapter(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Monitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Window(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern void glfwSetX11SelectionString(byte* @string);
+
+        [DllImport(LibraryName)]
+        public static extern byte* glfwGetX11SelectionString();
 
         [DllImport(LibraryName)]
         public static extern uint glfwGetGLXContext(Window* window);
@@ -501,10 +544,28 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern uint glfwGetGLXWindow(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandDisplay();
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandMonitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWaylandWindow(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetEGLDisplay();
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetEGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetEGLSurface(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetOSMesaColorBuffer(Window* window, int* width, int* height, int* format, void** buffer);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetOSMesaDepthBuffer(Window* window, int* width, int* height, int* bytesPerValue, void** buffer);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetOSMesaContext(Window* window);

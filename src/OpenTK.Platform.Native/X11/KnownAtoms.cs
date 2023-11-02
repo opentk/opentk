@@ -1,12 +1,33 @@
+using System;
+
 namespace OpenTK.Platform.Native.X11
 {
-    public enum KnownAtoms
+    internal enum KnownAtoms
     {
         #region Common Property Types
         ATOM,
         CARDINAL,
+        STRING,
         UTF8_STRING,
         WINDOW,
+        #endregion
+
+        #region ICCCM
+        WM_TAKE_FOCUS,
+        [Obsolete]
+        WM_SAVE_YOURSELF,
+        WM_DELETE_WINDOW,
+        WM_STATE,
+        WM_CHANGE_STATE,
+        WM_NAME,
+        WM_NORMAL_HINTS,
+
+        PRIMARY,
+        SECONDARY,
+        CLIPBOARD,
+        INCR,
+        TARGETS,
+        MULTIPLE,
         #endregion
 
         #region Freedesktop Atoms
@@ -61,6 +82,7 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_STATE_ABOVE,
         _NET_WM_STATE_BELOW,
         _NET_WM_STATE_DEMANDS_ATTENTION,
+        _NET_WM_STATE_FOCUSED,
         _NET_WM_ALLOWED_ACTIONS,
         _NET_WM_ACTION_MOVE,
         _NET_WM_ACTION_RESIZE,
@@ -88,6 +110,12 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_FULLSCREEN_MONITORS,
         _NET_WM_FULL_PLACEMENT,
         #endregion
+
+        #region Motif
+        _MOTIF_WM_HINTS,
+        #endregion
+
+        EDID,
 
         /// <summary>
         /// This is not a valid known atom name, however it is used for internal verification.

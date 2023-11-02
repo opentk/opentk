@@ -1,7 +1,9 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,10 +13,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class IconComponent : IIconComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32IconComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.WindowIcon;
 
+        /// <inheritdoc/>
+        public ILogger? Logger { get; set; }
+
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.WindowIcon)
@@ -23,17 +31,225 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool CanLoadFile => true;
+        /// <inheritdoc/>
+        public bool CanLoadSystemIcons => true;
 
-        public bool CanLoadSystemIcon => true;
-
-        public bool HasMipmaps => throw new NotImplementedException();
-
-        public IconHandle Create()
+        /// <inheritdoc/>
+        public IconHandle Create(SystemIconType systemIcon)
         {
-            return new HIcon();
+            HIcon hicon = new HIcon();
+
+            IDI idi = default;
+            switch (systemIcon)
+            {
+                case SystemIconType.Default:
+                    idi = IDI.Application;
+                    break;
+                case SystemIconType.Error:
+                    idi = IDI.Error;
+                    break;
+                case SystemIconType.Information:
+                    idi = IDI.Information;
+                    break;
+                case SystemIconType.Question:
+                    idi = IDI.Question;
+                    break;
+                case SystemIconType.Shield:
+                    idi = IDI.Shield;
+                    break;
+                case SystemIconType.Warning:
+                    idi = IDI.Warning;
+                    break;
+                case SystemIconType.OperatingSystem:
+                    // FIXME: This doesn't result in a windows logo...
+                    idi = IDI.WinLogo;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(systemIcon), (int)systemIcon, typeof(SystemIconType));
+            }
+
+            hicon.Icon = Win32.LoadImage(IntPtr.Zero, idi, ImageType.Icon, 0, 0, LR.Shared | LR.DefaultSize);
+            hicon.Mode = HIcon.IconMode.SystemIcon;
+
+            return hicon;
         }
 
+        /// <inheritdoc/>
+        public unsafe IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
+        {
+            HIcon hicon = new HIcon();
+
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (data.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {data.Length}");
+
+            // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
+            Win32.BITMAPV5HEADER header = default;
+            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
+            header.bV5Width = width;
+            header.bV5Height = -height;
+            header.bV5Planes = 1;
+            header.bV5BitCount = 32;
+            header.bV5Compression = BI.Bitfields;
+            // For some reason setting these masks to a proper ARGB format (or R, G, B, A as individual bytes) doesn't result in alpha.
+            // As such we are going to have to swizzle the data.
+            // - Noggin_Bops 2023-04-14
+            header.bV5RedMask = 0x00_FF_00_00;
+            header.bV5GreenMask = 0x00_00_FF_00;
+            header.bV5BlueMask = 0x00_00_00_FF;
+            header.bV5AlphaMask = 0xFF_00_00_00;
+            // FIXME: Determine color space!
+            // header.bV5CSType = LCS_sRGB?
+
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+
+            IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
+            if (colorBitmap == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateDIBSection failed.");
+            }
+
+            Span<byte> bitmapData = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
+
+            // Copy over image data.
+            // R,G,B,A byte order to B,G,R,A byte order.
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                bitmapData[i + 0] = data[i + 2];
+                bitmapData[i + 1] = data[i + 1];
+                bitmapData[i + 2] = data[i + 0];
+                bitmapData[i + 3] = data[i + 3];
+            }
+
+            // Create an empty mask.
+            IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
+            // FIXME: The value if ERROR_INVALID_BITMAP is impossible to find.
+            // It's not defined in wingdi.h and nothing online mentions it.
+            if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
+            {
+                throw new Win32Exception("CreateBitmap failed.");
+            }
+
+            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
+            {
+                fIcon = true, // We are creating a icon
+                xHotspot = 0,
+                yHotspot = 0,
+                hbmMask = maskBitmap,
+                hbmColor = colorBitmap,
+            };
+
+            IntPtr hIcon = Win32.CreateIconIndirect(in iconinfo);
+            if (hIcon == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateIconIndirect() failed.");
+            }
+
+            Win32.ReleaseDC(IntPtr.Zero, hDC);
+
+            hicon.Icon = hIcon;
+            hicon.MaskBitmap = maskBitmap;
+            hicon.ColorBitmap = colorBitmap;
+            hicon.Mode = HIcon.IconMode.Icon;
+
+            return hicon;
+        }
+
+        /// <summary>
+        /// Creates an icon from a windows .ico file.
+        /// </summary>
+        /// <remarks>
+        /// This icon will have a dynamic resolution.
+        /// </remarks>
+        /// <param name="file">The icon file to load.</param>
+        public IconHandle CreateFromIcoFile(string file)
+        {
+            // FIXME: Add a function for reading an ico file from resources.
+            // Using something like CreateIconFromResourceEx or similar.
+
+            HIcon hicon = new HIcon();
+
+            IntPtr icon = Win32.LoadImage(IntPtr.Zero, file, ImageType.Icon, 0, 0, LR.LoadFromFile | LR.DefaultSize);
+            if (icon == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
+
+            return hicon;
+        }
+
+        /// <summary>
+        /// Creates an icon from resx ico resource data.
+        /// </summary>
+        /// <remarks>
+        /// This icon will not have a dynamic resoltion. The icon will only have one resolution.
+        /// To get an icon with a dynamic resoltion, use <see cref="CreateFromIcoFile(string)"/> or <see cref="CreateFromIcoResource(string)"/>.
+        /// </remarks>
+        /// <param name="resource">The ico resource data to load.</param>
+        public unsafe IconHandle CreateFromIcoResource(byte[] resource)
+        {
+            HIcon hicon = new HIcon();
+
+            fixed (byte* ptr = resource)
+            {
+                int id = Win32.LookupIconIdFromDirectoryEx(ptr, true, 0, 0, LR.DefaultColor);
+                if (id == 0)
+                {
+                    throw new Win32Exception();
+                }
+
+                //Debug.Assert((((IntPtr)(ptr + id)) % IntPtr.Size) == 0);
+
+                IntPtr icon = Win32.CreateIconFromResourceEx(ptr + id, (uint)(resource.Length - id), true, 0x00030000, 0, 0, LR.DefaultSize);
+
+                if (icon == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                hicon.Icon = icon;
+            }
+
+            //hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
+
+            return hicon;
+        }
+
+        /// <summary>
+        /// Creates an icon from a resource name.
+        /// </summary>
+        /// <remarks>
+        /// <para>This icon will have a dynamic resolution.</para>
+        /// 
+        /// To use this function you need to create and include a resource file in your exe.
+        /// To do this, first create a .rc resource definition file and include your icon.
+        /// Then you need to compile that file into a .res file using rc.exe, the resource compiler.
+        /// Lastly you need to include that .res file in your csproj using the &lt;Win32Resource&gt; property.
+        /// FIXME: Write a guide on how to compile .rc files and include a .res file using &lt;Win32Resource&gt;.
+        /// </remarks>
+        /// <param name="resourceName">The name of the icon resource to load.</param>
+        public unsafe IconHandle CreateFromIcoResource(string resourceName)
+        {
+            HIcon hicon = new HIcon();
+
+            IntPtr icon = Win32.LoadIcon(WindowComponent.HInstance, resourceName);
+            if (icon == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
+
+            return hicon;
+        }
+
+        /// <inheritdoc/>
         public void Destroy(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -75,18 +291,15 @@ namespace OpenTK.Platform.Native.Windows
             hicon.ColorBitmap = default;
         }
 
-        public void GenerateMipmaps(IconHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
+        /// <inheritdoc/>
+        public unsafe void GetSize(IconHandle handle, out int width, out int height)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
             width = 0;
             height = 0;
 
+            // See https://stackoverflow.com/a/13295280
             if (Win32.GetIconInfo(hicon.Icon, out Win32.ICONINFO info))
             {
                 bool bwCursor = info.hbmColor == IntPtr.Zero;
@@ -105,16 +318,11 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public void GetDimensions(IconHandle handle, int level, out int width, out int height)
-        {
-            throw new NotImplementedException();
-        }
-
-        public unsafe void GetBitmap(IconHandle handle, Span<byte> data)
+        public unsafe void GetBitmapData(IconHandle handle, Span<byte> data)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
-            // FIXME: If this cursor is one of the standard cursors
+            // FIXME: If this icon is one of the standard icons
             // we want to call CopyIcon so that we can call GetIconInfo properly!
             IntPtr cursor_copy = Win32.CopyIcon(hicon.Icon);
             {
@@ -134,13 +342,17 @@ namespace OpenTK.Platform.Native.Windows
                     int success = Win32.GetDIBits(hDC, hbm, 0, 0, null, ref bmInfo, DIB.RGBColors);
                     if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                     {
-                        throw new Exception("GetDIBits failed.");
+                        throw new Exception($"GetDIBits failed. (0x{success:X})");
                     }
 
+                    // FIXME: biSizeImage can be 0 if biCompression = RGB
                     if (image.Length < bmInfo.bmiHeader.biSizeImage)
                     {
-                        throw new Exception("Image buffer not big enough!");
+                        throw new Exception($"Image buffer not big enough! Expected: {bmInfo.bmiHeader.biSizeImage} bytes, got: {image.Length} bytes");
                     }
+
+                    // Force the bitmap to be top-down.
+                    bmInfo.bmiHeader.biHeight = -Math.Abs(bmInfo.bmiHeader.biHeight);
 
                     bmInfo.bmiHeader.biBitCount = 32;
                     bmInfo.bmiHeader.biPlanes = 1;
@@ -148,15 +360,18 @@ namespace OpenTK.Platform.Native.Windows
 
                     fixed (byte* ptr = image)
                     {
-                        success = Win32.GetDIBits(hDC, hbm, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
+                        success = Win32.GetDIBits(hDC, hbm, 0, (uint)Math.Abs(bmInfo.bmiHeader.biHeight), (void*)ptr, ref bmInfo, DIB.RGBColors);
                         if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                         {
-                            throw new Exception("GetDIBits failed.");
+                            throw new Exception($"GetDIBits failed. (0x{success:X})");
                         }
                     }
 
                     if (bmInfo.bmiHeader.biHeight < 0)
                     {
+                        // FIXME: Overflow?
+                        bmInfo.bmiHeader.biHeight = -bmInfo.bmiHeader.biHeight;
+                        
                         // A negative height means we have a top-down bitmap.
                         // For consistency we need to flip this image vertically.
                         for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)
@@ -219,176 +434,47 @@ namespace OpenTK.Platform.Native.Windows
             }
             else
             {
-                throw new Win32Exception("GetIconInfo failed.");
+                throw new Win32Exception();
             }
 
             bool successBool = Win32.DestroyIcon(cursor_copy);
             if (successBool == false)
             {
-                throw new Win32Exception("DestroyIcon failed.");
+                throw new Win32Exception();
             }
         }
 
-        public void GetBitmap(IconHandle handle, int level, Span<byte> data)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetBitmapSize(IconHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetBitmapSize(IconHandle handle, int level)
-        {
-            throw new NotImplementedException();
-        }
-
-        public unsafe void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
+        public unsafe int GetBitmapByteSize(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
-            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
-            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+            int size;
 
-            if (data.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {data.Length}");
-
-            // FIXME: Figure out if we should destroy the previous icon like this.
-            Destroy(handle);
-
-            // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
-            Win32.BITMAPV5HEADER header = default;
-            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
-            header.bV5Width = width;
-            header.bV5Height = height;
-            header.bV5Planes = 1;
-            header.bV5BitCount = 32;
-            header.bV5Compression = BI.Bitfields;
-            header.bV5RedMask = 0x00_FF_00_00;
-            header.bV5GreenMask = 0x00_00_FF_00;
-            header.bV5BlueMask = 0x00_00_00_FF;
-            header.bV5AlphaMask = 0xFF_00_00_00;
-            // FIXME: Determine color space!
-            // header.bV5CSType = LCS_sRGB?
-
-            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-
-            IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
-            if (colorBitmap == IntPtr.Zero)
+            // See https://stackoverflow.com/a/13295280
+            if (Win32.GetIconInfo(hicon.Icon, out Win32.ICONINFO info))
             {
-                throw new Win32Exception("CreateDIBSection failed.");
+                bool bwCursor = info.hbmColor == IntPtr.Zero;
+                if (Win32.GetObject(info.hbmMask, sizeof(Win32.BITMAP), out Win32.BITMAP bmpInfo) != 0)
+                {
+                    int width = bmpInfo.bmWidth;
+                    int height = bmpInfo.bmHeight / (bwCursor ? 2 : 1);
+
+                    size = width * height * 4;
+                }
+                else
+                {
+                    throw new PalException(this, $"GetObject failed. (hbm: {info.hbmMask})");
+                }
+
+                Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmMask);
             }
-
-            Span<byte> bitmapData = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
-
-            // Copy over image data.
-            data.CopyTo(bitmapData);
-
-            // Create an empty mask.
-            IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
-            // FIXME: The value if ERROR_INVALID_BITMAP is impossible to find.
-            // It's not defined in wingdi.h and nothing online mentions it.
-            if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
-            {
-                throw new Win32Exception("CreateBitmap failed.");
-            }
-
-            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
-            {
-                fIcon = true, // We are creating a icon
-                xHotspot = 0,
-                yHotspot = 0,
-                hbmMask = maskBitmap,
-                hbmColor = colorBitmap,
-            };
-
-            IntPtr hIcon = Win32.CreateIconIndirect(in iconinfo);
-            if (hIcon == IntPtr.Zero)
-            {
-                throw new Win32Exception("CreateIconIndirect() failed.");
-            }
-
-            Win32.ReleaseDC(IntPtr.Zero, hDC);
-
-            hicon.Icon = hIcon;
-            hicon.MaskBitmap = maskBitmap;
-            hicon.ColorBitmap = colorBitmap;
-            hicon.Mode = HIcon.IconMode.Icon;
-        }
-
-        public void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(IconHandle handle, string file)
-        {
-            HIcon hicon = handle.As<HIcon>(this);
-
-            Destroy(hicon);
-
-            IntPtr icon = Win32.LoadImage(IntPtr.Zero, file, ImageType.Icon, 0, 0, LR.LoadFromFile | LR.DefaultSize);
-            if (icon == IntPtr.Zero)
+            else
             {
                 throw new Win32Exception();
             }
 
-            hicon.Icon = icon;
-            hicon.Mode = HIcon.IconMode.FileIcon;
-        }
-
-        public void Load(IconHandle handle, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(IconHandle handle, SystemIconType systemIcon)
-        {
-            HIcon hicon = handle.As<HIcon>(this);
-
-            Destroy(hicon);
-
-            OIC oic = default;
-            switch (systemIcon)
-            {
-                case SystemIconType.Default:
-                    oic = OIC.WinLogo;
-                    break;
-                case SystemIconType.Asterisk:
-                    // FIXME
-                    oic = OIC.Information;
-                    break;
-                case SystemIconType.Error:
-                    oic = OIC.Error;
-                    break;
-                case SystemIconType.Exclamation:
-                    oic = OIC.Bang;
-                    break;
-                case SystemIconType.Hand:
-                    oic = OIC.Hand;
-                    break;
-                case SystemIconType.Information:
-                    oic = OIC.Information;
-                    break;
-                case SystemIconType.Question:
-                    oic = OIC.Ques;
-                    break;
-                case SystemIconType.Shield:
-                    oic = OIC.Shield;
-                    break;
-                case SystemIconType.Warning:
-                    oic = OIC.Warning;
-                    break;
-                case SystemIconType.OperatingSystem:
-                    // FIXME how do we get this?
-                    oic = OIC.WinLogo;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(systemIcon), (int)systemIcon, typeof(SystemIconType));
-            }
-
-            hicon.Icon = Win32.LoadImage(IntPtr.Zero, oic, ImageType.Icon, 0, 0, LR.Shared | LR.DefaultSize);
-            hicon.Mode = HIcon.IconMode.SystemIcon;
+            return size;
         }
     }
 }

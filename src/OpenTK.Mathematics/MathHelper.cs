@@ -883,17 +883,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Swaps two float values.
+        /// Swaps two values.
         /// </summary>
         /// <typeparam name="T">The type of the values to swap.</typeparam>
         /// <param name="a">The first value.</param>
         /// <param name="b">The second value.</param>
-        public static void Swap<T>(ref T a, ref T b)
-        {
-            var temp = a;
-            a = b;
-            b = temp;
-        }
+        public static void Swap<T>(ref T a, ref T b) => (a, b) = (b, a);
 
         /// <summary>
         /// Clamps a number between a minimum and a maximum.
@@ -947,7 +942,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static int MapRange(int value, int valueMin, int valueMax, int resultMin, int resultMax)
         {
-            int inRange = valueMax - valueMax;
+            int inRange = valueMax - valueMin;
             int resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
@@ -965,7 +960,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static float MapRange(float value, float valueMin, float valueMax, float resultMin, float resultMax)
         {
-            float inRange = valueMax - valueMax;
+            float inRange = valueMax - valueMin;
             float resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
@@ -983,7 +978,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static double MapRange(double value, double valueMin, double valueMax, double resultMin, double resultMax)
         {
-            double inRange = valueMax - valueMax;
+            double inRange = valueMax - valueMin;
             double resultRange = resultMax - resultMin;
             return resultMin + (resultRange * ((value - valueMin) / inRange));
         }
@@ -1217,7 +1212,7 @@ namespace OpenTK.Mathematics
             // returns angle in the range [0, 2π).
             angle = ClampRadians(angle);
 
-            if (angle > PiOver2)
+            if (angle > Pi)
             {
                 // shift angle to range (-π, π]
                 angle -= 2 * Pi;
@@ -1236,7 +1231,7 @@ namespace OpenTK.Mathematics
             // returns angle in the range [0, 2π).
             angle = ClampRadians(angle);
 
-            if (angle > PiOver2)
+            if (angle > Pi)
             {
                 // shift angle to range (-π, π]
                 angle -= 2 * Pi;
@@ -1255,8 +1250,11 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-360, 360)
             angle %= 360f;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360f;
+            }
 
             return angle;
         }
@@ -1269,10 +1267,13 @@ namespace OpenTK.Mathematics
         public static double ClampAngle(double angle)
         {
             // mod angle so it's in the range (-360, 360)
-            angle %= 360f;
+            angle %= 360d;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360d;
+            }
 
             return angle;
         }
@@ -1285,10 +1286,13 @@ namespace OpenTK.Mathematics
         public static float ClampRadians(float angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= TwoPi;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0,2π)
+                angle += TwoPi;
+            }
 
             return angle;
         }
@@ -1301,14 +1305,30 @@ namespace OpenTK.Mathematics
         public static double ClampRadians(double angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= 2d * Math.PI;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0,2π)
+                angle += 2d * Math.PI;
+            }
 
             return angle;
         }
 
-        internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        internal static string GetListSeparator(IFormatProvider formatProvider)
+        {
+            if (formatProvider is CultureInfo cultureInfo)
+            {
+                return cultureInfo.TextInfo.ListSeparator;
+            }
+
+            if (formatProvider?.GetFormat(typeof(TextInfo)) is TextInfo textInfo)
+            {
+                return textInfo.ListSeparator;
+            }
+
+            return CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        }
     }
 }

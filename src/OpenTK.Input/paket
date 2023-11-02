@@ -2,7 +2,9 @@ type file
 id OpenTK.Input
 description
     Hid/Controller input library.
+dependencies
+    framework: net7.0
 files
-    bin\Release\net5.0\OpenTK.Input.dll ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Input.xml ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Input.pdb ==> lib\net5.0
+    bin\Release\net7.0\OpenTK.Input.dll ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Input.xml ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Input.pdb ==> lib\net7.0

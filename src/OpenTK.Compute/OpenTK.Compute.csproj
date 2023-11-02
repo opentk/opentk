@@ -1,11 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>OpenTK.Compute</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>9</LangVersion>
+      <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\OpenTK.Compute.xml</DocumentationFile>
@@ -14,4 +19,8 @@
     <PropertyGroup>
       <NoWarn>1591</NoWarn>
     </PropertyGroup>
+    
+    <Import Project="..\..\props\common.props" />
+    <Import Project="..\..\props\nuget-common.props" />
+    <Import Project="..\..\props\stylecop.props" />
 </Project>

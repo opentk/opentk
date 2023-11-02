@@ -9,30 +9,63 @@ namespace OpenTK.Core.Platform
     public interface ICursorComponent : IPalComponent
     {
         /// <summary>
-        /// True if the driver can load from a file.
-        /// </summary>
-        bool CanLoadFromFile { get; }
-
-        /// <summary>
         /// True if the driver can load system cursors.
         /// </summary>
-        bool CanLoadSystemCursor { get; }
+        /// <seealso cref="Create(SystemCursorType)"/>
+        bool CanLoadSystemCursors { get; }
 
         /// <summary>
-        /// True if the driver can scale a cursor.
+        /// True if the backend supports inspecting system cursor handles.
+        /// If true, functions like <see cref="GetSize(CursorHandle, out int, out int)"/> and <see cref="GetHotspot(CursorHandle, out int, out int)"/> works on system cursors.
+        /// If false, these functions will fail.
         /// </summary>
-        bool CanScaleCursor { get; }
+        /// <seealso cref="GetSize(CursorHandle, out int, out int)"/>
+        /// <seealso cref="GetHotspot(CursorHandle, out int, out int)"/>
+        bool CanInspectSystemCursors { get; }
+
+        // FIXME: Do we need to destroy system cursors?
+        // FIXME: Do two system cursors have reference equality?
 
         /// <summary>
-        /// True if the driver can create and display custom animated cursors.
+        /// Create a standard system cursor.
         /// </summary>
-        bool CanSupportAnimatedCursor { get; }
+        /// <remarks>
+        /// This function is only supported if <see cref="CanLoadSystemCursors"/> is true.
+        /// </remarks>
+        /// <param name="systemCursor">Type of the standard cursor to load.</param>
+        /// <returns>A handle to the created cursor.</returns>
+        /// <exception cref="PalNotImplementedException">Driver does not implement this function. See <see cref="CanLoadSystemCursors"/>.</exception>
+        /// <exception cref="PlatformException">System does not provide cursor type selected by <paramref name="systemCursor"/>.</exception>
+        CursorHandle Create(SystemCursorType systemCursor);
 
         /// <summary>
-        /// Create a cursor object.
+        /// Load a cursor image from memory.
         /// </summary>
-        /// <returns>A cursor object.</returns>
-        CursorHandle Create();
+        /// <param name="width">Width of the cursor image.</param>
+        /// <param name="height">Height of the cursor image.</param>
+        /// <param name="image">Buffer containing image data.</param>
+        /// <param name="hotspotX">The x coordinate of the cursor hotspot.</param>
+        /// <param name="hotspotY">The y coordinate of the cursor hotspot.</param>
+        /// <returns>A handle to the created cursor.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
+        /// <exception cref="ArgumentException"><paramref name="image"/> is smaller than specified dimensions.</exception>
+        CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY);
+
+        /// <summary>
+        /// Load a cursor image from memory.
+        /// </summary>
+        /// <param name="width">Width of the cursor image.</param>
+        /// <param name="height">Height of the cursor image.</param>
+        /// <param name="colorData">Buffer containing color data.</param>
+        /// <param name="maskData">Buffer containing mask data.</param>
+        /// <param name="hotspotX">The x coordinate of the cursor hotspot.</param>
+        /// <param name="hotspotY">The y coordinate of the cursor hotspot.</param>
+        /// <returns>A handle to the created handle.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
+        /// <exception cref="ArgumentException"><paramref name="colorData"/> or <paramref name="maskData"/> is smaller than specified dimensions.</exception>
+        // FIXME: Define the data format for colorData and maskData. Is this a BW or color cursor??
+        // FIXME: Make colorData and maskData into a standardized format, and maybe put into a struct?
+        CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY);
 
         /// <summary>
         /// Destroy a cursor object.
@@ -42,120 +75,40 @@ namespace OpenTK.Core.Platform
         void Destroy(CursorHandle handle);
 
         /// <summary>
+        /// Returns true if this cursor is a system cursor.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor.</param>
+        /// <returns>If the cursor is a system cursor or not.</returns>
+        /// <seealso cref="Create(SystemCursorType)"/>.
+        bool IsSystemCursor(CursorHandle handle);
+
+        /// <summary>
         /// Get the size of the cursor image.
         /// </summary>
+        /// <remarks>
+        /// If <paramref name="handle"/> is a system cursor and <see cref="CanInspectSystemCursors"/> is false this function will fail.
+        /// </remarks>
         /// <param name="handle">Handle to a cursor object.</param>
         /// <param name="width">Width of the cursor.</param>
         /// <param name="height">Height of the cursor.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="IsSystemCursor(CursorHandle)"/>
+        /// <seealso cref="CanInspectSystemCursors"/>
         void GetSize(CursorHandle handle, out int width, out int height);
 
         /// <summary>
         /// Get the hotspot location of the mouse cursor.
+        /// Getting the hotspot of a system cursor is not guaranteed to be possible, check <see cref="CanInspectSystemCursors"/> before trying.
         /// </summary>
+        /// <remarks>
+        /// If <paramref name="handle"/> is a system cursor and <see cref="CanInspectSystemCursors"/> is false this function will fail.
+        /// </remarks>
         /// <param name="handle">Handle to a cursor object.</param>
         /// <param name="x">X coordinate of the hotspot.</param>
         /// <param name="y">Y coordinate of the hotspot.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <seealso cref="IsSystemCursor(CursorHandle)"/>
+        /// <seealso cref="CanInspectSystemCursors"/>
         void GetHotspot(CursorHandle handle, out int x, out int y);
-
-        /// <summary>
-        /// Get the mouse cursor image.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="image">Buffer to copy cursor image into.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetImage(CursorHandle handle, Span<byte> image);
-
-        /// <summary>
-        /// Get the scale of the cursor image.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="horizontal">Horizontal scale of the cursor.</param>
-        /// <param name="vertical">Vertical scale of the cursor.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver cannot scale cursor images.</exception>
-        void GetScale(CursorHandle handle, out float horizontal, out float vertical);
-
-        /// <summary>
-        /// Load a standard system cursor.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="systemCursor">Name of the standard cursor to load.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not implement this function. See <see cref="CanLoadSystemCursor"/>.</exception>
-        /// <exception cref="PlatformException">System does not provide cursor type selected by <paramref name="systemCursor"/>.</exception>
-        void Load(CursorHandle handle, SystemCursorType systemCursor);
-
-        /// <summary>
-        /// Load a cursor image from memory.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="width">Width of the cursor image.</param>
-        /// <param name="height">Height of the cursor image.</param>
-        /// <param name="image">Buffer containing image data.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
-        /// <exception cref="ArgumentException"><paramref name="image"/> is smaller than specified dimensions.</exception>
-        void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image);
-
-        /// <summary>
-        /// Load a cursor image from memory.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="width">Width of the cursor image.</param>
-        /// <param name="height">Height of the cursor image.</param>
-        /// <param name="colorData">Buffer containing color data.</param>
-        /// <param name="maskData">Buffer containing mask data.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
-        /// <exception cref="ArgumentException"><paramref name="colorData"/> or <paramref name="maskData"/> is smaller than specified dimensions.</exception>
-        void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData);
-
-        /// <summary>
-        /// Load a cursor from a file.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="file">Path to cursor file.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="FileNotFoundException">File at path <paramref name="file"/> not found.</exception>
-        /// <exception cref="IOException">Input output error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        void Load(CursorHandle handle, string file);
-
-        /// <summary>
-        /// Load a cursor from a stream.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="stream">Stream containing mouse cursor.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="IOException">Input Output Error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        /// <remarks>This function should be implemented using a temporary file if the system does not support reading from a stream.</remarks>
-        void Load(CursorHandle handle, Stream stream);
-
-        /// <summary>
-        /// Set the cursor hot spot.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="x">X coordinate of the hotspot.</param>
-        /// <param name="y">Y coordinate of the hotspot.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="x"/> or <paramref name="y"/> is outside of the cursor image.</exception>
-        void SetHotspot(CursorHandle handle, int x, int y);
-
-        /// <summary>
-        /// Set the scale of the cursor image.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor image.</param>
-        /// <param name="horizontal">New horizontal scale of cursor image.</param>
-        /// <param name="vertical">New vertical scale of cursor image.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        ///     <paramref name="horizontal"/> or <paramref name="vertical"/> is negative.
-        /// </exception>
-        /// <exception cref="PalNotImplementedException">Driver cannot scale cursor images.</exception>
-        void SetScale(CursorHandle handle, float horizontal, float vertical);
     }
 }

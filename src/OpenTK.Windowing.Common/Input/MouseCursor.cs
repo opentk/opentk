@@ -90,9 +90,9 @@ namespace OpenTK.Windowing.Common.Input
         }
 
         /// <summary>
-        ///     Gets the shape for standard preset cursors.
+        /// Gets the shape for standard preset cursors.
         /// </summary>
-        internal StandardShape Shape { get; }
+        public StandardShape Shape { get; }
 
         /// <summary>
         /// Gets the x-coordinate of the cursor hotspot.
@@ -105,20 +105,43 @@ namespace OpenTK.Windowing.Common.Input
         public int Y { get; }
 
         /// <summary>
-        ///     Standard cursor shapes.
+        /// Standard cursor shapes.
         /// </summary>
-        internal enum StandardShape
+        public enum StandardShape
         {
             /// <summary>
-            ///     Default standard shape for user-created cursors.
+            /// Default standard shape for user-created cursors.
             /// </summary>
             CustomShape = 0,
 
+            /// <summary>
+            /// A normal arrow cursor.
+            /// </summary>
             Arrow,
+
+            /// <summary>
+            /// An I-beam text editing cursor.
+            /// </summary>
             IBeam,
+
+            /// <summary>
+            /// A crosshair cursor.
+            /// </summary>
             Crosshair,
+
+            /// <summary>
+            /// A hand cursor.
+            /// </summary>
             Hand,
+
+            /// <summary>
+            /// A horizontal resize cursor.
+            /// </summary>
             HResize,
+
+            /// <summary>
+            /// A vertical resize cursor.
+            /// </summary>
             VResize,
         }
     }

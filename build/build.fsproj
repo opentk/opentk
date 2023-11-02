@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="build.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fake.Api.GitHub" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.Environment" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.Target" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.Cli" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.NuGet" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.Paket" Version="6.0.0" />
+    <PackageReference Include="Fake.IO.FileSystem" Version="6.0.0" />
+    <PackageReference Include="Fake.Tools.Git" Version="6.0.0" />
+
+    <!-- So that Fake.DotNet.Nuget.Nuget command can find nuget.exe, but because the nuget dependencies are -->
+    <!-- downloaded into a shared cache of nuget packages we actually don't get a nuget.exe in our project -->
+    <!-- so we must later copy the nuget.exe out from this package into our own. -->
+    <!-- This was not needed when we ran our build using an .fsx file using paket to download dependencies as -->
+    <!-- paket downloaded these dependencies into a project local folder. -->
+    <PackageReference Include="NuGet.CommandLine" Version="6.7.0" GeneratePathProperty="true">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    
+    <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.858" />
+    <!-- See https://github.com/fsprojects/FAKE/issues/2722 -->
+    <!-- 17.3.2 is the last .net6.0 version of the package -->
+    <PackageReference Include="Microsoft.Build" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Because NuGet.CommandLine has only a tools/ folder inside, the nuget.exe file does not get put into  -->
+    <!-- the project bin folder. This means that Fake.DotNet.Nuget.Nuget cannot find nuget.exe. -->
+    <!-- So for this to work we need to copy nuget.exe out from the shared cached NuGet.CommandLine folder into our project bin. -->
+    <None Include="$(PkgNuGet_CommandLine)\tools\nuget.exe" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

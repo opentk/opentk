@@ -5,10 +5,12 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Linq;
+using System.Reflection;
+using System.Net.Http;
 
 namespace Generator
 {
-    public record DocumentationSource(DocumentationFolder[] Folders) : IDisposable
+    internal record DocumentationSource(DocumentationFolder[] Folders) : IDisposable
     {
         public void Dispose()
         {
@@ -21,7 +23,7 @@ namespace Generator
         }
     }
 
-    public record DocumentationFolder(string Folder, FileStream[] Files) : IDisposable
+    internal record DocumentationFolder(string Folder, FileStream[] Files) : IDisposable
     {
         public void Dispose()
         {
@@ -34,24 +36,23 @@ namespace Generator
         }
     }
 
-    public static class Reader
+    internal static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine("..", "..", "..", "SpecificationFiles");
+        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
-        public static FileStream ReadSpecFromGithub()
+        private static FileStream ReadFileFromGithub(string url, string filePath)
         {
-            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
-            string filePath = Path.Combine(TempDirectory, "gl.xml");
+            string fileName = Path.GetFileName(filePath);
 
             FileStream stream;
             if (File.Exists(filePath))
             {
-                Logger.Info($"Found cache file for gl.xml, using that.");
+                Logger.Info($"Found cache file for {fileName}, using that.");
                 stream = File.OpenRead(filePath);
             }
             else
             {
-                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}.");
+                Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
                 if (!Directory.Exists(TempDirectory))
                 {
                     Directory.CreateDirectory(TempDirectory);
@@ -62,7 +63,31 @@ namespace Generator
             return stream;
         }
 
-        public static DocumentationSource ReadDocumentationFromGithub()
+        internal static FileStream ReadGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
+            string filePath = Path.Combine(TempDirectory, "gl.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        internal static FileStream ReadWGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/wgl.xml";
+            string filePath = Path.Combine(TempDirectory, "wgl.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        internal static FileStream ReadGLXSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/glx.xml";
+            string filePath = Path.Combine(TempDirectory, "glx.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        internal static DocumentationSource ReadDocumentationFromGithub()
         {
             Path.GetFullPath(TempDirectory);
             string[] DocumentationFolders = new string[]
@@ -100,6 +125,7 @@ namespace Generator
                     Directory.CreateDirectory(folderPath);
 
                     string url = $"https://api.github.com/repos/KhronosGroup/OpenGL-Refpages/contents/{DocumentationFolders[folderIndex]}/";
+
 
                     HttpWebRequest request = WebRequest.CreateHttp(url);
                     request.Headers.Add("User-Agent: Other");

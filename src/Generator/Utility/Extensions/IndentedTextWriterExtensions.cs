@@ -3,25 +3,25 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Utility.Extensions
 {
-    public static class IndentedTextWriterExtension
+    internal static class IndentedTextWriterExtension
     {
-        public static Indentation Indent(this IndentedTextWriter writer)
+        internal static Indentation Indent(this IndentedTextWriter writer)
         {
             return new Indentation(writer);
         }
 
         // Utility method for creating a cs scope "{}".
-        public static CsScope CsScope(this IndentedTextWriter writer)
+        internal static CsScope CsScope(this IndentedTextWriter writer)
         {
             return new CsScope(writer);
         }
     }
 
-    public readonly struct Indentation : IDisposable
+    internal readonly struct Indentation : IDisposable
     {
-        public readonly IndentedTextWriter Writer;
+        internal readonly IndentedTextWriter Writer;
 
-        public Indentation(IndentedTextWriter writer)
+        internal Indentation(IndentedTextWriter writer)
         {
             Writer = writer;
             Writer.Indent++;
@@ -33,11 +33,11 @@ namespace Generator.Utility.Extensions
         }
     }
 
-    public readonly struct CsScope : IDisposable
+    internal readonly struct CsScope : IDisposable
     {
-        public readonly IndentedTextWriter Writer;
+        internal readonly IndentedTextWriter Writer;
 
-        public CsScope(IndentedTextWriter writer)
+        internal CsScope(IndentedTextWriter writer)
         {
             Writer = writer;
             Writer.WriteLine("{");

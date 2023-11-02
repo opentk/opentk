@@ -114,7 +114,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <remarks>
         /// This event handler is potentially called across threads. If thread safety is required,
-        /// or you would like to control when events are dispatched, use <see cref="Subscribe"/> instead.
+        /// or you would like to control when events are dispatched, use <see cref="Subscribe(PalHandle)"/> instead.
         /// </remarks>
         public static event PlatformEventHandler? EventRaised;
 

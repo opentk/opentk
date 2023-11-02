@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/tests/X11TestProject/X11TestProject.csproj",
+                "${workspaceFolder}/tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/tests/X11TestProject/X11TestProject.csproj",
+                "${workspaceFolder}/tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/tests/X11TestProject/X11TestProject.csproj"
+                "${workspaceFolder}/tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

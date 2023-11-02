@@ -37,7 +37,7 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2 : IEquatable<Vector2>
+    public struct Vector2 : IEquatable<Vector2>, IFormattable
     {
         /// <summary>
         /// The X component of the Vector2.
@@ -190,7 +190,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2 UnitY = new Vector2(0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector2.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2 Zero = new Vector2(0, 0);
 
@@ -641,11 +641,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
         public static Vector2 Lerp(Vector2 a, Vector2 b, float blend)
@@ -656,16 +656,44 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector2 a, in Vector2 b, float blend, out Vector2 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
             result.Y = (blend * (b.Y - a.Y)) + a.Y;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</returns>
+        [Pure]
+        public static Vector2 Lerp(Vector2 a, Vector2 b, Vector2 blend)
+        {
+            a.X = (blend.X * (b.X - a.X)) + a.X;
+            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
+        public static void Lerp(in Vector2 a, in Vector2 b, Vector2 blend, out Vector2 result)
+        {
+            result.X = (blend.X * (b.X - a.X)) + a.X;
+            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
         }
 
         /// <summary>
@@ -947,6 +975,20 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2 operator /(Vector2 vec, Vector2 scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            return vec;
+        }
+
+        /// <summary>
         /// Compares the specified instances for equality.
         /// </summary>
         /// <param name="left">Left operand.</param>
@@ -1013,12 +1055,54 @@ namespace OpenTK.Mathematics
             return new Vector2i((int)vec.X, (int)vec.Y);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        /// <summary>
+        /// Converts <see cref="Vector2"/> to <see cref="System.Drawing.PointF"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.PointF"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.PointF(Vector2 vec)
+        {
+            return new System.Drawing.PointF(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector2"/> to <see cref="System.Drawing.SizeF"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.SizeF"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.SizeF(Vector2 vec)
+        {
+            return new System.Drawing.SizeF(vec.X, vec.Y);
+        }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc/>
