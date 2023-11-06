@@ -269,7 +269,7 @@ namespace OpenTK.Platform.Tests
                 GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(Window);
+                glComp.SwapBuffers(context);
             }
         }
 
@@ -320,6 +320,7 @@ namespace OpenTK.Platform.Tests
             };
 
             var icon = (iconComp as X11IconComponent)?.Create(128, 128, images);
+            icon ??= iconComp.Create(128, 128, image128);
             windowComp.SetIcon(handle, icon);
         }
 

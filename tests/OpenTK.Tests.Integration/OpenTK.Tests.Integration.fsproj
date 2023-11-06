@@ -32,5 +32,5 @@
   </ItemGroup>
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+  <!--<Import Project="..\..\.paket\Paket.Restore.targets" />-->
 </Project>
