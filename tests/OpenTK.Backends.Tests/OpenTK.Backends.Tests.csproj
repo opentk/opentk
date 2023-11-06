@@ -7,7 +7,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
-    <Win32Resource>icons.res</Win32Resource>
+    
+    <!-- This is somehow broken on one of my machines... somehow https://github.com/dotnet/runtime/pull/89303 is supposed to fix this in .net 8? -->
+    <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
   <ItemGroup>
