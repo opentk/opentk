@@ -4,7 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>OpenTK.Windowing.Common</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />

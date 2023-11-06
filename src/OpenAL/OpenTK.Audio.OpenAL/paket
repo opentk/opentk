@@ -1,7 +1,7 @@
 type file
 id OpenTK.Audio.OpenAL
 description
-    OpenAL bindings for dotnet from the Khronos openAL c library.
+    OpenAL bindings for dotnet from the Khronos OpenAL C library.
 dependencies
     framework: net7.0
         OpenTK.Core ~> #VERSION#

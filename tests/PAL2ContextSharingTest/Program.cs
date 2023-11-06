@@ -58,7 +58,7 @@ void main()
 
         static void Main(string[] args)
         {
-            PlatformComponents.PreferSDL2 = true;
+            //PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
 
@@ -134,14 +134,14 @@ void main()
                 Program2 = CreateShader("Context 2", VertexShaderSource, FragmentShaderSource);
             }
 
-            WindowComp.GetPosition(WindowHandle1, out int x1, out int y1);
-            WindowComp.SetPosition(WindowHandle2, x1 + 800, y1);
+            WindowComp.GetClientPosition(WindowHandle1, out int x1, out int y1);
+            WindowComp.SetClientPosition(WindowHandle2, x1 + 800, y1);
 
             WindowComp.SetTitle(WindowHandle1, $"{PlatformComponents.GetBackend()} Test Window 1");
-            WindowComp.SetSize(WindowHandle1, 800, 600);
+            WindowComp.SetClientSize(WindowHandle1, 800, 600);
             WindowComp.SetMode(WindowHandle1, WindowMode.Normal);
             WindowComp.SetTitle(WindowHandle2, $"{PlatformComponents.GetBackend()} Test Window 2");
-            WindowComp.SetSize(WindowHandle2, 800, 600);
+            WindowComp.SetClientSize(WindowHandle2, 800, 600);
             WindowComp.SetMode(WindowHandle2, WindowMode.Normal);
 
             EventQueue.EventRaised += EventQueue_EventRaised;
@@ -195,7 +195,7 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                WindowComp.SwapBuffers(WindowHandle1);
+                OpenGLComponent.SwapBuffers(ContextHandle1);
             }
 
             if (WindowComp.IsWindowDestroyed(WindowHandle2) == false)
@@ -213,7 +213,7 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-                WindowComp.SwapBuffers(WindowHandle2);
+                OpenGLComponent.SwapBuffers(ContextHandle2);
             }
 
             return true;
