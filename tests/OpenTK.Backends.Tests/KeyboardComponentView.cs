@@ -25,7 +25,14 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            Layouts = Program.KeyboardComponent!.GetAvailableKeyboardLayouts();
+            try
+            { 
+                Layouts = Program.KeyboardComponent!.GetAvailableKeyboardLayouts();
+            }
+            catch
+            {
+                Layouts = new string[0];
+            }
         }
 
         public override void Paint()
