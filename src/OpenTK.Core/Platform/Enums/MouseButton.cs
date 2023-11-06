@@ -47,7 +47,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Auxiliary mouse button.
         /// </summary>
-        Button8
+        Button8,
     }
 
     /// <summary>

@@ -370,6 +370,9 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XUngrabPointer(XDisplayPtr display, XTime time);
 
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool XQueryExtension(XDisplayPtr display, string name, out int major_opcode_return, out int first_event_return, out int first_error_return);
+
         internal static unsafe string[] XListExtensions(XDisplayPtr display, out int nextensions_return)
         {
             byte** ptr = XListExtensions(display, out nextensions_return);
@@ -423,5 +426,11 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, int* /*Status*/ status_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XDisplayKeycodes(XDisplayPtr display, out int min_keycodes_return, out int max_keycodes_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XKeySym* XGetKeyboardMapping(XDisplayPtr display, byte first_keycode, int keycode_count, out int keysyms_per_keycode_return);
     }
 }

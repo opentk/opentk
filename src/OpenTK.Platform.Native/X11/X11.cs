@@ -30,6 +30,18 @@ namespace OpenTK.Platform.Native.X11
 
         public static int XRandRErrorBase { get; set; }
 
+        public static bool XFixesAvailable { get; set; }
+
+        public static int XFixesEventBase { get; set; }
+
+        public static int XFixesErrorBase { get; set; }
+
+        public static bool XI2Available { get; set; }
+
+        public static int XI2EventBase { get; set; }
+
+        public static int XI2ErrorBase { get; set; }
+
 
         /// <summary>
         /// remove/unset property

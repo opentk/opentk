@@ -408,6 +408,10 @@ namespace OpenTK.Backends.Tests
                     }
                 }
             }
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
+            {
+                Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
+            }
         }
 
         internal static IPalComponent? GetComponent(PalComponents component)

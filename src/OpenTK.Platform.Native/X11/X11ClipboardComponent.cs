@@ -27,7 +27,6 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
-
             OpenTKSelection = XInternAtom(X11.Display, "OpenTK_Selection", false);
 
             image_png = XInternAtom(X11.Display, "image/png", false);
@@ -42,13 +41,13 @@ namespace OpenTK.Platform.Native.X11
         /// <summary>
         /// Custom atom used to receive clipboard data.
         /// </summary>
-        private XAtom OpenTKSelection;
+        internal static XAtom OpenTKSelection;
 
         // FIXME: Figure out which image formats we support?
-        private XAtom image_png;
-        private XAtom image_bmp;
+        private static XAtom image_png;
+        private static XAtom image_bmp;
 
-        private XAtom text_urilist;
+        private static XAtom text_urilist;
 
         private struct pollfd {
             public int fd;
@@ -156,14 +155,14 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => throw new NotImplementedException();
 
-        /// <inheritdoc/>
-        public unsafe ClipboardFormat GetClipboardFormat()
+        // FIXME: What if we've not initialized the clipboard component
+        internal static unsafe ClipboardFormat GetSelectionFormat(XAtom selection, XAtom property)
         {
             XConvertSelection(
                     X11.Display,
-                    X11.Atoms[KnownAtoms.CLIPBOARD],
+                    selection,
                     X11.Atoms[KnownAtoms.TARGETS],
-                    OpenTKSelection,
+                    property,
                     X11WindowComponent.HelperWindow,
                     XTime.CurrentTime);
 
@@ -228,6 +227,12 @@ namespace OpenTK.Platform.Native.X11
 
                 return ClipboardFormat.None;
             }
+        }
+
+        /// <inheritdoc/>
+        public unsafe ClipboardFormat GetClipboardFormat()
+        {
+            return GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], OpenTKSelection);
         }
 
         /// <inheritdoc/>

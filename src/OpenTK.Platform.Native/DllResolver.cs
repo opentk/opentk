@@ -86,6 +86,11 @@ namespace OpenTK.Platform.Native
                 "libXcursor.so.1",
             },
 
+            ["XI2"] = new string[]
+            {
+                "libxcb-xinput.so.0",
+            },
+
             ["XScreenSaver"] = new string[]
             {
                 "libXss.so",

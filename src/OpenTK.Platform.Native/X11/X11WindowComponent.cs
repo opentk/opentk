@@ -14,7 +14,9 @@ using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XI2.XI2;
 using OpenTK.Platform.Native.X11.XRandR;
+using OpenTK.Platform.Native.X11.XI2;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -188,13 +190,45 @@ namespace OpenTK.Platform.Native.X11
                     XWindowAttributeValueMask.EventMask,
                     ref wa);
             }
+
+            if (XQueryExtension(X11.Display, "XFIXES", out int xfixes_opcode, out int xfixes_event_base, out int xfixes_error_base))
+            {
+                X11.XFixesAvailable = true;
+                X11.XFixesEventBase = xfixes_event_base;
+                X11.XFixesErrorBase = xfixes_error_base;
+
+                // Register for clipboard updates.
+                XFixes.XFixesSelectSelectionInput(X11.Display, X11.DefaultRootWindow, X11.Atoms[KnownAtoms.CLIPBOARD], XFixes.SelectionEventMask.SetSelectionOwnerNotifyMask);
+            }
+
+            // FIXME: Don't throw?
+            /*
+            if (XQueryExtension(X11.Display, "XInputExtension", out int opcode, out int @event, out int error) == false)
+            {
+                Logger?.LogInfo("XInputExtension is not available.");
+                X11.XI2Available = false;
+            }
+            else
+            {
+                int major = 2, minor = 0;
+                if (XIQueryVersion(X11.Display, ref major, ref minor) == XStatus.Success)
+                {
+                    X11.XI2Available = true;
+                }
+                else
+                {
+                    Logger?.LogInfo($"XI2 not available. Available version: {major}.{minor}.");
+                    X11.XI2Available = false;
+                }
+            }
+            */
         }
 
         /// <inheritdoc />
         public bool CanSetIcon => true;
 
         /// <inheritdoc />
-        public bool CanGetDisplay => false;
+        public bool CanGetDisplay => true;
 
         /// <inheritdoc />
         public bool CanSetCursor => true;
@@ -313,8 +347,43 @@ namespace OpenTK.Platform.Native.X11
 
                 if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
                 {
-                    // This event likely for a deleted window.
-                    Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.Window}.");
+                    if (ea.Any.Window == X11.DefaultRootWindow)
+                    {
+                        if (ea.Type == (XEventType)(X11.XFixesEventBase + 0))
+                        {
+                            // XFixesSelectionNotify
+                            XFixes.XFixesSelectionNotifyEvent selectionNotify = Unsafe.As<XEvent, XFixes.XFixesSelectionNotifyEvent>(ref ea);
+
+                            // Get the format of the selection.
+                            if (selectionNotify.selection == X11.Atoms[KnownAtoms.CLIPBOARD])
+                            {
+                                ClipboardFormat format = X11ClipboardComponent.GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], X11ClipboardComponent.OpenTKSelection);
+
+                                EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
+                            }
+                        }
+                        else
+                        {
+                            Logger?.LogDebug($"Received unhandled event {ea.Type} for root window.");
+                        }
+                    }
+                    else if (ea.Any.Window == HelperWindow)
+                    {
+                        if (ea.Type == XEventType.PropertyNotify && 
+                            ea.Property.atom == X11ClipboardComponent.OpenTKSelection)
+                        {
+                            // If some other window takes ownership of the a selection we expect this.
+                        }
+                        else 
+                        {
+                            Logger?.LogDebug($"Received unhandled event {ea.Type} for helper window.");
+                        }
+                    }
+                    else
+                    {
+                        // This event likely for a deleted window.
+                        Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.Window}.");
+                    }
                     continue;
                 }
 
@@ -360,6 +429,7 @@ namespace OpenTK.Platform.Native.X11
                                     default: throw new Exception("This should never happen.");
                                 }
 
+                                X11MouseComponent.RegisterMouseWheelDelta((xdelta, ydelta));
                                 // FIXME: Scrolling distance? Are there scrolling settings on linux/x11?
                                 EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs(xwindow, (xdelta, ydelta), (xdelta, ydelta)));
                             }
@@ -388,6 +458,7 @@ namespace OpenTK.Platform.Native.X11
                                     default: continue; // Skip this event.
                                 }
 
+                                X11MouseComponent.RegisterButtonState(button, true);
                                 EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button));
                             }
 
@@ -414,6 +485,7 @@ namespace OpenTK.Platform.Native.X11
                                 default: continue; // Skip this event.
                             }
 
+                            X11MouseComponent.RegisterButtonState(button, false);
                             EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button));
 
                             break;
@@ -924,6 +996,23 @@ namespace OpenTK.Platform.Native.X11
                 wmHints->input = 1;
 
                 XSetWMHints(X11.Display, window, wmHints);
+            }
+
+            if (X11.XI2Available)
+            {
+                unsafe {
+                    XIEventMask eventmask;
+                    eventmask.deviceid = (int)DeviceID.XIAllMasterDevices;
+                    eventmask.mask_len = XIMaskLen(XI2EventType.LASTEVENT);
+                    byte* mask = stackalloc byte[eventmask.mask_len];
+                    eventmask.mask = mask;
+
+                    XISetMask(mask, XI2EventType.ButtonPress);
+                    XISetMask(mask, XI2EventType.Motion);
+                    XISetMask(mask, XI2EventType.KeyPress);
+
+                    XISelectEvents(X11.Display, window, &eventmask, eventmask.mask_len);
+                }
             }
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
