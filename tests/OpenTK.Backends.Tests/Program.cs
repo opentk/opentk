@@ -412,6 +412,10 @@ namespace OpenTK.Backends.Tests
             {
                 Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
             }
+            else if (args is FileDropEventArgs fileDrop)
+            {
+                Logger.LogInfo($"Dropped files:\n\t{string.Join("\n\t", fileDrop.FilePaths)}");
+            }
         }
 
         internal static IPalComponent? GetComponent(PalComponents component)

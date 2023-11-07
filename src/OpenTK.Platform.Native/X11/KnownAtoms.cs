@@ -10,6 +10,7 @@ namespace OpenTK.Platform.Native.X11
         STRING,
         UTF8_STRING,
         WINDOW,
+        AnyPropertyType,
         #endregion
 
         #region ICCCM
