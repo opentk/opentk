@@ -395,6 +395,8 @@ namespace OpenTK.Platform.Native.X11
 
                             unsafe
                             {
+                                // FIXME: Check message_type for WM_PROTOCOLS?
+
                                 if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
                                     EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
@@ -406,6 +408,27 @@ namespace OpenTK.Platform.Native.X11
                                     reply.ClientMessage.Window = X11.DefaultRootWindow;
 
                                     XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
+                                }
+                                // FIXME: Should we really check == 32?
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndEnter])
+                                {
+                                    // XdndTypeList
+                                    // Get the list of supported formats?
+                                    
+                                    // Receive XdndPosition to get mouse position
+
+                                    // Receive XdndStatus
+
+                                    // XdndLeave
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndPosition])
+                                {
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndLeave])
+                                {
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndDrop])
+                                {
                                 }
                             }
 
@@ -1014,6 +1037,21 @@ namespace OpenTK.Platform.Native.X11
                     XISelectEvents(X11.Display, window, &eventmask, eventmask.mask_len);
                 }
             }
+
+            // FIXME: Maybe a way to toggle if we 
+            // accept drag and drop operations.
+            // Set the supported XDnD version.
+            // FIXME: Avoid allocation
+            long[] dndVersion = { 5 };
+            XChangeProperty(
+                X11.Display,
+                window,
+                X11.Atoms[KnownAtoms.XdndAware],
+                X11.Atoms[KnownAtoms.ATOM],
+                32,
+                XPropertyMode.Replace,
+                dndVersion,
+                1);
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
 

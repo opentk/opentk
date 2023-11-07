@@ -115,6 +115,25 @@ namespace OpenTK.Platform.Native.X11
         _MOTIF_WM_HINTS,
         #endregion
 
+        #region XDnD
+        XdndAware,
+        XdndSelection,
+        XdndEnter,
+        XdndLeave,
+        XdndPosition,
+        XdndDrop,
+        XdndFinished,
+        XdndStatus,
+        XdndActionCopy,
+        XdndActionMove,
+        XdndActionLink,
+        XdndActionAsk,
+        XdndActionPrivate,
+        XdndTypeList,
+        XdndActionList,
+        XdndActionDescription,
+        #endregion
+
         EDID,
 
         /// <summary>
