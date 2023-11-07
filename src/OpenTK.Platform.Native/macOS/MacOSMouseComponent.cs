@@ -3,6 +3,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
+using static OpenTK.Platform.Native.macOS.CG;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -24,7 +25,7 @@ namespace OpenTK.Platform.Native.macOS
 
         public ILogger? Logger { get; set; }
 
-        public bool CanSetMousePosition => throw new NotImplementedException();
+        public bool CanSetMousePosition => true;
 
         public void Initialize(PalComponents which)
         {
@@ -49,15 +50,12 @@ namespace OpenTK.Platform.Native.macOS
 
         public void SetPosition(int x, int y)
         {
-            // Find the closest screen to the mouse position
-            // Clamp the position to the screen then
-            // call CGDisplayMoveCursorToPoint.
-
             IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
+            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
+            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
 
-
-            // FIXME: Use CGDisplayMoveCursorToPoint to implement this.
-            throw new NotImplementedException();
+            // FIXME: Coordinate system
+            CGWarpMouseCursorPosition(new CGPoint(x, frame.size.y - y));
         }
 
         // FIXME: This is only a 32-bit float and

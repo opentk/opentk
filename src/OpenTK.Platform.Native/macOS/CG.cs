@@ -49,6 +49,10 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern nint /* size_t */ CGDisplayPixelsWide(uint /* CGDirectDisplayID */ display);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGWarpMouseCursorPosition(CGPoint newCursorPosition);
+
     }
 }
 

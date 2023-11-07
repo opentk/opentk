@@ -27,6 +27,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selWindow = sel_registerName("window"u8);
         internal static SEL selButtonNumber = sel_registerName("buttonNumber"u8);
         internal static SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
+        internal static SEL selMouseLocation = sel_registerName("mouseLocation"u8);
         internal static SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
         internal static SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
         internal static SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
@@ -65,6 +66,8 @@ namespace OpenTK.Platform.Native.macOS
 
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
+
+        internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -294,11 +297,32 @@ namespace OpenTK.Platform.Native.macOS
                             selConvertRectToBacking,
                             objc_msgSend_CGRect(nswindow.View, selBounds));
 
+
+                        // FIXME: Coordinate space
                         Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
                         
                         EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
 
                         objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.LeftMouseDragged:
+                case NSEventType.RightMouseDragged:
+                case NSEventType.OtherMouseDragged:
+                    {
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+
+                        CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
+
+                        CGRect backing = objc_msgSend_CGRect(
+                            nswindow.Window,
+                            selConvertRectToBacking,
+                            objc_msgSend_CGRect(nswindow.View, selBounds));
+
+                        // FIXME: Coordinate space
+                        Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
+
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
                         break;
                     }
                 case NSEventType.ScrollWheel:
@@ -313,6 +337,13 @@ namespace OpenTK.Platform.Native.macOS
                         // FIXME: Consider precise deltas...
                         Vector2 delta = new Vector2(scrollX, scrollY);
                         Vector2 distance = new Vector2(scrollX, scrollY);
+
+                        if (preciseScrollingDeltas)
+                        {
+                            // FIXME: This is an ok hack for now but we want to do this
+                            // "properly" in the future.
+                            delta *= 0.1f;
+                        }
 
                         MacOSMouseComponent.RegisterMouseWheelDelta(delta);
                         EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
