@@ -31,9 +31,12 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
         internal static SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
         internal static SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
+        internal static SEL selTrackingNumber = sel_registerName("trackingNumber"u8);
 
         internal static SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
         internal static SEL selInitWithFrame = sel_registerName("initWithFrame:"u8);
+
+        internal static SEL selAddTrackingRect_owner_userData_assumeInside = sel_registerName("addTrackingRect:owner:userData:assumeInside:"u8);
 
         internal static SEL selScreen = sel_registerName("screen"u8);
         internal static SEL selFrame = sel_registerName("frame"u8);
@@ -133,6 +136,8 @@ namespace OpenTK.Platform.Native.macOS
 
             NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"), "NSOpenTKView"u8, 0);
             //class_addMethod(opentkViewClass, sel_registerName("resetCursorRects"u8), OnResetCursorRect, "v@:"u8);
+            class_addMethod<MouseEnteredDelegate>(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), NSOtkView_MouseEntered, "v@:@"u8);
+            class_addMethod<MouseExitedDelegate>(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), NSOtkView_MouseExited, "v@:@"u8);
             objc_registerClassPair(NSOpenTKViewClass);
         }
 
@@ -172,11 +177,41 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: addCursorRect
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        delegate void KeyDownDelegate(IntPtr @this, SEL sel, IntPtr /* NSEvent */ @event);
-        internal static void keyDown(IntPtr @this, SEL sel, IntPtr /* NSEvent */ @event)
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void MouseEnteredDelegate(IntPtr view, SEL selector, IntPtr @event);
+        static MouseEnteredDelegate OnMouseEnter = NSOtkView_MouseEntered;
+        static void NSOtkView_MouseEntered(IntPtr view, SEL selector, IntPtr @event)
         {
-            Console.WriteLine("Key down!");
+            Console.WriteLine("Enter");
+            IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) != false)
+            {
+                // FIXME: How do we get the logger here?
+                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
+                Console.WriteLine($"Received MouseEntered event with unknown window: {window}");
+                return;
+            }
+
+            EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, true));
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void MouseExitedDelegate(IntPtr view, SEL selector, IntPtr @event);
+        static MouseExitedDelegate OnMouseExited = NSOtkView_MouseExited;
+        static void NSOtkView_MouseExited(IntPtr view, SEL selector, IntPtr @event)
+        {
+            Console.WriteLine("Exit");
+            IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) != false)
+            {
+                // FIXME: How do we get the logger here?
+                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
+                Console.WriteLine($"Received MouseExited event with unknown window: {window}");
+                return;
+            }
+
+            EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, false));
         }
 
         /// <inheritdoc/>
@@ -271,18 +306,8 @@ namespace OpenTK.Platform.Native.macOS
 
                         EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton));
 
-                        objc_msgSend(nsApplication, selSendEvent, @event);
-                        break;
-                    }
-                case NSEventType.MouseEntered:
-                    {
-                        Console.WriteLine($"Window: {windowPtr}");
-                        objc_msgSend(nsApplication, selSendEvent, @event);
-                        break;
-                    }
-                case NSEventType.MouseExited:
-                    {
-                        Console.WriteLine($"Window: {windowPtr}");
+                        // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
+
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
                     }
@@ -323,6 +348,8 @@ namespace OpenTK.Platform.Native.macOS
                         Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
 
                         EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
                     }
                 case NSEventType.ScrollWheel:
@@ -400,6 +427,13 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, sel_registerName("makeKeyWindow"u8));
             objc_msgSend(windowPtr, sel_registerName("center"u8));
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
+
+            // Register the view for mouse enter/exit notifications.
+            objc_msgSend_IntPtr(viewPtr, selAddTrackingRect_owner_userData_assumeInside,
+                objc_msgSend_CGRect(viewPtr, selBounds),
+                viewPtr,
+                IntPtr.Zero,
+                false);
 
             return nswindow;
         }

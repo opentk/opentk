@@ -167,5 +167,20 @@ namespace OpenTK.Platform.Native.macOS
         PopUpMenu = 101,
         ScreenSaver = 1000,
     }
+
+    // This is defined as nsuinteger
+    [Flags]
+    internal enum NSTrackingAreaOptions : uint
+    {
+        MouseEnteredAndExited = 0x01,
+        MouseMoved = 0x02,
+        CursorUpdate = 0x04,
+        NSTrackingActiveWhenFirstResponder = 0x10,
+        ActiveInKeyWindow = 0x20,
+        ActiveInActiveApp = 0x40,
+        ActiveAlways = 0x80,
+        InVisibleRect = 0x200,
+        EnabledDuringMouseDrag = 0x400,
+    }
 }
 

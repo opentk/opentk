@@ -130,6 +130,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2, IntPtr value3, [MarshalAs(UnmanagedType.I1)] bool value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -265,6 +268,20 @@ namespace OpenTK.Platform.Native.macOS
             [DllImport(FoundationFramework)]
             static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
         }
+
+        internal static bool class_addMethod<T>(ObjCClass cls, SEL name, T imp, ReadOnlySpan<byte> types) where T : Delegate
+        {
+            // FIXME: Maybe avoid marshalling the delegate?
+            IntPtr impPtr = Marshal.GetFunctionPointerForDelegate(imp);
+            fixed (byte* ptr = types)
+            {
+                return class_addMethod(cls, name, impPtr, ptr);
+            }
+        }
+
+        // FIXME: What framework?
+        [DllImport(FoundationFramework)]
+        static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
 
         [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);
