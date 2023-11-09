@@ -497,14 +497,19 @@ namespace OpenTK.Platform.Native.macOS
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
-            CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
+            //CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
 
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
-            CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+            //CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
 
-            x = (int)backingRect.origin.x;
-            y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
+            //x = (int)backingRect.origin.x;
+            //y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
+
+
+            CGRect screenFrame = objc_msgSend_CGRect(screen, selFrame);
+            x = (int)frame.origin.x;
+            y = (int)(screenFrame.size.y - frame.origin.y - frame.size.y);
         }
 
         /// <inheritdoc/>
@@ -524,11 +529,11 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect rect = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
-            CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, rect);
+            //CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, rect);
 
             // FIXME: Convert screen coordinates to pixel coordinates.
-            width = (int)backingRect.size.x;
-            height = (int)backingRect.size.y;
+            width = (int)rect.size.x;
+            height = (int)rect.size.y;
         }
 
         /// <inheritdoc/>
@@ -554,6 +559,7 @@ namespace OpenTK.Platform.Native.macOS
             CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, screenRect);
 
             x = (int)backingRect.origin.x;
+            y = (int)CG.FlipYCoordinate(screenRect.origin.y);
             y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
         }
 
@@ -581,6 +587,9 @@ namespace OpenTK.Platform.Native.macOS
 
             width = (int)backingRect.size.x;
             height = (int)backingRect.size.y;
+
+            width = (int)(bounds.size.x);
+            height = (int)(bounds.size.y);
         }
 
         /// <inheritdoc/>
@@ -590,6 +599,17 @@ namespace OpenTK.Platform.Native.macOS
             //throw new NotImplementedException();
 
 
+        }
+
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+            CGRect boundsBacking = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
+
+            width = (int)(boundsBacking.size.x);
+            height = (int)(boundsBacking.size.y);
         }
 
         /// <inheritdoc/>

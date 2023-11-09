@@ -57,6 +57,50 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern CGError CGWarpMouseCursorPosition(CGPoint newCursorPosition);
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint /* CGDirectDisplayID */ CGMainDisplayID();
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The y coordinate.</param>
+        /// <returns>The flipped y coordinate.</returns>
+        internal static float FlipYCoordinate(float y)
+        {
+            float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
+            return height - y - 1;
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The y coordinate.</param>
+        /// <returns>The flipped y coordinate.</returns>
+        internal static NFloat FlipYCoordinate(NFloat y)
+        {
+            NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
+            return height - y - 1;
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The coordinate to flip.</param>
+        /// <returns>The flipped coordinate.</returns>
+        internal static CGPoint FlipYCoordinate(CGPoint p)
+        {
+            NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
+            return new CGPoint(p.x, height - p.y - 1);
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The rectangle to flip.</param>
+        /// <returns>The flipped rectangle.</returns>
+        internal static CGRect FlipYCoordinate(CGRect rect)
+        {
+            return new CGRect(FlipYCoordinate(rect.origin), rect.size);
+        }
     }
 }
-

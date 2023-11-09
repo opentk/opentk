@@ -219,6 +219,11 @@ void main()
         /// </summary>
         public void RecreateFontDeviceTexture()
         {
+            if (_fontTexture != 0)
+            {
+                GL.DeleteTexture(_fontTexture);
+            }
+
             ImGuiIOPtr io = ImGui.GetIO();
             io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int bytesPerPixel);
 

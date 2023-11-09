@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,6 +42,13 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Size: ({w}, {w})");
                     ImGui.Text($"Client Size: ({cw}, {cw})");
                     // FIXME: Framebuffer size?
+
+                    if (Program.WindowComp is MacOSWindowComponent macOSWindowComp)
+                    {
+                        macOSWindowComp.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
+
+                        ImGui.Text($"Framebuffer size: {fbw}x{fbh}");
+                    }
                 }
                 catch { }
             }

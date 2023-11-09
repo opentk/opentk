@@ -6,10 +6,11 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
+using OpenTK.Platform.Native.macOS;
 using StbImageSharp;
 using System;
 using System.Diagnostics;
-using System.Numerics;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Backends.Tests
@@ -185,18 +186,21 @@ namespace OpenTK.Backends.Tests
                         IconComponent?.Destroy(handle);
                     }
                 }
-            } catch
-            {
-
             }
+            catch
+            { }
 
             // FIXME: Here we want to get the pixel size of the backbuffer.
             WindowComp.GetClientSize(Window, out int width, out int height);
+            (WindowComp as MacOSWindowComponent)?.GetFramebufferSize(Window, out width, out height);
             GL.Viewport(0, 0, width, height);
 
             bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(width, height, useGLES);
-            
+            ImGui.GetStyle().ScaleAllSizes(2);
+            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVector-Dotted.ttf", 13*2);
+            ImGuiController.RecreateFontDeviceTexture();
+
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {
                 CursorHandle defaultCursor = CursorComp.Create(SystemCursorType.Default);
