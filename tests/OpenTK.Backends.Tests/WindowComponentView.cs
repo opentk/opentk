@@ -152,14 +152,6 @@ namespace OpenTK.Backends.Tests
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
-                    ImGui.AlignTextToFramePadding();
-                    ImGui.TextUnformatted("Title"); ImGui.SameLine();
-                    ImGui.InputText("##title", ref titleString, 1024); ImGui.SameLine();
-                    if (ImGui.Button("Apply##tile"))
-                    {
-                        WindowComponent.SetTitle(window, titleString);
-                        Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
-                    }
                     WindowComponent.GetClientSize(window, out int cWidth, out int cHeight);
                     WindowComponent.GetSize(window, out int wWidth, out int wHeight);
                     WindowComponent.GetClientPosition(window, out int cx, out int cy);
@@ -168,6 +160,15 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Position: ({wx}, {wy})");
                     ImGui.Text($"Client Size: ({cWidth}, {cHeight})");
                     ImGui.Text($"Size: ({wWidth}, {wHeight})");
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Title"); ImGui.SameLine();
+                ImGui.InputText("##title", ref titleString, 1024); ImGui.SameLine();
+                if (ImGui.Button("Apply##tile"))
+                {
+                    WindowComponent.SetTitle(window, titleString);
+                    Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
                 }
 
                 ImGui.AlignTextToFramePadding();

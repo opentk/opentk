@@ -729,7 +729,7 @@ namespace OpenTK.Platform.Native.Windows
         Rect = 1,
     }
 
-    internal enum CF
+    internal enum CF : uint
     {
         /// <summary>
         /// A handle to a bitmap (HBITMAP).

@@ -41,6 +41,8 @@ namespace OpenTK.Backends.Tests
 
         static ImGuiMouseCursor prevCursor;
 
+        static bool IsProcessingEvents = false;
+
         static readonly MainTabContainer MainTabContainer = new MainTabContainer()
         {
             new OverviewView(),
@@ -53,6 +55,7 @@ namespace OpenTK.Backends.Tests
             new IconComponentView(),
             new ClipboardComponentView(),
             new ShellComponentView(),
+            new CoordinateSpacesView(),
         };
 
         static void Main(string[] args)
@@ -212,7 +215,9 @@ namespace OpenTK.Backends.Tests
                 watch.Restart();
 
                 // FIXME: Wait for events?
+                IsProcessingEvents = true;
                 WindowComp.ProcessEvents();
+                IsProcessingEvents = false;
 
                 if (WindowComp.IsWindowDestroyed(Window))
                 {
@@ -400,7 +405,10 @@ namespace OpenTK.Backends.Tests
                     GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
                     ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
 
-                    if (ImGuiController != null)
+                    // We can get here as a respose to interations made while
+                    // we are in the middle of updating and rendering ImGui.
+                    // So we need to check so that we are in ordinary event processing.
+                    if (ImGuiController != null && IsProcessingEvents)
                     {
                         Update(0f);
                         OpenGLComp.SetCurrentContext(OpenGLContext);

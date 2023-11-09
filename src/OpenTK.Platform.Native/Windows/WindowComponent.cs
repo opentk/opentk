@@ -1195,6 +1195,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            // FIXME: This includes the drop shadow.. we probably don't want that??
             bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
 
             if (success == false)
