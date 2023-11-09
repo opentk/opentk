@@ -44,6 +44,8 @@ namespace OpenTK.Backends.Tests
 
         static bool IsProcessingEvents = false;
 
+        static float CurrentImGuiScale = 1;
+
         static readonly MainTabContainer MainTabContainer = new MainTabContainer()
         {
             new OverviewView(),
@@ -223,6 +225,7 @@ namespace OpenTK.Backends.Tests
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                             ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);
+                            CurrentImGuiScale = scale;
                         }
                     }
                 }
@@ -458,6 +461,44 @@ namespace OpenTK.Backends.Tests
             else if (args is FileDropEventArgs fileDrop)
             {
                 Logger.LogInfo($"Dropped files:\n\t{string.Join("\n\t", fileDrop.FilePaths)}");
+            }
+            else if (args is WindowDpiChangeEventArgs dpiChange)
+            {
+                try
+                {
+                    if (DisplayComponent != null)
+                    {
+                        // FIXME: Should we only scale on Y? or something else?
+                        float scale = MathF.Max(dpiChange.ScaleX, dpiChange.ScaleY);
+                        if (scale != 1)
+                        {
+                            ImFontConfig config = new ImFontConfig();
+                            config.FontDataOwnedByAtlas = 1;
+                            config.OversampleH = 3;
+                            config.OversampleV = 3;
+                            config.PixelSnapH = 1;
+                            config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                            config.RasterizerMultiply = 1;
+                            config.EllipsisChar = 0xFFFF;
+                            unsafe
+                            {
+                                ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                                ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+
+                                // FIXME: This is not perfect and does introduce some visual artifacts
+                                // if the window dpi changes multiple times.
+                                // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
+                                // Thought that would mean we have to update both styles if we want to change some styling.
+                                ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
+                                ImGui.GetStyle().ScaleAllSizes(scale);
+                                CurrentImGuiScale = scale;
+                            }
+                        }
+                    }
+                }
+                catch { }
+
+                ImGuiController.RecreateFontDeviceTexture();
             }
         }
 
