@@ -197,8 +197,38 @@ namespace OpenTK.Backends.Tests
 
             bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(width, height, useGLES);
-            ImGui.GetStyle().ScaleAllSizes(2);
-            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVector-Dotted.ttf", 13*2);
+
+            try
+            {
+                if (DisplayComponent != null)
+                {
+                    DisplayHandle handle = WindowComp.GetDisplay(Window);
+                    DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                    DisplayComponent.Close(handle);
+
+                    // FIXME: Should we only scale on Y? or something else?
+                    float scale = MathF.Max(scaleX, scaleY);
+                    if (scale != 1)
+                    {
+                        ImFontConfig config = new ImFontConfig();
+                        config.FontDataOwnedByAtlas = 1;
+                        config.OversampleH = 3;
+                        config.OversampleV = 3;
+                        config.PixelSnapH = 1;
+                        config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                        config.RasterizerMultiply = 1;
+                        config.EllipsisChar = 0xFFFF;
+                        unsafe
+                        {
+                            ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                            ImGui.GetStyle().ScaleAllSizes(scale);
+                        }
+                    }
+                }
+            }
+            catch { }
+
             ImGuiController.RecreateFontDeviceTexture();
 
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
@@ -293,6 +323,7 @@ namespace OpenTK.Backends.Tests
             }
 
             ImGuiController.Update(InputData, dt);
+
 
             MainTabContainer.Paint();
 

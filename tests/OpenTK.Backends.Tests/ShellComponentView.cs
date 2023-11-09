@@ -131,10 +131,9 @@ namespace OpenTK.Backends.Tests
                             //winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
                         }
 
-                        ImGui.EndTabBar();
+                        ImGui.EndTabItem();
                     }
                 }
-
                 ImGui.EndTabBar();
             }
 
