@@ -37,6 +37,10 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern double CGDisplayModeGetRefreshRate(IntPtr /* CGDisplayModeRef */ mode);
 
+        // Deprecated, but we don't have any better options...
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CFStringRef */ CGDisplayModeCopyPixelEncoding(IntPtr /* CGDisplayModeRef */ mode);
+
         // FIXME: Make return enum
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern DisplayModeIOFlags CGDisplayModeGetIOFlags(IntPtr /* CGDisplayModeRef */ mode);

@@ -356,7 +356,6 @@ namespace OpenTK.Platform.Native.macOS
                     {
                         float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
                         float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
-                        Console.WriteLine($"scroll: ({scrollX}, {scrollY})");
 
                         bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
 

@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Native.macOS
         }
     }
 
-    internal struct CGPoint
+    internal struct CGPoint : IEquatable<CGPoint>
     {
         public static readonly CGPoint Zero = new CGPoint(0, 0);
 
@@ -44,9 +44,35 @@ namespace OpenTK.Platform.Native.macOS
             this.y = y;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is CGPoint point && Equals(point);
+        }
+
+        public bool Equals(CGPoint other)
+        {
+            return x.Equals(other.x) &&
+                   y.Equals(other.y);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x, y);
+        }
+
         public override string ToString()
         {
             return $"({x}, {y})";
+        }
+
+        public static bool operator ==(CGPoint left, CGPoint right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CGPoint left, CGPoint right)
+        {
+            return !(left == right);
         }
     }
     
@@ -54,6 +80,8 @@ namespace OpenTK.Platform.Native.macOS
     {
         public CGPoint origin;
         public CGPoint size;
+
+        public bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;
 
         public CGRect(CGPoint origin, CGPoint size)
         {
@@ -71,6 +99,14 @@ namespace OpenTK.Platform.Native.macOS
         {
             return $"{origin} - {size}";
         }
+    }
+
+    internal struct NSEdgeInsets
+    {
+        public NFloat top;
+        public NFloat left;
+        public NFloat bottom;
+        public NFloat right;
     }
 }
 

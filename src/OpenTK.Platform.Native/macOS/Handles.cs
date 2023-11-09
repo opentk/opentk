@@ -46,15 +46,13 @@ namespace OpenTK.Platform.Native.macOS
 
         public bool IsPrimary { get; set; }
 
-        public DisplayResolution Resolution { get; set; }
-
-        public double RefreshRate { get; set; }
-
-        public NSScreenHandle(uint directDisplayID, uint unitNumber, IntPtr screen)
+        public NSScreenHandle(uint directDisplayID, uint unitNumber, IntPtr screen, string name, bool isPrimary)
         {
             DirectDisplayID = directDisplayID;
             UnitNumber = unitNumber;
             Screen = screen;
+            Name = name;
+            IsPrimary = isPrimary;
         }
     }
 }

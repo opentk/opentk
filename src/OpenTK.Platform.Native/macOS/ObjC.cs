@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -14,6 +15,14 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly IntPtr FoundationLibrary = LoadLibrary("/System/Library/Frameworks/Foundation.framework/Foundation"u8);
         internal static readonly IntPtr AppKitLibrary = LoadLibrary("/System/Library/Frameworks/AppKit.framework/AppKit"u8);
+
+        internal static readonly IntPtr /* CFString */ IO16BitDirectPixels = CFStringCreateWithBytes(0, "-RRRRRGGGGGBBBBB"u8, CFStringEncoding.UTF8, false);
+        internal static readonly IntPtr /* CFString */ IO32BitDirectPixels = CFStringCreateWithBytes(0, "--------RRRRRRRRGGGGGGGGBBBBBBBB"u8, CFStringEncoding.UTF8, false);
+        internal static readonly IntPtr /* CFString */ IO30BitDirectPixels = CFStringCreateWithBytes(0, "--RRRRRRRRRRGGGGGGGGGGBBBBBBBBBB"u8, CFStringEncoding.UTF8, false);
+        internal static readonly IntPtr /* CFString */ IO64BitDirectPixels = CFStringCreateWithBytes(0, "-16R16G16B16"u8, CFStringEncoding.UTF8, false);
+        internal static readonly IntPtr /* CFString */ IO16BitFloatPixels = CFStringCreateWithBytes(0, "-16FR16FG16FB16F"u8, CFStringEncoding.UTF8, false);
+        internal static readonly IntPtr /* CFString */ IO32BitFloatPixels = CFStringCreateWithBytes(0, "-32FR32FG32FB32F"u8, CFStringEncoding.UTF8, false);
+
 
         // FIXME: Maybe move to a selector class?
         internal static readonly SEL Init = sel_registerName("init"u8);
@@ -73,7 +82,8 @@ namespace OpenTK.Platform.Native.macOS
             fixed (byte* ptr = symbol)
             {
                 // Load the pointer to the constant, then dereference it.
-                return *(IntPtr*)dlsym(handle, ptr);
+                IntPtr* symPtr = (IntPtr*)dlsym(handle, ptr);
+                return *symPtr;
             }
 
             [DllImport(libdl)]
@@ -171,6 +181,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern uint objc_msgSend_uint(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern int objc_msgSend_int(IntPtr receiver, SEL selector);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -190,7 +203,6 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1)
         {
-            // Huh, here rect has the correct return value, but when we return it, it doesn't?
             objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1);
             return rect;
 
@@ -200,7 +212,6 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1)
         {
-            // Huh, here rect has the correct return value, but when we return it, it doesn't?
             objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1, value1);
             return rect;
 
@@ -228,11 +239,14 @@ namespace OpenTK.Platform.Native.macOS
             }
             else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
             {
+                // For x64 any struct smaller than 16 bytes is put into registers.
+                // https://stackoverflow.com/a/39290251
                 return (float)objc_msgSend_float(receiver, selector);
             }
             else
             {
                 // FIXME: What do we do with ARM? Do we only need to consider 64bit?
+                // This is likely a good place to start: https://stackoverflow.com/a/39290251
                 return (float)objc_msgSend_float(receiver, selector);
             }
 
@@ -243,6 +257,41 @@ namespace OpenTK.Platform.Native.macOS
             static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
         }
 
+        // FIXME: Should we even consider 32-bit macos?
+        internal static NFloat objc_msgSend_nfloat(IntPtr receiver, SEL selector)
+        {
+            if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+            {
+                return objc_msgSend_fret(receiver, selector);
+            }
+            else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+            {
+                // For x64 any struct smaller than 16 bytes is put into registers.
+                // https://stackoverflow.com/a/39290251
+                return (NFloat)objc_msgSend_float(receiver, selector);
+            }
+            else
+            {
+                // FIXME: What do we do with ARM? Do we only need to consider 64bit?
+                // This is likely a good place to start: https://stackoverflow.com/a/39290251
+                return (NFloat)objc_msgSend_float(receiver, selector);
+            }
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
+            static extern NFloat objc_msgSend_fret(IntPtr receiver, SEL selector);
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
+        }
+
+        internal static NSEdgeInsets objc_msgSend_NSEdgeInsets(IntPtr receiver, SEL selector)
+        {
+            objc_msgSend_NSEdgeInsets(out NSEdgeInsets insets, receiver, selector);
+            return insets;
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+            static extern void objc_msgSend_NSEdgeInsets(out NSEdgeInsets @struct, IntPtr receiver, SEL selector);
+        }
 
         internal static ObjCClass objc_allocateClassPair(ObjCClass superclass, ReadOnlySpan<byte> name, ulong extraBytes)
         {
@@ -328,11 +377,17 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(AppKitFramework)]
         internal static extern SEL NSSelectorFromString(IntPtr /* NSString */ aSelectorName);
 
+        [DllImport(AppKitFramework)]
+        internal static extern nint NSBitsPerPixelFromDepth(int /* NSWindowDepth */ depth);
+
         [DllImport(FoundationFramework)]
         internal static extern nint CFArrayGetCount(IntPtr /* CFArrayRef */ theArray);
 
         [DllImport(FoundationFramework)]
         internal static extern IntPtr CFArrayGetValueAtIndex(IntPtr /* CFArrayRef */ theArray, nint idx);
+
+        [DllImport(FoundationFramework)]
+        internal static extern nint /* CFComparisonResult */ CFStringCompare(IntPtr /* CFString */ theString1, IntPtr /* CFString */ theString2, nuint compareOptions);
     }
 #pragma warning restore IDE1006 // Naming Styles
 }
