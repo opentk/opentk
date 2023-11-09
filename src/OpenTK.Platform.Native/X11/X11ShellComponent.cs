@@ -153,6 +153,8 @@ namespace OpenTK.Platform.Native.X11
                     // And highest battery percentage?
 
                     // FIXME: For now we don't report power saver info on linux.
+                    //  We can get this information from "org.freedesktop.portal.PowerProfileMonitor"
+                    // using dbus.
                     powerSaver = false;
 
                     // FIXME: Consider the case of multiple batteries.

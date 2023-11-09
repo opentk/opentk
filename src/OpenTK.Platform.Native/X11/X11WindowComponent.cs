@@ -395,6 +395,8 @@ namespace OpenTK.Platform.Native.X11
 
                             unsafe
                             {
+                                // FIXME: Check message_type for WM_PROTOCOLS?
+
                                 if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
                                     EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
@@ -406,6 +408,182 @@ namespace OpenTK.Platform.Native.X11
                                     reply.ClientMessage.Window = X11.DefaultRootWindow;
 
                                     XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
+                                }
+                                // FIXME: Should we really check == 32?
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndEnter])
+                                {
+                                    bool use_list = (clientMessage.l[1] & 1) != 0;
+
+                                    XAtom type;
+                                    if (use_list)
+                                    {
+                                        int result = XGetWindowProperty(
+                                            X11.Display,
+                                            new XWindow((ulong)clientMessage.l[0]),
+                                            X11.Atoms[KnownAtoms.XdndTypeList],
+                                            0, long.MaxValue,
+                                            false,
+                                            X11.Atoms[KnownAtoms.ATOM],
+                                            out XAtom actualType,
+                                            out int actualFormat,
+                                            out long numberOfItems,
+                                            out long remainingBytes,
+                                            out IntPtr contents);
+
+                                        Span<XAtom> list = new Span<XAtom>((XAtom*)contents, (int)numberOfItems);
+                                        type = ChooseType(list);
+
+                                        if (contents != IntPtr.Zero)
+                                        {
+                                            XFree(contents);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Span<XAtom> list = new Span<XAtom>(&clientMessage.l[2], 3);
+                                        type = ChooseType(list);
+                                    }
+
+                                    // Save this data so that we can respond to the other dnd events
+                                    xwindow.XDnDVersion = (int)(clientMessage.l[1] >>> 24);
+                                    xwindow.XDnDType = type;
+                                    xwindow.XDnDSource = new XAtom((ulong)clientMessage.l[0]);
+
+                                    // FIXME: Send a DropBegin event?
+
+                                    static XAtom ChooseType(Span<XAtom> types)
+                                    {
+                                        XAtom uriList = XInternAtom(X11.Display, "text/uri-list", false);
+                                        XAtom plain = XInternAtom(X11.Display, "text/plain", false);
+
+                                        foreach (var type in types)
+                                        {
+                                            if (type == uriList || type == plain)
+                                            {
+                                                return type;
+                                            }
+                                        }
+
+                                        return XAtom.None;
+                                    }
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndPosition])
+                                {
+                                    int root_x = (int)(clientMessage.l[2] >> 16);
+                                    int root_y = (int)(clientMessage.l[2] & 0xFFFF);
+                                    // FIXME: Global or local coordinates?
+                                    //EventQueue.Raise(xwindow, PlatformEventType.DropLocation, new DropLocationEventArgs((root_x, root_y)));
+
+                                    XWindow source = new XWindow((ulong)clientMessage.l[0]); 
+
+                                    XEvent @event = default;
+                                    ref XClientMessageEvent status = ref @event.ClientMessage;
+                                    status.Type = XEventType.ClientMessage;
+                                    status.Display = clientMessage.Display;
+                                    status.Window = source;
+                                    status.MessageType = X11.Atoms[KnownAtoms.XdndStatus];
+                                    status.Format = 32;
+                                    status.l[0] = (long)xwindow.Window.Id;
+                                    status.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
+                                    status.l[2] = 0;
+                                    status.l[3] = 0;
+                                    // FIXME: Do we want to support other actions?
+                                    status.l[4] = (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id;
+                                    XSendEvent(X11.Display, source, 0, XEventMask.None, @event);
+                                    // FIXME: SDL does XFlush here, do we need that?
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndLeave])
+                                {
+                                    // FIXME: Send DropEnd/DropCancelled event?
+                                    xwindow.XDnDSource = default;
+                                    xwindow.XDnDType = default;
+                                    xwindow.XDnDVersion = default;
+
+                                    // FIXME:
+                                    //EventQueue.Raise(DropEnd);
+                                }
+                                else if (clientMessage.MessageType == X11.Atoms[KnownAtoms.XdndDrop])
+                                {
+                                    if (xwindow.XDnDType != XAtom.None)
+                                    {
+                                        // FIXME: Possibly unify with the similar clipboard code.
+                                        XConvertSelection(
+                                            X11.Display,
+                                            X11.Atoms[KnownAtoms.XdndSelection],
+                                            xwindow.XDnDType,
+                                            X11.Atoms[KnownAtoms.PRIMARY],
+                                            xwindow.Window,
+                                            new XTime((ulong)clientMessage.l[2]));
+
+                                        XEvent notification;
+                                        while (XCheckTypedWindowEvent(X11.Display, xwindow.Window, XEventType.SelectionNotify, out notification) == false)
+                                        {
+                                            X11.WaitForXEvents();
+                                        }
+
+                                        // FIXME: Able to differentiate between different targets
+                                        // Find the event and remove it from the queue
+                                        XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+
+                                        int result = XGetWindowProperty(X11.Display,
+                                            notification.Selection.requestor,
+                                            X11.Atoms[KnownAtoms.PRIMARY],
+                                            0, long.MaxValue, true,
+                                            // FIXME: AnyPropertyType
+                                            new XAtom(0),
+                                            out XAtom actualType,
+                                            out int actualFormat,
+                                            out long numberOfItems,
+                                            out long remainingBytes,
+                                            out IntPtr data);
+
+                                        if (actualType == X11.Atoms[KnownAtoms.INCR])
+                                        {
+                                            throw new NotImplementedException("We don't support INCR here yet.");
+                                        }
+                                        else
+                                        {
+                                            string fullString = Marshal.PtrToStringUTF8(data)!;
+
+                                            // FIXME: Handle the different formats!
+                                            List<string> files = new List<string>();
+                                            string[] lines = fullString.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                                            for (int i = 0; i < lines.Length; i++)
+                                            {
+                                                if (lines[i].StartsWith("#")) continue;
+                                                else if (lines[i].StartsWith("file://"))
+                                                    files.Add(lines[i]["file://".Length..]);
+                                                else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
+                                            }
+
+                                            // FIXME: Get the last XdndPosition location!
+                                            EventQueue.Raise(xwindow, PlatformEventType.FileDrop, new FileDropEventArgs(xwindow, files, (0, 0)));
+                                        }
+                                    }
+
+                                    // End with sending XdndFinish.
+                                    XEvent @event = default;
+                                    ref XClientMessageEvent finish = ref @event.ClientMessage;
+                                    finish.Type = XEventType.ClientMessage;
+                                    finish.Display = clientMessage.Display;
+                                    finish.Window = clientMessage.Window;
+                                    finish.MessageType = X11.Atoms[KnownAtoms.XdndFinished];
+                                    finish.Format = 32;
+                                    finish.l[0] = (long)xwindow.Window.Id;
+                                    finish.l[1] = (xwindow.XDnDType != XAtom.None) ? 1 : 0;
+                                    finish.l[2] = (xwindow.XDnDType != XAtom.None) ? 
+                                                    (long)X11.Atoms[KnownAtoms.XdndActionCopy].Id :
+                                                    (long)XAtom.None.Id;
+                                    XSendEvent(
+                                        X11.Display,
+                                        new XWindow((ulong)clientMessage.l[0]),
+                                        0,
+                                        XEventMask.None,
+                                        @event);
+
+                                    xwindow.XDnDSource = default;
+                                    xwindow.XDnDType = default;
+                                    xwindow.XDnDVersion = default;
                                 }
                             }
 
@@ -1014,6 +1192,21 @@ namespace OpenTK.Platform.Native.X11
                     XISelectEvents(X11.Display, window, &eventmask, eventmask.mask_len);
                 }
             }
+
+            // FIXME: Maybe a way to toggle if we 
+            // accept drag and drop operations.
+            // Set the supported XDnD version.
+            // FIXME: Avoid allocation
+            long[] dndVersion = { 5 };
+            XChangeProperty(
+                X11.Display,
+                window,
+                X11.Atoms[KnownAtoms.XdndAware],
+                X11.Atoms[KnownAtoms.ATOM],
+                32,
+                XPropertyMode.Replace,
+                dndVersion,
+                1);
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
 

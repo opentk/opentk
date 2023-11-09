@@ -49,78 +49,16 @@ namespace OpenTK.Platform.Native.X11
 
         private static XAtom text_urilist;
 
-        private struct pollfd {
-            public int fd;
-            public short events;
-            public short revents;
-        }
-
-        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static unsafe extern int poll(pollfd* fds, uint nfds, int timeout);
-
-        private static unsafe bool Poll(pollfd* fds, int count, int timeout)
-        {
-            while (true)
-            {
-                int result = poll(fds, (uint)count, timeout);
-                int errno = Marshal.GetLastSystemError();
-
-                const int EINTR = 4;
-                const int EAGAIN = 11;
-
-                if (result > 0)
-                {
-                    return true;
-                }
-                else if (result < 0 && errno != EINTR && errno != EAGAIN)
-                {
-                    return false;
-                }
-                else // (result == 0)
-                {
-                    return false;
-                }
-            }
-        }
-
-        private static unsafe bool WaitForXEvents()
-        {
-            const short POLLIN = 0x0001;
-            
-            pollfd fd = new pollfd(){
-                fd = XConnectionNumber(X11.Display),
-                events = POLLIN,
-            };
-
-            while (XPending(X11.Display) == 0)
-            {
-                // poll with no timeout.
-                if (Poll(&fd, 1, -1) == false)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private static unsafe bool IsSelectionPropertyNewValueNotify(XDisplayPtr display, ref XEvent @event, IntPtr pointer)
-        {
-            XEvent* notification = (XEvent*)pointer;
-            return @event.Type == XEventType.PropertyNotify &&
-                @event.Property.state == PropertyState.PropertyNewValue &&
-                @event.Property.window == notification->Selection.requestor &&
-                @event.Property.atom == notification->Selection.property;
-        }
-
         private unsafe byte[] ReadINCRData(XEvent notification)
         {
             byte[] dataBytes = Array.Empty<byte>();
 
             while (true)
             {
-                while (XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification)) == false)
+                while (XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification)) == false)
                 {
                     // FIXME: Wait for events!
-                    WaitForXEvents();
+                    X11.WaitForXEvents();
                 }
 
                 XGetWindowProperty(X11.Display,
@@ -169,11 +107,11 @@ namespace OpenTK.Platform.Native.X11
             XEvent notification;
             while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
             {
-                WaitForXEvents();
+                X11.WaitForXEvents();
             }
 
             // Find the event and remove it from the queue
-            XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+            XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
             XGetWindowProperty(X11.Display,
                 notification.Selection.requestor,
@@ -261,11 +199,11 @@ namespace OpenTK.Platform.Native.X11
                 XEvent notification;
                 while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
                 {
-                    WaitForXEvents();
+                    X11.WaitForXEvents();
                 }
 
                 // Find the event and remove it from the queue
-                XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+                XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
                 XGetWindowProperty(X11.Display,
                     notification.Selection.requestor,
@@ -355,11 +293,11 @@ namespace OpenTK.Platform.Native.X11
             XEvent notification;
             while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
             {
-                WaitForXEvents();
+                X11.WaitForXEvents();
             }
 
             // Find the event and remove it from the queue
-            XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+            XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
             XGetWindowProperty(X11.Display,
                 notification.Selection.requestor,
@@ -389,6 +327,11 @@ namespace OpenTK.Platform.Native.X11
                     else if (lines[i].StartsWith("file://"))
                         files.Add(lines[i]["file://".Length..]);
                     else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
+                }
+
+                if (data != IntPtr.Zero)
+                {
+                    XFree(data);
                 }
 
                 return files;
