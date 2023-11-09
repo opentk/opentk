@@ -9,6 +9,7 @@ using static OpenTK.Platform.Native.macOS.CV;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -120,6 +121,19 @@ namespace OpenTK.Platform.Native.macOS
                 NSScreenHandle handle = new NSScreenHandle(displays[i], unitNumber, nsscreen, name, primary);
                 _displays.Add(handle);
             }
+        }
+
+        internal static DisplayHandle FindDisplay(IntPtr /* NSScreen */ nsscreen)
+        {
+            for (int i = 0; i < _displays.Count; i++)
+            {
+                if (_displays[i].Screen == nsscreen)
+                {
+                    return _displays[i];
+                }
+            }
+
+            throw new ArgumentException($"Cannot find display handle for NSScreen=0x{nsscreen}.");
         }
 
         // FIXME: Fix this for multiple screens

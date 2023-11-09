@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -67,10 +68,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selLevel = sel_registerName("level"u8);
         internal static SEL selSetLevel = sel_registerName("setLevel:"u8);
 
+        internal static SEL selScreens = sel_registerName("screens"u8);
+        internal static SEL selCount = sel_registerName("count"u8);
+        internal static SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
+
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
+        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -639,7 +645,77 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect windowFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            windowFrame = CG.FlipYCoordinate(windowFrame);
+
+            Box2 windowBounds = new Box2(
+                (float)windowFrame.origin.x,
+                (float)windowFrame.origin.y,
+                (float)(windowFrame.origin.x + windowFrame.size.x),
+                (float)(windowFrame.origin.y + windowFrame.size.y));
+
+            // X11DisplayComponent.GetDisplay contains a loop very similar to this one
+            // - Noggin_bops 2023-11-09
+            IntPtr bestScreen = 0;
+            float bestArea = 0;
+            float bestDistance = float.PositiveInfinity;
+
+            // Get all screens.
+            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
+            nint count = (nint)objc_msgSend_IntPtr(screensNSArray, selCount);
+            for (int screenIdx = 0; screenIdx < count; screenIdx++)
+            {
+                IntPtr nsscreen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, (IntPtr)screenIdx);
+                CGRect frame = objc_msgSend_CGRect(nsscreen, selFrame);
+
+                Box2 bounds = new Box2(
+                    (float)frame.origin.x,
+                    (float)frame.origin.y,
+                    (float)(frame.origin.x + frame.size.x),
+                    (float)(frame.origin.y + frame.size.y));
+
+                Box2 overlap = bounds.Intersected(windowBounds);
+
+                if (overlap.SizeX * overlap.SizeY > bestArea)
+                {
+                    bestArea = overlap.SizeX * overlap.SizeY;
+                    bestScreen = nsscreen;
+                }
+                else if (bestArea <= 0)
+                {
+                    // If there is no overlap we are looking for the display which is closest.
+                    float dist = Distance(bounds, windowBounds);
+                    if (dist < bestDistance)
+                    {
+                        bestDistance = dist;
+                        if (bestArea < 0)
+                        {
+                            bestScreen = nsscreen;
+                        }
+                    }
+                }
+            }
+
+            // FIXME: Maybe throw here?
+            Debug.Assert(bestScreen != IntPtr.Zero);
+
+            DisplayHandle disp = MacOSDisplayComponent.FindDisplay(bestScreen);
+
+            return disp;
+
+            // FIXME: Add a function like this to all Box types.
+            static float Distance(Box2 a, Box2 b)
+            {
+                return Math.Min(
+                    Math.Min(
+                        a.DistanceToNearestEdge(b.Min),
+                        a.DistanceToNearestEdge(b.Max)),
+                    Math.Min(
+                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)),
+                        a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
+            }
         }
 
         /// <inheritdoc/>

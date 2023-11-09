@@ -1672,8 +1672,8 @@ namespace OpenTK.Platform.Native.X11
 
 
             // Get all screens.
-            var rects = X11DisplayComponent.GetDisplayRects();
-            foreach (var rect in rects)
+            List<X11DisplayComponent.DisplayRect> rects = X11DisplayComponent.GetDisplayRects();
+            foreach (X11DisplayComponent.DisplayRect rect in rects)
             {
                 Box2i overlap = bounds.Intersected(rect.Bounds);
 

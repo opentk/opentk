@@ -202,7 +202,8 @@ namespace OpenTK.Backends.Tests
 
             try
             {
-                if (DisplayComponent != null)
+                // FIXME: For now we can't load this font on macos??
+                if (DisplayComponent != null && DisplayComponent is not MacOSDisplayComponent)
                 {
                     DisplayHandle handle = WindowComp.GetDisplay(Window);
                     DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
@@ -223,14 +224,17 @@ namespace OpenTK.Backends.Tests
                         unsafe
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
                     }
                 }
             }
-            catch { }
+            catch (Exception e)
+            {
+                Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
+            }
 
             ImGuiController.RecreateFontDeviceTexture();
 
