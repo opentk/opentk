@@ -235,7 +235,7 @@ namespace OpenTK.Backends.Tests
             {
                 Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
             }
-
+            
             ImGuiController.RecreateFontDeviceTexture();
 
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
@@ -500,7 +500,10 @@ namespace OpenTK.Backends.Tests
                         }
                     }
                 }
-                catch { }
+                catch (Exception e)
+                {
+                    Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
+                }
 
                 ImGuiController.RecreateFontDeviceTexture();
             }
