@@ -203,7 +203,7 @@ namespace OpenTK.Backends.Tests
             try
             {
                 // FIXME: For now we can't load this font on macos??
-                if (DisplayComponent != null && DisplayComponent is not MacOSDisplayComponent)
+                if (DisplayComponent != null)
                 {
                     DisplayHandle handle = WindowComp.GetDisplay(Window);
                     DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
