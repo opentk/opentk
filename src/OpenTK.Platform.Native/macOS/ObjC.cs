@@ -25,6 +25,7 @@ namespace OpenTK.Platform.Native.macOS
 
 
         // FIXME: Maybe move to a selector class?
+        // FIXME: Maybe prefix with sel like all other selectors...?
         internal static readonly SEL Init = sel_registerName("init"u8);
         internal static readonly SEL Alloc = sel_registerName("alloc"u8);
         internal static readonly SEL Retain = sel_registerName("retain"u8);
@@ -184,6 +185,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern int objc_msgSend_int(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern ushort objc_msgSend_ushort(IntPtr receiver, SEL selector);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -304,6 +308,34 @@ namespace OpenTK.Platform.Native.macOS
             static extern ObjCClass objc_allocateClassPair(ObjCClass superclass, byte* name, ulong extraBytes);
         }
 
+        internal static IntPtr /* Protocol */ objc_getProtocol(ReadOnlySpan<byte> name)
+        {
+            fixed (byte* ptr = name)
+            {
+                return objc_getProtocol(ptr);
+            }
+
+            [DllImport(FoundationFramework)]
+            static extern IntPtr /* Protocol */ objc_getProtocol(byte* name);
+        }
+
+        internal static bool class_addIvar(ObjCClass cls, ReadOnlySpan<byte> name, nuint size, nuint alignment, ReadOnlySpan<byte> types)
+        {
+            fixed(byte* namePtr = name)
+            fixed(byte* typesPtr = types)
+            {
+                return class_addIvar(cls, namePtr, size, alignment, typesPtr);
+            }
+
+            // FIXME: BOOL?
+            [DllImport(FoundationFramework)]
+            static extern bool class_addIvar(ObjCClass cls, byte* name, nuint size, nuint alignment, byte* types);
+        }
+
+        // FIXME: BOOL?
+        [DllImport(FoundationFramework)]
+        internal static extern bool class_addProtocol(ObjCClass cls, IntPtr /* Protocol */ protocol);
+
         internal static bool class_addMethod(ObjCClass cls, SEL name, Delegate imp, ReadOnlySpan<byte> types)
         {
             // FIXME: Maybe avoid marshalling the delegate?
@@ -318,19 +350,29 @@ namespace OpenTK.Platform.Native.macOS
             static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
         }
 
-        internal static bool class_addMethod<T>(ObjCClass cls, SEL name, T imp, ReadOnlySpan<byte> types) where T : Delegate
+        internal static IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, out IntPtr outValue)
         {
-            // FIXME: Maybe avoid marshalling the delegate?
-            IntPtr impPtr = Marshal.GetFunctionPointerForDelegate(imp);
-            fixed (byte* ptr = types)
+            fixed(byte* namePtr = name)
             {
-                return class_addMethod(cls, name, impPtr, ptr);
+                return object_getInstanceVariable(@object, namePtr, out outValue);
             }
+
+            // FIXME: BOOL
+            [DllImport(FoundationFramework)]
+            static extern IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, byte* name, out IntPtr outValue);
         }
 
-        // FIXME: What framework?
-        [DllImport(FoundationFramework)]
-        static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
+        internal static IntPtr /* Ivar */ object_setInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, IntPtr value)
+        {
+            fixed (byte* namePtr = name)
+            {
+                return object_setInstanceVariable(@object, namePtr, value);
+            }
+
+            // FIXME: BOOL
+            [DllImport(FoundationFramework)]
+            static extern IntPtr /* Ivar */ object_setInstanceVariable(IntPtr /* id */ @object, byte* name, IntPtr value);
+        }
 
         [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);

@@ -108,5 +108,19 @@ namespace OpenTK.Platform.Native.macOS
         public NFloat bottom;
         public NFloat right;
     }
+
+    internal struct NSRange
+    {
+        public nuint location;
+        public nuint length;
+
+        public static NSRange kEmptyRange = new NSRange((uint)nint.MaxValue, 0);
+
+        public NSRange(nuint location, nuint length)
+        {
+            this.location = location;
+            this.length = length;
+        }
+    }
 }
 

@@ -33,6 +33,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
         internal static SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
         internal static SEL selTrackingNumber = sel_registerName("trackingNumber"u8);
+        internal static SEL selKeyCode = sel_registerName("keyCode"u8);
+        internal static SEL selARepeat = sel_registerName("isARepeat"u8);
+
 
         internal static SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
         internal static SEL selInitWithFrame = sel_registerName("initWithFrame:"u8);
@@ -45,6 +48,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selSetFrameTopLeftPoint = sel_registerName("setFrameTopLeftPoint:"u8);
         internal static SEL selContentView = sel_registerName("contentView"u8);
         internal static SEL selSetContentView = sel_registerName("setContentView:"u8);
+        internal static SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
 
         internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
 
@@ -76,11 +80,26 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static SEL selUpdate = sel_registerName("update"u8);
 
+        internal static SEL selArray = sel_registerName("array"u8);
+        internal static SEL selArrayWithObject = sel_registerName("arrayWithObject:"u8);
+
+        internal static SEL selLength = sel_registerName("length"u8);
+
+        internal static SEL selIsKindOfClass = sel_registerName("isKindOfClass:"u8);
+        internal static SEL selInitWithAttributedString = sel_registerName("initWithAttributedString:"u8);
+        internal static SEL selInitWithString = sel_registerName("initWithString:"u8);
+        internal static SEL selMutableString = sel_registerName("mutableString"u8);
+        internal static SEL selString = sel_registerName("string"u8);
+        internal static SEL selSetString = sel_registerName("setString:"u8);
+
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
         internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
+        internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray");
+        internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
+        internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -150,10 +169,36 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMove:"u8), NSOtkWindowDelegate_WindowDidMoveInst, "v@:@"u8);
             objc_registerClassPair(NSOpenTKWindowClass);
 
+            IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
             NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"), "NSOpenTKView"u8, 0);
+
+            // Add an IVar for the markedText, so we can use it without finding the managed window object.
+            class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
+
             //class_addMethod(opentkViewClass, sel_registerName("resetCursorRects"u8), OnResetCursorRect, "v@:"u8);
-            class_addMethod<MouseEnteredDelegate>(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), NSOtkView_MouseEntered, "v@:@"u8);
-            class_addMethod<MouseExitedDelegate>(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), NSOtkView_MouseExited, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), NSOtkView_MouseEnteredInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), NSOtkView_MouseExitedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("keyDown:"u8), NSOtkView_KeyDownInst, "v@:@"u8);
+
+            // TODO: canBecomeKeyView, 
+            class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
+
+            // NSTextInputClientProtocol functions
+            class_addProtocol(NSOpenTKViewClass, NSTextInputClientProtocol);
+            // FIXME: The method type encoding strings only work for 64-bit, as NSRange is defined using NSUInteger so it changes size depending on arch.
+            // So {_NSRange=QQ} and {_NSPoint=dd} would have to have something else other than QQ and dd, but I can't figure out what it's supposed to be atm..
+            // - Noggin_bops 2023-11-11
+            class_addMethod(NSOpenTKViewClass, sel_registerName("hasMarkedText"u8), NSOtkView_NSTextInputClient_HasMarkedTextInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("markedRange"u8), NSOtkView_NSTextInputClient_MarkedRangeInst, "{_NSRange=QQ}@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("selectedRange"u8), NSOtkView_NSTextInputClient_SelectedRangeInst, "{_NSRange=QQ}@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("setMarkedText:selectedRange:replacementRange:"u8), NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst, "v@:@{_NSRange=QQ}{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("unmarkText"u8), NSOtkView_NSTextInputClient_UnmarkTextInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("validAttributesForMarkedText"u8), NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst, "@@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("attributedSubstringForProposedRange:actualRange:"u8), NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst, "@@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("insertText:replacementRange:"u8), NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst, "v@:@{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("characterIndexForPoint:"u8), NSOtkView_NSTextInputClient_CharacterIndexForPointInst, "Q@:{_NSPoint=dd}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("firstRectForCharacterRange:actualRange:"u8), NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst, "{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);;
             objc_registerClassPair(NSOpenTKViewClass);
         }
 
@@ -289,7 +334,7 @@ namespace OpenTK.Platform.Native.macOS
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void MouseEnteredDelegate(IntPtr view, SEL selector, IntPtr @event);
-        static MouseEnteredDelegate OnMouseEnter = NSOtkView_MouseEntered;
+        static MouseEnteredDelegate NSOtkView_MouseEnteredInst = NSOtkView_MouseEntered;
         static void NSOtkView_MouseEntered(IntPtr view, SEL selector, IntPtr @event)
         {
             Console.WriteLine("Enter");
@@ -307,7 +352,7 @@ namespace OpenTK.Platform.Native.macOS
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void MouseExitedDelegate(IntPtr view, SEL selector, IntPtr @event);
-        static MouseExitedDelegate OnMouseExited = NSOtkView_MouseExited;
+        static MouseExitedDelegate NSOtkView_MouseExitedInst = NSOtkView_MouseExited;
         static void NSOtkView_MouseExited(IntPtr view, SEL selector, IntPtr @event)
         {
             Console.WriteLine("Exit");
@@ -321,6 +366,162 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, false));
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSOtkView_KeyDown_(IntPtr view, SEL selector, IntPtr @event);
+        private static NSOtkView_KeyDown_ NSOtkView_KeyDownInst = NSOtkView_KeyDown;
+        private static void NSOtkView_KeyDown(IntPtr view, SEL selector, IntPtr @event)
+        {
+            IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
+            objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private delegate bool NSOtkView_AcceptsFirstResponder_(IntPtr view, SEL selector);
+        private static NSOtkView_AcceptsFirstResponder_ NSOtkView_AcceptsFirstResponderInst = NSOtkView_AcceptsFirstResponder;
+        private static bool NSOtkView_AcceptsFirstResponder(IntPtr view, SEL selector)
+        {
+            return true;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private delegate bool /* BOOL */ NSTextInputClient_HasMarkedText(IntPtr view, SEL selector);
+        private static readonly NSTextInputClient_HasMarkedText NSOtkView_NSTextInputClient_HasMarkedTextInst = NSOtkView_NSTextInputClient_HasMarkedText;
+        private static bool /* BOOL */ NSOtkView_NSTextInputClient_HasMarkedText(IntPtr view, SEL selector)
+        {
+            // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
+            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
+            return length > 0;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate NSRange NSTextInputClient_MarkedRange(IntPtr view, SEL selector);
+        private static readonly NSTextInputClient_MarkedRange NSOtkView_NSTextInputClient_MarkedRangeInst = NSOtkView_NSTextInputClient_MarkedRange;
+        private static NSRange NSOtkView_NSTextInputClient_MarkedRange(IntPtr view, SEL selector)
+        {
+            // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
+            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
+            if (length > 0)
+            {
+                return new NSRange(0, (nuint)length-1);
+            }
+            else
+            {
+                return NSRange.kEmptyRange;
+            }
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate NSRange NSTextInputClient_SelectedRange(IntPtr view, SEL selector);
+        private static readonly NSTextInputClient_SelectedRange NSOtkView_NSTextInputClient_SelectedRangeInst = NSOtkView_NSTextInputClient_SelectedRange;
+        private static NSRange NSOtkView_NSTextInputClient_SelectedRange(IntPtr view, SEL selector)
+        {
+            return NSRange.kEmptyRange;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange selectedRange, NSRange replacementRange);
+        private static readonly NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst = NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange;
+        private static void NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange selectedRange, NSRange replacementRange)
+        {
+            // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
+            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            objc_msgSend(markedText, Release);
+            // FIXME: BOOL
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            {
+                markedText = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSMutableAttributedStringClass, Alloc), selInitWithAttributedString, @string);
+
+            }
+            else
+            {
+                markedText = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSMutableAttributedStringClass, Alloc), selInitWithString, @string);
+            }
+            // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
+            object_setInstanceVariable(view, "markedText"u8, markedText);
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSTextInputClient_UnmarkText(IntPtr view, SEL selector);
+        private static readonly NSTextInputClient_UnmarkText NSOtkView_NSTextInputClient_UnmarkTextInst = NSOtkView_NSTextInputClient_UnmarkText;
+        private static void NSOtkView_NSTextInputClient_UnmarkText(IntPtr view, SEL selector)
+        {
+            // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
+            object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
+            // FIXME: Do not create a new NSString every time!
+            objc_msgSend(objc_msgSend_IntPtr(markedText, selMutableString), selSetString, ToNSString(""));
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate IntPtr /* NSArray<NSAttributedStringKey>* */ NSTextInputClient_ValidAttributesForMarkedText(IntPtr view, SEL selector);
+        private static readonly NSTextInputClient_ValidAttributesForMarkedText NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst = NSOtkView_NSTextInputClient_ValidAttributesForMarkedText;
+        private static IntPtr /* NSAttributedString* */ NSOtkView_NSTextInputClient_ValidAttributesForMarkedText(IntPtr view, SEL selector)
+        {
+            return objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArray);
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate IntPtr /* NSAttributedString* */ NSTextInputClient_AttributedSubstringForProposedRange_ActualRange(IntPtr view, SEL selector, NSRange range, ref NSRange actualRange);
+        private static readonly NSTextInputClient_AttributedSubstringForProposedRange_ActualRange NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst = NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange;
+        private static IntPtr /* NSAttributedString* */ NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange(IntPtr view, SEL selector, NSRange range, ref NSRange actualRange)
+        {
+            return IntPtr.Zero;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSTextInputClient_InsertText_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange range);
+        private static readonly NSTextInputClient_InsertText_ReplacementRange NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst = NSOtkView_NSTextInputClient_InsertText_ReplacementRange;
+        private static void NSOtkView_NSTextInputClient_InsertText_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange range)
+        {
+            IntPtr windowPtr = objc_msgSend_IntPtr(view, selWindow);
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+            {
+                Console.WriteLine($"Could not find NSWindow for NSView 0x{view}");
+                return;
+            }
+
+            string str;
+            if (objc_msgSend_bool(@string, selIsKindOfClass, (IntPtr)objc_getClass("NSAttributedString"u8)))
+            {
+                str = FromNSString(objc_msgSend_IntPtr(@string, selString));
+            }
+            else
+            {
+                str = FromNSString(@string);
+            }
+
+            EventQueue.Raise(nswindow, PlatformEventType.TextInput, new TextInputEventArgs(nswindow, str));
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate nuint NSTextInputClient_CharacterIndexForPoint(IntPtr view, SEL selector, CGPoint point);
+        private static readonly NSTextInputClient_CharacterIndexForPoint NSOtkView_NSTextInputClient_CharacterIndexForPointInst = NSOtkView_NSTextInputClient_CharacterIndexForPoint;
+        private static nuint NSOtkView_NSTextInputClient_CharacterIndexForPoint(IntPtr view, SEL selector, CGPoint point)
+        {
+            return 0;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate CGRect NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point);
+        private static readonly NSTextInputClient_FirstRectForCharacterRange_ActualRange NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
+        private static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point)
+        {
+            // FIXME: Why do we do this?
+            CGRect frame = objc_msgSend_CGRect(view, selFrame);
+            return new CGRect(frame.origin, CGPoint.Zero);
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSTextInputClient_DoCommandBySelector(IntPtr view, SEL _selector, SEL selector);
+        private static readonly NSTextInputClient_DoCommandBySelector NSOtkView_NSTextInputClient_DoCommandBySelectorInst = NSOtkView_NSTextInputClient_DoCommandBySelector;
+        private static void NSOtkView_NSTextInputClient_DoCommandBySelector(IntPtr view, SEL _selector, SEL selector)
+        {
+            Console.WriteLine("DoCommandBySelector");
         }
 
         /// <inheritdoc/>
@@ -493,11 +694,76 @@ namespace OpenTK.Platform.Native.macOS
                         }
                     case NSEventType.KeyDown:
                         {
-                            // Steal the keyDown event to avoid the beep.
+                            ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
+                            // FIXME: BOOL
+                            bool isRepeat = objc_msgSend_bool(@event, selARepeat);
+                            Console.WriteLine($"Key down: 0x{keyCode:X}");
+
+                            // FIXME: This is a temprary hack to get some of the most used key in.
+                            switch (keyCode)
+                            {
+                                case 0x24: // kVK_Return
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, Scancode.Return, isRepeat));
+                                    break;
+                                case 0x33: // kVK_Delete
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, Scancode.Backspace, isRepeat));
+                                    break;
+                                case 0x35: // kVK_Escape
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, Scancode.Escape, isRepeat));
+                                    break;
+                                case 0x7B: // kVK_LeftArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, isRepeat));
+                                    break;
+                                case 0x7C: // kVK_RightArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, isRepeat));
+                                    break;
+                                case 0x7D: // kVK_DownArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, isRepeat));
+                                    break;
+                                case 0x7E: // kVK_UpArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, isRepeat));
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
                         }
                     case NSEventType.KeyUp:
                         {
+                            ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
+                            Console.WriteLine($"Key up: 0x{keyCode:X}");
+
+                            // FIXME: This is a temprary hack to get some of the most used key in.
+                            switch (keyCode)
+                            {
+                                case 0x24: // kVK_Return
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, Scancode.Return));
+                                    break;
+                                case 0x33: // kVK_Delete
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, Scancode.Backspace));
+                                    break;
+                                case 0x35: // kVK_Escape
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, Scancode.Escape));
+                                    break;
+                                case 0x7B: // kVK_LeftArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow));
+                                    break;
+                                case 0x7C: // kVK_RightArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow));
+                                    break;
+                                case 0x7D: // kVK_DownArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow));
+                                    break;
+                                case 0x7E: // kVK_UpArrow
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow));
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
                         }
                     default:
@@ -538,9 +804,13 @@ namespace OpenTK.Platform.Native.macOS
 
             // FIXME: Move this somewhere?
             objc_msgSend(windowPtr, sel_registerName("setDelegate:"u8), windowPtr);
+            // Makes the view able to get text input?
+            objc_msgSend(windowPtr, sel_registerName("makeFirstResponder:"u8), viewPtr);
             objc_msgSend(windowPtr, sel_registerName("makeKeyWindow"u8));
             objc_msgSend(windowPtr, sel_registerName("center"u8));
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
+
+            IntPtr inputContext = objc_msgSend_IntPtr(viewPtr, sel_registerName("inputContext"u8));
 
             // Register the view for mouse enter/exit notifications.
             objc_msgSend_IntPtr(viewPtr, selAddTrackingRect_owner_userData_assumeInside,
