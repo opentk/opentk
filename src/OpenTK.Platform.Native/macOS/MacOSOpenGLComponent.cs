@@ -173,6 +173,8 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext);
 
             // We do this so the window component can implement SwapBuffers.
+            // And so we can call [Context update] when the window resizes or moves
+            // - Noggin_bops 2023-11-11
             nswindow.Context = nscontext;
 
             NSOpenGLContextDict.Add(nscontext.Context, nscontext);

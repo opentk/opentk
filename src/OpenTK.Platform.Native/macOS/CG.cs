@@ -68,7 +68,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static float FlipYCoordinate(float y)
         {
             float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
-            return height - y - 1;
+            return (height - 1) - y;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static NFloat FlipYCoordinate(NFloat y)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return height - y - 1;
+            return (height - 1) - y;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static CGPoint FlipYCoordinate(CGPoint p)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return new CGPoint(p.x, height - p.y - 1);
+            return new CGPoint(p.x, (height - 1) - p.y);
         }
 
         /// <summary>
@@ -100,7 +100,8 @@ namespace OpenTK.Platform.Native.macOS
         /// <returns>The flipped rectangle.</returns>
         internal static CGRect FlipYCoordinate(CGRect rect)
         {
-            return new CGRect(FlipYCoordinate(rect.origin), rect.size);
+            // Get the upper left corner and invert that.
+            return new CGRect(FlipYCoordinate(new CGPoint(rect.origin.x, rect.origin.y + rect.size.y)), rect.size);
         }
     }
 }

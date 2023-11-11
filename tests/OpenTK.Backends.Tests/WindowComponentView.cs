@@ -51,6 +51,8 @@ namespace OpenTK.Backends.Tests
         string titleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
+        Vector2i windowPosition;
+        Vector2i clientPosition;
 
         WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
         string[] WindowModeNames = Enum.GetNames<WindowMode>();
@@ -208,6 +210,26 @@ namespace OpenTK.Backends.Tests
 
                     bool value = Program.WindowComp.IsAlwaysOnTop(window);
                     Program.Logger.LogInfo($"Always on top: {value}");
+                }
+
+                ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
+                if (ImGui.Button("Set##Position"))
+                {
+                    Program.WindowComp.SetPosition(Program.Window, windowPosition.X, windowPosition.Y);
+                    Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
+
+                    Program.WindowComp.GetPosition(Program.Window, out int x, out int y);
+                    Program.Logger.LogInfo($"Window position: ({x}, {y})");
+                }
+
+                ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
+                if (ImGui.Button("Set##ClientPosition"))
+                {
+                    Program.WindowComp.SetClientPosition(Program.Window, clientPosition.X, clientPosition.Y);
+                    Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
+
+                    Program.WindowComp.GetClientPosition(Program.Window, out int x, out int y);
+                    Program.Logger.LogInfo($"Client position: ({x}, {y})");
                 }
             }
 

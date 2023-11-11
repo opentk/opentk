@@ -397,6 +397,18 @@ namespace OpenTK.Backends.Tests
             {
                 WindowComp.Destroy(close.Window);
             }
+            else if (args is FocusEventArgs focus)
+            {
+                string title = WindowComp.GetTitle(focus.Window);
+                if (focus.GotFocus)
+                {
+                    Logger.LogInfo($"Window '{title}' ({focus.Window}) got focus.");
+                }
+                else
+                {
+                    Logger.LogInfo($"Window '{title}' ({focus.Window}) lost focus.");
+                }
+            }
             else if (args is KeyDownEventArgs keyDown)
             {
                 ImGuiKey ikey = ToImgui(keyDown.Key);
@@ -444,8 +456,13 @@ namespace OpenTK.Backends.Tests
             {
                 if (resize.Window == Window)
                 {
-                    GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
-                    ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
+                    Vector2i newSize = resize.NewSize;
+                    var newSize2 = newSize;
+                    // FIXME: Framebuffer size on macos?
+                    (WindowComp as MacOSWindowComponent)?.GetFramebufferSize(resize.Window, out newSize.X, out newSize.Y);
+
+                    GL.Viewport(0, 0, newSize.X, newSize.Y);
+                    ImGuiController?.WindowResized(newSize.X, newSize.Y);
 
                     // We can get here as a respose to interations made while
                     // we are in the middle of updating and rendering ImGui.
@@ -456,6 +473,13 @@ namespace OpenTK.Backends.Tests
                         OpenGLComp.SetCurrentContext(OpenGLContext);
                         Render();
                     }
+                }
+            }
+            else if (args is WindowMoveEventArgs move)
+            {
+                if (move.Window == Window)
+                {
+                    Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
                 }
             }
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)

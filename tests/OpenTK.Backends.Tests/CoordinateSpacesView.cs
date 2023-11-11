@@ -39,8 +39,8 @@ namespace OpenTK.Backends.Tests
 
                     ImGui.Text($"Position: ({px}, {py})");
                     ImGui.Text($"Client Position: ({cpx}, {cpy})");
-                    ImGui.Text($"Size: ({w}, {w})");
-                    ImGui.Text($"Client Size: ({cw}, {cw})");
+                    ImGui.Text($"Size: ({w}, {h})");
+                    ImGui.Text($"Client Size: ({cw}, {ch})");
                     // FIXME: Framebuffer size?
 
                     if (Program.WindowComp is MacOSWindowComponent macOSWindowComp)

@@ -136,14 +136,14 @@ namespace OpenTK.Platform.Native.macOS
             throw new ArgumentException($"Cannot find display handle for NSScreen=0x{nsscreen}.");
         }
 
-        // FIXME: Fix this for multiple screens
-        internal Box2i ConvertCoordinates(CGRect rect, CGRect bounds)
+        // FIXME: Remove this
+        internal Box2i ConvertCoordinates(CGRect rect)
         {
             Box2i area = new Box2i(
                 (int)rect.origin.x,
-                (int)(bounds.size.y - rect.size.y - rect.origin.y),
+                (int)FlipYCoordinate(rect.origin.y + rect.size.y),
                 (int)(rect.origin.x + rect.size.x),
-                (int)rect.size.y);
+                (int)FlipYCoordinate(rect.origin.y));
 
             return area;
         }
@@ -348,9 +348,9 @@ namespace OpenTK.Platform.Native.macOS
 
             area = new Box2i(
                 (int)visible.origin.x,
-                (int)(bounds.size.y - visible.size.y - visible.origin.y),
+                (int)FlipYCoordinate(visible.origin.y + visible.size.y),
                 (int)(visible.origin.x + visible.size.x),
-                (int)visible.size.y);
+                (int)FlipYCoordinate(visible.origin.y));
         }
 
         public void GetSafeArea(DisplayHandle handle, out Box2i area)
@@ -361,9 +361,6 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
 
-            // FIXME: Get the actual max virtual screen height...
-            float totalHeight = (float)frame.size.y;
-
             frame.origin.x += insets.left;
             frame.origin.y += insets.bottom;
             frame.size.x -= insets.left + insets.right;
@@ -371,9 +368,9 @@ namespace OpenTK.Platform.Native.macOS
 
             area = new Box2i(
                 (int)frame.origin.x,
-                (int)(totalHeight - frame.size.y - frame.origin.y),
+                (int)FlipYCoordinate(frame.origin.y + frame.size.y),
                 (int)(frame.origin.x + frame.size.x),
-                (int)(totalHeight - frame.origin.y));
+                (int)FlipYCoordinate(frame.origin.y));
         }
 
         /// <summary>
@@ -398,8 +395,8 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                CGRect bounds = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
-                area = ConvertCoordinates(auxArea, bounds);
+                // FIXME: Remove ConvertCoordinates and use CG.FlipYCoordinate directly instead.
+                area = ConvertCoordinates(auxArea);
                 return true;
             }
         }
@@ -426,8 +423,8 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                CGRect bounds = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
-                area = ConvertCoordinates(auxArea, bounds);
+                // FIXME: Remove ConvertCoordinates and use CG.FlipYCoordinate directly instead.
+                area = ConvertCoordinates(auxArea);
                 return true;
             }
         }
