@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,9 +46,9 @@ namespace OpenTK.Backends.Tests
         string cursorName = "";
         string? loadingError = null;
 
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
-            base.Paint();
+            base.Paint(deltaTime);
 
             bool setCursor = false;
 
@@ -99,11 +100,13 @@ namespace OpenTK.Backends.Tests
                         // FIXME: Should we even show the cursors if they can't be set?
                         if (Program.WindowComp.CanSetIcon)
                         {
+                            (Program.CursorComp as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
                             // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
                             Program.WindowComp.SetCursor(Program.Window, handle);
                             setCursor = true;
 
                             hoveredIndex = i - 1;
+
                         }
                     }
                 }

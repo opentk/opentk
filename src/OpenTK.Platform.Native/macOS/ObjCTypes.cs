@@ -31,6 +31,12 @@ namespace OpenTK.Platform.Native.macOS
         }
     }
 
+    internal struct objc_super
+    {
+        public IntPtr /* id */ receiver;
+        public ObjCClass pclass;
+    }
+
     internal struct CGPoint : IEquatable<CGPoint>
     {
         public static readonly CGPoint Zero = new CGPoint(0, 0);
@@ -120,6 +126,18 @@ namespace OpenTK.Platform.Native.macOS
         {
             this.location = location;
             this.length = length;
+        }
+    }
+
+    internal struct NSSize
+    {
+        public NFloat width;
+        public NFloat height;
+
+        public NSSize(NFloat width, NFloat height)
+        {
+            this.width = width;
+            this.height = height;
         }
     }
 }

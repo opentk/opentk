@@ -83,8 +83,10 @@ namespace OpenTK.Backends.Tests
             extensionGroups.Sort((a, b) => StringComparer.InvariantCulture.Compare(a.Vendor, b.Vendor));
         }
 
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
+            base.Paint(deltaTime);
+
             ImGui.SeparatorText("Component Properties");
             // FIXME: Separate display if the property threw an exception?
             ImGuiUtils.ReadonlyCheckbox("Can Create From Window", canCreateFromWindow);

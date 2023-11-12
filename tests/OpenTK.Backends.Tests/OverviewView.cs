@@ -41,7 +41,7 @@ namespace OpenTK.Backends.Tests
         // FIXME: Add some other diagnostics data such as OS version, Arch, 64bit?, GPU vendor, etc.
 
         /// <inheritdoc/>
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
             ImGui.Text("This is the OpenTK PAL2 driver test suite.");
             ImGui.BulletText("Click on each tab to view details related to that driver. ");

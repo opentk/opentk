@@ -10,6 +10,8 @@ namespace OpenTK.Platform.Native.macOS
         // This is used to implement SwapBuffers
         public NSOpenGLContext? Context { get; set; }
 
+        public NSCursorHandle? Cursor { get; set; }
+
         public bool Destroyed { get; set; } = false;
 
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
@@ -53,6 +55,41 @@ namespace OpenTK.Platform.Native.macOS
             Screen = screen;
             Name = name;
             IsPrimary = isPrimary;
+        }
+    }
+
+    internal class NSCursorHandle : CursorHandle
+    {
+        public CursorMode Mode = CursorMode.Uninitialized;
+
+        public IntPtr Cursor;
+
+        public IntPtr[]? CursorFrames;
+        /// <summary>Delay between frames.</summary>
+        public double Delay = 0;
+        /// <summary>Used to keep track of this cursors current animation time.</summary>
+        public double Time = 0;
+        /// <summary>The current frame.</summary>
+        public int Frame = 0;
+        
+        public NSCursorHandle(CursorMode mode, IntPtr cursor)
+        {
+            Mode = mode;
+            Cursor = cursor;
+        }
+
+        public NSCursorHandle(CursorMode mode, IntPtr[] cursorFrames, double delay)
+        {
+            Mode = mode;
+            CursorFrames = cursorFrames;
+            Delay = delay;
+        }
+
+        internal enum CursorMode
+        {
+            Uninitialized,
+            SystemCursor,
+            AnimatedCursor,
         }
     }
 }

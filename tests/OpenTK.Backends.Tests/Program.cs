@@ -332,7 +332,7 @@ namespace OpenTK.Backends.Tests
             ImGuiController.Update(InputData, dt);
 
 
-            MainTabContainer.Paint();
+            MainTabContainer.Paint(dt);
 
             //ImGui.ShowDemoWindow();
         }

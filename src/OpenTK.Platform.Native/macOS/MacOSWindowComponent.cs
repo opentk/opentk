@@ -92,6 +92,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selString = sel_registerName("string"u8);
         internal static SEL selSetString = sel_registerName("setString:"u8);
 
+        internal static SEL selAddCursorRect_Cursor = sel_registerName("addCursorRect:cursor:"u8);
+        internal static SEL selInvalidateCursorRectsForView = sel_registerName("invalidateCursorRectsForView:"u8);
+        internal static SEL selEnableCursorRects = sel_registerName("enableCursorRects"u8);
+        internal static SEL selDisableCursorRects = sel_registerName("disableCursorRects"u8);
+
+        internal static SEL selSuperclass = sel_registerName("superclass"u8);
+
+
+
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
@@ -175,7 +184,7 @@ namespace OpenTK.Platform.Native.macOS
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
 
-            //class_addMethod(opentkViewClass, sel_registerName("resetCursorRects"u8), OnResetCursorRect, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), NSOtkView_ResetCursorRectsInst, "v@:"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), NSOtkView_MouseEnteredInst, "v@:@"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), NSOtkView_MouseExitedInst, "v@:@"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("keyDown:"u8), NSOtkView_KeyDownInst, "v@:@"u8);
@@ -228,13 +237,6 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             return true;
-        }
-
-        private delegate void ResetCursorRectDelegate(IntPtr self, SEL cmd);
-        private static readonly ResetCursorRectDelegate OnResetCursorRect = ResetCursorRects;
-        internal static void ResetCursorRects(IntPtr self, SEL cmd)
-        {
-            // FIXME: addCursorRect
         }
 
         // We reuse this delegate definition for all window delegate notifications that return void
@@ -333,13 +335,52 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        delegate void NSOtkView_ResetCursorRects_(IntPtr view, SEL selector);
+        static NSOtkView_ResetCursorRects_ NSOtkView_ResetCursorRectsInst = NSOtkView_ResetCursorRects;
+        static void NSOtkView_ResetCursorRects(IntPtr view, SEL selector)
+        {
+            objc_super super;
+            super.receiver = view;
+            super.pclass = (ObjCClass)objc_msgSend_IntPtr(view, selSuperclass);
+            objc_msgSendSuper(super, selector);
+
+            IntPtr window = objc_msgSend_IntPtr(view, selWindow);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
+            {
+                // FIXME: How do we get the logger here?
+                //Logger?.LogWarning($"Received ResetCurorRects event for unknown window: {window}");
+                Console.WriteLine($"Received ResetCurorRects event for unknown window: {window}");
+                return;
+            }
+
+            if (nswindow.Cursor != null)
+            {
+                CGRect bounds = objc_msgSend_CGRect(view, selBounds);
+                switch (nswindow.Cursor.Mode)
+                {
+                    // If the cursor is animated, pick the current frame.
+                    case NSCursorHandle.CursorMode.AnimatedCursor:
+                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame]);
+                        break;
+                    default:
+                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.Cursor);
+                        break;
+                }
+            }
+            else
+            {
+                // Null cursor means it is hidden.
+                // FIXME: Hide the cursor? Should we do it here?
+            }
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void MouseEnteredDelegate(IntPtr view, SEL selector, IntPtr @event);
         static MouseEnteredDelegate NSOtkView_MouseEnteredInst = NSOtkView_MouseEntered;
         static void NSOtkView_MouseEntered(IntPtr view, SEL selector, IntPtr @event)
         {
-            Console.WriteLine("Enter");
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
-            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) != false)
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
                 // FIXME: How do we get the logger here?
                 //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
@@ -355,9 +396,8 @@ namespace OpenTK.Platform.Native.macOS
         static MouseExitedDelegate NSOtkView_MouseExitedInst = NSOtkView_MouseExited;
         static void NSOtkView_MouseExited(IntPtr view, SEL selector, IntPtr @event)
         {
-            Console.WriteLine("Exit");
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
-            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) != false)
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
                 // FIXME: How do we get the logger here?
                 //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
@@ -525,7 +565,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public bool CanSetIcon => throw new NotImplementedException();
+        public bool CanSetIcon => true;
 
         /// <inheritdoc/>
         public bool CanGetDisplay => true;
@@ -1323,7 +1363,12 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            NSCursorHandle? nscursor = cursor?.As<NSCursorHandle>(this);
+
+            nswindow.Cursor = nscursor;
+
+            objc_msgSend(nswindow.Window, selInvalidateCursorRectsForView, nswindow.View);
         }
 
         /// <inheritdoc/>

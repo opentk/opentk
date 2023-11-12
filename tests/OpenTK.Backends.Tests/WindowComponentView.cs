@@ -60,9 +60,9 @@ namespace OpenTK.Backends.Tests
         WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
         string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
 
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
-            base.Paint();
+            base.Paint(deltaTime);
 
             if (selectedWindow > WindowManager.Windows.Count)
             {

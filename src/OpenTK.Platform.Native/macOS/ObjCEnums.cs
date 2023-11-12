@@ -182,5 +182,25 @@ namespace OpenTK.Platform.Native.macOS
         InVisibleRect = 0x200,
         EnabledDuringMouseDrag = 0x400,
     }
+
+    // From https://github.com/gnustep/libs-gui/blob/master/Headers/AppKit/NSGraphicsContext.h
+    // These are not the formal defintions of the "operator" instead these are the old ones...
+    internal enum NSCompositingOperator : uint
+    {
+        Clear,
+        Copy,
+        SourceOver,
+        SourceIn,
+        SourceOut,
+        SourceAtop,
+        DestinationOver,
+        DestinationIn,
+        DestinationOut,
+        DestinationAtop,
+        XOR,
+        PlusDarker,
+        Highlight,
+        PlusLighter,
+    }
 }
 

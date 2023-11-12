@@ -129,10 +129,22 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, CGRect value2, nuint value3, NFloat value4);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, CGPoint value1);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, NSSize value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, SEL value);
@@ -234,6 +246,11 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1, IntPtr ptr);
 
+
+        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern NSSize objc_msgSend_NSSize(IntPtr receiver, SEL selector);
+
         // FIXME: Should we even consider 32bit macos?
         internal static float objc_msgSend_float(IntPtr receiver, SEL selector)
         {
@@ -288,6 +305,33 @@ namespace OpenTK.Platform.Native.macOS
             static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
         }
 
+        // FIXME: Should we even consider 32-bit macos?
+        internal static double objc_msgSend_double(IntPtr receiver, SEL selector)
+        {
+            if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+            {
+                return objc_msgSend_fret(receiver, selector);
+            }
+            else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+            {
+                // For x64 any struct smaller than 16 bytes is put into registers.
+                // https://stackoverflow.com/a/39290251
+                return (NFloat)objc_msgSend_float(receiver, selector);
+            }
+            else
+            {
+                // FIXME: What do we do with ARM? Do we only need to consider 64bit?
+                // This is likely a good place to start: https://stackoverflow.com/a/39290251
+                return (NFloat)objc_msgSend_float(receiver, selector);
+            }
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
+            static extern double objc_msgSend_fret(IntPtr receiver, SEL selector);
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
+        }
+
         internal static NSEdgeInsets objc_msgSend_NSEdgeInsets(IntPtr receiver, SEL selector)
         {
             objc_msgSend_NSEdgeInsets(out NSEdgeInsets insets, receiver, selector);
@@ -296,6 +340,11 @@ namespace OpenTK.Platform.Native.macOS
             [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
             static extern void objc_msgSend_NSEdgeInsets(out NSEdgeInsets @struct, IntPtr receiver, SEL selector);
         }
+
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSendSuper")]
+        internal static extern void objc_msgSendSuper(in objc_super super, SEL op);
+
 
         internal static ObjCClass objc_allocateClassPair(ObjCClass superclass, ReadOnlySpan<byte> name, ulong extraBytes)
         {

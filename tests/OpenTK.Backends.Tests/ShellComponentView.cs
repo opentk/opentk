@@ -23,9 +23,9 @@ namespace OpenTK.Backends.Tests
 
         bool useImmersiveDarkMode = false;
 
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
-            base.Paint();
+            base.Paint(deltaTime);
 
             ImGui.SeparatorText("Screen saver");
 

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>

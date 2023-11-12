@@ -35,9 +35,9 @@ namespace OpenTK.Backends.Tests
             }
         }
 
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
-            base.Paint();
+            base.Paint(deltaTime);
 
             ImGui.SeparatorText("Keyboard layout");
 
