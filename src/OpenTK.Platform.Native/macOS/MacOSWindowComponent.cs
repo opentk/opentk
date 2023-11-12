@@ -49,6 +49,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selContentView = sel_registerName("contentView"u8);
         internal static SEL selSetContentView = sel_registerName("setContentView:"u8);
         internal static SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
+        internal static SEL selSetFrame_Display = sel_registerName("setFrame:display:"u8);
+        internal static SEL selSetContentSize = sel_registerName("setContentSize:"u8);
+
 
         internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
 
@@ -98,6 +101,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selDisableCursorRects = sel_registerName("disableCursorRects"u8);
 
         internal static SEL selSuperclass = sel_registerName("superclass"u8);
+
 
 
 
@@ -921,7 +925,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
+            //IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
             //CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
 
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
@@ -961,9 +965,14 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetSize(WindowHandle handle, int width, int height)
         {
-            // FIXME: setFrame:display:
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            throw new NotImplementedException();
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            frame.size.x = width;
+            frame.size.y = height;
+
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
         }
 
         /// <inheritdoc/>
@@ -1004,10 +1013,11 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
-            // FIXME:
-            //throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
+            NSSize size = new NSSize(width, height);
 
+            objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
 
         public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
