@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using static System.Formats.Asn1.AsnWriter;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
 namespace OpenTK.Platform.Native.macOS
@@ -14,6 +15,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSCursorClass = objc_getClass("NSCursor"u8);
         internal static readonly ObjCClass NSImageClass = objc_getClass("NSImage"u8);
         internal static readonly ObjCClass NSDictionaryClass = objc_getClass("NSDictionary"u8);
+        internal static readonly ObjCClass NSUserDefaultsClass = objc_getClass("NSUserDefaults"u8);
+
 
         internal static readonly SEL selInitWithImage_HotSpot = sel_registerName("initWithImage:hotSpot:"u8);
         internal static readonly SEL selHotSpot = sel_registerName("hotSpot"u8);
@@ -48,6 +51,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selLockFocus = sel_registerName("lockFocus"u8);
         internal static readonly SEL selUnlockFocus = sel_registerName("unlockFocus"u8);
         internal static readonly SEL selSize = sel_registerName("size"u8);
+
+        internal static readonly SEL selStandardUserDefaults = sel_registerName("standardUserDefaults"u8);
+        internal static readonly SEL selPersistentDomainForName = sel_registerName("persistentDomainForName:"u8);
 
 
         // Keep a list of animated cursors?
@@ -300,10 +306,50 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
 
-            // FIXME:
-            width = 16;
-            height = 16;
-            //throw new NotImplementedException();
+            IntPtr standardUserDefaults = objc_msgSend_IntPtr((IntPtr)NSUserDefaultsClass, selStandardUserDefaults);
+            IntPtr dict = objc_msgSend_IntPtr(standardUserDefaults, selPersistentDomainForName, ToNSString("com.apple.universalaccess"u8));
+            IntPtr scalePtr = objc_msgSend_IntPtr(dict, selValueForKey, ToNSString("mouseDriverCursorSize"u8));
+
+            // FIXME: Is this correct? Should we always get a value from the dictionary?
+            int scale;
+            if (scalePtr != IntPtr.Zero)
+            {
+                scale = (int)objc_msgSend_IntPtr(scalePtr, selIntegerValue);
+            }
+            else
+            {
+                scale = 1;
+            }
+
+            IntPtr cursor;
+            switch (nscursor.Mode)
+            {
+                case NSCursorHandle.CursorMode.AnimatedCursor:
+                    // Measure the current frame
+                    cursor = nscursor.CursorFrames![nscursor.Frame];
+                    break;
+                case NSCursorHandle.CursorMode.SystemCursor:
+                    cursor = nscursor.Cursor;
+                    break;
+                default:
+                    cursor = IntPtr.Zero;
+                    break;
+            }
+            if (cursor != IntPtr.Zero)
+            {
+                IntPtr image = objc_msgSend_IntPtr(cursor, selImage);
+                NSSize size = objc_msgSend_NSSize(image, selSize);
+
+                // FIXME: How should we round to float?
+                width = (int)(size.width * scale);
+                height = (int)(size.height * scale);
+            }
+            else
+            {
+                Logger?.LogWarning("Trying to get the size of an uninitialized cursor.");
+                width = -1;
+                height = -1;
+            }
         }
 
         public void GetHotspot(CursorHandle handle, out int x, out int y)
@@ -318,6 +364,8 @@ namespace OpenTK.Platform.Native.macOS
 
         // FIXME: Is this the API we want to expose, or do we want to
         // expose an api for updating all cursors at the same time.
+        // This requires us to constantly call SetCursor for the cursor to update
+        // is that fine? Is there some other way we can animate the cursor?
         public void UpdateAnimation(CursorHandle handle, double deltaTime)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
