@@ -515,12 +515,7 @@ namespace OpenTK.Backends.Tests
             }
             else if (args is TextInputEventArgs textInput)
             {
-                string text = textInput.Text;
-                // FIXME: There seems to be some issue with U+3000 where ImGui or the font we are using
-                // displays the character with zero width. We do this to get something that is actually visible.
-                //text = text.Replace('\u3000', ' ');
-
-                ImGui.GetIO().AddInputCharactersUTF8(text);
+                ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
             }
             else if (args is MouseMoveEventArgs mouseMove)
             {
