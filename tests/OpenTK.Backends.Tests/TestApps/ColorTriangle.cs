@@ -199,6 +199,17 @@ void main()
             }
         }
 
+        public void HandleEvent(EventArgs args)
+        {
+            // We don't need any events here..?
+            // FIXME: Handle resize?
+        }
+
+        public void Update(float deltaTime)
+        {
+
+        }
+
         public void Render()
         {
             GL.ClearColor(new Color4<Rgba>(0.05f, 0.05f, 0.1f, 1.0f));

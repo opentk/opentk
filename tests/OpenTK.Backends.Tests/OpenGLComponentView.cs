@@ -95,9 +95,9 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Contexts");
 
-            if (selectedWindow >= Program.WindowManager.Windows.Count)
+            if (selectedWindow >= Program.ApplicationWindows.Count)
             {
-                if (Program.WindowManager.Windows.Count == 0)
+                if (Program.ApplicationWindows.Count == 0)
                 {
                     selectedWindow = -1;
                 }
@@ -107,12 +107,12 @@ namespace OpenTK.Backends.Tests
                 }
             }
 
-            if (selectedWindow == -1 && Program.WindowManager.Windows.Count > 0)
+            if (selectedWindow == -1 && Program.ApplicationWindows.Count > 0)
             {
                 selectedWindow = 0;
             }
 
-            if (Program.WindowManager.Windows.Count == 0)
+            if (Program.ApplicationWindows.Count == 0)
             {
                 ImGui.BeginDisabled();
                 if (ImGui.BeginCombo("Child Window", "No child windows"))
@@ -130,18 +130,18 @@ namespace OpenTK.Backends.Tests
                 }
                 else
                 {
-                    var windowData = Program.WindowManager.Windows[selectedWindow];
-                    string title = Program.WindowComp.GetTitle(windowData.Window);
-                    windowTitle = $"{title} ({(windowData.Context == null ? "no context" : "opengl")})";
+                    var appWindow = Program.ApplicationWindows[selectedWindow];
+                    string title = Program.WindowComp.GetTitle(appWindow.Window);
+                    windowTitle = $"{title} ({(appWindow.Context == null ? "no context" : "opengl")})";
                 }
                 
                 if (ImGui.BeginCombo("Child Window", windowTitle))
                 {
-                    for (int i = 0; i < Program.WindowManager.Windows.Count; i++)
+                    for (int i = 0; i < Program.ApplicationWindows.Count; i++)
                     {
-                        var data = Program.WindowManager.Windows[i];
-                        string title = Program.WindowComp.GetTitle(data.Window);
-                        string label = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
+                        var appWindow = Program.ApplicationWindows[i];
+                        string title = Program.WindowComp.GetTitle(appWindow.Window);
+                        string label = $"{title} ({(appWindow.Context == null ? "no context" : "opengl")})";
 
                         if (ImGui.Selectable(label))
                         {
@@ -156,27 +156,42 @@ namespace OpenTK.Backends.Tests
             if (selectedWindow == -1)
             {
                 ImGui.BeginDisabled();
-                    ImGui.Button("Create");
+                ImGui.Button("Create");
                 ImGui.EndDisabled();
             }
             else
             {
-                var data = Program.WindowManager.Windows[selectedWindow];
+                var appWindow = Program.ApplicationWindows[selectedWindow];
 
-                if (data.Context == null)
+                if (appWindow.Context == null)
                 {
                     if (ImGui.Button("Create"))
                     {
-                        OpenGLContextHandle newContext = Program.OpenGLComp.CreateFromWindow(data.Window);
-                        data.Context = newContext;
+                        OpenGLContextHandle newContext = Program.OpenGLComp.CreateFromWindow(appWindow.Window);
+                        appWindow.Context = newContext;
+
+                        if (appWindow.Application != null)
+                        {
+                            // FIXME: Make it only a single place where we actuall initialize test apps.
+                            Program.OpenGLComp.SetCurrentContext(appWindow.Context);
+                            // FIXME: Proper check for GLES.
+                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, BackendsConfig.Singleton.PreferANGLE);
+                            Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                        }
                     }
                 }
                 else
                 {
                     if (ImGui.Button("Destroy"))
                     {
-                        OpenGLContextHandle context = data.Context;
-                        data.Context = null;
+                        OpenGLContextHandle context = appWindow.Context;
+                        if (appWindow.Application != null)
+                        {
+                            Program.OpenGLComp.SetCurrentContext(appWindow.Context);
+                            appWindow.Application.Deinitialize();
+                            Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                        }
+                        appWindow.Context = null;
                         Program.OpenGLComp.DestroyContext(context);
                     }
                 }
@@ -187,12 +202,21 @@ namespace OpenTK.Backends.Tests
 
             ImGui.BeginDisabled(
                 selectedWindow == -1 ||
-                Program.WindowManager.Windows[selectedWindow].Application?.GetType() == TestApps.All[lastActiveApp]
-            );
+                Program.ApplicationWindows[selectedWindow].Application?.GetType() == TestApps.All[lastActiveApp]);
+
             if (ImGui.Button("Launch") && selectedWindow != -1)
             {
-                Program.WindowManager.Windows[selectedWindow].Application = TestApps.Create(lastActiveApp);
+                var appWindow = Program.ApplicationWindows[selectedWindow];
+                appWindow.Application = TestApps.Create(lastActiveApp);
+                if (appWindow.Context != null)
+                {
+                    Program.OpenGLComp.SetCurrentContext(appWindow.Context);
+                    // FIXME: Proper check for GLES.
+                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, BackendsConfig.Singleton.PreferANGLE);
+                    Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                }
             }
+
             ImGui.EndDisabled();
 
             ImGui.SeparatorText("Main Context Information");

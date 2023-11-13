@@ -9,6 +9,7 @@ using OpenTK.Platform.Native.ANGLE;
 using OpenTK.Platform.Native.macOS;
 using StbImageSharp;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -32,10 +33,22 @@ namespace OpenTK.Backends.Tests
         public static IShellComponent? ShellComponent;
         public static IJoystickComponent? JoystickComponent;
 
-        public static WindowManager WindowManager { get; private set; }
+        public class ApplicationWindow
+        {
+            public WindowHandle Window;
+            public OpenGLContextHandle? Context;
+            public ITestApp? Application;
+
+            public ApplicationWindow(WindowHandle window)
+            {
+                Window = window;
+            }
+        }
+
+        public static List<ApplicationWindow> ApplicationWindows = new List<ApplicationWindow>();
 
         public static WindowHandle Window;
-        static OpenGLContextHandle OpenGLContext;
+        public static OpenGLContextHandle WindowContext;
 
         static ImGuiController ImGuiController;
         static InputData InputData = new InputData();
@@ -125,9 +138,9 @@ namespace OpenTK.Backends.Tests
             }
 
             Window = WindowComp.Create(hints);
-            OpenGLContext = OpenGLComp.CreateFromWindow(Window);
-            OpenGLComp.SetCurrentContext(OpenGLContext);
-            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
+            WindowContext = OpenGLComp.CreateFromWindow(Window);
+            OpenGLComp.SetCurrentContext(WindowContext);
+            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(WindowContext));
 
             static bool IsExtensionSupported(string name)
             {
@@ -151,8 +164,6 @@ namespace OpenTK.Backends.Tests
                 GL.Enable(EnableCap.DebugOutput);
                 GL.Enable(EnableCap.DebugOutputSynchronous);
             }
-
-            WindowManager = new WindowManager(WindowComp, OpenGLComp, Window, OpenGLContext);
 
             WindowComp.SetTitle(Window, "OpenTK PAL Test Application");
             WindowComp.SetClientSize(Window, 800, 600);
@@ -200,6 +211,7 @@ namespace OpenTK.Backends.Tests
             bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(width, height, useGLES);
 
+            float fontSize = 13f;
             try
             {
                 // FIXME: For now we can't load this font on macos??
@@ -213,6 +225,9 @@ namespace OpenTK.Backends.Tests
                     float scale = MathF.Max(scaleX, scaleY);
                     if (scale != 1)
                     {
+                        // Update font size with scale.
+                        fontSize = fontSize * scale;
+
                         ImFontConfig config = new ImFontConfig();
                         config.FontDataOwnedByAtlas = 1;
                         config.OversampleH = 3;
@@ -223,8 +238,9 @@ namespace OpenTK.Backends.Tests
                         config.EllipsisChar = 0xFFFF;
                         unsafe
                         {
+                            
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
@@ -235,8 +251,44 @@ namespace OpenTK.Backends.Tests
             {
                 Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
             }
+
+            // Load japanese font.
+            {
+                // If we haven't loaded any fonts, load the default so we can merge with it.
+                if (ImGui.GetIO().Fonts.Fonts.Size == 0)
+                {
+                    ImGui.GetIO().Fonts.AddFontDefault();
+                }
+
+                ImFontConfig config = new ImFontConfig();
+                config.FontDataOwnedByAtlas = 1;
+                config.OversampleH = 2;
+                config.OversampleV = 2;
+                config.PixelSnapH = 1;
+                config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                config.RasterizerMultiply = 1;
+
+                config.MergeMode = 1;
+                unsafe
+                {
+                    ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                    var io = ImGui.GetIO();
+                    io.Fonts.AddFontFromFileTTF("Resources/NotoSans/NotoSansJP-Regular.ttf", float.Floor(fontSize) + 3, configPtr, io.Fonts.GetGlyphRangesJapanese());
+                    // FIXME: When should we call this?
+                    io.Fonts.Build();
+                }
+            }
             
             ImGuiController.RecreateFontDeviceTexture();
+
+            // Set the imgui platform handle so we can use it in the IME data callback.
+            {
+                ImGuiViewportPtr viewport = ImGui.GetMainViewport();
+                GCHandle gchandle = GCHandle.Alloc(Window);
+                viewport.PlatformHandleRaw = (nint)gchandle;
+            }
+            // Make it so ImGui can set IME rect.
+            ImGui.GetIO().SetPlatformImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
 
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {
@@ -267,10 +319,23 @@ namespace OpenTK.Backends.Tests
 
                 Update(dt);
 
-                OpenGLComp.SetCurrentContext(OpenGLContext);
+                OpenGLComp.SetCurrentContext(WindowContext);
                 Render();
 
-                WindowManager.RenderChildWindows();
+                foreach (var applicationWindow in ApplicationWindows)
+                {
+                    if (applicationWindow.Context == null)
+                        continue;
+                    if (applicationWindow.Application == null)
+                        continue;
+
+                    OpenGLComp.SetCurrentContext(applicationWindow.Context);
+
+                    // FIXME: Send delta time?
+                    applicationWindow.Application.Render();
+
+                    OpenGLComp.SetCurrentContext(WindowContext);
+                }
             }
         }
 
@@ -334,6 +399,7 @@ namespace OpenTK.Backends.Tests
 
             MainTabContainer.Paint(dt);
 
+            ImGui.ShowMetricsWindow();
             //ImGui.ShowDemoWindow();
         }
 
@@ -344,7 +410,7 @@ namespace OpenTK.Backends.Tests
 
             ImGuiController.Render();
 
-            OpenGLComp.SwapBuffers(OpenGLContext);
+            OpenGLComp.SwapBuffers(WindowContext);
         }
 
         static ImGuiKey ToImgui(Key key)
@@ -387,7 +453,27 @@ namespace OpenTK.Backends.Tests
             {
                 if (args is CloseEventArgs close2)
                 {
-                    WindowManager.RemoveWindow(close2.Window);
+                    // If this is one of our other windows we want to gracefully close it before we delete the window.
+                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
+                    ApplicationWindow appWindow = ApplicationWindows[index];
+                    if (appWindow != null)
+                    {
+                        if (appWindow.Context != null)
+                        {
+                            if (appWindow.Application != null)
+                            {
+                                // FIXME: Make there only be one place where we actually deinit applications.
+                                OpenGLComp.SetCurrentContext(appWindow.Context);
+                                appWindow.Application?.Deinitialize();
+                                OpenGLComp.SetCurrentContext(WindowContext);
+                            }
+
+                            OpenGLComp.DestroyContext(appWindow.Context);
+                        }
+                        
+                        ApplicationWindows.RemoveAt(index);
+                    }
+
                     WindowComp.Destroy(close2.Window);
                 }
                 return;
@@ -429,10 +515,12 @@ namespace OpenTK.Backends.Tests
             }
             else if (args is TextInputEventArgs textInput)
             {
-                foreach(char c in textInput.Text)
-                {
-                    ImGui.GetIO().AddInputCharacterUTF16(c);
-                }
+                string text = textInput.Text;
+                // FIXME: There seems to be some issue with U+3000 where ImGui or the font we are using
+                // displays the character with zero width. We do this to get something that is actually visible.
+                //text = text.Replace('\u3000', ' ');
+
+                ImGui.GetIO().AddInputCharactersUTF8(text);
             }
             else if (args is MouseMoveEventArgs mouseMove)
             {
@@ -470,7 +558,7 @@ namespace OpenTK.Backends.Tests
                     if (ImGuiController != null && IsProcessingEvents)
                     {
                         Update(0f);
-                        OpenGLComp.SetCurrentContext(OpenGLContext);
+                        OpenGLComp.SetCurrentContext(WindowContext);
                         Render();
                     }
                 }
@@ -596,6 +684,34 @@ namespace OpenTK.Backends.Tests
                     default:
                         Logger?.LogInfo($"[default] [{source}] {message}");
                         break;
+                }
+            }
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void ImGui_SetPlaformImeDataFn(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data);
+        private static ImGui_SetPlaformImeDataFn ImGui_SetPlatformImeDataInst = ImGui_SetPlatformImeData;
+        private static void ImGui_SetPlatformImeData(ImGuiViewportPtr viewport, ImGuiPlatformImeDataPtr data)
+        {
+            if (data.WantVisible)
+            {
+                if (KeyboardComponent != null)
+                {
+                    try
+                    {
+                        GCHandle handle = GCHandle.FromIntPtr(viewport.PlatformHandleRaw);
+                        WindowHandle window = (WindowHandle)handle.Target!;
+
+                        int x = (int)data.InputPos.X;
+                        int y = (int)data.InputPos.Y;
+                        int w = 1; // FIXME: What do we actually want to pass here?
+                        int h = (int)data.InputLineHeight;
+
+                        KeyboardComponent.SetImeRectangle(window, x, y, w, h);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
         }

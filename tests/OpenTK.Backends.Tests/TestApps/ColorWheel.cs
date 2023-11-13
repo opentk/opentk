@@ -22,6 +22,16 @@ namespace OpenTK.Backends.Tests
             watch.Start();
         }
 
+        public void HandleEvent(EventArgs args)
+        {
+            // FIXME: Handle resize?
+        }
+
+        public void Update(float deltaTime)
+        {
+
+        }
+
         public void Render()
         {
             const float OMEGA = 0.002f * MathF.PI * 0.1f;

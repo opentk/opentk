@@ -888,7 +888,11 @@ namespace OpenTK.Platform.Native.Windows
                         const long IMM_ERROR_NODATA = -1;
                         const long IMM_ERROR_GENERAL = -2;
 
-                        HWND h = HWndDict[hWnd];
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h) == false)
+                        {
+                            // This can happen if we have a composition active when we close the window.
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
 
                         GCS gcs = (GCS)lParam;
 
@@ -919,6 +923,7 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
+                                // FIXME: Length?
                                 EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, IMECursor, 0));
                             }
                         }
@@ -948,12 +953,21 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(h, composition));
+                                // FIXME: Will this always trigger a WM_CHAR message?
+                                // For now we assume it will, if we send this here we later get a
+                                // WM_CHAR with the same text causing duplicate IME input.
+                                // - Noggin_bops 2023-11-13
+                                //EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, composition));
                             }
                         }
 
                         Win32.ImmReleaseContext(hWnd, hmic);
 
+                        // We don't pass this message forward, this will cause finished text to be sent
+                        // again to WM_CHAR which will cause duplicate TextInput events.
+                        // And we cannot remove this code to only rely on WM_CHAR as characters such as
+                        // spaces do not get send from this to WM_CHAR.
+                        // - Noggin_bops 2023-11-13
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.INPUTLANGCHANGE:

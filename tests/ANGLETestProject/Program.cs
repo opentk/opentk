@@ -2,7 +2,7 @@
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Egl;
-using OpenTK.Graphics.OpenGLES3;
+using OpenTK.Graphics.OpenGLES2;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;

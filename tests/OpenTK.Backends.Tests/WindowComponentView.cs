@@ -15,10 +15,7 @@ namespace OpenTK.Backends.Tests
         public override string Title => "Window Component";
 
         private IWindowComponent WindowComponent;
-        private WindowManager WindowManager;
-
-        public WindowComponentView() { }
-
+        
         const float IntDragSpeed = 0.2f;
 
         bool canSetCursor;
@@ -29,7 +26,6 @@ namespace OpenTK.Backends.Tests
         public override void Initialize()
         {
             WindowComponent = Program.WindowComp;
-            WindowManager = Program.WindowManager;
 
             // FIXME: Catch any exceptions...
             try { canSetCursor = WindowComponent.CanSetCursor; } catch { canSetCursor = false; }
@@ -64,7 +60,7 @@ namespace OpenTK.Backends.Tests
         {
             base.Paint(deltaTime);
 
-            if (selectedWindow > WindowManager.Windows.Count)
+            if (selectedWindow > Program.ApplicationWindows.Count)
             {
                 selectedWindow = -1;
             }
@@ -81,10 +77,10 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginListBox("Windows"))
             {
-                PaintWindow(WindowManager.RootWindow, 0);
-                for (int i = 0; i < WindowManager.Windows.Count; i++)
+                PaintWindow(Program.Window, 0);
+                for (int i = 0; i < Program.ApplicationWindows.Count; i++)
                 {
-                    PaintWindow(WindowManager.Windows[i].Window, i + 1);
+                    PaintWindow(Program.ApplicationWindows[i].Window, i + 1);
                 }
                 ImGui.EndListBox();
 
@@ -128,7 +124,7 @@ namespace OpenTK.Backends.Tests
                             try
                             {
                                 // Send the close event, this will close the window.
-                                WindowHandle handle = WindowManager.Windows[i - 1].Window;
+                                WindowHandle handle = Program.ApplicationWindows[i - 1].Window;
                                 EventQueue.Raise(handle, PlatformEventType.Close, new CloseEventArgs(handle));
 
                                 if (selectedWindow == i)
@@ -136,7 +132,7 @@ namespace OpenTK.Backends.Tests
                                     selectedWindow = -1;
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
                                 throw;
                             }
@@ -149,8 +145,8 @@ namespace OpenTK.Backends.Tests
             if (selectedWindow != -1)
             {
                 WindowHandle window = (selectedWindow == 0)
-                        ? WindowManager.RootWindow
-                        : WindowManager.Windows[selectedWindow - 1].Window;
+                        ? Program.Window
+                        : Program.ApplicationWindows[selectedWindow - 1].Window;
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
@@ -322,8 +318,8 @@ namespace OpenTK.Backends.Tests
                     {
                         WindowHandle handle = WindowComponent!.Create(openglSettings.Copy());
 
-                        int index = WindowManager.Windows.Count + 1;
-                        WindowManager.AddWindow(handle);
+                        int index = Program.ApplicationWindows.Count + 1;
+                        Program.ApplicationWindows.Add(new Program.ApplicationWindow(handle));
 
                         WindowComponent.SetTitle(handle, $"Child Window #{index}");
                         WindowComponent.SetSize(handle, WindowSize.X, WindowSize.Y);

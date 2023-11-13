@@ -338,7 +338,6 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        // FIXME: API for getting the candidate list.
         /// <inheritdoc/>
         public void EndIme(WindowHandle window)
         {
