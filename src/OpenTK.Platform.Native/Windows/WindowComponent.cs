@@ -963,10 +963,8 @@ namespace OpenTK.Platform.Native.Windows
 
                         Win32.ImmReleaseContext(hWnd, hmic);
 
-                        // We don't pass this message forward, this will cause finished text to be sent
-                        // again to WM_CHAR which will cause duplicate TextInput events.
-                        // And we cannot remove this code to only rely on WM_CHAR as characters such as
-                        // spaces do not get send from this to WM_CHAR.
+                        // We pass this message forward to get the default IME window to show up
+                        // and for the result string to get posted to WM_CHAR.
                         // - Noggin_bops 2023-11-13
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
