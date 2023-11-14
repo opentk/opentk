@@ -86,7 +86,6 @@ namespace OpenTK.Backends.Tests
             float width = ImGui.GetColumnWidth();
             float height = ImGui.GetContentRegionAvail().Y;
 
-            // FIXME: Positioning the caret using the mouse is offset for this textbox... why?
             bool edited = ImGui.InputTextMultiline("", ref TextInput, 8192, new System.Numerics.Vector2(width, height));
         }
     }
