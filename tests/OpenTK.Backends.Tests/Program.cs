@@ -576,7 +576,7 @@ namespace OpenTK.Backends.Tests
             {
                 if (move.Window == Window)
                 {
-                    Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
+                    //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
                 }
             }
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)
