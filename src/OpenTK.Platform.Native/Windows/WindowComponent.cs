@@ -235,10 +235,12 @@ namespace OpenTK.Platform.Native.Windows
 
                         Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
                         Key key = KeyboardComponent.ToKey(scancode, vk, extended);
-                        Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key down: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        //Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key down: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
+                        // FIXME: Should this be before or after we change the keyboard state?
+                        KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
                         KeyboardComponent.KeyStateChanged(code, true);
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown));
+                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -279,7 +281,10 @@ namespace OpenTK.Platform.Native.Windows
 
                         Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
                         Key key = KeyboardComponent.ToKey(scancode, vk, extended);
-                        Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key up: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        //Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key up: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+
+                        // FIXME: Should this be before or after we change the keyboard state?
+                        KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
 
                         // FIXME: Detect more specifically the case where both shift keys have been pressed at the same time.
                         // Instead of always releasing both.
@@ -289,9 +294,10 @@ namespace OpenTK.Platform.Native.Windows
                             Key otherKey = code == Scancode.LeftShift ? Key.RightShift : Key.LeftShift;
 
                             // If the state of the key changed when we released it we send an event about it.
+                            // FIXME: Should this change the modifiers??
                             if (KeyboardComponent.KeyStateChanged(otherCode, false))
                             {
-                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode));
+                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
                             }
                         }
 
@@ -299,18 +305,16 @@ namespace OpenTK.Platform.Native.Windows
                         // - 2023-02-13 NogginBops
                         if (code == Scancode.PrintScreen)
                         {
-                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false));
+                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false, modifiers));
                         }
 
                         KeyboardComponent.KeyStateChanged(code, false);
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code));
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.SYSCOMMAND:
                     {
-                        Console.WriteLine("Sys command.");
-
                         switch ((SC)((int)wParam & 0xfff0))
                         {
                             case SC.KeyMenu:

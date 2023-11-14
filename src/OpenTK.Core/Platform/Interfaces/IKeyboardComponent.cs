@@ -67,7 +67,11 @@ namespace OpenTK.Core.Platform
         /// <param name="keyboardState">An array to be filled with the keyboard state.</param>
         void GetKeyboardState(bool[] keyboardState);
 
-        // FIXME: Api to get modifier state?
+        /// <summary>
+        /// Gets the current keyboard modifiers.
+        /// </summary>
+        /// <returns>The current keyboard modifiers.</returns>
+        KeyModifier GetKeyboardModifiers();
 
         // FIXME: Probably want to rename BeginIme and EndIme to BeginTextEditing or StartTextEdit
 

@@ -393,15 +393,18 @@ namespace OpenTK.Platform.Native.SDL
                             Key key = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.sym, Logger);
                             Scancode scancode = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.scancode, Logger);
 
+                            // FIXME: Get modifier state!
+                            KeyModifier modifiers = KeyModifier.None; // SDLKeyboardComponent.GetKeyboardModifiers?
+
                             bool repeat = keyboardEvent.repeat > 0;
 
                             if (keyboardEvent.type == SDL_EventType.SDL_KEYDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat, modifiers));
                             }
                             else if (keyboardEvent.type == SDL_EventType.SDL_KEYUP)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode, modifiers));
                             }
 
                             break;

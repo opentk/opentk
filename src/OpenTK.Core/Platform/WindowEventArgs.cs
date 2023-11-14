@@ -192,17 +192,24 @@ namespace OpenTK.Core.Platform
         public bool IsRepeat { get; private set; }
 
         /// <summary>
+        /// The keyboard modifiers that where down while this key was pressed.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window which received this keypress.</param>
         /// <param name="key">The key that was pressed.</param>
         /// <param name="scancode">The scancode representing the key.</param>
         /// <param name="isRepeat">True if this event is triggered by holding down the key, false otherwise.</param>
-        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat) : base(window)
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was pressed.</param>
+        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
             IsRepeat = isRepeat;
+            Modifiers = modifiers;
         }
     }
 
@@ -227,15 +234,22 @@ namespace OpenTK.Core.Platform
         public Scancode Scancode { get; private set; }
 
         /// <summary>
+        /// The keyboard modifiers that where down while this key was released.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window which received this keypress.</param>
         /// <param name="key">The key that was released.</param>
         /// <param name="scancode">The scancode representing the key.</param>
-        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode) : base(window)
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was released.</param>
+        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
+            Modifiers = modifiers;
         }
     }
 

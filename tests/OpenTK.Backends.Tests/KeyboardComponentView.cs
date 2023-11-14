@@ -81,6 +81,21 @@ namespace OpenTK.Backends.Tests
             ImGui.TextUnformatted($"Scancodes: {pressedScancodes}");
             ImGui.TextUnformatted($"Keys: {pressedKeys}");
 
+            KeyModifier modifiers = Program.KeyboardComponent.GetKeyboardModifiers();
+            StringBuilder pressedModifiers = new StringBuilder();
+            foreach (var modifier in Enum.GetValues<KeyModifier>())
+            {
+                if (modifier == KeyModifier.None) continue;
+                if (modifiers.HasFlag(modifier))
+                {
+                    pressedModifiers.Append(modifier);
+                    pressedModifiers.Append(", ");
+                }
+            }
+            pressedModifiers.Length = Math.Max(pressedModifiers.Length - 2, 0);
+
+            ImGui.TextUnformatted($"Modifiers: {pressedModifiers}");
+
             ImGui.SeparatorText("Text input");
 
             float width = ImGui.GetColumnWidth();

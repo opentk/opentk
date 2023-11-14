@@ -513,6 +513,8 @@ namespace OpenTK.Backends.Tests
                 // FIXME: Track modifiers!
 
                 InputData.KeysPressed[(int)keyDown.Key] = true;
+
+                Logger.LogDebug($"Key Down: {keyDown.Key}, Scancode: {keyDown.Scancode}, Modifiers: {keyDown.Modifiers}, Repeat: {keyDown.IsRepeat}");
             }
             else if (args is KeyUpEventArgs keyUp)
             {
@@ -521,6 +523,8 @@ namespace OpenTK.Backends.Tests
                 ImGui.GetIO().AddKeyEvent(ikey, false);
 
                 InputData.KeysPressed[(int)keyUp.Key] = false;
+
+                Logger.LogDebug($"Key Up: {keyUp.Key}, Scancode: {keyUp.Scancode}, Modifiers: {keyUp.Modifiers}");
             }
             else if (args is TextInputEventArgs textInput)
             {

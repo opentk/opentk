@@ -95,6 +95,13 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public unsafe KeyModifier GetKeyboardModifiers()
+        {
+            // FIXME: SDL_GetModState
+            return KeyModifier.None;
+        }
+
+        /// <inheritdoc/>
         public void BeginIme(WindowHandle window)
         {
             SDLWindow sdlWindow = window.As<SDLWindow>(this);

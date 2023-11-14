@@ -793,6 +793,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        KeyModifier IKeyboardComponent.GetKeyboardModifiers()
+        {
+            return _keyboardComponent!.GetKeyboardModifiers();
+        }
+
+        /// <inheritdoc/>
         void IKeyboardComponent.BeginIme(WindowHandle window)
         {
             _keyboardComponent!.BeginIme(window);

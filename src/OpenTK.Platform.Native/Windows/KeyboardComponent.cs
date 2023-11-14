@@ -33,6 +33,7 @@ namespace OpenTK.Platform.Native.Windows
 
         private Key[] Keymap = new Key[256];
 
+        private static KeyModifier Modifiers = KeyModifier.None;
         private static bool[] KeyboardState = new bool[256];
 
         /// <inheritdoc/>
@@ -136,7 +137,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             bool prev = KeyboardState[(int)code];
             KeyboardState[(int)code] = pressed;
-            return prev == pressed;
+            return prev != pressed;
         }
 
         /// <inheritdoc/>
@@ -279,29 +280,53 @@ namespace OpenTK.Platform.Native.Windows
             Array.Fill(keyboardState, false);
             Array.Copy(KeyboardState, keyboardState, Math.Min(KeyboardState.Length, keyboardState.Length));
             return;
-
-            // Get the current keyboard state
-            // Translate VKs into scancodes/keycodes and set those indices in the array to true.
-            Span<byte> state = stackalloc byte[256];
-            bool success;
-            fixed (byte* ptr = state)
-            {
-                success = Win32.GetKeyboardState(ptr);
-            }
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
-
-            for (int i = 0; i < state.Length; i++)
-            {
-                // Go from VK to Scancode/Key?
-            }
-            
-
-            throw new NotImplementedException();
         }
 
+        internal static KeyModifier GetKeyboardModifiersInternal()
+        {
+            KeyModifier modifiers = KeyModifier.None;
+            if ((Win32.GetKeyState(VK.CapsLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.CapsLock;
+            if ((Win32.GetKeyState(VK.NumLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.NumLock;
+            if ((Win32.GetKeyState(VK.ScrollLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.ScrollLock;
+
+            if ((Win32.GetKeyState(VK.LeftShift) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftShift;
+            if ((Win32.GetKeyState(VK.RightShift) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightShift;
+            // FIXME: This is going to be true if we have Alt-gr pressed
+            if ((Win32.GetKeyState(VK.LeftControl) & 0x8000) != 0 && KeyboardState[(int)Scancode.LeftControl])
+                modifiers |= KeyModifier.LeftControl;
+            if ((Win32.GetKeyState(VK.RightControl) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightControl;
+            if ((Win32.GetKeyState(VK.LeftMenu) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftAlt;
+            if ((Win32.GetKeyState(VK.RightMenu) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightAlt;
+            if ((Win32.GetKeyState(VK.LeftWindows) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftGUI;
+            if ((Win32.GetKeyState(VK.RightWindows) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightGUI;
+
+            if (modifiers.HasFlag(KeyModifier.LeftShift) || modifiers.HasFlag(KeyModifier.RightShift))
+                modifiers |= KeyModifier.Shift;
+            if (modifiers.HasFlag(KeyModifier.LeftControl) || modifiers.HasFlag(KeyModifier.RightControl))
+                modifiers |= KeyModifier.Control;
+            if (modifiers.HasFlag(KeyModifier.LeftAlt) || modifiers.HasFlag(KeyModifier.RightAlt))
+                modifiers |= KeyModifier.Alt;
+            if (modifiers.HasFlag(KeyModifier.LeftGUI) || modifiers.HasFlag(KeyModifier.RightGUI))
+                modifiers |= KeyModifier.GUI;
+
+            return modifiers;
+        }
+
+        /// <inheritdoc/>
+        public KeyModifier GetKeyboardModifiers()
+        {
+            return GetKeyboardModifiersInternal();
+        }
 
         private bool _imeActive;
 

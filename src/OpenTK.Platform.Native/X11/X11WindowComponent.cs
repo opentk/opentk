@@ -686,7 +686,7 @@ namespace OpenTK.Platform.Native.X11
                                 // FIXME: Backspace hack!
                                 if (keysym.Id == 65288)
                                 {
-                                    EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, Key.Backspace, Scancode.Backspace, false));
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, Key.Backspace, Scancode.Backspace, false, KeyModifier.None));
                                 }
 
                                 bool isHighLatin1 = false;
@@ -730,7 +730,7 @@ namespace OpenTK.Platform.Native.X11
                                 // FIXME: Backspace hack!
                                 if (keysym.Id == 65288)
                                 {
-                                    EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, Key.Backspace, Scancode.Backspace));
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, Key.Backspace, Scancode.Backspace, KeyModifier.None));
                                 }
                             }
 

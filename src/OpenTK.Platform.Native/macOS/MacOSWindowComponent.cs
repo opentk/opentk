@@ -747,25 +747,25 @@ namespace OpenTK.Platform.Native.macOS
                             switch (keyCode)
                             {
                                 case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, Scancode.Return, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, Scancode.Return, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, Scancode.Backspace, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, Scancode.Backspace, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, Scancode.Escape, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, Scancode.Escape, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, isRepeat, KeyModifier.None));
                                     break;
                                 case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, isRepeat));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, isRepeat, KeyModifier.None));
                                     break;
                                 default:
                                     break;
@@ -783,25 +783,25 @@ namespace OpenTK.Platform.Native.macOS
                             switch (keyCode)
                             {
                                 case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, Scancode.Return));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, Scancode.Return, KeyModifier.None));
                                     break;
                                 case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, Scancode.Backspace));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, Scancode.Backspace, KeyModifier.None));
                                     break;
                                 case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, Scancode.Escape));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, Scancode.Escape, KeyModifier.None));
                                     break;
                                 case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, KeyModifier.None));
                                     break;
                                 case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, KeyModifier.None));
                                     break;
                                 case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, KeyModifier.None));
                                     break;
                                 case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, KeyModifier.None));
                                     break;
                                 default:
                                     break;
