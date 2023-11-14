@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.Windows
     public class ClipboardComponent : IClipboardComponent
     {
         /// <inheritdoc/>
-        public string Name => "Win32 Clipboard component";
+        public string Name => "Win32ClipboardComponent";
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;

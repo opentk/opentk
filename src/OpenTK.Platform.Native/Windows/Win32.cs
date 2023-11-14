@@ -66,7 +66,7 @@ namespace OpenTK.Platform.Native.Windows
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr DefWindowProc(IntPtr hWnd, WM Msg, UIntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr DefWindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct WNDCLASSEX

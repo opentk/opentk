@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Native.Windows
     public class ShellComponent : IShellComponent
     {
         /// <inheritdoc/>
-        public string Name => "Win32 Shell Component";
+        public string Name => "Win32ShellComponent";
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Shell;

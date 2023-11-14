@@ -370,11 +370,11 @@ namespace OpenTK.Platform.Native.Windows
             // 0x38 - 0x3F
             Scancode.LeftAlt, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
             // 0x40 - 0x47
-            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.NumLock, Scancode.ScrollLock, Scancode.Keypad7,
+            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Keypad7,
             // 0x48 - 0x4F
             Scancode.Keypad8, Scancode.Keypad9, Scancode.KeypadDash, Scancode.Keypad4, Scancode.Keypad5, Scancode.Keypad6, Scancode.KeypadPlus, Scancode.Keypad1,
             // 0x50 - 0x57
-            Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, 0, 0, Scancode.NonUSSlashBar, Scancode.F11,
+            Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, Scancode.PrintScreen, 0, Scancode.NonUSSlashBar, Scancode.F11,
             // 0x58 - 0x5F
             Scancode.F12, Scancode.KeypadEquals, 0, 0, Scancode.International6, 0, 0, 0,
             // 0x60 - 0x67

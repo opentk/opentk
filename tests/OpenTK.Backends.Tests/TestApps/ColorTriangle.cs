@@ -201,8 +201,18 @@ void main()
 
         public void HandleEvent(EventArgs args)
         {
-            // We don't need any events here..?
-            // FIXME: Handle resize?
+            if (args is WindowResizeEventArgs resize)
+            {
+                var prevContext = Program.OpenGLComp.GetCurrentContext();
+                Program.OpenGLComp.SetCurrentContext(Context);
+
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+
+                // Re-render the window to make resize live.
+                Render();
+
+                Program.OpenGLComp.SetCurrentContext(prevContext);
+            }
         }
 
         public void Update(float deltaTime)

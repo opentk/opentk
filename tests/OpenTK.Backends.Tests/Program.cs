@@ -399,7 +399,7 @@ namespace OpenTK.Backends.Tests
 
             MainTabContainer.Paint(dt);
 
-            ImGui.ShowMetricsWindow();
+            //ImGui.ShowMetricsWindow();
             //ImGui.ShowDemoWindow();
         }
 
@@ -475,8 +475,17 @@ namespace OpenTK.Backends.Tests
                     }
 
                     WindowComp.Destroy(close2.Window);
+                    return;
                 }
-                return;
+                else
+                {
+                    // If this is a window event for an application window, send the event to that window.
+                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == windowEvent.Window);
+                    if (index != -1)
+                    {
+                        ApplicationWindows[index].Application?.HandleEvent(windowEvent);
+                    }
+                }
             }
 
             if (args is CloseEventArgs close)

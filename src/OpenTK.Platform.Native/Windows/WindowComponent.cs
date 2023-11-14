@@ -196,7 +196,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            //Console.WriteLine("WinProc " + message + " " + hWnd);
+            // Console.WriteLine("WinProc " + uMsg + " " + hWnd);
             switch (uMsg)
             {
                 case WM.KEYDOWN:
@@ -235,7 +235,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
                         Key key = KeyboardComponent.ToKey(scancode, vk, extended);
-                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key down: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
                         KeyboardComponent.KeyStateChanged(code, true);
                         EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown));
@@ -250,24 +250,36 @@ namespace OpenTK.Platform.Native.Windows
                         // FIXME: It seems there is a bug when both left and right GUI are
                         // pressed in short succession where only one WM_KEYUP message gets sent.
 
-                        // FIXME: Holding down both shift keys results in only one WM_KEYUP message.
-
                         bool sysKey = uMsg == WM.SYSKEYUP;
 
-                        ulong vk = wParam.ToUInt64();
+                        VK vk = (VK)wParam;
                         long l = lParam.ToInt64();
                         int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        // FIXME: Should we peek messages like in keydown?
-                        if (uMsg == WM.SYSKEYUP && (VK)vk == VK.Control)
+                        if (vk == VK.Control && extended == false)
                         {
-                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                            // Pressing Alt-gr sends VK_CONTROL followed by VK_MENU
+                            int time = Win32.GetMessageTime();
+
+                            if (Win32.PeekMessage(out Win32.MSG msg, IntPtr.Zero, 0, 0, PM.NoRemove))
+                            {
+                                if (msg.message == WM.KEYDOWN || msg.message == WM.SYSKEYDOWN)
+                                {
+                                    bool isExtended = (msg.lParam.ToInt64() & (1 << 24)) != 0;
+                                    if ((VK)msg.wParam.ToUInt64() == VK.Menu && isExtended && msg.time == time)
+                                    {
+                                        // This message is the VK_CONTROL message triggered from pressing Alt-Gr
+                                        // So we should ignore this message and only handle the Alt-Gr message.
+                                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                                    }
+                                }
+                            }
                         }
 
-                        Scancode code = KeyboardComponent.ToScancode(scancode, (VK)vk, extended);
-                        Key key = KeyboardComponent.ToKey(scancode, (VK)vk, extended);
-                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {(VK)vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
+                        Key key = KeyboardComponent.ToKey(scancode, vk, extended);
+                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key up: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
                         // FIXME: Detect more specifically the case where both shift keys have been pressed at the same time.
                         // Instead of always releasing both.
@@ -292,6 +304,28 @@ namespace OpenTK.Platform.Native.Windows
 
                         KeyboardComponent.KeyStateChanged(code, false);
                         EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SYSCOMMAND:
+                    {
+                        Console.WriteLine("Sys command.");
+
+                        switch ((SC)((int)wParam & 0xfff0))
+                        {
+                            case SC.KeyMenu:
+                                {
+                                    // Don't open the menu.
+                                    // FIXME: Add a setting so we can re-enable this for
+                                    // the people who want to add a windows menu manually.
+                                    // Do we want this per window, or just global toggle?
+                                    // Maybe detect if there is a win32 menubar and allow
+                                    // it in that case?
+                                    // - Noggin_bops 2023-11-14
+                                    return 0;
+                                }
+                            default: break;
+                        }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -1049,6 +1083,12 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: Set HWND.WindowState!
             HWND hwnd = new HWND(hWnd, hints);
+
+            // Set the default cursor for the window.
+            HCursor hcursor = new HCursor();
+            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, OCR.Normal, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
+            hcursor.Mode = HCursor.CursorMode.SystemCursor;
+            SetCursor(hwnd, hcursor);
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 
