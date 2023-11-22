@@ -25,6 +25,7 @@ namespace Generator.Process
             bool ChangeNativeName);
 
         internal sealed record EnumGroupInfo(
+            string OriginalName,
             string GroupName,
             bool IsFlags)
         {
@@ -84,34 +85,34 @@ namespace Generator.Process
             {
                 bool isFlag = @enum.Type == EnumType.Bitmask;
 
-                foreach ((string groupName, GLFile @namespace) in @enum.Groups)
+                foreach ((string originalName, string translatedName, GLFile @namespace) in @enum.Groups)
                 {
-                    if (groupName == "ObjectTypeDX")
+                    if (translatedName == "ObjectTypeDX")
                     {
                         ;
                     }
 
                     if (@namespace == GLFile.GL)
                     {
-                        AddToGroup(allEnumGroups, OutputApi.GL, groupName, isFlag);
-                        AddToGroup(allEnumGroups, OutputApi.GLCompat, groupName, isFlag);
-                        AddToGroup(allEnumGroups, OutputApi.GLES1, groupName, isFlag);
-                        AddToGroup(allEnumGroups, OutputApi.GLES2, groupName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.GL, originalName, translatedName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.GLCompat, originalName, translatedName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.GLES1, originalName, translatedName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.GLES2, originalName, translatedName, isFlag);
                     }
                     else if (@namespace == GLFile.WGL)
                     {
-                        AddToGroup(allEnumGroups, OutputApi.WGL, groupName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.WGL, originalName, translatedName, isFlag);
                     }
                     else if (@namespace == GLFile.GLX)
                     {
-                        AddToGroup(allEnumGroups, OutputApi.GLX, groupName, isFlag);
+                        AddToGroup(allEnumGroups, OutputApi.GLX, originalName, translatedName, isFlag);
                     }
 
-                    static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string groupName, bool isFlag)
+                    static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string originalName, string translatedName, bool isFlag)
                     {
                         // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
                         // Then we want the groupName to be considered a bitmask.
-                        if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(groupName, isFlag), out EnumGroupInfo? actual))
+                        if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(originalName, translatedName, isFlag), out EnumGroupInfo? actual))
                         {
                             // In the current spec this case never happens, but it could.
                             // - 2021-07-04
@@ -123,7 +124,7 @@ namespace Generator.Process
                         }
                         else
                         {
-                            allEnumGroups[api].Add(new EnumGroupInfo(groupName, isFlag));
+                            allEnumGroups[api].Add(new EnumGroupInfo(originalName, translatedName, isFlag));
                         }
                     }
                 }
@@ -234,8 +235,9 @@ namespace Generator.Process
 
                         if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
                         {
-                            foreach (var (groupName, @namespace) in @enum.Groups)
+                            foreach (var groupRef in @enum.Groups)
                             {
+                                GLFile @namespace = groupRef.Namespace;
                                 if (@namespace != glFile)
                                 {
                                     if (@namespace == GLFile.GL)
@@ -277,7 +279,7 @@ namespace Generator.Process
                                             }
                                         }
 
-                                        AddToGroup(allEnumGroups, outputApi, groupName, @enum.IsFlag);
+                                        AddToGroup(allEnumGroups, outputApi, groupRef, @enum.IsFlag);
 
                                         static bool MatchesAPI(InputAPI api, OutputApi output)
                                         {
@@ -293,11 +295,11 @@ namespace Generator.Process
                                         }
 
                                         // FIXME: Duplicate implementation, see above.
-                                        static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string groupName, bool isFlag)
+                                        static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, GroupRef @ref, bool isFlag)
                                         {
                                             // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
                                             // Then we want the groupName to be considered a bitmask.
-                                            if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(groupName, isFlag), out EnumGroupInfo? actual))
+                                            if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag), out EnumGroupInfo? actual))
                                             {
                                                 // In the current spec this case never happens, but it could.
                                                 // - 2021-07-04
@@ -309,7 +311,7 @@ namespace Generator.Process
                                             }
                                             else
                                             {
-                                                allEnumGroups[api].Add(new EnumGroupInfo(groupName, isFlag));
+                                                allEnumGroups[api].Add(new EnumGroupInfo(@ref.OriginalName, @ref.TranslatedName, isFlag));
                                             }
                                         }
                                     }
@@ -452,15 +454,15 @@ namespace Generator.Process
 
                         if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
                         {
-                            foreach (var (groupName, @namespace) in @enum.Groups)
+                            foreach (var (originalName, translatedName, @namespace) in @enum.Groups)
                             {
                                 if (@namespace != glFile)
                                     continue;
 
-                                if (groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? groupMembers) == false)
+                                if (groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? groupMembers) == false)
                                 {
                                     groupMembers = new List<EnumGroupMember>();
-                                    groupNameToEnumGroup.Add(groupName, groupMembers);
+                                    groupNameToEnumGroup.Add(translatedName, groupMembers);
                                 }
 
                                 if (groupMembers.Find(g => g.MangledName == @enum.MangledName) == null)
@@ -507,24 +509,24 @@ namespace Generator.Process
                     // Add keys + lists for all enumName names
                     List<EnumGroup> finalGroups = new List<EnumGroup>();
 
-                    foreach ((string groupName, bool isFlags) in allEnumGroups[outAPI])
+                    foreach ((string originalName, string translatedName, bool isFlags) in allEnumGroups[outAPI])
                     {
-                        groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? members);
+                        groupNameToEnumGroup.TryGetValue(translatedName, out List<EnumGroupMember>? members);
                         members ??= new List<EnumGroupMember>();
 
                         // SpecialNumbers is not an enumName groupName that we want to output.
                         // We handle these entries differently as some of the entries don't fit in an int.
-                        if (groupName == "SpecialNumbers")
+                        if (originalName == "SpecialNumbers")
                             continue;
 
                         // Remove all empty enumName groups, except the empty groups referenced by included vendorFunctions.
                         // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
                         // while not including any members for that enumName groupName.
                         // This is needed to solve that case.
-                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(new GroupRef(groupName, glFile)) == false)
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(new GroupRef(originalName, translatedName, glFile)) == false)
                             continue;
 
-                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(new GroupRef(groupName, glFile), out var functionsUsingEnumGroup) == false)
+                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(new GroupRef(originalName, translatedName, glFile), out var functionsUsingEnumGroup) == false)
                         {
                             functionsUsingEnumGroup = null;
                         }
@@ -541,7 +543,7 @@ namespace Generator.Process
 
                         members.Sort(EnumGroupMember.DefaultComparison);
 
-                        finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
+                        finalGroups.Add(new EnumGroup(translatedName, isFlags, members, functionsUsingEnumGroup));
                     }
 
                     // Sort enum groups be name

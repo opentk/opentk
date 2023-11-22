@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:44 GMT+01:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
@@ -5297,7 +5297,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Double = 5130,
     }
     ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationi" />, <see cref="GL.BlendEquationSeparate" />, ...</summary>
-    public enum BlendEquationModeEXT : uint
+    public enum BlendEquationMode : uint
     {
         FuncAdd = 32774,
         FuncAddExt = 32774,
@@ -5354,14 +5354,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Stencil = 6146,
     }
     ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.MapBuffer" />, <see cref="GL.MapNamedBuffer" />, ...</summary>
-    public enum BufferAccessARB : uint
+    public enum BufferAccess : uint
     {
         ReadOnly = 35000,
         WriteOnly = 35001,
         ReadWrite = 35002,
     }
     ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" />, <see cref="GL.GetNamedBufferParameteri64v" />, ...</summary>
-    public enum BufferPNameARB : uint
+    public enum BufferPName : uint
     {
         BufferImmutableStorage = 33311,
         BufferStorageFlags = 33312,
@@ -5416,7 +5416,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         AtomicCounterBuffer = 37568,
     }
     ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
-    public enum BufferTargetARB : uint
+    public enum BufferTarget : uint
     {
         ParameterBuffer = 33006,
         ArrayBuffer = 34962,
@@ -8956,7 +8956,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ProgramSeparable = 33368,
     }
     ///<summary>Used in <see cref="GL.GetProgramiv" />, <see cref="GL.EXT.GetNamedProgramivEXT" />, <see cref="GL.ARB.GetProgramivARB" /></summary>
-    public enum ProgramPropertyARB : uint
+    public enum ProgramProperty : uint
     {
         ComputeWorkGroupSize = 33383,
         ProgramBinaryLength = 34625,

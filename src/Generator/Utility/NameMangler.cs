@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -12,6 +13,8 @@ namespace Generator.Utility
         internal HashSet<string> FunctionsWithoutPrefix { get; init; }
         internal HashSet<string> EnumsWithoutPrefix { get; init; }
 
+        internal Dictionary<string, string> EnumGroupNameTranslationTable { get; init; }
+
         internal NameManglerSettings()
         {
             ExtensionPrefix = "GL_";
@@ -19,6 +22,7 @@ namespace Generator.Utility
             EnumPrefixes = new List<string> { "GL_" };
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
+            EnumGroupNameTranslationTable = new Dictionary<string, string>();
         }
     }
 
@@ -159,9 +163,20 @@ namespace Generator.Utility
             return RemoveFunctionPrefix(name);
         }
 
+        internal string TranslateEnumGroupName(string name)
+        {
+            if (Settings.EnumGroupNameTranslationTable.TryGetValue(name, out string? translated))
+            {
+                return translated;
+            }
+
+            return name;
+        }
+
         internal string MangleEnumName(string name)
         {
             // Remove the "GL_" prefix.
+
             var mangledName = RemoveEnumPrefix(name);
             return MangleMemberName(mangledName);
         }

@@ -176,12 +176,11 @@ namespace Generator.Writing
         }
     }
 
-    // FIXME: Maybe combine TypeName and GroupRef.
-    internal record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSEnum(string TranslatedTypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
         internal override string ToCSString()
         {
-            return TypeName;
+            return TranslatedTypeName;
         }
     }
 
