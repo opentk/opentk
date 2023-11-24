@@ -90,6 +90,7 @@ namespace OpenTK.Platform.Native.macOS
             Uninitialized,
             SystemCursor,
             AnimatedCursor,
+            CustomCursor,
         }
     }
 }

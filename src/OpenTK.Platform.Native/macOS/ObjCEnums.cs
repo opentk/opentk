@@ -202,5 +202,19 @@ namespace OpenTK.Platform.Native.macOS
         Highlight,
         PlusLighter,
     }
+
+    [Flags]
+    internal enum NSBitmapFormat : uint
+    {
+        AlphaFirst = 1 << 0,
+        AlphaNonpremultiplied = 1 << 1,
+        FloatingPointSamples = 1 << 2,
+
+        SixteenBitLittleEndian = 1 << 8,
+        ThirtyTwoBitLittleEndian = 1 << 9,
+
+        SixteenBitBigEndian = 1 << 10,
+        ThirtyTwoBitBigEndian = 1 << 11,
+    }
 }
 

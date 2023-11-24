@@ -4,6 +4,7 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -37,12 +38,51 @@ namespace OpenTK.Backends.Tests
                     SystemCursors.Add(cursorType, handle);
                 }
             }
+
+            try
+            {
+                byte[] icon = new byte[16 * 16 * 4];
+                for (int ccx = 0; ccx < 16; ccx++)
+                {
+                    for (int ccy = 0; ccy < 16; ccy++)
+                    {
+                        int index = (ccy * 16 + ccx) * 4;
+
+                        if (ccx < 5)
+                        {
+                            icon[index + 0] = 255;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 0;
+                        }
+                        else if (ccx < 10)
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 255;
+                            icon[index + 2] = 0;
+                        }
+                        else
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 255;
+                        }
+
+                        icon[index + 3] = 255;
+                        if (ccy < 5) icon[index + 3] = 50;
+                    }
+                }
+                // FIXME: Don't allocate the cursor every frame...
+                customCursor = Program.CursorComp!.Create(16, 16, icon, 0, 0);
+            }
+            catch
+            { }
         }
 
         bool hasSetCursor = false;
 
         string cursorFilePath = Path.Combine(Environment.CurrentDirectory, "Resources");
         CursorHandle? loadedCursor = null;
+        CursorHandle? customCursor = null;
         string cursorName = "";
         string? loadingError = null;
 
@@ -64,6 +104,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.BeginDisabled();
             }
 
+            float targetSize;
             {
                 float maxTextWidth = float.NegativeInfinity;
                 foreach (string name in Enum.GetNames<SystemCursorType>())
@@ -77,7 +118,7 @@ namespace OpenTK.Backends.Tests
 
                 float columnWidth = ImGui.GetColumnWidth();
                 // The max text width + some padding.
-                float targetSize = maxTextWidth + 10;
+                targetSize = maxTextWidth + 10;
                 int buttonsPerLine = (int)(columnWidth / targetSize);
                 if (buttonsPerLine == 0) buttonsPerLine = 1;
                 targetSize = columnWidth / buttonsPerLine;
@@ -138,6 +179,52 @@ namespace OpenTK.Backends.Tests
             }
 
             if (canLoadSystemCursors == false)
+            {
+                ImGui.EndDisabled();
+            }
+
+            if (customCursor == null)
+            {
+                ImGui.BeginDisabled();
+            }
+
+            {
+                ImGui.SeparatorText("Custom cursors");
+
+                ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
+
+                // Do we really want to use targetSize here?
+                // FIXME: Get padding values from ImGui...
+                float padding = ImGui.GetStyle().FramePadding.X;
+                ImGui.Button("Custom Cursor", new System.Numerics.Vector2(ImGui.CalcTextSize("Custom Cursor").X + 2*padding, targetSize));
+                bool hovered = ImGui.IsItemHovered();
+                if (hovered)
+                {
+                    if (Program.WindowComp.CanSetCursor)
+                    {
+                        // FIXME: Better cursor image
+                        Program.WindowComp.SetCursor(Program.Window, customCursor);
+                        setCursor = true;
+                    }
+                }
+
+                Vector2i size = (0, 0);
+                Vector2i hotspot = (0, 0);
+                if (hovered)
+                {
+                    Program.CursorComp!.GetSize(customCursor, out int width, out int height);
+                    size = (width, height);
+
+                    Program.CursorComp!.GetHotspot(customCursor, out int x, out int y);
+                    hotspot = (x, y);
+                }
+                ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
+                ImGui.Text($"Hotspot: ({hotspot.X}, {hotspot.Y})");
+
+                ImGui.PopStyleVar();
+            }
+
+            if (customCursor == null)
             {
                 ImGui.EndDisabled();
             }

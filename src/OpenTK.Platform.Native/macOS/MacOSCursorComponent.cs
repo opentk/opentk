@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -16,7 +18,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSImageClass = objc_getClass("NSImage"u8);
         internal static readonly ObjCClass NSDictionaryClass = objc_getClass("NSDictionary"u8);
         internal static readonly ObjCClass NSUserDefaultsClass = objc_getClass("NSUserDefaults"u8);
+        internal static readonly ObjCClass NSBitmapImageRep = objc_getClass("NSBitmapImageRep"u8);
 
+        internal static readonly IntPtr NSCalibratedRGBColorSpace = GetStringConstant(AppKitLibrary, "NSCalibratedRGBColorSpace"u8);
 
         internal static readonly SEL selInitWithImage_HotSpot = sel_registerName("initWithImage:hotSpot:"u8);
         internal static readonly SEL selHotSpot = sel_registerName("hotSpot"u8);
@@ -51,10 +55,13 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selLockFocus = sel_registerName("lockFocus"u8);
         internal static readonly SEL selUnlockFocus = sel_registerName("unlockFocus"u8);
         internal static readonly SEL selSize = sel_registerName("size"u8);
+        internal static readonly SEL selAddRepresentation = sel_registerName("addRepresentation:"u8);
 
         internal static readonly SEL selStandardUserDefaults = sel_registerName("standardUserDefaults"u8);
         internal static readonly SEL selPersistentDomainForName = sel_registerName("persistentDomainForName:"u8);
 
+        internal static readonly SEL selInitWithBitmapDataPlanes_PixelsWide_PixelsHigh_BitsPerSample_SamplesPerPixel_HasAlpha_IsPlanar_ColorSpaceName_BitmapFormat_BytesPerRow_BitsPerPixel = sel_registerName("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:"u8);
+        internal static readonly SEL selBitmapData = sel_registerName("bitmapData"u8);
 
         // Keep a list of animated cursors?
         private List<NSCursorHandle> AnimatedCursors = new List<NSCursorHandle>();
@@ -273,7 +280,44 @@ namespace OpenTK.Platform.Native.macOS
 
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            throw new NotImplementedException();
+            IntPtr bitmap = objc_msgSend_IntPtr((IntPtr)NSBitmapImageRep, Alloc);
+            // FIXME: BOOL
+            objc_msgSend_IntPtr(bitmap,
+                selInitWithBitmapDataPlanes_PixelsWide_PixelsHigh_BitsPerSample_SamplesPerPixel_HasAlpha_IsPlanar_ColorSpaceName_BitmapFormat_BytesPerRow_BitsPerPixel,
+                IntPtr.Zero,
+                width,
+                height,
+                8,
+                4,
+                true,
+                false,
+                NSCalibratedRGBColorSpace,
+                (nuint)NSBitmapFormat.AlphaNonpremultiplied,
+                width * 4,
+                32);
+
+            unsafe
+            {
+                Span<byte> data = new Span<byte>((void*)objc_msgSend_IntPtr(bitmap, selBitmapData), width * height * 4);
+                image.CopyTo(data);
+            }
+
+
+            IntPtr nsimage = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithSize, new NSSize(width, height));
+            objc_msgSend(nsimage, selAddRepresentation, bitmap);
+
+            IntPtr nscursor = objc_msgSend_IntPtr(
+                objc_msgSend_IntPtr((IntPtr)NSCursorClass, Alloc),
+                selInitWithImage_HotSpot,
+                nsimage,
+                new CGPoint(hotspotX, hotspotY));
+
+            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomCursor, nscursor);
+
+            objc_msgSend(bitmap, Release);
+            objc_msgSend(nsimage, Release);
+
+            return handle;
         }
 
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
@@ -283,7 +327,7 @@ namespace OpenTK.Platform.Native.macOS
 
         public void Destroy(CursorHandle handle)
         {
-            // FIXME:
+            // FIXME: Release reference(s) and null them out.
         }
 
         public bool IsSystemCursor(CursorHandle handle)
@@ -331,6 +375,9 @@ namespace OpenTK.Platform.Native.macOS
                 case NSCursorHandle.CursorMode.SystemCursor:
                     cursor = nscursor.Cursor;
                     break;
+                case NSCursorHandle.CursorMode.CustomCursor:
+                    cursor = nscursor.Cursor;
+                    break;
                 default:
                     cursor = IntPtr.Zero;
                     break;
@@ -362,18 +409,24 @@ namespace OpenTK.Platform.Native.macOS
             y = (int)hotSpot.y;
         }
 
-        // FIXME: Is this the API we want to expose, or do we want to
-        // expose an api for updating all cursors at the same time.
-        // This requires us to constantly call SetCursor for the cursor to update
-        // is that fine? Is there some other way we can animate the cursor?
-        public void UpdateAnimation(CursorHandle handle, double deltaTime)
+        /// <summary>
+        /// Updates the animation of an animated cursor.
+        /// When animated cursors change frame <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called to properly animate.
+        /// This function returns true if the cursor needs to be set again.
+        /// </summary>
+        /// <param name="handle">An animated cursor to update.</param>
+        /// <param name="deltaTime">The amount of time to advance the cursor animation.</param>
+        /// <returns>True if the cursor frame has changed and <see cref="IWindowComponent.SetCursor(WindowHandle, CursorHandle?)"/> needs to be called for the cursor to update, false otherwise.</returns>
+        public bool UpdateAnimation(CursorHandle handle, double deltaTime)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
 
             if (nscursor.Mode != NSCursorHandle.CursorMode.AnimatedCursor)
             {
-                return;
+                return false;
             }
+
+            int startFrame = nscursor.Frame;
 
             nscursor.Time += deltaTime;
             while (nscursor.Time > nscursor.Delay)
@@ -381,6 +434,8 @@ namespace OpenTK.Platform.Native.macOS
                 nscursor.Frame = (nscursor.Frame + 1) % nscursor.CursorFrames!.Length;
                 nscursor.Time -= nscursor.Delay;
             }
+
+            return startFrame != nscursor.Frame;
         }
     }
 }

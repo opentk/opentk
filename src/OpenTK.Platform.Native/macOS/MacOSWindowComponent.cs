@@ -575,7 +575,7 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanGetDisplay => true;
 
         /// <inheritdoc/>
-        public bool CanSetCursor => throw new NotImplementedException();
+        public bool CanSetCursor => true;
 
         /// <inheritdoc/>
         public bool CanCaptureCursor => throw new NotImplementedException();
