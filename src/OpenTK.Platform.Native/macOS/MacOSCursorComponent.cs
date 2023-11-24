@@ -327,7 +327,30 @@ namespace OpenTK.Platform.Native.macOS
 
         public void Destroy(CursorHandle handle)
         {
-            // FIXME: Release reference(s) and null them out.
+            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
+
+            // FIXME: Is this all that is required to destroy the cursor?
+
+            if (nscursor.Cursor != 0)
+            {
+                objc_msgSend(nscursor.Cursor, Release);
+                nscursor.Cursor = 0;
+            }
+
+            if (nscursor.CursorFrames != null)
+            {
+                foreach (var frame in nscursor.CursorFrames)
+                {
+                    objc_msgSend(frame, Release);
+                }
+                nscursor.CursorFrames = null;
+            }
+
+            nscursor.Delay = 0;
+            nscursor.Time = 0;
+            nscursor.Frame = 0;
+
+            nscursor.Mode = NSCursorHandle.CursorMode.Uninitialized;
         }
 
         public bool IsSystemCursor(CursorHandle handle)
