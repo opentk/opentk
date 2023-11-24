@@ -41,6 +41,7 @@ namespace OpenTK.Backends.Tests
 
             try
             {
+                // FIXME: Better cursor image
                 byte[] icon = new byte[16 * 16 * 4];
                 for (int ccx = 0; ccx < 16; ccx++)
                 {
@@ -72,7 +73,24 @@ namespace OpenTK.Backends.Tests
                     }
                 }
                 // FIXME: Don't allocate the cursor every frame...
-                customCursor = Program.CursorComp!.Create(16, 16, icon, 0, 0);
+                customColorCursor = Program.CursorComp!.Create(16, 16, icon, 0, 0);
+
+                byte[] image = new byte[16 * 16 * 3];
+                byte[] mask = new byte[16 * 16 * 1];
+                for (int ccx = 0; ccx < 16; ccx++)
+                {
+                    for (int ccy = 0; ccy < 16; ccy++)
+                    {
+                        int index = (ccy * 16 + ccx) * 3;
+
+                        image[index + 0] = (byte)(ccx * 16);
+                        image[index + 1] = (byte)(ccx * 16);
+                        image[index + 2] = (byte)(ccx * 16);
+
+                        mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
+                    }
+                }
+                customMaskCursor = Program.CursorComp.Create(16, 16, image, mask, 8, 8);
             }
             catch
             { }
@@ -82,7 +100,8 @@ namespace OpenTK.Backends.Tests
 
         string cursorFilePath = Path.Combine(Environment.CurrentDirectory, "Resources");
         CursorHandle? loadedCursor = null;
-        CursorHandle? customCursor = null;
+        CursorHandle? customColorCursor = null;
+        CursorHandle? customMaskCursor = null;
         string cursorName = "";
         string? loadingError = null;
 
@@ -183,50 +202,67 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndDisabled();
             }
 
-            if (customCursor == null)
-            {
-                ImGui.BeginDisabled();
-            }
-
             {
                 ImGui.SeparatorText("Custom cursors");
 
                 ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
 
-                // Do we really want to use targetSize here?
-                // FIXME: Get padding values from ImGui...
-                float padding = ImGui.GetStyle().FramePadding.X;
-                ImGui.Button("Custom Cursor", new System.Numerics.Vector2(ImGui.CalcTextSize("Custom Cursor").X + 2*padding, targetSize));
-                bool hovered = ImGui.IsItemHovered();
-                if (hovered)
+                CursorHandle? hoveredHandle = null;
+                if (CursorButton(customColorCursor, "Color cursor"))
                 {
-                    if (Program.WindowComp.CanSetCursor)
-                    {
-                        // FIXME: Better cursor image
-                        Program.WindowComp.SetCursor(Program.Window, customCursor);
-                        setCursor = true;
-                    }
+                    hoveredHandle = customColorCursor;
                 }
+
+                ImGui.SameLine();
+
+                if (CursorButton(customMaskCursor, "Mask cursor"))
+                {
+                    hoveredHandle = customMaskCursor;
+                }
+
+                ImGui.PopStyleVar();
 
                 Vector2i size = (0, 0);
                 Vector2i hotspot = (0, 0);
-                if (hovered)
+                if (hoveredHandle != null)
                 {
-                    Program.CursorComp!.GetSize(customCursor, out int width, out int height);
+                    Program.CursorComp!.GetSize(hoveredHandle, out int width, out int height);
                     size = (width, height);
 
-                    Program.CursorComp!.GetHotspot(customCursor, out int x, out int y);
+                    Program.CursorComp!.GetHotspot(hoveredHandle, out int x, out int y);
                     hotspot = (x, y);
                 }
                 ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
                 ImGui.Text($"Hotspot: ({hotspot.X}, {hotspot.Y})");
 
-                ImGui.PopStyleVar();
-            }
+                bool CursorButton(CursorHandle? handle, string name)
+                {
+                    if (handle == null)
+                    {
+                        ImGui.BeginDisabled();
+                    }
 
-            if (customCursor == null)
-            {
-                ImGui.EndDisabled();
+                    // Do we really want to use targetSize here?
+                    float padding = ImGui.GetStyle().FramePadding.X;
+                    ImGui.Button(name, new System.Numerics.Vector2(ImGui.CalcTextSize(name).X + 2 * padding, targetSize));
+                    bool hovered = ImGui.IsItemHovered();
+                    if (hovered)
+                    {
+                        if (Program.WindowComp.CanSetCursor)
+                        {
+
+                            Program.WindowComp.SetCursor(Program.Window, handle);
+                            setCursor = true;
+                        }
+                    }
+
+                    if (handle == null)
+                    {
+                        ImGui.EndDisabled();
+                    }
+
+                    return hovered;
+                }
             }
 
             // FIXME: Add UI for either drawing an image or loading an image to make a cursor.
