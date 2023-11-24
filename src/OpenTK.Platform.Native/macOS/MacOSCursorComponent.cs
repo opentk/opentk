@@ -322,8 +322,14 @@ namespace OpenTK.Platform.Native.macOS
 
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
+            // FIXME: Create black and white cursor...
+            // We need to translate the colorData and maskData to be
+            // color + alpha?
+            // Do we support "invert" colors?
             throw new NotImplementedException();
         }
+
+        // FIXME: Function for creating custom animated cursors..
 
         public void Destroy(CursorHandle handle)
         {
