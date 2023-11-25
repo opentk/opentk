@@ -62,6 +62,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly SEL selInitWithBitmapDataPlanes_PixelsWide_PixelsHigh_BitsPerSample_SamplesPerPixel_HasAlpha_IsPlanar_ColorSpaceName_BitmapFormat_BytesPerRow_BitsPerPixel = sel_registerName("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:"u8);
         internal static readonly SEL selBitmapData = sel_registerName("bitmapData"u8);
+        internal static readonly SEL selSetSize = sel_registerName("setSize:"u8);
+
 
         // Keep a list of animated cursors?
         private List<NSCursorHandle> AnimatedCursors = new List<NSCursorHandle>();
@@ -205,7 +207,7 @@ namespace OpenTK.Platform.Native.macOS
                     // This isn't perfect, but it should be good enough.
                     cursor = IntPtr.Zero;
                     cursorFrames = LoadAnimatedHiddenCursor("busybutclickable", selArrowCursor, out delay);
-                    mode = NSCursorHandle.CursorMode.AnimatedCursor;
+                    mode = NSCursorHandle.CursorMode.SystemAnimatedCursor;
                     if (cursorFrames.Length == 1)
                     {
                         cursor = cursorFrames[0];
@@ -216,7 +218,7 @@ namespace OpenTK.Platform.Native.macOS
                 case SystemCursorType.Wait:
                     cursor = IntPtr.Zero;
                     cursorFrames = LoadAnimatedHiddenCursor("busybutclickable", selArrowCursor, out delay);
-                    mode = NSCursorHandle.CursorMode.AnimatedCursor;
+                    mode = NSCursorHandle.CursorMode.SystemAnimatedCursor;
                     if (cursorFrames.Length == 1)
                     {
                         cursor = cursorFrames[0];
@@ -268,8 +270,8 @@ namespace OpenTK.Platform.Native.macOS
                 case NSCursorHandle.CursorMode.SystemCursor:
                     nscursor = new NSCursorHandle(NSCursorHandle.CursorMode.SystemCursor, cursor);
                     break;
-                case NSCursorHandle.CursorMode.AnimatedCursor:
-                    nscursor = new NSCursorHandle(NSCursorHandle.CursorMode.AnimatedCursor, cursorFrames!, delay);
+                case NSCursorHandle.CursorMode.SystemAnimatedCursor:
+                    nscursor = new NSCursorHandle(NSCursorHandle.CursorMode.SystemAnimatedCursor, cursorFrames!, delay);
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, mode.GetType());
@@ -278,32 +280,37 @@ namespace OpenTK.Platform.Native.macOS
             return nscursor;
         }
 
-        public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
+        // FIXME: Some way to handle high DPI...?
+        internal IntPtr NSCursorFromImage(int resX, int resY, float width, float height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
             IntPtr bitmap = objc_msgSend_IntPtr((IntPtr)NSBitmapImageRep, Alloc);
             // FIXME: BOOL
-            objc_msgSend_IntPtr(bitmap,
+            bitmap = objc_msgSend_IntPtr(bitmap,
                 selInitWithBitmapDataPlanes_PixelsWide_PixelsHigh_BitsPerSample_SamplesPerPixel_HasAlpha_IsPlanar_ColorSpaceName_BitmapFormat_BytesPerRow_BitsPerPixel,
                 IntPtr.Zero,
-                width,
-                height,
+                resX,
+                resY,
                 8,
                 4,
                 true,
                 false,
                 NSCalibratedRGBColorSpace,
                 (nuint)NSBitmapFormat.AlphaNonpremultiplied,
-                width * 4,
+                resX * 4,
                 32);
+
+            Debug.Assert(bitmap != 0);
 
             unsafe
             {
-                Span<byte> data = new Span<byte>((void*)objc_msgSend_IntPtr(bitmap, selBitmapData), width * height * 4);
+                Span<byte> data = new Span<byte>((void*)objc_msgSend_IntPtr(bitmap, selBitmapData), resX * resY * 4);
                 image.CopyTo(data);
             }
 
+            // FIXME: Dissociate the resolution from the screen size.
+            // objc_msgSend(bitmap, selSetSize, new NSSize(width, height));
 
-            IntPtr nsimage = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithSize, new NSSize(width, height));
+            IntPtr nsimage = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithSize, new NSSize(resX, resY));
             objc_msgSend(nsimage, selAddRepresentation, bitmap);
 
             IntPtr nscursor = objc_msgSend_IntPtr(
@@ -312,10 +319,17 @@ namespace OpenTK.Platform.Native.macOS
                 nsimage,
                 new CGPoint(hotspotX, hotspotY));
 
-            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomCursor, nscursor);
-
             objc_msgSend(bitmap, Release);
             objc_msgSend(nsimage, Release);
+
+            return nscursor;
+        }
+
+        public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
+        {
+            IntPtr nscursor = NSCursorFromImage(width, height, width, height, image, hotspotX, hotspotY);
+
+            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.CustomCursor, nscursor);
 
             return handle;
         }
@@ -336,7 +350,45 @@ namespace OpenTK.Platform.Native.macOS
             return Create(width, height, imageData, hotspotX, hotspotY);
         }
 
-        // FIXME: Function for creating custom animated cursors..
+        public struct Frame
+        {
+            public int ResX;
+            public int ResY;
+            public float Width;
+            public float Height;
+            public int HotspotX;
+            public int HotspotY;
+            public byte[] Image;
+
+            public Frame(int width, int height, byte[] image, int hotspotX, int hotspotY)
+            {
+                Width = width;
+                Height = height;
+                Image = image;
+                HotspotX = hotspotX;
+                HotspotY = hotspotY;
+            }
+        }
+
+        /// <summary>
+        /// Creates an animated cursor from a collection of frames.
+        /// </summary>
+        /// <param name="frames">The frames of the animation.</param>
+        /// <param name="delay">The delay in seconds between frames of the animation.</param>
+        /// <returns>The created animated cursor.</returns>
+        public CursorHandle Create(Frame[] frames, float delay)
+        {
+            IntPtr[] cursorFrames = new IntPtr[frames.Length];
+            for (int i = 0; i < frames.Length; i++)
+            {
+                Frame frame = frames[i];
+                cursorFrames[i] = NSCursorFromImage(frame.ResX, frame.ResY, frame.Width, frame.Height, frame.Image, frame.HotspotX, frame.HotspotY);
+            }
+
+            NSCursorHandle handle = new NSCursorHandle(NSCursorHandle.CursorMode.SystemAnimatedCursor, cursorFrames, delay);
+
+            return handle;
+        }
 
         public void Destroy(CursorHandle handle)
         {
@@ -370,9 +422,28 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
 
-            // FIXME: Differentiate Animated system cursors from custom animated cursors
             if (nscursor.Mode == NSCursorHandle.CursorMode.SystemCursor ||
-                nscursor.Mode == NSCursorHandle.CursorMode.AnimatedCursor)
+                nscursor.Mode == NSCursorHandle.CursorMode.SystemAnimatedCursor)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if the cursor is an animated cursor.
+        /// </summary>
+        /// <param name="handle">The cursor to check if it is an animated</param>
+        /// <returns>True if the cursor is animated, false otherwise.</returns>
+        public bool IsAnimatedCursor(CursorHandle handle)
+        {
+            NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
+
+            if (nscursor.Mode == NSCursorHandle.CursorMode.SystemAnimatedCursor ||
+                nscursor.Mode == NSCursorHandle.CursorMode.CustomAnimatedCursor)
             {
                 return true;
             }
@@ -404,7 +475,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr cursor;
             switch (nscursor.Mode)
             {
-                case NSCursorHandle.CursorMode.AnimatedCursor:
+                case NSCursorHandle.CursorMode.SystemAnimatedCursor:
                     // Measure the current frame
                     cursor = nscursor.CursorFrames![nscursor.Frame];
                     break;
@@ -439,10 +510,21 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
 
-            CGPoint hotSpot = objc_msgSend_CGPoint(nscursor.Cursor, selHotSpot);
+            if (nscursor.Mode == NSCursorHandle.CursorMode.SystemAnimatedCursor ||
+                nscursor.Mode == NSCursorHandle.CursorMode.CustomAnimatedCursor)
+            {
+                CGPoint hotSpot = objc_msgSend_CGPoint(nscursor.CursorFrames![nscursor.Frame], selHotSpot);
 
-            x = (int)hotSpot.x;
-            y = (int)hotSpot.y;
+                x = (int)hotSpot.x;
+                y = (int)hotSpot.y;
+            }
+            else
+            {
+                CGPoint hotSpot = objc_msgSend_CGPoint(nscursor.Cursor, selHotSpot);
+
+                x = (int)hotSpot.x;
+                y = (int)hotSpot.y;
+            }
         }
 
         /// <summary>
@@ -457,17 +539,34 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
 
-            if (nscursor.Mode != NSCursorHandle.CursorMode.AnimatedCursor)
+            if (nscursor.Mode != NSCursorHandle.CursorMode.SystemAnimatedCursor)
             {
                 return false;
             }
 
             int startFrame = nscursor.Frame;
 
-            nscursor.Time += deltaTime;
-            while (nscursor.Time > nscursor.Delay)
+            // If delay is negative, invert deltaTime as we are playing the animation backwards.
+            if (nscursor.Delay < 0)
             {
-                nscursor.Frame = (nscursor.Frame + 1) % nscursor.CursorFrames!.Length;
+                deltaTime = -deltaTime;
+            }
+
+            nscursor.Time += deltaTime;
+            while (double.Abs(nscursor.Time) > double.Abs(nscursor.Delay))
+            {
+                // Handle both positive and negative animation direction.
+                if (nscursor.Delay > 0)
+                {
+                    nscursor.Frame = (nscursor.Frame + 1) % nscursor.CursorFrames!.Length;
+                }
+                else
+                {
+                    nscursor.Frame--;
+                    if (nscursor.Frame < 0)
+                        nscursor.Frame = nscursor.CursorFrames!.Length - 1;
+                }
+
                 nscursor.Time -= nscursor.Delay;
             }
 

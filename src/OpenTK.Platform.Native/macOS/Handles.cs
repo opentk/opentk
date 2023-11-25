@@ -89,8 +89,9 @@ namespace OpenTK.Platform.Native.macOS
         {
             Uninitialized,
             SystemCursor,
-            AnimatedCursor,
+            SystemAnimatedCursor,
             CustomCursor,
+            CustomAnimatedCursor,
         }
     }
 }

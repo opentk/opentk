@@ -305,7 +305,7 @@ namespace OpenTK.Mathematics
             float s = color.Y;
             float l = color.Z;
 
-            float hi = h * 6f;
+            byte hi = (byte)(h * 6);
             float c = (1 - MathHelper.Abs((2 * l) - 1)) * s;
             float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
 

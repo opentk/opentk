@@ -363,7 +363,7 @@ namespace OpenTK.Platform.Native.macOS
                 switch (nswindow.Cursor.Mode)
                 {
                     // If the cursor is animated, pick the current frame.
-                    case NSCursorHandle.CursorMode.AnimatedCursor:
+                    case NSCursorHandle.CursorMode.SystemAnimatedCursor:
                         objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame]);
                         break;
                     default:
