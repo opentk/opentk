@@ -272,7 +272,10 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets or sets a value indicating whether the application window will be minimized if the
-        /// focus changes while the window is in fullscreen mode. The default value is true.
+        /// focus changes while the window is in fullscreen mode. The default value is <c>true</c>. Note that
+        /// <see cref="WindowState.Fullscreen"/> implies exclusive fullscreen mode, which means other normal windows on
+        /// the same monitor will not overdraw the application window. If overdraw is required, the library consumer must
+        /// define and manage a non-exclusive "borderless" window, sized and positioned to cover the entire display area.
         /// </summary>
         public bool AutoIconify { get; set; } = true;
     }
