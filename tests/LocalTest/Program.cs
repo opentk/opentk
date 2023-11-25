@@ -78,31 +78,6 @@ namespace LocalTest
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
-
-            var input = KeyboardState;
-
-            // ESC to quit
-            if (input.IsKeyReleased(Keys.Escape))
-            {
-                Close();
-                return;
-            }
-
-            // Space to toggle fullscreen
-            if (input.IsKeyReleased(Keys.Space))
-            {
-                WindowState = (WindowState == WindowState.Fullscreen) ? WindowState.Normal : WindowState.Fullscreen;
-                Console.WriteLine($"WindowState {WindowState}");
-                return;
-            }
-
-            // Enter to toggle AutoIconify
-            if (input.IsKeyReleased(Keys.Enter))
-            {
-                AutoIconify = !AutoIconify;
-                Console.WriteLine($"AutoIconify {AutoIconify}");
-                return;
-            }
         }
 
         protected override void OnResize(ResizeEventArgs e)
