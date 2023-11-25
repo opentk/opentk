@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Diagnostics;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
@@ -267,5 +268,13 @@ namespace OpenTK.Windowing.Desktop
         /// if you are not using <see cref="GameWindow"/> you will have to handle adaptive vsync yourself.
         /// </summary>
         public VSyncMode Vsync { get; set; } = VSyncMode.Off;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application window will be minimized if the
+        /// focus changes while the window is in fullscreen mode. Set this to false to allow use of windows
+        /// located on other monitors. The default value is true, except when a debugger is attached (such
+        /// as running in debug mode within Visual Studio).
+        /// </summary>
+        public bool FullscreenMinimizeOnFocusChange { get; set; } //= !Debugger.IsAttached;
     }
 }

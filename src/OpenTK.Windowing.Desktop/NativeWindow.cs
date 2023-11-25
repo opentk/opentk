@@ -139,6 +139,25 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        private bool _fullscreenMinimizeOnFocusChange;
+
+        /// <summary>
+        /// <inheritdoc cref="NativeWindow.FullscreenMinimizeOnFocusChange"/>
+        /// </summary>
+        public unsafe bool FullscreenMinimizeOnFocusChange
+        {
+            get => _fullscreenMinimizeOnFocusChange;
+
+            set
+            {
+                if (_fullscreenMinimizeOnFocusChange != value)
+                {
+                    _fullscreenMinimizeOnFocusChange = value;
+                    GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.AutoIconify, value);
+                }
+            }
+        }
+
         private WindowIcon _icon;
 
         /// <summary>
@@ -822,6 +841,9 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.WindowHint(WindowHintBool.TransparentFramebuffer, transparent);
             }
+
+            _fullscreenMinimizeOnFocusChange = settings.FullscreenMinimizeOnFocusChange;
+            GLFW.WindowHint(WindowHintBool.AutoIconify, settings.FullscreenMinimizeOnFocusChange);
 
             var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
             var modePtr = GLFW.GetVideoMode(monitor);

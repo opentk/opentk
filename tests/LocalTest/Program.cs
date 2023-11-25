@@ -78,6 +78,31 @@ namespace LocalTest
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
+
+            var input = KeyboardState;
+
+            // ESC to quit
+            if (input.IsKeyReleased(Keys.Escape))
+            {
+                Close();
+                return;
+            }
+
+            // Space to toggle fullscreen
+            if (input.IsKeyReleased(Keys.Space))
+            {
+                WindowState = (WindowState == WindowState.Fullscreen) ? WindowState.Normal : WindowState.Fullscreen;
+                Console.WriteLine($"WindowState {WindowState}");
+                return;
+            }
+
+            // Enter to toggle FullscreenMinimizeOnFocusChange
+            if (input.IsKeyReleased(Keys.Enter))
+            {
+                FullscreenMinimizeOnFocusChange = !FullscreenMinimizeOnFocusChange;
+                Console.WriteLine($"FullscreenMinimizeOnFocusChange {FullscreenMinimizeOnFocusChange}");
+                return;
+            }
         }
 
         protected override void OnResize(ResizeEventArgs e)
