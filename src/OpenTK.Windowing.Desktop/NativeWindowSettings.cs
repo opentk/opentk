@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -271,10 +272,8 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets or sets a value indicating whether the application window will be minimized if the
-        /// focus changes while the window is in fullscreen mode. Set this to false to allow use of windows
-        /// located on other monitors. The default value is true, except when a debugger is attached (such
-        /// as running in debug mode within Visual Studio).
+        /// focus changes while the window is in fullscreen mode. The default value is true.
         /// </summary>
-        public bool FullscreenMinimizeOnFocusChange { get; set; } //= !Debugger.IsAttached;
+        public bool AutoIconify { get; set; } = true;
     }
 }

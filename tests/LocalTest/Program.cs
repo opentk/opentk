@@ -96,11 +96,11 @@ namespace LocalTest
                 return;
             }
 
-            // Enter to toggle FullscreenMinimizeOnFocusChange
+            // Enter to toggle AutoIconify
             if (input.IsKeyReleased(Keys.Enter))
             {
-                FullscreenMinimizeOnFocusChange = !FullscreenMinimizeOnFocusChange;
-                Console.WriteLine($"FullscreenMinimizeOnFocusChange {FullscreenMinimizeOnFocusChange}");
+                AutoIconify = !AutoIconify;
+                Console.WriteLine($"AutoIconify {AutoIconify}");
                 return;
             }
         }
