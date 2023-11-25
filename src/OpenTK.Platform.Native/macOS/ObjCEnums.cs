@@ -216,5 +216,12 @@ namespace OpenTK.Platform.Native.macOS
         SixteenBitBigEndian = 1 << 10,
         ThirtyTwoBitBigEndian = 1 << 11,
     }
+
+    internal enum NSImageSymbolScale : int
+    {
+        Small = 1,
+        Medium = 2,
+        Large = 3,
+    }
 }
 

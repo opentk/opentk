@@ -12,6 +12,8 @@ namespace OpenTK.Platform.Native.macOS
 
         public NSCursorHandle? Cursor { get; set; }
 
+        public NSIconHandle? Icon { get; set; }
+
         public bool Destroyed { get; set; } = false;
 
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
@@ -92,6 +94,23 @@ namespace OpenTK.Platform.Native.macOS
             SystemAnimatedCursor,
             CustomCursor,
             CustomAnimatedCursor,
+        }
+    }
+
+    internal class NSIconHandle : IconHandle
+    {
+        public IntPtr Image { get; set; }
+        public IntPtr SymbolConfiguration { get; set; }
+
+        public NSIconHandle(IntPtr image)
+        {
+            Image = image;
+        }
+
+        public NSIconHandle(IntPtr image, IntPtr symbolConfiguration)
+        {
+            Image = image;
+            SymbolConfiguration = symbolConfiguration;
         }
     }
 }

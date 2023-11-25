@@ -194,6 +194,7 @@ namespace OpenTK.Backends.Tests
                     if (handle != null)
                     {
                         WindowComp.SetIcon(Window, handle);
+                        (WindowComp as MacOSWindowComponent)?.SetDockIcon(Window, handle);
 
                         // FIXME: Should we destroy the icon?
                         IconComponent?.Destroy(handle);

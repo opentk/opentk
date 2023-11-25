@@ -21,6 +21,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
         internal static SEL selDiscardEventsMatchingMask_beforeEvent = sel_registerName("discardEventsMatchingMask:beforeEvent:"u8);
         internal static SEL selMainMenu = sel_registerName("mainMenu"u8);
+        internal static SEL selApplicationIconImage = sel_registerName("applicationIconImage"u8);
+        internal static SEL selSetApplicationIconImage = sel_registerName("setApplicationIconImage:"u8);
 
         internal static SEL selType = sel_registerName("type"u8);
         internal static SEL selSendEvent = sel_registerName("sendEvent:"u8);
@@ -51,6 +53,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
         internal static SEL selSetFrame_Display = sel_registerName("setFrame:display:"u8);
         internal static SEL selSetContentSize = sel_registerName("setContentSize:"u8);
+        internal static SEL selDockTile = sel_registerName("dockTile"u8);
 
 
         internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
@@ -102,7 +105,10 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static SEL selSuperclass = sel_registerName("superclass"u8);
 
-
+        internal static SEL selImageViewWithImage = sel_registerName("imageViewWithImage:"u8);
+        internal static SEL selImageWithSymbolConfiguration = sel_registerName("imageWithSymbolConfiguration:"u8);
+        internal static SEL selDisplay = sel_registerName("display"u8);
+        internal static SEL selSetSymbolConfiguration = sel_registerName("setSymbolConfiguration:"u8);
 
 
 
@@ -113,6 +119,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray");
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
+        internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
+
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -911,13 +919,50 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public IconHandle? GetIcon(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            return nswindow.Icon;
         }
 
         /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            NSIconHandle nsicon = icon.As<NSIconHandle>(this);
+
+            nswindow.Icon = nsicon;
+
+            // FIXME: Is there something we should do here?
+        }
+
+        // FIXME: Should we pass a window handle here?
+        // FIXME: Maybe move this to MacOSShellComponent.
+        public void SetDockIcon(WindowHandle handle, IconHandle icon)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            NSIconHandle nsicon = icon.As<NSIconHandle>(this);
+
+            IntPtr image = nsicon.Image;
+            // FIXME: Allocation?
+            // FIXME: It seems like the symbol configuration isn't quite working
+            // I'm not sure why though...
+            // - Noggin_bops 2023-11-25
+            if (nsicon.SymbolConfiguration != 0)
+                image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
+
+            objc_msgSend(nsApplication, selSetApplicationIconImage, image);
+            
+            // FIXME: Maybe make a function for setting the minimized icon...
+            /*
+            IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
+
+            IntPtr imageView = objc_msgSend_IntPtr((IntPtr)NSImageViewClass, selImageViewWithImage, nsicon.Image);
+            if (nsicon.SymbolConfiguration != 0)
+                objc_msgSend(imageView, selSetSymbolConfiguration, nsicon.SymbolConfiguration);
+            objc_msgSend(dockTile, selSetContentView, imageView);
+
+            objc_msgSend(dockTile, selDisplay);
+            */
         }
 
         /// <inheritdoc/>
