@@ -3,7 +3,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using System;
-using System.Linq;
 
 namespace LocalTest
 {
@@ -14,7 +13,6 @@ namespace LocalTest
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
-                //RenderFrequency = 10, Obsolete as of 4.8.1
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -26,7 +24,6 @@ namespace LocalTest
                 IsEventDriven = false,
                 Profile = ContextProfile.Core,
                 ClientSize = (800, 600),
-                //Size = (800, 600), Obsolete as of 4.8.2
                 StartFocused = true,
                 StartVisible = true,
                 Title = "Local OpenTK Test",
@@ -35,26 +32,13 @@ namespace LocalTest
             };
 
             using Window window = new Window(gwSettings, nwSettings);
-            window.Run();
+            {
+                window.Run();
+            }
         }
 
         public Window(GameWindowSettings gwSettings, NativeWindowSettings nwSettings) : base(gwSettings, nwSettings)
         {
-            Console.WriteLine("\nGameWindowSettings:");
-            DumpProperties(gwSettings);
-            Console.WriteLine("\nNativeWindowSettings:");
-            DumpProperties(nwSettings);
-
-            void DumpProperties(object o)
-            {
-                var properties = o.GetType().GetProperties().OrderBy(p => p.Name).ToList();
-                foreach(var prop in properties)
-                {
-                    var attribs = prop.GetCustomAttributes(typeof(ObsoleteAttribute), true);
-                    if(attribs.Length == 0) // ignore obsolete properties, including inherited ones
-                        Console.WriteLine($"  {prop.Name} = {prop.GetValue(o)}");
-                }
-            }
         }
 
         protected override void OnLoad()
