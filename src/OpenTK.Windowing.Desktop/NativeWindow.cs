@@ -139,6 +139,26 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        private bool _autoIconify;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application window will be minimized if the
+        /// focus changes while the window is in fullscreen mode. The default value is <c>true</c>.
+        /// </summary>
+        public unsafe bool AutoIconify
+        {
+            get => _autoIconify;
+
+            set
+            {
+                if (_autoIconify != value)
+                {
+                    _autoIconify = value;
+                    GLFW.SetWindowAttrib(WindowPtr, WindowAttribute.AutoIconify, value);
+                }
+            }
+        }
+
         private WindowIcon _icon;
 
         /// <summary>
@@ -835,6 +855,9 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.WindowHint(WindowHintBool.TransparentFramebuffer, transparent);
             }
+
+            _autoIconify = settings.AutoIconify;
+            GLFW.WindowHint(WindowHintBool.AutoIconify, settings.AutoIconify);
 
             var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
             var modePtr = GLFW.GetVideoMode(monitor);

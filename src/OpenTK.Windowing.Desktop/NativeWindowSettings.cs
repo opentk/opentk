@@ -267,5 +267,11 @@ namespace OpenTK.Windowing.Desktop
         /// if you are not using <see cref="GameWindow"/> you will have to handle adaptive vsync yourself.
         /// </summary>
         public VSyncMode Vsync { get; set; } = VSyncMode.Off;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application window will be minimized if the
+        /// focus changes while the window is in fullscreen mode. The default value is <c>true</c>.
+        /// </summary>
+        public bool AutoIconify { get; set; } = true;
     }
 }
