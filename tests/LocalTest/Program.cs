@@ -31,7 +31,7 @@ namespace LocalTest
                 WindowState = WindowState.Normal,
             };
 
-            using Window window = new Window(gwSettings, nwSettings)
+            using (Window window = new Window(gwSettings, nwSettings))
             {
                 window.Run();
             }
