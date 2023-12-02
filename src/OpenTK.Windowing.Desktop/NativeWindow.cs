@@ -504,8 +504,8 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private Vector2i? _minimumSize;
-        private Vector2i? _maximumSize;
+        private Vector2i? _minimumClientSize;
+        private Vector2i? _maximumClientize;
 
         /// <summary>
         /// Gets or sets a <see cref="Vector2i" /> structure that contains the external size of this window.
@@ -570,11 +570,11 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe Vector2i? MinimumSize
         {
-            get => _minimumSize;
+            get => _minimumClientSize;
             set
             {
-                _minimumSize = value;
-                GLFW.SetWindowSizeLimits(WindowPtr, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
+                _minimumClientSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare, _maximumClientize?.X ?? GLFW.DontCare, _maximumClientize?.Y ?? GLFW.DontCare);
             }
         }
 
@@ -587,11 +587,11 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe Vector2i? MaximumSize
         {
-            get => _maximumSize;
+            get => _maximumClientize;
             set
             {
-                _maximumSize = value;
-                GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare);
+                _maximumClientize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, _minimumClientSize?.X ?? GLFW.DontCare, _minimumClientSize?.Y ?? GLFW.DontCare, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare);
             }
         }
 
@@ -882,7 +882,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
             _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
-            _cachedWindowClientSize = settings.Size;
+            _cachedWindowClientSize = settings.ClientSize;
 
             if (settings.WindowState == WindowState.Fullscreen && _isVisible)
             {
@@ -891,7 +891,7 @@ namespace OpenTK.Windowing.Desktop
             }
             else
             {
-                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+                WindowPtr = GLFW.CreateWindow(settings.ClientSize.X, settings.ClientSize.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -954,10 +954,10 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowSize(WindowPtr, out var width, out var height);
 
             AspectRatio = settings.AspectRatio;
-            _minimumSize = settings.MinimumSize;
-            _maximumSize = settings.MaximumSize;
+            _minimumClientSize = settings.MinimumClientSize;
+            _maximumClientize = settings.MaximumClientSize;
 
-            GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
+            GLFW.SetWindowSizeLimits(WindowPtr, _minimumClientSize?.X ?? GLFW.DontCare, _minimumClientSize?.Y ?? GLFW.DontCare, _maximumClientize?.X ?? GLFW.DontCare, _maximumClientize?.Y ?? GLFW.DontCare);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
 

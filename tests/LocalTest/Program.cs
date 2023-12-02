@@ -17,7 +17,6 @@ namespace LocalTest
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
-                //RenderFrequency = 10,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -28,7 +27,7 @@ namespace LocalTest
                 Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible,
                 IsEventDriven = false,
                 Profile = ContextProfile.Core,
-                Size = (800, 600),
+                ClientSize = (800, 600),
                 StartFocused = true,
                 StartVisible = true,
                 Title = "Local OpenTK Test",
