@@ -2,10 +2,10 @@
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
-using OpenTK.Windowing.GraphicsLibraryFramework;	
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
-using System.Diagnostics;	
-using System.Runtime.InteropServices;	
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace LocalTest
