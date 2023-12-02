@@ -142,7 +142,8 @@ namespace OpenTK.Windowing.Desktop
         private bool _autoIconify;
 
         /// <summary>
-        /// <inheritdoc cref="NativeWindowSettings.AutoIconify"/>
+        /// Gets or sets a value indicating whether the application window will be minimized if the
+        /// focus changes while the window is in fullscreen mode. The default value is <c>true</c>.
         /// </summary>
         public unsafe bool AutoIconify
         {
