@@ -1,41 +1,17 @@
-open System
+﻿open System
 open System.IO
 open System.Threading
 open Fake.Core
 open Fake.DotNet
 open Fake.DotNet.NuGet
 open Fake.IO
-
-#r "paket:
-storage: packages
-
-// https://github.com/fsprojects/FAKE/issues/2722
-nuget Microsoft.Build 17.3.2
-nuget Microsoft.Build.Framework 17.3.2
-nuget Microsoft.Build.Tasks.Core 17.3.2
-nuget Microsoft.Build.Utilities.Core 17.3.2
-
-nuget FSharp.Core 6.0.0.0
-
-nuget Fake.IO.FileSystem
-nuget Fake.DotNet.MSBuild
-nuget Fake.DotNet.Testing.XUnit2
-nuget Fake.DotNet.AssemblyInfoFile
-nuget Fake.DotNet.NuGet prerelease
-nuget Fake.DotNet.Paket
-nuget Fake.DotNet.Cli
-nuget Fake.Core.Target
-nuget Fake.Net.Http
-nuget Fake.Api.Github
-nuget xunit.runner.console
-nuget NuGet.CommandLine
-nuget Fake.Core.ReleaseNotes //"
-
-#load "./.fake/build.fsx/intellisense.fsx"
-
-open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
+
+let execContext = Context.FakeExecutionContext.Create false "build.fsx" [ ]
+Context.setExecutionContext (Context.RuntimeContext.Fake execContext)
+
+let rootDir = __SOURCE_DIRECTORY__ </> ".."
 
 // ---------
 // Configuration
@@ -74,7 +50,7 @@ let tags = "OpenTK OpenGL OpenGLES GLES OpenAL OpenCL C# F# .NET Mono Vector Mat
 
 let copyright = "Copyright (c) 2006 - 2020 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
-let solutionFile = "OpenTK.sln"
+let solutionFile = rootDir </> "OpenTK.sln"
 
 let gitOwner = "opentk"
 
@@ -87,7 +63,7 @@ let gitName = "opentk"
 let gitRaw = Environment.environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 
 // Read additional information from the release notes document
-let release = ReleaseNotes.load "RELEASE_NOTES.md"
+let release = ReleaseNotes.load (rootDir </> "RELEASE_NOTES.md")
 
 
 // ---------
@@ -370,5 +346,13 @@ open Fake.Core.TargetOperators
 // Startup
 // ---------
 
-// Run all targets by default. Invoke 'build <Target>' to override
-Target.runOrDefault "All"
+[<EntryPoint>]
+let main args = 
+    try
+        match args with
+        | [| target |] -> Target.runOrDefault target
+        | _ -> Target.runOrDefault "All"
+        0
+    with e ->
+        printfn "%A" e
+        1

@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -353,9 +354,10 @@ namespace OpenTK.Windowing.Desktop
                 // Set the new window state before any potential callback is called,
                 // so that the new state is available in for example OnResize.
                 // - Noggin_bops 2023-09-25
+                var previousWindowState = _windowState;
                 _windowState = value;
 
-                if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
+                if (previousWindowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
                     GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
@@ -487,7 +489,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2i? _maximumClientize;
 
         /// <summary>
-        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
+        /// Gets or sets a <see cref="Vector2i" /> structure that contains the external size of this window.
         /// </summary>
         public unsafe Vector2i Size
         {
@@ -512,7 +514,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the client size of this window.
+        /// Gets or sets a <see cref="Vector2i" /> structure that contains the client size of this window.
         /// </summary>
         public unsafe Vector2i ClientSize
         {
@@ -525,6 +527,18 @@ namespace OpenTK.Windowing.Desktop
             set
             {
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="Vector2i" /> structure that contains the framebuffer size of this window.
+        /// </summary>
+        public unsafe Vector2i FramebufferSize
+        {
+            get
+            {
+                GLFW.GetFramebufferSize(WindowPtr, out int width, out int height);
+                return (width, height);
             }
         }
 
@@ -856,12 +870,6 @@ namespace OpenTK.Windowing.Desktop
             else
             {
                 WindowPtr = GLFW.CreateWindow(settings.ClientSize.X, settings.ClientSize.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-
-                if (settings.StartVisible)
-                {
-                    // If we are starting the window maximized or minimized we need to set that here.
-                    WindowState = settings.WindowState;
-                }
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -885,6 +893,14 @@ namespace OpenTK.Windowing.Desktop
                 {
                     InitializeGlBindings();
                 }
+            }
+
+            // When WindowState is Normal on Wayland it freezes on calling GLFW.RestoreWindow(WindowPtr) before Context?.MakeCurrent()
+            // See https://github.com/opentk/opentk/pull/1656 and https://github.com/glfw/glfw/issues/2395
+            if (settings.WindowState != WindowState.Fullscreen && _isVisible)
+            {
+                // If we are starting the window maximized or minimized we need to set that here.
+                WindowState = settings.WindowState;
             }
 
             // Enables the caps lock modifier to be detected and updated
@@ -1009,6 +1025,7 @@ namespace OpenTK.Windowing.Desktop
 
         private GLFWCallbacks.WindowPosCallback _windowPosCallback;
         private GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private GLFWCallbacks.FramebufferSizeCallback _framebufferSizeCallback;
         private GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
         private GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
         private GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
@@ -1029,6 +1046,7 @@ namespace OpenTK.Windowing.Desktop
 
             _windowPosCallback = WindowPosCallback;
             _windowSizeCallback = WindowSizeCallback;
+            _framebufferSizeCallback = FramebufferSizeCallback;
             _windowCloseCallback = WindowCloseCallback;
             _windowRefreshCallback = WindowRefreshCallback;
             _windowFocusCallback = WindowFocusCallback;
@@ -1051,6 +1069,7 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetFramebufferSizeCallback(WindowPtr, _framebufferSizeCallback);
             GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
             GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
             GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
@@ -1109,6 +1128,18 @@ namespace OpenTK.Windowing.Desktop
             try
             {
                 OnResize(new ResizeEventArgs(width, height));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void FramebufferSizeCallback(Window* window, int width, int height)
+        {
+            try
+            {
+                OnFramebufferResize(new FramebufferResizeEventArgs(width, height));
             }
             catch (Exception e)
             {
@@ -1498,6 +1529,11 @@ namespace OpenTK.Windowing.Desktop
         public event Action<ResizeEventArgs> Resize;
 
         /// <summary>
+        /// Occurs whenever the framebuffer is resized.
+        /// </summary>
+        public event Action<FramebufferResizeEventArgs> FramebufferResize;
+
+        /// <summary>
         /// Occurs whenever the window is refreshed.
         /// </summary>
         public event Action Refresh;
@@ -1722,6 +1758,15 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Raises the FramebufferResize event.
+        /// </summary>
+        /// <param name="e">A <see cref="FramebufferResizeEventArgs"/> that contains the event data.</param>
+        protected virtual void OnFramebufferResize(FramebufferResizeEventArgs e)
+        {
+            FramebufferResize?.Invoke(e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Refresh"/> event.
         /// </summary>
         protected virtual void OnRefresh()
@@ -1907,7 +1952,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <inheritdoc />
-        public void Dispose()
+        public virtual void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

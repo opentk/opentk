@@ -67,6 +67,11 @@ namespace LocalTest
             base.OnUnload();
         }
 
+        protected override void OnUpdateFrame(FrameEventArgs args)
+        {
+            base.OnUpdateFrame(args);
+        }
+
         float time = 0;
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -86,9 +91,11 @@ namespace LocalTest
             SwapBuffers();
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs args)
+        protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
         {
-            base.OnUpdateFrame(args);
+            base.OnFramebufferResize(e);
+
+            GL.Viewport(0, 0, e.Width, e.Height);
         }
 
         protected override void OnResize(ResizeEventArgs e)
