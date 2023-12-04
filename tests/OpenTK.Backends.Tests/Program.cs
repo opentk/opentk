@@ -579,6 +579,10 @@ namespace OpenTK.Backends.Tests
                     //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
                 }
             }
+            else if (args is WindowModeChangeEventArgs modeChange)
+            {
+                Logger.LogInfo($"New window mode: {modeChange.NewMode}");
+            } 
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
                 Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");

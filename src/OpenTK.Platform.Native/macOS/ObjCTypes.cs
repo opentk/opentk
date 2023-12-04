@@ -23,6 +23,8 @@ namespace OpenTK.Platform.Native.macOS
     [DebuggerDisplay("{Handle}")]
     internal struct SEL
     {
+        public static SEL Null => new SEL(0);
+
         public IntPtr Handle;
 
         public SEL(IntPtr handle)

@@ -16,6 +16,12 @@ namespace OpenTK.Platform.Native.macOS
     {
         internal static IntPtr nsApplication;
 
+        internal static SEL selSetMainMenu = sel_registerName("setMainMenu:"u8);
+        internal static SEL selInitWithTitle = sel_registerName("initWithTitle:"u8);
+        internal static SEL selAddItem = sel_registerName("addItem:"u8);
+        internal static SEL selSetSubmenu = sel_registerName("setSubmenu:"u8);
+        internal static SEL selInitWithTitle_Action_KeyEquivalent = sel_registerName("initWithTitle:action:keyEquivalent:"u8);
+
         internal static readonly SEL selQuit = sel_registerName("quit"u8);
         internal static SEL selSharedApplication = sel_registerName("sharedApplication"u8);
         internal static SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
@@ -68,6 +74,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selDeminiaturize = sel_registerName("deminiaturize:"u8);
         internal static SEL selIsZoomed = sel_registerName("isZoomed"u8);
         internal static SEL selZoom = sel_registerName("zoom:"u8);
+        internal static SEL selToggleFullScreen = sel_registerName("toggleFullScreen:"u8);
         internal static SEL selIsVisible = sel_registerName("isVisible"u8);
         internal static SEL selOrderFront = sel_registerName("orderFront:"u8);
         internal static SEL selOrderOut = sel_registerName("orderOut:"u8);
@@ -114,12 +121,16 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
+        internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication");
+        internal static readonly ObjCClass NSMenuClass = objc_getClass("NSMenu"u8);
+        internal static readonly ObjCClass NSMenuItemClass = objc_getClass("NSMenuItem"u8);
         internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
         internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
         internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray");
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
+
 
 
         internal static ObjCClass NSOpenTKWindowClass;
@@ -144,10 +155,9 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
             }
 
-            ObjCClass nsapp = objc_getClass("NSApplication"u8);
-            class_addMethod(nsapp, selQuit, OnQuitHandler, "v@:"u8);
+            class_addMethod(NSApplicationClass, selQuit, OnQuitHandler, "v@:"u8);
 
-            nsApplication = objc_msgSend_IntPtr((IntPtr)nsapp, selSharedApplication);
+            nsApplication = objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication);
 
             objc_msgSend_bool(nsApplication, selSetActivationPolicy, (long)NSApplicationActivationpolicy.Regular);
             objc_msgSend(nsApplication, selDiscardEventsMatchingMask_beforeEvent, (ulong)NSEventMask.Any, IntPtr.Zero);
@@ -155,28 +165,48 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr mainMenu = objc_msgSend_IntPtr(nsApplication, selMainMenu);
             if (mainMenu == IntPtr.Zero)
             {
-                IntPtr menubar = objc_msgSend_IntPtr((IntPtr)objc_getClass("NSMenu"u8), Alloc);
-                IntPtr menuItem = objc_msgSend_IntPtr((IntPtr)objc_getClass("NSMenuItem"u8), Alloc);
+                IntPtr menubar = objc_msgSend_IntPtr((IntPtr)NSMenuClass, Alloc);
+                objc_msgSend(nsApplication, selSetMainMenu, menubar);
 
-                objc_msgSend(menubar, sel_registerName("addItem:"u8), menuItem);
-                objc_msgSend(nsApplication, sel_registerName("setMainMenu:"u8), menubar);
+                // Application menu
+                IntPtr appMenuItem = objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc);
+                objc_msgSend(menubar, selAddItem, appMenuItem);
 
-                IntPtr appMenu = objc_msgSend_IntPtr((IntPtr)objc_getClass("NSMenu"u8), Alloc);
+                // We don't init the name for this item and it will become the "app" menu.
+                // FIXME: Make the application name better!
+                // Seems like this needs to be done using something like Info.plist?
+                // We want to figure out how to do that and write a little documentation about it...
+                IntPtr appMenu = objc_msgSend_IntPtr((IntPtr)NSMenuClass, Alloc);
+                objc_msgSend(appMenuItem, selSetSubmenu, appMenu);
+
                 IntPtr quitMenuItem = objc_msgSend_IntPtr(
-                        objc_msgSend_IntPtr((IntPtr)objc_getClass("NSMenuItem"u8), Alloc),
-                        sel_registerName("initWithTitle:action:keyEquivalent:"u8),
+                        objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc),
+                        selInitWithTitle_Action_KeyEquivalent,
                         ToNSString("Quit"u8),
                         selQuit,
                         ToNSString("q"u8));
+                objc_msgSend(appMenu, selAddItem, quitMenuItem);
 
-                objc_msgSend(appMenu, sel_registerName("addItem:"u8), quitMenuItem);
-                objc_msgSend(menuItem, sel_registerName("setSubmenu:"u8), appMenu);
+                // View menu
+                IntPtr viewMenuItem = objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc);
+                objc_msgSend(menubar, selAddItem, viewMenuItem);
+
+                IntPtr viewMenu = objc_msgSend_IntPtr(
+                    objc_msgSend_IntPtr((IntPtr)NSMenuClass, Alloc),
+                    selInitWithTitle,
+                    ToNSString("View"u8));
+                objc_msgSend(viewMenuItem, selSetSubmenu, viewMenu);
+
+                IntPtr enterFullScreenItem = objc_msgSend_IntPtr(
+                    objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc),
+                    selInitWithTitle_Action_KeyEquivalent,
+                    ToNSString("Enter Full Screen"u8),
+                    selToggleFullScreen,
+                    ToNSString(""u8));
+                objc_msgSend(viewMenu, selAddItem, enterFullScreenItem);
 
                 objc_msgSend(nsApplication, sel_registerName("finishLaunching"u8));
             }
-
-            // FIXME: OpenTK 3 creates a new window and view class for every window, with a unique name.
-            // Is this something we also want to do?
 
             // Allocate a window class
             NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
@@ -188,6 +218,10 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResignKey:"u8), NSOtkWindowDelegate_WindowDidResignKeyInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResize:"u8), NSOtkWindowDelegate_WindowDidResizeInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMove:"u8), NSOtkWindowDelegate_WindowDidMoveInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMiniaturize:"u8), NSOtkWindowDelegate_WindowDidMiniaturizeInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidDeminiaturize:"u8), NSOtkWindowDelegate_WindowDidDeminiaturizeInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidEnterFullScreen:"u8), NSOtkWindowDelegate_WindowDidEnterFullScreenInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidExitFullScreen:"u8), NSOtkWindowDelegate_WindowDidExitFullScreenInst, "v@:@"u8);
             objc_registerClassPair(NSOpenTKWindowClass);
 
             IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
@@ -345,6 +379,73 @@ namespace OpenTK.Platform.Native.macOS
                 Console.WriteLine($"Got WindowDidMove for unknown window: 0x{window}");
             }
         }
+
+        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidMiniaturizeInst = NSOtkWindowDelegate_WindowDidMiniaturize;
+        private static void NSOtkWindowDelegate_WindowDidMiniaturize(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            IntPtr window = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Minimized));
+            }
+            else
+            {
+                // FIXME: How do we get the logger here?
+                // Logger?.LogDebug($"Got WindowDidMiniaturize for unknown window: 0x{window}");
+                Console.WriteLine($"Got WindowDidMiniaturize for unknown window: 0x{window}");
+            }
+        }
+
+        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidDeminiaturizeInst = NSOtkWindowDelegate_WindowDidDeminiaturize;
+        private static void NSOtkWindowDelegate_WindowDidDeminiaturize(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            IntPtr window = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+            }
+            else
+            {
+                // FIXME: How do we get the logger here?
+                // Logger?.LogDebug($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
+                Console.WriteLine($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
+            }
+        }
+
+        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidEnterFullScreenInst = NSOtkWindowDelegate_WindowDidEnterFullScreen;
+        private static void NSOtkWindowDelegate_WindowDidEnterFullScreen(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            IntPtr window = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                // FIXME: Exclusive or Windowed fullscreen? Should we differentiate on mac?
+                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.WindowedFullscreen));
+            }
+            else
+            {
+                // FIXME: How do we get the logger here?
+                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+            }
+        }
+
+        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidExitFullScreenInst = NSOtkWindowDelegate_WindowDidExitFullScreen;
+        private static void NSOtkWindowDelegate_WindowDidExitFullScreen(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            IntPtr window = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+            }
+            else
+            {
+                // FIXME: How do we get the logger here?
+                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+            }
+        }
+
+
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void NSOtkView_ResetCursorRects_(IntPtr view, SEL selector);
@@ -1213,12 +1314,17 @@ namespace OpenTK.Platform.Native.macOS
             {
                 case WindowMode.Hidden:
                     {
+                        // FIXME: How should this work with fullscreen?
+                        // Atm the window remains fullscreen but disappears...
                         objc_msgSend(nswindow.Window, selOrderOut, nswindow.Window);
-
                         break;
                     }
                 case WindowMode.Minimized:
                     {
+                        // FIXME: If we are in a fullscreen mode we can't really do this.
+                        // This is also something macOS wants to avoid doing.
+                        // Do we allow it?
+                        // Do we log a message to the user that this is not expected on macOS?
                         objc_msgSend(nswindow.Window, selMiniaturize, nswindow.Window);
                         break;
                     }
@@ -1261,16 +1367,16 @@ namespace OpenTK.Platform.Native.macOS
                             objc_msgSend(nswindow.Window, selOrderFront, nswindow.Window);
                         }
 
-                        // FIXME: Should we be calling "zoom:" or "toggleFullscreen:" here?
-                        // What is the "expected" behaviour.
-
                         // macos calls maximizing "zoom".
                         objc_msgSend(nswindow.Window, selZoom, nswindow.Window);
                         break;
                     }
                 case WindowMode.WindowedFullscreen:
                     {
-                        throw new NotImplementedException();
+                        // FIXME: deminituarize, un-zoom or whatever else needs to be done.
+
+                        // FIXME: Add a menu item for fullscreen
+                        objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
                         break;
                     }
                 case WindowMode.ExclusiveFullscreen:
