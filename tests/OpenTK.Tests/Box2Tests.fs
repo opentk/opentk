@@ -51,7 +51,7 @@ module Box2 =
            let mutable b = b1
            let v = b.Center
            
-           b.Size <- v1
+           b.CenteredSize <- v1
            
            Assert.ApproximatelyEquivalent(v, b.Center)
         
