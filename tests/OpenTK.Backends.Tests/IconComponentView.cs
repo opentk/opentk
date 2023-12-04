@@ -42,6 +42,21 @@ namespace OpenTK.Backends.Tests
             ImageResult logoData = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
             IconHandle logo = Program.IconComponent!.Create(logoData.Width, logoData.Height, logoData.Data);
             CustomIcons.Add(("OpenTK Logo", logo));
+
+            if (OperatingSystem.IsMacOS())
+            {
+                IconHandle? icon = (Program.IconComponent as MacOSIconComponent)!.CreateSFSymbol("fireworks", "An icon containing fireworks.");
+                if (icon != null)
+                {
+                    CustomIcons.Add(("Fireworks", icon));
+                }
+
+                icon = (Program.IconComponent as MacOSIconComponent)!.CreateSFSymbol("paintbrush.fill", "An icon depicting a paintbrush.");
+                if (icon != null)
+                {
+                    CustomIcons.Add(("Paintbrush", icon));
+                }
+            }
         }
 
         public override void Paint(double deltaTime)

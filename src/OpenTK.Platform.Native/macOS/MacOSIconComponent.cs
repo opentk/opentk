@@ -62,8 +62,6 @@ namespace OpenTK.Platform.Native.macOS
             {
                 throw new Exception("MacOSIconComponent can only initialize the WindowIcon component.");
             }
-
-
         }
 
         public bool CanLoadSystemIcons => true;
@@ -105,9 +103,9 @@ namespace OpenTK.Platform.Native.macOS
                     break;
             }
 
-            // FIXME: Load colored icons!
             IntPtr image = objc_msgSend_IntPtr((IntPtr)NSImageClass, selImageWithSystemSymbolName_AccessibilityDescription, symbolName, desc);
 
+            // FIXME: Why does this not result in color icons?
             IntPtr configuration = objc_msgSend_IntPtr((IntPtr)NSImageSymbolConfigurationClass, selConfigurationPreferringMulticolor);
             configuration = objc_msgSend_IntPtr(
                 configuration,
@@ -145,7 +143,7 @@ namespace OpenTK.Platform.Native.macOS
                 data.CopyTo(dataSpan);
             }
 
-            // FIXME: Dissociate the resolution from the screen size.
+            // FIXME: Dissociate the resolution from the screen size for proper DPI.
             // objc_msgSend(bitmap, selSetSize, new NSSize(width, height));
 
             IntPtr nsimage = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithSize, new NSSize(width, height));
@@ -153,6 +151,41 @@ namespace OpenTK.Platform.Native.macOS
 
             NSIconHandle nsicon = new NSIconHandle(nsimage);
 
+            return nsicon;
+        }
+
+        // FIXME: Some way to get multicolor icons working.
+        // FIXME: Add API for setting the icon color?
+        /// <summary>
+        /// Loads a <see href="https://developer.apple.com/sf-symbols/">SF Symbols</see> symbol by name.
+        /// </summary>
+        /// <param name="sfSymbolName">The SF Symbols name.</param>
+        /// <param name="accessibilityDescription">An accessibility description of the icon.</param>
+        /// <returns>A handle to the created icon, or null if no SF Symbol matching the name was found.</returns>
+        public IconHandle? CreateSFSymbol(string sfSymbolName, string accessibilityDescription)
+        {
+            IntPtr symbolName = ToNSString(sfSymbolName);
+            IntPtr desc = ToNSString(accessibilityDescription);
+
+            IntPtr image = objc_msgSend_IntPtr((IntPtr)NSImageClass, selImageWithSystemSymbolName_AccessibilityDescription, symbolName, desc);
+            if (image == IntPtr.Zero)
+            {
+                objc_msgSend(symbolName, Release);
+                objc_msgSend(desc, Release);
+                return null;
+            }
+
+            // FIXME: Why does this not result in color icons?
+            IntPtr configuration = objc_msgSend_IntPtr((IntPtr)NSImageSymbolConfigurationClass, selConfigurationPreferringMulticolor);
+            configuration = objc_msgSend_IntPtr(
+                configuration,
+                selConfigurationByApplyingConfiguration,
+                objc_msgSend_IntPtr((IntPtr)NSImageSymbolConfigurationClass, selConfigurationWithScale, (nint)NSImageSymbolScale.Large));
+
+            NSIconHandle nsicon = new NSIconHandle(image, configuration);
+
+            objc_msgSend(symbolName, Release);
+            objc_msgSend(desc, Release);
             return nsicon;
         }
 
