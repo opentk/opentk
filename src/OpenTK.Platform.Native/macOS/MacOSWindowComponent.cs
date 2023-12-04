@@ -59,6 +59,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
         internal static SEL selSetFrame_Display = sel_registerName("setFrame:display:"u8);
         internal static SEL selSetContentSize = sel_registerName("setContentSize:"u8);
+        internal static SEL selSetContentMinSize = sel_registerName("setContentMinSize:"u8);
+        internal static SEL selSetContentMaxSize = sel_registerName("setContentMaxSize:"u8);
         internal static SEL selDockTile = sel_registerName("dockTile"u8);
 
 
@@ -211,6 +213,7 @@ namespace OpenTK.Platform.Native.macOS
             // Allocate a window class
             NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), ShouldWindowCloseHandler, "b@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("zoom:"u8), NSOtkWindow_ZoomInst, "v@:@"u8);
             //class_addMethod(opentkWindowClass, sel_registerName("keyDown:"u8), (KeyDownDelegate)keyDown, "v@:@"u8);
 
             // NSWindowDelegate methods. We set the window as it's own delegate.
@@ -283,6 +286,31 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             return true;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate void NSOtkWindow_Zoom_(IntPtr window, SEL selector, IntPtr sender);
+        private static readonly NSOtkWindow_Zoom_ NSOtkWindow_ZoomInst = NSOtkWindow_Zoom;
+        private static void NSOtkWindow_Zoom(IntPtr window, SEL selector, IntPtr sender)
+        {
+            objc_super super;
+            super.receiver = window;
+            super.pclass = (ObjCClass)objc_msgSend_IntPtr(window, selSuperclass);
+            objc_msgSendSuper(super, selector);
+
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                // FIXME: BOOL
+                bool zoomed = objc_msgSend_bool(window, selIsZoomed);
+                if (zoomed)
+                {
+                    EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Maximized));
+                }
+                else
+                {
+                    EventQueue.Raise(nswindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(nswindow, WindowMode.Normal));
+                }
+            }
         }
 
         // We reuse this delegate definition for all window delegate notifications that return void
@@ -1180,25 +1208,47 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            width = nswindow.MaxWidth;
+            height = nswindow.MaxHeight;
         }
 
         /// <inheritdoc/>
         public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            nswindow.MinWidth = width;
+            nswindow.MinHeight = height;
+
+            float fWidth = width ?? 10000.0f;
+            float fheight = height ?? 10000.0f;
+
+            objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(fWidth, fheight));
         }
 
         /// <inheritdoc/>
         public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            width = nswindow.MinWidth;
+            height = nswindow.MinHeight;
         }
 
         /// <inheritdoc/>
         public void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            nswindow.MinWidth = width;
+            nswindow.MinHeight = height;
+
+            float fWidth = width ?? 0.0f;
+            float fheight = height ?? 0.0f;
+
+            objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(fWidth, fheight));
         }
 
         /// <inheritdoc/>

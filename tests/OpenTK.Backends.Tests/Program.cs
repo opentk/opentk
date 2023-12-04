@@ -169,6 +169,9 @@ namespace OpenTK.Backends.Tests
             WindowComp.SetClientSize(Window, 800, 600);
             WindowComp.SetMode(Window, WindowMode.Normal);
 
+            WindowComp.SetMinClientSize(Window, 700, null);
+            WindowComp.SetMaxClientSize(Window, 900, null);
+
             try
             {
                 if (WindowComp.CanSetIcon)

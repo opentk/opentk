@@ -16,6 +16,11 @@ namespace OpenTK.Platform.Native.macOS
 
         public bool Destroyed { get; set; } = false;
 
+        public int? MinWidth { get; set; } = null;
+        public int? MinHeight { get; set; } = null;
+        public int? MaxWidth { get; set; } = null;
+        public int? MaxHeight { get; set; } = null;
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;
