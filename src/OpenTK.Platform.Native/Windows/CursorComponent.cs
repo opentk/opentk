@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Native.Windows
                     ocr = OCR.Normal;
                     break;
                 case SystemCursorType.Loading:
-                    ocr = OCR.Wait;
+                    ocr = OCR.AppStarting;
                     break;
                 case SystemCursorType.Wait:
                     ocr = OCR.Wait;
@@ -74,15 +74,23 @@ namespace OpenTK.Platform.Native.Windows
                 case SystemCursorType.ArrowFourway:
                     ocr = OCR.SizeAll;
                     break;
+                case SystemCursorType.ArrowN:
+                case SystemCursorType.ArrowS:
                 case SystemCursorType.ArrowNS:
                     ocr = OCR.SizeNS;
                     break;
+                case SystemCursorType.ArrowW:
+                case SystemCursorType.ArrowE:
                 case SystemCursorType.ArrowEW:
                     ocr = OCR.SizeWE;
                     break;
+                case SystemCursorType.ArrowNE:
+                case SystemCursorType.ArrowSW:
                 case SystemCursorType.ArrowNESW:
                     ocr = OCR.SizeNESW;
                     break;
+                case SystemCursorType.ArrowNW:
+                case SystemCursorType.ArrowSE:
                 case SystemCursorType.ArrowNWSE:
                     ocr = OCR.SizeNWSE;
                     break;

@@ -74,15 +74,23 @@ namespace OpenTK.Platform.Native.SDL
                 case SystemCursorType.ArrowFourway:
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_SIZENWSE;
                     break;
+                case SystemCursorType.ArrowN:
+                case SystemCursorType.ArrowS:
                 case SystemCursorType.ArrowNS:
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_SIZENS;
                     break;
+                case SystemCursorType.ArrowE:
+                case SystemCursorType.ArrowW:
                 case SystemCursorType.ArrowEW:
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_SIZEWE;
                     break;
+                case SystemCursorType.ArrowNE:
+                case SystemCursorType.ArrowSW:
                 case SystemCursorType.ArrowNESW:
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_SIZENESW;
                     break;
+                case SystemCursorType.ArrowNW:
+                case SystemCursorType.ArrowSE:
                 case SystemCursorType.ArrowNWSE:
                     sdlCursor = SDL_SystemCursor.SDL_SYSTEM_CURSOR_SIZENWSE;
                     break;
