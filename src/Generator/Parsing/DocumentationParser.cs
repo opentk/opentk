@@ -28,7 +28,7 @@ namespace Generator.Parsing
                 OutputApi api = folder.Folder switch
                 {
                     "es1.1" => OutputApi.GLES1,
-                    "es3" => OutputApi.GLES3,
+                    "es3" => OutputApi.GLES2,
                     "gl2.1" => OutputApi.GLCompat,
                     "gl4" => OutputApi.GL,
                     _ => throw new NotImplementedException(),
@@ -36,9 +36,12 @@ namespace Generator.Parsing
 
                 foreach (var file in folder.Files)
                 {
-                    XmlReaderSettings settings = new XmlReaderSettings { NameTable = new System.Xml.NameTable() };
-                    settings.DtdProcessing = DtdProcessing.Ignore;
-                    settings.ValidationType = ValidationType.None;
+                    XmlReaderSettings settings = new XmlReaderSettings
+                    {
+                        NameTable = new System.Xml.NameTable(),
+                        DtdProcessing = DtdProcessing.Ignore,
+                        ValidationType = ValidationType.None
+                    };
                     XmlNamespaceManager xmlns = new XmlNamespaceManager(settings.NameTable);
                     xmlns.AddNamespace("mml", "");
                     XmlParserContext context = new XmlParserContext(null, xmlns, "", XmlSpace.Default);
@@ -61,8 +64,8 @@ namespace Generator.Parsing
                         case OutputApi.GLES1:
                             refPagesLink += $"es1.1/xhtml/{filename}.xml";
                             break;
-                        case OutputApi.GLES3:
-                            refPagesLink += $"es3.0/html{filename}.xhtml";
+                        case OutputApi.GLES2:
+                            refPagesLink += $"es3.0/html/{filename}.xhtml";
                             break;
                         default:
                             throw new Exception("API not supported for documentation.");
@@ -140,8 +143,6 @@ namespace Generator.Parsing
                     }
 
                     parametersDescriptions.TryGetValue(parameterName, out string? desc);
-                    if (desc != null)
-                        desc = NameMangler.MangleParameterDescription(desc);
 
                     parameters.Add(new ParameterDocumentation(parameterName, desc ?? "!!missing documentation!!"));
                 }

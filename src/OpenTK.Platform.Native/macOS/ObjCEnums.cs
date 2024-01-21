@@ -1,7 +1,7 @@
 ﻿using System;
 namespace OpenTK.Platform.Native.macOS
 {
-    public enum CFStringEncoding : uint
+    internal enum CFStringEncoding : uint
     {
         // Incomplete enum...
         UTF8 = 0x0800_0100,
@@ -10,8 +10,8 @@ namespace OpenTK.Platform.Native.macOS
         UTF16LE = 0x1400_0100,
         ASCII = 0x0000_0600,
     }
-    
-    public enum NSStringEncoding : ulong
+
+    internal enum NSStringEncoding : ulong
     {
         // Incomplete enum...
         ASCII = 1,
@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Native.macOS
 
     // On watchOS this is a uint...
     [Flags]
-    public enum NSWindowStyleMask : ulong
+    internal enum NSWindowStyleMask : ulong
     {
         Borderless = 0,
         Titled = 1 << 0,
@@ -41,7 +41,7 @@ namespace OpenTK.Platform.Native.macOS
         HUDWindow = 1 << 13,
     }
 
-    public enum NSBackingStoreType : ulong
+    internal enum NSBackingStoreType : ulong
     {
         [Obsolete]
         Retained = 0,
@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Native.macOS
         Buffered  = 2,
     }
 
-    public enum NSEventType : ulong
+    internal enum NSEventType : ulong
     {
         LeftMouseDown = 1,
         LeftMouseUp = 2,
@@ -98,7 +98,7 @@ namespace OpenTK.Platform.Native.macOS
     }
 
     [Flags]
-    public enum NSEventMask : ulong
+    internal enum NSEventMask : ulong
     {
         Any = 0xFFFF_FFFF_FFFF_FFFF,
 
@@ -142,17 +142,86 @@ namespace OpenTK.Platform.Native.macOS
 
     }
 
-    public enum NSApplicationActivationpolicy : long
+    internal enum NSApplicationActivationpolicy : long
     {
         Regular,
         Accessory,
         Prohibited,
     }
 
-    public enum NSRequestUserAttentionType : ulong
+    internal enum NSRequestUserAttentionType : ulong
     {
         CriticalRequest = 0,
         InformationalRequest = 10,
+    }
+
+    internal enum NSWindowLevel : long
+    {
+        Normal = 0,
+        Floating = 3,
+        Submenu = 3,
+        TornOffMenu = 3,
+        MainMenu = 24,
+        Status = 25,
+        ModalPanel = 8,
+        PopUpMenu = 101,
+        ScreenSaver = 1000,
+    }
+
+    // This is defined as nsuinteger
+    [Flags]
+    internal enum NSTrackingAreaOptions : uint
+    {
+        MouseEnteredAndExited = 0x01,
+        MouseMoved = 0x02,
+        CursorUpdate = 0x04,
+        NSTrackingActiveWhenFirstResponder = 0x10,
+        ActiveInKeyWindow = 0x20,
+        ActiveInActiveApp = 0x40,
+        ActiveAlways = 0x80,
+        InVisibleRect = 0x200,
+        EnabledDuringMouseDrag = 0x400,
+    }
+
+    // From https://github.com/gnustep/libs-gui/blob/master/Headers/AppKit/NSGraphicsContext.h
+    // These are not the formal defintions of the "operator" instead these are the old ones...
+    internal enum NSCompositingOperator : uint
+    {
+        Clear,
+        Copy,
+        SourceOver,
+        SourceIn,
+        SourceOut,
+        SourceAtop,
+        DestinationOver,
+        DestinationIn,
+        DestinationOut,
+        DestinationAtop,
+        XOR,
+        PlusDarker,
+        Highlight,
+        PlusLighter,
+    }
+
+    [Flags]
+    internal enum NSBitmapFormat : uint
+    {
+        AlphaFirst = 1 << 0,
+        AlphaNonpremultiplied = 1 << 1,
+        FloatingPointSamples = 1 << 2,
+
+        SixteenBitLittleEndian = 1 << 8,
+        ThirtyTwoBitLittleEndian = 1 << 9,
+
+        SixteenBitBigEndian = 1 << 10,
+        ThirtyTwoBitBigEndian = 1 << 11,
+    }
+
+    internal enum NSImageSymbolScale : int
+    {
+        Small = 1,
+        Medium = 2,
+        Large = 3,
     }
 }
 

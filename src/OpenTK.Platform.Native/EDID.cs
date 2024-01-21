@@ -7,7 +7,7 @@ using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native 
 {
-    public static unsafe class EDID
+    internal static unsafe class EDID
     {
         public struct EDIDInfo 
         {

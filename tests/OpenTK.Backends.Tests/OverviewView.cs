@@ -38,8 +38,10 @@ namespace OpenTK.Backends.Tests
             log.Add($"[{DateTime.Now:HH:mm:ss.fff} {level}] {member} {Path.GetFileName(filePath)}:{lineNumber} {str}");
         }
 
+        // FIXME: Add some other diagnostics data such as OS version, Arch, 64bit?, GPU vendor, etc.
+
         /// <inheritdoc/>
-        public override void Paint()
+        public override void Paint(double deltaTime)
         {
             ImGui.Text("This is the OpenTK PAL2 driver test suite.");
             ImGui.BulletText("Click on each tab to view details related to that driver. ");
@@ -48,6 +50,9 @@ namespace OpenTK.Backends.Tests
 
             bool preferSDL2 = BackendsConfig.Singleton.PreferSDL2;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers SDL2", preferSDL2);
+
+            bool preferANGLE = BackendsConfig.Singleton.PreferANGLE;
+            ImGuiUtils.ReadonlyCheckbox("Default Prefers ANGLE", preferANGLE);
 
             if (ImGui.BeginTable("overview_table_id", 4, ImGuiTableFlags.Borders))
             {
@@ -123,7 +128,9 @@ namespace OpenTK.Backends.Tests
                 //                 how to make it unformatted since the C ... parameter is unimplemented.
                 //                      ImGui::TextWrappped("%s", line);
 
-                if (ImGui.BeginChild("overview_log_table", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+                // FIXME: When the next imgui update comes we can follow the "Auto-resize with constraints" demo and make the log window have a min height.
+                // ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
+                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
                 {
                     if (log.Count == 0)
                     {

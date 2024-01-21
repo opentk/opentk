@@ -15,11 +15,21 @@ namespace OpenTK.Backends.Tests
 
         private Stopwatch watch = new Stopwatch();
 
-        public void Initialize(WindowHandle window, OpenGLContextHandle context)
+        public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             this.Window = window;
             this.Context = context;
             watch.Start();
+        }
+
+        public void HandleEvent(EventArgs args)
+        {
+            // FIXME: Handle resize?
+        }
+
+        public void Update(float deltaTime)
+        {
+
         }
 
         public void Render()
@@ -36,7 +46,7 @@ namespace OpenTK.Backends.Tests
             );
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            Program.WindowComp.SwapBuffers(Window);
+            Program.OpenGLComp.SwapBuffers(Context);
         }
 
         public void Deinitialize()

@@ -20,12 +20,16 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
         public string Name => nameof(X11IconComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.WindowIcon;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -34,14 +38,17 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
         public bool CanLoadSystemIcons => false;
 
+        /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)
         {
             // FIXME: Is there some way to get system cursors?
             throw new NotSupportedException("X11 doesn't support system icons!");
         }
 
+        /// <inheritdoc/>
         public IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
             IconImage image = new IconImage(width, height, data.ToArray());
@@ -68,15 +75,17 @@ namespace OpenTK.Platform.Native.X11
             return xicon;
         }
 
+        /// <inheritdoc/>
         public void Destroy(IconHandle handle)
         {
             XIconHandle xicon = handle.As<XIconHandle>(this);
 
-            xicon.Images = null;
+            xicon.Images = null!;
             xicon.Width = -1;
             xicon.Height = -1;
         }
 
+        /// <inheritdoc/>
         public void GetSize(IconHandle handle, out int width, out int height)
         {
             XIconHandle xicon = handle.As<XIconHandle>(this);

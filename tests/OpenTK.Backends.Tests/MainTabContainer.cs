@@ -49,7 +49,7 @@ namespace OpenTK.Backends.Tests
         }
 
         /// <inheritdoc/>
-        public void Paint()
+        public void Paint(double deltaTime)
         {
             Vector2 size = ImGui.GetIO().DisplaySize;
 
@@ -86,7 +86,7 @@ namespace OpenTK.Backends.Tests
                         }
 
                         ImGui.BeginChild($"##{i}");
-                        view.Paint();
+                        view.Paint(deltaTime);
                         ImGui.EndChild();
 
                         ImGui.EndTabItem();

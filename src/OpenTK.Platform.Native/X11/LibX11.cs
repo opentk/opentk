@@ -99,19 +99,6 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
 
-        internal struct XWMHints
-        {
-            internal XWMHintsMask flags;  /* marks which fields in this structure are defined */
-            internal byte input;          /* does this application rely on the window manager to get keyboard input? */
-            internal int initial_state;	/* see below */
-            internal XPixmap icon_pixmap; /* pixmap to be used as icon */
-            internal XWindow icon_window; /* window to be used as icon */
-            internal int icon_x, icon_y;  /* initial position of icon */
-            internal XPixmap icon_mask;   /* pixmap to be used as mask for icon_pixmap */
-            internal XID window_group;    /* id of related window group */
-            /* this structure may be extended in the future */
-        }
-
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern XWMHints* XAllocWMHints();
 
@@ -383,6 +370,9 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XUngrabPointer(XDisplayPtr display, XTime time);
 
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool XQueryExtension(XDisplayPtr display, string name, out int major_opcode_return, out int first_event_return, out int first_error_return);
+
         internal static unsafe string[] XListExtensions(XDisplayPtr display, out int nextensions_return)
         {
             byte** ptr = XListExtensions(display, out nextensions_return);
@@ -436,5 +426,11 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, int* /*Status*/ status_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XDisplayKeycodes(XDisplayPtr display, out int min_keycodes_return, out int max_keycodes_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XKeySym* XGetKeyboardMapping(XDisplayPtr display, byte first_keycode, int keycode_count, out int keysyms_per_keycode_return);
     }
 }

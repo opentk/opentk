@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenTK.Benchmarks
 {
-    public class Program
+    internal class Program
     {
         public static void Main()
         {

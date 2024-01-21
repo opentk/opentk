@@ -2,7 +2,7 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public enum KnownAtoms
+    internal enum KnownAtoms
     {
         #region Common Property Types
         ATOM,
@@ -10,6 +10,7 @@ namespace OpenTK.Platform.Native.X11
         STRING,
         UTF8_STRING,
         WINDOW,
+        AnyPropertyType,
         #endregion
 
         #region ICCCM
@@ -113,6 +114,25 @@ namespace OpenTK.Platform.Native.X11
 
         #region Motif
         _MOTIF_WM_HINTS,
+        #endregion
+
+        #region XDnD
+        XdndAware,
+        XdndSelection,
+        XdndEnter,
+        XdndLeave,
+        XdndPosition,
+        XdndDrop,
+        XdndFinished,
+        XdndStatus,
+        XdndActionCopy,
+        XdndActionMove,
+        XdndActionLink,
+        XdndActionAsk,
+        XdndActionPrivate,
+        XdndTypeList,
+        XdndActionList,
+        XdndActionDescription,
         #endregion
 
         EDID,

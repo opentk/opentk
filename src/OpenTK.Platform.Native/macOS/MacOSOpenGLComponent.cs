@@ -28,28 +28,37 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static Dictionary<IntPtr, NSOpenGLContext> NSOpenGLContextDict = new Dictionary<nint, NSOpenGLContext>();
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSOpenGLComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.OpenGL;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             // FIXME: Do something?
         }
 
-        public bool CanShareContexts => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanShareContexts => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromSurface => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -164,6 +173,8 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext);
 
             // We do this so the window component can implement SwapBuffers.
+            // And so we can call [Context update] when the window resizes or moves
+            // - Noggin_bops 2023-11-11
             nswindow.Context = nscontext;
 
             NSOpenGLContextDict.Add(nscontext.Context, nscontext);
@@ -180,6 +191,7 @@ namespace OpenTK.Platform.Native.macOS
             return nscontext;
         }
 
+        /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
@@ -192,17 +204,20 @@ namespace OpenTK.Platform.Native.macOS
             nscontext.Context = IntPtr.Zero;
         }
 
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
         }
 
+        /// <inheritdoc/>
         public nint GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             // FIXME: Maybe more complicated logic?
             return GetSymbol(opengl, procedureName);
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
             IntPtr contextPtr = objc_msgSend_IntPtr((IntPtr)NSOpenGLContextClass, selCurrentContext);
@@ -217,6 +232,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             NSOpenGLContext? nscontext = handle?.As<NSOpenGLContext>(this);
@@ -233,12 +249,14 @@ namespace OpenTK.Platform.Native.macOS
             return true;
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
             return nscontext.SharedContext;
         }
 
+        /// <inheritdoc/>
         public unsafe void SetSwapInterval(int interval)
         {
             NSOpenGLContext? nscontext = (NSOpenGLContext?)GetCurrentContext();
@@ -249,6 +267,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public int GetSwapInterval()
         {
             NSOpenGLContext? nscontext = (NSOpenGLContext?)GetCurrentContext();
@@ -260,6 +279,13 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             return interval;
+        }
+
+        /// <inheritdoc/>
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+            objc_msgSend(nscontext.Context, selFlushBuffer);
         }
     }
 }

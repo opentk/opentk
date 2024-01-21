@@ -33,6 +33,9 @@ namespace OpenTK.Platform.Native.Windows
 
         private Key[] Keymap = new Key[256];
 
+        private static KeyModifier Modifiers = KeyModifier.None;
+        private static bool[] KeyboardState = new bool[256];
+
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
@@ -104,7 +107,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public static void KeyboardLayoutChange(WindowHandle handle, IntPtr hKL)
+        internal static void KeyboardLayoutChange(WindowHandle handle, IntPtr hKL)
         {
             // FIXME: We shouldn't need to call this statically...
             if (Instance != null)
@@ -129,6 +132,14 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <returns>If the state of the key changed.</returns>
+        internal static bool KeyStateChanged(Scancode code, bool pressed)
+        {
+            bool prev = KeyboardState[(int)code];
+            KeyboardState[(int)code] = pressed;
+            return prev != pressed;
+        }
+
         /// <inheritdoc/>
         public bool SupportsLayouts => true;
 
@@ -141,13 +152,13 @@ namespace OpenTK.Platform.Native.Windows
 
             int status;
 
-            status = Win32.RegOpenKeyEx((IntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out IntPtr layoutsKey);
+            status = Win32.RegOpenKeyEx((UIntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out UIntPtr layoutsKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"HKEY_LOCAL_MACHINE\\{LAYOUTS_REGISTRY_PATH}\") error: 0x{status:X8}");
             }
 
-            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out IntPtr layoutKey);
+            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out UIntPtr layoutKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"{layoutName}\") error: 0x{status:X8}");
@@ -218,6 +229,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        /// <remarks>This function is expensive and should be cached if possible.</remarks>
         public string[] GetAvailableKeyboardLayouts()
         {
             int count = Win32.GetKeyboardLayoutList(0, Span<IntPtr>.Empty);
@@ -261,6 +273,60 @@ namespace OpenTK.Platform.Native.Windows
             return Keymap[(int)scancode];
         }
 
+        /// <inheritdoc/>
+        public unsafe void GetKeyboardState(bool[] keyboardState)
+        {
+            // Copy over the current keyboard state.
+            Array.Fill(keyboardState, false);
+            Array.Copy(KeyboardState, keyboardState, Math.Min(KeyboardState.Length, keyboardState.Length));
+            return;
+        }
+
+        internal static KeyModifier GetKeyboardModifiersInternal()
+        {
+            KeyModifier modifiers = KeyModifier.None;
+            if ((Win32.GetKeyState(VK.CapsLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.CapsLock;
+            if ((Win32.GetKeyState(VK.NumLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.NumLock;
+            if ((Win32.GetKeyState(VK.ScrollLock) & 0x0001) != 0)
+                modifiers |= KeyModifier.ScrollLock;
+
+            if ((Win32.GetKeyState(VK.LeftShift) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftShift;
+            if ((Win32.GetKeyState(VK.RightShift) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightShift;
+            // FIXME: This is going to be true if we have Alt-gr pressed
+            if ((Win32.GetKeyState(VK.LeftControl) & 0x8000) != 0 && KeyboardState[(int)Scancode.LeftControl])
+                modifiers |= KeyModifier.LeftControl;
+            if ((Win32.GetKeyState(VK.RightControl) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightControl;
+            if ((Win32.GetKeyState(VK.LeftMenu) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftAlt;
+            if ((Win32.GetKeyState(VK.RightMenu) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightAlt;
+            if ((Win32.GetKeyState(VK.LeftWindows) & 0x8000) != 0)
+                modifiers |= KeyModifier.LeftGUI;
+            if ((Win32.GetKeyState(VK.RightWindows) & 0x8000) != 0)
+                modifiers |= KeyModifier.RightGUI;
+
+            if (modifiers.HasFlag(KeyModifier.LeftShift) || modifiers.HasFlag(KeyModifier.RightShift))
+                modifiers |= KeyModifier.Shift;
+            if (modifiers.HasFlag(KeyModifier.LeftControl) || modifiers.HasFlag(KeyModifier.RightControl))
+                modifiers |= KeyModifier.Control;
+            if (modifiers.HasFlag(KeyModifier.LeftAlt) || modifiers.HasFlag(KeyModifier.RightAlt))
+                modifiers |= KeyModifier.Alt;
+            if (modifiers.HasFlag(KeyModifier.LeftGUI) || modifiers.HasFlag(KeyModifier.RightGUI))
+                modifiers |= KeyModifier.GUI;
+
+            return modifiers;
+        }
+
+        /// <inheritdoc/>
+        public KeyModifier GetKeyboardModifiers()
+        {
+            return GetKeyboardModifiersInternal();
+        }
 
         private bool _imeActive;
 
@@ -297,7 +363,6 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        // FIXME: API for getting the candidate list.
         /// <inheritdoc/>
         public void EndIme(WindowHandle window)
         {
@@ -330,11 +395,11 @@ namespace OpenTK.Platform.Native.Windows
             // 0x38 - 0x3F
             Scancode.LeftAlt, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
             // 0x40 - 0x47
-            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.NumLock, Scancode.ScrollLock, Scancode.Keypad7,
+            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Keypad7,
             // 0x48 - 0x4F
             Scancode.Keypad8, Scancode.Keypad9, Scancode.KeypadDash, Scancode.Keypad4, Scancode.Keypad5, Scancode.Keypad6, Scancode.KeypadPlus, Scancode.Keypad1,
             // 0x50 - 0x57
-            Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, 0, 0, Scancode.NonUSSlashBar, Scancode.F11,
+            Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, Scancode.PrintScreen, 0, Scancode.NonUSSlashBar, Scancode.F11,
             // 0x58 - 0x5F
             Scancode.F12, Scancode.KeypadEquals, 0, 0, Scancode.International6, 0, 0, 0,
             // 0x60 - 0x67

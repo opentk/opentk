@@ -1,11 +1,11 @@
 type file
 id OpenTK.Windowing.GraphicsLibraryFramework
 description
-    GLFW bindings for c# from the cpp GLFW library.
+    GLFW bindings for C# from the C GLFW library.
 dependencies
     framework: net7.0
         OpenTK.Core ~> #VERSION#
-        OpenTK.redist.glfw >= 3.3.8.30
+        OpenTK.redist.glfw >= 3.3.8.39
 files
     bin\Release\net7.0\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\net7.0
     bin\Release\net7.0\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\net7.0

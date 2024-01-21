@@ -1,6 +1,6 @@
-﻿using OpenTK;
-using OpenTK.Core.Platform;
+﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Native.Windows
     public class ShellComponent : IShellComponent
     {
         /// <inheritdoc/>
-        public string Name => "Win32 Shell Component";
+        public string Name => "Win32ShellComponent";
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Shell;
@@ -131,6 +131,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         // FIXME: Move this to the window component itself?
+        // FIXME: DWMWA_BORDER_COLOR? DWMWA_WINDOW_CORNER_PREFERENCE?
         /// <summary>
         /// Sets the <c>DWMWA_USE_IMMERSIVE_DARK_MODE</c> flag on the window causing the titlebar be rendered in dark mode colors.
         /// </summary>
@@ -185,10 +186,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        /// <summary>
-        /// Gets information about the memory of the device and the current status.
-        /// </summary>
-        /// <returns>The memory info.</returns>
+        /// <inheritdoc/>
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
             Win32.MEMORYSTATUSEX status = default;

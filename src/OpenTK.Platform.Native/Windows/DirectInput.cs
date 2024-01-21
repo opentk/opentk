@@ -15,6 +15,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace OpenTK.Platform.Native.Windows
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
     internal static class DirectInput
     {
         internal static void CheckHResult(int hresult)
@@ -553,4 +554,5 @@ namespace OpenTK.Platform.Native.Windows
                 out IUnknown ppv);
         }
     }
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

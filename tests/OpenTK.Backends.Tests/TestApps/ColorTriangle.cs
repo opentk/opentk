@@ -63,13 +63,42 @@ void main()
 }
 ";
 
+        const string VertexShaderES = @"#version 300 es
+
+precision highp float;
+
+layout(location = 0) in vec2 v_Position;
+layout(location = 1) in vec3 v_Color;
+
+out vec3 f_Color;
+
+void main()
+{
+    gl_Position = vec4(v_Position, 0.0, 1.0);
+    f_Color = v_Color;
+}
+";
+        const string FragmentShaderES = @"#version 300 es
+
+precision highp float;
+
+in vec3 f_Color;
+
+out vec3 color;
+
+void main()
+{
+    color = f_Color;
+}
+";
+
         static readonly Vertex[] Vertices = {
             new Vertex((-0.5f, -0.5f), (1, 0, 0)),
             new Vertex((+0.5f, -0.5f), (0, 1, 0)),
             new Vertex(( 0.0f, +0.5f), (0, 0, 1)),
         };
 
-        public void Initialize(WindowHandle window, OpenGLContextHandle context)
+        public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             Window = window;
             Context = context;
@@ -97,7 +126,14 @@ void main()
                 GL.Enable(EnableCap.DebugOutputSynchronous);
             }
 
-            ShaderProgram = CompileShader(VertexShader, FragmentShader);
+            if (useGLES)
+            {
+                ShaderProgram = CompileShader(VertexShaderES, FragmentShaderES);
+            }
+            else
+            {
+                ShaderProgram = CompileShader(VertexShader, FragmentShader);
+            }
             if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, (uint)ShaderProgram, -1, "Program: Color Triangle");
 
             VAO = GL.GenVertexArray();
@@ -163,6 +199,27 @@ void main()
             }
         }
 
+        public void HandleEvent(EventArgs args)
+        {
+            if (args is WindowResizeEventArgs resize)
+            {
+                var prevContext = Program.OpenGLComp.GetCurrentContext();
+                Program.OpenGLComp.SetCurrentContext(Context);
+
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+
+                // Re-render the window to make resize live.
+                Render();
+
+                Program.OpenGLComp.SetCurrentContext(prevContext);
+            }
+        }
+
+        public void Update(float deltaTime)
+        {
+
+        }
+
         public void Render()
         {
             GL.ClearColor(new Color4<Rgba>(0.05f, 0.05f, 0.1f, 1.0f));
@@ -172,7 +229,7 @@ void main()
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
-            Program.WindowComp.SwapBuffers(Window);
+            Program.OpenGLComp.SwapBuffers(Context);
         }
 
         public void Deinitialize()

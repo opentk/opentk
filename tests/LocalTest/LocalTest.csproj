@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />

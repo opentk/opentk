@@ -15,10 +15,7 @@ namespace OpenTK.Backends.Tests
         public override string Title => "Window Component";
 
         private IWindowComponent WindowComponent;
-        private WindowManager WindowManager;
-
-        public WindowComponentView() { }
-
+        
         const float IntDragSpeed = 0.2f;
 
         bool canSetCursor;
@@ -29,7 +26,6 @@ namespace OpenTK.Backends.Tests
         public override void Initialize()
         {
             WindowComponent = Program.WindowComp;
-            WindowManager = Program.WindowManager;
 
             // FIXME: Catch any exceptions...
             try { canSetCursor = WindowComponent.CanSetCursor; } catch { canSetCursor = false; }
@@ -50,15 +46,21 @@ namespace OpenTK.Backends.Tests
 
         string titleString = "";
         int modeIndex = 0;
+        int borderStyleIndex = 0;
+        Vector2i windowPosition;
+        Vector2i clientPosition;
 
         WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
         string[] WindowModeNames = Enum.GetNames<WindowMode>();
 
-        public override void Paint()
-        {
-            base.Paint();
+        WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
+        string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
 
-            if (selectedWindow > WindowManager.Windows.Count)
+        public override void Paint(double deltaTime)
+        {
+            base.Paint(deltaTime);
+
+            if (selectedWindow > Program.ApplicationWindows.Count)
             {
                 selectedWindow = -1;
             }
@@ -75,10 +77,10 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginListBox("Windows"))
             {
-                PaintWindow(WindowManager.RootWindow, 0);
-                for (int i = 0; i < WindowManager.Windows.Count; i++)
+                PaintWindow(Program.Window, 0);
+                for (int i = 0; i < Program.ApplicationWindows.Count; i++)
                 {
-                    PaintWindow(WindowManager.Windows[i].Window, i + 1);
+                    PaintWindow(Program.ApplicationWindows[i].Window, i + 1);
                 }
                 ImGui.EndListBox();
 
@@ -122,7 +124,7 @@ namespace OpenTK.Backends.Tests
                             try
                             {
                                 // Send the close event, this will close the window.
-                                WindowHandle handle = WindowManager.Windows[i - 1].Window;
+                                WindowHandle handle = Program.ApplicationWindows[i - 1].Window;
                                 EventQueue.Raise(handle, PlatformEventType.Close, new CloseEventArgs(handle));
 
                                 if (selectedWindow == i)
@@ -130,7 +132,7 @@ namespace OpenTK.Backends.Tests
                                     selectedWindow = -1;
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
                                 throw;
                             }
@@ -143,19 +145,11 @@ namespace OpenTK.Backends.Tests
             if (selectedWindow != -1)
             {
                 WindowHandle window = (selectedWindow == 0)
-                        ? WindowManager.RootWindow
-                        : WindowManager.Windows[selectedWindow - 1].Window;
+                        ? Program.Window
+                        : Program.ApplicationWindows[selectedWindow - 1].Window;
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
-                    ImGui.AlignTextToFramePadding();
-                    ImGui.TextUnformatted("Title"); ImGui.SameLine();
-                    ImGui.InputText("##title", ref titleString, 1024); ImGui.SameLine();
-                    if (ImGui.Button("Apply##tile"))
-                    {
-                        WindowComponent.SetTitle(window, titleString);
-                        Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
-                    }
                     WindowComponent.GetClientSize(window, out int cWidth, out int cHeight);
                     WindowComponent.GetSize(window, out int wWidth, out int wHeight);
                     WindowComponent.GetClientPosition(window, out int cx, out int cy);
@@ -167,12 +161,71 @@ namespace OpenTK.Backends.Tests
                 }
 
                 ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Title"); ImGui.SameLine();
+                ImGui.InputText("##title", ref titleString, 1024); ImGui.SameLine();
+                if (ImGui.Button("Apply##tile"))
+                {
+                    WindowComponent.SetTitle(window, titleString);
+                    Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
+                }
+
+                ImGui.AlignTextToFramePadding();
                 ImGui.TextUnformatted("Mode"); ImGui.SameLine();
                 ImGui.Combo("##mode", ref modeIndex, WindowModeNames, WindowModeNames.Length); ImGui.SameLine();
                 if (ImGui.Button("Apply##mode"))
                 {
                     WindowComponent!.SetMode(window, WindowModes[modeIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Border style"); ImGui.SameLine();
+                ImGui.Combo("##border_style", ref borderStyleIndex, WindowBorderStyleNames, WindowBorderStyleNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##border_style"))
+                {
+                    WindowComponent!.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
+                    Program.Logger.LogInfo($"WindowComponent.SetBorderStyle({WindowBorderStyleNames[borderStyleIndex]})");
+
+                    var style = WindowComponent!.GetBorderStyle(window);
+                    Program.Logger.LogInfo($"Border style: {style}");
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();
+                if (ImGui.Button("Yes"))
+                {
+                    Program.WindowComp.SetAlwaysOnTop(window, true);
+
+                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    Program.Logger.LogInfo($"Always on top: {value}");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("No"))
+                {
+                    Program.WindowComp.SetAlwaysOnTop(window, false);
+
+                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    Program.Logger.LogInfo($"Always on top: {value}");
+                }
+
+                ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
+                if (ImGui.Button("Set##Position"))
+                {
+                    Program.WindowComp.SetPosition(Program.Window, windowPosition.X, windowPosition.Y);
+                    Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
+
+                    Program.WindowComp.GetPosition(Program.Window, out int x, out int y);
+                    Program.Logger.LogInfo($"Window position: ({x}, {y})");
+                }
+
+                ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
+                if (ImGui.Button("Set##ClientPosition"))
+                {
+                    Program.WindowComp.SetClientPosition(Program.Window, clientPosition.X, clientPosition.Y);
+                    Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
+
+                    Program.WindowComp.GetClientPosition(Program.Window, out int x, out int y);
+                    Program.Logger.LogInfo($"Client position: ({x}, {y})");
                 }
             }
 
@@ -265,8 +318,8 @@ namespace OpenTK.Backends.Tests
                     {
                         WindowHandle handle = WindowComponent!.Create(openglSettings.Copy());
 
-                        int index = WindowManager.Windows.Count + 1;
-                        WindowManager.AddWindow(handle);
+                        int index = Program.ApplicationWindows.Count + 1;
+                        Program.ApplicationWindows.Add(new Program.ApplicationWindow(handle));
 
                         WindowComponent.SetTitle(handle, $"Child Window #{index}");
                         WindowComponent.SetSize(handle, WindowSize.X, WindowSize.Y);

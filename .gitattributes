@@ -29,4 +29,4 @@
 *.ogg binary
 *.zip binary
 *.pdf binary
-
+*.ttf binary

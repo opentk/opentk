@@ -66,7 +66,7 @@ namespace OpenTK.Platform.Native.Windows
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr DefWindowProc(IntPtr hWnd, WM Msg, UIntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr DefWindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct WNDCLASSEX
@@ -309,11 +309,43 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        internal static IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return GetWindowLong(hWnd, nIndex);
+            }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int GetWindowLong(IntPtr hWnd, GetGWLPIndex nIndex);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        }
+
+        internal static IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return SetWindowLong(hWnd, nIndex, (int)dwNewLong);
+            }
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int SetWindowLong(IntPtr hWnd, SetGWLPIndex nIndex, int dwNewLong);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+        }
+
+        
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
@@ -880,17 +912,23 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         internal static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
 
+        [DllImport("user32.dll")]
+        internal static extern short GetKeyState(VK nVirtKey);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetKeyboardState(byte* lpKeyState);
+
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int /* LSTATUS */ RegOpenKeyEx(
-            IntPtr /* HKEY */ hKey,
+            UIntPtr /* HKEY */ hKey,
             string lpSubKey,
             RegOption ulOptions,
             AccessMask /* REGSAM */ samDesired,
-            out IntPtr /* PHKEY */ phkResult);
+            out UIntPtr /* PHKEY */ phkResult);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern int /* LSTATUS */ RegGetValue(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,
@@ -899,7 +937,7 @@ namespace OpenTK.Platform.Native.Windows
             ref uint pcbData);
 
         internal static int /* LSTATUS */ RegGetValue<T>(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -14,6 +16,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public WindowHandle Window { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that this event relates to.</param>
         public WindowEventArgs(WindowHandle window)
         {
             Window = window;
@@ -34,6 +40,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool GotFocus { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FocusEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that got or lost focus.</param>
+        /// <param name="gotFocus">If the window got focus.</param>
         public FocusEventArgs(WindowHandle window, bool gotFocus) : base(window)
         {
             GotFocus = gotFocus;
@@ -55,6 +66,12 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Vector2i ClientAreaPosition { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowMoveEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that moved.</param>
+        /// <param name="windowPosition">The new window position.</param>
+        /// <param name="clientAreaPosition">The new window client area position.</param>
         public WindowMoveEventArgs(WindowHandle window, Vector2i windowPosition, Vector2i clientAreaPosition) : base(window)
         {
             WindowPosition = windowPosition;
@@ -72,6 +89,12 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Vector2i NewSize { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowResizeEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that got resized.</param>
+        /// <param name="newSize">The new window size.</param>
+        // FIXME: Window client size? framebuffer size?
         public WindowResizeEventArgs(WindowHandle window, Vector2i newSize) : base(window)
         {
             NewSize = newSize;
@@ -88,6 +111,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public WindowMode NewMode { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowModeChangeEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that changed mode.</param>
+        /// <param name="newMode">The windows new mode.</param>
         public WindowModeChangeEventArgs(WindowHandle window, WindowMode newMode) : base(window)
         {
             NewMode = newMode;
@@ -121,6 +149,14 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public float ScaleY { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowDpiChangeEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window whose dpi has changed.</param>
+        /// <param name="dpiX">The new x axis dpi.</param>
+        /// <param name="dpiY">The new y axis dpi.</param>
+        /// <param name="scaleX">The new x axis scale factor.</param>
+        /// <param name="scaleY">The new y axis scale factor.</param>
         public WindowDpiChangeEventArgs(WindowHandle window, int dpiX, int dpiY, float scaleX, float scaleY) : base(window)
         {
             DpiX = dpiX;
@@ -155,11 +191,25 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool IsRepeat { get; private set; }
 
-        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat) : base(window)
+        /// <summary>
+        /// The keyboard modifiers that where down while this key was pressed.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyDownEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window which received this keypress.</param>
+        /// <param name="key">The key that was pressed.</param>
+        /// <param name="scancode">The scancode representing the key.</param>
+        /// <param name="isRepeat">True if this event is triggered by holding down the key, false otherwise.</param>
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was pressed.</param>
+        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
             IsRepeat = isRepeat;
+            Modifiers = modifiers;
         }
     }
 
@@ -183,10 +233,23 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Scancode Scancode { get; private set; }
 
-        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode) : base(window)
+        /// <summary>
+        /// The keyboard modifiers that where down while this key was released.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyUpEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window which received this keypress.</param>
+        /// <param name="key">The key that was released.</param>
+        /// <param name="scancode">The scancode representing the key.</param>
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was released.</param>
+        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
+            Modifiers = modifiers;
         }
     }
 
@@ -201,6 +264,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public string Text { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextInputEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window which received this text input.</param>
+        /// <param name="text">The typed text.</param>
         public TextInputEventArgs(WindowHandle window, string text) : base(window)
         {
             Text = text;
@@ -227,6 +295,13 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public int Length { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextEditingEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window in which the text is being edited.</param>
+        /// <param name="candidate">The candidate string.</param>
+        /// <param name="cursor">The caret position within the candidate string.</param>
+        /// <param name="length">The length of the text being edited.</param>
         public TextEditingEventArgs(WindowHandle window, string candidate, int cursor, int length) : base(window)
         {
             Candidate = candidate;
@@ -269,6 +344,13 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public string InputLanguageDisplayName { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputLanguageChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="keyboardLayout">The keyboard layout name of the new layout.</param>
+        /// <param name="keyboardLayoutDisplayName">The user facing keyboard layout name of the new layout.</param>
+        /// <param name="inputLanguage">The input language name of the new language.</param>
+        /// <param name="inputLanguageDisplayName">The user facing input language of the new language.</param>
         public InputLanguageChangedEventArgs(string keyboardLayout, string keyboardLayoutDisplayName, string inputLanguage, string inputLanguageDisplayName)
         {
             KeyboardLayout = keyboardLayout;
@@ -288,6 +370,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool Entered { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseEnterEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that the mouse entered or exited.</param>
+        /// <param name="entered">Whether the mouse entered or exited.</param>
         // FIXME: Include the position where this happened?
         public MouseEnterEventArgs(WindowHandle window, bool entered) : base(window)
         {
@@ -302,11 +389,18 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public class MouseMoveEventArgs : WindowEventArgs
     {
+        // FIXME: In what coordinate space is the mouse coords?
+
         /// <summary>
         /// The new position of the mouse cursor.
         /// </summary>
         public Vector2 Position { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window in which the mouse moved.</param>
+        /// <param name="position">The mouse position.</param>
         public MouseMoveEventArgs(WindowHandle window, Vector2 position) : base(window)
         {
             Position = position;
@@ -326,6 +420,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public MouseButton Button { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseButtonDownEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that was clicked on.</param>
+        /// <param name="button">The mouse button that was pressed.</param>
         public MouseButtonDownEventArgs(WindowHandle window, MouseButton button) : base(window)
         {
             Button = button;
@@ -342,6 +441,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public MouseButton Button { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MouseButtonUpEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that had input focus when the mouse is released.</param>
+        /// <param name="button">The button that was released.</param>
         public MouseButtonUpEventArgs(WindowHandle window, MouseButton button) : base(window)
         {
             Button = button;
@@ -366,6 +470,12 @@ namespace OpenTK.Core.Platform
         // FIXME? Explain this better. Also does this exist on other platforms?
         public Vector2 Distance { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that received the scrolling.</param>
+        /// <param name="delta">The number of steps that where scrolled.</param>
+        /// <param name="distance">The distance that was scrolled (affected by user scroll speed settings).</param>
         public ScrollEventArgs(WindowHandle window, Vector2 delta, Vector2 distance) : base(window)
         {
             Delta = delta;
@@ -378,6 +488,10 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public class CloseEventArgs : WindowEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CloseEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window that the user wants to close.</param>
         public CloseEventArgs(WindowHandle window) : base(window)
         {
         }
@@ -398,6 +512,12 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Vector2i Position { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileDropEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window where files where drag-and-dropped in.</param>
+        /// <param name="filePaths">A list of files to the files dropped.</param>
+        /// <param name="position">The position in the window where the files where dropped.</param>
         public FileDropEventArgs(WindowHandle window, IReadOnlyList<string> filePaths, Vector2i position) : base(window)
         {
             FilePaths = filePaths;
@@ -417,6 +537,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public ClipboardFormat NewFormat { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ClipboardUpdateEventArgs"/> class.
+        /// </summary>
+        /// <param name="newFormat">The new format of the clipboard.</param>
         public ClipboardUpdateEventArgs(ClipboardFormat newFormat)
         {
             NewFormat = newFormat;
@@ -433,6 +557,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public ThemeInfo NewTheme { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ThemeChangeEventArgs"/> class.
+        /// </summary>
+        /// <param name="newTheme">The new <see cref="ThemeInfo"/>.</param>
         public ThemeChangeEventArgs(ThemeInfo newTheme)
         {
             NewTheme = newTheme;
@@ -454,6 +582,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool Disconnected { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisplayConnectionChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="display">The display that was either connected or disconnected.</param>
+        /// <param name="disconnected">If the display was connected or disconnected.</param>
         // FIXME: Maybe add more data about the display...?
         public DisplayConnectionChangedEventArgs(DisplayHandle display, bool disconnected)
         {
@@ -472,6 +605,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool GoingToSleep { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PowerStateChangeEventArgs"/> class.
+        /// </summary>
+        /// <param name="goingToSleep">If we are going to sleep.</param>
         public PowerStateChangeEventArgs(bool goingToSleep)
         {
             GoingToSleep = goingToSleep;

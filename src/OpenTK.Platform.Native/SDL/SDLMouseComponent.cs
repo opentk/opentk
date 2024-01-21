@@ -1,5 +1,6 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
-            SDL_GetMouseState(out x, out y);
+            SDL_GetGlobalMouseState(out x, out y);
         }
 
         /// <inheritdoc/>
@@ -61,6 +62,48 @@ namespace OpenTK.Platform.Native.SDL
             SDLWindow window = handle.As<SDLWindow>(this);
 
             SDL_WarpMouseInWindow(window.Window, x, y);
+        }
+
+        // FIXME: This is only a 32-bit float and
+        // will quite quickly not be able to represent
+        // deltas if the user continously scrolls in
+        // one direction. Consider switching to doubles.
+        // FIXME: This is only ever updated when we get
+        // scroll messages to one of our windows, this is
+        // not the "global" state of the scroll wheel.
+        // Should we fix that? or is this what is expected?
+        internal static Vector2 ScrollPosition = (0.0f, 0.0f);
+        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        {
+            ScrollPosition += delta;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(out MouseState state)
+        {
+            uint buttons = SDL_GetGlobalMouseState(out int x, out int y);
+
+            const int SDL_BUTTON_LMASK = 1 << 0;
+            const int SDL_BUTTON_MMASK = 1 << 1;
+            const int SDL_BUTTON_RMASK = 1 << 2;
+            const int SDL_BUTTON_X1MASK = 1 << 3;
+            const int SDL_BUTTON_X2MASK = 1 << 4;
+
+            state.Position = (x, y);
+
+            state.Scroll = ScrollPosition;
+
+            state.PressedButtons = default;
+            if ((buttons & SDL_BUTTON_LMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button1;
+            if ((buttons & SDL_BUTTON_RMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button2;
+            if ((buttons & SDL_BUTTON_MMASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button3;
+            if ((buttons & SDL_BUTTON_X1MASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button4;
+            if ((buttons & SDL_BUTTON_X2MASK) != 0)
+                state.PressedButtons |= MouseButtonFlags.Button5;
         }
     }
 }

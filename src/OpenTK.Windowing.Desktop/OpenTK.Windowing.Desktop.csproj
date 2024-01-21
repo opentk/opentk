@@ -4,13 +4,18 @@
       <TargetFrameworks>net7.0</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.Desktop</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
-      <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
+      <ProjectReference Include="..\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" PrivateAssets="analyzers;build" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />

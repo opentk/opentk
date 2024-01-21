@@ -4,7 +4,7 @@ using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11 
 {
-    public static class LibXkb
+    internal static class LibXkb
     {
         const string Xkb = "Xkb";
 
@@ -16,5 +16,8 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XkbSelectEvents(XDisplayPtr display, uint device_spec, ulong bits_to_change, ulong values_for_bits);
+
+        [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* XkbDescPtr */ XkbGetMap(XDisplayPtr display, uint which, uint device_spec);
     }
 }

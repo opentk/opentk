@@ -108,10 +108,11 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME!!
             while (Joysticks.Count < 4)
             {
-                Joysticks.Add(new Joystick(default, default, null));
+                Joysticks.Add(new Joystick(default, default, null!));
             }
         }
 
+        /// <inheritdoc/>
         public bool IsConnected(int deviceIndex)
         {
             uint result = XInputGetCapabilities((uint)deviceIndex, 0, out _);
@@ -131,6 +132,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             Joystick joystick = handle.As<Joystick>(this);
         }
+
 
         public bool SupportsVibration(JoystickHandle handle)
         {

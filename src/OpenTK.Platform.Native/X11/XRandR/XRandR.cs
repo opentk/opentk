@@ -116,5 +116,8 @@ namespace OpenTK.Platform.Native.X11.XRandR
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
         internal static extern RROutput XRRGetOutputPrimary(XDisplayPtr dpy, XWindow window);
+
+        [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern RRConfigStatus XRRSetCrtcConfig(XDisplayPtr dpy, XRRScreenResources* resources, RRCrtc crtc, XTime timestamp, int x, int y, RRMode mode, Rotation rotation, RROutput* outputs, int noutputs);
     }
 }

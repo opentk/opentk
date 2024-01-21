@@ -367,7 +367,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IconHandle IWindowComponent.GetIcon(WindowHandle handle)
+        IconHandle? IWindowComponent.GetIcon(WindowHandle handle)
         {
             return _windowComponent!.GetIcon(handle);
         }
@@ -558,11 +558,6 @@ namespace OpenTK.Core.Platform
             _windowComponent!.ClientToScreen(handle, clientX, clientY, out x, out y);
         }
 
-        void IWindowComponent.SwapBuffers(WindowHandle handle)
-        {
-            _windowComponent!.SwapBuffers(handle);
-        }
-
         /// <inheritdoc/>
         IconHandle IIconComponent.Create(SystemIconType systemIcon)
         {
@@ -684,6 +679,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IMouseComponent.GetMouseState(out MouseState state)
+        {
+            _mouseComponent!.GetMouseState(out state);
+        }
+
+        /// <inheritdoc/>
         DisplayHandle IDisplayComponent.Open(int index)
         {
             return _displayComponent!.Open(index);
@@ -786,6 +787,18 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IKeyboardComponent.GetKeyboardState(bool[] keyboardState)
+        {
+            _keyboardComponent!.GetKeyboardState(keyboardState);
+        }
+
+        /// <inheritdoc/>
+        KeyModifier IKeyboardComponent.GetKeyboardModifiers()
+        {
+            return _keyboardComponent!.GetKeyboardModifiers();
+        }
+
+        /// <inheritdoc/>
         void IKeyboardComponent.BeginIme(WindowHandle window)
         {
             _keyboardComponent!.BeginIme(window);
@@ -870,6 +883,12 @@ namespace OpenTK.Core.Platform
         int IOpenGLComponent.GetSwapInterval()
         {
             return _openGLComponent!.GetSwapInterval();
+        }
+
+        /// <inheritdoc/>
+        void IOpenGLComponent.SwapBuffers(OpenGLContextHandle handle)
+        {
+            _openGLComponent!.SwapBuffers(handle);
         }
 
         /// <inheritdoc/>

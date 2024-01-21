@@ -72,7 +72,7 @@ void main()
             windowComponent.Initialize(PalComponents.Window);
             openglComponent.Initialize(PalComponents.OpenGL);
 
-            NSWindowHandle window = (NSWindowHandle)windowComponent.Create(new OpenGLGraphicsApiHints());
+            WindowHandle window = windowComponent.Create(new OpenGLGraphicsApiHints());
 
             windowComponent.SetTitle(window, "OpenTK Window");
             string title = windowComponent.GetTitle(window);
@@ -192,7 +192,7 @@ void main()
                 GL.BindVertexArray(VAO);
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
-                windowComponent.SwapBuffers(window);
+                openglComponent.SwapBuffers(context);
             }
         }
 

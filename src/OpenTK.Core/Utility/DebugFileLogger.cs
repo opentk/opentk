@@ -12,10 +12,18 @@ namespace OpenTK.Core.Utility
     /// </summary>
     public class DebugFileLogger : ILogger
     {
+        /// <inheritdoc/>
         public LogLevel Filter { get; set; } = LogLevel.Debug;
 
+        /// <summary>
+        /// The <see cref="TextWriter"/> used to write log data.
+        /// </summary>
         public TextWriter Writer { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DebugFileLogger"/> class.
+        /// </summary>
+        /// <param name="fileName">A path to the file to write to.</param>
         public DebugFileLogger(string fileName = "OpenTK_debug.log")
         {
             string path = Path.Combine(".", fileName);

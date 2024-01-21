@@ -59,6 +59,20 @@ namespace OpenTK.Core.Platform
         /// </returns>
         Key GetKeyFromScancode(Scancode scancode);
 
+        /// <summary>
+        /// Copies the current state of the keyboard into the specified array.
+        /// This array should be indexed using <see cref="Scancode"/> values.
+        /// The length of this array should be an array able to hold all possible <see cref="Scancode"/> values.
+        /// </summary>
+        /// <param name="keyboardState">An array to be filled with the keyboard state.</param>
+        void GetKeyboardState(bool[] keyboardState);
+
+        /// <summary>
+        /// Gets the current keyboard modifiers.
+        /// </summary>
+        /// <returns>The current keyboard modifiers.</returns>
+        KeyModifier GetKeyboardModifiers();
+
         // FIXME: Probably want to rename BeginIme and EndIme to BeginTextEditing or StartTextEdit
 
         /// <summary>

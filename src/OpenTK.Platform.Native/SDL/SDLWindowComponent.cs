@@ -287,6 +287,8 @@ namespace OpenTK.Platform.Native.SDL
                             // FIXME: I don't think this is distance! We want to precisely determine what should be put in the distance field.
                             Vector2 distance = new Vector2(mouseWheel.preciseX, mouseWheel.preciseY);
 
+                            // FIXME: should we use the precise values instead?
+                            SDLMouseComponent.RegisterMouseWheelDelta(scroll);
                             EventQueue.Raise(sdlWindow, PlatformEventType.Scroll, new ScrollEventArgs(sdlWindow, scroll, distance));
 
                             break;
@@ -391,15 +393,18 @@ namespace OpenTK.Platform.Native.SDL
                             Key key = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.sym, Logger);
                             Scancode scancode = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.scancode, Logger);
 
+                            // FIXME: Get modifier state!
+                            KeyModifier modifiers = KeyModifier.None; // SDLKeyboardComponent.GetKeyboardModifiers?
+
                             bool repeat = keyboardEvent.repeat > 0;
 
                             if (keyboardEvent.type == SDL_EventType.SDL_KEYDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat, modifiers));
                             }
                             else if (keyboardEvent.type == SDL_EventType.SDL_KEYUP)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode, modifiers));
                             }
 
                             break;
@@ -1013,9 +1018,9 @@ namespace OpenTK.Platform.Native.SDL
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
-            SDLCursor sdlCursor = cursor.As<SDLCursor>(this);
+            SDLCursor? sdlCursor = cursor?.As<SDLCursor>(this);
 
-            if (cursor == null)
+            if (sdlCursor == null)
             {
                 SDL_ShowCursor(0 /* SDL_DISABLE */);
             }
@@ -1109,14 +1114,6 @@ namespace OpenTK.Platform.Native.SDL
             // FIXME: How to do this??
 
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void SwapBuffers(WindowHandle handle)
-        {
-            SDLWindow window = handle.As<SDLWindow>(this);
-
-            SDL_GL_SwapWindow(window.Window);
         }
     }
 }

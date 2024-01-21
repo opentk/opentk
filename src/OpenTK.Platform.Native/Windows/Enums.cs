@@ -729,7 +729,7 @@ namespace OpenTK.Platform.Native.Windows
         Rect = 1,
     }
 
-    internal enum CF
+    internal enum CF : uint
     {
         /// <summary>
         /// A handle to a bitmap (HBITMAP).
@@ -3659,6 +3659,103 @@ namespace OpenTK.Platform.Native.Windows
         SORT_KOREAN_UNICODE = 1,
     }
 
+    internal enum SC : int
+    {
+        /// <summary>
+        /// Closes the window.
+        /// </summary>
+        Close = 0xF060,
+
+        /// <summary>
+        /// Changes the cursor to a question mark with a pointer. If the user then clicks a control in the dialog box, the control receives a WM_HELP message.
+        /// </summary>
+        ContextHelp = 0xF180,
+
+        /// <summary>
+        /// Selects the default item; the user double-clicked the window menu.
+        /// </summary>
+        Default = 0xF160,
+
+        /// <summary>
+        /// Activates the window associated with the application-specified hot key. The lParam parameter identifies the window to activate.
+        /// </summary>
+        HotKey = 0xF150,
+
+        /// <summary>
+        /// Scrolls horizontally.
+        /// </summary>
+        HScroll = 0xF080,
+
+        /// <summary>
+        /// Retrieves the window menu as a result of a keystroke. For more information, see the Remarks section.
+        /// </summary>
+        KeyMenu = 0xF100,
+
+        /// <summary>
+        /// Maximizes the window.
+        /// </summary>
+        Maximize = 0xF030,
+
+        /// <summary>
+        /// Minimizes the window.
+        /// </summary>
+        Minimize = 0xF020,
+
+        /// <summary>
+        /// Sets the state of the display. This command supports devices that have power-saving features, such as a battery-powered personal computer.
+        /// The lParam parameter can have the following values:
+        /// -1 (the display is powering on)
+        /// 1 (the display is going to low power)
+        /// 2 (the display is being shut off)
+        /// </summary>
+        MonitorPower = 0xF170,
+
+        /// <summary>
+        /// Retrieves the window menu as a result of a mouse click.
+        /// </summary>
+        MouseMenu = 0xF090,
+
+        /// <summary>
+        /// Moves the window.
+        /// </summary>
+        Move = 0xF010,
+
+        /// <summary>
+        /// Moves to the next window.
+        /// </summary>
+        NextWindow = 0xF040,
+
+        /// <summary>
+        /// Moves to the next window.
+        /// </summary>
+        PrevWindow = 0xF050,
+
+        /// <summary>
+        /// Restores the window to its normal position and size.
+        /// </summary>
+        Restore = 0xF120,
+
+        /// <summary>
+        /// Executes the screen saver application specified in the [boot] section of the System.ini file.
+        /// </summary>
+        ScreenSave = 0xF140,
+
+        /// <summary>
+        /// Sizes the window.
+        /// </summary>
+        Size = 0xF000,
+
+        /// <summary>
+        /// Activates the Start menu.
+        /// </summary>
+        TaskList = 0xF130,
+
+        /// <summary>
+        /// Scrolls vertically.
+        /// </summary>
+        VScroll = 0xF070,
+    }
+
     [Flags]
     internal enum FileAttribute : uint
     {
@@ -4460,8 +4557,8 @@ namespace OpenTK.Platform.Native.Windows
         RightButton = 0x02,
         Cancel = 0x03,
         MiddleButton = 0x04,
-        ExtraButton1 = 0x05,
-        ExtraButton2 = 0x06,
+        XButton1 = 0x05,
+        XButton2 = 0x06,
         Back = 0x08,
         Tab = 0x09,
         Clear = 0x0C,

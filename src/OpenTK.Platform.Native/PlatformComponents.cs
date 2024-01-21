@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
+    // FIXME: Remove or formalize
     public enum Backend
     {
         None,
@@ -28,6 +29,9 @@ namespace OpenTK.Platform.Native
         /// We will fall back to platform specifc backends if SDL cannot be loaded.
         /// </summary>
         public static bool PreferSDL2 { get; set; } = false;
+
+        // FIXME:
+        public static bool PreferANGLE { get; set; } = false;
 
         private delegate IPalComponent ComponentCtor();
 
@@ -81,16 +85,22 @@ namespace OpenTK.Platform.Native
             {
                 [PalComponents.Window] = () => new macOS.MacOSWindowComponent(),
                 [PalComponents.OpenGL] = () => new macOS.MacOSOpenGLComponent(),
-                //[PalComponents.Display] = () => new macOS.MacOSDisplayComponent(),
+                [PalComponents.Display] = () => new macOS.MacOSDisplayComponent(),
                 //[PalComponents.Shell] = () => new macOS.MacOSShellComponent(),
-                //[PalComponents.MiceInput] = () => new macOS.MacOSMouseComponent(),
+                [PalComponents.MiceInput] = () => new macOS.MacOSMouseComponent(),
                 //[PalComponents.KeyboardInput] = () => new macOS.MacOSKeyboardComponent(),
-                //[PalComponents.MouseCursor] = () => new macOS.MacOSCursorComponent(),
-                //[PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
+                [PalComponents.MouseCursor] = () => new macOS.MacOSCursorComponent(),
+                [PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
                 //[PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
                 //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
             };
 
+        /// <summary>
+        /// Returns the backend that will be used to create components.
+        /// </summary>
+        /// <returns>The backend that will be used to create components.</returns>
+        // FIXME: Better documentation
+        // FIXME: What do we do with things like, Win32 + ANGLE?
         public static Backend GetBackend()
         {
             // FIXME: Proper backend selection!
@@ -181,7 +191,16 @@ namespace OpenTK.Platform.Native
         /// <inheritdoc cref="GetPlatformComponents"/>
         public static IOpenGLComponent CreateOpenGLComponent()
         {
-            return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            // FIXME: Should we do this here?
+            // FIXME: Check so that we can actually load angle binaries too!
+            if (PreferANGLE)
+            {
+                return new ANGLE.ANGLEOpenGLComponent();
+            }
+            else
+            {
+                return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            }
         }
 
         /// <inheritdoc cref="GetPlatformComponents"/>

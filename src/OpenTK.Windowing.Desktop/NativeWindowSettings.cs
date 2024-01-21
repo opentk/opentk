@@ -82,8 +82,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets or sets a value representing the current graphics profile flags.
+        /// Default value is <see cref="ContextFlags.ForwardCompatible"/> to work out of the box on macos.
         /// </summary>
-        public ContextFlags Flags { get; set; } = ContextFlags.Default;
+        public ContextFlags Flags { get; set; } = ContextFlags.ForwardCompatible;
 
         /// <summary>
         /// Gets or sets a value indicating whether or not OpenGL bindings should be automatically loaded
@@ -136,6 +137,7 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the initial value for <see cref="NativeWindow.WindowState"/> on the new window.
+        ///     This setting is ignored if <c><see cref="StartVisible"/> = false</c>.
         /// </summary>
         public WindowState WindowState { get; set; } = WindowState.Normal;
 
@@ -251,5 +253,19 @@ namespace OpenTK.Windowing.Desktop
         /// Gets or sets a value indicating whether the backbuffer should be sRGB capable.
         /// </summary>
         public bool SrgbCapable { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the framebuffer should be transparent or not.
+        /// <c>null</c> and <c>false</c> does not result in a transparent framebuffer while <c>true</c> will result in a transparent framebuffer.
+        /// </summary>
+        public bool? TransparentFramebuffer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the vsync mode to use.
+        /// A pure NativeWindow supports <see cref="VSyncMode.Off"/> and <see cref="VSyncMode.On"/>.
+        /// <see cref="GameWindow"/> adds support for <see cref="VSyncMode.Adaptive"/>,
+        /// if you are not using <see cref="GameWindow"/> you will have to handle adaptive vsync yourself.
+        /// </summary>
+        public VSyncMode Vsync { get; set; } = VSyncMode.Off;
     }
 }

@@ -4,16 +4,17 @@
       <TargetFrameworks>net7.0</TargetFrameworks>
       <RootNamespace>OpenTK.Windowing.GraphicsLibraryFramework</RootNamespace>
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      <LangVersion>8.0</LangVersion>
+      <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\..\documentation\icon.png" Pack="true" PackagePath=""/>
+    </ItemGroup>
     
     <ItemGroup>
       <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
       <ProjectReference Include="..\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <PackageReference Include="OpenTK.redist.glfw" Version="3.3.8.30" />
+      <PackageReference Include="OpenTK.redist.glfw" Version="3.3.8.39" />
     </ItemGroup>
 
     <Import Project="..\..\props\common.props" />

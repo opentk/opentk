@@ -5,8 +5,10 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		CONTRIBUTING.md = CONTRIBUTING.md
+		OpenTK.nuspec = OpenTK.nuspec
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 		stylecop.json = stylecop.json
@@ -31,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{DB4C8652-965F-44F9-998B-8918768DB6AA}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
@@ -39,21 +40,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windowing", "Windowing", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests", "tests\OpenTK.Tests\OpenTK.Tests.fsproj", "{0100EDA0-A134-4D9E-AE6B-470169BD8B94}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "OpenTK.Tests.Integration", "tests\OpenTK.Tests.Integration\OpenTK.Tests.Integration.fsproj", "{48936313-63D4-4A26-87F0-040AA15FF4A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{471E0D18-D620-4CBE-A471-F3DB470E6D49}"
 	ProjectSection(SolutionItems) = preProject
-		build.cmd = build.cmd
-		build.fsx = build.fsx
-		build.sh = build.sh
+		build.ps1 = build.ps1
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenAL", "OpenAL", "{BF0E6BAA-C31F-4481-924B-3EE9826BEE4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL", "src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Audio.OpenAL", "src\OpenAL\OpenTK.Audio.OpenAL\OpenTK.Audio.OpenAL.csproj", "{40349C84-AAF1-4159-B118-0565F7351523}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions", "src\OpenAL\OpenTK.OpenAL.Extensions\OpenTK.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
 EndProject
@@ -92,9 +91,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDLTestProject", "tests\SDL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PAL2ContextSharingTest", "tests\PAL2ContextSharingTest\PAL2ContextSharingTest.csproj", "{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Backends.Tests", "tests\OpenTK.Backends.Tests\OpenTK.Backends.Tests.csproj", "{3E6C9007-27B2-4B50-91F5-9FF658089997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Backends.Tests", "tests\OpenTK.Backends.Tests\OpenTK.Backends.Tests.csproj", "{3E6C9007-27B2-4B50-91F5-9FF658089997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MacOSTestProject", "tests\MacOSTestProject\MacOSTestProject.csproj", "{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacOSTestProject", "tests\MacOSTestProject\MacOSTestProject.csproj", "{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANGLETestProject", "tests\ANGLETestProject\ANGLETestProject.csproj", "{7888FB56-FCBC-4240-B78F-691481A56AA1}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,6 +205,14 @@ Global
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,6 +236,8 @@ Global
 		{A2AF58CF-88FA-42EA-9F2A-B8A55FCACA22} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{3E6C9007-27B2-4B50-91F5-9FF658089997} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{7888FB56-FCBC-4240-B78F-691481A56AA1} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94} = {471E0D18-D620-4CBE-A471-F3DB470E6D49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

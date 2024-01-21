@@ -1,7 +1,7 @@
 type file
 id OpenTK.Graphics
 description
-    OpenGl and OpenGlEs bindings for dotnet from the Khronos openGL c library.
+    OpenGl and OpenGLES bindings for dotnet from the Khronos OpenGL C library.
 dependencies
     framework: net7.0
         OpenTK.Core ~> #VERSION#

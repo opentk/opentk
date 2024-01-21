@@ -2,6 +2,30 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal enum XStatus : int
+    {
+        Success = 0,
+        BadRequest = 1,
+        BadAccess = 10,
+        BadAlloc = 11,
+        BadColor = 12,
+        FirstExtensionError = 128,
+        BadGC = 13,
+        BadIDChoice = 14,
+        BadName = 15,
+        BadLength = 16,
+        BadImplementation = 17,
+        BadValue = 2,
+        LastExtensionError = 255,
+        BadWindow = 3,
+        BadPixmap = 4,
+        BadAtom = 5,
+        BadCursor = 6,
+        BadFont = 7,
+        BadMatch = 8,
+        BadDrawable = 9,
+    }
+
     internal enum WindowClass : uint
     {
         CopyFromParent = 0,
