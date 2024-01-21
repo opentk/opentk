@@ -137,7 +137,7 @@ namespace OpenTK.Platform.Native.X11
                     shape = XCursorShape.BottomLeftCorner;
                     break;
                 case SystemCursorType.ArrowNW:
-                    shape = XCursorShape.TopLeftArrow;
+                    shape = XCursorShape.TopLeftCorner;
                     break;
                 case SystemCursorType.ArrowUp:
                     shape = XCursorShape.SBUpArrow;
