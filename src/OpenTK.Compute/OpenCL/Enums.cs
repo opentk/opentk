@@ -80,6 +80,7 @@ namespace OpenTK.Compute.OpenCL
         /// </description></item>
         /// </list>
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Profile = 0x0900,
 
         /// <summary>
@@ -88,16 +89,19 @@ namespace OpenTK.Compute.OpenCL
         /// <para>"OpenCL {major_version.minor_version} {platform-specific information}"</para>
         /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Version = 0x0901,
 
         /// <summary>
         /// Platform name string.
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Name = 0x0902,
 
         /// <summary>
         /// Platform vendor string.
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Vendor = 0x0903,
 
         /// <summary>
@@ -105,28 +109,33 @@ namespace OpenTK.Compute.OpenCL
         /// supported by the platform. Each extension that is supported by all devices associated with this
         /// platform must be reported here.
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Extensions = 0x0904,
 
         /// <summary>
         /// Introduced in OpenCL 2.1.
-        /// Returns the resolution of the host timer in nanoseconds as used by <see cref="CL.GetHostTimer(CLDevice, IntPtr)"/>.
+        /// Returns the resolution of the host timer in nanoseconds as used by 
+        /// <c><see cref="CL.GetHostTimer(CLDevice, out nuint)">GetHostTimer()</see></c>.
         /// This value must be 0 for devices that do not support device and host timer synchronization.
         /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         HostTimerResolution = 0x0905,
 
         /// <summary>
         /// Introduced in OpenCL 3.0
         /// Returns the detailed (major, minor, patch) version supported by the platform.
-        /// The major and minor version numbers returned must match those returned via <see cref="Version"/>.
+        /// The major and minor version numbers returned must match those returned via <c><see cref="Version">Version</see></c>.
         /// </summary>
+        /// <remarks>Return Type: cl_version</remarks>
         NumericVersion = 0x0906,
 
         /// <summary>
         /// Introduced in OpenCL 3.0
         /// Returns an array of description (name and version) structures that lists all the extensions
         /// supported by the platform. The same extension name must not be reported more than once.
-        /// The list of extensions reported must match the list reported via <see cref="Extensions"/>.
+        /// The list of extensions reported must match the list reported via <c><see cref="Extensions">Extensions</see></c>.
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         ExtensionsWithVersion = 0x0907,
 
         /// <summary>
@@ -135,6 +144,7 @@ namespace OpenTK.Compute.OpenCL
         /// functions to be directed to this platform by the ICD Loader. 
         /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetPlatformInfo.html</para>
         /// </summary>
+        /// <remarks>Return Type: string</remarks>
         PlatformIcdSuffix = 0x0920
     }
 
@@ -178,12 +188,49 @@ namespace OpenTK.Compute.OpenCL
 
     #region Device
 
+    /// <summary>
+    /// The information that can be queried using <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
+    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table.</para>
+    /// </summary>
     public enum DeviceInfo : ulong
     {
+        /// <summary>
+        /// The type or types of the OpenCL device. Please see <c><see cref="DeviceType">DeviceType</see></c>
+        /// for supported device types and device type combinations.
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="DeviceType">DeviceType</see></c></remarks>
         Type = 0x1000,
+
+        /// <summary>
+        /// A unique device vendor identifier.
+        /// <para>If the vendor has a PCI vendor ID, the low 16 bits must contain that PCI vendor ID,
+        /// and the remaining bits must be set to zero. Otherwise, the value returned must be a 
+        /// valid Khronos vendor ID represented by type cl_khronos_vendor_id.
+        /// Khronos vendor IDs are allocated starting at 0x10000, to distinguish them from the PCI vendor ID namespace.</para>
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         VendorId = 0x1001,
+
+        /// <summary>
+        /// The number of parallel compute units on the OpenCL device.
+        /// A work-group executes on a single compute unit. The minimum value is 1.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumComputeUnits = 0x1002,
+
+        /// <summary>
+        /// Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model.
+        /// (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel,
+        /// uint, nuint[], nuint[], nuint[], CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
+        /// The minimum value is 3 for devices that are not of type 
+        /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </summary>
+        /// <remarks>Return Type: nuint</remarks>
         MaximumWorkItemDimensions = 0x1003,
+
+        /// <summary>
+        /// 
+        /// </summary>
         MaximumWorkGroupSize = 0x1004,
         MaximumWorkItemSizes = 0x1005,
         PreferredVectorWidthChar = 0x1006,
