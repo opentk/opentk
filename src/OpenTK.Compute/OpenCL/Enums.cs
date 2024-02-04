@@ -312,7 +312,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Max size of memory object allocation in bytes.
         /// The minimum value is:
-        /// <para><code>max(min(1024 × 1024 × 1024, 1/4th of <see cref="DeviceInfo.GlobalMemorySize">DeviceInfo.GlobalMemorySize</see>), 32 × 1024 × 1024)
+        /// <para><code>max(min(1024 x 1024 x 1024, 1/4th of <see cref="DeviceInfo.GlobalMemorySize">DeviceInfo.GlobalMemorySize</see>), 32 x 1024 x 1024)
         /// </code></para>
         /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
         /// </summary>
