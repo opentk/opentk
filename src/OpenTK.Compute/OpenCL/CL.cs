@@ -20,6 +20,8 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
+        /// Used to query the machine for the available platforms (Intel, AMD, Nvidia, etc...).
+        /// Displayed documentation is for OpenCL 3.0.
         /// See more: https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html.
         /// </summary>
         /// <param name="numberOfEntries">number of <see cref="CLPlatform"/> entries that can be added to platforms. If platforms is not NULL, numberOfEntries must be greater than zero.</param>
@@ -33,10 +35,11 @@ namespace OpenTK.Compute.OpenCL
             [Out] out uint numberOfPlatforms);
 
         /// <summary>
-        /// Introduced in OpenCL 1.0.
+        /// Used to query the machine for the available platforms (Intel, AMD, Nvidia, etc...).
+        /// This version only requires the output parameter.
         /// </summary>
-        /// <param name="platformIds">returns a list of OpenCL platforms found. The CLPlatform values returned in platforms can be used to identify a specific OpenCL platform.</param>
-        /// <returns>returns Success if the function is executed successfully. Otherwise, it returns one of the following errors:
+        /// <param name="platformIds">returns a list of OpenCL platforms found. The <see cref="CLPlatform"/> values returned in platforms can be used to identify a specific OpenCL platform.</param>
+        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
         /// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
         /// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
         public static CLResultCode GetPlatformIds(out CLPlatform[] platformIds)
@@ -48,7 +51,17 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
+        /// Used to query a specific platform for a specified piece of information. The information queried is defined by <see cref="PlatformInfo"/>
+        /// Displayed documentation is for OpenCL 3.0.
+        /// See more: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetPlatformInfo.html.
         /// </summary>
+        /// <param name="platform">refers to the platform returned by <see cref="GetPlatformIds(out CLPlatform[])"/> or can be NULL. If platform is NULL, the behavior is implementation-defined.</param>
+        /// <param name="paramName"></param>
+        /// <param name="numberOfPlatforms">returns the number of OpenCL platforms available. If numberOfPlatforms is NULL, this argument is ignored.</param>
+        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
+        /// -InvalidValue if numberOfEntries is equal to zero and platforms is not NULL or if both numberOfPlatforms and platforms are NULL.
+        /// -OutOfHostMemory if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
+        /// 
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformInfo")]
         public static extern CLResultCode GetPlatformInfo([In] CLPlatform platform, [In] PlatformInfo paramName,
             [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);

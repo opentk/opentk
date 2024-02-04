@@ -20,9 +20,25 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public static class GLFWProvider
     {
+        // This will throw "through" native frames, which doesn't work anywhere other than windows.
+        private static void DefaultErrorCallback(ErrorCode errorCode, string description)
+        {
+            throw new GLFWException(description, errorCode);
+        }
+
         // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.
-        private static readonly GLFWCallbacks.ErrorCallback ErrorCallback =
-            (errorCode, description) => throw new GLFWException(description, errorCode);
+        private static GLFWCallbacks.ErrorCallback ErrorCallback = DefaultErrorCallback;
+
+        /// <summary>
+        /// Sets the error handler callback that GLFW errors get reported to.
+        /// </summary>
+        /// <param name="errorCallback">The error callback delegate to set as the error callback.</param>
+        public static void SetErrorCallback(GLFWCallbacks.ErrorCallback errorCallback)
+        {
+            // Take a reference to this delegate to keep it from being garbage collected.
+            ErrorCallback = errorCallback;
+            GLFW.SetErrorCallback(ErrorCallback);
+        }
 
         // NOTE: This assumption about "main thread" is flat wrong.
         // We literally can't tell whether this is actually the main thread.
@@ -79,8 +95,8 @@ namespace OpenTK.Windowing.Desktop
 
             if (Initialized == false)
             {
-                GLFW.Init();
                 GLFW.SetErrorCallback(ErrorCallback);
+                GLFW.Init();
                 Initialized = true;
             }
         }

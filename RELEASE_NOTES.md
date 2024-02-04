@@ -1,3 +1,47 @@
+## 4.8.2
+
+* FIX: Fixed issue where setting `NativeWindow.WindowState = WindowState.Normal` while fullscreen would not exit fullscreen. (@Th3Dilli)
+
+* API: Added `NativeWindow.FramebufferSize`, `NativeWindow.OnFramebufferResize`, and `NativeWindow.FramebufferResize` to be able to properly get the framebuffer size of the window (useful on macos where framebuffer size is not equal to client size). (@NogginBops)
+
+* API: Added `GameWindowSettings.Win32SuspendTimerOnDrag` propery that allows the internal timer to be suspended while the window is moved or resized. Without this dragging the window will cause an abnormally large time delta since the last frame. (@MV10)
+
+* API: Made `NativeWindowSettings.Size` obsolete in favour of `NativeWindowSettings.ClientSize` (`NativeWindowSettings.Size` has always set the client size of the window, this namechange just makes this clear). (@MV10)
+
+* API: Added ability to override OpenAL and OpenCL native library search path by setting `OpenALLibraryNameContainer.OverridePath` or `OpenCLLibraryNameContainer.OverridePath`. (@NogginBops)
+
+* API: Added `NativeWindowSettings.AutoIconify` and `NativeWindow.AutoIconify` property to control if the window gets minimized if it loses focus while fullscreen. (@MV10)
+
+* API: Added missing enums to `GetPName`. (@BoyBaykiller)
+
+* FIX: Fixed an issue where creating a `NativeWindow` on wayland would freeze in the constructor. (@Th3Dilli)
+
+* BREAKING: Re-implemented `Box2/3.Inflate` to work like `System.Drawing.Rectangle.Inflate`. The old behaviour can be found using `Box2/3.Extend`, as the previous obsoletion message stated. (@MV10, @NogginBops)
+
+* Add example of how to implement `IBindingsContext` in the documentation comments on `IBindingsContext`. (@utkumaden)
+
+* Internal changes to make the build system simpler and easier to modify. (@NogginBops)
+
+* Internal changes from `Math` to `MathF` where appropriate. (@MV10)
+
+## 4.8.1
+
+* API: Added `NativeWindow.HasTransparentFramebuffer` to be able to check if a transparent framebuffer was created successfully. (@NogginBops)
+
+* API: Added missing enum entries in `OpenCL.ContextProperties`. (@NogginBops)
+
+* FIX: `NativeWindowSettings.StartVisible = false` has been fixed and should now work as expected. (@NogginBops)
+
+* FIX: Fixed issue where `JoystickState.GetAxis` returned buttons instead of axes. (@NogginBops)
+
+* FIX: Fixed issue where self-contained `dotnet publish` would break due to duplicate `libglfw.so` files. (@Th3Dilli)
+
+* FIX: Setting `NativeWindow.WindowState` will now be reflected in `OnResize` event caused by it. (@NogginBops)
+
+* FIX: `GameWindow.UpdateTime` is now correctly updated, fixing an issue that first appeared in `4.7.1`. (@NogginBops)
+
+* FIX: Fixed typo in deprecation message for `GameWindow.RenderFrequency`. (@postmeback)
+
 ## 4.8.0
 
 * BREAKING: Renamed the `OpenTK.OpenAL` assembly to `OpenTK.Audio.OpenAL` to match the namespace. (@NogginBops)

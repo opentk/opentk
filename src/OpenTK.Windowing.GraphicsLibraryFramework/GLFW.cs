@@ -1916,7 +1916,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe ReadOnlySpan<float> GetJoystickAxes(int jid)
         {
-            var ptr = GetJoystickButtonsRaw(jid, out var count);
+            var ptr = GetJoystickAxesRaw(jid, out var count);
             if (ptr == null)
             {
                 return ReadOnlySpan<float>.Empty;
