@@ -457,6 +457,8 @@ namespace OpenTK.Backends.Tests
             {
                 if (args is CloseEventArgs close2)
                 {
+                    Console.WriteLine($"Closing window: '{WindowComp.GetTitle(close2.Window)}'");
+
                     // If this is one of our other windows we want to gracefully close it before we delete the window.
                     int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
                     ApplicationWindow appWindow = ApplicationWindows[index];
@@ -477,7 +479,7 @@ namespace OpenTK.Backends.Tests
                         
                         ApplicationWindows.RemoveAt(index);
                     }
-
+                    
                     WindowComp.Destroy(close2.Window);
                     return;
                 }
@@ -494,6 +496,7 @@ namespace OpenTK.Backends.Tests
 
             if (args is CloseEventArgs close)
             {
+                Console.WriteLine("Closing main window!");
                 WindowComp.Destroy(close.Window);
             }
             else if (args is FocusEventArgs focus)

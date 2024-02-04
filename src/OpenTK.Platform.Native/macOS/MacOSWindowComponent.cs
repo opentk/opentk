@@ -62,7 +62,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selSetContentMinSize = sel_registerName("setContentMinSize:"u8);
         internal static SEL selSetContentMaxSize = sel_registerName("setContentMaxSize:"u8);
         internal static SEL selDockTile = sel_registerName("dockTile"u8);
-
+        internal static SEL selTerminate = sel_registerName("terminate:"u8);
+        internal static SEL selClose = sel_registerName("close"u8);
+        internal static SEL selSetTitle = sel_registerName("setTitle:"u8);
+        internal static SEL selTitle = sel_registerName("title"u8);
+        internal static SEL selSetDelegate = sel_registerName("setDelegate:"u8);
+        internal static SEL selMakeFirstResponder = sel_registerName("makeFirstResponder:"u8);
+        internal static SEL selMakeKeyWindow = sel_registerName("makeKeyWindow"u8);
+        internal static SEL selCenter = sel_registerName("center"u8);
+        internal static SEL selInputContext = sel_registerName("inputContext"u8);
 
         internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
 
@@ -157,7 +165,8 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
             }
 
-            class_addMethod(NSApplicationClass, selQuit, OnQuitHandler, "v@:"u8);
+            // FIXME: Override terminate: instead!
+            class_addMethod(NSApplicationClass, selQuit, Menu_QuitInst, "v@:"u8);
 
             nsApplication = objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication);
 
@@ -181,6 +190,7 @@ namespace OpenTK.Platform.Native.macOS
                 IntPtr appMenu = objc_msgSend_IntPtr((IntPtr)NSMenuClass, Alloc);
                 objc_msgSend(appMenuItem, selSetSubmenu, appMenu);
 
+                // FIXME: Use terminate: instead of quit:
                 IntPtr quitMenuItem = objc_msgSend_IntPtr(
                         objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc),
                         selInitWithTitle_Action_KeyEquivalent,
@@ -212,7 +222,7 @@ namespace OpenTK.Platform.Native.macOS
 
             // Allocate a window class
             NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), ShouldWindowCloseHandler, "b@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), NSOtkWindow_WindowShouldCloseInst, "b@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("zoom:"u8), NSOtkWindow_ZoomInst, "v@:@"u8);
             //class_addMethod(opentkWindowClass, sel_registerName("keyDown:"u8), (KeyDownDelegate)keyDown, "v@:@"u8);
 
@@ -260,32 +270,35 @@ namespace OpenTK.Platform.Native.macOS
             objc_registerClassPair(NSOpenTKViewClass);
         }
 
-        private delegate void OnQuitDelegate(IntPtr self, SEL cmd);
-        private static readonly OnQuitDelegate OnQuitHandler = OnQuit;
-        private static void OnQuit(IntPtr self, SEL cmd)
+        private delegate void Menu_Quit_(IntPtr self, SEL cmd);
+        private static readonly Menu_Quit_ Menu_QuitInst = Menu_Quit;
+        private static void Menu_Quit(IntPtr self, SEL cmd)
         {
             Console.WriteLine("On quit!");
 
+            // FIXME: Send an event for this?
+            //EventQueue.Raise(null, 0, new ApplicationExitEventArgs());
+
             // Actually quit.
-            objc_msgSend(nsApplication, sel_registerName("terminate:"u8), nsApplication);
+            objc_msgSend(nsApplication, selTerminate, nsApplication);
         }
 
-        private delegate bool ShouldWindowCloseDelegate(IntPtr windowPtr, SEL selector, IntPtr sender);
-        static ShouldWindowCloseDelegate ShouldWindowCloseHandler = ShouldWindowClose;
-        private static bool ShouldWindowClose(IntPtr window, SEL selector, IntPtr sender)
+        private delegate bool NSOtkWindow_WindowShouldClose_(IntPtr windowPtr, SEL selector, IntPtr sender);
+        static NSOtkWindow_WindowShouldClose_ NSOtkWindow_WindowShouldCloseInst = NSOtkWindow_WindowShouldClose;
+        private static bool NSOtkWindow_WindowShouldClose(IntPtr window, SEL selector, IntPtr sender)
         {
-            // FIXME:
-            // Send event and return false?
-            // Or should we override performClose instead?
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
                 EventQueue.Raise(nswindow, PlatformEventType.Close, new CloseEventArgs(nswindow));
 
-                // FIXME: Don't destroy the window by default.
-                nswindow.Destroyed = true;
+                // Let the user handle closing the window.
+                return false;
             }
-
-            return true;
+            else
+            {
+                // We don't know about this window, let it close.
+                return true;
+            }
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -984,14 +997,14 @@ namespace OpenTK.Platform.Native.macOS
 
 
             // FIXME: Move this somewhere?
-            objc_msgSend(windowPtr, sel_registerName("setDelegate:"u8), windowPtr);
+            objc_msgSend(windowPtr, selSetDelegate, windowPtr);
             // Makes the view able to get text input?
-            objc_msgSend(windowPtr, sel_registerName("makeFirstResponder:"u8), viewPtr);
-            objc_msgSend(windowPtr, sel_registerName("makeKeyWindow"u8));
-            objc_msgSend(windowPtr, sel_registerName("center"u8));
+            objc_msgSend(windowPtr, selMakeFirstResponder, viewPtr);
+            objc_msgSend(windowPtr, selMakeKeyWindow);
+            objc_msgSend(windowPtr, selCenter);
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
 
-            IntPtr inputContext = objc_msgSend_IntPtr(viewPtr, sel_registerName("inputContext"u8));
+            IntPtr inputContext = objc_msgSend_IntPtr(viewPtr, selInputContext);
 
             // Register the view for mouse enter/exit notifications.
             objc_msgSend_IntPtr(viewPtr, selAddTrackingRect_owner_userData_assumeInside,
@@ -1012,7 +1025,7 @@ namespace OpenTK.Platform.Native.macOS
 
             // This also releases the window if the releaseWhenClosed property is true
             // This is the default.
-            objc_msgSend(nswindow.Window, sel_registerName("close"u8));
+            objc_msgSend(nswindow.Window, selClose);
 
             // Maybe make sure that there are no references to the window?
 
@@ -1032,7 +1045,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            IntPtr nsStringTitle = objc_msgSend_IntPtr(nswindow.Window, sel_registerName("title"u8));
+            IntPtr nsStringTitle = objc_msgSend_IntPtr(nswindow.Window, selTitle);
             string title = FromNSString(nsStringTitle);
             return title;
         }
@@ -1042,7 +1055,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            objc_msgSend(nswindow.Window, sel_registerName("setTitle:"u8), ToNSString(title));
+            objc_msgSend(nswindow.Window, selSetTitle, ToNSString(title));
         }
 
         /// <inheritdoc/>
