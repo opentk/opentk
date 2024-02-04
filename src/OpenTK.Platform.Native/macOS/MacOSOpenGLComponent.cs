@@ -10,21 +10,21 @@ namespace OpenTK.Platform.Native.macOS
 {
     public unsafe class MacOSOpenGLComponent : IOpenGLComponent
     {
-        internal static ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext");
-        internal static ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat");
+        internal static readonly ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext");
+        internal static readonly ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat");
 
-        internal static SEL selInitWithAttributes = sel_registerName("initWithAttributes:"u8);
-        internal static SEL selInitWithFormatShareContext = sel_registerName("initWithFormat:shareContext:"u8);
-        internal static SEL selSetView = sel_registerName("setView:"u8);
-        internal static SEL selSetWantsBestResolutionOpenGLSurface = sel_registerName("setWantsBestResolutionOpenGLSurface:"u8);
-        internal static SEL selUpdate = sel_registerName("update"u8);
-        internal static SEL selClearCurrentContext = sel_registerName("clearCurrentContext"u8);
-        internal static SEL selCurrentContext = sel_registerName("currentContext"u8);
-        internal static SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
-        internal static SEL selClearDrawable = sel_registerName("clearDrawable"u8);
-        internal static SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
+        internal static readonly SEL selInitWithAttributes = sel_registerName("initWithAttributes:"u8);
+        internal static readonly SEL selInitWithFormatShareContext = sel_registerName("initWithFormat:shareContext:"u8);
+        internal static readonly SEL selSetView = sel_registerName("setView:"u8);
+        internal static readonly SEL selSetWantsBestResolutionOpenGLSurface = sel_registerName("setWantsBestResolutionOpenGLSurface:"u8);
+        internal static readonly SEL selUpdate = sel_registerName("update"u8);
+        internal static readonly SEL selClearCurrentContext = sel_registerName("clearCurrentContext"u8);
+        internal static readonly SEL selCurrentContext = sel_registerName("currentContext"u8);
+        internal static readonly SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
+        internal static readonly SEL selClearDrawable = sel_registerName("clearDrawable"u8);
+        internal static readonly SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
 
-        internal static IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
+        internal static readonly IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
 
         internal static Dictionary<IntPtr, NSOpenGLContext> NSOpenGLContextDict = new Dictionary<nint, NSOpenGLContext>();
 

@@ -16,8 +16,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selPressedMouseButtons = sel_registerName("pressedMouseButtons"u8);
 
         internal static readonly SEL selScreens = sel_registerName("screens"u8);
-        internal static SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
-        internal static SEL selFrame = sel_registerName("frame"u8);
+        internal static readonly SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
+        internal static readonly SEL selFrame = sel_registerName("frame"u8);
 
         public string Name => nameof(MacOSMouseComponent);
 

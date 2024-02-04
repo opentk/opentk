@@ -16,120 +16,120 @@ namespace OpenTK.Platform.Native.macOS
     {
         internal static IntPtr nsApplication;
 
-        internal static SEL selSetMainMenu = sel_registerName("setMainMenu:"u8);
-        internal static SEL selInitWithTitle = sel_registerName("initWithTitle:"u8);
-        internal static SEL selAddItem = sel_registerName("addItem:"u8);
-        internal static SEL selSetSubmenu = sel_registerName("setSubmenu:"u8);
-        internal static SEL selInitWithTitle_Action_KeyEquivalent = sel_registerName("initWithTitle:action:keyEquivalent:"u8);
+        internal static readonly SEL selSetMainMenu = sel_registerName("setMainMenu:"u8);
+        internal static readonly SEL selInitWithTitle = sel_registerName("initWithTitle:"u8);
+        internal static readonly SEL selAddItem = sel_registerName("addItem:"u8);
+        internal static readonly SEL selSetSubmenu = sel_registerName("setSubmenu:"u8);
+        internal static readonly SEL selInitWithTitle_Action_KeyEquivalent = sel_registerName("initWithTitle:action:keyEquivalent:"u8);
 
         internal static readonly SEL selQuit = sel_registerName("quit"u8);
-        internal static SEL selSharedApplication = sel_registerName("sharedApplication"u8);
-        internal static SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
-        internal static SEL selDiscardEventsMatchingMask_beforeEvent = sel_registerName("discardEventsMatchingMask:beforeEvent:"u8);
-        internal static SEL selMainMenu = sel_registerName("mainMenu"u8);
-        internal static SEL selApplicationIconImage = sel_registerName("applicationIconImage"u8);
-        internal static SEL selSetApplicationIconImage = sel_registerName("setApplicationIconImage:"u8);
+        internal static readonly SEL selSharedApplication = sel_registerName("sharedApplication"u8);
+        internal static readonly SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
+        internal static readonly SEL selDiscardEventsMatchingMask_beforeEvent = sel_registerName("discardEventsMatchingMask:beforeEvent:"u8);
+        internal static readonly SEL selMainMenu = sel_registerName("mainMenu"u8);
+        internal static readonly SEL selApplicationIconImage = sel_registerName("applicationIconImage"u8);
+        internal static readonly SEL selSetApplicationIconImage = sel_registerName("setApplicationIconImage:"u8);
 
-        internal static SEL selType = sel_registerName("type"u8);
-        internal static SEL selSendEvent = sel_registerName("sendEvent:"u8);
-        internal static SEL selNextEventMatchingMask_untilDate_inMode_dequeue = sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"u8);
-        internal static SEL selWindow = sel_registerName("window"u8);
-        internal static SEL selButtonNumber = sel_registerName("buttonNumber"u8);
-        internal static SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
-        internal static SEL selMouseLocation = sel_registerName("mouseLocation"u8);
-        internal static SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
-        internal static SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
-        internal static SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
-        internal static SEL selTrackingNumber = sel_registerName("trackingNumber"u8);
-        internal static SEL selKeyCode = sel_registerName("keyCode"u8);
-        internal static SEL selARepeat = sel_registerName("isARepeat"u8);
-
-
-        internal static SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
-        internal static SEL selInitWithFrame = sel_registerName("initWithFrame:"u8);
-
-        internal static SEL selAddTrackingRect_owner_userData_assumeInside = sel_registerName("addTrackingRect:owner:userData:assumeInside:"u8);
-
-        internal static SEL selScreen = sel_registerName("screen"u8);
-        internal static SEL selFrame = sel_registerName("frame"u8);
-        internal static SEL selBounds = sel_registerName("bounds"u8);
-        internal static SEL selSetFrameTopLeftPoint = sel_registerName("setFrameTopLeftPoint:"u8);
-        internal static SEL selContentView = sel_registerName("contentView"u8);
-        internal static SEL selSetContentView = sel_registerName("setContentView:"u8);
-        internal static SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
-        internal static SEL selSetFrame_Display = sel_registerName("setFrame:display:"u8);
-        internal static SEL selSetContentSize = sel_registerName("setContentSize:"u8);
-        internal static SEL selSetContentMinSize = sel_registerName("setContentMinSize:"u8);
-        internal static SEL selSetContentMaxSize = sel_registerName("setContentMaxSize:"u8);
-        internal static SEL selDockTile = sel_registerName("dockTile"u8);
-        internal static SEL selTerminate = sel_registerName("terminate:"u8);
-        internal static SEL selClose = sel_registerName("close"u8);
-        internal static SEL selSetTitle = sel_registerName("setTitle:"u8);
-        internal static SEL selTitle = sel_registerName("title"u8);
-        internal static SEL selSetDelegate = sel_registerName("setDelegate:"u8);
-        internal static SEL selMakeFirstResponder = sel_registerName("makeFirstResponder:"u8);
-        internal static SEL selMakeKeyWindow = sel_registerName("makeKeyWindow"u8);
-        internal static SEL selCenter = sel_registerName("center"u8);
-        internal static SEL selInputContext = sel_registerName("inputContext"u8);
-
-        internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
-
-        internal static SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
-
-        internal static SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
-        internal static SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
-
-        internal static SEL selIsMiniaturized = sel_registerName("isMiniaturized"u8);
-        internal static SEL selMiniaturize = sel_registerName("miniaturize:"u8);
-        internal static SEL selDeminiaturize = sel_registerName("deminiaturize:"u8);
-        internal static SEL selIsZoomed = sel_registerName("isZoomed"u8);
-        internal static SEL selZoom = sel_registerName("zoom:"u8);
-        internal static SEL selToggleFullScreen = sel_registerName("toggleFullScreen:"u8);
-        internal static SEL selIsVisible = sel_registerName("isVisible"u8);
-        internal static SEL selOrderFront = sel_registerName("orderFront:"u8);
-        internal static SEL selOrderOut = sel_registerName("orderOut:"u8);
-
-        internal static SEL selStyleMask = sel_registerName("styleMask"u8);
-        internal static SEL selSetStyleMask = sel_registerName("setStyleMask:"u8);
-
-        internal static SEL selLevel = sel_registerName("level"u8);
-        internal static SEL selSetLevel = sel_registerName("setLevel:"u8);
-
-        internal static SEL selScreens = sel_registerName("screens"u8);
-        internal static SEL selCount = sel_registerName("count"u8);
-        internal static SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
-
-        internal static SEL selObject = sel_registerName("object"u8);
-
-        internal static SEL selUpdate = sel_registerName("update"u8);
-
-        internal static SEL selArray = sel_registerName("array"u8);
-        internal static SEL selArrayWithObject = sel_registerName("arrayWithObject:"u8);
-
-        internal static SEL selLength = sel_registerName("length"u8);
-
-        internal static SEL selIsKindOfClass = sel_registerName("isKindOfClass:"u8);
-        internal static SEL selInitWithAttributedString = sel_registerName("initWithAttributedString:"u8);
-        internal static SEL selInitWithString = sel_registerName("initWithString:"u8);
-        internal static SEL selMutableString = sel_registerName("mutableString"u8);
-        internal static SEL selString = sel_registerName("string"u8);
-        internal static SEL selSetString = sel_registerName("setString:"u8);
-
-        internal static SEL selAddCursorRect_Cursor = sel_registerName("addCursorRect:cursor:"u8);
-        internal static SEL selInvalidateCursorRectsForView = sel_registerName("invalidateCursorRectsForView:"u8);
-        internal static SEL selEnableCursorRects = sel_registerName("enableCursorRects"u8);
-        internal static SEL selDisableCursorRects = sel_registerName("disableCursorRects"u8);
-
-        internal static SEL selSuperclass = sel_registerName("superclass"u8);
-
-        internal static SEL selImageViewWithImage = sel_registerName("imageViewWithImage:"u8);
-        internal static SEL selImageWithSymbolConfiguration = sel_registerName("imageWithSymbolConfiguration:"u8);
-        internal static SEL selDisplay = sel_registerName("display"u8);
-        internal static SEL selSetSymbolConfiguration = sel_registerName("setSymbolConfiguration:"u8);
+        internal static readonly SEL selType = sel_registerName("type"u8);
+        internal static readonly SEL selSendEvent = sel_registerName("sendEvent:"u8);
+        internal static readonly SEL selNextEventMatchingMask_untilDate_inMode_dequeue = sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"u8);
+        internal static readonly SEL selWindow = sel_registerName("window"u8);
+        internal static readonly SEL selButtonNumber = sel_registerName("buttonNumber"u8);
+        internal static readonly SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
+        internal static readonly SEL selMouseLocation = sel_registerName("mouseLocation"u8);
+        internal static readonly SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
+        internal static readonly SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
+        internal static readonly SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
+        internal static readonly SEL selTrackingNumber = sel_registerName("trackingNumber"u8);
+        internal static readonly SEL selKeyCode = sel_registerName("keyCode"u8);
+        internal static readonly SEL selARepeat = sel_registerName("isARepeat"u8);
 
 
+        internal static readonly SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
+        internal static readonly SEL selInitWithFrame = sel_registerName("initWithFrame:"u8);
 
-        internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
+        internal static readonly SEL selAddTrackingRect_owner_userData_assumeInside = sel_registerName("addTrackingRect:owner:userData:assumeInside:"u8);
+
+        internal static readonly SEL selScreen = sel_registerName("screen"u8);
+        internal static readonly SEL selFrame = sel_registerName("frame"u8);
+        internal static readonly SEL selBounds = sel_registerName("bounds"u8);
+        internal static readonly SEL selSetFrameTopLeftPoint = sel_registerName("setFrameTopLeftPoint:"u8);
+        internal static readonly SEL selContentView = sel_registerName("contentView"u8);
+        internal static readonly SEL selSetContentView = sel_registerName("setContentView:"u8);
+        internal static readonly SEL selInterpretKeyEvents = sel_registerName("interpretKeyEvents:"u8);
+        internal static readonly SEL selSetFrame_Display = sel_registerName("setFrame:display:"u8);
+        internal static readonly SEL selSetContentSize = sel_registerName("setContentSize:"u8);
+        internal static readonly SEL selSetContentMinSize = sel_registerName("setContentMinSize:"u8);
+        internal static readonly SEL selSetContentMaxSize = sel_registerName("setContentMaxSize:"u8);
+        internal static readonly SEL selDockTile = sel_registerName("dockTile"u8);
+        internal static readonly SEL selTerminate = sel_registerName("terminate:"u8);
+        internal static readonly SEL selClose = sel_registerName("close"u8);
+        internal static readonly SEL selSetTitle = sel_registerName("setTitle:"u8);
+        internal static readonly SEL selTitle = sel_registerName("title"u8);
+        internal static readonly SEL selSetDelegate = sel_registerName("setDelegate:"u8);
+        internal static readonly SEL selMakeFirstResponder = sel_registerName("makeFirstResponder:"u8);
+        internal static readonly SEL selMakeKeyWindow = sel_registerName("makeKeyWindow"u8);
+        internal static readonly SEL selCenter = sel_registerName("center"u8);
+        internal static readonly SEL selInputContext = sel_registerName("inputContext"u8);
+
+        internal static readonly SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
+
+        internal static readonly SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
+
+        internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
+        internal static readonly SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
+
+        internal static readonly SEL selIsMiniaturized = sel_registerName("isMiniaturized"u8);
+        internal static readonly SEL selMiniaturize = sel_registerName("miniaturize:"u8);
+        internal static readonly SEL selDeminiaturize = sel_registerName("deminiaturize:"u8);
+        internal static readonly SEL selIsZoomed = sel_registerName("isZoomed"u8);
+        internal static readonly SEL selZoom = sel_registerName("zoom:"u8);
+        internal static readonly SEL selToggleFullScreen = sel_registerName("toggleFullScreen:"u8);
+        internal static readonly SEL selIsVisible = sel_registerName("isVisible"u8);
+        internal static readonly SEL selOrderFront = sel_registerName("orderFront:"u8);
+        internal static readonly SEL selOrderOut = sel_registerName("orderOut:"u8);
+
+        internal static readonly SEL selStyleMask = sel_registerName("styleMask"u8);
+        internal static readonly SEL selSetStyleMask = sel_registerName("setStyleMask:"u8);
+
+        internal static readonly SEL selLevel = sel_registerName("level"u8);
+        internal static readonly SEL selSetLevel = sel_registerName("setLevel:"u8);
+
+        internal static readonly SEL selScreens = sel_registerName("screens"u8);
+        internal static readonly SEL selCount = sel_registerName("count"u8);
+        internal static readonly SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
+
+        internal static readonly SEL selObject = sel_registerName("object"u8);
+
+        internal static readonly SEL selUpdate = sel_registerName("update"u8);
+
+        internal static readonly SEL selArray = sel_registerName("array"u8);
+        internal static readonly SEL selArrayWithObject = sel_registerName("arrayWithObject:"u8);
+
+        internal static readonly SEL selLength = sel_registerName("length"u8);
+
+        internal static readonly SEL selIsKindOfClass = sel_registerName("isKindOfClass:"u8);
+        internal static readonly SEL selInitWithAttributedString = sel_registerName("initWithAttributedString:"u8);
+        internal static readonly SEL selInitWithString = sel_registerName("initWithString:"u8);
+        internal static readonly SEL selMutableString = sel_registerName("mutableString"u8);
+        internal static readonly SEL selString = sel_registerName("string"u8);
+        internal static readonly SEL selSetString = sel_registerName("setString:"u8);
+
+        internal static readonly SEL selAddCursorRect_Cursor = sel_registerName("addCursorRect:cursor:"u8);
+        internal static readonly SEL selInvalidateCursorRectsForView = sel_registerName("invalidateCursorRectsForView:"u8);
+        internal static readonly SEL selEnableCursorRects = sel_registerName("enableCursorRects"u8);
+        internal static readonly SEL selDisableCursorRects = sel_registerName("disableCursorRects"u8);
+
+        internal static readonly SEL selSuperclass = sel_registerName("superclass"u8);
+
+        internal static readonly SEL selImageViewWithImage = sel_registerName("imageViewWithImage:"u8);
+        internal static readonly SEL selImageWithSymbolConfiguration = sel_registerName("imageWithSymbolConfiguration:"u8);
+        internal static readonly SEL selDisplay = sel_registerName("display"u8);
+        internal static readonly SEL selSetSymbolConfiguration = sel_registerName("setSymbolConfiguration:"u8);
+
+
+
+        internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication");
         internal static readonly ObjCClass NSMenuClass = objc_getClass("NSMenu"u8);
@@ -140,7 +140,6 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
-
 
 
         internal static ObjCClass NSOpenTKWindowClass;
@@ -165,7 +164,7 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
             }
 
-            // FIXME: Override terminate: instead!
+            // This method is called from the Quit menu option.
             class_addMethod(NSApplicationClass, selQuit, Menu_QuitInst, "v@:"u8);
 
             nsApplication = objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication);
@@ -190,7 +189,6 @@ namespace OpenTK.Platform.Native.macOS
                 IntPtr appMenu = objc_msgSend_IntPtr((IntPtr)NSMenuClass, Alloc);
                 objc_msgSend(appMenuItem, selSetSubmenu, appMenu);
 
-                // FIXME: Use terminate: instead of quit:
                 IntPtr quitMenuItem = objc_msgSend_IntPtr(
                         objc_msgSend_IntPtr((IntPtr)NSMenuItemClass, Alloc),
                         selInitWithTitle_Action_KeyEquivalent,

@@ -17,27 +17,27 @@ namespace OpenTK.Platform.Native.macOS
     {
         internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
 
-        internal static SEL selScreens = sel_registerName("screens"u8);
-        internal static SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
-        internal static SEL selCount = sel_registerName("count"u8);
+        internal static readonly SEL selScreens = sel_registerName("screens"u8);
+        internal static readonly SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
+        internal static readonly SEL selCount = sel_registerName("count"u8);
 
-        internal static SEL selDeviceDescription = sel_registerName("deviceDescription"u8);
-        internal static SEL selLocalizedName = sel_registerName("localizedName"u8);
-        internal static SEL selBackingScaleFactor = sel_registerName("backingScaleFactor"u8);
-        internal static SEL selVisibleFrame = sel_registerName("visibleFrame"u8);
-        internal static SEL selFrame = sel_registerName("frame"u8);
-        internal static SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
-        internal static SEL selDepth = sel_registerName("depth"u8);
+        internal static readonly SEL selDeviceDescription = sel_registerName("deviceDescription"u8);
+        internal static readonly SEL selLocalizedName = sel_registerName("localizedName"u8);
+        internal static readonly SEL selBackingScaleFactor = sel_registerName("backingScaleFactor"u8);
+        internal static readonly SEL selVisibleFrame = sel_registerName("visibleFrame"u8);
+        internal static readonly SEL selFrame = sel_registerName("frame"u8);
+        internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
+        internal static readonly SEL selDepth = sel_registerName("depth"u8);
         // macOS 12.0+
-        internal static SEL selSafeAreaInsets = sel_registerName("safeAreaInsets"u8);
-        internal static SEL selAuxiliaryTopLeftArea = sel_registerName("auxiliaryTopLeftArea"u8);
-        internal static SEL selAuxiliaryTopRightArea = sel_registerName("auxiliaryTopRightArea"u8);
+        internal static readonly SEL selSafeAreaInsets = sel_registerName("safeAreaInsets"u8);
+        internal static readonly SEL selAuxiliaryTopLeftArea = sel_registerName("auxiliaryTopLeftArea"u8);
+        internal static readonly SEL selAuxiliaryTopRightArea = sel_registerName("auxiliaryTopRightArea"u8);
 
-        internal static SEL selObjectForKey = sel_registerName("objectForKey:"u8);
+        internal static readonly SEL selObjectForKey = sel_registerName("objectForKey:"u8);
 
-        internal static SEL selUnsignedIntValue = sel_registerName("unsignedIntValue"u8);
+        internal static readonly SEL selUnsignedIntValue = sel_registerName("unsignedIntValue"u8);
 
-        internal static SEL selRespondsToSelector = sel_registerName("respondsToSelector:"u8);
+        internal static readonly SEL selRespondsToSelector = sel_registerName("respondsToSelector:"u8);
 
         /// <inheritdoc/>
         public string Name => nameof(MacOSDisplayComponent);
