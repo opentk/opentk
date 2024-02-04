@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.Window] = () => new macOS.MacOSWindowComponent(),
                 [PalComponents.OpenGL] = () => new macOS.MacOSOpenGLComponent(),
                 [PalComponents.Display] = () => new macOS.MacOSDisplayComponent(),
-                //[PalComponents.Shell] = () => new macOS.MacOSShellComponent(),
+                [PalComponents.Shell] = () => new macOS.MacOSShellComponent(),
                 [PalComponents.MiceInput] = () => new macOS.MacOSMouseComponent(),
                 //[PalComponents.KeyboardInput] = () => new macOS.MacOSKeyboardComponent(),
                 [PalComponents.MouseCursor] = () => new macOS.MacOSCursorComponent(),

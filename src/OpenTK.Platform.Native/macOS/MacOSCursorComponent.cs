@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
-using static System.Formats.Asn1.AsnWriter;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
 namespace OpenTK.Platform.Native.macOS
