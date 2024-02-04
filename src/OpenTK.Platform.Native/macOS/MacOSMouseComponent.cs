@@ -19,14 +19,19 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);
         internal static readonly SEL selFrame = sel_registerName("frame"u8);
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSMouseComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MiceInput;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public bool CanSetMousePosition => true;
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MiceInput)
@@ -35,6 +40,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
@@ -48,6 +54,7 @@ namespace OpenTK.Platform.Native.macOS
             y = (int)(frame.size.y - p.y);
         }
 
+        /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
             IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
@@ -72,6 +79,7 @@ namespace OpenTK.Platform.Native.macOS
             ScrollPosition += delta;
         }
 
+        /// <inheritdoc/>
         public void GetMouseState(out MouseState state)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
