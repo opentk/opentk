@@ -3,10 +3,10 @@ STRATEGY: MIN
 RESTRICTION: || (== netcoreapp3.1) (== netstandard2.0) (== netstandard2.1)
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FsCheck (2.16.5)
+    FsCheck (2.16.6)
       FSharp.Core (>= 4.2.3)
-    FsCheck.Xunit (2.16.5)
-      FsCheck (2.16.5)
+    FsCheck.Xunit (2.16.6)
+      FsCheck (2.16.6)
       xunit.extensibility.execution (>= 2.2 < 3.0)
     FSharp.Core (4.2.3)
       System.Collections (>= 4.0.11)
@@ -567,7 +567,7 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3)
     xunit.abstractions (2.0.1)
       NETStandard.Library (>= 1.6)
-    xunit.assert (2.4.2)
+    xunit.assert (2.6)
       NETStandard.Library (>= 1.6.1)
     xunit.extensibility.core (2.2)
       NETStandard.Library (>= 1.6)
