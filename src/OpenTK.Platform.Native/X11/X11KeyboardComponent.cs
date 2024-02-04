@@ -91,6 +91,7 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public KeyModifier GetKeyboardModifiers()
         {
             throw new NotImplementedException();

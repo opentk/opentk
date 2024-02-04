@@ -49,13 +49,16 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selSetSize = sel_registerName("setSize:"u8);
         internal static readonly SEL selSize = sel_registerName("size"u8);
 
-
+        /// <inheritdoc/>
         public string Name => nameof(MacOSIconComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.WindowIcon;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.WindowIcon)
@@ -64,8 +67,10 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public bool CanLoadSystemIcons => true;
 
+        /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)
         {
             IntPtr symbolName = 0;
@@ -117,6 +122,7 @@ namespace OpenTK.Platform.Native.macOS
             return nsicon;
         }
 
+        /// <inheritdoc/>
         public IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
             IntPtr bitmap = objc_msgSend_IntPtr((IntPtr)NSBitmapImageRep, Alloc);
@@ -189,6 +195,7 @@ namespace OpenTK.Platform.Native.macOS
             return nsicon;
         }
 
+        /// <inheritdoc/>
         public void Destroy(IconHandle handle)
         {
             NSIconHandle nsicon = handle.As<NSIconHandle>(this);
@@ -202,6 +209,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void GetSize(IconHandle handle, out int width, out int height)
         {
             NSIconHandle nsicon = handle.As<NSIconHandle>(this);

@@ -67,12 +67,16 @@ namespace OpenTK.Platform.Native.macOS
         // Keep a list of animated cursors?
         private List<NSCursorHandle> AnimatedCursors = new List<NSCursorHandle>();
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSCursorComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MouseCursor)
@@ -81,8 +85,10 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public bool CanLoadSystemCursors => true;
 
+        /// <inheritdoc/>
         public bool CanInspectSystemCursors => true;
 
         // FIXME: Make two separate functions, one for loading animated cursors.
@@ -191,6 +197,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public CursorHandle Create(SystemCursorType systemCursor)
         {
             IntPtr cursor;
@@ -324,6 +331,7 @@ namespace OpenTK.Platform.Native.macOS
             return nscursor;
         }
 
+        /// <inheritdoc/>
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
             IntPtr nscursor = NSCursorFromImage(width, height, width, height, image, hotspotX, hotspotY);
@@ -333,6 +341,7 @@ namespace OpenTK.Platform.Native.macOS
             return handle;
         }
 
+        /// <inheritdoc/>
         public CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
             // Convert the image to RGBA interleaved format
@@ -389,6 +398,7 @@ namespace OpenTK.Platform.Native.macOS
             return handle;
         }
 
+        /// <inheritdoc/>
         public void Destroy(CursorHandle handle)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
@@ -417,6 +427,7 @@ namespace OpenTK.Platform.Native.macOS
             nscursor.Mode = NSCursorHandle.CursorMode.Uninitialized;
         }
 
+        /// <inheritdoc/>
         public bool IsSystemCursor(CursorHandle handle)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
@@ -452,6 +463,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void GetSize(CursorHandle handle, out int width, out int height)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
@@ -505,6 +517,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
             NSCursorHandle nscursor = handle.As<NSCursorHandle>(this);
