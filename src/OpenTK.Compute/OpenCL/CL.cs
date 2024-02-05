@@ -13,13 +13,9 @@ namespace OpenTK.Compute.OpenCL
 
         private const string LibName = "opencl";
         private const CallingConvention CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
-        private const string LibName = "opencl";
-        private const CallingConvention CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
 
         public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
-        public delegate void ClEventCallback(IntPtr waitEvent, IntPtr userData);
 
-        #region Platform API
         #region Platform API
 
         /// <summary>
@@ -2163,7 +2159,6 @@ namespace OpenTK.Compute.OpenCL
         }
 
         #endregion
-        #endregion
 
         #region Memory Objects API
 
@@ -2332,7 +2327,6 @@ namespace OpenTK.Compute.OpenCL
                 (uint)(eventWaitList?.Length ?? 0), eventWaitList, out @event);
         }
 
-        #endregion
         #endregion
 
         #region Shared Virtual Memory API
@@ -3406,7 +3400,6 @@ namespace OpenTK.Compute.OpenCL
         }
 
         #endregion
-        #endregion
 
         #region Profiling API
 
@@ -3437,9 +3430,7 @@ namespace OpenTK.Compute.OpenCL
         }
 
         #endregion
-        #endregion
 
-        #region Deprecated OpenCL API
         #region Deprecated OpenCL API
 
         /// <summary>
@@ -3597,6 +3588,5 @@ namespace OpenTK.Compute.OpenCL
 
         #endregion
     }
-        #endregion
-    }
 }
+
