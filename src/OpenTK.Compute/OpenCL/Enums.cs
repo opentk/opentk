@@ -255,17 +255,74 @@ namespace OpenTK.Compute.OpenCL
         MaximumWorkItemSizes = 0x1005,
 
         /// <summary>
-        /// 
+        /// Preferred native vector width size for built-in scalar types that can be put into vectors.
+        /// <para>The vector width is defined as the number of scalar elements that can be stored in the vector.</para>
         /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         PreferredVectorWidthChar = 0x1006,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthShort = 0x1007,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthInt = 0x1008,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthLong = 0x1009,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthFloat = 0x100A,
+
+        /// <remarks>
+        /// If double precision is not supported, must return 0.
+        /// <para>Return Type: uint</para>
+        /// </remarks>
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthDouble = 0x100B,
+
+        /// <summary>
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Before OpenCL 2.2</term>
+        /// <description>Maximum configured clock frequency of the device in MHz.</description>
+        /// </item>
+        ///
+        /// <item>
+        /// <term>After OpenCL 2.2</term>
+        /// <description>Clock frequency of the device in MHz.
+        /// The meaning of this value is implementation-defined.
+        /// For devices with multiple clock domains,
+        /// the clock frequency for any of the clock domains may be returned.
+        /// For devices that dynamically change frequency for power or thermal reasons,
+        /// the returned clock frequency may be any valid frequency.</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumClockFrequency = 0x100C,
+
+        /// <summary>
+        /// The default compute device address space size of the global
+        /// address space specified as an unsigned integer value in bits.
+        /// Currently supported values are 32 or 64 bits.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         AddressBits = 0x100D,
+
+        /// <summary>
+        /// Max number of image objects arguments of a kernel
+        /// declared with the read_only qualifier.
+        /// The minimum value is 128 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumReadImageArguments = 0x100E,
+
+        /// <summary>
+        /// Max number of image objects arguments of a kernel
+        /// declared with the write_only qualifier.
+        /// The minimum value is 64 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumWriteImageArguments = 0x100F,
 
         /// <summary>
@@ -277,14 +334,77 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <remarks>Return Type: ulong</remarks>
         MaximumMemoryAllocationSize = 0x1010,
+
+        /// <summary>
+        /// Max width of 2D image or 1D image not created from a buffer object in pixels.
+        /// The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        /// the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         Image2DMaximumWidth = 0x1011,
+
+        /// <summary>
+        /// Max height of 2D image in pixels.
+        /// The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        /// the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         Image2DMaximumHeight = 0x1012,
+
+        /// <summary>
+        /// Max width of 3D image in pixels.
+        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        /// the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         Image3DMaximumWidth = 0x1013,
+
+        /// <summary>
+        /// Max height of 3D image in pixels.
+        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        /// the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         Image3DMaximumHeight = 0x1014,
+
+        /// <summary>
+        /// Max depth of 3D image in pixels.
+        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        /// the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         Image3DMaximumDepth = 0x1015,
+
+        /// <summary>
+        /// Is TRUE if images are supported by the OpenCL device and FALSE otherwise.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         ImageSupport = 0x1016,
+
+        /// <summary>
+        /// Max size in bytes of all arguments that can be passed to a kernel.
+        /// The minimum value is 1024 for devices that are not of type
+        /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
+        /// For all other values, a maximum of 255 arguments can be passed to a kernel.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         MaximumParameterSize = 0x1017,
+
+        /// <summary>
+        /// Maximum number of samplers that can be used in a kernel.
+        /// The minimum value is 16 if <c><see cref="ImageSupport">ImageSupport</see></c>
+        /// is TRUE, the value is 0 otherwise.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumSamplers = 0x1018,
+
+        /// <summary>
+        /// Alignment requirement (in bits) for sub-buffer offsets.
+        /// The minimum value is the size (in bits) of the largest OpenCL built-in data type
+        /// supported by the device (long16 in FULL profile, long16 or int16 in EMBEDDED profile)
+        /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </summary>
         MemoryBaseAddressAlignment = 0x1019,
 
         [Obsolete("MinimumDataTypeAlignmentSize is a deprecated OpenCL 1.1 property.")]
