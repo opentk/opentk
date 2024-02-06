@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography;
 
 namespace OpenTK.Platform.Native.macOS
@@ -489,6 +490,33 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework)]
         internal static extern nint /* CFComparisonResult */ CFStringCompare(IntPtr /* CFString */ theString1, IntPtr /* CFString */ theString2, nuint compareOptions);
+
+        // FIXME: Boolean
+        [DllImport(FoundationFramework)]
+        internal static extern bool CFEqual(IntPtr /* CFTypeRef */ cf1, IntPtr /* CFTypeRef */ cf2);
+
+        [DllImport(FoundationFramework)]
+        internal static extern void CFRelease(IntPtr /* CFTypeRef */ cf);
+
+        [DllImport(FoundationFramework)]
+        internal static extern nint /* CFIndex */ CFDictionaryGetCount(IntPtr /* CFDictionaryRef */ theDict);
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr /* void* */ CFDictionaryGetValue(IntPtr /* CFDictionaryRef */ theDict, IntPtr /* void* */ key);
+
+        [DllImport(FoundationFramework)]
+        internal static extern void CFDictionaryGetKeysAndValues(IntPtr /* CFDictionaryRef */ theDict, IntPtr* keys, IntPtr* values);
+
+        // FIXME: Boolean
+        // FIXME: CFnumberType
+        [DllImport(FoundationFramework)]
+        internal static extern bool CFNumberGetValue(IntPtr /* CFnumberRef */ number, nint /* CFNumberType */ theType, void* valuePtr);
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr /* CFStringRef */ CFCopyDescription(IntPtr /* CFTypeRef */ cf);
+
+        [DllImport(FoundationFramework)]
+        internal static extern bool CFBooleanGetValue(IntPtr /* CFBooleanRef */ boolean);
     }
 #pragma warning restore IDE1006 // Naming Styles
 }

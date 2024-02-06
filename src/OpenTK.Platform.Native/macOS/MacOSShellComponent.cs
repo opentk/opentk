@@ -3,13 +3,20 @@ using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.IOPM;
+using static OpenTK.Platform.Native.macOS.IOPS;
 using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
     public class MacOSShellComponent : IShellComponent
     {
         internal static readonly ObjCClass NSWorkspaceClass = objc_getClass("NSWorkspace"u8);
+        internal static readonly ObjCClass NSProcessInfo = objc_getClass("NSProcessInfo"u8);
+
+        internal static readonly SEL selProcessInfo = sel_registerName("processInfo"u8);
+        internal static readonly SEL selIsLowPowerModeEnabled = sel_registerName("isLowPowerModeEnabled"u8);
 
         internal static readonly SEL selEffectiveAppearance = sel_registerName("effectiveAppearance"u8);
         internal static readonly SEL selName = sel_registerName("name"u8);
@@ -69,11 +76,118 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        public BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
+        public unsafe BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
         {
-            //throw new NotImplementedException();
+            BatteryStatus status;
             batteryInfo = default;
-            return BatteryStatus.Unknown;
+
+            IntPtr processInfo = objc_msgSend_IntPtr((IntPtr)NSProcessInfo, selProcessInfo);
+            // FIXME: BOOL
+            batteryInfo.PowerSaver = objc_msgSend_bool(processInfo, selIsLowPowerModeEnabled);
+
+            IntPtr blob = IOPSCopyPowerSourcesInfo();
+            IntPtr sources = IOPSCopyPowerSourcesList(blob);
+
+            nint count = CFArrayGetCount(sources);
+            if (count == 0)
+            {
+                CFRelease(sources);
+                CFRelease(blob);
+                batteryInfo = default;
+                return BatteryStatus.NoSystemBattery;
+            }
+            else
+            {
+                // FIXME: What if count is != 0 but all of the batteries are not present?
+                status = BatteryStatus.HasSystemBattery;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                IntPtr ps = CFArrayGetValueAtIndex(sources, i);
+                IntPtr desc = IOPSGetPowerSourceDescription(blob, ps);
+
+                IntPtr isPresent = CFDictionaryGetValue(desc, kIOPSIsPresentKey);
+                if (isPresent != IntPtr.Zero)
+                {
+                    if (CFBooleanGetValue(isPresent) == false)
+                    {
+                        // This battery is not of interest to us.
+                        continue;
+                    }
+                }
+
+                bool usingBattery = false;
+                bool charging = false;
+
+                IntPtr sourceState = CFDictionaryGetValue(desc, kIOPSPowerSourceStateKey);
+                if (sourceState != IntPtr.Zero)
+                {
+                    if (CFEqual(sourceState, kIOPSACPowerValue))
+                    {
+                        batteryInfo.OnAC = true;
+                    }
+                    else if (CFEqual(sourceState, kIOPSBatteryPowerValue))
+                    {
+                        usingBattery = true;
+                    }
+                }
+
+                IntPtr isCharging = CFDictionaryGetValue(desc, kIOPSIsChargingKey);
+                if (isCharging != IntPtr.Zero)
+                {
+                    batteryInfo.Charging |= CFBooleanGetValue(isCharging);
+                    charging = CFBooleanGetValue(isCharging);
+                }
+
+                int currentCapacity = -1;
+                int maxCapacity = -1;
+
+                IntPtr currentCap = CFDictionaryGetValue(desc, kIOPSCurrentCapacityKey);
+                if (currentCap != IntPtr.Zero)
+                {
+                    // FIXME: kCFNumberIntType
+                    CFNumberGetValue(currentCap, 9, &currentCapacity);
+                }
+
+                IntPtr maxCap = CFDictionaryGetValue(desc, kIOPSMaxCapacityKey);
+                if (maxCap != IntPtr.Zero)
+                {
+                    // FIXME: kCFNumberIntType
+                    CFNumberGetValue(maxCap, 9, &maxCapacity);
+                }
+
+                if (currentCapacity != -1 && maxCapacity != -1)
+                {
+                    float percent = 100 * (currentCapacity / (float)maxCapacity);
+                    if (percent > (batteryInfo.BatteryPercent ?? -1))
+                        batteryInfo.BatteryPercent = percent;
+                }
+
+                // kIOPSTimeToEmptyKey is only valid when kIOPSPowerSourceStateKey == kIOPSPowerSourceStateKey
+                // and kIOPSIsChargingKey == false.
+                if (usingBattery && charging == false)
+                {
+                    int timeToEmpty = -1;
+                    IntPtr timeToEmptyNumber = CFDictionaryGetValue(desc, kIOPSTimeToEmptyKey);
+                    if (timeToEmptyNumber != IntPtr.Zero)
+                    {
+                        // FIXME: kCFNumberIntType
+                        CFNumberGetValue(timeToEmptyNumber, 9, &timeToEmpty);
+                    }
+
+                    // Both if the key wasn't present, but also if the time is unknown.
+                    if (timeToEmpty != -1)
+                    {
+                        batteryInfo.BatteryTime = timeToEmpty * 60;
+                    }
+                }
+            }
+
+            CFRelease(sources);
+            CFRelease(blob);
+
+            return status;
         }
 
         public ThemeInfo GetPreferredTheme()
