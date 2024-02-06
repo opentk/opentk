@@ -27,16 +27,85 @@ namespace OpenTK.Compute.OpenCL
         TerminateKHR = 0x2032,
     }
 
+    #region Platform
+
+    /// <summary>
+    /// The information that can be queried using <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])">GetPlatformInfo()</see></c>.
+    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table.</para>
+    /// </summary>
     public enum PlatformInfo : uint
     {
+        /// <summary>
+        /// OpenCL profile string. Returns the profile name supported by the implementation.
+        /// The profile name returned can be one of the following strings:
+        ///
+        /// <list type="bullet">
+        /// <item><description>
+        /// FULL_PROFILE - if the implementation supports the OpenCL specification
+        /// (functionality defined as part of the core specification and does not require any extensions to be supported).
+        /// </description></item>
+        ///
+        /// <item><description>
+        /// EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile.
+        /// The embedded profile for OpenCL is described in:
+        /// https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
+        /// </description></item>
+        /// </list>
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Profile = 0x0900,
+
+        /// <summary>
+        /// OpenCL version string. Returns the OpenCL version supported by the implementation.
+        /// This version string has the following format:
+        /// <para>"OpenCL {major_version.minor_version} {platform-specific information}"</para>
+        /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Version = 0x0901,
+
+        /// <summary>
+        /// Platform name string.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Name = 0x0902,
+
+        /// <summary>
+        /// Platform vendor string.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Vendor = 0x0903,
+
+        /// <summary>
+        /// Returns a space separated list of extension names (the extension names themselves do not contain any spaces)~
+        /// supported by the platform. Each extension that is supported by all devices associated with this
+        /// platform must be reported here.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Extensions = 0x0904,
+
+        /// <summary>
+        /// Introduced in OpenCL 2.1.
+        /// Returns the resolution of the host timer in nanoseconds as used by
+        /// <c><see cref="CL.GetHostTimer(CLDevice, IntPtr)">GetHostTimer()</see></c>.
+        /// This value must be 0 for devices that do not support device and host timer synchronization.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         PlatformHostTimerResolution = 0x0905,
+
+        /// <summary>
+        /// Only available for OpenCL 2.0 and 2.1
+        /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension
+        /// functions to be directed to this platform by the ICD Loader.
+        /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetPlatformInfo.html</para>
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         PlatformIcdSuffix = 0x0920
     }
+
+    #endregion
+
+    #region Device
 
     [Flags]
     public enum DeviceType : ulong
@@ -49,11 +118,43 @@ namespace OpenTK.Compute.OpenCL
         All = 0xFFFFFFFF
     }
 
+    /// <summary>
+    /// The information that can be queried using <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
+    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table.</para>
+    /// </summary>
     public enum DeviceInfo : ulong
     {
+        /// <summary>
+        /// The type or types of the OpenCL device. Please see <c><see cref="DeviceType">DeviceType</see></c>
+        /// for supported device types and device type combinations.
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="DeviceType">DeviceType</see></c></remarks>
         Type = 0x1000,
+
+        /// <summary>
+        /// A unique device vendor identifier.
+        /// <para>If the vendor has a PCI vendor ID, the low 16 bits must contain that PCI vendor ID,
+        /// and the remaining bits must be set to zero. Otherwise, the value returned must be a
+        /// valid Khronos vendor ID represented by type cl_khronos_vendor_id.
+        /// Khronos vendor IDs are allocated starting at 0x10000, to distinguish them from the PCI vendor ID namespace.</para>
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         VendorId = 0x1001,
+
+        /// <summary>
+        /// The number of parallel compute units on the OpenCL device.
+        /// A work-group executes on a single compute unit. The minimum value is 1.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumComputeUnits = 0x1002,
+
+        /// <summary>
+        /// Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model.
+        /// (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint, CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
+        /// The minimum value is 3 for devices that are not of type
+        /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         MaximumWorkItemDimensions = 0x1003,
         MaximumWorkGroupSize = 0x1004,
         MaximumWorkItemSizes = 0x1005,
@@ -67,6 +168,15 @@ namespace OpenTK.Compute.OpenCL
         AddressBits = 0x100D,
         MaximumReadImageArguments = 0x100E,
         MaximumWriteImageArguments = 0x100F,
+
+        /// <summary>
+        /// Max size of memory object allocation in bytes.
+        /// The minimum value is:
+        /// <para><code>max(min(1024 × 1024 × 1024, 1/4th of <see cref="GlobalMemorySize">DeviceInfo.GlobalMemorySize</see>), 32 × 1024 × 1024)
+        /// </code></para>
+        /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         MaximumMemoryAllocationSize = 0x1010,
         Image2DMaximumWidth = 0x1011,
         Image2DMaximumHeight = 0x1012,
@@ -157,6 +267,7 @@ namespace OpenTK.Compute.OpenCL
         SpirVersion = 0x40E0
     }
 
+    #endregion
     public enum ContextInfo : uint
     {
         ReferenceCount = 0x1080,
