@@ -1,9 +1,11 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
+    #region Context
     public enum ContextProperties : int
     {
         ContextPlatform = 0x1084,
@@ -26,6 +28,16 @@ namespace OpenTK.Compute.OpenCL
         MemoryInitializeKHR = 0x2030,
         TerminateKHR = 0x2032,
     }
+
+    public enum ContextInfo : uint
+    {
+        ReferenceCount = 0x1080,
+        Devices = 0x1081,
+        Properties = 0x1082,
+        NumberOfDevices = 0x1083
+    }
+
+    #endregion
 
     #region Platform
 
@@ -107,20 +119,72 @@ namespace OpenTK.Compute.OpenCL
 
     #region Device
 
+    /// <summary>
+    /// The valid types of OpenCL devices.
+    /// <para>
+    /// The device type is purely informational and has no semantic meaning.
+    /// </para>
+    /// <para>
+    /// Some devices may be more than one type. For example,
+    /// a <c><see cref="Cpu">CPU</see></c> device may also be a <c><see cref="Gpu">GPU</see></c> device,
+    /// or a <c><see cref="Accelerator">Accelerator</see></c> device may also be some other, more descriptive device type.
+    /// <c><see cref="Custom">Custom</see></c> devices must not be combined with any other device types.
+    /// </para>
+    /// <para>
+    /// One device in the platform should be a <c><see cref="Default">Default</see></c> device.
+    /// The default device should also be a more specific device type,
+    /// such as <c><see cref="Cpu">CPU</see></c> or <c><see cref="Gpu">GPU</see></c>.
+    /// </para>
+    /// </summary>
     [Flags]
     public enum DeviceType : ulong
     {
+        /// <summary>
+        /// The default OpenCL device in the platform. The default OpenCL device must not be a
+        /// <c><see cref="Custom">Custom</see></c> device.
+        /// </summary>
         Default = 1 << 0,
+
+        /// <summary>
+        /// An OpenCL device similar to a traditional CPU (Central Processing Unit).
+        /// The host processor that executes OpenCL host code may also be considered a CPU OpenCL device.
+        /// </summary>
         Cpu = 1 << 1,
+
+        /// <summary>
+        /// An OpenCL device similar to a GPU (Graphics Processing Unit).
+        /// Many systems include a dedicated processor for graphics or
+        /// rendering that may be considered a GPU OpenCL device.
+        /// </summary>
         Gpu = 1 << 2,
+
+        /// <summary>
+        /// Dedicated devices that may accelerate OpenCL programs,
+        /// such as FPGAs (Field Programmable Gate Arrays),
+        /// DSPs (Digital Signal Processors), or AI (Artificial Intelligence) processors.
+        /// </summary>
         Accelerator = 1 << 3,
+
+        /// <summary>
+        /// Specialized devices that implement some of the OpenCL runtime
+        /// APIs but do not support all required OpenCL functionality.
+        /// </summary>
+        /// <remarks>Only available after OpenCL 1.2</remarks>
         Custom = 1 << 4,
+
+        /// <summary>
+        /// All OpenCL devices available in the platform,
+        /// except for <c><see cref="Custom">Custom</see></c> devices.
+        /// </summary>
         All = 0xFFFFFFFF
     }
 
     /// <summary>
-    /// The information that can be queried using <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
-    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table.</para>
+    /// The information that can be queried using
+    /// <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
+    /// <para>
+    /// Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table.
+    /// </para>
     /// </summary>
     public enum DeviceInfo : ulong
     {
@@ -150,14 +214,49 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model.
-        /// (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint, CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
+        /// (Refer to
+        /// <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
         /// The minimum value is 3 for devices that are not of type
         /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
         /// </summary>
         /// <remarks>Return Type: UIntPtr</remarks>
         MaximumWorkItemDimensions = 0x1003,
+
+        /// <summary>
+        /// Maximum number of work-items in a work-group that a device is capable
+        /// of executing on a single compute unit, for any given kernel-instance running on the device.
+        /// (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c> and
+        /// <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>).
+        /// The minimum value is 1.
+        /// <para>The returned value is an upper limit and will not necessarily maximize performance.
+        /// This maximum may be larger than supported by a specific kernel
+        /// (refer to the <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>
+        /// query of <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
+        /// KernelWorkGroupInfo, UIntPtr, byte[], out UIntPtr)">GetKernelWorkGroupInfo()</see></c>).</para>
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         MaximumWorkGroupSize = 0x1004,
+
+        /// <summary>
+        /// Maximum number of work-items that can be specified in each dimension of the work-group to
+        /// <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>.
+        /// Returns n <c>UIntPtr</c> entries, where n is the value returned by the query for
+        /// <c><see cref="MaximumWorkItemDimensions">MaximumWorkItemDimensions</see></c>.
+        /// The minimum value is (1, 1, 1) for devices that are not of type
+        /// <c><see cref="DeviceType.Custom">Custom</see></c>.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr[]</remarks>
         MaximumWorkItemSizes = 0x1005,
+
+        /// <summary>
+        /// 
+        /// </summary>
         PreferredVectorWidthChar = 0x1006,
         PreferredVectorWidthShort = 0x1007,
         PreferredVectorWidthInt = 0x1008,
@@ -268,13 +367,6 @@ namespace OpenTK.Compute.OpenCL
     }
 
     #endregion
-    public enum ContextInfo : uint
-    {
-        ReferenceCount = 0x1080,
-        Devices = 0x1081,
-        Properties = 0x1082,
-        NumberOfDevices = 0x1083
-    }
 
     public enum CommandQueueInfo : uint
     {
