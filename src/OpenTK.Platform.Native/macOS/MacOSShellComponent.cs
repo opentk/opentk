@@ -4,9 +4,11 @@ using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.IOPM;
 using static OpenTK.Platform.Native.macOS.IOPS;
+using static OpenTK.Platform.Native.macOS.Mach;
 using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Xml.XPath;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -146,15 +148,13 @@ namespace OpenTK.Platform.Native.macOS
                 IntPtr currentCap = CFDictionaryGetValue(desc, kIOPSCurrentCapacityKey);
                 if (currentCap != IntPtr.Zero)
                 {
-                    // FIXME: kCFNumberIntType
-                    CFNumberGetValue(currentCap, 9, &currentCapacity);
+                    CFNumberGetValue(currentCap, kCFNumberIntType, &currentCapacity);
                 }
 
                 IntPtr maxCap = CFDictionaryGetValue(desc, kIOPSMaxCapacityKey);
                 if (maxCap != IntPtr.Zero)
                 {
-                    // FIXME: kCFNumberIntType
-                    CFNumberGetValue(maxCap, 9, &maxCapacity);
+                    CFNumberGetValue(maxCap, kCFNumberIntType, &maxCapacity);
                 }
 
                 if (currentCapacity != -1 && maxCapacity != -1)
@@ -172,11 +172,10 @@ namespace OpenTK.Platform.Native.macOS
                     IntPtr timeToEmptyNumber = CFDictionaryGetValue(desc, kIOPSTimeToEmptyKey);
                     if (timeToEmptyNumber != IntPtr.Zero)
                     {
-                        // FIXME: kCFNumberIntType
-                        CFNumberGetValue(timeToEmptyNumber, 9, &timeToEmpty);
+                        CFNumberGetValue(timeToEmptyNumber, kCFNumberIntType, &timeToEmpty);
                     }
 
-                    // Both if the key wasn't present, but also if the time is unknown.
+                    // Handles both if the key wasn't present, but also if the time is unknown.
                     if (timeToEmpty != -1)
                     {
                         batteryInfo.BatteryTime = timeToEmpty * 60;
@@ -219,10 +218,40 @@ namespace OpenTK.Platform.Native.macOS
             return info;
         }
 
-        public SystemMemoryInfo GetSystemMemoryInformation()
+        public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
-            return default;
-            throw new NotImplementedException();
+            // Seems like host_statistics64 doesn't like to have a count >15 on my test machine
+            // running macOS 12.3.1.
+            // Not sure why this is, but it'll have to be fine for now.
+            // - Noggin_bops 2024-02-08
+            uint count = HOST_VM_INFO_COUNT;
+            int result = host_statistics(mach_host_self(), HOST_VM_INFO, out vm_statistics stats, ref count);
+            if (result != KERN_SUCCESS)
+            {
+                Logger?.LogWarning($"Failed to get memory statistics: {result}");
+                return default;
+            }
+
+            result = host_page_size(mach_host_self(), out nuint page_size);
+            if (result != KERN_SUCCESS)
+            {
+                Logger?.LogWarning($"Failed to get page size: {result}");
+                return default;
+            }
+
+            // These don't add up to the total amount of pages.
+            // It seems like there is something weird going on with host_statistics
+            // where it doesn't count some pages.
+            // See: https://stackoverflow.com/questions/14789672/why-does-host-statistics64-return-inconsistent-results
+            // - Noggin_bops 2024-02-08
+            uint total_pages = stats.wire_count + stats.active_count + stats.inactive_count + stats.free_count + stats.purgable_count;
+            uint free_pages = stats.free_count;
+
+            SystemMemoryInfo info;
+            info.TotalPhysicalMemory = total_pages * (long)page_size;
+            info.AvailablePhysicalMemory = free_pages * (long)page_size;
+
+            return info;
         }
     }
 }

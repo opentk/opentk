@@ -10,7 +10,7 @@ namespace OpenTK.Platform.Native.macOS
         On = 255,
     }
 
-    public static class IOPM
+    internal static class IOPM
     {
         public const string Lib = "/System/Library/Frameworks/IOKit.framework/IOKit";
 

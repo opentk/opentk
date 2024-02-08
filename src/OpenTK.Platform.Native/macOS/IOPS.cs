@@ -11,7 +11,7 @@ namespace OpenTK.Platform.Native.macOS
         Final = 3,
     }
 
-    public static class IOPS
+    internal static class IOPS
     {
         public const string Lib = "/System/Library/Frameworks/IOKit.framework/IOKit";
 

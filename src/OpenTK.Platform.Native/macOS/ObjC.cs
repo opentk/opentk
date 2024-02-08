@@ -24,6 +24,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr /* CFString */ IO16BitFloatPixels = CFStringCreateWithBytes(0, "-16FR16FG16FB16F"u8, CFStringEncoding.UTF8, false);
         internal static readonly IntPtr /* CFString */ IO32BitFloatPixels = CFStringCreateWithBytes(0, "-32FR32FG32FB32F"u8, CFStringEncoding.UTF8, false);
 
+        // FIXME: Number type enum!
+        internal const int kCFNumberIntType = 9;
 
         // FIXME: Maybe move to a selector class?
         // FIXME: Maybe prefix with sel like all other selectors...?
