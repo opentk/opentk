@@ -52,13 +52,17 @@ namespace OpenTK.Compute.OpenCL
         /// The profile name returned can be one of the following strings:
         ///
         /// <list type="bullet">
-        /// <item><description>
-        /// FULL_PROFILE - if the implementation supports the OpenCL specification
+        /// <item><term>
+        /// FULL_PROFILE</term>
+        /// <description>
+        /// if the implementation supports the OpenCL specification
         /// (functionality defined as part of the core specification and does not require any extensions to be supported).
         /// </description></item>
         ///
-        /// <item><description>
-        /// EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile.
+        /// <item><term>
+        /// EMBEDDED_PROFILE</term>
+        /// <description>
+        /// if the implementation supports the OpenCL embedded profile.
         /// The embedded profile for OpenCL is described in:
         /// https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
         /// </description></item>
@@ -405,36 +409,259 @@ namespace OpenTK.Compute.OpenCL
         /// supported by the device (long16 in FULL profile, long16 or int16 in EMBEDDED profile)
         /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
         /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MemoryBaseAddressAlignment = 0x1019,
 
+        /// <summary>
+        /// Deprecated OpenCL 1.1 property
+        /// <para>The minimum value is the size (in bytes)
+        /// of the largest OpenCL data type supported by the device
+        /// (long16 in FULL profile, long16 or int16 in EMBEDDED profile).</para>
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         [Obsolete("MinimumDataTypeAlignmentSize is a deprecated OpenCL 1.1 property.")]
         MinimumDataTypeAlignmentSize = 0x101A,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <remarks>Return Type: cl_device_fp_config</remarks>
         SingleFloatingPointConfiguration = 0x101B,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Type of global memory cache supported.
+        /// Valid values are: CL_NONE, CL_READ_ONLY_CACHE, and CL_READ_WRITE_CACHE.
+        /// </summary>
+        /// <remarks>Return Type: cl_device_mem_cache_type</remarks>
         GlobalMemoryCacheType = 0x101C,
+
+        /// <summary>
+        /// Size of global memory cache line in bytes.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         GlobalMemoryCachelineSize = 0x101D,
+
+        /// <summary>
+        /// Size of global memory cache in bytes.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         GlobalMemoryCacheSize = 0x101E,
+
+        /// <summary>
+        /// Size of global device memory in bytes.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         GlobalMemorySize = 0x101F,
+
+        /// <summary>
+        /// Max size in bytes of a constant buffer allocation. The minimum value is 64 KB.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         MaximumConstantBufferSize = 0x1020,
+
+        /// <summary>
+        /// Max number of arguments declared with the <c>__constant</c> qualifier in a kernel. The minimum value is 8.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         MaximumConstantArguments = 0x1021,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Type of local memory supported.
+        /// This can be set to CL_LOCAL implying dedicated local memory storage such as SRAM, or CL_GLOBAL.
+        /// </summary>
+        /// <remarks>Return Type: cl_device_local_mem_type</remarks>
         LocalMemoryType = 0x1022,
+
+        /// <summary>
+        /// Size of local memory arena in bytes. The minimum value is 32 KB.
+        /// </summary>
+        /// <remarks>Return Type: ulong</remarks>
         LocalMemorySize = 0x1023,
+
+        /// <summary>
+        /// Is TRUE if the device implements error correction
+        /// for all accesses to compute device memory (global and constant).
+        /// Is FALSE if the device does not implement such error correction.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         ErrorCorrectionSupport = 0x1024,
+
+        /// <summary>
+        /// Describes the resolution of device timer. This is measured in nanoseconds.
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         ProfilingTimerResolution = 0x1025,
+
+        /// <summary>
+        /// Is TRUE if the OpenCL device is a little endian device and FALSE otherwise.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         EndianLittle = 0x1026,
+
+        /// <summary>
+        /// Is TRUE if the device is available and FALSE if the device is not available.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         Available = 0x1027,
+
+        /// <summary>
+        /// Is FALSE if the implementation does not have
+        /// a compiler available to compile the program source.
+        /// Is TRUE if the compiler is available.
+        /// This can be FALSE for the embedded platform profile only.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         CompilerAvailable = 0x1028,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Describes the execution capabilities of the device.
+        /// This is a bit-field that describes one or more of the following values:
+        /// <list type="bullet">
+        /// <item><term>
+        /// CL_EXEC_KERNEL</term>
+        /// <description>
+        /// The OpenCL device can execute OpenCL kernels.
+        /// </description></item>
+        ///
+        /// <item><term>
+        /// CL_EXEC_NATIVE_KERNEL</term>
+        /// <description>
+        /// The OpenCL device can execute native kernels.
+        /// </description></item>
+        /// </list>
+        ///
+        /// The mandated minimum capability is CL_EXEC_KERNEL.
+        /// </summary>
+        /// <remarks>Return Type: cl_device_exec_capabilities</remarks>
         ExecutionCapabilities = 0x1029,
 
+        /// #TODO: Unfinished return type in API
+        /// <summary>
+        /// Describes the command-queue properties supported by the device.
+        /// The mandated minimum capability is CL_QUEUE_PROFILING_ENABLE.
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c></remarks>
         [Obsolete("QueueProperties is a deprecated OpenCL 1.2 property, please use QueueOnHostProperties.")]
         QueueProperties = 0x102A,
+
+        /// #TODO: Unfinished return type in API
+        /// <summary>
+        /// Describes the on host command-queue properties supported by the device.
+        /// The mandated minimum capability is: CL_QUEUE_PROFILING_ENABLE.
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c></remarks>
         QueueOnHostProperties = 0x102A,
 
+        /// <summary>
+        /// Device name string.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Name = 0x102B,
+
+        /// <summary>
+        /// Vendor name string.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Vendor = 0x102C,
+
+        /// <summary>
+        /// OpenCL software driver version string. Follows a vendor-specific format.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         DriverVersion = 0x102D,
+
+        /// <summary>
+        /// OpenCL profile string.
+        /// Returns the profile name supported by the device.
+        /// The profile name returned can be one of the following strings:
+        /// <list type="bullet">
+        /// <item><term>
+        /// FULL_PROFILE</term>
+        /// <description>
+        /// if the device supports the OpenCL specification
+        /// (functionality defined as part of the core specification and does not require any extensions to be supported).
+        /// </description></item>
+        ///
+        /// <item><term>
+        /// EMBEDDED_PROFILE</term>
+        /// <description>
+        /// if the device supports the OpenCL embedded profile.
+        /// </description></item>
+        /// </list>
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Profile = 0x102E,
+
+        /// <summary>
+        /// OpenCL version string. Returns the OpenCL version supported by the device. This version string has the following format:
+        /// <para><c>OpenCL &lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</c></para>
+        /// The <c>major_version.minor_version</c> value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2, or 3.0.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Version = 0x102F,
+
+        /// <summary>
+        /// Returns a space separated list of extension names
+        /// (the extension names themselves do not contain any spaces) supported by the device.
+        /// The list of extension names may include Khronos approved extension names and vendor specified extension names.
+        /// <para>The following Khronos extension names must be returned by all devices that support OpenCL 1.1:</para>
+        ///
+        /// <list type="bullet">
+        /// <item><description>
+        /// cl_khr_byte_addressable_store</description>
+        /// </item>
+        ///
+        /// <item><description>
+        /// cl_khr_global_int32_base_atomics</description>
+        /// </item>
+        ///
+        /// <item><description>
+        /// cl_khr_local_int32_base_atomics</description>
+        /// </item>
+        ///
+        /// <item><description>
+        /// cl_khr_local_int32_extended_atomics</description>
+        /// </item>
+        /// </list>
+        ///
+        /// Additionally, the following Khronos extension names must be returned by all devices
+        /// that support OpenCL 1.2 when and only when the optional feature is supported:
+        /// <list type="bullet">
+        /// <item><description>
+        /// cl_khr_fp64</description>
+        /// </item>
+        /// </list>
+        ///
+        /// Additionally, the following Khronos extension names must be returned
+        /// by all devices that support OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2.
+        /// For devices that support OpenCL 3.0,
+        /// these extension names must be returned when and only when the optional feature is supported:
+        ///
+        /// <list type="bullet">
+        /// <item><description>
+        /// cl_khr_3d_image_writes</description>
+        /// </item>
+        ///
+        /// <item><description>
+        /// cl_khr_depth_images</description>
+        /// </item>
+        ///
+        /// <item><description>
+        /// cl_khr_image2d_from_buffer</description>
+        /// </item>
+        /// </list>
+        ///
+        /// Please refer to the OpenCL Extension Specification or vendor provided documentation
+        /// for a detailed description of these extensions.
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         Extensions = 0x1030,
+
+        /// <summary>
+        /// The platform associated with this device.
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="CLPlatform">CLPlatform</see></c></remarks>
         Platform = 0x1031,
         DoubleFloatingPointConfiguration = 0x1032,
         HalfFloatingPointConfiguration = 0x1033,
