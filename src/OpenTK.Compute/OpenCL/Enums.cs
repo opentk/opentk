@@ -663,23 +663,147 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <remarks>Return Type: <c><see cref="CLPlatform">CLPlatform</see></c></remarks>
         Platform = 0x1031,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Describes double precision floating-point capability of the OpenCL device.
+        /// </summary>
+        /// <remarks>Return Type: cl_device_fp_config</remarks>
         DoubleFloatingPointConfiguration = 0x1032,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Describes the OPTIONAL half precision floating-point capability of the OpenCL device.
+        /// </summary>
+        /// <remarks>Return Type: cl_device_fp_config</remarks>
         HalfFloatingPointConfiguration = 0x1033,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthHalf = 0x1034,
 
+        /// <summary>
+        /// Is TRUE if the device and the host have a unified memory subsystem and is FALSE otherwise.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         [Obsolete("HostUnifiedMemory is a deprecated OpenCL 1.2 property.")]
         HostUnifiedMemory = 0x1035,
+
+        /// <summary>
+        /// Returns the native ISA vector width.
+        /// The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         NativeVectorWidthChar = 0x1036,
+
+        /// <inheritdoc cref="NativeVectorWidthChar"/>
         NativeVectorWidthShort = 0x1037,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         NativeVectorWidthInt = 0x1038,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         NativeVectorWidthLong = 0x1039,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         NativeVectorWidthFloat = 0x103A,
+
+        /// <remarks>If double precision is not supported, must return 0.
+        /// <para>Return Type: uint</para>
+        /// </remarks>
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         NativeVectorWidthDouble = 0x103B,
+
+        /// <remarks>If the <c>cl_khr_fp16</c> extension is not supported, must return 0.
+        /// <para>Return Type: uint</para>
+        /// </remarks>
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
         NativeVectorWidthHalf = 0x103C,
+
+        /// #TODO: missing 3.0 implementation
+        /// <summary>
+        /// Unavailable before version 1.1 and obsolete after version 3.0.
+        /// <para>
+        /// Returns the highest fully backwards compatible OpenCL C version
+        /// supported by the compiler for the device.
+        /// For devices supporting compilation from OpenCL C source,
+        /// this will return a version string with the following format:
+        /// </para>
+        /// <para>
+        /// <c>OpenCL &lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</c>
+        /// </para>
+        /// <para>
+        /// For devices that support compilation from OpenCL C source:
+        /// </para>
+        /// <para>
+        /// Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
+        /// an OpenCL 3.0 device must support at least OpenCL C 1.2. An OpenCL 3.0
+        /// device may return an OpenCL C version newer than OpenCL C 1.2 if and only
+        /// if all optional OpenCL C features are supported by the device for the newer version.
+        /// </para>
+        /// <para>
+        /// Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
+        /// an OpenCL 3.0 device must support at least OpenCL C 1.2.
+        /// An OpenCL 3.0 device may return an OpenCL C version newer than
+        /// OpenCL C 1.2 if and only if all optional OpenCL C features are
+        /// supported by the device for the newer version.
+        /// </para>
+        /// <para>
+        /// Support for OpenCL C 2.0 is required for an OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2 device.
+        /// </para>
+        /// <para>
+        /// Support for OpenCL C 1.2 is required for an OpenCL 1.2 device.
+        /// </para>
+        /// <para>
+        /// Support for OpenCL C 1.1 is required for an OpenCL 1.1 device.
+        /// </para>
+        /// <para>
+        /// Support for either OpenCL C 1.0 or OpenCL C 1.1 is required for an OpenCL 1.0 device.
+        /// </para>
+        /// <para>
+        /// For devices that do not support compilation from OpenCL C source,
+        /// such as when <c><see cref="CompilerAvailable">CompilerAvailable</see></c> is FALSE, this query may return an empty string.
+        /// </para>
+        /// <para>
+        /// This query has been superseded by the CL_DEVICE_OPENCL_C_ALL_VERSIONS query, which returns a set of OpenCL C versions supported by a device.
+        /// </para>
+        /// </summary>
+        /// <remarks>>Return Type: string</remarks>
         OpenClCVersion = 0x103D,
+
+        /// <summary>
+        /// Is FALSE if the implementation does not have a linker available. Is TRUE if the linker is available.
+        /// This can be FALSE for the embedded platform profile only.
+        /// This must be TRUE if <c><see cref="CompilerAvailable">CompilerAvailable</see></c> is TRUE.
+        /// </summary>
+        /// <remarks>Return Type: bool</remarks>
         LinkerAvailable = 0x103E,
+
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>
+        /// A semi-colon separated list of built-in kernels supported by the device.
+        /// An empty string is returned if no built-in kernels are supported by the device.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: string</remarks>
         BuiltInKernels = 0x103F,
+
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>Max number of pixels for a 1D image created from a buffer object.
+        /// The minimum value is 65536 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         ImageMaximumBufferSize = 0x1040,
+
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>Max number of images in a 1D or 2D image array.
+        /// The minimum value is 2048 <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: UIntPtr</remarks>
         ImageMaximumArraySize = 0x1041,
         ParentDevice = 0x1042,
         PartitionMaximumSubDevices = 0x1043,
