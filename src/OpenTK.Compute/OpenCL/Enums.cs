@@ -423,15 +423,40 @@ namespace OpenTK.Compute.OpenCL
         MinimumDataTypeAlignmentSize = 0x101A,
 
         /// #TODO: Missing return type equivalent in the API
-        /// <remarks>Return Type: cl_device_fp_config</remarks>
+        /// <summary>
+        /// Describes single precision floating-point capability of the device.
+        /// Double precision is an optional feature so the mandated minimum
+        /// double precision floating-point capability is 0.
+        /// <para>
+        /// If double precision is supported by the device,
+        /// then the minimum double precision floating-point capability
+        /// for OpenCL 2.0 or newer devices is:
+        /// </para>
+        /// <para><code>
+        /// <see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see>
+        ///  | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see>
+        ///  | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see>
+        /// </code></para>
+        /// <para>
+        /// or for OpenCL 1.0, OpenCL 1.1 or OpenCL 1.2 devices:
+        /// </para>
+        /// <para><code>
+        /// <see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see>
+        ///  | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see>
+        ///  | <see cref="DeviceFloatingPointConfig.RoundToZero">RoundToZero</see>
+        ///  | <see cref="DeviceFloatingPointConfig.RoundToInfinity">RoundToInfinity</see>
+        ///  | <see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see>
+        ///  | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see>
+        /// </code></para>
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c></remarks>
         SingleFloatingPointConfiguration = 0x101B,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// Type of global memory cache supported.
-        /// Valid values are: CL_NONE, CL_READ_ONLY_CACHE, and CL_READ_WRITE_CACHE.
         /// </summary>
-        /// <remarks>Return Type: cl_device_mem_cache_type</remarks>
+        /// <remarks>Return Type: <c><see cref="DeviceMemoryCacheType">DeviceMemoryCacheType</see></c></remarks>
         GlobalMemoryCacheType = 0x101C,
 
         /// <summary>
@@ -467,9 +492,11 @@ namespace OpenTK.Compute.OpenCL
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// Type of local memory supported.
-        /// This can be set to CL_LOCAL implying dedicated local memory storage such as SRAM, or CL_GLOBAL.
+        /// This can be set to <c><see cref="DeviceLocalMemoryType.Local">Local</see></c>
+        /// implying dedicated local memory storage such as SRAM, or
+        /// <c><see cref="DeviceLocalMemoryType.Global">Global</see></c>.
         /// </summary>
-        /// <remarks>Return Type: cl_device_local_mem_type</remarks>
+        /// <remarks>Return Type: <c><see cref="DeviceLocalMemoryType">DeviceLocalMemoryType</see></c></remarks>
         LocalMemoryType = 0x1022,
 
         /// <summary>
@@ -519,21 +546,22 @@ namespace OpenTK.Compute.OpenCL
         /// This is a bit-field that describes one or more of the following values:
         /// <list type="bullet">
         /// <item><term>
-        /// CL_EXEC_KERNEL</term>
+        /// <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c></term>
         /// <description>
         /// The OpenCL device can execute OpenCL kernels.
         /// </description></item>
         ///
         /// <item><term>
-        /// CL_EXEC_NATIVE_KERNEL</term>
+        /// <c><see cref="DeviceExecutionCapabilities.NativeKernel">NativeKernel</see></c></term>
         /// <description>
         /// The OpenCL device can execute native kernels.
         /// </description></item>
         /// </list>
         ///
-        /// The mandated minimum capability is CL_EXEC_KERNEL.
+        /// The mandated minimum capability is
+        /// <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c>.
         /// </summary>
-        /// <remarks>Return Type: cl_device_exec_capabilities</remarks>
+        /// <remarks>Return Type: <c><see cref="DeviceExecutionCapabilities">DeviceExecutionCapabilities</see></c></remarks>
         ExecutionCapabilities = 0x1029,
 
         /// #TODO: Unfinished return type in API
@@ -805,9 +833,43 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <remarks>Return Type: UIntPtr</remarks>
         ImageMaximumArraySize = 0x1041,
+
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>Returns the <c><see cref="CLDevice">CLDevice</see></c> of the parent
+        /// device to which this sub-device belongs.
+        /// If device is a root-level device, a NULL value is returned.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="CLDevice">CLDevice</see></c></remarks>
         ParentDevice = 0x1042,
+
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>
+        /// Returns the maximum number of sub-devices that can be created when a device is partitioned.
+        /// The value returned cannot exceed <c><see cref="MaximumComputeUnits">MaximumComputeUnits</see></c>.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: uint</remarks>
         PartitionMaximumSubDevices = 0x1043,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// Unavailable before version 1.2.
+        /// <para>
+        /// Returns the list of partition types supported by device.
+        /// If the device cannot be partitioned (i.e. there is no partitioning scheme
+        /// supported by the device that will return at least two sub-devices),
+        /// a value of 0 will be returned.
+        /// </para>
+        /// </summary>
+        /// <remarks>Return Type: <c><see cref="DevicePartitionProperty">MaximumComputeUnits[]</see></c></remarks>
         PartitionProperties = 0x1044,
+
+        /// <summary>
+        /// 
+        /// </summary>
         PartitionAffinityDomain = 0x1045,
         PartitionType = 0x1046,
         ReferenceCount = 0x1047,
@@ -1136,8 +1198,63 @@ namespace OpenTK.Compute.OpenCL
         ContentUndefined = 1 << 1
     }
 
+    #region Unfinished
+    public enum DevicePartitionProperty : uint
+    {
+        Equally,
+        ByCounts,
+        ByAffinityDomain
+    }
+
+    public enum DeviceLocalMemoryType : uint
+    {
+        Local,
+        Global
+    }
+
+    public enum DeviceExecutionCapabilities : uint
+    {
+        Kernel,
+        NativeKernel
+    }
+
+    public enum DeviceMemoryCacheType : uint
+    {
+        None,
+        ReadOnly,
+        ReadWrite
+    }
+
+    [Flags]
+    public enum DeviceFloatingPointConfig : uint
+    {
+        Denorm,
+        InfinityNaN,
+        RoundToNearest,
+        RoundToZero,
+        RoundToInfinity,
+        FusedMultiplyAdd, // IEEE754-2008
+        SoftFloat,
+        CorrectlyRoundedDivideSqrt
+    }
+
     [Flags]
     public enum CommandQueueProperty : ulong
     {
+        OutOfOrderExecutionModeEnable,
+        ProfilingEnable
     }
+
+    [Flags]
+    public enum DeviceAffinityDomain : uint
+    {
+        Numa,
+        L4Cache,
+        L3Cache,
+        L2Cache,
+        L1Cache,
+        NextPartionable
+    }
+
+    #endregion
 }
