@@ -32,6 +32,20 @@ namespace OpenTK.Backends.Tests
             try { canGetDisplay = WindowComponent.CanGetDisplay; } catch { canGetDisplay = false; }
             try { canCaptureCursor = WindowComponent.CanCaptureCursor; } catch { canCaptureCursor = false; }
             try { canSetIcon = WindowComponent.CanSetIcon; } catch { canSetIcon = false; }
+
+            // FIXME: Make a useful hit test callback as part of this view.
+            //WindowComponent.SetHitTestCallback(Program.Window, HitTest);
+        }
+
+        // FIXME: Actually make this usable.
+        private HitType HitTest(WindowHandle window, Vector2 point)
+        {
+            if (point.X < 300 && point.Y < 300)
+            {
+                return HitType.Draggable;
+            }
+
+            return HitType.Default;
         }
 
         int selectedWindow = -1;

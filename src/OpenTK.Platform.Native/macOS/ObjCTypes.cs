@@ -103,6 +103,19 @@ namespace OpenTK.Platform.Native.macOS
             size = new CGPoint(width, height);
         }
 
+        public bool Contains(CGPoint point)
+        {
+            if (point.x >= origin.x && point.x < origin.x + size.x &&
+                point.y >= origin.y && point.y < origin.y + size.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public override string ToString()
         {
             return $"{origin} - {size}";

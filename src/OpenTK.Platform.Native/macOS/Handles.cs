@@ -21,6 +21,9 @@ namespace OpenTK.Platform.Native.macOS
         public int? MaxWidth { get; set; } = null;
         public int? MaxHeight { get; set; } = null;
 
+        public HitTest? HitTest { get; set; } = null;
+        public bool BackgroundDragEnabled { get; set; } = false;
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;

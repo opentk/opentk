@@ -40,6 +40,19 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        internal static void GetPosition(out double x, out double y)
+        {
+            CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
+
+            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
+            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
+            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
+
+            // FIXME: Coordinate system
+            x = p.x;
+            y = frame.size.y - p.y;
+        }
+
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {

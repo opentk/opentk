@@ -88,6 +88,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selIsVisible = sel_registerName("isVisible"u8);
         internal static readonly SEL selOrderFront = sel_registerName("orderFront:"u8);
         internal static readonly SEL selOrderOut = sel_registerName("orderOut:"u8);
+        internal static readonly SEL selSetMovableByWindowBackground = sel_registerName("setMovableByWindowBackground:"u8);
 
         internal static readonly SEL selStyleMask = sel_registerName("styleMask"u8);
         internal static readonly SEL selSetStyleMask = sel_registerName("setStyleMask:"u8);
@@ -716,6 +717,44 @@ namespace OpenTK.Platform.Native.macOS
             Console.WriteLine("DoCommandBySelector");
         }
 
+        private bool ProcessHitTest(IntPtr @event)
+        {
+            IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
+            // Ignore windows we don't recognize.
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? window) == false)
+            {
+                return false;
+            }
+
+            CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+            GetClientSize(window, out _, out int height);
+            // FIXME: Potentially a -1 is needed here.
+            point.y = height - point.y;
+
+            return DoHitTest(window, point);
+        }
+
+        private bool DoHitTest(NSWindowHandle window, CGPoint point)
+        {
+            bool draggable = false;
+            if (window.HitTest != null)
+            {
+                HitType type = window.HitTest(window, new Vector2((float)point.x, (float)point.y));
+                if (type == HitType.Draggable)
+                {
+                    draggable = true;
+                }
+            }
+
+            if (window.BackgroundDragEnabled != draggable)
+            {
+                window.BackgroundDragEnabled = draggable;
+                objc_msgSend(window.Window, selSetMovableByWindowBackground, draggable);
+            }
+
+            return draggable;
+        }
+
         /// <inheritdoc/>
         public bool CanSetIcon => true;
 
@@ -771,6 +810,20 @@ namespace OpenTK.Platform.Native.macOS
                     case NSEventType.RightMouseDown:
                     case NSEventType.OtherMouseDown:
                         {
+                            CGRect frame = objc_msgSend_CGRect(objc_msgSend_IntPtr(objc_msgSend_IntPtr(@event, selWindow), selContentView), selFrame);
+                            CGPoint location = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                            if (frame.Contains(location) == false)
+                            {
+                                objc_msgSend(nsApplication, selSendEvent, @event);
+                                continue;
+                            }
+
+                            // We don't want to process this event further.
+                            if (ProcessHitTest(@event))
+                            {
+                                continue;
+                            }
+
                             // FIXME: This should be a long, not ulong
                             ulong button = objc_msgSend_ulong(@event, selButtonNumber);
                             MouseButton mouseButton;
@@ -796,6 +849,12 @@ namespace OpenTK.Platform.Native.macOS
                     case NSEventType.RightMouseUp:
                     case NSEventType.OtherMouseUp:
                         {
+                            if (ProcessHitTest(@event))
+                            {
+                                objc_msgSend(nsApplication, selSendEvent, @event);
+                                continue;
+                            }
+
                             // FIXME: This should be a long, not ulong
                             ulong button = objc_msgSend_ulong(@event, selButtonNumber);
                             MouseButton mouseButton;
@@ -821,6 +880,12 @@ namespace OpenTK.Platform.Native.macOS
                         }
                     case NSEventType.MouseMoved:
                         {
+                            if (ProcessHitTest(@event))
+                            {
+                                objc_msgSend(nsApplication, selSendEvent, @event);
+                                continue;
+                            }
+
                             CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
 
                             CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
@@ -1579,7 +1644,16 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
-            throw new NotImplementedException();
+            NSWindowHandle window = handle.As<NSWindowHandle>(this);
+            window.HitTest = test;
+
+            MacOSMouseComponent.GetPosition(out double x, out double y);
+            //ScreenToClient
+            GetClientPosition(window, out int cx, out int cy);
+            CGPoint point = new CGPoint((NFloat)x - cx, (NFloat)y - cy);
+
+            // FIXME: Do an initial check when setting the delegate.
+            DoHitTest(window, point);
         }
 
         /// <inheritdoc/>
