@@ -74,6 +74,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// OpenCL version string. Returns the OpenCL version supported by the implementation.
         /// This version string has the following format:
+        /// <para/>
         /// <para>"OpenCL {major_version.minor_version} {platform-specific information}"</para>
         /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
         /// </summary>
@@ -113,6 +114,7 @@ namespace OpenTK.Compute.OpenCL
         /// Only available for OpenCL 2.0 and 2.1
         /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension
         /// functions to be directed to this platform by the ICD Loader.
+        /// <para/>
         /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetPlatformInfo.html</para>
         /// </summary>
         /// <remarks>Return Type: string</remarks>
@@ -184,85 +186,125 @@ namespace OpenTK.Compute.OpenCL
     }
 
     /// <summary>
-    /// The information that can be queried using
-    /// <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
     /// <para>
-    /// Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table.
+    ///     The information that can be queried using
+    ///     <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, out byte[])">GetDeviceInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     For more info look at the original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#device-queries-table">here</see></u></b>.
     /// </para>
     /// </summary>
     public enum DeviceInfo : ulong
     {
         /// <summary>
-        /// The type or types of the OpenCL device. Please see <c><see cref="DeviceType">DeviceType</see></c>
-        /// for supported device types and device type combinations.
+        /// <para>
+        ///     The type or types of the OpenCL device. Please see <c><see cref="DeviceType">DeviceType</see></c>
+        ///     for supported device types and device type combinations.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceType">DeviceType</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DeviceType">DeviceType</see></c></remarks>
         Type = 0x1000,
 
         /// <summary>
-        /// A unique device vendor identifier.
-        /// <para>If the vendor has a PCI vendor ID, the low 16 bits must contain that PCI vendor ID,
-        /// and the remaining bits must be set to zero. Otherwise, the value returned must be a
-        /// valid Khronos vendor ID represented by type cl_khronos_vendor_id.
-        /// Khronos vendor IDs are allocated starting at 0x10000, to distinguish them from the PCI vendor ID namespace.</para>
+        /// <para>
+        ///     A unique device vendor identifier.
+        /// </para>
+        /// <para>
+        ///     If the vendor has a PCI vendor ID, the low 16 bits must contain that PCI vendor ID,
+        ///     and the remaining bits must be set to zero. Otherwise, the value returned must be a
+        ///     valid Khronos vendor ID represented by type <c>cl_khronos_vendor_id</c>.
+        ///     Khronos vendor IDs are allocated starting at 0x10000, to distinguish them from the PCI vendor ID namespace.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         VendorId = 0x1001,
 
         /// <summary>
-        /// The number of parallel compute units on the OpenCL device.
-        /// A work-group executes on a single compute unit. The minimum value is 1.
+        /// <para>
+        ///     The number of parallel compute units on the OpenCL device.
+        ///     A work-group executes on a single compute unit. The minimum value is 1.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         MaximumComputeUnits = 0x1002,
 
         /// <summary>
-        /// Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model.
-        /// (Refer to
-        /// <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
-        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
-        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
-        /// The minimum value is 3 for devices that are not of type
-        /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// <para>
+        ///     Maximum dimensions that specify the global and local work-item IDs used by the data parallel execution model.
+        ///     (Refer to
+        ///     <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        ///     CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>).
+        ///     The minimum value is 3 for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
         MaximumWorkItemDimensions = 0x1003,
 
         /// <summary>
-        /// Maximum number of work-items in a work-group that a device is capable
-        /// of executing on a single compute unit, for any given kernel-instance running on the device.
-        /// (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
-        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
-        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c> and
-        /// <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>).
-        /// The minimum value is 1.
-        /// <para>The returned value is an upper limit and will not necessarily maximize performance.
-        /// This maximum may be larger than supported by a specific kernel
-        /// (refer to the <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>
-        /// query of <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
-        /// KernelWorkGroupInfo, UIntPtr, byte[], out UIntPtr)">GetKernelWorkGroupInfo()</see></c>).</para>
+        /// <para>
+        ///     Maximum number of work-items that can be specified in each dimension of the work-group to
+        ///     <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        ///     CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>.
+        ///     Returns n <c>UIntPtr</c> entries, where n is the value returned by the query for
+        ///     <c><see cref="MaximumWorkItemDimensions">MaximumWorkItemDimensions</see></c>.
+        ///     The minimum value is (1, 1, 1) for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">Custom</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        MaximumWorkGroupSize = 0x1004,
-
-        /// <summary>
-        /// Maximum number of work-items that can be specified in each dimension of the work-group to
-        /// <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
-        /// CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
-        /// CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>.
-        /// Returns n <c>UIntPtr</c> entries, where n is the value returned by the query for
-        /// <c><see cref="MaximumWorkItemDimensions">MaximumWorkItemDimensions</see></c>.
-        /// The minimum value is (1, 1, 1) for devices that are not of type
-        /// <c><see cref="DeviceType.Custom">Custom</see></c>.
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr[]</remarks>
         MaximumWorkItemSizes = 0x1005,
 
         /// <summary>
-        /// Preferred native vector width size for built-in scalar types that can be put into vectors.
-        /// <para>The vector width is defined as the number of scalar elements that can be stored in the vector.</para>
+        /// <para>
+        ///     Maximum number of work-items in a work-group that a device is capable
+        ///     of executing on a single compute unit, for any given kernel-instance running on the device.
+        ///     (Refer to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        ///     CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c> and
+        ///     <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>).
+        ///     The minimum value is 1.
+        /// </para>
+        /// <para>
+        ///     The returned value is an upper limit and will not necessarily maximize performance.
+        ///     This maximum may be larger than supported by a specific kernel
+        ///     (refer to the <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>
+        ///     query of <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
+        ///     KernelWorkGroupInfo, UIntPtr, byte[], out UIntPtr)">GetKernelWorkGroupInfo()</see></c>).
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
+        MaximumWorkGroupSize = 0x1004,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before version 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Preferred native vector width size for built-in scalar types that can be put into vectors.
+        /// </para>
+        /// <para>
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PreferredVectorWidthChar = 0x1006,
 
         /// <inheritdoc cref="PreferredVectorWidthChar"/>
@@ -277,308 +319,589 @@ namespace OpenTK.Compute.OpenCL
         /// <inheritdoc cref="PreferredVectorWidthChar"/>
         PreferredVectorWidthFloat = 0x100A,
 
-        /// <remarks>
-        /// If double precision is not supported, must return 0.
-        /// <para>Return Type: uint</para>
-        /// </remarks>
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
+        /// <summary>
+        /// <para>
+        ///     Preferred native vector width size for built-in scalar types that can be put into vectors.
+        /// </para>
+        /// <para>
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     If double precision is not supported, must return 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PreferredVectorWidthDouble = 0x100B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing byefore verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Preferred native vector width size for built-in scalar types that can be put into vectors.
+        /// </para>
+        /// <para>
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     If the <c>cl_khr_fp16</c> extension is not supported, must return 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        PreferredVectorWidthHalf = 0x1034,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the native ISA vector width.
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        NativeVectorWidthChar = 0x1036,
+
+        /// <inheritdoc cref="NativeVectorWidthChar"/>
+        NativeVectorWidthShort = 0x1037,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
+        NativeVectorWidthInt = 0x1038,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
+        NativeVectorWidthLong = 0x1039,
+
+        /// <inheritdoc cref="PreferredVectorWidthChar"/>
+        NativeVectorWidthFloat = 0x103A,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the native ISA vector width.
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     If double precision is not supported, must return 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        NativeVectorWidthDouble = 0x103B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the native ISA vector width.
+        ///     The vector width is defined as the number of scalar elements that can be stored in the vector.
+        /// </para>
+        /// <para>
+        ///     If the <c>cl_khr_fp16</c> extension is not supported, must return 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        NativeVectorWidthHalf = 0x103C,
 
         /// <summary>
         /// <list type="bullet">
         /// <item>
-        /// <term>Before OpenCL 2.2</term>
-        /// <description>Maximum configured clock frequency of the device in MHz.</description>
+        ///     <term><b>Before OpenCL 2.2: </b></term>
+        ///     <description>Maximum configured clock frequency of the device in MHz.</description>
         /// </item>
         ///
         /// <item>
-        /// <term>After OpenCL 2.2</term>
-        /// <description>Clock frequency of the device in MHz.
-        /// The meaning of this value is implementation-defined.
-        /// For devices with multiple clock domains,
-        /// the clock frequency for any of the clock domains may be returned.
-        /// For devices that dynamically change frequency for power or thermal reasons,
-        /// the returned clock frequency may be any valid frequency.</description>
+        ///     <term><b>After OpenCL 2.2: </b></term>
+        ///     <description>Clock frequency of the device in MHz.
+        ///     The meaning of this value is implementation-defined.
+        ///     For devices with multiple clock domains,
+        ///     the clock frequency for any of the clock domains may be returned.
+        ///     For devices that dynamically change frequency for power or thermal reasons,
+        ///     the returned clock frequency may be any valid frequency.</description>
         /// </item>
         /// </list>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         MaximumClockFrequency = 0x100C,
 
         /// <summary>
-        /// The default compute device address space size of the global
-        /// address space specified as an unsigned integer value in bits.
-        /// Currently supported values are 32 or 64 bits.
+        /// <para>
+        ///     The default compute device address space size of the global
+        ///     address space specified as an unsigned integer value in bits.
+        ///     Currently supported values are 32 or 64 bits.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         AddressBits = 0x100D,
 
         /// <summary>
-        /// Max number of image objects arguments of a kernel
-        /// declared with the read_only qualifier.
-        /// The minimum value is 128 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// <para>
+        ///     Max size of memory object allocation in bytes.
+        ///     The minimum value is:
+        /// </para>
+        /// <para>
+        /// <pre>max(min(1024 × 1024 × 1024, 1/4th of <see cref="GlobalMemorySize">DeviceInfo.GlobalMemorySize</see>), 32 × 1024 × 1024)</pre>
+        /// </para>
+        /// <para>
+        ///     for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
-        MaximumReadImageArguments = 0x100E,
-
-        /// <summary>
-        /// Max number of image objects arguments of a kernel
-        /// declared with the write_only qualifier.
-        /// The minimum value is 64 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
-        /// </summary>
-        /// <remarks>Return Type: uint</remarks>
-        MaximumWriteImageArguments = 0x100F,
-
-        /// <summary>
-        /// Max size of memory object allocation in bytes.
-        /// The minimum value is:
-        /// <para><code>max(min(1024 × 1024 × 1024, 1/4th of <see cref="GlobalMemorySize">DeviceInfo.GlobalMemorySize</see>), 32 × 1024 × 1024)
-        /// </code></para>
-        /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
-        /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
         MaximumMemoryAllocationSize = 0x1010,
 
         /// <summary>
-        /// Max width of 2D image or 1D image not created from a buffer object in pixels.
-        /// The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
-        /// the value is 0 otherwise.
+        /// <para>
+        ///     Is TRUE if images are supported by the OpenCL device and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        Image2DMaximumWidth = 0x1011,
-
-        /// <summary>
-        /// Max height of 2D image in pixels.
-        /// The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
-        /// the value is 0 otherwise.
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        Image2DMaximumHeight = 0x1012,
-
-        /// <summary>
-        /// Max width of 3D image in pixels.
-        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
-        /// the value is 0 otherwise.
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        Image3DMaximumWidth = 0x1013,
-
-        /// <summary>
-        /// Max height of 3D image in pixels.
-        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
-        /// the value is 0 otherwise.
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        Image3DMaximumHeight = 0x1014,
-
-        /// <summary>
-        /// Max depth of 3D image in pixels.
-        /// The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
-        /// the value is 0 otherwise.
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        Image3DMaximumDepth = 0x1015,
-
-        /// <summary>
-        /// Is TRUE if images are supported by the OpenCL device and FALSE otherwise.
-        /// </summary>
-        /// <remarks>Return Type: bool</remarks>
         ImageSupport = 0x1016,
 
         /// <summary>
-        /// Max size in bytes of all arguments that can be passed to a kernel.
-        /// The minimum value is 1024 for devices that are not of type
-        /// <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
-        /// For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
-        /// For all other values, a maximum of 255 arguments can be passed to a kernel.
+        /// <para>
+        ///     Max number of image objects arguments of a kernel
+        ///     declared with the read_only qualifier.
+        ///     The minimum value is 128 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
+        MaximumReadImageArguments = 0x100E,
+
+        /// <summary>
+        /// <para>
+        ///     Max number of image objects arguments of a kernel
+        ///     declared with the write_only qualifier.
+        ///     The minimum value is 64 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumWriteImageArguments = 0x100F,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Max number of image objects arguments of a kernel
+        ///     declared with the <c>write_only</c> or <c>read_write</c> qualifier.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 64 if the device supports read-write images arguments,
+        ///     and must be 0 for devices that do not support read-write images.
+        /// </para>
+        /// <para>
+        ///     Support for read-write image arguments is required for
+        ///     an OpenCL 2.0, 2.1, or 2.2 device if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumReadWriteImageArguments = 0x104C,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The intermediate languages that can be supported by
+        ///     <c><see cref="CL.CreateProgramWithIL(CLContext, IntPtr, UIntPtr, out CLResultCode)">CreateProgramWithIL()</see></c>
+        ///     for this device. Returns a space-separated list of IL version strings of the form
+        ///     <c>&lt;IL_Prefix&gt;_&lt;Major_Version&gt;.&lt;Minor_Version&gt;</c>.
+        /// </para>
+        /// <para>
+        ///      For an OpenCL 2.1 or 2.2 device, SPIR-V is a required IL prefix.
+        ///      If the device does not support intermediate language programs, the value must be "" (an empty string).
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        IntermediateLanguageVersion = 0x105B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns an array of descriptions (name and version)
+        ///     for all supported intermediate languages.
+        ///     Intermediate languages with the same name may
+        ///     be reported more than once but each name and major/minor
+        ///     version combination may only be reported once.
+        ///     The list of intermediate languages reported must match
+        ///     the list reported via <c><see cref="IntermediateLanguageVersion">IntermediateLanguageVersion</see></c>.
+        /// </para>
+        /// <para>
+        ///      For an OpenCL 2.1 or 2.2 device, SPIR-V is a required IL prefix.
+        ///      If the device does not support intermediate language programs, the value must be "" (an empty string).
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        IntermediateLanguagesWithVersion = 0x1061,
+
+        /// <summary>
+        /// <para>
+        ///     Max width of 2D image or 1D image not created from a buffer object in pixels.
+        ///     The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        ///     the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        Image2DMaximumWidth = 0x1011,
+
+        /// <summary>
+        /// <para>
+        ///     Max height of 2D image in pixels.
+        ///     The minimum value is 16384 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        ///     the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        Image2DMaximumHeight = 0x1012,
+
+        /// <summary>
+        /// <para>
+        ///     Max width of 3D image in pixels.
+        ///     The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        ///     the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        Image3DMaximumWidth = 0x1013,
+
+        /// <summary>
+        /// <para>
+        ///     Max height of 3D image in pixels.
+        ///     The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        ///     the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        Image3DMaximumHeight = 0x1014,
+
+        /// <summary>
+        /// <para>
+        ///     Max depth of 3D image in pixels.
+        ///     The minimum value is 2048 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE,
+        ///     the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        Image3DMaximumDepth = 0x1015,
+
+        /// <summary>
+        /// <para>
+        ///     Max size in bytes of all arguments that can be passed to a kernel.
+        ///     The minimum value is 1024 for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        ///     For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
+        ///     For all other values, a maximum of 255 arguments can be passed to a kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         MaximumParameterSize = 0x1017,
 
         /// <summary>
-        /// Maximum number of samplers that can be used in a kernel.
-        /// The minimum value is 16 if <c><see cref="ImageSupport">ImageSupport</see></c>
-        /// is TRUE, the value is 0 otherwise.
+        /// <para>
+        ///     Maximum number of samplers that can be used in a kernel.
+        ///     The minimum value is 16 if <c><see cref="ImageSupport">ImageSupport</see></c>
+        ///     is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         MaximumSamplers = 0x1018,
 
         /// <summary>
-        /// Alignment requirement (in bits) for sub-buffer offsets.
-        /// The minimum value is the size (in bits) of the largest OpenCL built-in data type
-        /// supported by the device (long16 in FULL profile, long16 or int16 in EMBEDDED profile)
-        /// for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// <para>
+        ///     Alignment requirement (in bits) for sub-buffer offsets.
+        ///     The minimum value is the size (in bits) of the largest OpenCL built-in data type
+        ///     supported by the device (long16 in FULL profile, long16 or int16 in EMBEDDED profile)
+        ///     for devices that are not of type <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         MemoryBaseAddressAlignment = 0x1019,
 
         /// <summary>
-        /// Deprecated OpenCL 1.1 property
-        /// <para>The minimum value is the size (in bytes)
-        /// of the largest OpenCL data type supported by the device
-        /// (long16 in FULL profile, long16 or int16 in EMBEDDED profile).</para>
+        /// <para>
+        ///     <i><pre>Deprecated by version 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The minimum value is the size (in bytes)
+        ///     of the largest OpenCL data type supported by the device
+        ///     (long16 in FULL profile, long16 or int16 in EMBEDDED profile).
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         [Obsolete("MinimumDataTypeAlignmentSize is a deprecated OpenCL 1.1 property.")]
         MinimumDataTypeAlignmentSize = 0x101A,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Describes single precision floating-point capability of the device.
-        /// Double precision is an optional feature so the mandated minimum
-        /// double precision floating-point capability is 0.
         /// <para>
-        /// If double precision is supported by the device,
-        /// then the minimum double precision floating-point capability
-        /// for OpenCL 2.0 or newer devices is:
+        ///     Describes single precision floating-point capability of the device.
+        ///     Double precision is an optional feature so the mandated minimum
+        ///     double precision floating-point capability is 0.
         /// </para>
-        /// <para><code>
-        /// <see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see>
-        ///  | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see>
-        ///  | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see>
-        /// </code></para>
         /// <para>
-        /// or for OpenCL 1.0, OpenCL 1.1 or OpenCL 1.2 devices:
+        ///     If double precision is supported by the device,
+        ///     then the minimum double precision floating-point capability
+        ///     for OpenCL 2.0 or newer devices is:
         /// </para>
-        /// <para><code>
-        /// <see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see>
-        ///  | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see>
-        ///  | <see cref="DeviceFloatingPointConfig.RoundToZero">RoundToZero</see>
-        ///  | <see cref="DeviceFloatingPointConfig.RoundToInfinity">RoundToInfinity</see>
-        ///  | <see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see>
-        ///  | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see>
-        /// </code></para>
+        /// <para>
+        ///     <pre><see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see> | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see> | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see></pre>
+        /// </para>
+        /// <para>
+        ///     or for OpenCL 1.0, OpenCL 1.1 or OpenCL 1.2 devices:
+        /// </para>
+        /// <para>
+        ///     <pre><see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see> | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see> | <see cref="DeviceFloatingPointConfig.RoundToZero">RoundToZero</see> | <see cref="DeviceFloatingPointConfig.RoundToInfinity">RoundToInfinity</see> | <see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see> | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see></pre>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c></remarks>
         SingleFloatingPointConfiguration = 0x101B,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Type of global memory cache supported.
+        /// <para>
+        ///     Type of global memory cache supported.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceMemoryCacheType">DeviceMemoryCacheType</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DeviceMemoryCacheType">DeviceMemoryCacheType</see></c></remarks>
         GlobalMemoryCacheType = 0x101C,
 
         /// <summary>
-        /// Size of global memory cache line in bytes.
+        /// <para>
+        ///     Size of global memory cache line in bytes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         GlobalMemoryCachelineSize = 0x101D,
 
         /// <summary>
-        /// Size of global memory cache in bytes.
+        /// <para>
+        ///     Size of global memory cache in bytes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
         GlobalMemoryCacheSize = 0x101E,
 
         /// <summary>
-        /// Size of global device memory in bytes.
+        /// <para>
+        ///     Size of global device memory in bytes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
         GlobalMemorySize = 0x101F,
 
         /// <summary>
-        /// Max size in bytes of a constant buffer allocation. The minimum value is 64 KB.
+        /// <para>
+        ///     Max size in bytes of a constant buffer allocation. The minimum value is 64 KB.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
         MaximumConstantBufferSize = 0x1020,
 
         /// <summary>
-        /// Max number of arguments declared with the <c>__constant</c> qualifier in a kernel. The minimum value is 8.
+        /// <para>
+        ///     Max number of arguments declared with the <c>__constant</c> qualifier in a kernel.
+        ///     The minimum value is 8.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         MaximumConstantArguments = 0x1021,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Type of local memory supported.
-        /// This can be set to <c><see cref="DeviceLocalMemoryType.Local">Local</see></c>
-        /// implying dedicated local memory storage such as SRAM, or
-        /// <c><see cref="DeviceLocalMemoryType.Global">Global</see></c>.
+        /// <para>
+        ///     Type of local memory supported.
+        ///     This can be set to <c><see cref="DeviceLocalMemoryType.Local">Local</see></c>
+        ///     implying dedicated local memory storage such as SRAM, or
+        ///     <c><see cref="DeviceLocalMemoryType.Global">Global</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceLocalMemoryType">DeviceLocalMemoryType</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DeviceLocalMemoryType">DeviceLocalMemoryType</see></c></remarks>
         LocalMemoryType = 0x1022,
 
         /// <summary>
-        /// Size of local memory arena in bytes. The minimum value is 32 KB.
+        /// <para>
+        ///     Size of local memory arena in bytes. The minimum value is 32 KB.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
         LocalMemorySize = 0x1023,
 
         /// <summary>
-        /// Is TRUE if the device implements error correction
-        /// for all accesses to compute device memory (global and constant).
-        /// Is FALSE if the device does not implement such error correction.
+        /// <para>
+        ///     Is TRUE if the device implements error correction
+        ///     for all accesses to compute device memory (global and constant).
+        ///     Is FALSE if the device does not implement such error correction.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: bool</remarks>
         ErrorCorrectionSupport = 0x1024,
 
         /// <summary>
-        /// Describes the resolution of device timer. This is measured in nanoseconds.
+        /// <para>
+        ///     Describes the resolution of device timer. This is measured in nanoseconds.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
         ProfilingTimerResolution = 0x1025,
 
         /// <summary>
-        /// Is TRUE if the OpenCL device is a little endian device and FALSE otherwise.
+        /// <para>
+        ///     Is TRUE if the OpenCL device is a little endian device and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: bool</remarks>
         EndianLittle = 0x1026,
 
         /// <summary>
-        /// Is TRUE if the device is available and FALSE if the device is not available.
+        /// <para>
+        ///     Is TRUE if the device is available and FALSE if the device is not available.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: bool</remarks>
         Available = 0x1027,
 
         /// <summary>
-        /// Is FALSE if the implementation does not have
-        /// a compiler available to compile the program source.
-        /// Is TRUE if the compiler is available.
-        /// This can be FALSE for the embedded platform profile only.
+        /// <para>
+        ///     Is FALSE if the implementation does not have
+        ///     a compiler available to compile the program source.
+        ///     Is TRUE if the compiler is available.
+        ///     This can be FALSE for the embedded platform profile only.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: bool</remarks>
         CompilerAvailable = 0x1028,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Describes the execution capabilities of the device.
-        /// This is a bit-field that describes one or more of the following values:
+        /// <para>
+        ///     Describes the execution capabilities of the device.
+        ///     This is a bit-field that describes one or more of the following values:
+        /// </para>
         /// <list type="bullet">
         /// <item><term>
-        /// <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c></term>
+        ///     <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c></term>
         /// <description>
-        /// The OpenCL device can execute OpenCL kernels.
+        ///     The OpenCL device can execute OpenCL kernels.
         /// </description></item>
         ///
         /// <item><term>
-        /// <c><see cref="DeviceExecutionCapabilities.NativeKernel">NativeKernel</see></c></term>
+        ///     <c><see cref="DeviceExecutionCapabilities.NativeKernel">NativeKernel</see></c></term>
         /// <description>
-        /// The OpenCL device can execute native kernels.
+        ///     The OpenCL device can execute native kernels.
         /// </description></item>
         /// </list>
-        ///
-        /// The mandated minimum capability is
-        /// <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c>.
+        /// <para>
+        ///     The mandated minimum capability is
+        ///     <c><see cref="DeviceExecutionCapabilities.Kernel">Kernel</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceExecutionCapabilities">DeviceExecutionCapabilities</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DeviceExecutionCapabilities">DeviceExecutionCapabilities</see></c></remarks>
         ExecutionCapabilities = 0x1029,
 
-        /// #TODO: Unfinished return type in API
         /// <summary>
-        /// Describes the command-queue properties supported by the device.
-        /// The mandated minimum capability is CL_QUEUE_PROFILING_ENABLE.
+        /// <para>
+        ///     <i><pre>Deprecated by verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes the command-queue properties supported by the device.
+        ///     The mandated minimum capability is
+        ///     <c><see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c></remarks>
         [Obsolete("QueueProperties is a deprecated OpenCL 1.2 property, please use QueueOnHostProperties.")]
         QueueProperties = 0x102A,
 
         /// #TODO: Unfinished return type in API
         /// <summary>
-        /// Describes the on host command-queue properties supported by the device.
-        /// The mandated minimum capability is: CL_QUEUE_PROFILING_ENABLE.
+        ///     Describes the on host command-queue properties supported by the device.
+        ///     The mandated minimum capability is:
+        ///     <c><see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></c>.
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c></remarks>
         QueueOnHostProperties = 0x102A,
 
         /// <summary>
@@ -706,46 +1029,12 @@ namespace OpenTK.Compute.OpenCL
         /// <remarks>Return Type: cl_device_fp_config</remarks>
         HalfFloatingPointConfiguration = 0x1033,
 
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        PreferredVectorWidthHalf = 0x1034,
-
         /// <summary>
         /// Is TRUE if the device and the host have a unified memory subsystem and is FALSE otherwise.
         /// </summary>
         /// <remarks>Return Type: bool</remarks>
         [Obsolete("HostUnifiedMemory is a deprecated OpenCL 1.2 property.")]
         HostUnifiedMemory = 0x1035,
-
-        /// <summary>
-        /// Returns the native ISA vector width.
-        /// The vector width is defined as the number of scalar elements that can be stored in the vector.
-        /// </summary>
-        /// <remarks>Return Type: uint</remarks>
-        NativeVectorWidthChar = 0x1036,
-
-        /// <inheritdoc cref="NativeVectorWidthChar"/>
-        NativeVectorWidthShort = 0x1037,
-
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        NativeVectorWidthInt = 0x1038,
-
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        NativeVectorWidthLong = 0x1039,
-
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        NativeVectorWidthFloat = 0x103A,
-
-        /// <remarks>If double precision is not supported, must return 0.
-        /// <para>Return Type: uint</para>
-        /// </remarks>
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        NativeVectorWidthDouble = 0x103B,
-
-        /// <remarks>If the <c>cl_khr_fp16</c> extension is not supported, must return 0.
-        /// <para>Return Type: uint</para>
-        /// </remarks>
-        /// <inheritdoc cref="PreferredVectorWidthChar"/>
-        NativeVectorWidthHalf = 0x103C,
 
         /// #TODO: missing 3.0 implementation
         /// <summary>
@@ -867,9 +1156,6 @@ namespace OpenTK.Compute.OpenCL
         /// <remarks>Return Type: <c><see cref="DevicePartitionProperty">MaximumComputeUnits[]</see></c></remarks>
         PartitionProperties = 0x1044,
 
-        /// <summary>
-        /// 
-        /// </summary>
         PartitionAffinityDomain = 0x1045,
         PartitionType = 0x1046,
         ReferenceCount = 0x1047,
@@ -877,7 +1163,6 @@ namespace OpenTK.Compute.OpenCL
         PrintfBufferSize = 0x1049,
         ImagePitchAlignment = 0x104A,
         ImageBaseAddressAlignment = 0x104B,
-        MaximumReadWriteImageArguments = 0x104C,
         MaximumGlobalVariableSize = 0x104D,
         QueueOnDeviceProperties = 0x104E,
         QueueOnDevicePreferredSize = 0x104F,
@@ -892,7 +1177,6 @@ namespace OpenTK.Compute.OpenCL
         PreferredPlatformAtomicAlignment = 0x1058,
         PreferredGlobalAtomicAlignment = 0x1059,
         PreferredLocalAtomicAlignment = 0x105A,
-        IntermediateLanguageVersion = 0x105B,
         MaximumNumberOfSubGroups = 0x105C,
         SubGroupIndependentForwardProgress = 0x105D,
         TerminateCapabilityKhr = 0x2031,
