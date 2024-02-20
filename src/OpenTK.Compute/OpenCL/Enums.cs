@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using static System.Net.WebRequestMethods;
 
 namespace OpenTK.Compute.OpenCL
 {
@@ -556,11 +557,10 @@ namespace OpenTK.Compute.OpenCL
         ///     the list reported via <c><see cref="IntermediateLanguageVersion">IntermediateLanguageVersion</see></c>.
         /// </para>
         /// <para>
-        ///      For an OpenCL 2.1 or 2.2 device, SPIR-V is a required IL prefix.
-        ///      If the device does not support intermediate language programs, the value must be "" (an empty string).
+        ///      For an OpenCL 2.1 or 2.2 device, at least one version of SPIR-V must be reported.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>string</c>
+        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
         /// </para>
         /// </summary>
         IntermediateLanguagesWithVersion = 0x1061,
@@ -627,17 +627,33 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     Max size in bytes of all arguments that can be passed to a kernel.
-        ///     The minimum value is 1024 for devices that are not of type
-        ///     <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
-        ///     For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
-        ///     For all other values, a maximum of 255 arguments can be passed to a kernel.
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Max number of pixels for a 1D image created from a buffer object.
+        ///     The minimum value is 65536 if <c><see cref="ImageSupport">ImageSupport</see></c>
+        ///     is TRUE, the value is 0 otherwise.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
         /// </para>
         /// </summary>
-        MaximumParameterSize = 0x1017,
+        ImageMaximumBufferSize = 0x1040,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Max number of images in a 1D or 2D image array.
+        ///     The minimum value is 2048 <c><see cref="ImageSupport">ImageSupport</see></c>
+        ///     is TRUE, the value is 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        ImageMaximumArraySize = 0x1041,
 
         /// <summary>
         /// <para>
@@ -650,6 +666,117 @@ namespace OpenTK.Compute.OpenCL
         /// </para>
         /// </summary>
         MaximumSamplers = 0x1018,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The row pitch alignment size in pixels for 2D images
+        ///     created from a buffer. The value returned must be a power of 2.
+        /// </para>
+        /// <para>
+        ///     Support for 2D images created from a buffer is required
+        ///     for an OpenCL 2.0, 2.1, or 2.2 device if <c><see cref="ImageSupport">ImageSupport</see></c>
+        ///     is TRUE.
+        /// </para>
+        /// <para>
+        ///     This value must be 0 for devices that do not support 2D images created from a buffer.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ImagePitchAlignment = 0x104A,
+
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This query specifies the minimum alignment in pixels of the <c>host_ptr</c> specified to
+        ///     <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr, IntPtr, out CLResultCode)">CreateBuffer()</see></c> or
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>
+        ///     when a 2D image is created from a buffer which was created using <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c>.
+        ///     The value returned must be a power of 2.
+        /// </para>
+        /// <para>
+        ///     Support for 2D images created from a buffer is required
+        ///     for an OpenCL 2.0, 2.1, or 2.2 device if <c><see cref="ImageSupport">ImageSupport</see></c>
+        ///     is TRUE.
+        /// </para>
+        /// <para>
+        ///     This value must be 0 for devices that do not support 2D images created from a buffer.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ImageBaseAddressAlignment = 0x104B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum number of pipe objects that can be passed
+        ///     as arguments to a kernel. The minimum value is 16 for devices supporting pipes,
+        ///     and must be 0 for devices that do not support pipes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumPipeArguments = 0x1055,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum number of reservations that can be active for a pipe
+        ///     per work-item in a kernel. A work-group reservation is counted as one
+        ///     reservation per work-item. The minimum value is 1 for devices supporting pipes,
+        ///     and must be 0 for devices that do not support pipes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        PipeMaximumActiveReservations = 0x1056,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum size of pipe packet in bytes.
+        /// </para>
+        /// <para>
+        ///     Support for pipes is required for an OpenCL 2.0, 2.1, or 2.2 device.
+        ///     The minimum value is 1024 bytes if the device supports pipes,
+        ///     and must be 0 for devices that do not support pipes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        PipeMaximumPacketSize = 0x1057,
+
+        /// <summary>
+        /// <para>
+        ///     Max size in bytes of all arguments that can be passed to a kernel.
+        ///     The minimum value is 1024 for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">DeviceType.Custom</see></c>.
+        ///     For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
+        ///     For all other values, a maximum of 255 arguments can be passed to a kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        MaximumParameterSize = 0x1017,
 
         /// <summary>
         /// <para>
@@ -666,7 +793,7 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     <i><pre>Deprecated by version 1.1.</pre></i>
+        ///     <i><pre>Deprecated by version 1.2.</pre></i>
         /// </para>
         /// <para>
         ///     The minimum value is the size (in bytes)
@@ -684,8 +811,29 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// <para>
         ///     Describes single precision floating-point capability of the device.
-        ///     Double precision is an optional feature so the mandated minimum
-        ///     double precision floating-point capability is 0.
+        /// </para>
+        /// <para>
+        ///     For the full profile, the mandated minimum floating-point capability
+        ///     for devices that are not of type <c><see cref="DeviceType.Custom">Custom</see></c> is:
+        /// </para>
+        /// <para>
+        ///     <pre><see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see> | <see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see></pre>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c>
+        /// </para>
+        /// </summary>
+        SingleFloatingPointConfiguration = 0x101B,
+
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes double precision floating-point capability of the OpenCL device.
+        ///     Double precision is an optional feature so the mandated minimum double
+        ///     precision floating-point capability is 0.
         /// </para>
         /// <para>
         ///     If double precision is supported by the device,
@@ -693,7 +841,7 @@ namespace OpenTK.Compute.OpenCL
         ///     for OpenCL 2.0 or newer devices is:
         /// </para>
         /// <para>
-        ///     <pre><see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see> | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see> | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see></pre>
+        ///     <pre><see cref="DeviceFloatingPointConfig.FusedMultiplyAdd">FusedMultiplyAdd</see> | <see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see> | <see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see> | <see cref="DeviceFloatingPointConfig.Denorm">Denorm</see></pre>
         /// </para>
         /// <para>
         ///     or for OpenCL 1.0, OpenCL 1.1 or OpenCL 1.2 devices:
@@ -705,7 +853,7 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c>
         /// </para>
         /// </summary>
-        SingleFloatingPointConfiguration = 0x101B,
+        DoubleFloatingPointConfiguration = 0x1032,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
@@ -750,7 +898,9 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     Max size in bytes of a constant buffer allocation. The minimum value is 64 KB.
+        ///     Max size in bytes of a constant buffer allocation.
+        ///     The minimum value is 64 KB for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">Custom</see></c>.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>ulong</c>
@@ -761,13 +911,52 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// <para>
         ///     Max number of arguments declared with the <c>__constant</c> qualifier in a kernel.
-        ///     The minimum value is 8.
+        ///     The minimum value is 8 for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">Custom</see></c>.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>uint</c>
         /// </para>
         /// </summary>
         MaximumConstantArguments = 0x1021,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum number of bytes of storage that may be allocated for any single
+        ///     variable in program scope or inside a function in an OpenCL kernel
+        ///     language declared in the global address space.
+        /// </para>
+        /// <para>
+        ///     Support for program scope global variables is required
+        ///     for an OpenCL 2.0, 2.1, or 2.2 device. The minimum value is 64 KB if the device
+        ///     supports program scope global variables, and must be 0 for devices that do
+        ///     not support program scope global variables.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        MaximumGlobalVariableSize = 0x104D,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Maximum preferred total size, in bytes,
+        ///     of all program variables in the global address space.
+        ///     This is a performance hint. An implementation may place such variables
+        ///     in storage with optimized device access.
+        ///     This query returns the capacity of such storage. The minimum value is 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        GlobalVariablePreferredTotalSize = 0x1054,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
@@ -785,7 +974,9 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     Size of local memory arena in bytes. The minimum value is 32 KB.
+        ///     Size of local memory arena in bytes.
+        ///     The minimum value is 32 KB for devices that are not of type
+        ///     <c><see cref="DeviceType.Custom">Custom</see></c>..
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>ulong</c>
@@ -807,7 +998,22 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     Describes the resolution of device timer. This is measured in nanoseconds.
+        ///     <i><pre>Missing before verison 1.1 and deprecated by version 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the device and the host have a unified memory subsystem and is FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        [Obsolete("HostUnifiedMemory is a deprecated OpenCL 1.2 property.")]
+        HostUnifiedMemory = 0x1035,
+
+        /// <summary>
+        /// <para>
+        ///     Describes the resolution of device timer. This is measured in nanoseconds. Refer to
+        ///     <see cref="https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#profiling-operations">Profiling Operations</see> for details.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
@@ -828,6 +1034,8 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// <para>
         ///     Is TRUE if the device is available and FALSE if the device is not available.
+        ///     A device is considered to be available if the device can be expected to
+        ///     successfully execute commands enqueued to the device.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>bool</c>
@@ -847,6 +1055,23 @@ namespace OpenTK.Compute.OpenCL
         /// </para>
         /// </summary>
         CompilerAvailable = 0x1028,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is FALSE if the implementation does not have a linker available. Is TRUE if the linker is available.
+        /// </para>
+        /// <para>
+        ///     This can be FALSE for the embedded platform profile only.
+        ///     This must be TRUE if <c><see cref="CompilerAvailable">CompilerAvailable</see></c> is TRUE.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        LinkerAvailable = 0x103E,
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
@@ -877,14 +1102,13 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         ExecutionCapabilities = 0x1029,
 
+        /// #TODO: Unfinished return type in API
         /// <summary>
         /// <para>
         ///     <i><pre>Deprecated by verison 2.0.</pre></i>
         /// </para>
         /// <para>
-        ///     Describes the command-queue properties supported by the device.
-        ///     The mandated minimum capability is
-        ///     <c><see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></c>.
+        ///     See description of <c><see cref="QueueOnHostProperties">QueueOnHostProperties</see></c>
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
@@ -895,14 +1119,42 @@ namespace OpenTK.Compute.OpenCL
 
         /// #TODO: Unfinished return type in API
         /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
         ///     Describes the on host command-queue properties supported by the device.
         ///     The mandated minimum capability is:
         ///     <c><see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></c>.
+        /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
         /// </para>
         /// </summary>
         QueueOnHostProperties = 0x102A,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes the on device command-queue properties supported by the device.
+        /// </para>
+        /// <para>
+        ///     Support for on-device queues is required for an OpenCL 2.0, 2.1, or 2.2 device.
+        ///     When on-device queues are supported, the mandated minimum capability is:
+        /// </para>
+        /// <para>
+        ///     <c><pre></pre></c>
+        /// </para>
+        /// <para>
+        ///     Must be 0 for devices that do not support on-device queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        /// </para>
+        /// </summary>
+        QueueOnDeviceProperties = 0x104E,
 
         /// <summary>
         /// Device name string.
@@ -1017,24 +1269,10 @@ namespace OpenTK.Compute.OpenCL
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Describes double precision floating-point capability of the OpenCL device.
-        /// </summary>
-        /// <remarks>Return Type: cl_device_fp_config</remarks>
-        DoubleFloatingPointConfiguration = 0x1032,
-
-        /// #TODO: Missing return type equivalent in the API
-        /// <summary>
         /// Describes the OPTIONAL half precision floating-point capability of the OpenCL device.
         /// </summary>
         /// <remarks>Return Type: cl_device_fp_config</remarks>
         HalfFloatingPointConfiguration = 0x1033,
-
-        /// <summary>
-        /// Is TRUE if the device and the host have a unified memory subsystem and is FALSE otherwise.
-        /// </summary>
-        /// <remarks>Return Type: bool</remarks>
-        [Obsolete("HostUnifiedMemory is a deprecated OpenCL 1.2 property.")]
-        HostUnifiedMemory = 0x1035,
 
         /// #TODO: missing 3.0 implementation
         /// <summary>
@@ -1088,14 +1326,6 @@ namespace OpenTK.Compute.OpenCL
         OpenClCVersion = 0x103D,
 
         /// <summary>
-        /// Is FALSE if the implementation does not have a linker available. Is TRUE if the linker is available.
-        /// This can be FALSE for the embedded platform profile only.
-        /// This must be TRUE if <c><see cref="CompilerAvailable">CompilerAvailable</see></c> is TRUE.
-        /// </summary>
-        /// <remarks>Return Type: bool</remarks>
-        LinkerAvailable = 0x103E,
-
-        /// <summary>
         /// Unavailable before version 1.2.
         /// <para>
         /// A semi-colon separated list of built-in kernels supported by the device.
@@ -1104,24 +1334,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <remarks>Return Type: string</remarks>
         BuiltInKernels = 0x103F,
-
-        /// <summary>
-        /// Unavailable before version 1.2.
-        /// <para>Max number of pixels for a 1D image created from a buffer object.
-        /// The minimum value is 65536 if <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
-        /// </para>
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        ImageMaximumBufferSize = 0x1040,
-
-        /// <summary>
-        /// Unavailable before version 1.2.
-        /// <para>Max number of images in a 1D or 2D image array.
-        /// The minimum value is 2048 <c><see cref="ImageSupport">ImageSupport</see></c> is TRUE, the value is 0 otherwise.
-        /// </para>
-        /// </summary>
-        /// <remarks>Return Type: UIntPtr</remarks>
-        ImageMaximumArraySize = 0x1041,
 
         /// <summary>
         /// Unavailable before version 1.2.
@@ -1161,19 +1373,12 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x1047,
         PreferredInteropUserSync = 0x1048,
         PrintfBufferSize = 0x1049,
-        ImagePitchAlignment = 0x104A,
-        ImageBaseAddressAlignment = 0x104B,
-        MaximumGlobalVariableSize = 0x104D,
-        QueueOnDeviceProperties = 0x104E,
+        
         QueueOnDevicePreferredSize = 0x104F,
         QueueOnDeviceMaximumSize = 0x1050,
         MaximumOnDeviceQueues = 0x1051,
         MaximumOnDeviceEvents = 0x1052,
         SvmCapabilities = 0x1053,
-        GlobalVariablePreferredTotalSize = 0x1054,
-        MaximumPipeArguments = 0x1055,
-        PipeMaximumActiveReservations = 0x1056,
-        PipeMaximumPacketSize = 0x1057,
         PreferredPlatformAtomicAlignment = 0x1058,
         PreferredGlobalAtomicAlignment = 0x1059,
         PreferredLocalAtomicAlignment = 0x105A,
