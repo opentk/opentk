@@ -1145,7 +1145,7 @@ namespace OpenTK.Compute.OpenCL
         ///     When on-device queues are supported, the mandated minimum capability is:
         /// </para>
         /// <para>
-        ///     <c><pre></pre></c>
+        ///     <pre><see cref="CommandQueueProperty.OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see> | <see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></pre>
         /// </para>
         /// <para>
         ///     Must be 0 for devices that do not support on-device queues.
@@ -1157,43 +1157,177 @@ namespace OpenTK.Compute.OpenCL
         QueueOnDeviceProperties = 0x104E,
 
         /// <summary>
-        /// Device name string.
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The preferred size of the device queue, in bytes.
+        ///     Applications should use this size for the device queue to ensure good performance.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 16 KB for devices supporting on-device queues,
+        ///     and must be 0 for devices that do not support on-device queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
+        QueueOnDevicePreferredSize = 0x104F,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum size of the device queue in bytes.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 256 KB for the full profile and 64 KB for
+        ///     the embedded profile for devices supporting on-device queues,
+        ///     and must be 0 for devices that do not support on-device queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        QueueOnDeviceMaximumSize = 0x1050,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The maximum number of device queues that can be created for this device in a single context.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 1 for devices supporting on-device queues,
+        ///     and must be 0 for devices that do not support on-device queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumOnDeviceQueues = 0x1051,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///      The maximum number of events in use by a device queue.
+        ///      These refer to events returned by the <c>enqueue_</c> built-in functions
+        ///      to a device queue or user events returned by the <c>create_user_event</c>
+        ///      built-in function that have not been released.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 1024 for devices supporting on-device queues,
+        ///     and must be 0 for devices that do not support on-device queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumOnDeviceEvents = 0x1052,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///      A semi-colon separated list of built-in kernels supported by the device.
+        ///      An empty string is returned if no built-in kernels are supported by the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        BuiltInKernels = 0x103F,
+
+        /// #TODO: missing equivalent return type in API
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns an array of descriptions for the built-in kernels supported by the device.
+        ///     Each built-in kernel may only be reported once.
+        ///     The list of reported kernels must match the list returned via
+        ///     <c><see cref="BuiltInKernels">BuiltInKernels</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        /// </para>
+        /// </summary>
+        BuiltInKernelsWithVersion = 0x1062,
+
+        /// <summary>
+        /// <para>
+        ///     The platform associated with this device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLPlatform">CLPlatform</see></c>
+        /// </para>
+        /// </summary>
+        Platform = 0x1031,
+
+        /// <summary>
+        /// <para>
+        ///     Device name string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Name = 0x102B,
 
         /// <summary>
-        /// Vendor name string.
+        /// <para>
+        ///     Vendor name string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
         /// <remarks>Return Type: string</remarks>
         Vendor = 0x102C,
 
         /// <summary>
-        /// OpenCL software driver version string. Follows a vendor-specific format.
+        /// <para>
+        ///     OpenCL software driver version string. Follows a vendor-specific format.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         DriverVersion = 0x102D,
 
         /// <summary>
-        /// OpenCL profile string.
-        /// Returns the profile name supported by the device.
-        /// The profile name returned can be one of the following strings:
+        /// <para>
+        ///     OpenCL profile string.
+        ///     Returns the profile name supported by the device.
+        ///     The profile name returned can be one of the following strings:
+        /// </para>
         /// <list type="bullet">
-        /// <item><term>
-        /// FULL_PROFILE</term>
-        /// <description>
-        /// if the device supports the OpenCL specification
-        /// (functionality defined as part of the core specification and does not require any extensions to be supported).
-        /// </description></item>
+        /// <item>
+        ///     <term><b>FULL_PROFILE: </b></term>
+        ///     <description>
+        ///         if the device supports the OpenCL specification
+        ///         (functionality defined as part of the core specification and
+        ///         does not require any extensions to be supported).
+        ///     </description>
+        /// </item>
         ///
-        /// <item><term>
-        /// EMBEDDED_PROFILE</term>
-        /// <description>
-        /// if the device supports the OpenCL embedded profile.
-        /// </description></item>
+        /// <item>
+        ///     <term><b>EMBEDED_PROFILE: </b></term>
+        ///     <description>
+        ///         if the device supports the OpenCL embedded profile.
+        ///     </description>
+        /// </item>
         /// </list>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         Profile = 0x102E,
 
         /// <summary>
@@ -1261,12 +1395,6 @@ namespace OpenTK.Compute.OpenCL
         /// <remarks>Return Type: string</remarks>
         Extensions = 0x1030,
 
-        /// <summary>
-        /// The platform associated with this device.
-        /// </summary>
-        /// <remarks>Return Type: <c><see cref="CLPlatform">CLPlatform</see></c></remarks>
-        Platform = 0x1031,
-
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// Describes the OPTIONAL half precision floating-point capability of the OpenCL device.
@@ -1325,15 +1453,7 @@ namespace OpenTK.Compute.OpenCL
         /// <remarks>>Return Type: string</remarks>
         OpenClCVersion = 0x103D,
 
-        /// <summary>
-        /// Unavailable before version 1.2.
-        /// <para>
-        /// A semi-colon separated list of built-in kernels supported by the device.
-        /// An empty string is returned if no built-in kernels are supported by the device.
-        /// </para>
-        /// </summary>
-        /// <remarks>Return Type: string</remarks>
-        BuiltInKernels = 0x103F,
+        
 
         /// <summary>
         /// Unavailable before version 1.2.
@@ -1373,11 +1493,6 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x1047,
         PreferredInteropUserSync = 0x1048,
         PrintfBufferSize = 0x1049,
-        
-        QueueOnDevicePreferredSize = 0x104F,
-        QueueOnDeviceMaximumSize = 0x1050,
-        MaximumOnDeviceQueues = 0x1051,
-        MaximumOnDeviceEvents = 0x1052,
         SvmCapabilities = 0x1053,
         PreferredPlatformAtomicAlignment = 0x1058,
         PreferredGlobalAtomicAlignment = 0x1059,
