@@ -1331,129 +1331,220 @@ namespace OpenTK.Compute.OpenCL
         Profile = 0x102E,
 
         /// <summary>
-        /// OpenCL version string. Returns the OpenCL version supported by the device. This version string has the following format:
-        /// <para><c>OpenCL &lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</c></para>
-        /// The <c>major_version.minor_version</c> value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2, or 3.0.
+        /// <para>
+        ///     OpenCL version string. Returns the OpenCL version supported by the device.
+        ///     This version string has the following format:
+        /// </para>
+        /// <para>
+        ///     <c><pre>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</pre></c>
+        /// </para>
+        /// <para>
+        ///     The <c>major_version.minor_version</c>
+        ///     value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2, or 3.0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         Version = 0x102F,
 
+        /// #TODO: Missing equivalent return type in the API
         /// <summary>
-        /// Returns a space separated list of extension names
-        /// (the extension names themselves do not contain any spaces) supported by the device.
-        /// The list of extension names may include Khronos approved extension names and vendor specified extension names.
-        /// <para>The following Khronos extension names must be returned by all devices that support OpenCL 1.1:</para>
-        ///
-        /// <list type="bullet">
-        /// <item><description>
-        /// cl_khr_byte_addressable_store</description>
-        /// </item>
-        ///
-        /// <item><description>
-        /// cl_khr_global_int32_base_atomics</description>
-        /// </item>
-        ///
-        /// <item><description>
-        /// cl_khr_local_int32_base_atomics</description>
-        /// </item>
-        ///
-        /// <item><description>
-        /// cl_khr_local_int32_extended_atomics</description>
-        /// </item>
-        /// </list>
-        ///
-        /// Additionally, the following Khronos extension names must be returned by all devices
-        /// that support OpenCL 1.2 when and only when the optional feature is supported:
-        /// <list type="bullet">
-        /// <item><description>
-        /// cl_khr_fp64</description>
-        /// </item>
-        /// </list>
-        ///
-        /// Additionally, the following Khronos extension names must be returned
-        /// by all devices that support OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2.
-        /// For devices that support OpenCL 3.0,
-        /// these extension names must be returned when and only when the optional feature is supported:
-        ///
-        /// <list type="bullet">
-        /// <item><description>
-        /// cl_khr_3d_image_writes</description>
-        /// </item>
-        ///
-        /// <item><description>
-        /// cl_khr_depth_images</description>
-        /// </item>
-        ///
-        /// <item><description>
-        /// cl_khr_image2d_from_buffer</description>
-        /// </item>
-        /// </list>
-        ///
-        /// Please refer to the OpenCL Extension Specification or vendor provided documentation
-        /// for a detailed description of these extensions.
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the detailed (major, minor, patch)
+        ///     version supported by the device. The major and minor version numbers
+        ///     returned must match those returned via <c><see cref="Version">Version</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>cl_version</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
-        Extensions = 0x1030,
+        NumericVersion = 0x105E,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Describes the OPTIONAL half precision floating-point capability of the OpenCL device.
-        /// </summary>
-        /// <remarks>Return Type: cl_device_fp_config</remarks>
-        HalfFloatingPointConfiguration = 0x1033,
-
-        /// #TODO: missing 3.0 implementation
-        /// <summary>
-        /// Unavailable before version 1.1 and obsolete after version 3.0.
         /// <para>
-        /// Returns the highest fully backwards compatible OpenCL C version
-        /// supported by the compiler for the device.
-        /// For devices supporting compilation from OpenCL C source,
-        /// this will return a version string with the following format:
+        ///     <i><pre>Missing before verison 1.1 and deprecated by version 3.0.</pre></i>
         /// </para>
         /// <para>
-        /// <c>OpenCL &lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</c>
+        ///     Returns the highest fully backwards compatible OpenCL C version
+        ///     supported by the compiler for the device.
+        ///     For devices supporting compilation from OpenCL C source,
+        ///     this will return a version string with the following format:
         /// </para>
         /// <para>
-        /// For devices that support compilation from OpenCL C source:
+        ///     <c><pre>OpenCL&lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</pre></c>
         /// </para>
         /// <para>
-        /// Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
-        /// an OpenCL 3.0 device must support at least OpenCL C 1.2. An OpenCL 3.0
-        /// device may return an OpenCL C version newer than OpenCL C 1.2 if and only
-        /// if all optional OpenCL C features are supported by the device for the newer version.
+        ///     For devices that support compilation from OpenCL C source:
         /// </para>
         /// <para>
-        /// Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
-        /// an OpenCL 3.0 device must support at least OpenCL C 1.2.
-        /// An OpenCL 3.0 device may return an OpenCL C version newer than
-        /// OpenCL C 1.2 if and only if all optional OpenCL C features are
-        /// supported by the device for the newer version.
+        ///     Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
+        ///     an OpenCL 3.0 device must support at least OpenCL C 1.2. An OpenCL 3.0
+        ///     device may return an OpenCL C version newer than OpenCL C 1.2 if and only
+        ///     if all optional OpenCL C features are supported by the device for the newer version.
         /// </para>
         /// <para>
-        /// Support for OpenCL C 2.0 is required for an OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2 device.
+        ///     Support for OpenCL C 2.0 is required for an OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2 device.
         /// </para>
         /// <para>
-        /// Support for OpenCL C 1.2 is required for an OpenCL 1.2 device.
+        ///     Support for OpenCL C 1.2 is required for an OpenCL 1.2 device.
         /// </para>
         /// <para>
-        /// Support for OpenCL C 1.1 is required for an OpenCL 1.1 device.
+        ///     Support for OpenCL C 1.1 is required for an OpenCL 1.1 device.
         /// </para>
         /// <para>
-        /// Support for either OpenCL C 1.0 or OpenCL C 1.1 is required for an OpenCL 1.0 device.
+        ///     Support for either OpenCL C 1.0 or OpenCL C 1.1 is required for an OpenCL 1.0 device.
         /// </para>
         /// <para>
-        /// For devices that do not support compilation from OpenCL C source,
-        /// such as when <c><see cref="CompilerAvailable">CompilerAvailable</see></c> is FALSE, this query may return an empty string.
+        ///     For devices that do not support compilation from OpenCL C source,
+        ///     such as when <c><see cref="CompilerAvailable">CompilerAvailable</see></c>
+        ///     is FALSE, this query may return an empty string.
         /// </para>
         /// <para>
-        /// This query has been superseded by the CL_DEVICE_OPENCL_C_ALL_VERSIONS query, which returns a set of OpenCL C versions supported by a device.
+        ///     This query has been superseded by the CL_DEVICE_OPENCL_C_ALL_VERSIONS query, which returns a set of OpenCL C versions supported by a device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
         /// </para>
         /// </summary>
-        /// <remarks>>Return Type: string</remarks>
+        [Obsolete("OpenCLCVersion is a deprecated OpenCL 2.2 property, please use OpenClCAllVersions.")]
         OpenClCVersion = 0x103D,
 
-        
+        /// #TODO: Missing equivalent return type in the API
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns an array of name, version descriptions listing all
+        ///     the versions of OpenCL C supported by the compiler for the device.
+        ///     In each returned description structure, the name field is required
+        ///     to be "OpenCL C". The list may include both newer non-backwards compatible OpenCL C versions,
+        ///     such as OpenCL C 3.0, and older OpenCL C versions with mandatory backwards compatibility.
+        ///     The version returned by <c><see cref="OpenClCVersion">OpenClCVersion</see></c>
+        ///     is required to be present in the list.
+        /// </para>
+        /// <para>
+        ///     For devices that support compilation from OpenCL C source:
+        /// </para>
+        /// <para>
+        ///     Because OpenCL 3.0 is backwards compatible with OpenCL C 1.2,
+        ///     and OpenCL C 1.2 is backwards compatible with OpenCL C 1.1 and OpenCL C 1.0,
+        ///     support for at least OpenCL C 3.0, OpenCL C 1.2, OpenCL C 1.1,
+        ///     and OpenCL C 1.0 is required for an OpenCL 3.0 device.
+        /// </para>
+        /// <para>
+        ///     Support for OpenCL C 2.0, OpenCL C 1.2, OpenCL C 1.1,
+        ///     and OpenCL C 1.0 is required for an OpenCL 2.0, OpenCL 2.1,
+        ///     or OpenCL 2.2 device.
+        /// </para>
+        /// <para>
+        ///     Support for OpenCL C 1.2, OpenCL C 1.1, and OpenCL C 1.0
+        ///     is required for an OpenCL 1.2 device.
+        /// </para>
+        /// <para>
+        ///     Support for OpenCL C 1.1 and OpenCL C 1.0 is required for an OpenCL 1.1 device.
+        /// </para>
+        /// <para>
+        ///     Support for at least OpenCL C 1.0 is required for an OpenCL 1.0 device.
+        /// </para>
+        /// <para>
+        ///    For devices that do not support compilation from OpenCL C source,
+        ///    this query may return an empty array. this query may return an empty string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        /// </para>
+        /// </summary>
+        OpenClCAllVersions = 0x1066,
+
+        /// #TODO: Missing equivalent return type in the API
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns an array of optional OpenCL C features supported by the compiler
+        ///     for the device alongside the OpenCL C version that introduced the feature macro.
+        ///     For example, if a compiler supports an OpenCL C 3.0 feature,
+        ///     the returned name will be the full name of the OpenCL C feature macro,
+        ///     and the returned version will be 3.0.0.
+        /// </para>
+        /// <para>
+        ///     For devices that do not support compilation from OpenCL C source,
+        ///     this query may return an empty array.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        /// </para>
+        /// </summary>
+        OpenCLCFeatures = 0x106F,
+
+        /// <summary>
+        /// <para>
+        ///     Returns a space separated list of extension names
+        ///     (the extension names themselves do not contain any spaces) supported by the device.
+        ///     The list of extension names may include Khronos
+        ///     approved extension names and vendor specified extension names.
+        /// </para>
+        /// <para>
+        ///     The following Khronos extension names must be returned by all devices that support OpenCL 1.1:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        ///     <description><b>cl_khr_byte_addressable_store</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_global_int32_base_atomics</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_global_int32_extended_atomics</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_local_int32_base_atomics</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_local_int32_extended_atomics</b></description>
+        /// </item>
+        /// </list>
+        /// <para>
+        ///     Additionally, the following Khronos extension names must be returned by all devices
+        ///     that support OpenCL 1.2 when and only when the optional feature is supported:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        ///     <description><b>cl_khr_fp64</b></description>
+        /// </item>
+        /// </list>
+        /// <para>
+        ///     Additionally, the following Khronos extension names must be returned
+        ///     by all devices that support OpenCL 2.0, OpenCL 2.1, or OpenCL 2.2.
+        ///     For devices that support OpenCL 3.0,
+        ///     these extension names must be returned when and only when the optional feature is supported:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        ///     <description><b>cl_khr_3d_image_writes</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_depth_images</b></description>
+        /// </item>
+        /// <item>
+        ///     <description><b>cl_khr_image2d_from_buffer</b></description>
+        /// </item>
+        /// </list>
+        /// <para>
+        ///     Please refer to the OpenCL Extension Specification or vendor provided documentation
+        ///     for a detailed description of these extensions.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        Extensions = 0x1030,
 
         /// <summary>
         /// Unavailable before version 1.2.
