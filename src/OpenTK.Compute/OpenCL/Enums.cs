@@ -1410,7 +1410,6 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c>string</c>
         /// </para>
         /// </summary>
-        [Obsolete("OpenCLCVersion is a deprecated OpenCL 2.2 property, please use OpenClCAllVersions.")]
         OpenClCVersion = 0x103D,
 
         /// #TODO: Missing equivalent return type in the API
@@ -1546,24 +1545,85 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         Extensions = 0x1030,
 
+        /// #TODO: Missing equivalent return type in the API
         /// <summary>
-        /// Unavailable before version 1.2.
-        /// <para>Returns the <c><see cref="CLDevice">CLDevice</see></c> of the parent
-        /// device to which this sub-device belongs.
-        /// If device is a root-level device, a NULL value is returned.
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns an array of description (name and version) structures.
+        ///     The same extension name must not be reported more than once.
+        ///     The list of extensions reported must match the list reported via
+        ///     <c><see cref="Extensions">Extensions</see></c>.
+        /// </para>
+        /// <para>
+        ///     See <c><see cref="Extensions">Extensions</see></c>
+        ///     for a list of extensions that are required to be reported for a given OpenCL version.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
         /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="CLDevice">CLDevice</see></c></remarks>
+        ExtensionsWithVersion = 0x1060,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Maximum size in bytes of the internal buffer that holds the output of
+        ///     printf calls from a kernel. The minimum value for the FULL profile is 1 MB.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        PrintfBufferSize = 0x1049,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the devices preference is for the user to be responsible
+        ///     for synchronization, when sharing memory objects between OpenCL and other APIs
+        ///     such as DirectX, FALSE if the device / implementation has a performant path
+        ///     for performing synchronization of memory object shared between
+        ///     OpenCL and other APIs such as DirectX.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        PreferredInteropUserSync = 0x1048,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the <c><see cref="CLDevice">CLDevice</see></c> of the parent
+        ///     device to which this sub-device belongs.
+        ///     If device is a root-level device, a NULL value is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLDevice">CLDevice</see></c>
+        /// </para>
+        /// </summary>
         ParentDevice = 0x1042,
 
         /// <summary>
-        /// Unavailable before version 1.2.
         /// <para>
-        /// Returns the maximum number of sub-devices that can be created when a device is partitioned.
-        /// The value returned cannot exceed <c><see cref="MaximumComputeUnits">MaximumComputeUnits</see></c>.
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the maximum number of sub-devices that can be created when a device is partitioned.
+        ///     The value returned cannot exceed <c><see cref="MaximumComputeUnits">MaximumComputeUnits</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
         /// </para>
         /// </summary>
-        /// <remarks>Return Type: uint</remarks>
         PartitionMaximumSubDevices = 0x1043,
 
         /// #TODO: Missing return type equivalent in the API
@@ -1582,8 +1642,6 @@ namespace OpenTK.Compute.OpenCL
         PartitionAffinityDomain = 0x1045,
         PartitionType = 0x1046,
         ReferenceCount = 0x1047,
-        PreferredInteropUserSync = 0x1048,
-        PrintfBufferSize = 0x1049,
         SvmCapabilities = 0x1053,
         PreferredPlatformAtomicAlignment = 0x1058,
         PreferredGlobalAtomicAlignment = 0x1059,
