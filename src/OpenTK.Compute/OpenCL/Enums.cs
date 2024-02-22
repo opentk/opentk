@@ -86,6 +86,24 @@ namespace OpenTK.Compute.OpenCL
         /// </para>
         /// </summary>
         MemoryInitializeKHR = 0x2030,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c>cl_khr_terminate_context</c> extension</pre></i>
+        /// </para>
+        /// <para>
+        ///     Specifies whether the context can be terminated. The default value is FALSE.
+        /// </para>
+        /// <para>
+        ///     Can be specified in the context properties only if all devices associated with
+        ///     the context support the ability to support context termination
+        ///     (i.e. CL_DEVICE_TERMINATE_CAPABILITY_CONTEXT_KHR is set for CL_DEVICE_TERMINATE_CAPABILITY_KHR).
+        ///     Otherwise, context creation fails with error code of CL_INVALID_PROPERTY.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
         TerminateKHR = 0x2032,
     }
 
@@ -2059,7 +2077,28 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c>string</c>
         /// </para>
         /// </summary>
-        LatestConformanceVersionPassed = 0x1072
+        LatestConformanceVersionPassed = 0x1072,
+
+        // Values added by extensions:
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c>cl_khr_fp16</c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///      Bitfield that describes half precision floating-point capability of the OpenCL device.
+        /// </para>
+        /// <para>
+        ///     The required minimum half precision floating-point capability as implemented by this extension is:
+        /// </para>
+        /// <para>
+        ///     <pre><c><see cref="DeviceFloatingPointConfig.RoundToZero">RoundToZero</see></c> | <c><see cref="DeviceFloatingPointConfig.RoundToNearest">RoundToNearest</see></c> | <c><see cref="DeviceFloatingPointConfig.InfinityNaN">InfinityNaN</see></c></pre>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c>
+        /// </para>
+        /// </summary>
+        HalfFloatingPointConfiguration = 0x1033
     }
 
     #endregion
@@ -2391,17 +2430,62 @@ namespace OpenTK.Compute.OpenCL
         ReadWrite
     }
 
+    /// <summary>
+    /// Bitfield that describes the floating point configuration of a device
+    /// </summary>
     [Flags]
     public enum DeviceFloatingPointConfig : uint
     {
-        Denorm,
-        InfinityNaN,
-        RoundToNearest,
-        RoundToZero,
-        RoundToInfinity,
-        FusedMultiplyAdd, // IEEE754-2008
-        SoftFloat,
-        CorrectlyRoundedDivideSqrt
+        /// <summary>
+        /// Denorms are supported
+        /// </summary>
+        Denorm = 1 << 0,
+
+        /// <summary>
+        ///  INF and NaNs are supported
+        /// </summary>
+        InfinityNaN = 1 << 1,
+
+        /// <summary>
+        /// Round to nearest even rounding mode supported
+        /// </summary>
+        RoundToNearest = 1 << 2,
+
+        /// <summary>
+        /// Round to zero rounding mode supported
+        /// </summary>
+        RoundToZero = 1 << 3,
+
+        /// <summary>
+        ///  Round to positive and negative infinity rounding modes supported
+        /// </summary>
+        RoundToInfinity = 1 << 4,
+
+        /// <summary>
+        /// IEEE754-2008 fused multiply-add is supported
+        /// </summary>
+        FusedMultiplyAdd = 1 << 5,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Basic floating-point operations
+        ///     (such as addition, subtraction, multiplication) are implemented in software.
+        ///  </para>
+        /// </summary>
+        SoftFloat = 1 << 6,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Divide and sqrt are correctly rounded as defined by the IEEE754 specification
+        /// </para>
+        /// </summary>
+        CorrectlyRoundedDivideSqrt = 1 << 7
     }
 
     [Flags]
