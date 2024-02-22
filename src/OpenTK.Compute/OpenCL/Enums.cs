@@ -1980,6 +1980,7 @@ namespace OpenTK.Compute.OpenCL
 
     #endregion
 
+    #region Command Queue
     public enum CommandQueueInfo : uint
     {
         Context = 0x1090,
@@ -1989,6 +1990,8 @@ namespace OpenTK.Compute.OpenCL
         Size = 0x1094,
         DeviceDefault = 0x1095
     }
+
+    #endregion
 
     [Flags]
     public enum MemoryFlags : ulong
@@ -2265,16 +2268,16 @@ namespace OpenTK.Compute.OpenCL
     [Flags]
     public enum MapFlags : ulong
     {
-        Read = 1,
-        Write = 2,
-        WriteInvalidateRegion = 3
+        Read = 1 << 0,
+        Write = 1 << 1,
+        WriteInvalidateRegion = 1 << 2
     }
 
     [Flags]
     public enum MemoryMigrationFlags : ulong
     {
-        Host = 1,
-        ContentUndefined = 2
+        Host = 1 << 0,
+        ContentUndefined = 1 << 1
     }
 
     #region Unfinished
@@ -2355,38 +2358,38 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Support for the <b>relaxed</b> memory order.
         /// </summary>
-        OrderRelaxed = 1,
+        OrderRelaxed = 1 << 0,
 
         /// <summary>
         /// Support for the <b>acquire</b>, <b>release</b>, and <b>acquire-release</b> memory orders.
         /// </summary>
-        OrderAcquireRelease = 2,
+        OrderAcquireRelease = 1 << 1,
 
         /// <summary>
         /// Support for the <b>sequentially consistent</b> memory order.
         /// </summary>
-        OrderSequentiallyConsistent = 3,
+        OrderSequentiallyConsistent = 1 << 2,
 
         /// <summary>
         /// Support for memory ordering constraints that apply to a single work-item.
         /// </summary>
-        ScopeWorkItem = 4,
+        ScopeWorkItem = 1 << 3,
 
         /// <summary>
         /// Support for memory ordering constraints that apply to all work-items in a work-group.
         /// </summary>
-        ScopeWorkGroup = 5,
+        ScopeWorkGroup = 1 << 4,
 
         /// <summary>
         /// Support for memory ordering constraints that apply to all work-items executing on the device.
         /// </summary>
-        ScopeDevice = 6,
+        ScopeDevice = 1 << 5,
 
         /// <summary>
         /// Support for memory ordering constraints that apply to all work-items
         /// executing across all devices that can share SVM memory with each other and the host process.
         /// </summary>
-        SccopeAllDevices = 7,
+        SccopeAllDevices = 1 << 6,
     }
 
     /// <summary>
@@ -2398,11 +2401,11 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Device supports device-side enqueue and on-device queues.
         /// </summary>
-        QueueSupported = 1,
+        QueueSupported = 1 << 0,
 
         /// <summary>
         /// Device supports a replaceable default on-device queue.
         /// </summary>
-        QueueReplaceableDefault = 2
+        QueueReplaceableDefault = 1 << 1
     }
 }
