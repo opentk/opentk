@@ -1897,14 +1897,85 @@ namespace OpenTK.Compute.OpenCL
         GenericAddressSpaceSupport = 0x1069,
 
         /// <summary>
-        /// 
+        ///  <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes device-side enqueue capabilities of the device.
+        /// </para>
+        /// <para>
+        ///     If <c><see cref="DeviceDeviceEnqueueCapabilities.QueueReplaceableDefault">QueueReplaceableDefault</see></c>
+        ///     is set, <c><see cref="DeviceDeviceEnqueueCapabilities.QueueSupported">QueueSupported</see></c>
+        ///     must also be set.
+        /// </para>
+        /// <para>
+        ///     Devices that set <c><see cref="DeviceDeviceEnqueueCapabilities.QueueSupported">QueueSupported</see></c>
+        ///     for <c><see cref="DeviceDeviceEnqueueCapabilities">DeviceDeviceEnqueueCapabilities</see></c>
+        ///     must also return TRUE for <c><see cref="GenericAddressSpaceSupport">GenericAddressSpaceSupport</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceDeviceEnqueueCapabilities">DeviceDeviceEnqueueCapabilities</see></c>
+        /// </para>
         /// </summary>
         DeviceEnqueueCapabilities = 0x1070,
+
         /// <summary>
-        /// 
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the device supports pipes, and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     Devices that return TRUE for <c><see cref="PipeSupport">PipeSupport</see></c>
+        ///     must also return TRUE for
+        ///     <c><see cref="GenericAddressSpaceSupport">GenericAddressSpaceSupport</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
         /// </summary>
-        TerminateCapabilityKhr = 0x2031,
-        SpirVersion = 0x40E0
+        PipeSupport = 0x1071,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the preferred multiple of work-group size for the given device.
+        ///     This is a performance hint intended as a guide when specifying
+        ///     the local work size argument to
+        ///     <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel, uint,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>.
+        /// </para>
+        /// <para>
+        ///     (Refer also to
+        ///     <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
+        ///     KernelWorkGroupInfo, out byte[])">GetKernelWorkGroupInfo()</see></c>
+        ///     where <c><see cref="KernelWorkGroupInfo.PreferredWorkGroupSizeMultiple"/></c>
+        ///     can return a different value to
+        ///     <c><see cref="PreferredWorkGroupSizeMultiple"/></c> which may be more optimal.)
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        PreferredWorkGroupSizeMultiple = 0x1067,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the latest version of the conformance test suite that this device has
+        ///     fully passed in accordance with the official conformance process.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        LatestConformanceVersionPassed = 0x1072
     }
 
     #endregion
@@ -2321,7 +2392,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield that describes device-side enqueue capabilities of the device.
     /// </summary>
     [Flags]
-    public enum DeviceEnqueueCapabilities
+    public enum DeviceDeviceEnqueueCapabilities
     {
         /// <summary>
         /// Device supports device-side enqueue and on-device queues.
