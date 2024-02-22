@@ -12,7 +12,7 @@ namespace OpenTK.Compute.OpenCL
     /// <para>
     ///     The supported properties for creating a context using
     ///     <c><see cref="CL.CreateContext(IntPtr[], CLDevice[], IntPtr, IntPtr, out CLResultCode)">CreateContext()</see></c>, or
-    ///     <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>
+    ///     <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>.
     /// </para>
     /// <para>
     ///     For more info look at the original documentation
@@ -2098,7 +2098,90 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c><see cref="DeviceFloatingPointConfig">DeviceFloatingPointConfig</see></c>
         /// </para>
         /// </summary>
-        HalfFloatingPointConfiguration = 0x1033
+        HalfFloatingPointConfiguration = 0x1033,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c>cl_khr_terminate_context</c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Bitfield that describes the termination capability of the OpenCL device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceTerminateCapability">DeviceTerminateCapability</see></c>
+        /// </para>
+        /// </summary>
+        TerminateCapabilityKHR = 0x2031,
+    }
+
+    /// <summary>
+    /// Bitfield that describes the floating point configuration of a device.
+    /// </summary>
+    [Flags]
+    public enum DeviceFloatingPointConfig : uint
+    {
+        /// <summary>
+        /// Denorms are supported
+        /// </summary>
+        Denorm = 1 << 0,
+
+        /// <summary>
+        ///  INF and NaNs are supported
+        /// </summary>
+        InfinityNaN = 1 << 1,
+
+        /// <summary>
+        /// Round to nearest even rounding mode supported
+        /// </summary>
+        RoundToNearest = 1 << 2,
+
+        /// <summary>
+        /// Round to zero rounding mode supported
+        /// </summary>
+        RoundToZero = 1 << 3,
+
+        /// <summary>
+        ///  Round to positive and negative infinity rounding modes supported
+        /// </summary>
+        RoundToInfinity = 1 << 4,
+
+        /// <summary>
+        /// IEEE754-2008 fused multiply-add is supported
+        /// </summary>
+        FusedMultiplyAdd = 1 << 5,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Basic floating-point operations
+        ///     (such as addition, subtraction, multiplication) are implemented in software.
+        ///  </para>
+        /// </summary>
+        SoftFloat = 1 << 6,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Divide and sqrt are correctly rounded as defined by the IEEE754 specification
+        /// </para>
+        /// </summary>
+        CorrectlyRoundedDivideSqrt = 1 << 7
+    }
+
+    /// <summary>
+    /// Bitfield that describes the termination capability of the OpenCL device.
+    /// </summary>
+    [Flags]
+    public enum DeviceTerminateCapability : uint
+    {
+        /// <summary>
+        /// Indicates that context termination is supported.
+        /// </summary>
+        ContextKHR = 1 << 0
     }
 
     #endregion
@@ -2428,64 +2511,6 @@ namespace OpenTK.Compute.OpenCL
         None,
         ReadOnly,
         ReadWrite
-    }
-
-    /// <summary>
-    /// Bitfield that describes the floating point configuration of a device
-    /// </summary>
-    [Flags]
-    public enum DeviceFloatingPointConfig : uint
-    {
-        /// <summary>
-        /// Denorms are supported
-        /// </summary>
-        Denorm = 1 << 0,
-
-        /// <summary>
-        ///  INF and NaNs are supported
-        /// </summary>
-        InfinityNaN = 1 << 1,
-
-        /// <summary>
-        /// Round to nearest even rounding mode supported
-        /// </summary>
-        RoundToNearest = 1 << 2,
-
-        /// <summary>
-        /// Round to zero rounding mode supported
-        /// </summary>
-        RoundToZero = 1 << 3,
-
-        /// <summary>
-        ///  Round to positive and negative infinity rounding modes supported
-        /// </summary>
-        RoundToInfinity = 1 << 4,
-
-        /// <summary>
-        /// IEEE754-2008 fused multiply-add is supported
-        /// </summary>
-        FusedMultiplyAdd = 1 << 5,
-
-        /// <summary>
-        /// <para>
-        ///     <i><pre>Missing before verison 1.1.</pre></i>
-        /// </para>
-        /// <para>
-        ///     Basic floating-point operations
-        ///     (such as addition, subtraction, multiplication) are implemented in software.
-        ///  </para>
-        /// </summary>
-        SoftFloat = 1 << 6,
-
-        /// <summary>
-        /// <para>
-        ///     <i><pre>Missing before verison 1.2.</pre></i>
-        /// </para>
-        /// <para>
-        ///     Divide and sqrt are correctly rounded as defined by the IEEE754 specification
-        /// </para>
-        /// </summary>
-        CorrectlyRoundedDivideSqrt = 1 << 7
     }
 
     [Flags]
