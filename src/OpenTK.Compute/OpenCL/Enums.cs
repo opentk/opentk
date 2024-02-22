@@ -7,9 +7,48 @@ namespace OpenTK.Compute.OpenCL
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
     #region Context
+
+    /// <summary>
+    /// <para>
+    ///     The supported properties for creating a context using
+    ///     <c><see cref="CL.CreateContext(IntPtr[], CLDevice[], IntPtr, IntPtr, out CLResultCode)">CreateContext()</see></c>, or
+    ///     <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>
+    /// </para>
+    /// <para>
+    ///     For more info look at the original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#context-properties-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum ContextProperties : int
     {
+        /// <summary>
+        /// <para>
+        ///     Specifies the platform to use.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c><see cref="CLProgram">CLProgram</see></c>
+        /// </para>
+        /// </summary>
         ContextPlatform = 0x1084,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing byefore verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Specifies whether the user is responsible for synchronization between
+        ///     OpenCL and other APIs. Please refer to the specific sections in the OpenCL
+        ///     Extension Specification that describe sharing with other APIs for restrictions
+        ///     on using this flag.
+        /// </para>
+        /// <para>
+        ///     If <c><see cref="InteropUserSync">InteropUserSync</see></c> is not specified,
+        ///     a default of FALSE is assumed.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
         InteropUserSync = 0x1085,
 
         GlContextKHR = 0x2008,
@@ -26,6 +65,26 @@ namespace OpenTK.Compute.OpenCL
 
         D3D11DeviceKHR = 0x401D,
 
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c>cl_khr_initialize_memory</c> extension</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes which memory types for the context must be initialized.
+        /// </para>
+        /// <para>
+        ///     If the context is created with <c><see cref="MemoryInitializeKHR">MemoryInitializeKHR</see></c>,
+        ///     appropriate memory locations as specified by the bit-field is initialized with zeroes,
+        ///     prior to the start of execution of any kernel.
+        ///     The driver chooses when, prior to kernel execution,
+        ///     the initialization of local and/or private memory is performed.
+        ///     The only requirement is there should be no values set from outside the context,
+        ///     which can be read during a kernel execution.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c><see cref="ContextMemoryInitializeKHR">ContextMemoryInitializeKHR</see></c>
+        /// </para>
+        /// </summary>
         MemoryInitializeKHR = 0x2030,
         TerminateKHR = 0x2032,
     }
@@ -38,6 +97,31 @@ namespace OpenTK.Compute.OpenCL
         NumberOfDevices = 0x1083
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Requires the <c>cl_khr_initialize_memory</c> extension</pre></i>
+    /// </para>
+    /// <para>
+    ///     A Bitfield that describes which memory types for the context must be initialized.
+    /// </para>
+    /// </summary>
+    [Flags]
+    public enum ContextMemoryInitializeKHR : uint
+    {
+        /// <summary>
+        /// <para>
+        ///     Initialize local memory to zeros.
+        /// </para>
+        /// </summary>
+        LocalKHR = 1 << 0,
+
+        /// <summary>
+        /// <para>
+        ///     Initialize private memory to zeros.
+        /// </para>
+        /// </summary>
+        PrivateKHR = 1 << 1
+    }
     #endregion
 
     #region Platform
