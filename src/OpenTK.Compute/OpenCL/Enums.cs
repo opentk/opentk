@@ -2345,6 +2345,7 @@ namespace OpenTK.Compute.OpenCL
     }
 
     #endregion
+
     /// <summary>
     /// Bit field to describe the atomic memory capabilities of a device.
     /// </summary>
