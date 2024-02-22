@@ -146,7 +146,7 @@ namespace OpenTK.Compute.OpenCL
 
     /// <summary>
     /// The information that can be queried using <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])">GetPlatformInfo()</see></c>.
-    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table.</para>
+    /// <para>Original documentation <see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table">here</see>.</para>
     /// </summary>
     public enum PlatformInfo : uint
     {
@@ -1078,7 +1078,7 @@ namespace OpenTK.Compute.OpenCL
         /// <para>
         ///     Size of local memory arena in bytes.
         ///     The minimum value is 32 KB for devices that are not of type
-        ///     <c><see cref="DeviceType.Custom">Custom</see></c>..
+        ///     <c><see cref="DeviceType.Custom">Custom</see></c>.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>ulong</c>
@@ -2115,6 +2115,80 @@ namespace OpenTK.Compute.OpenCL
     }
 
     /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 2.0.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Bitfield that describes the various shared virtual memory (SVM) memory allocation types a device supports.
+    /// </para>
+    /// </summary>
+    [Flags]
+    public enum DeviceSvmCapabilities : uint
+    {
+        /// <summary>
+        /// Support for coarse-grain buffer sharing using
+        /// <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
+        /// Memory consistency is guaranteed at synchronization points and the host must use calls to
+        /// <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        /// MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
+        /// <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
+        /// </summary>
+        CoarseGrainBuffer = 1 << 0,
+
+        /// <summary>
+        /// Support for fine-grain buffer sharing using
+        /// <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
+        /// Memory consistency is guaranteed at synchronization points and the host must use calls to
+        /// <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        /// MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
+        /// <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
+        /// </summary>
+        FineGrainBuffer = 1 << 1,
+
+        /// <summary>
+        /// Support for sharing the host’s entire virtual memory including memory allocated using <c>malloc</c>.
+        /// Memory consistency is guaranteed at synchronization points.
+        /// </summary>
+        FineGrainSystem = 1 << 2,
+
+        /// <summary>
+        /// Support for the OpenCL 2.0 atomic operations that provide memory consistency
+        /// across the host and all OpenCL devices supporting fine-grain SVM allocations.
+        /// </summary>
+        Atomics = 1 << 3
+    }
+
+    /// <summary>
+    /// Type of local memory supported.
+    /// </summary>
+    public enum DeviceLocalMemoryType : uint
+    {
+        /// <summary>
+        /// Implies dedicated local memory storage such as SRAM
+        /// </summary>
+        Local = 1,
+
+        /// <summary>
+        /// Uses the global machine memory
+        /// </summary>
+        Global = 2
+    }
+
+    [Flags]
+    public enum DeviceExecutionCapabilities : uint
+    {
+        Kernel = 1 << 0,
+        NativeKernel = 1 << 1
+    }
+
+    public enum DeviceMemoryCacheType : uint
+    {
+        None = 0,
+        ReadOnly = 1,
+        ReadWrite = 2
+    }
+
+    /// <summary>
     /// Bitfield that describes the floating point configuration of a device.
     /// </summary>
     [Flags]
@@ -2182,6 +2256,171 @@ namespace OpenTK.Compute.OpenCL
         /// Indicates that context termination is supported.
         /// </summary>
         ContextKHR = 1 << 0
+    }
+
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Specifies the supported methods for partioning a device that can be used
+    ///     in <c><see cref="CL.CreateSubDevices(CLDevice, IntPtr[], uint, CLDevice[], out uint)">CreateSubDevices()</see></c>.
+    /// </para>
+    /// </summary>
+    public enum DevicePartitionProperty : uint
+    {
+        /// <summary>
+        /// <para>
+        ///     Split the aggregate device into as many smaller aggregate devices as can be created,
+        ///     each containing <i>n</i> compute units. The value <i>n</i> is passed as the value accompanying this property.
+        ///     If <i>n</i> does not divide evenly into <c><see cref="DeviceInfo.MaximumComputeUnits">MaximumComputeUnits</see></c>,
+        ///     then the remaining compute units are not used.
+        /// </para>
+        /// <para>
+        ///     <i><u>Partition Value:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        Equally = 0x1086,
+
+        /// <summary>
+        /// <para>
+        ///     This property is followed by a list of compute unit counts terminated with 0.
+        ///     For each non-zero count <i>m</i> in the list, a sub-device is created with <i>m</i> compute units in it.
+        /// </para>
+        /// <para>
+        ///     The number of non-zero count entries in the list may not exceed
+        ///     <c><see cref="DeviceInfo.PartitionMaximumSubDevices">PartitionMaximumSubDevices</see></c>.
+        /// </para>
+        /// <para>
+        ///     The total number of compute units specified may not exceed
+        ///     <c><see cref="DeviceInfo.PartitionMaximumSubDevices">PartitionMaximumSubDevices</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Partition Value:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ByCounts = 0x1087,
+
+        /// <summary>
+        /// <para>
+        ///     Split the device into smaller aggregate devices containing one or more compute units
+        ///     that all share part of a cache hierarchy.
+        /// </para>
+        /// <para>
+        ///     The user may determine what happened by calling
+        ///     <c><see cref="CL.CreateSubDevices(CLDevice, IntPtr[], uint, CLDevice[], out uint)">CreateSubDevices(<see cref="DeviceInfo.PartitionType">PartitionType</see>)</see></c>
+        ///     on the sub-devices.
+        /// </para>
+        /// <para>
+        ///     <i><u>Partition Value:</u></i> <c><see cref="DeviceAffinityDomain">DeviceAffinityDomain</see></c>
+        /// </para>
+        /// </summary>
+        ByAffinityDomain = 0x1088
+    }
+
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Bitfield with the supported affinity domains for partitioning a device.
+    /// </para>
+    /// </summary>
+    [Flags]
+    public enum DeviceAffinityDomain : uint
+    {
+        /// <summary>
+        /// Split the device into sub-devices comprised of compute units that share a NUMA node.
+        /// </summary>
+        Numa = 1 << 0,
+
+        /// <summary>
+        /// Split the device into sub-devices comprised of compute units that share a level 4 data cache.
+        /// </summary>
+        L4Cache = 1 << 1,
+
+        /// <summary>
+        /// Split the device into sub-devices comprised of compute units that share a level 3 data cache.
+        /// </summary>
+        L3Cache = 1 << 2,
+
+        /// <summary>
+        /// Split the device into sub-devices comprised of compute units that share a level 2 data cache.
+        /// </summary>
+        L2Cache = 1 << 3,
+
+        /// <summary>
+        /// Split the device into sub-devices comprised of compute units that share a level 1 data cache.
+        /// </summary>
+        L1Cache = 1 << 4,
+
+        /// <summary>
+        /// Split the device along the next partitionable affinity domain.
+        /// The implementation shall find the first level along which the device or sub-device
+        /// may be further subdivided in the order NUMA, L4, L3, L2, L1, and partition the device
+        /// into sub-devices comprised of compute units that share memory subsystems at this level.
+        /// </summary>
+        NextPartionable = 1 << 5
+    }
+
+    /// <summary>
+    /// Bit field to describe the atomic memory capabilities of a device.
+    /// </summary>
+    [Flags]
+    public enum DeviceAtomicCapabilities : uint
+    {
+        /// <summary>
+        /// Support for the <b>relaxed</b> memory order.
+        /// </summary>
+        OrderRelaxed = 1 << 0,
+
+        /// <summary>
+        /// Support for the <b>acquire</b>, <b>release</b>, and <b>acquire-release</b> memory orders.
+        /// </summary>
+        OrderAcquireRelease = 1 << 1,
+
+        /// <summary>
+        /// Support for the <b>sequentially consistent</b> memory order.
+        /// </summary>
+        OrderSequentiallyConsistent = 1 << 2,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to a single work-item.
+        /// </summary>
+        ScopeWorkItem = 1 << 3,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items in a work-group.
+        /// </summary>
+        ScopeWorkGroup = 1 << 4,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items executing on the device.
+        /// </summary>
+        ScopeDevice = 1 << 5,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items
+        /// executing across all devices that can share SVM memory with each other and the host process.
+        /// </summary>
+        SccopeAllDevices = 1 << 6,
+    }
+
+    /// <summary>
+    /// Bitfield that describes device-side enqueue capabilities of the device.
+    /// </summary>
+    [Flags]
+    public enum DeviceDeviceEnqueueCapabilities
+    {
+        /// <summary>
+        /// Device supports device-side enqueue and on-device queues.
+        /// </summary>
+        QueueSupported = 1 << 0,
+
+        /// <summary>
+        /// Device supports a replaceable default on-device queue.
+        /// </summary>
+        QueueReplaceableDefault = 1 << 1
     }
 
     #endregion
@@ -2453,6 +2692,51 @@ namespace OpenTK.Compute.OpenCL
         Context = 0x11D4
     }
 
+    /// <summary>
+    /// Bitfield that describes the properties of a command queue
+    /// </summary>
+    [Flags]
+    public enum CommandQueueProperty : uint
+    {
+        /// <summary>
+        /// Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
+        /// If set, the commands in the command-queue are executed out-of-order.
+        /// Otherwise, commands are executed in-order.
+        /// </summary>
+        OutOfOrderExecutionModeEnable = 1 << 0,
+
+        /// <summary>
+        /// Enable or disable profiling of commands in the command-queue.
+        /// If set, the profiling of commands is enabled.
+        /// Otherwise profiling of commands is disabled.
+        /// </summary>
+        ProfilingEnable = 1 << 1,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Indicates that this is a device queue.
+        ///     If <c><see cref="OnDevice">OnDevice</see></c> is set,
+        ///     <c><see cref="OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see></c>
+        ///     must also be set.
+        /// </para>
+        /// </summary>
+        OnDevice = 1 << 2,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Indicates that this is the default device queue.
+        ///     This can only be used with <c><see cref="OnDevice">OnDevice</see></c>.
+        /// </para>
+        /// </summary>
+        OnDeviceDefault = 1 << 3
+    }
+
     public enum CommandExecutionStatus : int
     {
         Error = -0x1,
@@ -2487,118 +2771,6 @@ namespace OpenTK.Compute.OpenCL
     }
 
     #region Unfinished
-    public enum DevicePartitionProperty : uint
-    {
-        Equally,
-        ByCounts,
-        ByAffinityDomain
-    }
-
-    public enum DeviceLocalMemoryType : uint
-    {
-        Local,
-        Global
-    }
-
-    public enum DeviceExecutionCapabilities : uint
-    {
-        Kernel,
-        NativeKernel
-    }
-
-    public enum DeviceMemoryCacheType : uint
-    {
-        None,
-        ReadOnly,
-        ReadWrite
-    }
-
-    [Flags]
-    public enum CommandQueueProperty : uint
-    {
-        OutOfOrderExecutionModeEnable,
-        ProfilingEnable
-    }
-
-    [Flags]
-    public enum DeviceAffinityDomain : uint
-    {
-        Numa,
-        L4Cache,
-        L3Cache,
-        L2Cache,
-        L1Cache,
-        NextPartionable
-    }
-
-    [Flags]
-    public enum DeviceSvmCapabilities : uint
-    {
-        CoarseGrainBuffer,
-        FineGrainBuffer,
-        FineGrainSystem,
-        Atomics
-    }
 
     #endregion
-
-    /// <summary>
-    /// Bit field to describe the atomic memory capabilities of a device.
-    /// </summary>
-    [Flags]
-    public enum DeviceAtomicCapabilities : uint
-    {
-        /// <summary>
-        /// Support for the <b>relaxed</b> memory order.
-        /// </summary>
-        OrderRelaxed = 1 << 0,
-
-        /// <summary>
-        /// Support for the <b>acquire</b>, <b>release</b>, and <b>acquire-release</b> memory orders.
-        /// </summary>
-        OrderAcquireRelease = 1 << 1,
-
-        /// <summary>
-        /// Support for the <b>sequentially consistent</b> memory order.
-        /// </summary>
-        OrderSequentiallyConsistent = 1 << 2,
-
-        /// <summary>
-        /// Support for memory ordering constraints that apply to a single work-item.
-        /// </summary>
-        ScopeWorkItem = 1 << 3,
-
-        /// <summary>
-        /// Support for memory ordering constraints that apply to all work-items in a work-group.
-        /// </summary>
-        ScopeWorkGroup = 1 << 4,
-
-        /// <summary>
-        /// Support for memory ordering constraints that apply to all work-items executing on the device.
-        /// </summary>
-        ScopeDevice = 1 << 5,
-
-        /// <summary>
-        /// Support for memory ordering constraints that apply to all work-items
-        /// executing across all devices that can share SVM memory with each other and the host process.
-        /// </summary>
-        SccopeAllDevices = 1 << 6,
-    }
-
-    /// <summary>
-    /// Bitfield that describes device-side enqueue capabilities of the device.
-    /// </summary>
-    [Flags]
-    public enum DeviceDeviceEnqueueCapabilities
-    {
-        /// <summary>
-        /// Device supports device-side enqueue and on-device queues.
-        /// </summary>
-        QueueSupported = 1 << 0,
-
-        /// <summary>
-        /// Device supports a replaceable default on-device queue.
-        /// </summary>
-        QueueReplaceableDefault = 1 << 1
-    }
 }
