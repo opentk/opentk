@@ -1013,7 +1013,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// <para>
         ///     Describes the resolution of device timer. This is measured in nanoseconds. Refer to
-        ///     <see cref="https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#profiling-operations">Profiling Operations</see> for details.
+        ///     <see href="https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#profiling-operations">Profiling Operations</see> for details.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
@@ -1604,7 +1604,7 @@ namespace OpenTK.Compute.OpenCL
         /// <para>
         ///     Returns the <c><see cref="CLDevice">CLDevice</see></c> of the parent
         ///     device to which this sub-device belongs.
-        ///     If device is a root-level device, a NULL value is returned.
+        ///     If <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, UIntPtr, byte[], out UIntPtr)">device</see></c> is a root-level device, a NULL value is returned.
         /// </para>
         /// <para>
         ///     <i><u>Return Type:</u></i> <c><see cref="CLDevice">CLDevice</see></c>
@@ -1628,26 +1628,281 @@ namespace OpenTK.Compute.OpenCL
 
         /// #TODO: Missing return type equivalent in the API
         /// <summary>
-        /// Unavailable before version 1.2.
         /// <para>
-        /// Returns the list of partition types supported by device.
-        /// If the device cannot be partitioned (i.e. there is no partitioning scheme
-        /// supported by the device that will return at least two sub-devices),
-        /// a value of 0 will be returned.
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the list of partition types supported by device.
+        ///     If the device cannot be partitioned (i.e. there is no partitioning scheme
+        ///     supported by the device that will return at least two sub-devices),
+        ///     a value of 0 will be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DevicePartitionProperty">DevicePartitionProperty[]</see></c>
         /// </para>
         /// </summary>
-        /// <remarks>Return Type: <c><see cref="DevicePartitionProperty">MaximumComputeUnits[]</see></c></remarks>
         PartitionProperties = 0x1044,
 
+        /// #TODO: Missing return type equivalent in the API
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the list of supported affinity domains for
+        ///     partitioning the device using
+        ///     <c><see cref="DevicePartitionProperty.ByAffinityDomain">ByAffinityDomain</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the device does not support any affinity domains, a value of 0 will be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceAffinityDomain">DeviceAffinityDomain</see></c>
+        /// </para>
+        /// </summary>
         PartitionAffinityDomain = 0x1045,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the properties argument specified in
+        ///     <c><see cref="CL.CreateSubDevices(CLDevice, IntPtr[], uint, CLDevice[], out uint)">CreateSubDevices()</see></c>
+        ///     if device is a sub-device. In the case where the properties argument to
+        ///     <c><see cref="CL.CreateSubDevices(CLDevice, IntPtr[], uint, CLDevice[], out uint)">CreateSubDevices()</see></c>
+        ///     is <c><see cref="DevicePartitionProperty.ByAffinityDomain">ByAffinityDomain</see></c>,
+        ///     C<c><see cref="DeviceAffinityDomain.NextPartionable">NextPartionable</see></c>,
+        ///     the affinity domain used to perform the partition will be returned.
+        /// </para>
+        /// <para>
+        ///     Otherwise the implementation may either return a
+        ///     <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, UIntPtr, byte[], out UIntPtr)">paramValueSizeReturned</see></c>
+        ///     of 0 i.e. there is no partition type associated with device or can return
+        ///     a property value of 0 (where 0 is used to terminate the partition property list) in the memory that
+        ///     <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, UIntPtr, byte[], out UIntPtr)">paramValue</see></c>
+        ///     points to.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DevicePartitionProperty">DevicePartitionProperty[]</see></c>
+        /// </para>
+        /// </summary>
         PartitionType = 0x1046,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the <c><see cref="CL.GetDeviceInfo(CLDevice, DeviceInfo, UIntPtr, byte[], out UIntPtr)">device</see></c>
+        ///     reference count. If the device is a root-level device, a reference count of one is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1047,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes the various shared virtual memory (SVM) memory allocation types the device supports.
+        /// </para>
+        /// <para>
+        ///      The mandated minimum capability for an OpenCL 2.0, 2.1, or 2.2 device is
+        ///      <c><see cref="DeviceSvmCapabilities.CoarseGrainBuffer">CoarseGrainBuffer</see></c>.
+        ///      For other device versions there is no mandated minimum capability.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceSvmCapabilities">DeviceSvmCapabilities</see></c>
+        /// </para>
+        /// </summary>
         SvmCapabilities = 0x1053,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the value representing the preferred alignment in bytes for OpenCL 2.0
+        ///     fine-grained SVM atomic types. This query can return 0 which indicates that
+        ///     the preferred alignment is aligned to the natural size of the type.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PreferredPlatformAtomicAlignment = 0x1058,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the value representing the preferred alignment in bytes
+        ///     for OpenCL 2.0 atomic types to global memory. This query can return
+        ///     0 which indicates that the preferred alignment is aligned to the natural size of the type.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PreferredGlobalAtomicAlignment = 0x1059,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the value representing the preferred alignment in
+        ///     bytes for OpenCL 2.0 atomic types to local memory. This query
+        ///     can return 0 which indicates that the preferred alignment
+        ///     is aligned to the natural size of the type.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PreferredLocalAtomicAlignment = 0x105A,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Maximum number of sub-groups in a work-group that a device is capable
+        ///     of executing on a single compute unit,
+        ///     for any given kernel-instance running on the device.
+        /// </para>
+        /// <para>
+        ///     The minimum value is 1 if the device supports sub-groups,
+        ///     and must be 0 for devices that do not support sub-groups.
+        ///     Support for sub-groups is required for an OpenCL 2.1 or 2.2 device.
+        /// </para>
+        /// <para>
+        ///     (Refer also to
+        ///     <c><see cref="CL.GetKernelSubGroupInfo(CLKernel, CLDevice, KernelSubGroupInfo, UIntPtr, IntPtr, UIntPtr, byte[], out UIntPtr)">GetKernelSubGroupInfo()</see></c>.)
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         MaximumNumberOfSubGroups = 0x105C,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if this device supports independent forward progress of sub-groups, FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     This query must return TRUE for devices that support the <c>cl_khr_subgroups</c> extension,
+        ///     and must return FALSE for devices that do not support sub-groups.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
         SubGroupIndependentForwardProgress = 0x105D,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes the various memory orders and scopes that the device supports for atomic memory operations.
+        /// </para>
+        /// <para>
+        ///     Because atomic memory orders are hierarchical,
+        ///     a device that supports a strong memory order must also support all weaker memory orders.
+        /// </para>
+        /// <para>
+        ///     Because atomic scopes are hierarchical,
+        ///     a device that supports a wide scope must also support all narrower scopes,
+        ///     except for the work-item scope, which is a special case.
+        /// </para>
+        /// <para>
+        ///     The mandated minimum capability is:
+        /// </para>
+        ///     <pre><c><see cref="DeviceAtomicCapabilities.OrderRelaxed">OrderRelaxed</see></c> | <c><see cref="DeviceAtomicCapabilities.ScopeWorkGroup">ScopeWorkGroup</see></c></pre>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceAtomicCapabilities">DeviceAtomicCapabilities</see></c>
+        /// </para>
+        /// </summary>
+        AtomicMemoryCapabilities = 0x1063,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Describes the various memory orders and scopes that the device
+        ///     supports for atomic fence operations. This is a bit-field that has
+        ///     the same set of possible values as described for
+        ///     <c><see cref="AtomicMemoryCapabilities">AtomicMemoryCapabilities</see></c>.
+        /// </para>
+        /// <para>
+        ///     The mandated minimum capability is:
+        /// </para>
+        ///     <pre><c><see cref="DeviceAtomicCapabilities.OrderRelaxed">OrderRelaxed</see></c> | <c><see cref="DeviceAtomicCapabilities.OrderAcquireRelease">OrderAcquireRelease</see></c> | <c><see cref="DeviceAtomicCapabilities.ScopeWorkGroup">ScopeWorkGroup</see></c></pre>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="DeviceAtomicCapabilities">DeviceAtomicCapabilities</see></c>
+        /// </para>
+        /// </summary>
+        AtomicFenceCapabilities = 0x1064,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the device supports non-uniform work-groups, and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        NonUniformGroupSupport = 0x1065,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the device supports work-group collective functions, e.g.
+        ///     <c><see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/workGroupFunctions.html">these</see></c>,
+        ///     and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        WorkGroupCollectiveFunctionsSupport = 0x1068,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Is TRUE if the device supports the generic address space
+        ///     and its associated built-in functions, and FALSE otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        GenericAddressSpaceSupport = 0x1069,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DeviceEnqueueCapabilities = 0x1070,
+        /// <summary>
+        /// 
+        /// </summary>
         TerminateCapabilityKhr = 0x2031,
         SpirVersion = 0x40E0
     }
@@ -1939,16 +2194,16 @@ namespace OpenTK.Compute.OpenCL
     [Flags]
     public enum MapFlags : ulong
     {
-        Read = 1 << 0,
-        Write = 1 << 1,
-        WriteInvalidateRegion = 1 << 2
+        Read = 1,
+        Write = 2,
+        WriteInvalidateRegion = 3
     }
 
     [Flags]
     public enum MemoryMigrationFlags : ulong
     {
-        Host = 1 << 0,
-        ContentUndefined = 1 << 1
+        Host = 1,
+        ContentUndefined = 2
     }
 
     #region Unfinished
@@ -1992,7 +2247,7 @@ namespace OpenTK.Compute.OpenCL
     }
 
     [Flags]
-    public enum CommandQueueProperty : ulong
+    public enum CommandQueueProperty : uint
     {
         OutOfOrderExecutionModeEnable,
         ProfilingEnable
@@ -2009,5 +2264,73 @@ namespace OpenTK.Compute.OpenCL
         NextPartionable
     }
 
+    [Flags]
+    public enum DeviceSvmCapabilities : uint
+    {
+        CoarseGrainBuffer,
+        FineGrainBuffer,
+        FineGrainSystem,
+        Atomics
+    }
+
     #endregion
+    /// <summary>
+    /// Bit field to describe the atomic memory capabilities of a device.
+    /// </summary>
+    [Flags]
+    public enum DeviceAtomicCapabilities : uint
+    {
+        /// <summary>
+        /// Support for the <b>relaxed</b> memory order.
+        /// </summary>
+        OrderRelaxed = 1,
+
+        /// <summary>
+        /// Support for the <b>acquire</b>, <b>release</b>, and <b>acquire-release</b> memory orders.
+        /// </summary>
+        OrderAcquireRelease = 2,
+
+        /// <summary>
+        /// Support for the <b>sequentially consistent</b> memory order.
+        /// </summary>
+        OrderSequentiallyConsistent = 3,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to a single work-item.
+        /// </summary>
+        ScopeWorkItem = 4,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items in a work-group.
+        /// </summary>
+        ScopeWorkGroup = 5,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items executing on the device.
+        /// </summary>
+        ScopeDevice = 6,
+
+        /// <summary>
+        /// Support for memory ordering constraints that apply to all work-items
+        /// executing across all devices that can share SVM memory with each other and the host process.
+        /// </summary>
+        SccopeAllDevices = 7,
+    }
+
+    /// <summary>
+    /// Bitfield that describes device-side enqueue capabilities of the device.
+    /// </summary>
+    [Flags]
+    public enum DeviceEnqueueCapabilities
+    {
+        /// <summary>
+        /// Device supports device-side enqueue and on-device queues.
+        /// </summary>
+        QueueSupported = 1,
+
+        /// <summary>
+        /// Device supports a replaceable default on-device queue.
+        /// </summary>
+        QueueReplaceableDefault = 2
+    }
 }
