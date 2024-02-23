@@ -2083,7 +2083,7 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     <i><pre>Requires the <c>cl_khr_fp16</c> extension.</pre></i>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/cl_khr_fp16.html">cl_khr_fp16</see></c> extension.</pre></i>
         /// </para>
         /// <para>
         ///      Bitfield that describes half precision floating-point capability of the OpenCL device.
@@ -2102,7 +2102,7 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// <para>
-        ///     <i><pre>Requires the <c>cl_khr_terminate_context</c> extension.</pre></i>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/cl_khr_terminate_context.html">cl_khr_terminate_context</see></c> extension.</pre></i>
         /// </para>
         /// <para>
         ///     Bitfield that describes the termination capability of the OpenCL device.
@@ -2112,6 +2112,139 @@ namespace OpenTK.Compute.OpenCL
         /// </para>
         /// </summary>
         TerminateCapabilityKHR = 0x2031,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/cl_khr_spir.html">cl_khr_spir</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A space separated list of SPIR versions supported by the device.
+        /// </para>
+        /// <para>
+        ///     For example, returning "1.2" in this query implies that SPIR version
+        ///     1.2 is supported by the implementation.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
+        SPIRVersions = 0x40E0,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     Returns the major revision number that defines the CUDA compute capability of the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ComputeCapabilityMajorNVIDIA = 0x4000,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     Returns the minor revision number that defines the CUDA compute capability of the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ComputeCapabilityMinorNVIDIA = 0x4001,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     Maximum number of 32-bit registers available to a work-group.
+        ///     this number is shared by all work-groups simultaneously resident on a multiprocessor.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        RegistersPerBlockNVIDIA = 0x4002,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     Warp size in work-items.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        WarpSizeNVIDIA = 0x4003,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     Returns TRUE if the device can concurrently copy memory between host
+        ///     and device while executing a kernel, or FALSE if not.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        GPUOverlapNVIDIA = 0x4004,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     TRUE if there is a run time limit for kernels executed
+        ///     on the device, or FALSE if not.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        KernelExecutionTimeoutNVIDIA = 0x4005,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt">cl_nv_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query device attributes specific to NVIDIA hardware.
+        /// </para>
+        /// <para>
+        ///     TRUE if the device is integrated with the memory
+        ///     subsystem, or FALSE if not.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        IntegratedMemoryNVIDIA = 0x4006
     }
 
     /// <summary>
@@ -2174,17 +2307,41 @@ namespace OpenTK.Compute.OpenCL
         Global = 2
     }
 
+    /// <summary>
+    /// Bitfield that describes the kernel execution capabilities of a device.
+    /// </summary>
     [Flags]
     public enum DeviceExecutionCapabilities : uint
     {
+        /// <summary>
+        /// The OpenCL device can execute OpenCL kernels.
+        /// </summary>
         Kernel = 1 << 0,
+
+        /// <summary>
+        /// The OpenCL device can execute native kernels.
+        /// </summary>
         NativeKernel = 1 << 1
     }
 
+    /// <summary>
+    /// Type of global memory cache supported by a device.
+    /// </summary>
     public enum DeviceMemoryCacheType : uint
     {
+        /// <summary>
+        /// No cache is supported
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Read only cache is supported
+        /// </summary>
         ReadOnly = 1,
+
+        /// <summary>
+        /// Read and Write cache is supported
+        /// </summary>
         ReadWrite = 2
     }
 
@@ -2364,7 +2521,7 @@ namespace OpenTK.Compute.OpenCL
     }
 
     /// <summary>
-    /// Bit field to describe the atomic memory capabilities of a device.
+    /// Bitfield to describe the atomic memory capabilities of a device.
     /// </summary>
     [Flags]
     public enum DeviceAtomicCapabilities : uint
@@ -2434,6 +2591,51 @@ namespace OpenTK.Compute.OpenCL
         Properties = 0x1093,
         Size = 0x1094,
         DeviceDefault = 0x1095
+    }
+
+    /// <summary>
+    /// Bitfield that describes the properties of a command queue.
+    /// </summary>
+    [Flags]
+    public enum CommandQueueProperty : uint
+    {
+        /// <summary>
+        /// Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
+        /// If set, the commands in the command-queue are executed out-of-order.
+        /// Otherwise, commands are executed in-order.
+        /// </summary>
+        OutOfOrderExecutionModeEnable = 1 << 0,
+
+        /// <summary>
+        /// Enable or disable profiling of commands in the command-queue.
+        /// If set, the profiling of commands is enabled.
+        /// Otherwise profiling of commands is disabled.
+        /// </summary>
+        ProfilingEnable = 1 << 1,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Indicates that this is a device queue.
+        ///     If <c><see cref="OnDevice">OnDevice</see></c> is set,
+        ///     <c><see cref="OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see></c>
+        ///     must also be set.
+        /// </para>
+        /// </summary>
+        OnDevice = 1 << 2,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Indicates that this is the default device queue.
+        ///     This can only be used with <c><see cref="OnDevice">OnDevice</see></c>.
+        /// </para>
+        /// </summary>
+        OnDeviceDefault = 1 << 3
     }
 
     #endregion
@@ -2690,51 +2892,6 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x11D2,
         CommandExecutionStatus = 0x11D3,
         Context = 0x11D4
-    }
-
-    /// <summary>
-    /// Bitfield that describes the properties of a command queue
-    /// </summary>
-    [Flags]
-    public enum CommandQueueProperty : uint
-    {
-        /// <summary>
-        /// Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
-        /// If set, the commands in the command-queue are executed out-of-order.
-        /// Otherwise, commands are executed in-order.
-        /// </summary>
-        OutOfOrderExecutionModeEnable = 1 << 0,
-
-        /// <summary>
-        /// Enable or disable profiling of commands in the command-queue.
-        /// If set, the profiling of commands is enabled.
-        /// Otherwise profiling of commands is disabled.
-        /// </summary>
-        ProfilingEnable = 1 << 1,
-
-        /// <summary>
-        /// <para>
-        ///     <i><pre>Missing before verison 2.0.</pre></i>
-        /// </para>
-        /// <para>
-        ///     Indicates that this is a device queue.
-        ///     If <c><see cref="OnDevice">OnDevice</see></c> is set,
-        ///     <c><see cref="OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see></c>
-        ///     must also be set.
-        /// </para>
-        /// </summary>
-        OnDevice = 1 << 2,
-
-        /// <summary>
-        /// <para>
-        ///     <i><pre>Missing before verison 2.0.</pre></i>
-        /// </para>
-        /// <para>
-        ///     Indicates that this is the default device queue.
-        ///     This can only be used with <c><see cref="OnDevice">OnDevice</see></c>.
-        /// </para>
-        /// </summary>
-        OnDeviceDefault = 1 << 3
     }
 
     public enum CommandExecutionStatus : int
