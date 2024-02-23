@@ -240,6 +240,8 @@ namespace OpenTK.Platform.Native.SDL
 
         internal static Key FromSDL(SDL_Keycode keycode, ILogger? logger)
         {
+            // FIXME: On ubuntu the key codes reported from SDL are any UTF key code.
+            // Do we also want to do that or do we want to do something else?
             foreach (var key in Enum.GetValues<Key>())
             {
                 if (ToSDL(key, logger) == keycode)

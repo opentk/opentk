@@ -33,7 +33,6 @@ namespace OpenTK.Platform.Native.Windows
 
         private Key[] Keymap = new Key[256];
 
-        private static KeyModifier Modifiers = KeyModifier.None;
         private static bool[] KeyboardState = new bool[256];
 
         /// <inheritdoc/>

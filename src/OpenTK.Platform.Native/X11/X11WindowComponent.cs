@@ -678,17 +678,33 @@ namespace OpenTK.Platform.Native.X11
                                 XKeySym keysym = default;
                                 const int TEXT_LENGTH = 32;
                                 byte* str = stackalloc byte[TEXT_LENGTH];
+                                // FIXME: Use Xutf8LookupString?
                                 int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
 
                                 // FIXME: Convert keycode into scancode and then key.
                                 // XDisplayKeycodes -> XGetKeyboardMapping -> "normal" keysym translations..
 
-                                // FIXME: Backspace hack!
-                                if (keysym.Id == 65288)
-                                {
-                                    EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, Key.Backspace, Scancode.Backspace, false, KeyModifier.None));
-                                }
+                                Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
 
+                                KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
+
+                                bool changed = X11KeyboardComponent.KeyStateChanged(scancode, true);
+                                X11KeyboardComponent.SetModifiers(modifiers);
+                                
+                                bool isRepeat = false;
+                                if (X11KeyboardComponent.XkbDetectableRepeatEnabled)
+                                {
+                                    isRepeat = (changed == false);
+                                }
+                                else
+                                {
+                                    // FIXME: We could do what glfw does and look for a KeyUp event with
+                                    // basically the same timestamp.
+                                }
+                                
+                                EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, key, scancode, isRepeat, modifiers));
+                                
                                 bool isHighLatin1 = false;
                                 for (int i = 0; i < TEXT_LENGTH; i++)
                                 {
@@ -723,15 +739,18 @@ namespace OpenTK.Platform.Native.X11
 
                             unsafe {
                                 XKeySym keysym = default;
-                                const int TEXT_LENGTH = 32;
-                                byte* str = stackalloc byte[TEXT_LENGTH];
-                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+                                byte* str = stackalloc byte[0];
+                                int charsWritten = XLookupString(&keyPressed, str, 0, &keysym, null);
 
-                                // FIXME: Backspace hack!
-                                if (keysym.Id == 65288)
-                                {
-                                    EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, Key.Backspace, Scancode.Backspace, KeyModifier.None));
-                                }
+                                Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
+                                Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
+
+                                KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
+
+                                bool changed = X11KeyboardComponent.KeyStateChanged(scancode, false);
+                                X11KeyboardComponent.SetModifiers(modifiers);
+
+                                EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, key, scancode, modifiers));
                             }
 
                             break;

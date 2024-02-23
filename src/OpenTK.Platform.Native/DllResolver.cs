@@ -86,6 +86,18 @@ namespace OpenTK.Platform.Native
                 "libXcursor.so.1",
             },
 
+            ["Xkb"] = new string[]
+            {
+                "libX11.so",
+                "libX11.so.6",
+                "libX11.so.5",
+                "libX11.so.4",
+                "libX11.so.3",
+                "libX11.so.2",
+                "libX11.so.1",
+                "libX11.so.0",
+            },
+
             ["XI2"] = new string[]
             {
                 "libxcb-xinput.so.0",

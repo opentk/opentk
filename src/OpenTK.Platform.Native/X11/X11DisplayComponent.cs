@@ -642,14 +642,14 @@ namespace OpenTK.Platform.Native.X11
                     else
                     {
                         // FIXME: Name or index of the display...
-                        Logger?.LogWarning("Could not get refresh rate.");
+                        Logger?.LogWarning($"Could not get refresh rate. (crtc={xdisplay.Crtc.Id})");
                         refreshRate = 0;
                     }
                 }
                 else
                 {
                     // FIXME: Name or index of the display...
-                    Logger?.LogWarning("Could not find mode info for display.");
+                    Logger?.LogWarning($"Could not find mode info for display. (crtc={xdisplay.Crtc.Id})");
                     refreshRate = 0;
                 }
 
@@ -663,7 +663,10 @@ namespace OpenTK.Platform.Native.X11
         {
             // FIXME: We can read something like XrmGetResource "Xft.dpi" or use X11_XGetDefault(dpy, "Xft", "dpi")
             // But the question is how do we get the scale factor from just the DPI?
-            throw new NotImplementedException();
+            scaleX = 1;
+            scaleY = 1;
+            Logger?.LogWarning("Display scale is always 1 on X11 atm.");
+            //throw new NotImplementedException();
         }
     }
 }

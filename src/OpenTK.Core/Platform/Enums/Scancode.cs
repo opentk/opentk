@@ -38,6 +38,7 @@ namespace OpenTK.Core.Platform
         GraveAccent,
         Comma,
         Period,
+        // FIXME: Should this be ForwardSlash?
         QuestionMark,
         CapsLock,
         F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
@@ -62,6 +63,7 @@ namespace OpenTK.Core.Platform
         Keypad1, Keypad2, Keypad3, Keypad4, Keypad5, Keypad6, Keypad7, Keypad8, Keypad9, Keypad0,
         // FIXME: Rename this to KeypadDivide?
         KeypadForwardSlash,
+        // FIXME: Should this be called decimal instead?
         KeypadPeriod,
         // FIXME: Rename these to be the operation instead of the symbol?
         KeypadStar,

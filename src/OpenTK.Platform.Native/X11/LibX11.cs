@@ -431,6 +431,19 @@ namespace OpenTK.Platform.Native.X11
         internal static extern void XDisplayKeycodes(XDisplayPtr display, out int min_keycodes_return, out int max_keycodes_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static unsafe extern XKeySym* XGetKeyboardMapping(XDisplayPtr display, byte first_keycode, int keycode_count, out int keysyms_per_keycode_return);
+        internal static unsafe extern XKeySym* XGetKeyboardMapping(XDisplayPtr display, byte /* KeyCode */ first_keycode, int keycode_count, out int keysyms_per_keycode_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern XKeySym XKeycodeToKeysym(XDisplayPtr display, byte /* KeyCode */ keycode, int index);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl, EntryPoint = "XKeysymToString")]
+        private static unsafe extern byte* XKeysymToString_(XKeySym keysym);
+
+        internal static unsafe string? XKeysymToString(XKeySym keysym)
+        {
+            byte* ptr = XKeysymToString_(keysym);
+            string? str = Marshal.PtrToStringUTF8((nint)ptr);
+            return str;
+        }
     }
 }
