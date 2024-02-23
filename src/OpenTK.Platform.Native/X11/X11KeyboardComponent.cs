@@ -217,6 +217,11 @@ namespace OpenTK.Platform.Native.X11
                 case XK.XK_Alt_R: return Key.RightAlt;
                 case XK.XK_Super_R: return Key.RightGUI;
 
+                case XK.XK_Left: return Key.LeftArrow;
+                case XK.XK_Right: return Key.RightArrow;
+                case XK.XK_Up: return Key.UpArrow;
+                case XK.XK_Down: return Key.DownArrow;
+
                 // FIXME: This part would get crazy long if
                 // we had to do this for every keyboard layout...
                 case XK.XK_odiaeresis: return Key.OEM3;

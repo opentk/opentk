@@ -691,7 +691,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 bool changed = X11KeyboardComponent.KeyStateChanged(scancode, true);
                                 X11KeyboardComponent.SetModifiers(modifiers);
-                                
+
                                 bool isRepeat = false;
                                 if (X11KeyboardComponent.XkbDetectableRepeatEnabled)
                                 {
@@ -745,6 +745,11 @@ namespace OpenTK.Platform.Native.X11
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
                                 Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
 
+                                // FIXME: If we are releasing a modifier this will still report the
+                                // modifier as pressed. This isn't really great...
+                                // We could update the modifiers every Key or Mouse event
+                                // but that isn't really failsafe either...
+                                // - Noggin_bops 2024-02-23
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
                                 bool changed = X11KeyboardComponent.KeyStateChanged(scancode, false);
