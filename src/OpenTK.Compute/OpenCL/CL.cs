@@ -11,6 +11,29 @@ namespace OpenTK.Compute.OpenCL
             CLBase.RegisterOpenCLResolver();
         }
 
+        #region Version Macros
+
+        public const int CLVersionMajorBits = 10;
+        public const int CLVersionMinorBits = 10;
+        public const int CLVersionPatchBits = 12;
+
+        public const int CLVersionMajorMask = (1 << CLVersionMajorBits) - 1;
+        public const int CLVersionMinorMask = (1 << CLVersionMinorBits) - 1;
+        public const int CLVersionPatchMask = (1 << CLVersionPatchBits) - 1;
+
+        public static int CLVersionMajor(uint clVersion) => (int)(clVersion >> (CLVersionMinorBits + CLVersionPatchBits));
+
+        public static int CLVersionMinor(uint clVersion) => (int)((clVersion >> CLVersionPatchBits) & CLVersionMinorMask);
+
+        public static int CLVersionPatch(uint clVersion) => (int)(clVersion & CLVersionPatchMask);
+
+        public static uint CLMakeVersion(int major, int minor, int patch) => (uint)(((major &
+            CLVersionMajorMask) << (CLVersionMinorBits + CLVersionPatchBits)) |
+            ((minor & CLVersionMinorMask) << CLVersionPatchBits) |
+            (patch & CLVersionPatchMask));
+
+        #endregion
+
         private const string LibName = "opencl";
         private const CallingConvention CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl;
 

@@ -2244,7 +2244,419 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c>bool</c>
         /// </para>
         /// </summary>
-        IntegratedMemoryNVIDIA = 0x4006
+        IntegratedMemoryNVIDIA = 0x4006,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the offset in nano-seconds between an event timestamp and Epoch.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        ProfilingTimerOffsetAMD = 0x4036,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the topology for the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        TopologyAMD = 0x4037,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the SKU board name for the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        BoardNameAMD = 0x4038,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the global free memory in KBytes for the device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GlobalFreeMemoryAMD = 0x4039,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return number of SIMD (Single Instruction Multiple Data) units per compute unit that execute in parallel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        SIMDPerComputeUnitAMD = 0x4040,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the maximum number of work items from the same work group that can be executed by a SIMD in parellel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        SIMDWidthAMD = 0x4041,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of instructions that a SIMD can execute in parallel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        SIMDInstructionWidthAMD = 0x4042,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of workitems per wavefront.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        WavefrontWidth = 0x4043,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of global memory channels.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GlobalMemoryChannelsAMD = 0x4044,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of banks in each global memory channel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GlobalMemoryChannelBanksAMD = 0x4045,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the width in bytes of each of global memory bank.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GlobalMemoryChannelBankWidthAMD = 0x4046,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the local memory size in bytes per CU.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        LocalMemorySizePerComputeUnitAMD = 0x4047,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of banks of local memory.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        LocalMemoryBanksAMD = 0x4048,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return 1 if thread trace is supported, 0 otherwise.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        ThreadTraceSupportedAMD = 0x4049,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the core engine GFXIP major version.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GFXIPMajorAMD = 0x404A,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the core engine GFXIP minor version.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        GFXIPMinorAMD = 0x404B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the number of available async queues.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        AvailableAsyncQueuesAMD = 0x404C,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the preferred work group size.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        PreferredWorkGroupSizeAMD = 0x4030,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the extended maximum work group size.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        MaximumWorkGroupSizeAMD = 0x4031,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the preferred constant buffer size.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        PreferredConstantBufferSizeAMD = 0x4033,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This value provides a mechanism to query AMD specific device attributes.
+        /// </para>
+        /// <para>
+        ///     Return the device PCIe ID.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> (TODO)
+        /// </para>
+        /// </summary>
+        PCIeIdAMD = 0x4034,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/amd/cl_amd_device_attribute_query.txt">cl_amd_device_attribute_query</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the version of the C++ for OpenCL language supported by the device compiler.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint(cl_version)</c>
+        /// </para>
+        /// </summary>
+        CxxForOpenCLNumericVersionEXT = 0x4230
     }
 
     /// <summary>
