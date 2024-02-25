@@ -665,7 +665,7 @@ namespace OpenTK.Platform.Native.X11
                                 default: continue; // Skip this event.
                             }
 
-                            KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonRelease.state);
+                            KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonReleased.state);
 
                             X11MouseComponent.RegisterButtonState(button, false);
                             EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button, modifiers));

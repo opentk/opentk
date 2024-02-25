@@ -59,6 +59,18 @@ namespace OpenTK.Platform.Native.X11
 
             KeyModifier modifiers = KeyModifier.None;
 
+            // FIXME: Set the left and right
+            // versions of the modifiers.
+            // - Noggin_bops 2024-02-25
+
+            // FIXME: Using xmodmap one can redefine
+            // what the different mod1-mod3 makes
+            // are toggled by. SDL has some logic to
+            // figure out which mod is bound to 
+            // what modifier.
+            // Do we care about that?
+            // - Noggin_bops 2024-02-25
+
             if (mask.HasFlag(XStateMask.ShiftMask))
                 modifiers |= KeyModifier.Shift;
 
@@ -364,6 +376,7 @@ namespace OpenTK.Platform.Native.X11
 
         // FIXME: static...
         static readonly Scancode[] KeycodeToScancode = new Scancode[256];
+        static readonly int[] ScancodeToKeycode = new int[256];
 
         internal static Scancode ToScancode(uint keycode)
         {
@@ -376,7 +389,12 @@ namespace OpenTK.Platform.Native.X11
         internal unsafe void UpdateKeymap()
         {
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
-            XkbGetNames(X11.Display, XkbKeyNamesMask | XkbKeyAliasesMask, desc);
+            int status = XkbGetNames(X11.Display, XkbKeyNamesMask | XkbKeyAliasesMask, desc);
+            if (status != X11.Success)
+            {
+                Logger?.LogError($"XkbGetNames failed with status: {status}");
+                return;
+            }
 
             int min = desc->min_key_code;
             int max = desc->max_key_code;
@@ -388,14 +406,15 @@ namespace OpenTK.Platform.Native.X11
                 Console.WriteLine($"Scancode: {scancode}, Name: {name ?? "NULL"}, Otk Scancode: {value}");
 
                 KeycodeToScancode[scancode] = value;
+                ScancodeToKeycode[(int)KeycodeToScancode[scancode]] = scancode;
             }
         }
 
         /// <inheritdoc/>
-        public bool SupportsLayouts => throw new NotImplementedException();
+        public bool SupportsLayouts => false;
 
         /// <inheritdoc/>
-        public bool SupportsIme => throw new NotImplementedException();
+        public bool SupportsIme => false;
 
         /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
@@ -426,11 +445,12 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public Key GetKeyFromScancode(Scancode scancode)
         {
-            // FIXME:
-            // Maybe we can go from scancode -> keycode 
-            // and then get the KeySym from the keycode?
-            return Key.Unknown;
-            throw new NotImplementedException();
+            int keycode = ScancodeToKeycode[(int)scancode];
+            // FIXME: index?
+            // XkbKeycodeToKeysym?
+            XKeySym sym = XKeycodeToKeysym(X11.Display, (byte)keycode, 0);
+
+            return TranslateKeySym(stackalloc XKeySym[1] { sym });
         }
 
         /// <inheritdoc/>
@@ -471,11 +491,5 @@ namespace OpenTK.Platform.Native.X11
         {
             throw new NotImplementedException();
         }
-
-        private static readonly Scancode[] LinuxScancodes = new Scancode[/*256*/]
-        {
-            // 0x00 - 0x07
-
-        };
     }
 }

@@ -436,6 +436,9 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XKeySym XKeycodeToKeysym(XDisplayPtr display, byte /* KeyCode */ keycode, int index);
 
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern byte /* KeyCode */ XKeysymToKeycode(XDisplayPtr display, XKeySym keysym);
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl, EntryPoint = "XKeysymToString")]
         private static unsafe extern byte* XKeysymToString_(XKeySym keysym);
 
