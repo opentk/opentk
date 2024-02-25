@@ -109,6 +109,12 @@ namespace OpenTK.Platform.Native
                 "libXss.so.1",
             },
 
+            ["Gio"] = new string[]
+            {
+                "libgio-2.0.so",
+                "libgio-2.0.so.0",
+            },
+
             ["SDL2"] = new string[]
             {
                 "libSDL2-2.0.so",
