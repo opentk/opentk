@@ -421,13 +421,20 @@ namespace OpenTK.Core.Platform
         public MouseButton Button { get; private set; }
 
         /// <summary>
+        /// The active keyboard modifiers when the mouse button was pressed.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that was clicked on.</param>
         /// <param name="button">The mouse button that was pressed.</param>
-        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button) : base(window)
+        /// <param name="modifiers">The modifiers that where active when the mouse button was pressed.</param>
+        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
         {
             Button = button;
+            Modifiers = modifiers;
         }
     }
 
@@ -442,13 +449,20 @@ namespace OpenTK.Core.Platform
         public MouseButton Button { get; private set; }
 
         /// <summary>
+        /// The active keyboard modifiers when the mouse button was released.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that had input focus when the mouse is released.</param>
         /// <param name="button">The button that was released.</param>
-        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button) : base(window)
+        /// <param name="modifiers">The modifiers that where active when the mouse button was released.</param>
+        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
         {
             Button = button;
+            Modifiers = modifiers;
         }
     }
 

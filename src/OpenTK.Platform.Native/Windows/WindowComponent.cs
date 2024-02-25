@@ -541,8 +541,10 @@ namespace OpenTK.Platform.Native.Windows
                             // FIXME: Keep track of which buttons we are pressing?
                             Win32.SetCapture(hWnd);
 
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -600,8 +602,10 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
 
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);

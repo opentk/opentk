@@ -22,11 +22,7 @@ namespace OpenTK.Platform.Native.X11
 
         internal static bool XkbDetectableRepeatEnabled = false;
 
-        // FIXME: The initial modifier state is not getting set properly!
-        private static KeyModifier Modifiers = KeyModifier.None;
-
         private static bool[] KeyboardState = new bool[256];
-
 
         /// <inheritdoc/>
         public unsafe void Initialize(PalComponents which)
@@ -85,11 +81,6 @@ namespace OpenTK.Platform.Native.X11
                 modifiers |= KeyModifier.GUI;
 
             return modifiers;
-        }
-
-        internal static void SetModifiers(KeyModifier mods)
-        {
-            Modifiers = mods;
         }
 
         /// <returns>If the state of the key changed.</returns>
@@ -452,7 +443,15 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public KeyModifier GetKeyboardModifiers()
         {
-            return Modifiers;
+            if (XQueryPointer(X11.Display, XDefaultRootWindow(X11.Display), out _, out _, out _, out _, out _, out _, out uint state) != 0)
+            {
+                return ModifiersFromState(state);
+            }
+            else
+            {
+                Logger?.LogDebug($"Could not get key modifiers. XQueryPointer returned false.");
+                return KeyModifier.None;
+            }
         }
 
         /// <inheritdoc/>

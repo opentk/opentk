@@ -642,6 +642,9 @@ namespace OpenTK.Platform.Native.SDL
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);
 
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_Keymod SDL_GetModState();
+
     }
 #pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

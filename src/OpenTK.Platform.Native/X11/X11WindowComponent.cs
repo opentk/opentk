@@ -636,8 +636,10 @@ namespace OpenTK.Platform.Native.X11
                                     default: continue; // Skip this event.
                                 }
 
+                                KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonPressed.state);
+
                                 X11MouseComponent.RegisterButtonState(button, true);
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button));
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button, modifiers));
                             }
 
                             break;
@@ -663,16 +665,16 @@ namespace OpenTK.Platform.Native.X11
                                 default: continue; // Skip this event.
                             }
 
+                            KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonRelease.state);
+
                             X11MouseComponent.RegisterButtonState(button, false);
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button, modifiers));
 
                             break;
                         }
                     case XEventType.KeyPress:
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
-
-                            // FIXME: Handle repeats
 
                             unsafe {
                                 XKeySym keysym = default;
@@ -681,16 +683,12 @@ namespace OpenTK.Platform.Native.X11
                                 // FIXME: Use Xutf8LookupString?
                                 int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
 
-                                // FIXME: Convert keycode into scancode and then key.
-                                // XDisplayKeycodes -> XGetKeyboardMapping -> "normal" keysym translations..
-
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
                                 Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
                                 bool changed = X11KeyboardComponent.KeyStateChanged(scancode, true);
-                                X11KeyboardComponent.SetModifiers(modifiers);
 
                                 bool isRepeat = false;
                                 if (X11KeyboardComponent.XkbDetectableRepeatEnabled)
@@ -745,15 +743,9 @@ namespace OpenTK.Platform.Native.X11
                                 Scancode scancode = X11KeyboardComponent.ToScancode(keyPressed.keycode);
                                 Key key = X11KeyboardComponent.TranslateKeySym(stackalloc XKeySym[1] {keysym});
 
-                                // FIXME: If we are releasing a modifier this will still report the
-                                // modifier as pressed. This isn't really great...
-                                // We could update the modifiers every Key or Mouse event
-                                // but that isn't really failsafe either...
-                                // - Noggin_bops 2024-02-23
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(keyPressed.state);
 
                                 bool changed = X11KeyboardComponent.KeyStateChanged(scancode, false);
-                                X11KeyboardComponent.SetModifiers(modifiers);
 
                                 EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, key, scancode, modifiers));
                             }
@@ -802,6 +794,10 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.FocusIn:
                         {
                             XFocusChangeEvent focusIn = ea.FocusIn;
+
+                            // FIXME: Update current keyboard state as it might have
+                            // changed since we last had focus..
+                            // - Noggin_bops 2024-02-25
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
                             // I copied what SDLLib did:

@@ -263,13 +263,15 @@ namespace OpenTK.Platform.Native.SDL
                                 _ => throw new PalException(this, $"Got unknown mouse button: {buttonEvent.which}"),
                             };
 
+                            KeyModifier modifiers = SDLKeyboardComponent.FromSDL(SDL_GetModState());
+
                             if (buttonEvent.type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button, modifiers));
                             }
                             else
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button, modifiers));
                             }
 
                             break;
@@ -393,8 +395,7 @@ namespace OpenTK.Platform.Native.SDL
                             Key key = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.sym, Logger);
                             Scancode scancode = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.scancode, Logger);
 
-                            // FIXME: Get modifier state!
-                            KeyModifier modifiers = KeyModifier.None; // SDLKeyboardComponent.GetKeyboardModifiers?
+                            KeyModifier modifiers = SDLKeyboardComponent.FromSDL(SDL_GetModState());
 
                             bool repeat = keyboardEvent.repeat > 0;
 

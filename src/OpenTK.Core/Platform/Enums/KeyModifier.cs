@@ -10,6 +10,7 @@ namespace OpenTK.Core.Platform
     /// Flags indicating keyboard modifiers.
     /// </summary>
     [Flags]
+    // FIXME: Should we add a AltGr modifier as a separate thing?
     public enum KeyModifier
     {
         /// <summary>

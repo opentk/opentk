@@ -97,8 +97,7 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public unsafe KeyModifier GetKeyboardModifiers()
         {
-            // FIXME: SDL_GetModState
-            return KeyModifier.None;
+            return FromSDL(SDL_GetModState());
         }
 
         /// <inheritdoc/>
@@ -379,6 +378,48 @@ namespace OpenTK.Platform.Native.SDL
             logger?.LogWarning($"Could not find Scancode for SDL scancode {scancode}.");
 
             return Scancode.Unknown;
+        }
+    
+        internal static KeyModifier FromSDL(SDL_Keymod mods)
+        {
+            KeyModifier modifiers = KeyModifier.None;
+            if (mods.HasFlag(SDL_Keymod.KMOD_LSHIFT))
+                modifiers |= KeyModifier.LeftShift;
+            if (mods.HasFlag(SDL_Keymod.KMOD_RSHIFT))
+                modifiers |= KeyModifier.RightShift;
+
+            if (mods.HasFlag(SDL_Keymod.KMOD_LCTRL))
+                modifiers |= KeyModifier.LeftControl;
+            if (mods.HasFlag(SDL_Keymod.KMOD_RCTRL))
+                modifiers |= KeyModifier.RightControl;
+
+            if (mods.HasFlag(SDL_Keymod.KMOD_LALT))
+                modifiers |= KeyModifier.LeftAlt;
+            if (mods.HasFlag(SDL_Keymod.KMOD_RALT))
+                modifiers |= KeyModifier.RightAlt;
+
+            if (mods.HasFlag(SDL_Keymod.KMOD_LGUI))
+                modifiers |= KeyModifier.LeftGUI;
+            if (mods.HasFlag(SDL_Keymod.KMOD_RGUI))
+                modifiers |= KeyModifier.RightGUI;
+
+            if (mods.HasFlag(SDL_Keymod.KMOD_NUM))
+                modifiers |= KeyModifier.NumLock;
+            if (mods.HasFlag(SDL_Keymod.KMOD_CAPS))
+                modifiers |= KeyModifier.CapsLock;
+            if (mods.HasFlag(SDL_Keymod.KMOD_SCROLL))
+                modifiers |= KeyModifier.ScrollLock;
+
+            if (modifiers.HasFlag(KeyModifier.LeftShift) || modifiers.HasFlag(KeyModifier.RightShift))
+                modifiers |= KeyModifier.Shift;
+            if (modifiers.HasFlag(KeyModifier.LeftControl) || modifiers.HasFlag(KeyModifier.RightControl))
+                modifiers |= KeyModifier.Control;
+            if (modifiers.HasFlag(KeyModifier.LeftAlt) || modifiers.HasFlag(KeyModifier.RightAlt))
+                modifiers |= KeyModifier.Alt;
+            if (modifiers.HasFlag(KeyModifier.LeftGUI) || modifiers.HasFlag(KeyModifier.RightGUI))
+                modifiers |= KeyModifier.GUI;
+
+            return modifiers;
         }
     }
 }

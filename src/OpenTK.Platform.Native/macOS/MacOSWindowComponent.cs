@@ -840,7 +840,8 @@ namespace OpenTK.Platform.Native.macOS
                                 default: throw new PalException(this, $"Unknown mouse button: {button}");
                             }
 
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton));
+                            // FIXME: Get modifiers
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, KeyModifier.None));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
@@ -871,7 +872,8 @@ namespace OpenTK.Platform.Native.macOS
                                 default: throw new PalException(this, $"Unknown mouse button: {button}");
                             }
 
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton));
+                            // FIXME: Get modifiers
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, KeyModifier.None));
 
                             // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
 
