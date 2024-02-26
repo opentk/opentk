@@ -69,8 +69,34 @@ namespace OpenTK.Backends.Tests
                 Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), refreshRate, (scaleX, scaleY));
                 Displays.Add(disp);
 
-                BoundingBox.Inflate(disp.Bounds.Min);
-                BoundingBox.Inflate(disp.Bounds.Max);
+                BoundingBox.Extend(disp.Bounds.Min);
+                BoundingBox.Extend(disp.Bounds.Max);
+
+                Program.DisplayComponent.Close(handle);
+            }
+        }
+
+        public void HandleConnectionChange(DisplayConnectionChangedEventArgs connectionChange)
+        {
+            // FIXME: For now we just recreate the entire list of displays.
+            Displays.Clear();
+            int displays = Program.DisplayComponent!.GetDisplayCount();
+            for (int i = 0; i < displays; i++)
+            {
+                var handle = Program.DisplayComponent.Open(i);
+
+                string name = Program.DisplayComponent.GetName(handle);
+                bool primary = Program.DisplayComponent.IsPrimary(handle);
+                Program.DisplayComponent.GetVirtualPosition(handle, out int x, out int y);
+                Program.DisplayComponent.GetResolution(handle, out int width, out int height);
+                Program.DisplayComponent.GetRefreshRate(handle, out float refreshRate);
+                Program.DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+
+                Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), refreshRate, (scaleX, scaleY));
+                Displays.Add(disp);
+
+                BoundingBox.Extend(disp.Bounds.Min);
+                BoundingBox.Extend(disp.Bounds.Max);
 
                 Program.DisplayComponent.Close(handle);
             }

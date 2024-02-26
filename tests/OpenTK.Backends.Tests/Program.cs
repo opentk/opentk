@@ -638,6 +638,10 @@ namespace OpenTK.Backends.Tests
 
                 ImGuiController.RecreateFontDeviceTexture();
             }
+            else if (args is DisplayConnectionChangedEventArgs displayChanged)
+            {
+                ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.HandleConnectionChange(displayChanged);
+            }
         }
 
         internal static IPalComponent? GetComponent(PalComponents component)

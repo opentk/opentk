@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Native.Windows
             return monitorHandle;
         }
 
-        internal static void UpdateMonitors()
+        internal static void UpdateMonitors(ILogger? logger)
         {
             List<HMonitor> newDisplays = new List<HMonitor>();
 
@@ -205,7 +205,7 @@ namespace OpenTK.Platform.Native.Windows
                 _displays.Remove(removed);
 
                 EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
-                Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+                logger?.LogDebug($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
 
             foreach (HMonitor connected in newDisplays)
@@ -213,7 +213,7 @@ namespace OpenTK.Platform.Native.Windows
                 _displays.Add(connected);
 
                 EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
-                Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+                logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
             }
 
             HMonitor? primary = null;
@@ -235,12 +235,13 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (primary != oldPrimary)
                 {
-                    Console.WriteLine("New primary monitor!");
+                    
+                    logger?.LogDebug("New primary monitor!");
                 }
             }
             else
             {
-                Console.WriteLine("Could not find primary monitor!");
+                logger?.LogWarning("Could not find primary monitor!");
             }
         }
 
@@ -290,7 +291,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            UpdateMonitors();
+            UpdateMonitors(Logger);
         }
 
         /// <inheritdoc/>

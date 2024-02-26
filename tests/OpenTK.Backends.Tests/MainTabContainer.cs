@@ -98,6 +98,18 @@ namespace OpenTK.Backends.Tests
             ImGui.End();
         }
 
+        public View? this[Type type]
+        {
+            get
+            {
+                foreach (View view in _views)
+                {
+                    if (view.GetType() == type)
+                        return view;
+                }
+                return null;
+            }
+        }
 
         #region IEnumerable<View>
             /// <inheritdoc/>

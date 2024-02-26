@@ -362,6 +362,10 @@ namespace OpenTK.Platform.Native.X11
                                 EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
                             }
                         }
+                        else if (ea.Type >= (XEventType)(X11.XRandREventBase) && ea.Type <= (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
+                        {
+                            X11DisplayComponent.HandleXRREvent(ea, Logger);
+                        }
                         else
                         {
                             Logger?.LogDebug($"Received unhandled event {ea.Type} for root window.");
@@ -1031,13 +1035,7 @@ namespace OpenTK.Platform.Native.X11
                             break;
                         }
                     default:
-                    {
-                        if (ea.Type == (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
-                        {
-                            X11DisplayComponent.HandleXRREvent(ea);
-                        }
                         break;
-                    }
                 }
             }
 

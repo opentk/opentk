@@ -839,7 +839,7 @@ namespace OpenTK.Platform.Native.Windows
                         Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
-                        DisplayComponent.UpdateMonitors();
+                        DisplayComponent.UpdateMonitors(Logger);
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:

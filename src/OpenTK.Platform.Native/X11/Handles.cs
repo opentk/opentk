@@ -114,10 +114,11 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         public RRMode OldMode { get; set; } = RRMode.None;
 
-        public XDisplayHandle(RROutput output, RRCrtc crtc)
+        public XDisplayHandle(RROutput output, RRCrtc crtc, string name)
         {
             Output = output;
             Crtc = crtc;
+            Name = name;
         }
     }
 

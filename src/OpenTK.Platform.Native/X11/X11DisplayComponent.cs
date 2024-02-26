@@ -33,7 +33,8 @@ namespace OpenTK.Platform.Native.X11
         private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
 
         // FIXME: Do we really need this?
-        internal struct DisplayRect{
+        internal struct DisplayRect
+        {
             public XDisplayHandle Handle;
             public Box2i Bounds;
         }
@@ -224,6 +225,58 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        private static unsafe string GetOutputName(RROutput output, XRROutputInfo* outputInfo, ILogger? logger)
+        {
+            string name = Marshal.PtrToStringUTF8((IntPtr)outputInfo->name)!;
+
+            Span<XAtom> atoms = XRRListOutputProperties(X11.Display, output, out int nprops);
+
+            string? displayName = null;
+
+            List<string> list = new List<string>();
+            foreach (var atom in atoms)
+            {
+                list.Add(XGetAtomName(X11.Display, atom));
+
+                if (atom == X11.Atoms[KnownAtoms.EDID])
+                {
+                    int status = XRRGetOutputProperty(
+                        X11.Display, output,
+                        X11.Atoms[KnownAtoms.EDID],
+                        0, ~0,
+                        false, false,
+                        new XAtom(0),
+                        out XAtom actualType,
+                        out int actualFormat,
+                        out long nitems,
+                        out long bytesAfter,
+                        out IntPtr prop);
+
+                    if (status == X11.Success)
+                    {
+                        byte* edid = (byte*)prop;
+
+                        EDID.EDIDInfo info = EDID.Parse(edid, logger);
+
+                        displayName = info.DisplayName;
+
+                        XFree(prop);
+                    }
+                }
+            }
+
+            XFree(atoms);
+            XRRFreeOutputInfo(outputInfo);
+        
+            return displayName ?? name;
+        }
+
+        // FIXME: In the current implementation we rely on function like
+        // XRRGetScreenResources to always return a valid pointer.
+        // This isn't really robust as this might fail in some rare cases.
+        // We should fix this.
+        // - Noggin_bops 2024-02-26
+
         /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
@@ -243,18 +296,13 @@ namespace OpenTK.Platform.Native.X11
                         return;
                     }
 
-                    int screenCount = XScreenCount(X11.Display);
+                    unsafe {
+                        XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
 
-                    // Loop through all displays
-                    for (int screen = 0; screen < screenCount; screen++)
-                    {
-                        unsafe {
-                            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                        RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
 
-                            RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
-
-                            if (resources == null) continue;
-
+                        if (resources != null)
+                        {
                             for (int i = 0; i < resources->NumberOfOutputs; i++)
                             {
                                 RROutput output = resources->Outputs[i];
@@ -266,45 +314,7 @@ namespace OpenTK.Platform.Native.X11
                                     continue;
                                 }
 
-                                string name = Marshal.PtrToStringUTF8((IntPtr)outputInfo->name)!;
-
-                                Span<XAtom> atoms = XRRListOutputProperties(X11.Display, output, out int nprops);
-
-                                string? displayName = null;
-
-                                List<string> list = new List<string>();
-                                foreach (var atom in atoms)
-                                {
-                                    list.Add(XGetAtomName(X11.Display, atom));
-
-                                    if (atom == X11.Atoms[KnownAtoms.EDID])
-                                    {
-                                        int status = XRRGetOutputProperty(
-                                            X11.Display, output,
-                                            X11.Atoms[KnownAtoms.EDID],
-                                            0, ~0,
-                                            false, false,
-                                            new XAtom(0),
-                                            out XAtom actualType,
-                                            out int actualFormat,
-                                            out long nitems,
-                                            out long bytesAfter,
-                                            out IntPtr prop);
-
-                                        if (status == X11.Success)
-                                        {
-                                            byte* edid = (byte*)prop;
-
-                                            EDID.EDIDInfo info = EDID.Parse(edid, Logger);
-
-                                            displayName = info.DisplayName;
-
-                                            XFree(prop);
-                                        }
-                                    }
-                                }
-
-                                XFree(atoms);
+                                string name = GetOutputName(output, outputInfo, Logger);
 
                                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, outputInfo->crtc);
 
@@ -315,16 +325,13 @@ namespace OpenTK.Platform.Native.X11
 
                                 bool isPrimary = output == primaryOutput;
 
-                                Console.WriteLine($"Name: {name}");
-                                Console.WriteLine($"Name: {displayName}");
-                                if (isPrimary) Console.WriteLine($"Primary display");
-                                Console.WriteLine($"Position: ({crtcInfo->x}, {crtcInfo->y})");
-                                Console.WriteLine($"Resolution: ({crtcInfo->width}, {crtcInfo->height})");
-                                Console.WriteLine($"Rotation: {crtcInfo->rotation}");
-                                Console.WriteLine($"Atoms: {string.Join(", ", list)}");
+                                Logger?.LogDebug($"Name: {name}");
+                                if (isPrimary) Logger?.LogDebug($"Primary display");
+                                Logger?.LogDebug($"Position: ({crtcInfo->x}, {crtcInfo->y})");
+                                Logger?.LogDebug($"Resolution: ({crtcInfo->width}, {crtcInfo->height})");
+                                Logger?.LogDebug($"Rotation: {crtcInfo->rotation}");
 
-                                XDisplayHandle handle = new XDisplayHandle(output, outputInfo->crtc);
-                                handle.Name = displayName ?? name;
+                                XDisplayHandle handle = new XDisplayHandle(output, outputInfo->crtc, name);
 
                                 // FIXME: More proper order of displays?
                                 if (isPrimary)
@@ -337,10 +344,12 @@ namespace OpenTK.Platform.Native.X11
                             }
 
                             XRRFreeScreenResources(resources);
-
-                            // Subscribe to events relating to connecting and disconnecting monitors.
-                            XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.OutputChangeNotifyMask);
                         }
+
+                        Debug.Assert(_displays.Count > 0);
+
+                        // Subscribe to events relating to connecting and disconnecting monitors.
+                        XRRSelectInput(X11.Display, X11.DefaultRootWindow,  RRSelectMask.OutputChangeNotifyMask);
                     }
                 
                     HasRANDR = true;
@@ -356,7 +365,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        internal static void HandleXRREvent(XEvent @event)
+        internal static void HandleXRREvent(XEvent @event, ILogger? logger)
         {
             switch ((RREventType)(@event.Type - X11.XRandREventBase))
             {
@@ -364,8 +373,78 @@ namespace OpenTK.Platform.Native.X11
                     Console.WriteLine("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
-                    Console.WriteLine($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                {
+                    logger?.LogDebug($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                    if (@event.RRNotify.SubType == RRNotifySubType.OutputChange)
+                    {
+                        XRROutputChangeNotifyEvent outputChanged = @event.RROutputChangeNotify;
+
+                        // Find the XDisplayHandle that this event relates to...
+                        XDisplayHandle? handle = null;
+                        foreach (XDisplayHandle display in _displays)
+                        {
+                            if (display.Output == outputChanged.Output)
+                            {
+                                handle = display;
+                                break;
+                            }
+                        }
+
+                        if (outputChanged.Connection == Connection.Connected)
+                        {
+                            if (handle == null)
+                            {
+                                unsafe
+                                {
+                                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                                    RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
+
+                                    if (resources != null)
+                                    {
+                                        XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, outputChanged.Output);
+
+                                        if (outputInfo->crtc == RRCrtc.None || outputInfo->connection == Connection.Disconnected)
+                                        {
+                                            XRRFreeOutputInfo(outputInfo);
+                                            XRRFreeScreenResources(resources);
+                                            return;
+                                        }
+
+                                        string name = GetOutputName(outputChanged.Output, outputInfo, logger);
+
+                                        handle = new XDisplayHandle(outputChanged.Output, outputInfo->crtc, name);
+
+                                        if (handle.Output == primaryOutput)
+                                            _displays.Insert(0, handle);
+                                        else
+                                            _displays.Add(handle);
+
+                                        EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
+                                        logger?.LogDebug($"Connected display '{name}'!");
+
+                                        XRRFreeScreenResources(resources);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                logger?.LogDebug("Connected already connected display!");
+                                // This display already existed.
+                                // FIXME: Update rotation?
+                            }
+                        }
+                        else if (outputChanged.Connection == Connection.Disconnected)
+                        {
+                            if (handle != null)
+                            {
+                                logger?.LogDebug($"Disconnected display '{handle.Name}'!");
+                                _displays.Remove(handle);
+                                EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, true));
+                            }
+                        }
+                    }
                     break;
+                }
                 default:
                     break;
             }
@@ -423,22 +502,31 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
-                if (info != null)
+                if (crtcInfo != null)
                 {
-                    // FIXME: Handle screen rotation!
-                    mode.Width = (int)crtcInfo->width;
-                    mode.Height = (int)crtcInfo->height;
-                    mode.RefreshRate = CalculateRefreshRate(this, info);
-                    mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                    XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
+                    if (info != null)
+                    {
+                        // FIXME: Handle screen rotation!
+                        mode.Width = (int)crtcInfo->width;
+                        mode.Height = (int)crtcInfo->height;
+                        mode.RefreshRate = CalculateRefreshRate(this, info);
+                        mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                    }
+                    else
+                    {
+                        mode = default;
+                        Logger?.LogError("Could not get the current video mode.");
+                    }
+
+                    XRRFreeCrtcInfo(crtcInfo);
                 }
                 else
                 {
                     mode = default;
-                    Logger?.LogError("Could not get the current video mode.");
+                    Logger?.LogError($"GetCrtcInfo returned null, could not get video mode for {xdisplay.Name} (crtc={xdisplay.Crtc})");
                 }
 
-                XRRFreeCrtcInfo(crtcInfo);
                 XRRFreeScreenResources(resources);
             }
         }
@@ -450,22 +538,31 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
 
-                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
-                if (info != null)
+                if (crtcInfo != null)
                 {
-                    // FIXME: Handle screen rotation!
-                    mode.Width = (int)crtcInfo->width;
-                    mode.Height = (int)crtcInfo->height;
-                    mode.RefreshRate = CalculateRefreshRate(comp, info);
-                    mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                    XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
+                    if (info != null)
+                    {
+                        // FIXME: Handle screen rotation!
+                        mode.Width = (int)crtcInfo->width;
+                        mode.Height = (int)crtcInfo->height;
+                        mode.RefreshRate = CalculateRefreshRate(comp, info);
+                        mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                    }
+                    else
+                    {
+                        mode = default;
+                        comp.Logger?.LogError($"Could not get the current video mode for {handle.Name}.");
+                    }
+
+                    XRRFreeCrtcInfo(crtcInfo);
                 }
                 else
                 {
                     mode = default;
-                    comp.Logger?.LogError("Could not get the current video mode.");
+                    comp.Logger?.LogError($"GetCrtcInfo returned null, could not get video mode for {handle.Name} (crtc={handle.Crtc})");
                 }
 
-                XRRFreeCrtcInfo(crtcInfo);
                 XRRFreeScreenResources(resources);
             }
         }
@@ -479,6 +576,10 @@ namespace OpenTK.Platform.Native.X11
 
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, xdisplay.Output);
+                if (outputInfo == null)
+                {
+                    return Array.Empty<VideoMode>();
+                }
 
                 VideoMode[] modes = new VideoMode[outputInfo->nmode];
                 for (int i = 0; i < outputInfo->nmode; i++)
@@ -510,10 +611,21 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                x = crtcInfo->x;
-                y = crtcInfo->y;
+                if (crtcInfo != null)
+                {
+                    x = crtcInfo->x;
+                    y = crtcInfo->y;
 
-                XRRFreeCrtcInfo(crtcInfo);
+                    XRRFreeCrtcInfo(crtcInfo);
+                }
+                else
+                {
+                    x = 0;
+                    y = 0;
+                    Logger?.LogError($"GetCrtcInfo returned null, could not get virtual position for {xdisplay.Name} (crtc={xdisplay.Crtc})");
+
+                }
+
                 XRRFreeScreenResources(resources);
             }
         }
@@ -529,13 +641,22 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                // FIXME: Handle screen rotation!
+                if (crtcInfo != null)
+                {
+                    // FIXME: Handle screen rotation!
+                    // FIXME: Should we use crtc size or output size?
+                    width = (int)crtcInfo->width;
+                    height = (int)crtcInfo->height;
 
-                // FIXME: Should we use crtc size or output size?
-                width = (int)crtcInfo->width;
-                height = (int)crtcInfo->height;
+                    XRRFreeCrtcInfo(crtcInfo);
+                }
+                else
+                {
+                    width = 0;
+                    height = 0;
+                    Logger?.LogError($"GetCrtcInfo returned null, could not get resolution for {xdisplay.Name} (crtc={xdisplay.Crtc})");
+                }
 
-                XRRFreeCrtcInfo(crtcInfo);
                 XRRFreeScreenResources(resources);
             }
         }
@@ -550,12 +671,23 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                // FIXME: Get mode info to handle rotated displays!
+                if (crtcInfo != null)
+                {
+                    // FIXME: Get mode info to handle rotated displays!
 
-                // FIXME: Should we use crtc size or output size?
-                area = new Box2i(crtcInfo->x, crtcInfo->y, crtcInfo->x + (int)crtcInfo->width, crtcInfo->y + (int)crtcInfo->height);
+                    // FIXME: Should we use crtc size or output size?
+                    area = new Box2i(crtcInfo->x, crtcInfo->y, crtcInfo->x + (int)crtcInfo->width, crtcInfo->y + (int)crtcInfo->height);
 
-                XRRFreeCrtcInfo(crtcInfo);
+                    XRRFreeCrtcInfo(crtcInfo);
+                }
+                else
+                {
+                    area = default;
+                    Logger?.LogError($"GetCrtcInfo returned null, could not get work area for {xdisplay.Name} (crtc={xdisplay.Crtc})");
+                    XRRFreeScreenResources(resources);
+                    return;
+                }
+
                 XRRFreeScreenResources(resources);
             }
 
@@ -632,28 +764,37 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
-                if (info != null)
+                if (crtcInfo != null)
                 {
-                    if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
+                    XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
+                    if (info != null)
                     {
-                        refreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+                        if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
+                        {
+                            refreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+                        }
+                        else
+                        {
+                            // FIXME: Name or index of the display...
+                            Logger?.LogWarning($"Could not get refresh rate. (crtc={xdisplay.Crtc.Id})");
+                            refreshRate = 0;
+                        }
                     }
                     else
                     {
                         // FIXME: Name or index of the display...
-                        Logger?.LogWarning($"Could not get refresh rate. (crtc={xdisplay.Crtc.Id})");
+                        Logger?.LogWarning($"Could not find mode info for display. (crtc={xdisplay.Crtc.Id})");
                         refreshRate = 0;
                     }
+
+                    XRRFreeCrtcInfo(crtcInfo);
                 }
                 else
                 {
-                    // FIXME: Name or index of the display...
-                    Logger?.LogWarning($"Could not find mode info for display. (crtc={xdisplay.Crtc.Id})");
                     refreshRate = 0;
+                    Logger?.LogError($"GetCrtcInfo returned null, could not get refresh rate for {xdisplay.Name} (crtc={xdisplay.Crtc})");
                 }
 
-                XRRFreeCrtcInfo(crtcInfo);
                 XRRFreeScreenResources(resources);
             }
         }
