@@ -68,8 +68,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static readonly Matrix4 Identity =
-            new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
+        public static readonly Matrix4 Identity = new Matrix4(Vector4.UnitX, Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW);
 
         /// <summary>
         /// The zero matrix.

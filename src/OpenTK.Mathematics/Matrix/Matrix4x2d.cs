@@ -57,13 +57,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The zero matrix.
         /// </summary>
-        public static readonly Matrix4x2d Zero = new Matrix4x2d
-        (
-            Vector2d.Zero,
-            Vector2d.Zero,
-            Vector2d.Zero,
-            Vector2d.Zero
-        );
+        public static readonly Matrix4x2d Zero = new Matrix4x2d(Vector2d.Zero, Vector2d.Zero, Vector2d.Zero, Vector2d.Zero);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4x2d"/> struct.

@@ -58,12 +58,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
+        public static readonly Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
 
         /// <summary>
         /// The zero matrix.
         /// </summary>
-        public static Matrix4d Zero = new Matrix4d(Vector4d.Zero, Vector4d.Zero, Vector4d.Zero, Vector4d.Zero);
+        public static readonly Matrix4d Zero = new Matrix4d(Vector4d.Zero, Vector4d.Zero, Vector4d.Zero, Vector4d.Zero);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
