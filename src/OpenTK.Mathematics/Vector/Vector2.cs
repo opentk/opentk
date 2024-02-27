@@ -77,7 +77,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public float this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -114,7 +114,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((X * X) + (Y * Y));
+        public readonly float Length => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -125,7 +125,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+        public readonly float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -136,23 +136,23 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public float LengthSquared => (X * X) + (Y * Y);
+        public readonly float LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2 PerpendicularRight => new Vector2(Y, -X);
+        public readonly Vector2 PerpendicularRight => new Vector2(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2 PerpendicularLeft => new Vector2(-Y, X);
+        public readonly Vector2 PerpendicularLeft => new Vector2(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2 scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector2 Normalized()
+        public readonly Vector2 Normalized()
         {
             var v = this;
             v.Normalize();
@@ -830,7 +830,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Yx
         {
-            get => new Vector2(Y, X);
+            readonly get => new Vector2(Y, X);
             set
             {
                 Y = value.X;
@@ -1096,7 +1096,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{2} {1})",
@@ -1112,14 +1112,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector2 other)
+        public readonly bool Equals(Vector2 other)
         {
             return X == other.X &&
                    Y == other.Y;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -1130,7 +1130,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out float x, out float y)
+        public readonly void Deconstruct(out float x, out float y)
         {
             x = X;
             y = Y;

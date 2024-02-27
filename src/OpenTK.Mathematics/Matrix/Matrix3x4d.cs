@@ -98,29 +98,65 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the first column of this matrix.
         /// </summary>
-        public Vector3d Column0 => new Vector3d(Row0.X, Row1.X, Row2.X);
+        public Vector3d Column0
+        {
+            readonly get => new Vector3d(Row0.X, Row1.X, Row2.X);
+            set
+            {
+                Row0.X = value.X;
+                Row1.X = value.Y;
+                Row2.X = value.Z;
+            }
+        }
 
         /// <summary>
         /// Gets the second column of this matrix.
         /// </summary>
-        public Vector3d Column1 => new Vector3d(Row0.Y, Row1.Y, Row2.Y);
+        public Vector3d Column1
+        {
+            readonly get => new Vector3d(Row0.Y, Row1.Y, Row2.Y);
+            set
+            {
+                Row0.Y = value.X;
+                Row1.Y = value.Y;
+                Row2.Y = value.Z;
+            }
+        }
 
         /// <summary>
         /// Gets the third column of this matrix.
         /// </summary>
-        public Vector3d Column2 => new Vector3d(Row0.Z, Row1.Z, Row2.Z);
+        public Vector3d Column2
+        {
+            readonly get => new Vector3d(Row0.Z, Row1.Z, Row2.Z);
+            set
+            {
+                Row0.Z = value.X;
+                Row1.Z = value.Y;
+                Row2.Z = value.Z;
+            }
+        }
 
         /// <summary>
         /// Gets the fourth column of this matrix.
         /// </summary>
-        public Vector3d Column3 => new Vector3d(Row0.W, Row1.W, Row2.W);
+        public Vector3d Column3
+        {
+            readonly get => new Vector3d(Row0.W, Row1.W, Row2.W);
+            set
+            {
+                Row0.W = value.X;
+                Row1.W = value.Y;
+                Row2.W = value.Z;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value at row 1, column 1 of this instance.
         /// </summary>
         public double M11
         {
-            get => Row0.X;
+            readonly get => Row0.X;
             set => Row0.X = value;
         }
 
@@ -129,7 +165,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M12
         {
-            get => Row0.Y;
+            readonly get => Row0.Y;
             set => Row0.Y = value;
         }
 
@@ -138,7 +174,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M13
         {
-            get => Row0.Z;
+            readonly get => Row0.Z;
             set => Row0.Z = value;
         }
 
@@ -147,7 +183,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M14
         {
-            get => Row0.W;
+            readonly get => Row0.W;
             set => Row0.W = value;
         }
 
@@ -156,7 +192,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M21
         {
-            get => Row1.X;
+            readonly get => Row1.X;
             set => Row1.X = value;
         }
 
@@ -165,7 +201,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M22
         {
-            get => Row1.Y;
+            readonly get => Row1.Y;
             set => Row1.Y = value;
         }
 
@@ -174,7 +210,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M23
         {
-            get => Row1.Z;
+            readonly get => Row1.Z;
             set => Row1.Z = value;
         }
 
@@ -183,7 +219,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M24
         {
-            get => Row1.W;
+            readonly get => Row1.W;
             set => Row1.W = value;
         }
 
@@ -192,7 +228,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M31
         {
-            get => Row2.X;
+            readonly get => Row2.X;
             set => Row2.X = value;
         }
 
@@ -201,7 +237,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M32
         {
-            get => Row2.Y;
+            readonly get => Row2.Y;
             set => Row2.Y = value;
         }
 
@@ -210,7 +246,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M33
         {
-            get => Row2.Z;
+            readonly get => Row2.Z;
             set => Row2.Z = value;
         }
 
@@ -219,7 +255,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M34
         {
-            get => Row2.W;
+            readonly get => Row2.W;
             set => Row2.W = value;
         }
 
@@ -228,7 +264,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3d Diagonal
         {
-            get => new Vector3d(Row0.X, Row1.Y, Row2.Z);
+            readonly get => new Vector3d(Row0.X, Row1.Y, Row2.Z);
             set
             {
                 Row0.X = value.X;
@@ -240,7 +276,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
-        public double Trace => Row0.X + Row1.Y + Row2.Z;
+        public readonly double Trace => Row0.X + Row1.Y + Row2.Z;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -250,7 +286,7 @@ namespace OpenTK.Mathematics
         /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
-            get
+            readonly get
             {
                 if (rowIndex == 0)
                 {
@@ -299,6 +335,51 @@ namespace OpenTK.Mathematics
         public void Invert()
         {
             this = Invert(this);
+        }
+
+        /// <summary>
+        /// Returns an inverted copy of this instance.
+        /// </summary>
+        /// <returns>The inverted copy.</returns>
+        public readonly Matrix3x4d Inverted()
+        {
+            Matrix3x4d m = this;
+            m.Invert();
+            return m;
+        }
+
+        /// <summary>
+        /// Returns a transposed copy of this instance.
+        /// </summary>
+        /// <returns>The transposed copy.</returns>
+        public readonly Matrix4x3d Transposed()
+        {
+            return Transpose(this);
+        }
+
+        /// <summary>
+        /// Swizzles this instance. Swiches places of the rows of the matrix.
+        /// </summary>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        public void Swizzle(int rowForRow0, int rowForRow1, int rowForRow2)
+        {
+            this = Swizzle(this, rowForRow0, rowForRow1, rowForRow2);
+        }
+
+        /// <summary>
+        /// Returns a swizzled copy of this instance.
+        /// </summary>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <returns>The swizzled copy.</returns>
+        public readonly Matrix3x4d Swizzled(int rowForRow0, int rowForRow1, int rowForRow2)
+        {
+            Matrix3x4d m = this;
+            m.Swizzle(rowForRow0, rowForRow1, rowForRow2);
+            return m;
         }
 
         /// <summary>
@@ -883,6 +964,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Swizzles a matrix, i.e. switches rows of the matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to swizzle.</param>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <returns>The swizzled matrix.</returns>
+        /// <exception cref="IndexOutOfRangeException">If any of the rows are outside of the range [0, 2].</exception>
+        public static Matrix3x4d Swizzle(Matrix3x4d mat, int rowForRow0, int rowForRow1, int rowForRow2)
+        {
+            Swizzle(mat, rowForRow0, rowForRow1, rowForRow2, out Matrix3x4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Swizzles a matrix, i.e. switches rows of the matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to swizzle.</param>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="result">The swizzled matrix.</param>
+        /// <exception cref="IndexOutOfRangeException">If any of the rows are outside of the range [0, 2].</exception>
+        public static void Swizzle(in Matrix3x4d mat, int rowForRow0, int rowForRow1, int rowForRow2, out Matrix3x4d result)
+        {
+            result.Row0 = rowForRow0 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow0)} must be a number between 0 and 2. Got {rowForRow0}."),
+            };
+
+            result.Row1 = rowForRow1 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow1)} must be a number between 0 and 2. Got {rowForRow1}."),
+            };
+
+            result.Row2 = rowForRow2 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow2)} must be a number between 0 and 2. Got {rowForRow2}."),
+            };
+        }
+
+        /// <summary>
         /// Matrix multiplication.
         /// </summary>
         /// <param name="left">left-hand operand.</param>
@@ -970,25 +1102,25 @@ namespace OpenTK.Mathematics
         /// Returns a System.String that represents the current Matrix4.
         /// </summary>
         /// <returns>The string representation of the matrix.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             var row0 = Row0.ToString(format, formatProvider);
             var row1 = Row1.ToString(format, formatProvider);
@@ -1000,7 +1132,7 @@ namespace OpenTK.Mathematics
         /// Returns the hashcode for this instance.
         /// </summary>
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Row0, Row1, Row2);
         }
@@ -1011,7 +1143,7 @@ namespace OpenTK.Mathematics
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
         [Pure]
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Matrix3x4d && Equals((Matrix3x4d)obj);
         }
@@ -1022,7 +1154,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         [Pure]
-        public bool Equals(Matrix3x4d other)
+        public readonly bool Equals(Matrix3x4d other)
         {
             return
                 Row0 == other.Row0 &&

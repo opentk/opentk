@@ -137,7 +137,7 @@ namespace OpenTK.Mathematics
         /// <param name="t">The t, value between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
         [Pure]
-        private Vector2 CalculatePointOfDerivative(float t)
+        private readonly Vector2 CalculatePointOfDerivative(float t)
         {
             var c = 1.0f - t;
             var r = new Vector2

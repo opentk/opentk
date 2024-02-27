@@ -109,7 +109,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public double this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y));
+        public readonly double Length => Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -155,23 +155,23 @@ namespace OpenTK.Mathematics
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        public double LengthSquared => (X * X) + (Y * Y);
+        public readonly double LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2d PerpendicularRight => new Vector2d(Y, -X);
+        public readonly Vector2d PerpendicularRight => new Vector2d(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2d PerpendicularLeft => new Vector2d(-Y, X);
+        public readonly Vector2d PerpendicularLeft => new Vector2d(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector2d Normalized()
+        public readonly Vector2d Normalized()
         {
             var v = this;
             v.Normalize();
@@ -781,7 +781,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yx
         {
-            get => new Vector2d(Y, X);
+            readonly get => new Vector2d(Y, X);
             set
             {
                 Y = value.X;
@@ -1025,7 +1025,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{2} {1})",
@@ -1041,14 +1041,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector2d other)
+        public readonly bool Equals(Vector2d other)
         {
             return X == other.X &&
                    Y == other.Y;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -1059,7 +1059,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out double x, out double y)
+        public readonly void Deconstruct(out double x, out double y)
         {
             x = X;
             y = Y;

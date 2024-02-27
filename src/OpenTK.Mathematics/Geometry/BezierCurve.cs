@@ -35,7 +35,7 @@ namespace OpenTK.Mathematics
         /// Gets the points of this curve.
         /// </summary>
         /// <remarks>The first point and the last points represent the anchor points.</remarks>
-        public IList<Vector2> Points => _points;
+        public readonly IList<Vector2> Points => _points;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BezierCurve"/> struct.
@@ -105,7 +105,7 @@ namespace OpenTK.Mathematics
         /// <param name="t">The t value, between 0.0f and 1.0f.</param>
         /// <returns>Resulting point.</returns>
         [Pure]
-        public Vector2 CalculatePoint(float t)
+        public readonly Vector2 CalculatePoint(float t)
         {
             return CalculatePoint(_points, t, Parallel);
         }
@@ -120,7 +120,7 @@ namespace OpenTK.Mathematics
         /// value gets smaller.
         /// </remarks>
         [Pure]
-        public float CalculateLength(float precision)
+        public readonly float CalculateLength(float precision)
         {
             return CalculateLength(_points, precision, Parallel);
         }
@@ -203,7 +203,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 CalculatePoint(IList<Vector2> points, float t, float parallel)
         {
-            Vector2 r = default(Vector2);
+            Vector2 r = default;
             float c = 1 - t;
             float temp;
             int i = 0;
@@ -248,7 +248,7 @@ namespace OpenTK.Mathematics
         [Pure]
         private static Vector2 CalculatePointOfDerivative(IList<Vector2> points, float t)
         {
-            Vector2 r = default(Vector2);
+            Vector2 r = default;
             float c = 1 - t;
             float temp;
             int i = 0;

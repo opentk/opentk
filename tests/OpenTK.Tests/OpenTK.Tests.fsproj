@@ -45,6 +45,10 @@
     <ProjectReference Include="..\..\src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="8.0.100" />
+  </ItemGroup>
+
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\netfx-mono.props" />
 </Project>

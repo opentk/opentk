@@ -96,7 +96,7 @@ namespace OpenTK.Mathematics
         /// This method is intended only for compatibility with System.Drawing. It compresses the color into 8 bits per
         /// channel, which means color information is lost.
         /// </remarks>
-        public int ToArgb()
+        public readonly int ToArgb()
         {
             var value =
                 ((uint)(A * byte.MaxValue) << 24) |
@@ -184,7 +184,7 @@ namespace OpenTK.Mathematics
         /// Calculates the hash code for this Color4 structure.
         /// </summary>
         /// <returns>A System.Int32 containing the hashcode of this Color4 structure.</returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(R, G, B, A);
         }
@@ -211,7 +211,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             var ls = MathHelper.GetListSeparator(formatProvider);
             var r = R.ToString(format, formatProvider);
@@ -1464,7 +1464,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">The Color4 structure to compare to.</param>
         /// <returns>True if both Color4 structures contain the same components; false otherwise.</returns>
         [Pure]
-        public bool Equals(Color4 other)
+        public readonly bool Equals(Color4 other)
         {
             return
                 R == other.R &&
