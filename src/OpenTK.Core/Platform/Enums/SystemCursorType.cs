@@ -4,7 +4,7 @@
     // FIXME: Maybe start the enum values at 0?
 
     /// <summary>
-    /// Enumeration of system cursor types based on the Win32 mouse cursor set.
+    /// Enumeration of system cursor types based on the Win32 and MacOS mouse cursor set.
     /// </summary>
     public enum SystemCursorType
     {
@@ -77,5 +77,45 @@
         /// A cursor pointing up.
         /// </summary>
         ArrowUp = 14,
+
+        /// <summary>
+        /// A cursor with an arrow pointing north. (intend to resize)
+        /// </summary>
+        ArrowN = 15,
+
+        /// <summary>
+        /// A cursor with an arrow pointing east. (intend to resize)
+        /// </summary>
+        ArrowE = 16,
+
+        /// <summary>
+        /// A cursor with an arrow pointing south. (intend to resize)
+        /// </summary>
+        ArrowS = 17,
+
+        /// <summary>
+        /// A cursor with an arrow pointing west. (intend to resize)
+        /// </summary>
+        ArrowW = 18,
+
+        /// <summary>
+        /// A cursor with an arrow pointing north east. (intend to resize)
+        /// </summary>
+        ArrowNE = 19,
+
+        /// <summary>
+        /// A cursor with an arrow pointing south east. (intend to resize)
+        /// </summary>
+        ArrowSE = 20,
+
+        /// <summary>
+        /// A cursor with an arrow pointing south west. (intend to resize)
+        /// </summary>
+        ArrowSW = 21,
+
+        /// <summary>
+        /// A cursor with an arrow pointing north west. (intend to resize)
+        /// </summary>
+        ArrowNW = 22,
     }
 }
