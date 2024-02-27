@@ -31,9 +31,11 @@ namespace OpenTK.Core.Platform
         Equals,
         LeftBrace,
         RightBrace,
+        // FIXME: On macos this is \ and £ it seems like...
         /// <summary> Pipe and Slash, NonUS. </summary>
         Pipe,
         SemiColon,
+        // FIXME: Change name to something more understandable
         LeftApostrophe,
         GraveAccent,
         Comma,
@@ -69,11 +71,11 @@ namespace OpenTK.Core.Platform
         KeypadStar,
         KeypadDash,
         KeypadPlus,
+        KeypadEquals,
+        KeypadComma,
 
         NonUSSlashBar,
         Application,
-        KeypadEquals,
-        KeypadComma,
 
         International1,
         International2,
@@ -92,11 +94,13 @@ namespace OpenTK.Core.Platform
 
         LeftControl,
         LeftShift,
+        // LeftOption on macos
         LeftAlt,
         LeftGUI,
 
         RightControl,
         RightShift,
+        // RightOption on macos
         RightAlt,
         RightGUI,
 
