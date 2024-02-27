@@ -280,20 +280,16 @@ namespace OpenTK.Platform.Native.macOS
                     cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selResizeLeftCursor);
                     break;
                 case SystemCursorType.ArrowNE:
-                    // FIXME: Is there a hidden resize cursor for this?
-                    cursor = LoadHiddenCursor("resizenortheastsouthwest", selClosedHandCursor);
+                    cursor = LoadHiddenCursor("resizenortheast", selClosedHandCursor);
                     break;
                 case SystemCursorType.ArrowSE:
-                    // FIXME: Is there a hidden resize cursor for this?
-                    cursor = LoadHiddenCursor("resizenorthwestsoutheast", selClosedHandCursor);
+                    cursor = LoadHiddenCursor("resizesoutheast", selClosedHandCursor);
                     break;
                 case SystemCursorType.ArrowSW:
-                    // FIXME: Is there a hidden resize cursor for this?
-                    cursor = LoadHiddenCursor("resizenortheastsouthwest", selClosedHandCursor);
+                    cursor = LoadHiddenCursor("resizesouthwest", selClosedHandCursor);
                     break;
                 case SystemCursorType.ArrowNW:
-                    // FIXME: Is there a hidden resize cursor for this?
-                    cursor = LoadHiddenCursor("resizenorthwestsoutheast", selClosedHandCursor);
+                    cursor = LoadHiddenCursor("resizenorthwest", selClosedHandCursor);
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(systemCursor), (int)systemCursor, typeof(SystemCursorType));
