@@ -266,6 +266,35 @@ namespace OpenTK.Platform.Native.macOS
                     // FIXME: There isn't really a good cursor for this...
                     cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selPointingHandCursor);
                     break;
+                // FIXME: Figure out if there are any hidden cursors we want to load here?
+                case SystemCursorType.ArrowN:
+                    cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selResizeUpCursor);
+                    break;
+                case SystemCursorType.ArrowE:
+                    cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selResizeRightCursor);
+                    break;
+                case SystemCursorType.ArrowS:
+                    cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selResizeDownCursor);
+                    break;
+                case SystemCursorType.ArrowW:
+                    cursor = objc_msgSend_IntPtr((IntPtr)NSCursorClass, selResizeLeftCursor);
+                    break;
+                case SystemCursorType.ArrowNE:
+                    // FIXME: Is there a hidden resize cursor for this?
+                    cursor = LoadHiddenCursor("resizenortheastsouthwest", selClosedHandCursor);
+                    break;
+                case SystemCursorType.ArrowSE:
+                    // FIXME: Is there a hidden resize cursor for this?
+                    cursor = LoadHiddenCursor("resizenorthwestsoutheast", selClosedHandCursor);
+                    break;
+                case SystemCursorType.ArrowSW:
+                    // FIXME: Is there a hidden resize cursor for this?
+                    cursor = LoadHiddenCursor("resizenortheastsouthwest", selClosedHandCursor);
+                    break;
+                case SystemCursorType.ArrowNW:
+                    // FIXME: Is there a hidden resize cursor for this?
+                    cursor = LoadHiddenCursor("resizenorthwestsoutheast", selClosedHandCursor);
+                    break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(systemCursor), (int)systemCursor, typeof(SystemCursorType));
             }
