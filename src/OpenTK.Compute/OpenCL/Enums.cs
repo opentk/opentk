@@ -51,6 +51,8 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         InteropUserSync = 0x1085,
 
+        // Extension Specific Values
+
         GlContextKHR = 0x2008,
         EglDisplayKHR = 0x2009,
         GlxDisplayKHR = 0x200A,
@@ -145,83 +147,131 @@ namespace OpenTK.Compute.OpenCL
     #region Platform
 
     /// <summary>
-    /// The information that can be queried using <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])">GetPlatformInfo()</see></c>.
-    /// <para>Original documentation <see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table">here</see>.</para>
+    /// <para>
+    ///     The information that can be queried using
+    ///     <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])">GetPlatformInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation <see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table">here</see>.
+    /// </para>
     /// </summary>
     public enum PlatformInfo : uint
     {
         /// <summary>
-        /// OpenCL profile string. Returns the profile name supported by the implementation.
-        /// The profile name returned can be one of the following strings:
-        ///
+        /// <para>
+        ///     OpenCL profile string. Returns the profile name supported by the implementation.
+        ///     The profile name returned can be one of the following strings:
+        /// </para>
         /// <list type="bullet">
-        /// <item><term>
-        /// FULL_PROFILE</term>
+        /// <item>
         /// <description>
-        /// if the implementation supports the OpenCL specification
-        /// (functionality defined as part of the core specification and does not require any extensions to be supported).
+        ///     <b>FULL_PROFILE</b> - if the implementation supports the OpenCL specification
+        ///     (functionality defined as part of the core specification
+        ///     and does not require any extensions to be supported).
         /// </description></item>
         ///
-        /// <item><term>
-        /// EMBEDDED_PROFILE</term>
+        /// <item>
         /// <description>
-        /// if the implementation supports the OpenCL embedded profile.
-        /// The embedded profile for OpenCL is described in:
-        /// https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
+        ///     <b>EMBEDDED_PROFILE</b> - if the implementation supports the OpenCL embedded profile.
+        ///     The embedded profile for OpenCL is described in:
+        ///     https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
         /// </description></item>
         /// </list>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         Profile = 0x0900,
 
         /// <summary>
-        /// OpenCL version string. Returns the OpenCL version supported by the implementation.
-        /// This version string has the following format:
-        /// <para/>
-        /// <para>"OpenCL {major_version.minor_version} {platform-specific information}"</para>
-        /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
+        /// <para>
+        ///     OpenCL version string. Returns the OpenCL version supported by the implementation.
+        ///     This version string has the following format:
+        /// </para>
+        /// <para>
+        ///     <c><pre>OpenCL&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;platform-specific information&gt;</pre></c>
+        /// </para>
+        /// <para>
+        ///     The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         Version = 0x0901,
 
         /// <summary>
-        /// Platform name string.
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the detailed (major, minor, patch) version supported by the platform.
+        ///     The major and minor version numbers returned must match those returned via
+        ///     <c><see cref="Version">Version</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLVersion">CLVersion</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
+        NumericVersion = 0x0906,
+
+        /// <summary>
+        /// <para>
+        ///     Platform name string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Name = 0x0902,
 
         /// <summary>
-        /// Platform vendor string.
+        /// <para>
+        ///     Platform vendor string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
         Vendor = 0x0903,
 
         /// <summary>
-        /// Returns a space separated list of extension names (the extension names themselves do not contain any spaces)~
-        /// supported by the platform. Each extension that is supported by all devices associated with this
-        /// platform must be reported here.
+        /// <para>
+        ///     Returns a space separated list of extension names (the extension names themselves do not contain any spaces)~
+        ///     supported by the platform. Each extension that is supported by all devices associated with this
+        ///     platform must be reported here.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
         /// </summary>
         /// <remarks>Return Type: string</remarks>
         Extensions = 0x0904,
 
         /// <summary>
-        /// Introduced in OpenCL 2.1.
-        /// Returns the resolution of the host timer in nanoseconds as used by
-        /// <c><see cref="CL.GetHostTimer(CLDevice, IntPtr)">GetHostTimer()</see></c>.
-        /// This value must be 0 for devices that do not support device and host timer synchronization.
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLNameVersion">CLNameVersion</see></c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: ulong</remarks>
-        PlatformHostTimerResolution = 0x0905,
+        ExtensionsWithVersion = 0x0907,
 
         /// <summary>
-        /// Only available for OpenCL 2.0 and 2.1
-        /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension
-        /// functions to be directed to this platform by the ICD Loader.
-        /// <para/>
-        /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetPlatformInfo.html</para>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the resolution of the host timer in nanoseconds as used by
+        ///     <c><see cref="CL.GetHostTimer(CLDevice, IntPtr)">GetHostTimer()</see></c>.
+        ///     This value must be 0 for devices that do not support device and host timer synchronization.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
         /// </summary>
-        /// <remarks>Return Type: string</remarks>
-        PlatformIcdSuffix = 0x0920
+        PlatformHostTimerResolution = 0x0905,
     }
 
     #endregion
@@ -2656,7 +2706,106 @@ namespace OpenTK.Compute.OpenCL
         ///     <i><u>Return Type:</u></i> <c>uint(cl_version)</c>
         /// </para>
         /// </summary>
-        CxxForOpenCLNumericVersionEXT = 0x4230
+        CxxForOpenCLNumericVersionEXT = 0x4230,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/qcom/cl_qcom_ext_host_ptr.txt">cl_qcom_ext_host_ptr</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the amount of memory padding that the application must add
+        ///     to the end of every external allocation that will be used in conjunction
+        ///     with <i>(Unimplemented)<c>CL_MEM_EXT_HOST_PTR_QCOM</c></i>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ExternalMemoryPaddingInBytesQCOM = 0x40A0,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/extensions/qcom/cl_qcom_ext_host_ptr.txt">cl_qcom_ext_host_ptr</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the device's page size.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        PageSizeQCOM = 0x40A1,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_subgroup_named_barrier">cl_khr_subgroup_named_barrier</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Maximum number of named barriers in a work-group for
+        ///     any given kernel-instance running on the device.
+        ///     The minimum value is 8.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumNamedBarrierCountKHR = 0x2035,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_extended_versioning">cl_khr_extended_versioning</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Functions like <c><see cref="NumericVersion">NumericVersion</see></c>
+        /// </para>
+        /// </summary>
+        NumericVersionKHR = 0x105E,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_extended_versioning">cl_khr_extended_versioning</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Functions like <c><see cref="OpenClCVersion">OpenClCVersion</see></c>
+        /// </para>
+        /// </summary>
+        OpenCLCNumericVersionKHR = 0x105F,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_extended_versioning">cl_khr_extended_versioning</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Functions like <c><see cref="ExtensionsWithVersion">ExtensionsWithVersion</see></c>
+        /// </para>
+        /// </summary>
+        ExtensionsWithVersionKHR = 0x1060,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_extended_versioning">cl_khr_extended_versioning</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Functions like <c><see cref="IntermediateLanguagesWithVersion">IntermediateLanguagesWithVersion</see></c>
+        /// </para>
+        /// </summary>
+        IntermediateLanguagesWithVersionKHR = 0x1061,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Requires the <c><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_Ext.html#cl_khr_extended_versioning">cl_khr_extended_versioning</see></c> extension.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Functions like <c><see cref="BuiltInKernelsWithVersion">BuiltInKernelsWithVersion</see></c>
+        /// </para>
+        /// </summary>
+        BuiltInKernelsWithVersionKHR = 0x1062
     }
 
     /// <summary>

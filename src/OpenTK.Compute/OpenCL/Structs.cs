@@ -1,15 +1,17 @@
 using System;
+using System.Reflection.Metadata.Ecma335;
+using Microsoft.VisualBasic;
 
 namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public struct ImageFormat
+    public struct CLImageFormat
     {
         public ChannelOrder ChannelOrder;
         public ChannelType ChannelType;
     }
 
-    public struct ImageDescription
+    public struct CLImageDescription
     {
         public MemoryObjectType ImageType;
         public UIntPtr Width;
@@ -22,9 +24,9 @@ namespace OpenTK.Compute.OpenCL
         public uint Samples;
         public IntPtr Buffer;
 
-        public static ImageDescription Create2D(uint width, uint height)
+        public static CLImageDescription Create2D(uint width, uint height)
         {
-            return new ImageDescription()
+            return new CLImageDescription()
             {
                 ImageType = MemoryObjectType.Image2D,
                 Width = (UIntPtr)width,
@@ -33,9 +35,9 @@ namespace OpenTK.Compute.OpenCL
             };
         }
 
-        public static ImageDescription Create2D(uint width, uint height, uint rowPitch)
+        public static CLImageDescription Create2D(uint width, uint height, uint rowPitch)
         {
-            return new ImageDescription()
+            return new CLImageDescription()
             {
                 ImageType = MemoryObjectType.Image2D,
                 Width = (UIntPtr)width,
@@ -45,9 +47,9 @@ namespace OpenTK.Compute.OpenCL
             };
         }
 
-        public static ImageDescription Create3D(uint width, uint height, uint depth)
+        public static CLImageDescription Create3D(uint width, uint height, uint depth)
         {
-            return new ImageDescription()
+            return new CLImageDescription()
             {
                 ImageType = MemoryObjectType.Image3D,
                 Width = (UIntPtr)width,
@@ -56,9 +58,9 @@ namespace OpenTK.Compute.OpenCL
             };
         }
 
-        public static ImageDescription Create3D(uint width, uint height, uint depth, uint rowPitch, uint slicePitch)
+        public static CLImageDescription Create3D(uint width, uint height, uint depth, uint rowPitch, uint slicePitch)
         {
-            return new ImageDescription()
+            return new CLImageDescription()
             {
                 ImageType = MemoryObjectType.Image3D,
                 Width = (UIntPtr)width,
@@ -68,6 +70,53 @@ namespace OpenTK.Compute.OpenCL
                 SlicePitch = (UIntPtr)slicePitch
             };
         }
+    }
+
+    public struct CLVersion
+    {
+        public uint Version
+        {
+            get => Version;
+            set => Version = value;
+        }
+
+        public int Major
+        {
+            get => (int)(Version >> (CL.CLVersionMinorBits + CL.CLVersionPatchBits));
+        }
+
+        public int Minor
+        {
+            get => (int)((Version >> CL.CLVersionPatchBits) & CL.CLVersionMinorMask);
+        }
+
+        public int Patch
+        {
+            get => (int)(Version & CL.CLVersionPatchMask);
+        }
+
+        public CLVersion(int major, int minor, int patch)
+        {
+            Version = (uint)(((major & CL.CLVersionMajorMask) << (CL.CLVersionMinorBits + CL.CLVersionPatchBits)) |
+            ((minor & CL.CLVersionMinorMask) << CL.CLVersionPatchBits) |
+            (patch & CL.CLVersionPatchMask));
+        }
+
+        public CLVersion(uint version) => Version = version;
+
+        public override string ToString() => $"{Major}.{Minor}.{Patch}";
+
+        public static implicit operator uint(CLVersion v) => v.Version;
+
+        public static implicit operator CLVersion(uint v) => new CLVersion(v);
+
+        public static explicit operator CLVersion(byte[] v) => new CLVersion(BitConverter.ToUInt32(v, 0));
+    }
+
+    public struct CLNameVersion
+    {
+        public Version Version;
+        public string Name;
     }
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 }
