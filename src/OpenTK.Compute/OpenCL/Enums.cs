@@ -51,7 +51,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         InteropUserSync = 0x1085,
 
-        // Extension Specific Values
+        // Extension Values
 
         GlContextKHR = 0x2008,
         EglDisplayKHR = 0x2009,
@@ -279,61 +279,63 @@ namespace OpenTK.Compute.OpenCL
     #region Device
 
     /// <summary>
-    /// The valid types of OpenCL devices.
+    ///     The valid types of OpenCL devices.
     /// <para>
-    /// The device type is purely informational and has no semantic meaning.
+    ///     The device type is purely informational and has no semantic meaning.
     /// </para>
     /// <para>
-    /// Some devices may be more than one type. For example,
-    /// a <c><see cref="Cpu">CPU</see></c> device may also be a <c><see cref="Gpu">GPU</see></c> device,
-    /// or a <c><see cref="Accelerator">Accelerator</see></c> device may also be some other, more descriptive device type.
-    /// <c><see cref="Custom">Custom</see></c> devices must not be combined with any other device types.
+    ///     Some devices may be more than one type. For example,
+    ///     a <c><see cref="Cpu">CPU</see></c> device may also be a
+    ///     <c><see cref="Gpu">GPU</see></c> device,
+    ///     or a <c><see cref="Accelerator">Accelerator</see></c>
+    ///     device may also be some other, more descriptive device type.
+    ///     <c><see cref="Custom">Custom</see></c> devices must not be combined with any other device types.
     /// </para>
     /// <para>
-    /// One device in the platform should be a <c><see cref="Default">Default</see></c> device.
-    /// The default device should also be a more specific device type,
-    /// such as <c><see cref="Cpu">CPU</see></c> or <c><see cref="Gpu">GPU</see></c>.
+    ///     One device in the platform should be a <c><see cref="Default">Default</see></c> device.
+    ///     The default device should also be a more specific device type,
+    ///     such as <c><see cref="Cpu">CPU</see></c> or <c><see cref="Gpu">GPU</see></c>.
     /// </para>
     /// </summary>
     [Flags]
     public enum DeviceType : ulong
     {
         /// <summary>
-        /// The default OpenCL device in the platform. The default OpenCL device must not be a
-        /// <c><see cref="Custom">Custom</see></c> device.
+        ///     The default OpenCL device in the platform. The default OpenCL device must not be a
+        ///     <c><see cref="Custom">Custom</see></c> device.
         /// </summary>
         Default = 1 << 0,
 
         /// <summary>
-        /// An OpenCL device similar to a traditional CPU (Central Processing Unit).
-        /// The host processor that executes OpenCL host code may also be considered a CPU OpenCL device.
+        ///     An OpenCL device similar to a traditional CPU (Central Processing Unit).
+        ///     The host processor that executes OpenCL host code may also be considered a CPU OpenCL device.
         /// </summary>
         Cpu = 1 << 1,
 
         /// <summary>
-        /// An OpenCL device similar to a GPU (Graphics Processing Unit).
-        /// Many systems include a dedicated processor for graphics or
-        /// rendering that may be considered a GPU OpenCL device.
+        ///     An OpenCL device similar to a GPU (Graphics Processing Unit).
+        ///     Many systems include a dedicated processor for graphics or
+        ///     rendering that may be considered a GPU OpenCL device.
         /// </summary>
         Gpu = 1 << 2,
 
         /// <summary>
-        /// Dedicated devices that may accelerate OpenCL programs,
-        /// such as FPGAs (Field Programmable Gate Arrays),
-        /// DSPs (Digital Signal Processors), or AI (Artificial Intelligence) processors.
+        ///     Dedicated devices that may accelerate OpenCL programs,
+        ///     such as FPGAs (Field Programmable Gate Arrays),
+        ///     DSPs (Digital Signal Processors), or AI (Artificial Intelligence) processors.
         /// </summary>
         Accelerator = 1 << 3,
 
         /// <summary>
-        /// Specialized devices that implement some of the OpenCL runtime
-        /// APIs but do not support all required OpenCL functionality.
-        /// </summary>
+        ///     Specialized devices that implement some of the OpenCL runtime
+        ///     APIs but do not support all required OpenCL functionality.
+        ///     </summary>
         /// <remarks>Only available after OpenCL 1.2</remarks>
         Custom = 1 << 4,
 
         /// <summary>
-        /// All OpenCL devices available in the platform,
-        /// except for <c><see cref="Custom">Custom</see></c> devices.
+        ///     All OpenCL devices available in the platform,
+        ///     except for <c><see cref="Custom">Custom</see></c> devices.
         /// </summary>
         All = 0xFFFFFFFF
     }
@@ -959,7 +961,6 @@ namespace OpenTK.Compute.OpenCL
         [Obsolete("MinimumDataTypeAlignmentSize is a deprecated OpenCL 1.1 property.")]
         MinimumDataTypeAlignmentSize = 0x101A,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     Describes single precision floating-point capability of the device.
@@ -977,7 +978,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         SingleFloatingPointConfiguration = 0x101B,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 1.2.</pre></i>
@@ -1007,7 +1007,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         DoubleFloatingPointConfiguration = 0x1032,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     Type of global memory cache supported.
@@ -1110,7 +1109,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         GlobalVariablePreferredTotalSize = 0x1054,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     Type of local memory supported.
@@ -1225,7 +1223,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         LinkerAvailable = 0x103E,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     Describes the execution capabilities of the device.
@@ -1254,7 +1251,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         ExecutionCapabilities = 0x1029,
 
-        /// #TODO: Unfinished return type in API
         /// <summary>
         /// <para>
         ///     <i><pre>Deprecated by verison 2.0.</pre></i>
@@ -1269,7 +1265,6 @@ namespace OpenTK.Compute.OpenCL
         [Obsolete("QueueProperties is a deprecated OpenCL 1.2 property, please use QueueOnHostProperties.")]
         QueueProperties = 0x102A,
 
-        /// #TODO: Unfinished return type in API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 2.0.</pre></i>
@@ -1395,7 +1390,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         BuiltInKernels = 0x103F,
 
-        /// #TODO: missing equivalent return type in API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 3.0.</pre></i>
@@ -1407,7 +1401,7 @@ namespace OpenTK.Compute.OpenCL
         ///     <c><see cref="BuiltInKernels">BuiltInKernels</see></c>.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLNameVersion">CLNameVersion[]</see></c>
         /// </para>
         /// </summary>
         BuiltInKernelsWithVersion = 0x1062,
@@ -1500,7 +1494,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         Version = 0x102F,
 
-        /// #TODO: Missing equivalent return type in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 3.0.</pre></i>
@@ -1511,7 +1504,7 @@ namespace OpenTK.Compute.OpenCL
         ///     returned must match those returned via <c><see cref="Version">Version</see></c>.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>cl_version</c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLVersion">CLVersion</see></c>
         /// </para>
         /// </summary>
         NumericVersion = 0x105E,
@@ -1564,7 +1557,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         OpenClCVersion = 0x103D,
 
-        /// #TODO: Missing equivalent return type in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 3.0.</pre></i>
@@ -1607,12 +1599,11 @@ namespace OpenTK.Compute.OpenCL
         ///    this query may return an empty array. this query may return an empty string.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLNameVersion">CLNameVersion[]</see></c>
         /// </para>
         /// </summary>
         OpenClCAllVersions = 0x1066,
 
-        /// #TODO: Missing equivalent return type in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 3.0.</pre></i>
@@ -1629,7 +1620,7 @@ namespace OpenTK.Compute.OpenCL
         ///     this query may return an empty array.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLNameVersion">CLNameVersion[]</see></c>
         /// </para>
         /// </summary>
         OpenCLCFeatures = 0x106F,
@@ -1697,7 +1688,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         Extensions = 0x1030,
 
-        /// #TODO: Missing equivalent return type in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 3.0.</pre></i>
@@ -1713,7 +1703,7 @@ namespace OpenTK.Compute.OpenCL
         ///     for a list of extensions that are required to be reported for a given OpenCL version.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>cl_name_version[]</c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLNameVersion">CLNameVersion[]</see></c>
         /// </para>
         /// </summary>
         ExtensionsWithVersion = 0x1060,
@@ -1778,7 +1768,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         PartitionMaximumSubDevices = 0x1043,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 1.2.</pre></i>
@@ -1795,7 +1784,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         PartitionProperties = 0x1044,
 
-        /// #TODO: Missing return type equivalent in the API
         /// <summary>
         /// <para>
         ///     <i><pre>Missing before verison 1.2.</pre></i>
