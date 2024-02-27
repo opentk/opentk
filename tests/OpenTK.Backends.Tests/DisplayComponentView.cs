@@ -79,7 +79,9 @@ namespace OpenTK.Backends.Tests
         public void HandleConnectionChange(DisplayConnectionChangedEventArgs connectionChange)
         {
             // FIXME: For now we just recreate the entire list of displays.
+            BoundingBox = Box2i.Empty;
             Displays.Clear();
+            
             int displays = Program.DisplayComponent!.GetDisplayCount();
             for (int i = 0; i < displays; i++)
             {

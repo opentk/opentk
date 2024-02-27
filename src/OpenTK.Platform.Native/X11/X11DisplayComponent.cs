@@ -266,7 +266,6 @@ namespace OpenTK.Platform.Native.X11
             }
 
             XFree(atoms);
-            XRRFreeOutputInfo(outputInfo);
         
             return displayName ?? name;
         }
@@ -422,6 +421,7 @@ namespace OpenTK.Platform.Native.X11
                                         EventQueue.Raise(handle, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(handle, false));
                                         logger?.LogDebug($"Connected display '{name}'!");
 
+                                        XRRFreeOutputInfo(outputInfo);
                                         XRRFreeScreenResources(resources);
                                     }
                                 }
@@ -460,6 +460,9 @@ namespace OpenTK.Platform.Native.X11
         public DisplayHandle Open(int index)
         {
             // FIXME: Bounds check
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Display index cannot be negative. {index}");
+            if (index >= _displays.Count) throw new ArgumentOutOfRangeException(nameof(index), $"Display index cannot be larger or equal to the number of displays. Index: {index}, Display count: {_displays.Count}");
+
             return _displays[index];
         }
 

@@ -160,7 +160,8 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public DisplayHandle Open(int index)
         {
-            // FIXME: Range check?
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Display index cannot be negative. {index}");
+            if (index >= _displays.Count) throw new ArgumentOutOfRangeException(nameof(index), $"Display index cannot be larger or equal to the number of displays. Index: {index}, Display count: {_displays.Count}");
 
             return _displays[index];
         }
