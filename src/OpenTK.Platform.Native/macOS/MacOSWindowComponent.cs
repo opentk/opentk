@@ -258,6 +258,7 @@ namespace OpenTK.Platform.Native.macOS
 
             // TODO: canBecomeKeyView, 
             class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
 
             // NSTextInputClientProtocol functions
             class_addProtocol(NSOpenTKViewClass, NSTextInputClientProtocol);
@@ -598,6 +599,13 @@ namespace OpenTK.Platform.Native.macOS
         private static bool NSOtkView_AcceptsFirstResponder(IntPtr view, SEL selector)
         {
             return true;
+        }
+
+        private delegate void NSOtkView_ViewDidChangeEffectiveAppearance_(IntPtr view, SEL selector);
+        private static NSOtkView_ViewDidChangeEffectiveAppearance_ NSOtkView_ViewDidChangeEffectiveAppearanceInst = NSOtkView_ViewDidChangeEffectiveAppearance;
+        private static void NSOtkView_ViewDidChangeEffectiveAppearance(IntPtr view, SEL selector)
+        {
+            MacOSShellComponent.CheckPreferredThemeChange();
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

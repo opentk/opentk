@@ -642,6 +642,11 @@ namespace OpenTK.Backends.Tests
             {
                 ((DisplayComponentView?)MainTabContainer[typeof(DisplayComponentView)])?.HandleConnectionChange(displayChanged);
             }
+            else if (args is ThemeChangeEventArgs themeChange)
+            {
+                // FIXME: Actually change imgui theme?
+                Logger.LogInfo($"Theme changed: {themeChange.NewTheme}.");
+            }
         }
 
         internal static IPalComponent? GetComponent(PalComponents component)

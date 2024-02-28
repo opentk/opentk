@@ -8,7 +8,6 @@ using static OpenTK.Platform.Native.macOS.Mach;
 using static OpenTK.Platform.Native.macOS.MacOSWindowComponent;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Xml.XPath;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -49,6 +48,9 @@ namespace OpenTK.Platform.Native.macOS
             {
                 throw new Exception("MacOSShellComponent can only initialize the Shell component.");
             }
+
+            // Set the initial theme so we can detect changes later
+            LastTheme = GetCurrentTheme();
         }
 
         public void AllowScreenSaver(bool allow)
@@ -189,7 +191,7 @@ namespace OpenTK.Platform.Native.macOS
             return status;
         }
 
-        public ThemeInfo GetPreferredTheme()
+        private static ThemeInfo GetCurrentTheme()
         {
             ThemeInfo info;
             IntPtr appearance = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication), selEffectiveAppearance);
@@ -216,6 +218,24 @@ namespace OpenTK.Platform.Native.macOS
             info.HighContrast = highContrast;
 
             return info;
+        }
+
+        private static ThemeInfo LastTheme;
+
+        internal static void CheckPreferredThemeChange()
+        {
+            ThemeInfo theme = GetCurrentTheme();
+
+            if (theme != LastTheme)
+            {
+                EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(theme));
+                LastTheme = theme;
+            }
+        }
+
+        public ThemeInfo GetPreferredTheme()
+        {
+            return GetCurrentTheme();
         }
 
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
