@@ -43,6 +43,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selTrackingNumber = sel_registerName("trackingNumber"u8);
         internal static readonly SEL selKeyCode = sel_registerName("keyCode"u8);
         internal static readonly SEL selARepeat = sel_registerName("isARepeat"u8);
+        internal static readonly SEL selModifierFlags = sel_registerName("modifierFlags"u8);
 
 
         internal static readonly SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
@@ -840,8 +841,10 @@ namespace OpenTK.Platform.Native.macOS
                                 default: throw new PalException(this, $"Unknown mouse button: {button}");
                             }
 
-                            // FIXME: Get modifiers
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, KeyModifier.None));
+                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
                             break;
@@ -872,8 +875,10 @@ namespace OpenTK.Platform.Native.macOS
                                 default: throw new PalException(this, $"Unknown mouse button: {button}");
                             }
 
-                            // FIXME: Get modifiers
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, KeyModifier.None));
+                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                            EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
 
                             // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
 
@@ -958,31 +963,39 @@ namespace OpenTK.Platform.Native.macOS
                             bool isRepeat = objc_msgSend_bool(@event, selARepeat);
                             Console.WriteLine($"Key down: 0x{keyCode:X}");
 
-                            // FIXME: This is a temprary hack to get some of the most used key in.
+                            Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
+
+                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                            MacOSKeyboardComponent.KeyStateChanged(scancode, true);
+
+                            // FIXME: Figure out what we want to do with the Keys enum...
                             switch (keyCode)
                             {
                                 case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, Scancode.Return, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Return, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, Scancode.Backspace, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Backspace, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, Scancode.Escape, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Escape, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.LeftArrow, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.RightArrow, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.DownArrow, scancode, isRepeat, modifiers));
                                     break;
                                 case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, isRepeat, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.UpArrow, scancode, isRepeat, modifiers));
                                     break;
                                 default:
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, Key.Unknown, scancode, isRepeat, modifiers));
                                     break;
                             }
 
@@ -994,35 +1007,84 @@ namespace OpenTK.Platform.Native.macOS
                             ushort keyCode = objc_msgSend_ushort(@event, selKeyCode);
                             Console.WriteLine($"Key up: 0x{keyCode:X}");
 
-                            // FIXME: This is a temprary hack to get some of the most used key in.
+                            Scancode scancode = MacOSKeyboardComponent.ScancodeFromVK((VK)keyCode);
+
+                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                            MacOSKeyboardComponent.KeyStateChanged(scancode, false);
+
+                            // FIXME: Figure out what we want to do with the Keys enum...
                             switch (keyCode)
                             {
                                 case 0x24: // kVK_Return
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, Scancode.Return, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Return, scancode, modifiers));
                                     break;
                                 case 0x33: // kVK_Delete
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, Scancode.Backspace, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Backspace, scancode, modifiers));
                                     break;
                                 case 0x35: // kVK_Escape
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, Scancode.Escape, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Escape, scancode, modifiers));
                                     break;
                                 case 0x7B: // kVK_LeftArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, Scancode.LeftArrow, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.LeftArrow, scancode, modifiers));
                                     break;
                                 case 0x7C: // kVK_RightArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, Scancode.RightArrow, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.RightArrow, scancode, modifiers));
                                     break;
                                 case 0x7D: // kVK_DownArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, Scancode.DownArrow, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.DownArrow, scancode, modifiers));
                                     break;
                                 case 0x7E: // kVK_UpArrow
-                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, Scancode.UpArrow, KeyModifier.None));
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.UpArrow, scancode, modifiers));
                                     break;
                                 default:
+                                    EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, Key.Unknown, scancode, modifiers));
                                     break;
                             }
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
+                            break;
+                        }
+                    case NSEventType.FlagsChanged:
+                        {
+                            ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
+                            KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
+
+                            // FIXME: Handle CapsLock key state?
+                            // SDL subscribes to flagsChanged: and
+                            // sends KeyDown and KeyUp events then
+                            // the internal state doesn't match OS state..
+                            // Might be the only solution we have but
+                            // I would like to investigate further.
+                            // - Noggin_bops 2024-02-28
+
+                            // FIXME: We probably wont get repeats for modifier keys?
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCTLKEYMASK, Scancode.LeftControl, Key.LeftControl, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELSHIFTKEYMASK, Scancode.LeftShift, Key.LeftShift, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERSHIFTKEYMASK, Scancode.RightShift, Key.RightShift, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELCMDKEYMASK, Scancode.LeftGUI, Key.LeftGUI, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCMDKEYMASK, Scancode.RightGUI, Key.RightGUI, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICELALTKEYMASK, Scancode.LeftAlt, Key.LeftAlt, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERALTKEYMASK, Scancode.RightAlt, Key.RightAlt, modifiers);
+                            CheckKey(nswindow, modifierFlags, ModifierFlags.NX_DEVICERCTLKEYMASK, Scancode.RightControl, Key.RightControl, modifiers);
+
+                            static void CheckKey(NSWindowHandle nswindow, ModifierFlags flags, ModifierFlags modKey, Scancode scancode, Key key, KeyModifier modifiers)
+                            {
+                                bool pressed = flags.HasFlag(modKey);
+                                if (MacOSKeyboardComponent.KeyStateChanged(scancode, pressed))
+                                {
+                                    if (pressed)
+                                    {
+                                        EventQueue.Raise(nswindow, PlatformEventType.KeyDown, new KeyDownEventArgs(nswindow, key, scancode, false, modifiers));
+                                    }
+                                    else
+                                    {
+                                        EventQueue.Raise(nswindow, PlatformEventType.KeyUp, new KeyUpEventArgs(nswindow, key, scancode, modifiers));
+                                    }
+                                }
+                            }
+
                             break;
                         }
                     default:
