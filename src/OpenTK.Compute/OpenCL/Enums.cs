@@ -109,11 +109,76 @@ namespace OpenTK.Compute.OpenCL
         TerminateKHR = 0x2032,
     }
 
+    /// <summary>
+    /// <para>
+    ///     The list of supported values and the information returned by
+    ///     <c><see cref="CL.GetContextInfo(CLContext, ContextInfo, out byte[])">GetContextInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation <see href="https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetContextInfo.html">here</see>.
+    /// </para>
+    /// </summary>
     public enum ContextInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///      Return the <c>context</c> reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1080,
+
+        /// <summary>
+        /// <para>
+        ///      Return the <c>context</c> reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLDevice">CLDevice[]</see></c>
+        /// </para>
+        /// </summary>
         Devices = 0x1081,
+
+        /// <summary>
+        /// <para>
+        ///     Return the properties argument specified in
+        ///     <c><see cref="CL.CreateContext(IntPtr, CLDevice[], IntPtr, IntPtr, out CLResultCode)">CreateContext()</see></c>
+        ///     or <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the <c>properties</c> argument specified in
+        ///     <c><see cref="CL.CreateContext(IntPtr, CLDevice[], IntPtr, IntPtr, out CLResultCode)">CreateContext()</see></c>
+        ///     or <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>
+        ///     used to create context was not NULL,
+        ///     the implementation must return the values specified in the properties argument in the same order
+        ///     and without including additional properties.
+        /// </para>
+        /// <para>
+        ///     If the <c>properties</c> argument specified in
+        ///     <c><see cref="CL.CreateContext(IntPtr, CLDevice[], IntPtr, IntPtr, out CLResultCode)">CreateContext()</see></c>
+        ///     or <c><see cref="CL.CreateContextFromType(IntPtr, DeviceType, IntPtr, IntPtr, out CLResultCode)">CreateContextFromType()</see></c>
+        ///     used to create context was NULL,
+        ///     the implementation must return <c>param_value_size_ret</c> equal to 0,
+        ///     indicating that there are no properties to be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="ContextProperties">ContextProperties[]</see></c>
+        /// </para>
+        /// </summary>
         Properties = 0x1082,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before version ~1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///      Return the number of devices in <c>context</c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         NumberOfDevices = 0x1083
     }
 
@@ -142,6 +207,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         PrivateKHR = 1 << 1
     }
+
     #endregion
 
     #region Platform
@@ -1259,7 +1325,7 @@ namespace OpenTK.Compute.OpenCL
         ///     See description of <c><see cref="QueueOnHostProperties">QueueOnHostProperties</see></c>
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperties">CommandQueueProperties</see></c>
         /// </para>
         /// </summary>
         [Obsolete("QueueProperties is a deprecated OpenCL 1.2 property, please use QueueOnHostProperties.")]
@@ -1272,10 +1338,10 @@ namespace OpenTK.Compute.OpenCL
         /// <para>
         ///     Describes the on host command-queue properties supported by the device.
         ///     The mandated minimum capability is:
-        ///     <c><see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></c>.
+        ///     <c><see cref="CommandQueueProperties.ProfilingEnable">ProfilingEnable</see></c>.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperties">CommandQueueProperties</see></c>
         /// </para>
         /// </summary>
         QueueOnHostProperties = 0x102A,
@@ -1292,13 +1358,13 @@ namespace OpenTK.Compute.OpenCL
         ///     When on-device queues are supported, the mandated minimum capability is:
         /// </para>
         /// <para>
-        ///     <pre><see cref="CommandQueueProperty.OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see> | <see cref="CommandQueueProperty.ProfilingEnable">ProfilingEnable</see></pre>
+        ///     <pre><see cref="CommandQueueProperties.OutOfOrderExecutionModeEnable">OutOfOrderExecutionModeEnable</see> | <see cref="CommandQueueProperties.ProfilingEnable">ProfilingEnable</see></pre>
         /// </para>
         /// <para>
         ///     Must be 0 for devices that do not support on-device queues.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperty">CommandQueueProperty</see></c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperties">CommandQueueProperties</see></c>
         /// </para>
         /// </summary>
         QueueOnDeviceProperties = 0x104E,
@@ -2805,37 +2871,37 @@ namespace OpenTK.Compute.OpenCL
     /// </para>
     /// </summary>
     [Flags]
-    public enum DeviceSvmCapabilities : uint
+    public enum DeviceSvmCapabilities : ulong
     {
         /// <summary>
-        /// Support for coarse-grain buffer sharing using
-        /// <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
-        /// Memory consistency is guaranteed at synchronization points and the host must use calls to
-        /// <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
-        /// MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
-        /// <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
+        ///     Support for coarse-grain buffer sharing using
+        ///     <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
+        ///     Memory consistency is guaranteed at synchronization points and the host must use calls to
+        ///     <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
+        ///     <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
         /// </summary>
         CoarseGrainBuffer = 1 << 0,
 
         /// <summary>
-        /// Support for fine-grain buffer sharing using
-        /// <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
-        /// Memory consistency is guaranteed at synchronization points and the host must use calls to
-        /// <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
-        /// MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
-        /// <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
+        ///     Support for fine-grain buffer sharing using
+        ///     <c><see cref="CL.SVMAlloc(CLContext, SvmMemoryFlags, UIntPtr, uint)">SVMAlloc()</see></c>.
+        ///     Memory consistency is guaranteed at synchronization points and the host must use calls to
+        ///     <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint, CLEvent[],out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c> and
+        ///     <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>.
         /// </summary>
         FineGrainBuffer = 1 << 1,
 
         /// <summary>
-        /// Support for sharing the host’s entire virtual memory including memory allocated using <c>malloc</c>.
-        /// Memory consistency is guaranteed at synchronization points.
+        ///     Support for sharing the host’s entire virtual memory including memory allocated using <c>malloc</c>.
+        ///     Memory consistency is guaranteed at synchronization points.
         /// </summary>
         FineGrainSystem = 1 << 2,
 
         /// <summary>
-        /// Support for the OpenCL 2.0 atomic operations that provide memory consistency
-        /// across the host and all OpenCL devices supporting fine-grain SVM allocations.
+        ///     Support for the OpenCL 2.0 atomic operations that provide memory consistency
+        ///     across the host and all OpenCL devices supporting fine-grain SVM allocations.
         /// </summary>
         Atomics = 1 << 3
     }
@@ -2860,7 +2926,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield that describes the kernel execution capabilities of a device.
     /// </summary>
     [Flags]
-    public enum DeviceExecutionCapabilities : uint
+    public enum DeviceExecutionCapabilities : ulong
     {
         /// <summary>
         /// The OpenCL device can execute OpenCL kernels.
@@ -2898,7 +2964,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield that describes the floating point configuration of a device.
     /// </summary>
     [Flags]
-    public enum DeviceFloatingPointConfig : uint
+    public enum DeviceFloatingPointConfig : ulong
     {
         /// <summary>
         /// Denorms are supported
@@ -2956,7 +3022,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield that describes the termination capability of the OpenCL device.
     /// </summary>
     [Flags]
-    public enum DeviceTerminateCapability : uint
+    public enum DeviceTerminateCapability : ulong
     {
         /// <summary>
         /// Indicates that context termination is supported.
@@ -3033,38 +3099,38 @@ namespace OpenTK.Compute.OpenCL
     /// </para>
     /// </summary>
     [Flags]
-    public enum DeviceAffinityDomain : uint
+    public enum DeviceAffinityDomain : ulong
     {
         /// <summary>
-        /// Split the device into sub-devices comprised of compute units that share a NUMA node.
+        ///     Split the device into sub-devices comprised of compute units that share a NUMA node.
         /// </summary>
         Numa = 1 << 0,
 
         /// <summary>
-        /// Split the device into sub-devices comprised of compute units that share a level 4 data cache.
+        ///     Split the device into sub-devices comprised of compute units that share a level 4 data cache.
         /// </summary>
         L4Cache = 1 << 1,
 
         /// <summary>
-        /// Split the device into sub-devices comprised of compute units that share a level 3 data cache.
+        ///     Split the device into sub-devices comprised of compute units that share a level 3 data cache.
         /// </summary>
         L3Cache = 1 << 2,
 
         /// <summary>
-        /// Split the device into sub-devices comprised of compute units that share a level 2 data cache.
+        ///     Split the device into sub-devices comprised of compute units that share a level 2 data cache.
         /// </summary>
         L2Cache = 1 << 3,
 
         /// <summary>
-        /// Split the device into sub-devices comprised of compute units that share a level 1 data cache.
+        ///     Split the device into sub-devices comprised of compute units that share a level 1 data cache.
         /// </summary>
         L1Cache = 1 << 4,
 
         /// <summary>
-        /// Split the device along the next partitionable affinity domain.
-        /// The implementation shall find the first level along which the device or sub-device
-        /// may be further subdivided in the order NUMA, L4, L3, L2, L1, and partition the device
-        /// into sub-devices comprised of compute units that share memory subsystems at this level.
+        ///     Split the device along the next partitionable affinity domain.
+        ///     The implementation shall find the first level along which the device or sub-device
+        ///     may be further subdivided in the order NUMA, L4, L3, L2, L1, and partition the device
+        ///     into sub-devices comprised of compute units that share memory subsystems at this level.
         /// </summary>
         NextPartionable = 1 << 5
     }
@@ -3073,7 +3139,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield to describe the atomic memory capabilities of a device.
     /// </summary>
     [Flags]
-    public enum DeviceAtomicCapabilities : uint
+    public enum DeviceAtomicCapabilities : ulong
     {
         /// <summary>
         /// Support for the <b>relaxed</b> memory order.
@@ -3116,7 +3182,7 @@ namespace OpenTK.Compute.OpenCL
     /// Bitfield that describes device-side enqueue capabilities of the device.
     /// </summary>
     [Flags]
-    public enum DeviceDeviceEnqueueCapabilities
+    public enum DeviceDeviceEnqueueCapabilities : ulong
     {
         /// <summary>
         /// Device supports device-side enqueue and on-device queues.
@@ -3131,34 +3197,135 @@ namespace OpenTK.Compute.OpenCL
 
     #endregion
 
-    #region Command Queue
+    #region Commands
+
+    /// <summary>
+    ///     The list of supported values for, and the information returned by
+    ///     <c><see cref="CL.GetCommandQueueInfo(CLCommandQueue, CommandQueueInfo, out byte[])">GetCommandQueueInfo()</see></c>
+    /// </summary>
     public enum CommandQueueInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Return the context specified when the command-queue is created.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
         Context = 0x1090,
+
+        /// <summary>
+        /// <para>
+        ///     Return the device specified when the command-queue is created.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLDevice">CLDevice</see></c>
+        /// </para>
+        /// </summary>
         Device = 0x1091,
+
+        /// <summary>
+        /// <para>
+        ///     Return the command-queue reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1092,
+
+        /// <summary>
+        /// <para>
+        ///     Return the currently specified properties for the command-queue.
+        ///     These properties are specified by the value associated with the
+        ///     <c><see cref="QueueProperties.Properties">Properties</see></c> passed in <c>properties</c>
+        ///     argument in
+        ///     <c><see cref="CL.CreateCommandQueueWithProperties(CLContext, IntPtr, IntPtr, out CLResultCode)">CreateCommandQueueWithProperties()</see></c>,
+        ///     or the value of the properties argument in
+        ///     <c><see cref="CL.CreateCommandQueue(CLContext, CLDevice, CommandQueueProperties, out CLResultCode)">CreateCommandQueue()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CommandQueueProperties">CommandQueueProperties</see></c>
+        /// </para>
+        /// </summary>
         Properties = 0x1093,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the properties argument specified in
+        ///     <c><see cref="CL.CreateCommandQueueWithProperties(CLContext, IntPtr, IntPtr, out CLResultCode)">CreateCommandQueueWithProperties()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the properties argument specified in
+        ///     <c><see cref="CL.CreateCommandQueueWithProperties(CLContext, IntPtr, IntPtr, out CLResultCode)">CreateCommandQueueWithProperties()</see></c>
+        ///     used to create <c>command_queue</c> was not NULL,
+        ///     the implementation must return the values specified
+        ///     in the properties argument in the same order and without including additional properties.
+        /// </para>
+        /// <para>
+        ///     If <c>command_queue</c> was created using
+        ///     <c><see cref="CL.CreateCommandQueue(CLContext, CLDevice, CommandQueueProperties, out CLResultCode)">CreateCommandQueue()</see></c>,
+        ///     or if the properties argument specified in
+        ///     <c><see cref="CL.CreateCommandQueueWithProperties(CLContext, IntPtr, IntPtr, out CLResultCode)">CreateCommandQueueWithProperties()</see></c>
+        ///     was NULL, the implementation must return <c>param_value_size_ret</c> equal to 0,
+        ///     indicating that there are no properties to be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="QueueProperties">QueueProperties[]</see></c>
+        /// </para>
+        /// </summary>
+        PropertiesArray = 0x1098,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the size of the device command-queue.
+        ///     To be considered valid for this query,
+        ///     command_queue must be a device command-queue.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         Size = 0x1094,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the current default command-queue for the underlying device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLCommandQueue">CLCommandQueue</see></c>
+        /// </para>
+        /// </summary>
         DeviceDefault = 0x1095
     }
 
     /// <summary>
-    /// Bitfield that describes the properties of a command queue.
+    ///     Bitfield that describes the properties of a command queue.
     /// </summary>
     [Flags]
-    public enum CommandQueueProperty : uint
+    public enum CommandQueueProperties : ulong
     {
         /// <summary>
-        /// Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
-        /// If set, the commands in the command-queue are executed out-of-order.
-        /// Otherwise, commands are executed in-order.
+        ///     Determines whether the commands queued in the command-queue are executed in-order or out-of-order.
+        ///     If set, the commands in the command-queue are executed out-of-order.
+        ///     Otherwise, commands are executed in-order.
         /// </summary>
         OutOfOrderExecutionModeEnable = 1 << 0,
 
         /// <summary>
-        /// Enable or disable profiling of commands in the command-queue.
-        /// If set, the profiling of commands is enabled.
-        /// Otherwise profiling of commands is disabled.
+        ///     Enable or disable profiling of commands in the command-queue.
+        ///     If set, the profiling of commands is enabled.
+        ///     Otherwise profiling of commands is disabled.
         /// </summary>
         ProfilingEnable = 1 << 1,
 
@@ -3187,7 +3354,61 @@ namespace OpenTK.Compute.OpenCL
         OnDeviceDefault = 1 << 3
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 2.0.</pre></i>
+    /// </para>
+    /// <para>
+    ///     List of supported queue creation properties by
+    ///     <c><see cref="CL.CreateCommandQueueWithProperties(CLContext, IntPtr, IntPtr, out CLResultCode)">CreateCommandQueueWithProperties()</see></c>.
+    /// </para>
+    /// </summary>
+    public enum QueueProperties : ulong
+    {
+        /// <summary>
+        /// <para>
+        ///     If <c><see cref="Properties">Properties</see></c> is not specified an
+        ///     in-order host command-queue is created for the specified device
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c><see cref="CommandQueueProperties">CommandQueueProperties</see></c>
+        /// </para>
+        /// </summary>
+        Properties = 0x1093,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Specifies the size of the device queue in bytes.
+        /// </para>
+        /// <para>
+        ///     This can only be specified if <c><see cref="CommandQueueProperties.OnDevice">OnDevice</see></c>
+        ///     is set in <c><see cref="Properties">Properties</see></c>.
+        ///     This must be a value ≤
+        ///     <c><see cref="DeviceInfo.QueueOnDeviceMaximumSize">QueueOnDeviceMaximumSize</see></c>.
+        /// </para>
+        /// <para>
+        ///     For best performance, this should be ≤
+        ///     <c><see cref="DeviceInfo.QueueOnDevicePreferredSize">QueueOnDevicePreferredSize</see></c>.
+        /// </para>
+        /// <para>
+        ///     If <c><see cref="Size">Size</see></c> is not specified,
+        ///     the device queue is created with
+        ///     <c><see cref="DeviceInfo.QueueOnDevicePreferredSize">QueueOnDevicePreferredSize</see></c>
+        ///     as the size of the queue.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        Size = 0x1094
+    }
+
     #endregion
+
+    #region Memory
 
     [Flags]
     public enum MemoryFlags : ulong
@@ -3226,11 +3447,6 @@ namespace OpenTK.Compute.OpenCL
         CL_MEM_RESERVED4_ARM = 1 << 36,
     }
 
-    public enum BufferCreateType : uint
-    {
-        Region = 0x1220
-    }
-
     public enum MemoryObjectType : uint
     {
         Buffer = 0x10F0,
@@ -3241,6 +3457,50 @@ namespace OpenTK.Compute.OpenCL
         Image1DArray = 0x10F5,
         Image1DBuffer = 0x10F6,
         Pipe = 0x10F7
+    }
+
+    public enum MemoryObjectInfo : uint
+    {
+        Type = 0x1100,
+        Flags = 0x1101,
+        Size = 0x1102,
+        HostPointer = 0x1103,
+        MapCount = 0x1104,
+        ReferenceCount = 0x1105,
+        Context = 0x1106,
+        AssociatedMemoryObject = 0x1107,
+        Offset = 0x1108,
+        UsesSvmPointer = 0x1109
+    }
+
+    [Flags]
+    public enum SvmMemoryFlags : ulong
+    {
+        ReadWrite = 1 << 0,
+        WriteOnly = 1 << 1,
+        ReadOnly = 1 << 2,
+        UseHostPointer = 1 << 3,
+        AllocateHostPointer = 1 << 4,
+        CopyHostPointer = 1 << 5,
+        HostWriteOnly = 1 << 7,
+        HostReadOnly = 1 << 8,
+        HostNoAccess = 1 << 9,
+        SvmFineGrainBuffer = 1 << 10,
+        SvmAtomics = 1 << 11,
+        KernelReadAndWrite = 1 << 12
+    }
+
+    [Flags]
+    public enum MemoryMigrationFlags : ulong
+    {
+        Host = 1 << 0,
+        ContentUndefined = 1 << 1
+    }
+
+    #endregion
+    public enum BufferCreateType : uint
+    {
+        Region = 0x1220
     }
 
     public enum ImageInfo : uint
@@ -3303,41 +3563,10 @@ namespace OpenTK.Compute.OpenCL
         NormalizedUnsignedInteger101010Version2 = 0x10E0
     }
 
-    public enum MemoryObjectInfo : uint
-    {
-        Type = 0x1100,
-        Flags = 0x1101,
-        Size = 0x1102,
-        HostPointer = 0x1103,
-        MapCount = 0x1104,
-        ReferenceCount = 0x1105,
-        Context = 0x1106,
-        AssociatedMemoryObject = 0x1107,
-        Offset = 0x1108,
-        UsesSvmPointer = 0x1109
-    }
-
     public enum PipeInfo : uint
     {
         PacketSize = 0x1120,
         MaximumNumberOfPackets = 0x1121
-    }
-
-    [Flags]
-    public enum SvmMemoryFlags : ulong
-    {
-        ReadWrite = 1 << 0,
-        WriteOnly = 1 << 1,
-        ReadOnly = 1 << 2,
-        UseHostPointer = 1 << 3,
-        AllocateHostPointer = 1 << 4,
-        CopyHostPointer = 1 << 5,
-        HostWriteOnly = 1 << 7,
-        HostReadOnly = 1 << 8,
-        HostNoAccess = 1 << 9,
-        SvmFineGrainBuffer = 1 << 10,
-        SvmAtomics = 1 << 11,
-        KernelReadAndWrite = 1 << 12
     }
 
     public enum SamplerInfo : uint
@@ -3467,13 +3696,6 @@ namespace OpenTK.Compute.OpenCL
         Read = 1 << 0,
         Write = 1 << 1,
         WriteInvalidateRegion = 1 << 2
-    }
-
-    [Flags]
-    public enum MemoryMigrationFlags : ulong
-    {
-        Host = 1 << 0,
-        ContentUndefined = 1 << 1
     }
 
     #region Unfinished
