@@ -58,7 +58,7 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.SetCursorPos(x, y);
             if (success == false)
             {
-                throw new Win32Exception("SetCursorPos failed.");
+                throw new Win32Exception();
             }
         }
 

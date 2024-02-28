@@ -1239,15 +1239,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            //IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
-            //CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
-
             CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
-
-            //CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
-
-            //x = (int)backingRect.origin.x;
-            //y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
 
             x = (int)frame.origin.x;
             y = (int)CG.FlipYCoordinate(frame.origin.y + frame.size.y);
@@ -1269,11 +1261,11 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            CGRect rect = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
             // FIXME: Do not cast to int?
-            width = (int)rect.size.x;
-            height = (int)rect.size.y;
+            width = (int)frame.size.x;
+            height = (int)frame.size.y;
         }
 
         /// <inheritdoc/>
@@ -1290,16 +1282,47 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
+        public void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+
+            // FIXME: Do not cast to int?
+            x = (int)frame.origin.x;
+            y = (int)CG.FlipYCoordinate(frame.origin.y + frame.size.y);
+            width = (int)frame.size.x;
+            height = (int)frame.size.y;
+        }
+
+        /// <inheritdoc/>
+        public void SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            float flippedY = CG.FlipYCoordinate(y);
+
+            CGRect frame;
+            frame.origin.x = x;
+            frame.origin.y = flippedY;
+            frame.size.x = width;
+            frame.size.y = height;
+
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
+        }
+
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
             CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
 
-            CGRect screenRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
+            CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
 
-            x = (int)screenRect.origin.x;
-            y = (int)CG.FlipYCoordinate(screenRect.origin.y + screenRect.size.y);
+            x = (int)screenFrame.origin.x;
+            y = (int)CG.FlipYCoordinate(screenFrame.origin.y + screenFrame.size.y);
         }
 
         /// <inheritdoc/>
@@ -1308,8 +1331,6 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME:
             //throw new NotImplementedException();
         }
-
-        // FIXME: Separate the window size from the framebuffer size?
 
         /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out int width, out int height)
@@ -1334,6 +1355,31 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
 
+        /// <inheritdoc/>
+        public void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
+
+            CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
+
+            // FIXME: Do not cast to int?
+            x = (int)screenFrame.origin.x;
+            y = (int)CG.FlipYCoordinate(screenFrame.origin.y + screenFrame.size.y);
+            width = (int)screenFrame.size.x;
+            height = (int)screenFrame.size.y;
+        }
+
+        /// <inheritdoc/>
+        public void SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            throw new NotImplementedException();
+        }
+
+        // FIXME: Separate the window size from the framebuffer size?
         public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);

@@ -94,10 +94,9 @@ namespace OpenTK.Platform.Native.Windows
             wndClass.lpszClassName = CLASS_NAME;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-
             if (wndClassAtom == 0)
             {
-                throw new Win32Exception("RegisterClassEx failed!");
+                throw new Win32Exception();
             }
 
             HelperHWnd = Win32.CreateWindowEx(
@@ -113,10 +112,9 @@ namespace OpenTK.Platform.Native.Windows
                 IntPtr.Zero,
                 HInstance,
                 IntPtr.Zero);
-
             if (HelperHWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("Failed to create helper window");
+                throw new Win32Exception();
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
@@ -945,7 +943,7 @@ namespace OpenTK.Platform.Native.Windows
                             long length = Win32.ImmGetCompositionString(hmic, GCS.CompStr, (Span<byte>)null, 0);
                             if (length == IMM_ERROR_NODATA || length == IMM_ERROR_GENERAL)
                             {
-                                throw new Win32Exception("IME error");
+                                throw new Win32Exception();
                             }
                             else
                             {
@@ -954,7 +952,7 @@ namespace OpenTK.Platform.Native.Windows
                                 long written = Win32.ImmGetCompositionString(hmic, GCS.CompStr, bytes, (uint)bytes.Length);
                                 if (written == IMM_ERROR_NODATA || written == IMM_ERROR_GENERAL)
                                 {
-                                    throw new Win32Exception("IME error");
+                                    throw new Win32Exception();
                                 }
 
                                 string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
@@ -1173,10 +1171,9 @@ namespace OpenTK.Platform.Native.Windows
             HWND hwnd = handle.As<HWND>(this);
 
             bool success = Win32.SetWindowText(hwnd.HWnd, title);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window title");
+                throw new Win32Exception();
             }
         }
 
@@ -1255,16 +1252,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            // FIXME: This includes the drop shadow.. we probably don't want that??
-            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetWindowRect failed");
-            }
-
-            x = lpRect.left;
-            y = lpRect.top;
+            GetBounds(hwnd, out x, out y, out _, out _);
         }
 
         /// <inheritdoc/>
@@ -1274,10 +1262,9 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position");
+                throw new Win32Exception();
             }
         }
 
@@ -1286,15 +1273,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetWindowRect failed");
-            }
-
-            width = lpRect.right - lpRect.left;
-            height = lpRect.bottom - lpRect.top;
+            GetBounds(hwnd, out _, out _, out width, out height);
         }
 
         /// <inheritdoc/>
@@ -1304,10 +1283,39 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, width, height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window size");
+                throw new Win32Exception();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            x = lpRect.left;
+            y = lpRect.top;
+            width = lpRect.Width;
+            height = lpRect.Height;
+        }
+
+        /// <inheritdoc/>
+        public void SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
+            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, width, height, SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
@@ -1319,10 +1327,9 @@ namespace OpenTK.Platform.Native.Windows
             Win32.POINT point = new Win32.POINT(0, 0);
 
             bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
-
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed");
+                throw new Win32Exception();
             }
 
             x = point.X;
@@ -1342,18 +1349,16 @@ namespace OpenTK.Platform.Native.Windows
             // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
             // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
-
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed");
+                throw new Win32Exception();
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, rect.left, rect.top, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position");
+                throw new Win32Exception();
             }
         }
 
@@ -1362,15 +1367,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetClientRect failed");
-            }
-
-            width = lpRect.right;
-            height = lpRect.bottom;
+            GetClientBounds(hwnd, out _, out _, out width, out height);
         }
 
         /// <inheritdoc/>
@@ -1387,18 +1384,60 @@ namespace OpenTK.Platform.Native.Windows
             // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
             // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
-
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed");
+                throw new Win32Exception();
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, rect.Width, rect.Height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("SetWindowPos failed");
+                throw new Win32Exception();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            x = lpRect.left;
+            y = lpRect.top;
+            width = lpRect.Width;
+            height = lpRect.Height;
+        }
+
+        /// <inheritdoc/>
+        public void SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.RECT rect = new Win32.RECT(x, y, x + width, y + height);
+
+            WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
+
+            // This assumes the window doesn't have a menu bar or scroll bars. For now our windows don't have those, but it's possible that could change.
+            // A user could also modify the window manually so that it has a menubar or scrollbar.
+            // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
+            // - 2023-06-28 Noggin_bops
+            bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
+            success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, rect.left, rect.top, rect.Width, rect.Height, SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
@@ -1972,7 +2011,7 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.ScreenToClient(hwnd.HWnd, ref point);
             if (success == false)
             {
-                throw new Win32Exception("ScreenToClient failed.");
+                throw new Win32Exception();
             }
 
             clientX = point.X;
@@ -1990,7 +2029,7 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed.");
+                throw new Win32Exception();
             }
 
             x = point.X;

@@ -167,6 +167,26 @@ namespace OpenTK.Core.Platform
         void SetSize(WindowHandle handle, int width, int height);
 
         /// <summary>
+        /// Get the bounds of the window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="x">X coordinate of the window.</param>
+        /// <param name="y">Y coordinate of the window.</param>
+        /// <param name="width">Width of the window in pixels.</param>
+        /// <param name="height">Height of the window in pixels.</param>
+        void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height);
+
+        /// <summary>
+        /// Set the bounds of the window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="x">New X coordinate of the window.</param>
+        /// <param name="y">New Y coordinate of the window.</param>
+        /// <param name="width">New width of the window in pixels.</param>
+        /// <param name="height">New height of the window in pixels.</param>
+        void SetBounds(WindowHandle handle, int x, int y, int width, int height);
+
+        /// <summary>
         /// Get the position of the client area (drawing area) of a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -201,6 +221,26 @@ namespace OpenTK.Core.Platform
         /// <param name="height">New height of the client area in pixels.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void SetClientSize(WindowHandle handle, int width, int height);
+
+        /// <summary>
+        /// Get the client area bounds (drawing area) of a window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="x">X coordinate of the client area.</param>
+        /// <param name="y">Y coordinate of the client area.</param>
+        /// <param name="width">Width of the client area in pixels.</param>
+        /// <param name="height">Height of the client area in pixels.</param>
+        void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height);
+
+        /// <summary>
+        /// Set the client area bounds (drawing area) of a window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="x">New X coordinate of the client area.</param>
+        /// <param name="y">New Y coordinate of the client area.</param>
+        /// <param name="width">New width of the client area in pixels.</param>
+        /// <param name="height">New height of the client area in pixels.</param>
+        void SetClientBounds(WindowHandle handle, int x, int y, int width, int height);
 
         /// <summary>
         /// Gets the maximum size of the client area.

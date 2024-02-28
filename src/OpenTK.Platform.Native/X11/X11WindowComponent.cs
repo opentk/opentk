@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net;
-using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -460,7 +458,7 @@ namespace OpenTK.Platform.Native.X11
                                         XAtom uriList = XInternAtom(X11.Display, "text/uri-list", false);
                                         XAtom plain = XInternAtom(X11.Display, "text/plain", false);
 
-                                        foreach (var type in types)
+                                        foreach (XAtom type in types)
                                         {
                                             if (type == uriList || type == plain)
                                             {
@@ -1259,7 +1257,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public bool IsWindowDestroyed(WindowHandle handle)
         {
-            var xhandle = handle.As<XWindowHandle>(this);
+            XWindowHandle xhandle = handle.As<XWindowHandle>(this);
 
             return xhandle.Destroyed;
         }
@@ -1267,7 +1265,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public string GetTitle(WindowHandle handle)
         {
-            var window = handle.As<XWindowHandle>(this);
+            XWindowHandle window = handle.As<XWindowHandle>(this);
 
             // Prefer to fetch the freedesktop name.
             int status = XGetWindowProperty(
@@ -1299,7 +1297,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void SetTitle(WindowHandle handle, string title)
         {
-            var window = handle.As<XWindowHandle>(this);
+            XWindowHandle window = handle.As<XWindowHandle>(this);
             byte[] titleBytes = System.Text.Encoding.UTF8.GetBytes(title);
 
             XStoreName(window.Display, window.Window, title);   // Set classic name,
@@ -1390,7 +1388,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         private void GetWindowExtents(WindowHandle handle, out int left, out int right, out int top, out int bottom)
         {
-            var window = handle.As<XWindowHandle>(this);
+            XWindowHandle window = handle.As<XWindowHandle>(this);
             int status = XGetWindowProperty(
                 window.Display,
                 window.Window,
@@ -1476,17 +1474,60 @@ namespace OpenTK.Platform.Native.X11
             if (IsWindowManagerFreedesktop)
             {
                 GetWindowExtents(xwindow, out int left, out int right, out int top, out int bottom);
-                innerWidth -= left + right;
-                innerHeight -= top + bottom;
+                innerWidth = Math.Max(width - left - right, 0);
+                innerHeight = Math.Max(height - top - bottom, 0);
             }
 
             SetClientSize(xwindow, innerWidth, innerHeight);
         }
 
+        /// <inheritdoc/>
+        public void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: Check status?
+            int status = XGetWindowAttributes(xwindow.Display, xwindow.Window, out XWindowAttributes attributes);
+
+            x = attributes.X;
+            y = attributes.Y;
+            width = attributes.Width;
+            height = attributes.Height;
+
+            if (IsWindowManagerFreedesktop)
+            {
+                GetWindowExtents(handle, out int left, out int right, out int top, out int bottom);
+                x -= left;
+                y -= top;
+                width += left + right;
+                height += top + bottom;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            uint innerWidth = (uint)width;
+            uint innerHeight = (uint)height;
+
+            if (IsWindowManagerFreedesktop)
+            {
+                GetWindowExtents(handle, out int left, out int right, out int top, out int bottom);
+                x -= left;
+                y -= top;
+                innerWidth = (uint)Math.Max(width - left - right, 0);
+                innerHeight = (uint)Math.Max(height - top - bottom, 0);
+            }
+
+            XMoveResizeWindow(X11.Display, xwindow.Window, x, y, innerWidth, innerHeight);
+        }
+
         /// <inheritdoc />
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
-            var window = handle.As<XWindowHandle>(this);
+            XWindowHandle window = handle.As<XWindowHandle>(this);
             XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
             XTranslateCoordinates(
                 window.Display,
@@ -1510,7 +1551,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            var window = handle.As<XWindowHandle>(this);
+            XWindowHandle window = handle.As<XWindowHandle>(this);
             int status = XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
 
             width = attributes.Width;
@@ -1525,6 +1566,28 @@ namespace OpenTK.Platform.Native.X11
             XResizeWindow(X11.Display, xwindow.Window, width, height);
 
             XFlush(X11.Display);
+        }
+
+        /// <inheritdoc/>
+        public void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: Check status?
+            int status = XGetWindowAttributes(xwindow.Display, xwindow.Window, out XWindowAttributes attributes);
+
+            x = attributes.X;
+            y = attributes.Y;
+            width = attributes.Width;
+            height = attributes.Height;
+        }
+
+        /// <inheritdoc/>
+        public void SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XMoveResizeWindow(X11.Display, xwindow.Window, x, y, (uint)width, (uint)height);
         }
 
         /// <inheritdoc />
@@ -1678,10 +1741,7 @@ namespace OpenTK.Platform.Native.X11
             // We would ideally match that behaviour.
             // - Noggin_bops 2023-10-05
 
-            // FIXME: GetBounds function
-            GetPosition(xwindow, out int x, out int y);
-            GetSize(xwindow, out int width, out int height);
-
+            GetBounds(xwindow, out int x, out int y, out int width, out int height);
             Box2i bounds = new Box2i(x, y, x + width, y + height);
 
             DisplayHandle? bestDisp = null;

@@ -403,6 +403,18 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IWindowComponent.GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            _windowComponent!.GetBounds(handle, out x, out y, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            _windowComponent!.SetBounds(handle, x, y, width, height);
+        }
+
+        /// <inheritdoc/>
         void IWindowComponent.GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             _windowComponent!.GetClientPosition(handle, out x, out y);
@@ -424,6 +436,18 @@ namespace OpenTK.Core.Platform
         void IWindowComponent.SetClientSize(WindowHandle handle, int width, int height)
         {
             _windowComponent!.SetClientSize(handle, width, height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            _windowComponent!.GetClientBounds(handle, out x, out y, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            _windowComponent!.SetClientBounds(handle, x, y, width, height);
         }
 
         /// <inheritdoc/>

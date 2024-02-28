@@ -237,7 +237,7 @@ namespace OpenTK.Platform.Native.Windows
             int read = Win32.GetKeyboardLayoutList(count, layouts);
             if (read == 0)
             {
-                throw new Win32Exception("GetKeyboardLayoutList failed");
+                throw new Win32Exception();
             }
 
             IntPtr oldLayout = Win32.GetKeyboardLayout(0);

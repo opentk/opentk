@@ -36,11 +36,15 @@ namespace OpenTK.Backends.Tests
                     Program.WindowComp.GetClientPosition(Program.Window, out int cpx, out int cpy);
                     Program.WindowComp.GetSize(Program.Window, out int w, out int h);
                     Program.WindowComp.GetClientSize(Program.Window, out int cw, out int ch);
+                    Program.WindowComp.GetBounds(Program.Window, out int bpx, out int bpy, out int bw, out int bh);
+                    Program.WindowComp.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
 
                     ImGui.Text($"Position: ({px}, {py})");
                     ImGui.Text($"Client Position: ({cpx}, {cpy})");
                     ImGui.Text($"Size: ({w}, {h})");
                     ImGui.Text($"Client Size: ({cw}, {ch})");
+                    ImGui.Text($"Bounds: (x:{bpx}, y:{bpy}, w:{bw}, h:{bh})");
+                    ImGui.Text($"Client Bounds: (x:{bcpx}, y:{bcpy}, w:{bcw}, h:{bch})");
                     // FIXME: Framebuffer size?
 
                     if (Program.WindowComp is MacOSWindowComponent macOSWindowComp)
