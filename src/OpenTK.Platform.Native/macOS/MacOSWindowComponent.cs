@@ -129,7 +129,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selDisplay = sel_registerName("display"u8);
         internal static readonly SEL selSetSymbolConfiguration = sel_registerName("setSymbolConfiguration:"u8);
 
-
+        internal static readonly SEL selDefaultCenter = sel_registerName("defaultCenter"u8);
+        internal static readonly SEL selAddObserver_selector_name_object = sel_registerName("addObserver:selector:name:object:"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
@@ -142,7 +143,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
-
+        internal static readonly ObjCClass NSNotificationCenterClass = objc_getClass("NSNotificationCenter"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -222,6 +223,11 @@ namespace OpenTK.Platform.Native.macOS
 
             // Allocate a window class
             NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
+
+            // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
+            class_addIvar(NSOpenTKWindowClass, "otkPALWindowComponent"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
+
+            // NSWindow methods.
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), NSOtkWindow_WindowShouldCloseInst, "b@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("zoom:"u8), NSOtkWindow_ZoomInst, "v@:@"u8);
             //class_addMethod(opentkWindowClass, sel_registerName("keyDown:"u8), (KeyDownDelegate)keyDown, "v@:@"u8);
@@ -235,6 +241,8 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidDeminiaturize:"u8), NSOtkWindowDelegate_WindowDidDeminiaturizeInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidEnterFullScreen:"u8), NSOtkWindowDelegate_WindowDidEnterFullScreenInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidExitFullScreen:"u8), NSOtkWindowDelegate_WindowDidExitFullScreenInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("didChangeScreenParameters:"u8), NSOtkWindowDelegate_DidChangeScreenParametersInst, "v@:@"u8);
+
             objc_registerClassPair(NSOpenTKWindowClass);
 
             IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
@@ -486,7 +494,17 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-
+        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_DidChangeScreenParametersInst = NSOtkWindowDelegate_DidChangeScreenParameters;
+        private static void NSOtkWindowDelegate_DidChangeScreenParameters(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            object_getInstanceVariable(@delegate, "otkPALWindowComponent"u8, out IntPtr windowCompPtr);
+            ILogger? logger = null;
+            if (((GCHandle)windowCompPtr).Target is IWindowComponent windowComponent)
+            {
+                logger = windowComponent.Logger;
+            }
+            MacOSDisplayComponent.UpdateDisplays(logger, true);
+        }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void NSOtkView_ResetCursorRects_(IntPtr view, SEL selector);
@@ -502,6 +520,8 @@ namespace OpenTK.Platform.Native.macOS
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
                 // FIXME: How do we get the logger here?
+                // We could create an Ivar like we do with NSOtkWindowDelegate_DidChangeScreenParameters
+                // - Noggin_bops 2024-02-28
                 //Logger?.LogWarning($"Received ResetCurorRects event for unknown window: {window}");
                 Console.WriteLine($"Received ResetCurorRects event for unknown window: {window}");
                 return;
@@ -1122,7 +1142,6 @@ namespace OpenTK.Platform.Native.macOS
 
             NSWindowDict.Add(windowPtr, nswindow);
 
-
             // FIXME: Move this somewhere?
             objc_msgSend(windowPtr, selSetDelegate, windowPtr);
             // Makes the view able to get text input?
@@ -1130,6 +1149,16 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, selMakeKeyWindow);
             objc_msgSend(windowPtr, selCenter);
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
+
+            // FIXME: Store the Ivar somewhere so we can use it later?
+            object_setInstanceVariable(windowPtr, "otkPALWindowComponent"u8, (IntPtr)GCHandle.Alloc(this, GCHandleType.Normal));
+
+            IntPtr notificationCenter = objc_msgSend_IntPtr((IntPtr)NSNotificationCenterClass, selDefaultCenter);
+            objc_msgSend(notificationCenter, selAddObserver_selector_name_object,
+                windowPtr,
+                sel_registerName("didChangeScreenParameters:"u8),
+                NSApplicationDidChangeScreenParametersNotification,
+                IntPtr.Zero);
 
             IntPtr inputContext = objc_msgSend_IntPtr(viewPtr, selInputContext);
 

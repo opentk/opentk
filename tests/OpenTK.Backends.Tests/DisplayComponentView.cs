@@ -78,6 +78,20 @@ namespace OpenTK.Backends.Tests
 
         public void HandleConnectionChange(DisplayConnectionChangedEventArgs connectionChange)
         {
+            Program.Logger.LogInfo("Refreshing screen info!");
+            if (connectionChange.Disconnected)
+            {
+                // FIXME: Make sure that we can always get the name of disconnected displays
+                // We probably want a few DisplayComponent function to still work in the disconnected
+                // event so we should formalize and document this.
+                // - Noggin_bops 2024-02-28
+                Program.Logger.LogDebug($"Display '{Program.DisplayComponent!.GetName(connectionChange.Display)}' was disconnected.");
+            }
+            else
+            {
+                Program.Logger.LogDebug($"Display '{Program.DisplayComponent!.GetName(connectionChange.Display)}' was connected.");
+            }
+
             // FIXME: For now we just recreate the entire list of displays.
             BoundingBox = Box2i.Empty;
             Displays.Clear();

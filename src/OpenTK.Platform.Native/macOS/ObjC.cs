@@ -24,6 +24,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr /* CFString */ IO16BitFloatPixels = CFStringCreateWithBytes(0, "-16FR16FG16FB16F"u8, CFStringEncoding.UTF8, false);
         internal static readonly IntPtr /* CFString */ IO32BitFloatPixels = CFStringCreateWithBytes(0, "-32FR32FG32FB32F"u8, CFStringEncoding.UTF8, false);
 
+        internal static readonly IntPtr /* NSString */ NSApplicationDidChangeScreenParametersNotification = GetStringConstant(AppKitLibrary, "NSApplicationDidChangeScreenParametersNotification"u8);
+
         // FIXME: Number type enum!
         internal const int kCFNumberIntType = 9;
 
@@ -143,6 +145,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, NSSize size);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value1, SEL value2, IntPtr value3, IntPtr value4);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector);

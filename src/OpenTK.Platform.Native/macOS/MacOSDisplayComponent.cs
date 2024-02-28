@@ -58,13 +58,23 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, "MacOSDisplayComponent can only initialize the Display component.");
             }
 
+            UpdateDisplays(Logger, false);
+        }
+
+        internal static unsafe void UpdateDisplays(ILogger? logger, bool sendEvents)
+        {
+            List<NSScreenHandle> newDisplays = new List<NSScreenHandle>();
+
+            List<NSScreenHandle> removedDisplays = new List<NSScreenHandle>(_displays);
+
+            // FIXME: Maybe use CGGetOnlineDisplayList?
             CGError status = CGGetActiveDisplayList(0, null, out uint noDisplays);
             if (status != CGError.Success)
             {
                 // FIXME:
             }
             Span<uint> displays = stackalloc uint[(int)noDisplays];
-            fixed(uint* displaysPtr = displays)
+            fixed (uint* displaysPtr = displays)
             {
                 CGGetActiveDisplayList(noDisplays, displaysPtr, out noDisplays);
             }
@@ -72,10 +82,7 @@ namespace OpenTK.Platform.Native.macOS
             for (int i = 0; i < displays.Length; i++)
             {
                 if (CGDisplayIsAsleep(displays[i]) != 0)
-                {
-                    // This display is asleep, ignore it.
                     continue;
-                }
 
                 uint unitNumber = CGDisplayUnitNumber(displays[i]);
 
@@ -98,6 +105,18 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 }
 
+                // If this display already existed remove it from the removed list.
+                NSScreenHandle? handle = null;
+                for (int j = 0; j < _displays.Count; j++)
+                {
+                    if (_displays[j].UnitNumber == unitNumber)
+                    {
+                        handle = _displays[j];
+                        removedDisplays.Remove(handle);
+                        break;
+                    }
+                }
+
                 // FIXME: Returns BOOL
                 string name = "Display";
                 if (objc_msgSend_bool(nsscreen, selRespondsToSelector, selLocalizedName))
@@ -108,18 +127,72 @@ namespace OpenTK.Platform.Native.macOS
                 {
                     // FIXME: If localizedName doesn't work we could use the IOKit api to query the name
                     // Is this needed?
-                    Logger?.LogWarning($"Could not get localized name from: CGDirectDisplayID={displays[i]}, UnitNumber={unitNumber}, NSScreen={nsscreen}");
+                    logger?.LogWarning($"Could not get localized name from: CGDirectDisplayID={displays[i]}, UnitNumber={unitNumber}, NSScreen={nsscreen}");
                 }
 
-                bool primary = CGDisplayIsMain(displays[i]) != 0;
+                bool isPrimary = CGDisplayIsMain(displays[i]) != 0;
 
                 IntPtr mode = CGDisplayCopyDisplayMode(displays[i]);
                 var width = CGDisplayPixelsWide(displays[i]);
 
                 CGDisplayModeRelease(mode);
 
-                NSScreenHandle handle = new NSScreenHandle(displays[i], unitNumber, nsscreen, name, primary);
-                _displays.Add(handle);
+                if (handle == null)
+                {
+                    handle = new NSScreenHandle(displays[i], unitNumber, nsscreen, name, isPrimary);
+                    newDisplays.Add(handle);
+                }
+                else
+                {
+                    handle.Name = name;
+                    handle.Screen = nsscreen;
+                    handle.IsPrimary = isPrimary;
+                    handle.DirectDisplayID = displays[i];
+                }
+            }
+
+            // FIXME: Should we really update _display as we are sending the events?
+            // Wouldn't it be better if we had figured out the elements and order before
+            // we start sending events?
+            // - Noggin_bops 2024-02-28
+
+            foreach (NSScreenHandle removed in removedDisplays)
+            {
+                _displays.Remove(removed);
+                if (sendEvents)
+                {
+                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                }
+            }
+
+            foreach (NSScreenHandle connected in newDisplays)
+            {
+                _displays.Add(connected);
+                if (sendEvents)
+                {
+                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                }
+            }
+
+            NSScreenHandle? primary = null;
+            foreach (NSScreenHandle display in _displays)
+            {
+                if (display.IsPrimary)
+                {
+                    primary = display;
+                    break;
+                }
+            }
+
+            if (primary != null)
+            {
+                int index = _displays.IndexOf(primary);
+                _displays.RemoveAt(index);
+                _displays.Insert(0, primary);
+            }
+            else
+            {
+                logger?.LogWarning("Could not find primary monitor!");
             }
         }
 
