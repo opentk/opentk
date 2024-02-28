@@ -7,14 +7,18 @@ namespace OpenTK.Platform.Native.macOS
 {
     public class MacOSKeyboardComponent : IKeyboardComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(MacOSKeyboardComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.KeyboardInput;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
-        public static bool[] KeyboardState = new bool[256];
+        internal static bool[] KeyboardState = new bool[256];
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.KeyboardInput)
@@ -23,16 +27,20 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public bool SupportsLayouts => false;
 
+        /// <inheritdoc/>
         public bool SupportsIme => false;
 
+        /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle)
         {
             // FIXME:
             return "Unknown";
         }
 
+        /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             // FIXME:
@@ -235,22 +243,26 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public Scancode GetScancodeFromKey(Key key)
         {
             return Scancode.Unknown;
         }
 
+        /// <inheritdoc/>
         public Key GetKeyFromScancode(Scancode scancode)
         {
             return Key.Unknown;
         }
 
+        /// <inheritdoc/>
         public void GetKeyboardState(bool[] keyboardState)
         {
             Array.Fill(keyboardState, false);
             Array.Copy(KeyboardState, keyboardState, Math.Min(KeyboardState.Length, keyboardState.Length));
         }
 
+        /// <inheritdoc/>
         public KeyModifier GetKeyboardModifiers()
         {
             ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr((IntPtr)MacOSWindowComponent.NSEventClass, MacOSWindowComponent.selModifierFlags)).ToUInt64();
@@ -291,16 +303,19 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void BeginIme(WindowHandle window)
         {
             // FIXME:
         }
 
+        /// <inheritdoc/>
         public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
         {
             // FIXME:
         }
 
+        /// <inheritdoc/>
         public void EndIme(WindowHandle window)
         {
             // FIXME:
