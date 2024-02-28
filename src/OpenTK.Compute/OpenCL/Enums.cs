@@ -3197,7 +3197,7 @@ namespace OpenTK.Compute.OpenCL
 
     #endregion
 
-    #region Commands
+    #region Command Queue
 
     /// <summary>
     ///     The list of supported values for, and the information returned by
@@ -3406,6 +3406,15 @@ namespace OpenTK.Compute.OpenCL
         Size = 0x1094
     }
 
+    public enum CommandExecutionStatus : int
+    {
+        Error = -0x1,
+        Complete = 0x0,
+        Running = 0x1,
+        Submitted = 0x2,
+        Queued = 0x3
+    }
+
     #endregion
 
     #region Memory
@@ -3498,10 +3507,8 @@ namespace OpenTK.Compute.OpenCL
     }
 
     #endregion
-    public enum BufferCreateType : uint
-    {
-        Region = 0x1220
-    }
+
+    #region Image
 
     public enum ImageInfo : uint
     {
@@ -3518,6 +3525,17 @@ namespace OpenTK.Compute.OpenCL
         NumberOfSamples = 0x111A
     }
 
+    #endregion
+
+    #region Buffer
+    public enum BufferCreateType : uint
+    {
+        Region = 0x1220
+    }
+
+    #endregion
+
+    #region Channel
     public enum ChannelOrder : uint
     {
         R = 0x10B0,
@@ -3563,12 +3581,18 @@ namespace OpenTK.Compute.OpenCL
         NormalizedUnsignedInteger101010Version2 = 0x10E0
     }
 
+    #endregion
+
+    #region Pipe
     public enum PipeInfo : uint
     {
         PacketSize = 0x1120,
         MaximumNumberOfPackets = 0x1121
     }
 
+    #endregion
+
+    #region Sampler
     public enum SamplerInfo : uint
     {
         ReferenceCount = 0x1150,
@@ -3595,7 +3619,9 @@ namespace OpenTK.Compute.OpenCL
         Repeat = 0x1133,
         MirroredRepeat = 0x1134
     }
+    #endregion
 
+    #region Program
     public enum ProgramInfo : uint
     {
         ReferenceCount = 0x1160,
@@ -3619,6 +3645,9 @@ namespace OpenTK.Compute.OpenCL
         GlobalVariableTotalSize = 0x1185
     }
 
+    #endregion
+
+    #region Kernel
     public enum KernelExecInfo : uint
     {
         SvmPointers = 0x11B6,
@@ -3663,6 +3692,9 @@ namespace OpenTK.Compute.OpenCL
         LocalSizeForSubGroupCount = 0x11B8
     }
 
+    #endregion
+
+    #region Other
     public enum EventInfo : uint
     {
         CommandQueue = 0x11D0,
@@ -3670,15 +3702,6 @@ namespace OpenTK.Compute.OpenCL
         ReferenceCount = 0x11D2,
         CommandExecutionStatus = 0x11D3,
         Context = 0x11D4
-    }
-
-    public enum CommandExecutionStatus : int
-    {
-        Error = -0x1,
-        Complete = 0x0,
-        Running = 0x1,
-        Submitted = 0x2,
-        Queued = 0x3
     }
 
     public enum ProfilingInfo : uint
@@ -3697,8 +3720,6 @@ namespace OpenTK.Compute.OpenCL
         Write = 1 << 1,
         WriteInvalidateRegion = 1 << 2
     }
-
-    #region Unfinished
 
     #endregion
 }
