@@ -220,6 +220,10 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
+            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
+            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
+            // - Noggin_bops 2024-02-28
+
             HMonitor? primary = null;
             foreach (HMonitor display in _displays)
             {

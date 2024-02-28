@@ -35,6 +35,9 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Exception("ShellComponent can only initialize the Shell component.");
             }
+
+            // Set the inital theme so we can detect changes later.
+            LastTheme = GetCurrentTheme();
         }
 
         /// <inheritdoc/>
