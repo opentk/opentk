@@ -3665,10 +3665,33 @@ namespace OpenTK.Compute.OpenCL
         UsesSvmPointer = 0x1109
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Bit-field used to specify memory migration options.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#migration-flags-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     [Flags]
     public enum MemoryMigrationFlags : ulong
     {
+        /// <summary>
+        ///     This flag indicates that the specified set of memory objects
+        ///     are to be migrated to the host, regardless of the target command-queue.
+        /// </summary>
         Host = 1 << 0,
+
+        /// <summary>
+        ///     This flag indicates that the contents of the set of memory
+        ///     objects are undefined after migration. The specified set of memory
+        ///     objects are migrated to the device associated with
+        ///     <c>command_queue</c> without incurring the overhead of migrating their contents.
+        /// </summary>
         ContentUndefined = 1 << 1
     }
 
@@ -3691,38 +3714,161 @@ namespace OpenTK.Compute.OpenCL
         NumberOfSamples = 0x111A
     }
 
-    #endregion
-
-    #region Buffer
-    public enum BufferCreateType : uint
-    {
-        Region = 0x1220
-    }
-
-    #endregion
-
-    #region Channel
+    /// <summary>
+    /// <para>
+    ///     Specifies the number of channels and the channel layout i.e. the memory layout in which channels are stored an image
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#image-channel-order-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum ChannelOrder : uint
     {
+        /// <summary>
+        ///     Single channel image formats where the single channel represents a <b>RED</b> component
+        /// </summary>
         R = 0x10B0,
+
+        /// <summary>
+        ///     Single channel image formats where the single channel represents an <b>ALPHA</b> component
+        /// </summary>
         A = 0x10B1,
+
+        /// <summary>
+        ///     Two channel image formats. The first channel represents a <b>RED</b> component.
+        ///     The second channel represents a <b>GREEN</b> component.
+        /// </summary>
         Rg = 0x10B2,
+
+        /// <summary>
+        ///     Two channel image formats. The first channel represents a <b>RED</b> component.
+        ///     The second channel represents an <b>ALPHA</b> component.
+        /// </summary>
         Ra = 0x10B3,
+
+        /// <summary>
+        ///     A three channel image format, where the three channels represent <b>RED</b>,
+        ///     <b>GREEN</b>, and <b>BLUE</b> components.
+        /// </summary>
         Rgb = 0x10B4,
+
+        /// <summary>
+        ///     Four channel image formats, where the four channels represent <b>RED</b>,
+        ///     <b>GREEN</b>, <b>BLUE</b>, and <b>ALPHA</b> components.
+        /// </summary>
         Rgba = 0x10B5,
+
+        /// <inheritdoc cref="Rgba"/>
         Bgra = 0x10B6,
+
+        /// <inheritdoc cref="Rgba"/>
         Argb = 0x10B7,
+
+        /// <summary>
+        ///     A single channel image format where the single channel represents an
+        ///     <b>INTENSITY</b> value. The <b>INTENSITY</b> value is replicated
+        ///     into the <b>RED</b>, <b>GREEN</b>, <b>BLUE</b>, and <b>ALPHA</b> components.
+        /// </summary>
         Intensity = 0x10B8,
+
+        /// <summary>
+        ///     A single channel image format where the single channel represents a
+        ///     <b>LUMINANCE</b> value. The <b>LUMINANCE</b> value is replicated into the
+        ///     <b>RED</b>, <b>GREEN</b> and <b>BLUE</b> components.
+        /// </summary>
         Luminance = 0x10B9,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A two channel image format, where the first channel represents
+        ///     a <b>RED</b> component and the second channel is ignored.
+        /// </para>
+        /// </summary>
         Rx = 0x10BA,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A three channel image format, where the first two channels represent
+        ///     <b>RED</b> and <b>GREEN</b> components and the third channel is ignored.
+        /// </para>
+        /// </summary>
         Rgx = 0x10BB,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A four channel image format, where the first three channels represent
+        ///     <b>RED</b>, <b>GREEN</b> and <b>BLUE</b> components and the fourth channel is ignored.
+        /// </para>
+        /// </summary>
         Rgbx = 0x10BC,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A single channel image format where the single channel represents a <b>DEPTH</b> component.
+        /// </para>
+        /// </summary>
         Depth = 0x10BD,
-        DepthStencil = 0x10BE,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A three channel image format, where the three channels represent
+        ///     <b>RED</b>, <b>GREEN</b> and <b>BLUE</b> components in the sRGB color space.
+        /// </para>
+        /// </summary>
         Srgb = 0x10BF,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     A four channel image format, where the three channels represent
+        ///     <b>RED</b>, <b>GREEN</b> and <b>BLUE</b> components in the sRGB color space.
+        ///     The fourth channel is ignored.
+        /// </para>
+        /// </summary>
         Srgbx = 0x10C0,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Four channel image formats, where the first three channels represent
+        ///     <b>RED</b>, <b>GREEN</b> and <b>BLUE</b> components in the sRGB color space.
+        ///     The fourth channel represents an <b>ALPHA</b> component.
+        /// </para>
+        /// </summary>
         Srgba = 0x10C1,
+
+        /// <inheritdoc cref="Srgba"/>
         Sbgra = 0x10C2,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Four channel image formats, where the four channels represent <b>RED</b>,
+        ///     <b>GREEN</b>, <b>BLUE</b>, and <b>ALPHA</b> components.
+        /// </para>
+        /// </summary>
         Abgr = 0x10C3
     }
 
@@ -3745,6 +3891,14 @@ namespace OpenTK.Compute.OpenCL
         Float = 0x10DE,
         NormalizedUnsignedInteger24 = 0x10DF,
         NormalizedUnsignedInteger101010Version2 = 0x10E0
+    }
+
+    #endregion
+
+    #region Buffer
+    public enum BufferCreateType : uint
+    {
+        Region = 0x1220
     }
 
     #endregion
