@@ -3201,7 +3201,7 @@ namespace OpenTK.Compute.OpenCL
 
     /// <summary>
     ///     The list of supported values for, and the information returned by
-    ///     <c><see cref="CL.GetCommandQueueInfo(CLCommandQueue, CommandQueueInfo, out byte[])">GetCommandQueueInfo()</see></c>
+    ///     <c><see cref="CL.GetCommandQueueInfo(CLCommandQueue, CommandQueueInfo, out byte[])">GetCommandQueueInfo()</see></c>.
     /// </summary>
     public enum CommandQueueInfo : uint
     {
@@ -3419,41 +3419,224 @@ namespace OpenTK.Compute.OpenCL
 
     #region Memory
 
+    /// <summary>
+    /// <para>
+    ///     Bit-field that is used to specify allocation and usage
+    ///     information about a memory object being created.
+    /// </para>
+    /// </summary>
     [Flags]
     public enum MemoryFlags : ulong
     {
+        /// <summary>
+        ///     This flag specifies that the memory object will be read
+        ///     and written by a kernel. This is the default.
+        /// </summary>
         ReadWrite = 1 << 0,
+
+        /// <summary>
+        /// <para>
+        ///     This flag specifies that the memory object will be written but not read by a kernel.
+        /// </para>
+        /// <para>
+        ///     Reading from a buffer or image object created with
+        ///     <c><see cref="WriteOnly">WriteOnly</see></c> inside a kernel is undefined.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="ReadWrite">ReadWrite</see></c> and <c><see cref="WriteOnly">WriteOnly</see></c>
+        ///     are mutually exclusive.
+        /// </para>
+        /// </summary>
         WriteOnly = 1 << 1,
+
+        /// <summary>
+        /// <para>
+        ///     This flag specifies that the memory object is a readonly memory object when used inside a kernel.
+        /// </para>
+        /// <para>
+        ///     Writing to a buffer or image object created with <c><see cref="ReadOnly">ReadOnly</see></c>
+        ///     inside a kernel is undefined.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="ReadWrite">ReadWrite</see></c>
+        ///     or <c><see cref="WriteOnly">WriteOnly</see></c>
+        ///     and <c><see cref="ReadOnly">ReadOnly</see></c> are mutually exclusive.
+        /// </para>
+        /// </summary>
         ReadOnly = 1 << 2,
+
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     This flag is valid only if <c>host_ptr</c> is not NULL.
+        ///     If specified, it indicates that the application wants the OpenCL
+        ///     implementation to use memory referenced by <c>host_ptr</c>
+        ///     as the storage bits for the memory object.
+        /// </para>
+        /// <para>
+        ///     The contents of the memory pointed to by <c>host_ptr</c> at the time of the
+        ///     <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr, IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>,
+        ///     or <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage3D()</see></c>
+        ///     call define the initial contents of the memory object.
+        /// </para>
+        /// <para>
+        ///     OpenCL implementations are allowed to cache the contents pointed to by <c>host_ptr</c>
+        ///     in device memory. This cached copy can be used when kernels are executed on a device.
+        /// </para>
+        /// <para>
+        ///     The result of OpenCL commands that operate on multiple buffer
+        ///     objects created with the same <c>host_ptr</c> or from overlapping host
+        ///     or SVM regions is considered to be undefined.
+        /// </para>
+        /// </summary>
         UseHostPtr = 1 << 3,
+
+        /// <summary>
+        /// <para>
+        ///     This flag specifies that the application wants the OpenCL implementation
+        ///     to allocate memory from host accessible memory.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="AllocHostPtr">AllocHostPtr</see></c>
+        ///     and <c><see cref="UseHostPtr">UseHostPtr</see></c>
+        ///     are mutually exclusive.
+        /// </para>
+        /// </summary>
         AllocHostPtr = 1 << 4,
+
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///      This flag is valid only if <c>host_ptr</c> is not NULL.
+        ///      If specified, it indicates that the application wants the OpenCL
+        ///      implementation to allocate memory for the memory object and
+        ///      copy the data from memory referenced by <c>host_ptr</c>.
+        ///      The implementation will copy the memory immediately and <c>host_ptr</c>
+        ///      is available for reuse by the application when the
+        ///      <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr, IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>,
+        ///     or <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage3D()</see></c>
+        ///     operation returns.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="CopyHostPtr">CopyHostPtr</see></c> and
+        ///     <c><see cref="UseHostPtr">UseHostPtr</see></c> are mutually exclusive.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="CopyHostPtr">CopyHostPtr</see></c>
+        ///     can be used with <c><see cref="AllocHostPtr">AllocHostPtr</see></c>
+        ///     to initialize the contents of the <c><b>cl_mem</b></c> object allocated
+        ///     using host-accessible (e.g. PCIe) memory.
+        /// </para>
+        /// </summary>
         CopyHostPtr = 1 << 5,
 
         // Reserved = 1 << 6,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This flag specifies that the host will only write to the memory
+        ///     object (using OpenCL APIs that enqueue a write or a map for write).
+        ///     This can be used to optimize write access from the host
+        ///     (e.g. enable write-combined allocations for memory objects for devices
+        ///     that communicate with the host over a system bus such as PCIe).
+        /// </para>
+        /// </summary>
         HostWriteOnly = 1 << 7,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This flag specifies that the host will only read the memory object
+        ///     (using OpenCL APIs that enqueue a read or a map for read).
+        /// </para>
+        /// <para>
+        ///     <c><see cref="HostWriteOnly">HostWriteOnly</see></c>
+        ///     and <c><see cref="HostReadOnly">HostReadOnly</see></c> are mutually exclusive.
+        /// </para>
+        /// </summary>
         HostReadOnly = 1 << 8,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This flag specifies that the host will not read or write the memory object.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="HostWriteOnly">HostWriteOnly</see></c>
+        ///     or <c><see cref="HostReadOnly">HostReadOnly</see></c> and
+        ///     <c><see cref="HostNoAccess">HostNoAccess</see></c>
+        ///     are mutually exclusive.
+        /// </para>
+        /// </summary>
         HostNoAccess = 1 << 9,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Only used in
+        ///     <c><see cref="CL.SVMAlloc(CLContext, MemoryFlags, UIntPtr, uint)"/></c>
+        /// </para>
+        /// <para>
+        ///     This specifies that the application wants the OpenCL implementation to do a fine-grained allocation.
+        /// </para>
+        /// </summary>
         SvmFineGrainBuffer = 1 << 10,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Only used in
+        ///     <c><see cref="CL.SVMAlloc(CLContext, MemoryFlags, UIntPtr, uint)"/></c>
+        /// </para>
+        /// <para>
+        ///     This flag is valid only if <c><see cref="SvmFineGrainBuffer">SvmFineGrainBuffer</see></c>
+        ///     is specified in flags. It is used to indicate that SVM atomic operations
+        ///     can control visibility of memory accesses in this SVM buffer.
+        /// </para>
+        /// </summary>
         SvmAtomics = 1 << 11,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This flag is only used by
+        ///     <c><see cref="CL.GetSupportedImageFormats(CLContext, MemoryFlags,
+        ///     MemoryObjectType, out CLImageFormat[])">GetSupportedImageFormats()</see></c>
+        ///     to query image formats that may be both read from and written to by the same kernel instance.
+        ///     To create a memory object that may be read from and written to use
+        ///     <c><see cref="ReadWrite">ReadWrite</see></c>.
+        /// </para>
+        /// </summary>
         KernelReadAndWrite = 1 << 12,
-
-        NoAccessIntel = 1 << 24,
-        AccessFlagsUnrestrictedIntel = 1 << 25,
-        UseUncachedCpuMemoryImg = 1 << 26,
-        UseCachedCpuMemoryImg = 1 << 27,
-        UseGrallocPtrImg = 1 << 28,
-        ExtHostPtrQcom = 1 << 29,
-
-        // Unused
-        //  BusAddressableAmd = 1 << 30,
-        // Unused
-        //  ExternalMemoryAmd = 1 << 31,
-
-        CL_MEM_RESERVED0_ARM = 1 << 32,
-        CL_MEM_RESERVED1_ARM = 1 << 33,
-        CL_MEM_RESERVED2_ARM = 1 << 34,
-        CL_MEM_RESERVED3_ARM = 1 << 35,
-        CL_MEM_RESERVED4_ARM = 1 << 36,
     }
 
     public enum MemoryObjectType : uint
@@ -3480,23 +3663,6 @@ namespace OpenTK.Compute.OpenCL
         AssociatedMemoryObject = 0x1107,
         Offset = 0x1108,
         UsesSvmPointer = 0x1109
-    }
-
-    [Flags]
-    public enum SvmMemoryFlags : ulong
-    {
-        ReadWrite = 1 << 0,
-        WriteOnly = 1 << 1,
-        ReadOnly = 1 << 2,
-        UseHostPointer = 1 << 3,
-        AllocateHostPointer = 1 << 4,
-        CopyHostPointer = 1 << 5,
-        HostWriteOnly = 1 << 7,
-        HostReadOnly = 1 << 8,
-        HostNoAccess = 1 << 9,
-        SvmFineGrainBuffer = 1 << 10,
-        SvmAtomics = 1 << 11,
-        KernelReadAndWrite = 1 << 12
     }
 
     [Flags]

@@ -570,7 +570,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 2.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSVMAlloc")]
-        public static extern IntPtr SVMAlloc([In] CLContext context, [In] SvmMemoryFlags flags, [In] UIntPtr size,
+        public static extern IntPtr SVMAlloc([In] CLContext context, [In] MemoryFlags flags, [In] UIntPtr size,
             [In] uint alignment);
 
         /// <summary>
