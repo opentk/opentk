@@ -4823,11 +4823,81 @@ namespace OpenTK.Compute.OpenCL
         CommandComplete = 0x1284
     }
 
+    /// <summary>
+    ///     Bit-field for describing mapping operations.
+    /// </summary>
     [Flags]
     public enum MapFlags : ulong
     {
+        /// <summary>
+        /// <para>
+        ///     This flag specifies that the region being mapped in the memory object is being mapped for reading.
+        /// </para>
+        /// <para>
+        ///     The pointer returned by
+        ///     <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        ///     (<c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
+        ///     is guaranteed to contain the latest bits in the region being
+        ///     mapped when the <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        ///     (<c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
+        ///     command has completed.
+        /// </para>
+        /// </summary>
         Read = 1 << 0,
+
+        /// <summary>
+        /// <para>
+        ///     This flag specifies that the region being mapped in the memory object is being mapped for writing.
+        /// </para>
+        /// <para>
+        ///     The pointer returned by
+        ///     <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        ///     (<c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
+        ///     is guaranteed to contain the latest bits in the region being
+        ///     mapped when the <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        ///     (<c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
+        ///     command has completed.
+        /// </para>
+        /// </summary>
         Write = 1 << 1,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This flag specifies that the region being mapped in the memory object is being mapped for writing.
+        /// </para>
+        /// <para>
+        ///     The contents of the region being mapped are to be discarded.
+        ///     This is typically the case when the region being mapped is overwritten by the host.
+        ///     This flag allows the implementation to no longer guarantee that the pointer returned
+        ///     by <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        ///     (<c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
+        ///     contains the latest bits in the region being mapped which can be
+        ///     a significant performance enhancement.
+        /// </para>
+        /// </summary>
         WriteInvalidateRegion = 1 << 2
     }
 
