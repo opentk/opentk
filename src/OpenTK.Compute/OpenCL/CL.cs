@@ -478,7 +478,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.1.
         /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback");
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
         public static extern CLResultCode SetMemoryObjectDestructorCallback([In] ICLMemoryObject memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
 
         #endregion

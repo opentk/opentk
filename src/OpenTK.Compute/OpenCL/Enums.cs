@@ -4538,32 +4538,197 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Sampler
+
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetSamplerInfo(CLSampler, SamplerInfo, out byte[])">GetSamplerInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#sampler-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum SamplerInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Return the sampler reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1150,
+
+        /// <summary>
+        /// <para>
+        ///     Return the context specified when the sampler is created.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
         Context = 0x1151,
+
+        /// <summary>
+        /// <para>
+        ///     Return the normalized coords value associated with sampler.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
         NormalizedCoordinates = 0x1152,
+
+        /// <summary>
+        /// <para>
+        ///     Return the addressing mode value associated with sampler.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.AddressingMode">AddressingMode</see></c>
+        /// </para>
+        /// </summary>
         AddressingMode = 0x1153,
+
+        /// <summary>
+        /// <para>
+        ///     Return the filter mode value associated with sampler.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.FilterMode">FilterMode</see></c>
+        /// </para>
+        /// </summary>
         FilterMode = 0x1154,
-        MipFilterMode = 0x1155,
-        LodMinimum = 0x1156,
-        LodMaximum = 0x1157
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the properties argument specified in
+        ///     <c><see cref="CL.CreateSamplerWithProperties(CLContext,
+        ///     IntPtr, out CLResultCode)">CreateSamplerWithProperties()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the properties argument specified in
+        ///     <c><see cref="CL.CreateSamplerWithProperties(CLContext,
+        ///     IntPtr, out CLResultCode)">CreateSamplerWithProperties()</see></c>
+        ///     used to create sampler was not NULL, the implementation must return
+        ///     the values specified in the properties argument in the same order
+        ///     and without including additional properties.
+        /// </para>
+        /// <para>
+        ///     If sampler was created using  <c><see cref="CL.CreateSampler(CLContext, uint,
+        ///     OpenCL.AddressingMode, OpenCL.FilterMode, out CLResultCode)">CreateSampler()</see></c>,
+        ///     or if the properties argument specified in
+        ///     <c><see cref="CL.CreateSamplerWithProperties(CLContext,
+        ///     IntPtr, out CLResultCode)">CreateSamplerWithProperties()</see></c>
+        ///     was NULL, the implementation must return <c>param_value_size_ret</c> equal to 0,
+        ///     indicating that there are no properties to be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="SamplerProperties">SamplerProperties[]</see></c>
+        /// </para>
+        /// </summary>
+        Properties = 0x1158
     }
 
+    /// <summary>
+    ///     Specifies the type of filter that is applied when reading an image.
+    /// </summary>
     public enum FilterMode : uint
     {
+        /// <summary>
+        ///     Returns the image element nearest to the image coordinate.
+        /// </summary>
         Nearest = 0x1140,
+
+        /// <summary>
+        ///     Returns a weighted average of the four image elements nearest to the image coordinate.
+        /// </summary>
         Linear = 0x1141
     }
 
+    /// <summary>
+    ///     Specifies how out-of-range image coordinates are handled when reading from an image.
+    /// </summary>
     public enum AddressingMode : uint
     {
+        /// <summary>
+        ///     Behavior is undefined for out-of-range image coordinates.
+        /// </summary>
         None = 0x1130,
+
+        /// <summary>
+        ///     Out-of-range image coordinates are clamped to the edge of the image.
+        /// </summary>
         ClampToEdge = 0x1131,
+
+        /// <summary>
+        ///     Out-of-range image coordinates are assigned a border color value.
+        /// </summary>
         Clamp = 0x1132,
+
+        /// <summary>
+        ///     Out-of-range image coordinates read from the image as if
+        ///     the image data were replicated in all dimensions.
+        /// </summary>
         Repeat = 0x1133,
+
+        /// <summary>
+        ///     Out-of-range image coordinates read from the image as if the image
+        ///     data were replicated in all dimensions, mirroring the image
+        ///     contents at the edge of each replication.
+        /// </summary>
         MirroredRepeat = 0x1134
     }
+
+    /// <summary>
+    /// <para>
+    ///     Specifies a list of sampler property names.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#sampler-properties-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
+    public enum SamplerProperties : ulong
+    {
+        /// <summary>
+        /// <para>
+        ///     A boolean value that specifies whether the image coordinates specified are normalized or not.
+        ///     The default value (i.e. the value used if this property is not specified in sampler_properties) is TRUE.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        NormalizedCoords = 0x1152,
+
+        /// <summary>
+        /// <para>
+        ///     Specifies how out-of-range image coordinates are handled when reading from an image.
+        ///     The default is <c><see cref="AddressingMode.Clamp">Clamp</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c><see cref="OpenCL.AddressingMode">AddressingMode</see></c>
+        /// </para>
+        /// </summary>
+        AddressingMode = 0x1153,
+
+        /// <summary>
+        /// <para>
+        ///     Specifies the type of filter that is applied when reading an image.
+        ///     The default value is <c><see cref="FilterMode.Nearest">Nearest</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Property Value:</u></i> <c><see cref="OpenCL.FilterMode">FilterMode</see></c>
+        /// </para>
+        /// </summary>
+        FilterMode = 0x1154
+    }
+
     #endregion
 
     #region Program
