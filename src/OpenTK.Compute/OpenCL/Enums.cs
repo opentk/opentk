@@ -3723,18 +3723,263 @@ namespace OpenTK.Compute.OpenCL
         Pipe = 0x10F7
     }
 
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetMemObjectInfo(ICLMemoryObject, MemoryObjectInfo, out byte[])"/></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#mem-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum MemoryObjectInfo : uint
     {
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     Returns the type of the memory object queried
+        /// </para>
+        /// <para>
+        ///     The value of <c><see cref="CLImageDescription.ImageType"/></c> if object is created with
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c> or
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="MemoryObjectType">MemoryObjectType</see></c>
+        /// </para>
+        /// </summary>
         Type = 0x1100,
+
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     Return the flags argument value specified when <c>memobj</c> is created with
+        ///     <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>,
+        ///     <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateImage3D()</see></c>, or
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If <c>memobj</c> is a sub-buffer the memory access qualifiers
+        ///     inherited from parent buffer is also returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="MemoryFlags">MemoryFlags</see></c>
+        /// </para>
+        /// </summary>
         Flags = 0x1101,
+
+        /// <summary>
+        /// <para>
+        ///     Return actual size of the data store associated with <c>memobj</c> in bytes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         Size = 0x1102,
+
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     If <c>memobj</c> is created with <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>,
+        ///     or <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateImage3D()</see></c>,
+        ///     and <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c> is specified in
+        ///     <c>mem_flags</c>, return the <c>host_ptr</c> argument value specified when <c>memobj</c> is created.
+        /// </para>
+        /// <para>
+        ///     Otherwise, if <c>memobj</c> is created with
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>,
+        ///     and <c>memobj</c> is created from a buffer that was created with
+        ///     <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c>
+        ///     specified in <c>mem_flags</c>, return the <c>host_ptr</c>
+        ///     passed to <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateBuffer()</see></c> or
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>,
+        ///     plus the origin value specified in <c>buffer_create_info</c> when <c>memobj</c> is created.
+        /// </para>
+        /// <para>
+        ///     Otherwise, returns NULL.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr (void *)</c>
+        /// </para>
+        /// </summary>
         HostPointer = 0x1103,
+
+        /// <summary>
+        /// <para>
+        ///     Map count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         MapCount = 0x1104,
+
+        /// <summary>
+        /// <para>
+        ///     Return <c>memobj</c> reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1105,
+
+        /// <summary>
+        /// <para>
+        ///     Return context specified when memory object is created.
+        ///     If <c>memobj</c> is created using
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>,
+        ///     the context associated with the memory object specified as the buffer argument
+        ///     to <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c> is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
         Context = 0x1106,
+
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return memory object from which <c>memobj</c> is created.
+        /// </para>
+        /// <para>
+        ///     This returns the memory object specified as buffer argument
+        ///     to <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c> if <c>memobj</c>
+        ///     is a subbuffer object created using to
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>.
+        /// </para>
+        /// <para>
+        ///     This returns <c><see cref="CLImageDescription.MemoryObject"/></c> if
+        ///     <c>memobj</c> is an image object created using
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>
+        ///     or <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>.
+        /// </para>
+        /// <para>
+        ///     Otherwise, returns NULL.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="ICLMemoryObject">ICLMemoryObject</see></c>
+        /// </para>
+        /// </summary>
         AssociatedMemoryObject = 0x1107,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return offset if <c>memobj</c>
+        ///     is a sub-buffer object created using
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>.
+        /// </para>
+        /// <para>
+        ///     This return 0 if <c>memobj</c> is not a subbuffer object.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         Offset = 0x1108,
-        UsesSvmPointer = 0x1109
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return TRUE if <c>memobj</c> is a buffer object that
+        ///     was created with <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c>
+        ///     or is a sub-buffer object of a buffer object that was created
+        ///     with <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c> and the
+        ///    <c>host_ptr</c> specified when the buffer object was created is a SVM pointer;
+        ///    otherwise returns FALSE.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
+        UsesSvmPointer = 0x1109,
+
+        /// #TODO: CreateImageWithProperties() isnt implemented
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the properties argument specified in
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c> or
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the properties argument specified in
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>
+        ///     or <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>
+        ///     used to create <c>memobj</c> was not NULL,
+        ///     the implementation must return the values specified in the properties
+        ///     argument in the same order and without including additional properties.
+        /// </para>
+        /// <para>
+        ///     If <c>memobj</c> was created using
+        ///     <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+        ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>,
+        ///     or <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateImage3D()</see></c>,
+        ///     or if the properties argument specified in
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>
+        ///     or <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>
+        ///     was NULL, the implementation must return <c>param_value_size_ret</c> equal to 0,
+        ///     indicating that there are no properties to be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.MemoryProperties">MemoryProperties</see></c>
+        /// </para>
+        /// </summary>
+        MemoryProperties = 0x110A
     }
 
     /// <summary>
@@ -3767,6 +4012,9 @@ namespace OpenTK.Compute.OpenCL
         ContentUndefined = 1 << 1
     }
 
+    public enum MemoryProperties : ulong
+    {
+    }
     #endregion
 
     #region Image

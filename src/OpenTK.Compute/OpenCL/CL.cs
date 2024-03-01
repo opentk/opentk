@@ -378,19 +378,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLBuffer memoryObject);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLImage memoryObject);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] CLPipe memoryObject);
+        public static extern CLResultCode RetainMemoryObject([In] ICLMemoryObject memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
@@ -402,19 +390,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLBuffer memoryObject);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLImage memoryObject);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] CLPipe memoryObject);
+        public static extern CLResultCode ReleaseMemoryObject([In] ICLMemoryObject memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
@@ -441,27 +417,6 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
         public static extern CLResultCode GetMemObjectInfo([In] IntPtr memoryObject, [In] MemoryObjectInfo paramName,
-            [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
-        public static extern CLResultCode GetMemObjectInfo([In] CLBuffer memoryObject, [In] MemoryObjectInfo paramName,
-            [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
-        public static extern CLResultCode GetMemObjectInfo([In] CLImage memoryObject, [In] MemoryObjectInfo paramName,
-            [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
-        public static extern CLResultCode GetMemObjectInfo([In] CLPipe memoryObject, [In] MemoryObjectInfo paramName,
             [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace OpenTK.Compute.OpenCL
         public UIntPtr SlicePitch;
         public uint MipLevels;
         public uint Samples;
-        public IntPtr Buffer;
+        public ICLMemoryObject MemoryObject;
 
         public static CLImageDescription Create2D(uint width, uint height)
         {
