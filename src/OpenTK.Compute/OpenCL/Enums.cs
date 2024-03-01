@@ -4019,18 +4019,175 @@ namespace OpenTK.Compute.OpenCL
 
     #region Image
 
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using <c><see cref="CL.GetImageInfo(CLImage, ImageInfo, out byte[])"/></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#image-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum ImageInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Return the image format descriptor specified when image is created with
+        ///     <c><see cref="CL.CreateImage(CLContext, MemoryFlags, ref CLImageFormat, ref CLImageDescription,
+        ///     IntPtr, out CLResultCode)">CreateImage()</see></c>,
+        ///     <c><see cref="CL.CreateImageWithProperties()">CreateImageWithProperties()</see></c>,
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c> or
+        ///     <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr,
+        ///     IntPtr, out CLResultCode)">CreateImage3D()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLImageFormat">CLImageFormat</see></c>
+        /// </para>
+        /// </summary>
         Format = 0x1110,
+
+        /// <summary>
+        /// <para>
+        ///     Return size of each element of the image memory object given by image in bytes.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         ElementSize = 0x1111,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the row pitch in bytes of a row of elements of the image object given by image.
+        /// </para>
+        /// <para>
+        ///     If image was created with a non-zero value for <c>image_row_pitch</c>,
+        ///     then the value provided for <c>image_row_pitch</c> by the application is returned,
+        ///     otherwise the returned value is calculated as <c><see cref="Width">Width</see></c> ×
+        ///     <c><see cref="ElementSize">ElementSize</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         RowPitch = 0x1112,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the slice pitch in bytes of a 2D slice for the 3D image object or size
+        ///     of each image in a 1D or 2D image array given by image.
+        /// </para>
+        /// <para>
+        ///     If image was created with a non-zero value for <c>image_slice_pitch</c>
+        ///     then the value provided for <c>image_slice_pitch</c> by the application is returned,
+        ///     otherwise the returned value is calculated as:
+        /// </para>
+        /// <list type="bullet">
+        /// <item>
+        ///     <description>
+        ///         <c><see cref="RowPitch">RowPitch</see></c> for 1D image arrays.
+        ///     </description>
+        /// </item>
+        /// <item>
+        ///     <description>
+        ///         <c><see cref="Height">Height</see></c> × <c><see cref="RowPitch">RowPitch</see></c>
+        ///         for 3D images and 2D image arrays.
+        ///     </description>
+        /// </item>
+        /// </list>
+        /// <para>
+        ///     For a 1D image, 1D image buffer and 2D image object return 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         SlicePitch = 0x1113,
+
+        /// <summary>
+        /// <para>
+        ///     Return width of the image in pixels.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         Width = 0x1114,
+
+        /// <summary>
+        /// <para>
+        ///     Return height of the image in pixels.
+        ///     For a 1D image, 1D image buffer and 1D image array object, height = 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         Height = 0x1115,
+
+        /// <summary>
+        /// <para>
+        ///     Return depth of the image in pixels.
+        ///     For a 1D image, 1D image buffer, 2D image or 1D and 2D image array object, depth = 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         Depth = 0x1116,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return number of images in the image array. If image is not an image array, 0 is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         ArraySize = 0x1117,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2. and deprecated by version 2.0</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return buffer object associated with image.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="ICLMemoryObject">ICLMemoryObject</see></c>
+        /// </para>
+        /// </summary>
         Buffer = 0x1118,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return <c><see cref="CLImageDescription.MipLevels">MipLevels</see></c> associated with image.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         NumberOfMipLevels = 0x1119,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return <c><see cref="CLImageDescription.Samples">Samples</see></c> associated with image.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         NumberOfSamples = 0x111A
     }
 
