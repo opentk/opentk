@@ -3976,10 +3976,10 @@ namespace OpenTK.Compute.OpenCL
         ///     indicating that there are no properties to be returned.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.MemoryProperties">MemoryProperties</see></c>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.MemoryProperties">MemoryProperties[]</see></c>
         /// </para>
         /// </summary>
-        MemoryProperties = 0x110A
+        Properties = 0x110A
     }
 
     /// <summary>
@@ -4021,7 +4021,8 @@ namespace OpenTK.Compute.OpenCL
 
     /// <summary>
     /// <para>
-    ///     Specifies the information to query using <c><see cref="CL.GetImageInfo(CLImage, ImageInfo, out byte[])"/></c>.
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetImageInfo(CLImage, ImageInfo, out byte[])">GetImageInfo()</see></c>.
     /// </para>
     /// <para>
     ///     Original documentation
@@ -4456,10 +4457,82 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Pipe
+
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetPipeInfo(CLPipe, PipeInfo, out byte[])">GetPipeInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#pipe-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum PipeInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return pipe packet size specified when pipe is created with
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         PacketSize = 0x1120,
-        MaximumNumberOfPackets = 0x1121
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return maximum number of packets specified when pipe is created with
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        MaximumNumberOfPackets = 0x1121,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the properties argument specified in
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the properties argument specified in
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>
+        ///     used to create pipe was not NULL,
+        ///     the implementation must return the values specified in the properties
+        ///     argument in the same order and without including additional properties.
+        /// </para>
+        /// <para>
+        ///     If the properties argument specified in
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>
+        ///     used to create pipe was NULL, the implementation must return <c>param_value_size_ret</c>
+        ///     equal to 0, indicating that there are no properties to be returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="PipeProperties">PipeProperties[]</see></c>
+        /// </para>
+        /// </summary>
+        Properties = 0x1122
+    }
+
+    public enum PipeProperties : ulong
+    {
     }
 
     #endregion
