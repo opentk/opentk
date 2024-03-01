@@ -3639,15 +3639,87 @@ namespace OpenTK.Compute.OpenCL
         KernelReadAndWrite = 1 << 12,
     }
 
+    /// <summary>
+    ///     Describes the type of memory a object.
+    /// </summary>
     public enum MemoryObjectType : uint
     {
+        /// #TODO: CreateBufferWithProperties() isnt implemented
+        /// <summary>
+        ///     <c><see cref="CLBuffer"/></c> memory object created using
+        ///     <c><see cref="CL.CreateBuffer(CLContext, MemoryFlags,
+        ///     UIntPtr, IntPtr, out CLResultCode)">CreateBuffer()</see></c>,
+        ///     <c><see cref="CL.CreateBufferWithProperties()">CreateBufferWithProperties()</see></c>
+        ///     or <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags,
+        ///     BufferCreateType, IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>
+        /// </summary>
         Buffer = 0x10F0,
+
+        /// <summary>
+        ///     <c><see cref="CLImage"/></c> memory object created using
+        ///     <c><see cref="CL.CreateImage2D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage2D()</see></c>.
+        /// </summary>
         Image2D = 0x10F1,
+
+        /// <summary>
+        ///     <c><see cref="CLImage"/></c> memory object created using
+        ///     <c><see cref="CL.CreateImage3D(CLContext, MemoryFlags, ref CLImageFormat,
+        ///     UIntPtr, UIntPtr, UIntPtr, UIntPtr, UIntPtr, IntPtr, out CLResultCode)">CreateImage3D()</see></c>.
+        /// </summary>
         Image3D = 0x10F2,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Array of 2D <c><see cref="CLImage"/></c> memory objects.
+        /// </para>
+        /// </summary>
         Image2DArray = 0x10F3,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <c><see cref="CLImage"/></c> memory object stored as a single
+        ///     scanline which is a linear sequence of adjacent elements.
+        /// </para>
+        /// </summary>
         Image1D = 0x10F4,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Array of 1D <c><see cref="CLImage"/></c> memory objects.
+        /// </para>
+        /// </summary>
         Image1DArray = 0x10F5,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     1D <c><see cref="CLImage"/></c> memory objects created from a <c><see cref="CLBuffer"/></c>.
+        /// </para>
+        /// </summary>
         Image1DBuffer = 0x10F6,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     <c><see cref="CLPipe"/></c> memory object created using
+        ///     <c><see cref="CL.CreatePipe(CLContext, MemoryFlags, uint, uint,
+        ///     IntPtr[], out CLResultCode)">CreatePipe()</see></c>.
+        /// </para>
+        /// </summary>
         Pipe = 0x10F7
     }
 

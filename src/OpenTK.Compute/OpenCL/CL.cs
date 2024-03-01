@@ -478,25 +478,7 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0.
         /// </summary>
-        public static CLResultCode GetMemObjectInfo(CLBuffer memoryObject, MemoryObjectInfo paramName,
-            out byte[] paramValue)
-        {
-            return GetMemObjectInfo(memoryObject.Handle, paramName, out paramValue);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        public static CLResultCode GetMemObjectInfo(CLImage memoryObject, MemoryObjectInfo paramName,
-            out byte[] paramValue)
-        {
-            return GetMemObjectInfo(memoryObject.Handle, paramName, out paramValue);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        public static CLResultCode GetMemObjectInfo(CLPipe memoryObject, MemoryObjectInfo paramName,
+        public static CLResultCode GetMemObjectInfo(ICLMemoryObject memoryObject, MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
             return GetMemObjectInfo(memoryObject.Handle, paramName, out paramValue);
@@ -541,26 +523,8 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.1.
         /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
-        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] IntPtr memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
-        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] CLBuffer memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
-        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] CLImage memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
-        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] CLPipe memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
+        [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback");
+        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] ICLMemoryObject memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
 
         #endregion
 
