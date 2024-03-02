@@ -5685,9 +5685,52 @@ namespace OpenTK.Compute.OpenCL
         CompileNumberSubGroups = 0x11BA
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 2.0.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.SetKernelExecInfo(CLKernel,
+    ///     KernelExecInfo, UIntPtr, IntPtr)">SetKernelExecInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#kernel-exec-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum KernelExecInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     SVM pointers must reference locations contained entirely within
+        ///     buffers that are passed to kernel as arguments,
+        ///     or that are passed through the execution information.
+        /// </para>
+        /// <para>
+        ///     Non-argument SVM buffers must be specified by passing pointers to those
+        ///     buffers via <c><see cref="CL.SetKernelExecInfo(CLKernel,
+        ///     KernelExecInfo, UIntPtr, IntPtr)">SetKernelExecInfo()</see></c>
+        ///     for coarse-grain and fine-grain buffer SVM allocations but
+        ///     not for finegrain system SVM allocations.
+        /// </para>
+        /// <para>
+        ///     <i><u>Type:</u></i> <c>IntPtr[]</c>
+        /// </para>
+        /// </summary>
         SvmPointers = 0x11B6,
+
+        /// <summary>
+        /// <para>
+        ///     This flag indicates whether the kernel uses pointers
+        ///     that are fine grain system SVM allocations.
+        ///     These fine grain system SVM pointers may be passed as arguments
+        ///     or defined in SVM buffers that are passed as arguments to kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Type:</u></i> <c>bool</c>
+        /// </para>
+        /// </summary>
         SvmFineGrainSystem = 0x11B7
     }
 
