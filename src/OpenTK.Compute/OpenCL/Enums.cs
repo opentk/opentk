@@ -5462,14 +5462,107 @@ namespace OpenTK.Compute.OpenCL
         ///     (register usage etc.) to determine what this work-group size should be.
         /// </para>
         /// <para>
-        ///     <i><u>Return Type:</u></i> <c>string</c>
+        ///     As a result and unlike
+        ///     <c><see cref="DeviceInfo.MaximumWorkGroupSize">MaximumWorkGroupSize</see></c>
+        ///     this value may vary from one kernel to another as well as one device to another.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="KernelWorkGroupInfo.WorkGroupSize">WorkGroupSize</see></c>
+        ///     will be less than or equal to
+        ///     <c><see cref="DeviceInfo.MaximumWorkGroupSize">MaximumWorkGroupSize</see></c>
+        ///     for a given kernel object.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
         /// </para>
         /// </summary>
         WorkGroupSize = 0x11B0,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the work-group size specified in the kernel source or IL.
+        /// </para>
+        /// <para>
+        ///     If the work-group size is not specified in the kernel source or IL, (0, 0, 0) is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr[3]</c>
+        /// </para>
+        /// </summary>
         CompileWorkGroupSize = 0x11B1,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the amount of local memory in bytes being used by a kernel.
+        ///     This includes local memory that may be needed by an implementation to execute the kernel,
+        ///     variables declared inside the kernel with the <c>__local</c> address qualifier
+        ///     and local memory to be allocated for arguments to the kernel declared as pointers with the
+        ///     <c>__local</c> address qualifier and whose size is specified with
+        ///     <c><see cref="CL.SetKernelArg(CLKernel, uint, UIntPtr, IntPtr)">SetKernelArg()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If the local memory size, for any pointer argument to the kernel declared with the
+        ///     <c>__local</c> address qualifier, is not specified, its size is assumed to be 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
+        /// </summary>
         LocalMemorySize = 0x11B2,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the preferred multiple of work-group size for launch.
+        ///     This is a performance hint. Specifying a work-group size that is not a multiple
+        ///     of the value returned by this query as the value of the local work size argument
+        ///     to <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel, uint,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], uint, CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>
+        ///     will not fail to enqueue the kernel for execution unless the work-group size specified
+        ///     is larger than the device maximum.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         PreferredWorkGroupSizeMultiple = 0x11B3,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the minimum amount of private memory, in bytes,
+        ///     used by each work-item in the kernel. This value may include any private memory
+        ///     needed by an implementation to execute the kernel,
+        ///     including that used by the language built-ins and variable declared
+        ///     inside the kernel with the <c>__private</c> qualifier.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>ulong</c>
+        /// </para>
+        /// </summary>
         PrivateMemorySize = 0x11B4,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     This provides a mechanism for the application to query the
+        ///     maximum global size that can be used to execute a kernel
+        ///     (i.e. <c>global_work_size</c> argument to
+        ///     <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue, CLKernel, uint,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], uint, CLEvent[], out CLEvent)">
+        ///     EnqueueNDRangeKernel()</see></c>) on a custom device given by device
+        ///     or a built-in kernel on an OpenCL device given by device.
+        /// </para>
+        /// <para>
+        ///     If device is not a custom device and kernel is not a built-in kernel,
+        ///     <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
+        ///     KernelWorkGroupInfo, out byte[])">GetKernelWorkGroupInfo()</see></c>
+        ///     returns the error <c><see cref="CLResultCode.InvalidValue">InvalidValue</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr[3]</c>
+        /// </para>
+        /// </summary>
         GlobalWorkSize = 0x11B5
     }
 
