@@ -5210,16 +5210,91 @@ namespace OpenTK.Compute.OpenCL
         SvmFineGrainSystem = 0x11B7
     }
 
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetKernelInfo(CLKernel,
+    ///     KernelInfo, out byte[])">GetKernelInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#kernel-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum KernelInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Return the kernel function name.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         FunctionName = 0x1190,
+
+        /// <summary>
+        /// <para>
+        ///     Return the number of arguments to kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         NumberOfArguments = 0x1191,
+
+        /// <summary>
+        /// <para>
+        ///     Return the kernel reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1192,
+
+        /// <summary>
+        /// <para>
+        ///     Return the context associated with kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
         Context = 0x1193,
+
+        /// <summary>
+        /// <para>
+        ///     Return the program object associated with kernel.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLProgram">CLProgram</see></c>
+        /// </para>
+        /// </summary>
         Program = 0x1194,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns any attributes specified using the <c>__attribute__</c>
+        ///     OpenCL C qualifier (or using an OpenCL C++ qualifier syntax [[]] )
+        ///     with the kernel function declaration in the program source.
+        ///     These attributes include attributes described in the earlier OpenCL C
+        ///     kernel language specifications and other attributes supported by an implementation.
+        /// </para>
+        /// <para>
+        ///     Attributes are returned as they were declared inside <c>__attribute__((...))</c>,
+        ///     with any surrounding whitespace and embedded newlines removed.
+        ///     When multiple attributes are present, they are returned as a single,
+        ///     space delimited string.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Attributes = 0x1195,
-        MaxNumberOfSubGroups = 0x11B9,
-        CompileNumberOfSubGroups = 0x11BA
     }
 
     public enum KernelArgInfo : uint
