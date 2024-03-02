@@ -3,18 +3,13 @@ using System;
 namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly struct CLBuffer : IEquatable<CLBuffer>, ICLMemoryObject
+    public readonly struct CLBuffer : IEquatable<CLBuffer>
     {
-        private readonly IntPtr _handle;
-
-        public IntPtr Handle
-        {
-            get => _handle;
-        }
+        public readonly IntPtr Handle;
 
         public CLBuffer(IntPtr handle)
         {
-            _handle = handle;
+            Handle = handle;
         }
 
         public bool Equals(CLBuffer other)
@@ -43,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLBuffer buffer) => buffer.Handle;
+
+        public static explicit operator CLMemoryObject(CLBuffer buffer) => new CLMemoryObject(buffer.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

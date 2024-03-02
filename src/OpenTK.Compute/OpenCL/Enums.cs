@@ -4732,17 +4732,166 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Program
+
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo,
+    ///     UIntPtr, byte[], out UIntPtr)">GetPlatformInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#program-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum ProgramInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Return the program reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         ReferenceCount = 0x1160,
+
+        /// <summary>
+        /// <para>
+        ///     Return the context specified when the program object is created.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
         Context = 0x1161,
+
+        /// <summary>
+        /// <para>
+        ///     Return the number of devices associated with program.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
         NumberOfDevices = 0x1162,
+
+        /// <summary>
+        /// <para>
+        ///     Return the list of devices associated with the program object.
+        ///     This can be the devices associated with context on which the
+        ///     program object has been created or can be a subset of devices
+        ///     that are specified when a program object is created using
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[], UIntPtr[],
+        ///     IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLDevice">CLDevice[]</see></c>
+        /// </para>
+        /// </summary>
         Devices = 0x1163,
+
+        /// <summary>
+        /// <para>
+        ///     Return the program source code specified by
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c>.
+        ///     The source string returned is a concatenation of all source strings specified to
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c> with a null terminator.
+        ///     The concatenation strips any nulls in the original source strings.
+        /// </para>
+        /// <para>
+        ///     Return the program source code specified by
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c>. The source string returned
+        ///     is a concatenation of all source strings specified to
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c> with a null terminator.
+        ///     The concatenation strips any nulls in the original source strings.
+        ///     If program is created using
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[], UIntPtr[],
+        ///     IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>,
+        ///     <c><see cref="CL.CreateProgramWithIL(CLContext, IntPtr,
+        ///     UIntPtr, out CLResultCode)">CreateProgramWithIL()</see></c>
+        ///     or <c><see cref="CL.CreateProgramWithBuiltInKernels(CLContext, uint,
+        ///     IntPtr[], string, out CLResultCode)">CreateProgramWithBuiltInKernels()</see></c>,
+        ///     a null string or the appropriate program source code is returned depending
+        ///     on whether or not the program source code is stored in the binary.
+        /// </para>
+        /// <para>
+        ///     The actual number of characters that represents the program source code including
+        ///     the null terminator is returned in <c>param_value_size_ret</c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Source = 0x1164,
+
+        /// <summary>
+        /// <para>
+        ///     Returns an array that contains the size in bytes of the program binary
+        ///     (could be an executable binary, compiled binary or library binary)
+        ///     for each device associated with program. The size of the array is the number
+        ///     of devices associated with program. If a binary is not available for a device(s),
+        ///     a size of zero is returned.
+        /// </para>
+        /// <para>
+        ///     If program is created using <c><see cref="CL.CreateProgramWithBuiltInKernels(CLContext, uint,
+        ///     IntPtr[], string, out CLResultCode)">CreateProgramWithBuiltInKernels()</see></c>,
+        ///     the implementation may return zero in any entries of the returned array.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr[]</c>
+        /// </para>
+        /// </summary>
         BinarySizes = 0x1165,
+
+        /// <summary>
+        /// <para>
+        ///     Return the program binaries (could be an executable binary,
+        ///     compiled binary or library binary) for all devices associated with program.
+        ///     For each device in program, the binary returned can be the binary specified
+        ///     for the device when program is created with
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[], UIntPtr[],
+        ///     IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>
+        ///     or it can be the executable binary generated by
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>.
+        ///     If program is created with clCreateProgramWithSource or clCreateProgramWithIL, the binary returned is the binary generated by clBuildProgram, clCompileProgram or clLinkProgram. The bits returned can be an implementation-specific intermediate representation (a.k.a. IR) or device specific executable bits or both. The decision on which information is returned in the binary is up to the OpenCL implementation.
+        /// </para>
+        /// </summary>
         Binaries = 0x1166,
         NumberOfKernels = 0x1167,
         KernelNames = 0x1168,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Returns the program IL for programs created with
+        ///     <c><see cref="CL.CreateProgramWithIL(CLContext, IntPtr,
+        ///     UIntPtr, out CLResultCode)">CreateProgramWithIL()</see></c>.
+        /// </para>
+        /// <para>
+        ///     If program is created with
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c>,
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[], UIntPtr[],
+        ///     IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>
+        ///     or <c><see cref="CL.CreateProgramWithBuiltInKernels(CLContext, uint,
+        ///     IntPtr[], string, out CLResultCode)">CreateProgramWithBuiltInKernels()</see></c>
+        ///     the memory pointed to by <c>param_value</c> will be unchanged and
+        ///     <c>param_value_size_ret</c> will be set to 0.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Il = 0x1169
     }
 
@@ -4896,6 +5045,12 @@ namespace OpenTK.Compute.OpenCL
         ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>)
         ///     contains the latest bits in the region being mapped which can be
         ///     a significant performance enhancement.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="Read">Read</see></c> or
+        ///     <c><see cref="Write">Write</see></c>
+        ///     and <c><see cref="WriteInvalidateRegion">WriteInvalidateRegion</see></c>
+        ///     are mutually exclusive.
         /// </para>
         /// </summary>
         WriteInvalidateRegion = 1 << 2

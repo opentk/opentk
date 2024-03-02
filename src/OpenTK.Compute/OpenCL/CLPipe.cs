@@ -3,18 +3,13 @@ using System;
 namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly struct CLPipe : IEquatable<CLPipe>, ICLMemoryObject
+    public readonly struct CLPipe : IEquatable<CLPipe>
     {
-        private readonly IntPtr _handle;
-
-        public IntPtr Handle
-        {
-            get => _handle;
-        }
+        public readonly IntPtr Handle;
 
         public CLPipe(IntPtr handle)
         {
-            _handle = handle;
+            Handle = handle;
         }
 
         public bool Equals(CLPipe other)
@@ -43,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLPipe pipe) => pipe.Handle;
+
+        public static explicit operator CLMemoryObject(CLPipe pipe) => new CLMemoryObject(pipe.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

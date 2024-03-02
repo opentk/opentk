@@ -3,18 +3,13 @@ using System;
 namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly struct CLImage : IEquatable<CLImage>, ICLMemoryObject
+    public readonly struct CLImage : IEquatable<CLImage>
     {
-        private readonly IntPtr _handle;
-
-        public IntPtr Handle
-        {
-            get => _handle;
-        }
+        public readonly IntPtr Handle;
 
         public CLImage(IntPtr handle)
         {
-            _handle = handle;
+            Handle = handle;
         }
 
         public bool Equals(CLImage other)
@@ -43,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLImage image) => image.Handle;
+
+        public static implicit operator CLMemoryObject(CLImage image) => new CLMemoryObject(image.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
