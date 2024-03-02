@@ -54,9 +54,8 @@ namespace OpenTK.Backends.Tests
             bool preferANGLE = BackendsConfig.Singleton.PreferANGLE;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers ANGLE", preferANGLE);
 
-            if (ImGui.BeginTable("overview_table_id", 4, ImGuiTableFlags.Borders))
+            if (ImGui.BeginTable("overview_table_id", 3, ImGuiTableFlags.Borders))
             {
-                ImGui.TableSetupColumn("Default", ImGuiTableColumnFlags.WidthFixed);
                 ImGui.TableSetupColumn("Component", ImGuiTableColumnFlags.WidthFixed);
                 ImGui.TableSetupColumn("Driver Name", ImGuiTableColumnFlags.WidthFixed);
                 ImGui.TableSetupColumn("Class", ImGuiTableColumnFlags.WidthStretch);
@@ -69,9 +68,7 @@ namespace OpenTK.Backends.Tests
                     if (driver == null)
                         continue;
 
-                    bool isDefault = BackendsConfig.Singleton[component] == null;
                     ImGui.TableNextRow();
-                    ImGui.TableNextColumn(); ImGui.Checkbox("", ref isDefault);
                     ImGui.TableNextColumn(); ImGui.TextUnformatted(component.ToString());
                     ImGui.TableNextColumn(); ImGui.TextUnformatted(driver.Name);
                     ImGui.TableNextColumn(); ImGui.TextUnformatted(driver.GetType().FullName);

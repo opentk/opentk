@@ -107,12 +107,12 @@ namespace OpenTK.Backends.Tests
                     {
                         for (int y = 0; y < HEIGHT; y++)
                         {
-                            float angle = float.Atan2(y - (HEIGHT/2), x - (WIDTH/2));
+                            float angle = float.Atan2(y - (HEIGHT / 2), x - (WIDTH / 2));
                             angle += float.Sin(float.Tau / frames.Length) * frame;
                             if (angle > float.Pi)
                                 angle -= float.Tau;
                             angle = MathHelper.MapRange(angle, -float.Pi, float.Pi, 0, 1);
-                            float dist = float.Sqrt((x - (WIDTH / 2)) * (x - (WIDTH/2)) + (y - (HEIGHT / 2)) * (y - (HEIGHT/2)));
+                            float dist = float.Sqrt((x - (WIDTH / 2)) * (x - (WIDTH / 2)) + (y - (HEIGHT / 2)) * (y - (HEIGHT / 2)));
                             Color4<Rgba> color = new Color4<Hsva>(angle, 1, 1, 1).ToRgba();
                             image[(x + y * WIDTH) * 4 + 0] = byte.CreateSaturating(color.X * 255);
                             image[(x + y * WIDTH) * 4 + 1] = byte.CreateSaturating(color.Y * 255);

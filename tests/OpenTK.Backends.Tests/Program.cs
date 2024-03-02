@@ -80,48 +80,41 @@ namespace OpenTK.Backends.Tests
 
             BackendsConfig.Logger = Logger;
 
-            BackendsConfig.Singleton.PreferSDL2 = false;
-            BackendsConfig.Singleton.PreferANGLE = false;
+            //BackendsConfig.Singleton.PreferSDL2 = false;
+            //BackendsConfig.Singleton.PreferANGLE = false;
 
-            foreach (PalComponents component in Enum.GetValues<PalComponents>())
-            {
-                try
-                {
-                    IPalComponent? driver = BackendsConfig.GetBackend(component);
-                    if (driver != null)
-                    {
-                        switch (component)
-                        {
-                        case PalComponents.Window:        WindowComp =         (IWindowComponent)   driver; break;
-                        case PalComponents.OpenGL:        OpenGLComp =         (IOpenGLComponent)   driver; break;
-                        case PalComponents.WindowIcon:    IconComponent =      (IIconComponent)     driver; break;
-                        case PalComponents.MouseCursor:   CursorComp =         (ICursorComponent)   driver; break;
-                        case PalComponents.Display:       DisplayComponent =   (IDisplayComponent)  driver; break;
-                        case PalComponents.MiceInput:     MouseComponent =     (IMouseComponent)    driver; break;
-                        case PalComponents.KeyboardInput: KeyboardComponent =  (IKeyboardComponent) driver; break;
-                        case PalComponents.Clipboard:     ClipboardComponent = (IClipboardComponent)driver; break;
-                        case PalComponents.Shell:         ShellComponent =     (IShellComponent)    driver; break;
-                        case PalComponents.Joystick:      JoystickComponent =  (IJoystickComponent) driver; break;
-                        }
-                        driver.Logger = Logger;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError($"Could not initialize component {component}: {ex}\n{ex.StackTrace}");
-                }
-            }
+            // FIXME: It's confusing that we set these settings here
+            // when we use Toolkit.Init to actually create the components...
+            // - Noggin_bops 2024-03-02
+            PlatformComponents.PreferSDL2 = false;
+            PlatformComponents.PreferANGLE = false;
 
-            WindowComp.Initialize(PalComponents.Window);
-            OpenGLComp.Initialize(PalComponents.OpenGL);
-            CursorComp?.Initialize(PalComponents.MouseCursor);
-            IconComponent?.Initialize(PalComponents.WindowIcon);
-            DisplayComponent?.Initialize(PalComponents.Display);
-            MouseComponent?.Initialize(PalComponents.MiceInput);
-            KeyboardComponent?.Initialize(PalComponents.KeyboardInput);
-            ClipboardComponent?.Initialize(PalComponents.Clipboard);
-            ShellComponent?.Initialize(PalComponents.Shell);
-            JoystickComponent?.Initialize(PalComponents.Joystick);
+            // Init all of the components.
+            Toolkit.Init(new ToolkitOptions());
+
+            WindowComp = Toolkit.Window;
+            OpenGLComp = Toolkit.OpenGL;
+            IconComponent = Toolkit.Icon;
+            CursorComp = Toolkit.Cursor;
+            DisplayComponent = Toolkit.Display;
+            MouseComponent = Toolkit.Mouse;
+            KeyboardComponent = Toolkit.Keyboard;
+            ClipboardComponent = Toolkit.Clipboard;
+            ShellComponent = Toolkit.Shell;
+            JoystickComponent = Toolkit.Joystick;
+
+            // FIXME: Better way to set the logger?
+            // Maybe make it a static property of Toolkit?
+            WindowComp.Logger = BackendsConfig.Logger;
+            OpenGLComp.Logger = BackendsConfig.Logger;
+            IconComponent.Logger = BackendsConfig.Logger;
+            CursorComp.Logger = BackendsConfig.Logger;
+            DisplayComponent.Logger = BackendsConfig.Logger;
+            MouseComponent.Logger = BackendsConfig.Logger;
+            KeyboardComponent.Logger = BackendsConfig.Logger;
+            ClipboardComponent.Logger = BackendsConfig.Logger;
+            ShellComponent.Logger = BackendsConfig.Logger;
+            JoystickComponent.Logger = BackendsConfig.Logger;
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
@@ -242,7 +235,6 @@ namespace OpenTK.Backends.Tests
                         config.EllipsisChar = 0xFFFF;
                         unsafe
                         {
-                            
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
                             ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);

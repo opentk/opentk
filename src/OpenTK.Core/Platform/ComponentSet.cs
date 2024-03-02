@@ -36,6 +36,28 @@ namespace OpenTK.Core.Platform
         private IShellComponent? _shellComponent;
         private IJoystickComponent? _joystickComponent;
 
+        public IWindowComponent Window => _windowComponent;
+
+        public ISurfaceComponent Surface => _surfaceComponent;
+
+        public IOpenGLComponent OpenGL => _openGLComponent;
+
+        public IDisplayComponent Display => _displayComponent;
+
+        public IShellComponent Shell => _shellComponent;
+
+        public IMouseComponent Mouse => _mouseComponent;
+
+        public IKeyboardComponent Keyboard => _keyboardComponent;
+
+        public ICursorComponent Cursor => _cursorComponent;
+
+        public IIconComponent Icon => _iconComponent;
+
+        public IClipboardComponent Clipboard => _clipboardComponent;
+
+        public IJoystickComponent Joystick => _joystickComponent;
+
         /// <summary>
         /// Indicated whether the component set has been initialized.
         /// </summary>
@@ -493,19 +515,19 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        void IWindowComponent.SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
         {
             _windowComponent!.SetFullscreenDisplay(window, display);
         }
 
         /// <inheritdoc/>
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        void IWindowComponent.SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
         {
             _windowComponent!.SetFullscreenDisplay(window, display, videoMode);
         }
 
         /// <inheritdoc/>
-        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        bool IWindowComponent.GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
         {
             return _windowComponent!.GetFullscreenDisplay(window, out display);
         }
@@ -535,7 +557,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        public void SetHitTestCallback(WindowHandle handle, HitTest? test)
+        void IWindowComponent.SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
             _windowComponent!.SetHitTestCallback(handle, test);
         }
