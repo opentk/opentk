@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace OpenTK.Platform.Native
     public sealed class ToolkitOptions
     {
         public string ApplicationName { get; set; } = "OpenTK Application";
+
+        public ILogger? Logger { get; set; } = null;
     }
 
     // FIXME: Maybe find another name for this?
@@ -65,6 +68,29 @@ namespace OpenTK.Platform.Native
             try { _iconComponent = PlatformComponents.CreateIconComponent(); } catch (NotSupportedException) { }
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
+
+            if (_windowComponent != null)
+                _windowComponent.Logger = options.Logger;
+            if (_surfaceComponent != null)
+                _surfaceComponent.Logger = options.Logger;
+            if (_openGLComponent != null)
+                _openGLComponent.Logger = options.Logger;
+            if (_displayComponent != null)
+                _displayComponent.Logger = options.Logger;
+            if (_shellComponent != null)
+                _shellComponent.Logger = options.Logger;
+            if (_mouseComponent != null)
+                _mouseComponent.Logger = options.Logger;
+            if (_keyboardComponent != null)
+                _keyboardComponent.Logger = options.Logger;
+            if (_cursorComponent != null)
+                _cursorComponent.Logger = options.Logger;
+            if (_iconComponent != null)
+                _iconComponent.Logger = options.Logger;
+            if (_clipboardComponent != null)
+                _clipboardComponent.Logger = options.Logger;
+            if (_joystickComponent != null)
+                _joystickComponent.Logger = options.Logger;
 
             // FIXME: Change initialize to take toolkit options
             // This will also allow us to potentially remove the need

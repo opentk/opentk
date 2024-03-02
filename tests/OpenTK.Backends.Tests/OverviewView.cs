@@ -5,6 +5,7 @@ using System.Numerics;
 using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -48,10 +49,10 @@ namespace OpenTK.Backends.Tests
             ImGui.BulletText("Use the command line argument to specify which drivers to load manually.");
             ImGui.BulletText("Alternatively, drag the config file on the application.");
 
-            bool preferSDL2 = BackendsConfig.Singleton.PreferSDL2;
+            bool preferSDL2 = PlatformComponents.PreferSDL2;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers SDL2", preferSDL2);
 
-            bool preferANGLE = BackendsConfig.Singleton.PreferANGLE;
+            bool preferANGLE = PlatformComponents.PreferANGLE;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers ANGLE", preferANGLE);
 
             if (ImGui.BeginTable("overview_table_id", 3, ImGuiTableFlags.Borders))
@@ -75,25 +76,6 @@ namespace OpenTK.Backends.Tests
                 }
 
                 ImGui.EndTable();
-            }
-
-
-            if (ImGui.TreeNodeEx("Extra Assemblies", TREE_NODE_FLAGS))
-            {
-                if (BackendsConfig.ExtraAssembliesLoaded)
-                {
-                    ImGui.Text("Also, the following extra assemblies were loaded:");
-                    foreach (var name in BackendsConfig.Singleton.ExtraAssemblies)
-                    {
-                        ImGui.BulletText(name);
-                    }
-                }
-                else
-                {
-                    ImGui.Text("No extra assemblies have been loaded.");
-                }
-
-                ImGui.TreePop();
             }
 
             if (ImGui.TreeNodeEx("Log", TREE_NODE_FLAGS))

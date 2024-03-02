@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -175,7 +176,7 @@ namespace OpenTK.Backends.Tests
                             // FIXME: Make it only a single place where we actuall initialize test apps.
                             Program.OpenGLComp.SetCurrentContext(appWindow.Context);
                             // FIXME: Proper check for GLES.
-                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, BackendsConfig.Singleton.PreferANGLE);
+                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
                             Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
                         }
                     }
@@ -212,7 +213,7 @@ namespace OpenTK.Backends.Tests
                 {
                     Program.OpenGLComp.SetCurrentContext(appWindow.Context);
                     // FIXME: Proper check for GLES.
-                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, BackendsConfig.Singleton.PreferANGLE);
+                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
                     Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
                 }
             }

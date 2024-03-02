@@ -80,9 +80,6 @@ namespace OpenTK.Backends.Tests
 
             BackendsConfig.Logger = Logger;
 
-            //BackendsConfig.Singleton.PreferSDL2 = false;
-            //BackendsConfig.Singleton.PreferANGLE = false;
-
             // FIXME: It's confusing that we set these settings here
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
@@ -90,7 +87,7 @@ namespace OpenTK.Backends.Tests
             PlatformComponents.PreferANGLE = false;
 
             // Init all of the components.
-            Toolkit.Init(new ToolkitOptions());
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger });
 
             WindowComp = Toolkit.Window;
             OpenGLComp = Toolkit.OpenGL;
@@ -103,19 +100,6 @@ namespace OpenTK.Backends.Tests
             ShellComponent = Toolkit.Shell;
             JoystickComponent = Toolkit.Joystick;
 
-            // FIXME: Better way to set the logger?
-            // Maybe make it a static property of Toolkit?
-            WindowComp.Logger = BackendsConfig.Logger;
-            OpenGLComp.Logger = BackendsConfig.Logger;
-            IconComponent.Logger = BackendsConfig.Logger;
-            CursorComp.Logger = BackendsConfig.Logger;
-            DisplayComponent.Logger = BackendsConfig.Logger;
-            MouseComponent.Logger = BackendsConfig.Logger;
-            KeyboardComponent.Logger = BackendsConfig.Logger;
-            ClipboardComponent.Logger = BackendsConfig.Logger;
-            ShellComponent.Logger = BackendsConfig.Logger;
-            JoystickComponent.Logger = BackendsConfig.Logger;
-
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
                 Version = new Version(4, 1),
@@ -124,7 +108,11 @@ namespace OpenTK.Backends.Tests
                 DebugFlag = true,
             };
 
-            if (BackendsConfig.Singleton.PreferANGLE)
+            // If we are using ANGLE we need to create a OpenGL ES context
+            // Currently we do this with the same OpenGLGraphicsApiHints
+            // we just change the version numbers around.
+            // - Noggin_bops 2024-03-02
+            if (PlatformComponents.PreferANGLE)
             {
                 hints.Version = new Version(3, 1);
                 hints.Profile = OpenGLProfile.None;

@@ -3,6 +3,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.X11;
 using System;
 using System.Collections.Generic;
@@ -75,14 +76,14 @@ namespace OpenTK.Platform.Tests
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             //Native.PlatformComponents.PreferSDL2 = true;
-            windowComp = Native.PlatformComponents.CreateWindowComponent();
-            glComp = Native.PlatformComponents.CreateOpenGLComponent();
-            cursorComp = Native.PlatformComponents.CreateCursorComponent();
-            mouseComp = Native.PlatformComponents.CreateMouseComponent();
-            shellComp = Native.PlatformComponents.CreateShellComponent();
-            displayComp = Native.PlatformComponents.CreateDisplayComponent();
-            iconComp = Native.PlatformComponents.CreateIconComponent();
-            clipComp = Native.PlatformComponents.CreateClipboardComponent();
+            windowComp = PlatformComponents.CreateWindowComponent();
+            glComp = PlatformComponents.CreateOpenGLComponent();
+            cursorComp = PlatformComponents.CreateCursorComponent();
+            mouseComp = PlatformComponents.CreateMouseComponent();
+            shellComp = PlatformComponents.CreateShellComponent();
+            displayComp = PlatformComponents.CreateDisplayComponent();
+            iconComp = PlatformComponents.CreateIconComponent();
+            clipComp = PlatformComponents.CreateClipboardComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();

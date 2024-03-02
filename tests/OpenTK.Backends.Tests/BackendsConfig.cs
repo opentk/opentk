@@ -17,35 +17,6 @@ namespace OpenTK.Backends.Tests
     [JsonSerializable(typeof(BackendsConfig))]
     public class BackendsConfig
     {
-        // Because this tool not only aims to support third party developers
-        // making their own platform drivers, it should support a multitude of
-        // options for dependency injection.
-        //
-        // 1. The assemblies in LoadExtraAssemblies are loaded.
-        // 2. If any specific driver name is provided, these are created using reflection.
-        // 3. Any driver names not provided are loaded using normal driver loading logic.
-        //      - PreferSDL2 is passed to the OpenTK.Platform.Native loader.
-
-
-        /// <summary>
-        /// Provides the preferred backend to pick.
-        /// </summary>
-        /// <remarks>Use "auto" for automatic.</remarks>
-        /// <seealso cref="OpenTK.Platform.Native.Backend"/>
-        public bool PreferSDL2 {get; set; } = false;
-
-        /// <summary>
-        /// Provides the preferred backend to pick.
-        /// </summary>
-        /// <remarks>Use "auto" for automatic.</remarks>
-        /// <seealso cref="OpenTK.Platform.Native.Backend"/>
-        public bool PreferANGLE { get; set; } = false;
-
-        /// <summary>
-        /// Extra assemblies to load before loading PAL2 drivers.
-        /// </summary>
-        public List<string> ExtraAssemblies { get; set; } = new List<string>();
-
         /// <summary>
         /// Create a new instance of BackendsConfig.
         /// </summary>
@@ -122,26 +93,6 @@ namespace OpenTK.Backends.Tests
                 // Make sure there actually is a backend config.
                 if (config == null)
                     config = new BackendsConfig();
-
-                if (config.ExtraAssemblies?.Count > 0)
-                {
-                    foreach (string name in config.ExtraAssemblies)
-                    {
-                        try
-                        {
-                            Assembly.Load(name);
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger?.LogError($"Could not load assembly \"{name}\": {ex}\n{ex.StackTrace}");
-
-                            if (Debugger.IsAttached)
-                                Debugger.Break();
-                        }
-                    }
-
-                    ExtraAssembliesLoaded = true;
-                }
             }
             catch (Exception ex)
             {
