@@ -30,6 +30,7 @@ namespace OpenTK.Compute.OpenCL
         public static CLVersion CLMakeVersion(int major, int minor, int patch) => new CLVersion(major, minor, patch);
 
         public const int NameVersionMaxNameSize = 64;
+
         #endregion
 
         private const string LibName = "opencl";
@@ -378,7 +379,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clRetainMemObject")]
-        public static extern CLResultCode RetainMemoryObject([In] ICLMemoryObject memoryObject);
+        public static extern CLResultCode RetainMemoryObject([In] CLMemoryObject memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
@@ -390,7 +391,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clReleaseMemObject")]
-        public static extern CLResultCode ReleaseMemoryObject([In] ICLMemoryObject memoryObject);
+        public static extern CLResultCode ReleaseMemoryObject([In] CLMemoryObject memoryObject);
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
@@ -416,27 +417,18 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetMemObjectInfo")]
-        public static extern CLResultCode GetMemObjectInfo([In] IntPtr memoryObject, [In] MemoryObjectInfo paramName,
+        public static extern CLResultCode GetMemObjectInfo([In] CLMemoryObject memoryObject, [In] MemoryObjectInfo paramName,
             [In] UIntPtr paramValueSize, [Out] byte[] paramValue, [Out] out UIntPtr paramValueSizeReturned);
 
         /// <summary>
         /// Introduced in OpenCL 1.0.
         /// </summary>
-        public static CLResultCode GetMemObjectInfo(IntPtr memoryObject, MemoryObjectInfo paramName,
+        public static CLResultCode GetMemObjectInfo(CLMemoryObject memoryObject, MemoryObjectInfo paramName,
             out byte[] paramValue)
         {
             GetMemObjectInfo(memoryObject, paramName, UIntPtr.Zero, null, out UIntPtr size);
             paramValue = new byte[size.ToUInt64()];
             return GetMemObjectInfo(memoryObject, paramName, size, paramValue, out _);
-        }
-
-        /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// </summary>
-        public static CLResultCode GetMemObjectInfo(ICLMemoryObject memoryObject, MemoryObjectInfo paramName,
-            out byte[] paramValue)
-        {
-            return GetMemObjectInfo(memoryObject.Handle, paramName, out paramValue);
         }
 
         /// <summary>
@@ -479,7 +471,7 @@ namespace OpenTK.Compute.OpenCL
         /// Introduced in OpenCL 1.1.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clSetMemObjectDestructorCallback")]
-        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] ICLMemoryObject memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
+        public static extern CLResultCode SetMemoryObjectDestructorCallback([In] CLMemoryObject memoryObject, [In] IntPtr notificationCallback, [In] IntPtr userData);
 
         #endregion
 
