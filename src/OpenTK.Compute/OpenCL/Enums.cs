@@ -5204,11 +5204,6 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Kernel
-    public enum KernelExecInfo : uint
-    {
-        SvmPointers = 0x11B6,
-        SvmFineGrainSystem = 0x11B7
-    }
 
     /// <summary>
     /// <para>
@@ -5297,17 +5292,179 @@ namespace OpenTK.Compute.OpenCL
         Attributes = 0x1195,
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetKernelArgInfo(CLKernel, uint,
+    ///     KernelArgInfo, out byte[])">GetKernelArgInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#kernel-argument-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum KernelArgInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Returns the address qualifier specified for the argument given by <c>arg_index</c>.
+        /// </para>
+        /// <para>
+        ///     If no address qualifier is specified, the default address qualifier
+        ///     which is <c><see cref="KernelArgAddressQualifier.Private">Private</see></c> is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="KernelArgAddressQualifier">KernelArgAddressQualifier</see></c>
+        /// </para>
+        /// </summary>
         AddressQualifier = 0x1196,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the access qualifier specified for the argument given by <c>arg_index</c>.
+        /// </para>
+        /// <para>
+        ///     If argument is not an image type and is not declared with the pipe qualifier,
+        ///     <c><see cref="KernelArgAccessQualifier.None">None</see></c> is returned.
+        ///     If argument is an image type, the access qualifier specified or the default access qualifier is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="KernelArgAccessQualifier">KernelArgAccessQualifier</see></c>
+        /// </para>
+        /// </summary>
         AccessQualifier = 0x1197,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the type name specified for the argument given by <c>arg_index</c>.
+        ///     The type name returned will be the argument type name as it was declared with
+        ///     any whitespace removed. If argument type name is an unsigned scalar type
+        ///     (i.e. unsigned char, unsigned short, unsigned int, unsigned long), uchar,
+        ///     ushort, uint and ulong will be returned. The argument type name returned
+        ///     does not include any type qualifiers.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         TypeName = 0x1198,
+
+        /// <summary>
+        /// <para>
+        ///     Returns a bitfield describing one or more type qualifiers
+        ///     specified for the argument given by <c>arg_index</c>.
+        /// </para>
+        /// <para>
+        ///     <c><see cref="KernelArgTypeQualifier.None">None</see></c>
+        ///     is returned for all parameters passed by value.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="KernelArgTypeQualifier">KernelArgTypeQualifier</see></c>
+        /// </para>
+        /// </summary>
         TypeQualifier = 0x1199,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the name specified for the argument given by <c>arg_index</c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Name = 0x119A
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Valid options for the return value of
+    ///     <c><see cref="CL.GetKernelArgInfo(CLKernel, uint,
+    ///     KernelArgInfo, out byte[])">GetKernelArgInfo()</see></c> using
+    ///     <c><see cref="KernelArgInfo.AddressQualifier"/></c>.
+    /// </para>
+    /// </summary>
+    public enum KernelArgAddressQualifier : uint
+    {
+        Global = 0x119B,
+        Local = 0x119C,
+        Constant = 0x119D,
+        Private = 0x119E
+    }
+
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Valid options for the return value of
+    ///     <c><see cref="CL.GetKernelArgInfo(CLKernel, uint,
+    ///     KernelArgInfo, out byte[])">GetKernelArgInfo()</see></c> using
+    ///     <c><see cref="KernelArgInfo.AccessQualifier"/></c>.
+    /// </para>
+    /// </summary>
+    public enum KernelArgAccessQualifier : uint
+    {
+        ReadOnly = 0x11A0,
+        WriteOnly = 0x11A1,
+        ReadWrite = 0x11A2,
+        None = 0x11A3
+    }
+
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.2.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Bit-field options for the return value of
+    ///     <c><see cref="CL.GetKernelArgInfo(CLKernel, uint,
+    ///     KernelArgInfo, out byte[])">GetKernelArgInfo()</see></c> using
+    ///     <c><see cref="KernelArgInfo.TypeQualifier"/></c>.
+    /// </para>
+    /// </summary>
+    [Flags]
+    public enum KernelArgTypeQualifier : ulong
+    {
+        None = 0,
+        Constant = 1 << 0,
+        Restrict = 1 << 1,
+        Volatile = 1 << 2,
+
+        /// <summary>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </summary>
+        Pipe = 1 << 3
+    }
+
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetKernelWorkGroupInfo(CLKernel, CLDevice,
+    ///     KernelWorkGroupInfo, out byte[])">GetKernelArgInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#kernel-workgroup-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum KernelWorkGroupInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     This provides a mechanism for the application to query the maximum work-group
+        ///     size that can be used to execute the kernel on a specific device given by device.
+        ///     The OpenCL implementation uses the resource requirements of the kernel
+        ///     (register usage etc.) to determine what this work-group size should be.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         WorkGroupSize = 0x11B0,
         CompileWorkGroupSize = 0x11B1,
         LocalMemorySize = 0x11B2,
@@ -5321,6 +5478,12 @@ namespace OpenTK.Compute.OpenCL
         MaximumSubGroupSizeForNdRange = 0x2033,
         SubGroupCountForNdRange = 0x2034,
         LocalSizeForSubGroupCount = 0x11B8
+    }
+
+    public enum KernelExecInfo : uint
+    {
+        SvmPointers = 0x11B6,
+        SvmFineGrainSystem = 0x11B7
     }
 
     #endregion
