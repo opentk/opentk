@@ -5566,11 +5566,123 @@ namespace OpenTK.Compute.OpenCL
         GlobalWorkSize = 0x11B5
     }
 
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 2.1.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetKernelSubGroupInfo(CLKernel, CLDevice,
+    ///     KernelSubGroupInfo, UIntPtr, IntPtr, UIntPtr, byte[], out UIntPtr)">
+    ///     GetKernelSubGroupInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#kernel-sub-group-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum KernelSubGroupInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Returns the maximum sub-group size for this kernel.
+        ///     All sub-groups must be the same size, while the last sub-group in any work-group
+        ///     (i.e. the sub-group with the maximum index) could be the same or smaller size.
+        /// </para>
+        /// <para>
+        ///     The input_value must be an array of <c>size_t</c> values corresponding
+        ///     to the local work size parameter of the intended dispatch.
+        ///     The number of dimensions in the ND-range will be inferred from
+        ///     the value specified for <c>input_value_size</c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Input Type:</u></i> <c>IntPtr(size_t*)</c>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         MaximumSubGroupSizeForNdRange = 0x2033,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the number of sub-groups that will be present
+        ///     in each work-group for a given local work size.
+        ///     All workgroups, apart from the last work-group in each dimension
+        ///     in the presence of non-uniform work-group sizes, will have the same number of sub-groups.
+        /// </para>
+        /// <para>
+        ///     The <c>input_value</c> must be an array of <c>size_t</c> values corresponding
+        ///     to the local work size parameter of the intended dispatch.
+        ///     The number of dimensions in the ND-range will be inferred from
+        ///     the value specified for <c>input_value_size</c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Input Type:</u></i> <c>IntPtr(size_t*)</c>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         SubGroupCountForNdRange = 0x2034,
-        LocalSizeForSubGroupCount = 0x11B8
+
+        /// <summary>
+        /// <para>
+        ///     Returns the local size that will generate the requested
+        ///     number of sub-groups for the kernel. The output array must be
+        ///     an array of <c>size_t</c> values corresponding to the local size parameter.
+        ///     Any returned work-group will have one dimension.
+        ///     Other dimensions inferred from the value specified
+        ///     for <c>param_value_size</c> will be filled with the value 1.
+        ///     The returned value will produce an exact number of sub-groups and
+        ///     result in no partial groups for an executing kernel except in the
+        ///     case where the last work-group in a dimension has a size different
+        ///     from that of the other groups. If no work-group size can accommodate
+        ///     the requested number of sub-groups, 0 will be returned in each element of the return array.
+        /// </para>
+        /// <para>
+        ///     <i><u>Input Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr[]</c>
+        /// </para>
+        /// </summary>
+        LocalSizeForSubGroupCount = 0x11B8,
+
+        /// <summary>
+        /// <para>
+        ///     This provides a mechanism for the application to query
+        ///     the maximum number of sub-groups that may make up each
+        ///     work-group to execute a kernel on a specific device given by device.
+        ///     The OpenCL implementation uses the resource requirements
+        ///     of the kernel (register usage etc.) to determine what this work-group
+        ///     size should be. The returned value may be used to compute a work-group
+        ///     size to enqueue the kernel with to give a round
+        ///     number of sub-groups for an enqueue.
+        /// </para>
+        /// <para>
+        ///     <i><u>Input Type:</u></i> ignored
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        MaximumNumberSubGroups = 0x11B9,
+
+        /// <summary>
+        /// <para>
+        ///     Returns the number of sub-groups per work-group specified
+        ///     in the kernel source or IL. If the sub-group count is
+        ///     not specified then 0 is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Input Type:</u></i> ignored
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
+        CompileNumberSubGroups = 0x11BA
     }
 
     public enum KernelExecInfo : uint
