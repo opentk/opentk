@@ -5001,13 +5001,204 @@ namespace OpenTK.Compute.OpenCL
         ProgramScopeGlobalDestructorsPresent = 0x116B
     }
 
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetProgramBuildInfo(CLProgram, CLDevice,
+    ///     ProgramBuildInfo, out byte[])">GetProgramBuildInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#program-build-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
     public enum ProgramBuildInfo : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Returns the build, compile or link status,
+        ///     whichever was performed last on the specified program object for device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="BuildStatus">BuildStatus</see></c>
+        /// </para>
+        /// </summary>
         Status = 0x1181,
+
+        /// <summary>
+        /// <para>
+        ///     Return the build, compile or link options specified by the options argument in
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c>
+        ///     or <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>,
+        ///     whichever was performed last on the specified program object for device.
+        /// </para>
+        /// <para>
+        ///     If build status of the specified program for device is
+        ///     <c><see cref="BuildStatus.None">None</see></c>, an empty string is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Options = 0x1182,
+
+        /// <summary>
+        /// <para>
+        ///     Return the build, compile or link log for
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>,
+        ///     whichever was performed last on program for device.
+        /// </para>
+        /// <para>
+        ///     If build status of the specified program for device is
+        ///     <c><see cref="BuildStatus.None">None</see></c>, an empty string is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>string</c>
+        /// </para>
+        /// </summary>
         Log = 0x1183,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the program binary type for device.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="ProgramBinaryType">ProgramBinaryType</see></c>
+        /// </para>
+        /// </summary>
         BinaryType = 0x1184,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     The total amount of storage, in bytes, used by program variables in the global address space.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>UIntPtr</c>
+        /// </para>
+        /// </summary>
         GlobalVariableTotalSize = 0x1185
+    }
+
+    /// <summary>
+    ///     Valid options for the return value of
+    ///     <c><see cref="CL.GetProgramBuildInfo(CLProgram, CLDevice,
+    ///     ProgramBuildInfo, out byte[])">GetProgramBuildInfo()</see></c> using
+    ///     <c><see cref="ProgramBuildInfo.BinaryType"/></c>.
+    /// </summary>
+    public enum ProgramBinaryType : uint
+    {
+        /// <summary>
+        ///     There is no binary associated with the specified program object for device.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        ///     A compiled binary is associated with device.
+        ///     This is the case when the specified program object was created using
+        ///     <c><see cref="CL.CreateProgramWithSource(CLContext, string, out CLResultCode)">
+        ///     CreateProgramWithSource()</see></c> and compiled using
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c>,
+        ///     or when a compiled binary was loaded using
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[],
+        ///     UIntPtr[], IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>.
+        /// </summary>
+        CompiledObject = 1,
+
+        /// <summary>
+        ///     A library binary is associated with device.
+        ///     This is the case when the specified program object was linked by
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     using the <c>-create-library</c> link option, or when a compiled library
+        ///     binary was loaded using
+        ///     <c><see cref="CL.CreateProgramWithBinary(CLContext, uint, IntPtr[],
+        ///     UIntPtr[], IntPtr[], out CLResultCode[], out CLResultCode)">CreateProgramWithBinary()</see></c>.
+        /// </summary>
+        Library = 2,
+
+        /// <summary>
+        ///     An executable binary is associated with device.
+        ///     This is the case when the specified program object was linked by
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     without the <c>-create-library</c> link option, or when an executable binary
+        ///     was built using <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>.
+        /// </summary>
+        Executable = 3
+    }
+
+    /// <summary>
+    ///     Valid options for the return value of
+    ///     <c><see cref="CL.GetProgramBuildInfo(CLProgram, CLDevice,
+    ///     ProgramBuildInfo, out byte[])">GetProgramBuildInfo()</see></c> using
+    ///     <c><see cref="ProgramBuildInfo.Status"/></c>.
+    /// </summary>
+    public enum BuildStatus : int
+    {
+        /// <summary>
+        ///     The build status returned if
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     - whichever was performed last on the specified program object for device - was successful.
+        /// </summary>
+        Success = 0,
+
+        /// <summary>
+        ///     The build status returned if no
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     has been performed on the specified program object for device.
+        /// </summary>
+        None = -1,
+
+        /// <summary>
+        ///     The build status returned if
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     - whichever was performed last on the specified program object for device - generated an error.
+        /// </summary>
+        Error = -2,
+
+        /// <summary>
+        ///     The build status returned if
+        ///     <c><see cref="CL.BuildProgram(CLProgram, CLDevice[], string,
+        ///     CL.ClEventCallback)">BuildProgram()</see></c>,
+        ///     <c><see cref="CL.CompileProgram(CLProgram, uint, CLDevice[], string, uint,
+        ///     IntPtr[], out IntPtr, IntPtr, IntPtr)">CompileProgram()</see></c> or
+        ///     <c><see cref="CL.LinkProgram(CLContext, uint, CLDevice[], string, uint,
+        ///     CLProgram[], IntPtr, IntPtr, out CLResultCode)">LinkProgram()</see></c>
+        ///     - whichever was performed last on the specified program object for device - has not finished.
+        /// </summary>
+        InProgress = -3
     }
 
     #endregion
