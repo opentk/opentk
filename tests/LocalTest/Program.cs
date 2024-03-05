@@ -15,8 +15,6 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
-            //GLFW.InitHint(InitHintPlatform.Platform, Platform.Cocoa);
-
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
@@ -52,7 +50,6 @@ namespace LocalTest
         {
             base.OnLoad();
 
-            
             string ver = GLFW.GetVersionString();
             Console.WriteLine($"GLFW version: {ver}");
         }
