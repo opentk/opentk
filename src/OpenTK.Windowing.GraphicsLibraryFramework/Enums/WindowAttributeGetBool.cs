@@ -115,5 +115,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible values are <c>true</c> and <c>false</c>.
         /// </summary>
         OpenGLDebugContext = WindowHintBool.OpenGLDebugContext,
+
+        /// <summary>
+        /// Specifies whether the window is double buffered or not.
+        /// </summary>
+        DoubleBuffer = WindowHintBool.DoubleBuffer,
     }
 }

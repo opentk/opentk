@@ -16,6 +16,22 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     public enum WindowHintInt
     {
         /// <summary>
+        /// Specifies the desired initial x position of the window.
+        /// The window manager may modify or ignore these coordinates.
+        /// If either or both of these hints are set to <see cref="GLFW.AnyPosition"/> then the window manager will position the window where it thinks the user will prefer it.
+        /// Possible values are any valid screen coordinates and <see cref="GLFW.AnyPosition"/>.
+        /// </summary>
+        PositionX = 0x0002000E,
+
+        /// <summary>
+        /// Specifies the desired initial y position of the window.
+        /// The window manager may modify or ignore these coordinates.
+        /// If either or both of these hints are set to <see cref="GLFW.AnyPosition"/> then the window manager will position the window where it thinks the user will prefer it.
+        /// Possible values are any valid screen coordinates and <see cref="GLFW.AnyPosition"/>.
+        /// </summary>
+        PositionY = 0x0002000F,
+
+        /// <summary>
         /// Indicate the client API version(major part) of the window's context.
         /// </summary>
         ContextVersionMajor = 0x00022002,

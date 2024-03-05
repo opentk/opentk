@@ -215,4 +215,157 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowRefreshCallback(Window* window);
     }
+
+    /// <summary>
+    /// The function pointer type for memory allocation callbacks.
+    ///
+    /// This is the function pointer type for memory allocation callbacks. A memory
+    /// allocation callback function has the following signature:
+    /// <code>
+    /// void* function_name(size_t size, void* user)
+    /// </code>
+    ///
+    /// This function must return either a memory block at least `size` bytes long,
+    /// or `NULL` if allocation failed.Note that not all parts of GLFW handle allocation
+    /// failures gracefully yet.
+    ///
+    /// This function must support being called during @ref glfwInit but before the library is
+    /// flagged as initialized, as well as during @ref glfwTerminate after the library is no
+    /// longer flagged as initialized.
+    ///
+    /// Any memory allocated via this function will be deallocated via the same allocator
+    /// during library termination or earlier.
+    ///
+    /// Any memory allocated via this function must be suitably aligned for any object type.
+    /// If you are using C99 or earlier, this alignment is platform-dependent but will be the
+    /// same as what `malloc` provides.If you are using C11 or later, this is the value of
+    /// `alignof(max_align_t)`.
+    ///
+    /// The size will always be greater than zero.  Allocations of size zero are filtered out
+    /// before reaching the custom allocator.
+    ///
+    /// If this function returns `NULL`, GLFW will emit <see cref="ErrorCode.OutOfMemory"/>.
+    ///
+    /// This function must not call any GLFW function.
+    ///
+    /// Added in version 3.4.
+    /// </summary>
+    /// <remarks>
+    /// The returned memory block must be valid at least until it is deallocated.
+    ///
+    /// This function should not call any GLFW function.
+    ///
+    /// This function must support being called from any thread that calls GLFW functions.
+    /// </remarks>
+    /// <param name="size">The minimum size, in bytes, of the memory block.</param>
+    /// <param name="user">The user-defined pointer from the allocator.</param>
+    /// <returns>The address of the newly allocated memory block, or `NULL` if an error occurred.</returns>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public unsafe delegate void* GLFWallocatefun(UIntPtr size, void* user);
+
+    /// <summary>
+    /// The function pointer type for memory reallocation callbacks.
+    ///
+    /// This is the function pointer type for memory reallocation callbacks.
+    /// A memory reallocation callback function has the following signature:
+    /// <code>
+    /// void* function_name(void* block, size_t size, void* user)
+    /// </code>
+    ///
+    /// This function must return a memory block at least <c>size</c> bytes long, or
+    /// <c>null</c> if allocation failed. Note that not all parts of GLFW handle allocation
+    /// failures gracefully yet.
+    ///
+    /// This function must support being called during <see cref="glfwInit"/> but before the library is
+    /// flagged as initialized, as well as during <see cref="glfwTerminate"/> after the library is no
+    /// longer flagged as initialized.
+    ///
+    /// Any memory allocated via this function will be deallocated via the same allocator
+    /// during library termination or earlier.
+    ///
+    /// Any memory allocated via this function must be suitably aligned for any object type.
+    /// If you are using C99 or earlier, this alignment is platform-dependent but will be the
+    /// same as what <c>realloc</c> provides.If you are using C11 or later, this is the value of
+    /// <c>alignof(max_align_t)</c>.
+    ///
+    /// The block address will never be <c>null</c> and the size will always be greater than zero.
+    /// Reallocations of a block to size zero are converted into deallocations before reaching
+    /// the custom allocator.Reallocations of <c>null</c> to a non-zero size are converted into
+    /// regular allocations before reaching the custom allocator.
+    ///
+    /// If this function returns <c>null</c>, GLFW will emit <see cref="ErrorCode.OutOfMemory"/>.
+    ///
+    /// This function must not call any GLFW function.
+    /// </summary>
+    /// <remarks>
+    ///  The returned memory block must be valid at least until it is deallocated.
+    ///
+    /// This function should not call any GLFW function.
+    ///
+    /// This function must support being called from any thread that calls GLFW functions.
+    /// </remarks>
+    /// <param name="block">The address of the memory block to reallocate.</param>
+    /// <param name="size">The new minimum size, in bytes, of the memory block.</param>
+    /// <param name="user">The user-defined pointer from the allocator.</param>
+    /// <returns>The address of the newly allocated or resized memory block, or <c>null</c> if an error occurred.</returns>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public unsafe delegate void* GLFWreallocatefun(void* block, UIntPtr size, void* user);
+
+    /// <summary>
+    /// The function pointer type for memory deallocation callbacks.
+    ///
+    /// This is the function pointer type for memory deallocation callbacks.
+    /// A memory deallocation callback function has the following signature:
+    /// @code
+    /// void function_name(void* block, void* user)
+    /// @endcode
+    ///
+    /// This function may deallocate the specified memory block.This memory block
+    /// will have been allocated with the same allocator.
+    ///
+    /// This function must support being called during @ref glfwInit but before the library is
+    /// flagged as initialized, as well as during @ref glfwTerminate after the library is no
+    /// longer flagged as initialized.
+    ///
+    /// The block address will never be `NULL`.  Deallocations of `NULL` are filtered out
+    /// before reaching the custom allocator.
+    ///
+    /// If this function returns `NULL`, GLFW will emit @ref GLFW_OUT_OF_MEMORY.
+    ///
+    /// This function must not call any GLFW function.
+    /// </summary>
+    /// <remarks>
+    /// The specified memory block will not be accessed by GLFW after this function is called.
+    ///
+    /// This function should not call any GLFW function.
+    ///
+    /// This function must support being called from any thread that calls GLFW functions.
+    /// </remarks>
+    /// <param name="block">The address of the memory block to deallocate.</param>
+    /// <param name="user">The user-defined pointer from the allocator.</param>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public unsafe delegate void GLFWdeallocatefun(void* block, void* user);
+
+    public unsafe struct GLFWallocator
+    {
+        /// <summary>
+        /// The memory allocation function.  See <see cref="GLFWallocatefun"/> for details about allocation function.
+        /// </summary>
+        public GLFWallocatefun Allocate;
+
+        /// <summary>
+        /// The memory reallocation function.  See <see cref="GLFWreallocatefun"/> for details about reallocation function.
+        /// </summary>
+        public GLFWreallocatefun Reallocate;
+
+        /// <summary>
+        /// The memory deallocation function.  See <see cref="GLFWdeallocatefun"/> for details about deallocation function.
+        /// </summary>
+        public GLFWdeallocatefun Deallocate;
+
+        /// <summary>
+        /// The user pointer for this custom allocator.  This value will be passed to the allocator functions.
+        /// </summary>
+        public void* User;
+    }
 }
