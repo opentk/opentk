@@ -610,7 +610,7 @@ namespace Generator.Parsing
                         "INT64" => CSPrimitive.Long(@const),
                         "PROC" => new CSFunctionPointer("???", @const),
                         "RECT" => new CSStruct("Rect", @const),
-                        "LPCSTR" => new CSPointer(new CSChar16(true), @const),
+                        "LPCSTR" => new CSPointer(new CSChar8(true), @const),
                         "LPVOID" => CSPrimitive.IntPtr(@const),
                         "UINT" => CSPrimitive.Uint(@const),
                         "USHORT" => CSPrimitive.Ushort(@const),

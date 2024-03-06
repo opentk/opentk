@@ -16,9 +16,11 @@ namespace Generator.Writing
         private const string BaseNamespace = "OpenTK";
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
 
-        // FIXME: This needs to change for WGL and GLX!
-        private const string LoaderClass = "GLLoader";
-        private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
+        internal record FileStrings(string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext)
+        {
+            /// <summary>Alias for <see cref="ClassName"/>.</summary>
+            public string ApiName => ClassName;
+        }
 
         public static void Write(OutputData data)
         {
@@ -29,24 +31,16 @@ namespace Generator.Writing
 
             foreach (Pointers pointers in data.Pointers)
             {
-                string className = pointers.File switch
+                FileStrings strings = pointers.File switch
                 {
-                    GLFile.GL => "GL",
-                    GLFile.WGL => "Wgl",
-                    GLFile.GLX => "Glx",
-                    _ => throw new Exception(),
-                };
-
-                string pointersNamespace = pointers.File switch
-                {
-                    GLFile.GL => "OpenGL",
-                    GLFile.WGL => "Wgl",
-                    GLFile.GLX => "Glx",
+                    GLFile.GL => new FileStrings("GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
+                    GLFile.WGL => new FileStrings("Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
+                    GLFile.GLX => new FileStrings("Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
                     _ => throw new Exception(),
                 };
 
                 // FIXME: Merge the writing of these function pointers for the relevant namespaces!
-                WriteFunctionPointers(outputProjectPath, className, pointersNamespace, pointers.NativeFunctions);
+                WriteFunctionPointers(outputProjectPath, strings, pointers.NativeFunctions);
             }
 
             foreach (Namespace @namespace in data.Namespaces)
@@ -58,46 +52,35 @@ namespace Generator.Writing
         public static void WriteNamespace(string outputProjectPath, Namespace @namespace)
         {
             // FIXME: Fix function pointers so we can merge this.
-            string className = @namespace.Name switch
+            FileStrings strings = @namespace.Name switch
             {
-                OutputApi.GL => "GL",
-                OutputApi.GLCompat => "GL",
-                OutputApi.GLES1 => "GL",
-                OutputApi.GLES2 => "GL",
-                OutputApi.WGL => "Wgl",
-                OutputApi.GLX => "Glx",
-                _ => throw new Exception(),
-            };
-
-            string apiNamespace = @namespace.Name switch
-            {
-                OutputApi.GL => "OpenGL",
-                OutputApi.GLCompat => "OpenGL.Compatibility",
-                OutputApi.GLES1 => "OpenGLES1",
-                OutputApi.GLES2 => "OpenGLES2",
-                OutputApi.WGL => "Wgl",
-                OutputApi.GLX => "Glx",
+                OutputApi.GL => new FileStrings("GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLCompat => new FileStrings("GL", "OpenGL.Compatibility", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLES1 => new FileStrings("GL", "OpenGLES1", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLES2 => new FileStrings("GL", "OpenGLES2", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.WGL => new FileStrings("Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
+                OutputApi.GLX => new FileStrings("Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
                 _ => throw new Exception($"This is not a valid output API ({@namespace.Name})"),
             };
 
-            string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
+            string directoryPath = Path.Combine(outputProjectPath, Path.Combine(strings.Namespace.Split('.')));
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
             var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
-            foreach (var file in files.Where(file => Path.GetFileName(file) != $"{className}.Manual.cs"))
+            foreach (var file in files.Where(file => Path.GetFileName(file) != $"{strings.ClassName}.Manual.cs"))
             {
                 File.Delete(file);
             }
 
-            WriteNativeFunctions(directoryPath, className, apiNamespace, @namespace.Vendors, @namespace.Documentation);
-            WriteOverloads(directoryPath, className, apiNamespace, @namespace.Vendors);
+            WriteNativeFunctions(directoryPath, strings, @namespace.Vendors, @namespace.Documentation);
+            WriteOverloads(directoryPath, strings, @namespace.Vendors);
 
-            WriteEnums(directoryPath, className, apiNamespace, @namespace.EnumGroups);
+            WriteEnums(directoryPath, strings, @namespace.EnumGroups);
         }
 
         // FIXME: Maybe we should nest this 
-        private static void WriteFunctionPointers(string directoryPath, string className, string apiNamespace, List<NativeFunction> nativeFunctions)
+        private static void WriteFunctionPointers(string directoryPath, FileStrings strings, List<NativeFunction> nativeFunctions)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{className}.Pointers.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ClassName}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
@@ -107,24 +90,24 @@ namespace Generator.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
 
             using (writer.CsScope())
             {
                 writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
                 // FIXME: Better class name?
-                writer.WriteLine($"public static unsafe partial class {className}Pointers");
+                writer.WriteLine($"public static unsafe partial class {strings.ClassName}Pointers");
                 using (writer.CsScope())
                 {
                     foreach (NativeFunction function in nativeFunctions)
                     {
-                        WriteFunctionPointer(writer, function);
+                        WriteFunctionPointer(writer, function, strings);
                     }
                 }
             }
         }
 
-        private static void WriteFunctionPointer(IndentedTextWriter writer, NativeFunction function)
+        private static void WriteFunctionPointer(IndentedTextWriter writer, NativeFunction function, FileStrings strings)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -147,7 +130,7 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){strings.LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
                 {
@@ -244,12 +227,11 @@ namespace Generator.Writing
 
         private static void WriteNativeFunctions(
             string directoryPath,
-            string apiName,
-            string apiNamespace,
+            FileStrings strings,
             SortedDictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Native.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ApiName}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
@@ -257,15 +239,15 @@ namespace Generator.Writing
             writer.WriteLine("using OpenTK.Graphics;");
 
             // FIXME: This is messy.
-            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            if (strings.Namespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
+            if (strings.Namespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
+            if (strings.Namespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
 
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
-                writer.WriteLine($"public static unsafe partial class {apiName}");
+                writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -282,7 +264,7 @@ namespace Generator.Writing
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function.NativeFunction);
                             documentation.TryGetValue(function.NativeFunction, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation, apiName);
+                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation, strings.ApiName);
                         }
 
                         scope?.Dispose();
@@ -337,11 +319,10 @@ namespace Generator.Writing
 
         private static void WriteOverloads(
             string directoryPath,
-            string apiName,
-            string apiNamespace,
+            FileStrings strings,
             SortedDictionary<string, GLVendorFunctions> groups)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Overloads.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ApiName}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
@@ -351,16 +332,16 @@ namespace Generator.Writing
             writer.WriteLine("using OpenTK.Graphics;");
 
             // FIXME: This is messy.
-            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
-            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
-            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+            if (strings.Namespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
+            if (strings.Namespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
+            if (strings.Namespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
 
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?
-                writer.WriteLine($"public static unsafe partial class {apiName}");
+                writer.WriteLine($"public static unsafe partial class {strings.ApiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -486,21 +467,21 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteEnums(string directoryPath, string apiName, string apiNamespace, List<EnumGroup> enumGroups)
+        private static void WriteEnums(string directoryPath, FileStrings strings, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now:yyyy-MM-dd HH:mm:ss \"GMT\"zzz}");
             writer.WriteLine("using System;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{strings.Namespace}");
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
                 writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-                WriteEnumGroups(writer, apiName, enumGroups);
+                WriteEnumGroups(writer, strings.ApiName, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?

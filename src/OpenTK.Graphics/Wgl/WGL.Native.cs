@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 18:33:30 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -46,7 +46,7 @@ namespace OpenTK.Graphics.Wgl
         public static int GetPixelFormat(IntPtr hdc) => WglPointers._GetPixelFormat_fnptr(hdc);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglGetProcAddress</c>]</b><br/>  </summary>
-        public static IntPtr GetProcAddress(char* lpszProc) => WglPointers._wglGetProcAddress_fnptr(lpszProc);
+        public static IntPtr GetProcAddress(byte* lpszProc) => WglPointers._wglGetProcAddress_fnptr(lpszProc);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglMakeCurrent</c>]</b><br/>  </summary>
         public static int MakeCurrent_(IntPtr hDc, IntPtr newContext) => WglPointers._wglMakeCurrent_fnptr(hDc, newContext);
