@@ -603,6 +603,9 @@ namespace Generator.Parsing
                         "DWORD" => CSPrimitive.Uint(@const),
                         "FLOAT" => CSPrimitive.Float(@const),
                         "HANDLE" => CSPrimitive.IntPtr(@const),
+                        // FIXME: Do we want types for types like HDC and HGLRC
+                        // that we could use both here and in PAL2?
+                        // - Noggin_bops 2024-03-06
                         "HDC" => CSPrimitive.IntPtr(@const),
                         "HGLRC" => CSPrimitive.IntPtr(@const),
                         "INT" => CSPrimitive.Int(@const),
