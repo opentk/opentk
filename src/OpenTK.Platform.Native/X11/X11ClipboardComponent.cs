@@ -337,5 +337,7 @@ namespace OpenTK.Platform.Native.X11
                 return files;
             }
         }
+
+        // FIXME: Platform specific API for getting and setting the current selection string?
     }
 }

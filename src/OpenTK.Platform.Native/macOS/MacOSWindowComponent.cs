@@ -1854,5 +1854,31 @@ namespace OpenTK.Platform.Native.macOS
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Returns the <c>NSWindow</c> used by the specified window handle.
+        /// The Objective-C object returned is a subclass of <c>NSWindow</c> called <c>NSOpenTKWindow</c>.
+        /// </summary>
+        /// <param name="handle">A handle to a window to get the associated <c>NSWindow</c> from.</param>
+        /// <returns>The <c>NSWindow</c> associated with the window handle.</returns>
+        public IntPtr GetNSWindow(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            return nswindow.Window;
+        }
+
+        /// <summary>
+        /// Returns the <c>NSVeiw</c> used by the specified window handle.
+        /// The Objective-C object returned is a subclass of <c>NSView</c> called <c>NSOpenTKView</c>
+        /// </summary>
+        /// <param name="handle">A handle to a window to get the associated <c>NSView</c> from.</param>
+        /// <returns>The <c>NSView</c> associated with the window handle.</returns>
+        public IntPtr GetNSView(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            return nswindow.View;
+        }
     }
 }

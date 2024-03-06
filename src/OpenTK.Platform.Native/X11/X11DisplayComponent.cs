@@ -812,5 +812,35 @@ namespace OpenTK.Platform.Native.X11
             Logger?.LogWarning("Display scale is always 1 on X11 atm.");
             //throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Gets the RandR <c>RRCrtc</c> associated with the display handle.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the <c>RRCrtc</c> from.</param>
+        /// <returns>The <c>RRCrtc</c> associated with the display handle.</returns>
+        public IntPtr GetRRCrtc(DisplayHandle handle)
+        {
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+            // FIXME: XID is a `unsigned long int` and should be IntPtr in C#
+            // but for now we have them as ulong.
+            // - Noggin_bops 2024-03-06
+            return (IntPtr)xdisplay.Crtc.Id;
+        }
+
+        /// <summary>
+        /// Gets the RandR <c>RROutput</c> associated with the display handle.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the <c>RROutput</c> from.</param>
+        /// <returns>The <c>RROutput</c> associated with the display handle.</returns>
+        public IntPtr GetRROutput(DisplayHandle handle)
+        {
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+            // FIXME: XID is a `unsigned long int` and should be IntPtr in C#
+            // but for now we have them as ulong.
+            // - Noggin_bops 2024-03-06
+            return (IntPtr)xdisplay.Output.Id;
+        }
     }
 }

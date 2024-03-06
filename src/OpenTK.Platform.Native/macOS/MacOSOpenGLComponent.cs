@@ -287,6 +287,18 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
             objc_msgSend(nscontext.Context, selFlushBuffer);
         }
+
+        /// <summary>
+        /// Returns the <c>NSOpenGLContext</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>NSOpenGLContext</c> from.</param>
+        /// <returns>The <c>NSOpenGLContext</c> associated with the context handle.</returns>
+        public IntPtr GetNSOpenGLContext(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+
+            return nscontext.Context;
+        }
     }
 }
 

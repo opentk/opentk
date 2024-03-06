@@ -2035,5 +2035,18 @@ namespace OpenTK.Platform.Native.Windows
             x = point.X;
             y = point.Y;
         }
+
+        /// <summary>
+        /// Returns the underlying win32 <c>HWND</c> for the specified window.
+        /// Modifying things about the window outside of OpenTK functions may cause inconsistent behaviour of OpenTK functions.
+        /// </summary>
+        /// <param name="handle">The window to get the <c>HWND</c> from.</param>
+        /// <returns>The <c>HWND</c> of the window.</returns>
+        public IntPtr GetHWND(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.HWnd;
+        }
     }
 }

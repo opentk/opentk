@@ -463,5 +463,29 @@ namespace OpenTK.Platform.Native.Windows
             scaleX = dpiX / DefaultDPI;
             scaleY = dpiY / DefaultDPI;
         }
+
+        /// <summary>
+        /// Returns the win32 adapter string associated with this display.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the adapter name for.</param>
+        /// <returns>The win32 adapter name for the display.</returns>
+        public string GetAdapter(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.AdapterName;
+        }
+
+        /// <summary>
+        /// Returns the win32 mointor device name string associated with this display.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the monitor name for.</param>
+        /// <returns>The win32 monitor name for the display.</returns>
+        public string GetMonitor(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.DeviceName;
+        }
     }
 }

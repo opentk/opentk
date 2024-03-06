@@ -285,5 +285,38 @@ namespace OpenTK.Platform.Native.ANGLE
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
             Egl.SwapBuffers(eglDisplay, context.EglSurface);
         }
+
+        /// <summary>
+        /// Returns the <c>EGLDisplay</c> used by OpenTK.
+        /// </summary>
+        /// <returns>The <c>EGLDisplay</c> used by OpenTK.</returns>
+        public IntPtr GetEglDisplay()
+        {
+            return eglDisplay;
+        }
+
+        /// <summary>
+        /// Returns the <c>EGLContext</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLContext</c> from.</param>
+        /// <returns>The <c>EGLContext</c> associated with the context handle.</returns>
+        public IntPtr GetEglContext(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            return context.EglContext;
+        }
+
+        /// <summary>
+        /// Returns the <c>EGLSurface</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLSurface</c> from.</param>
+        /// <returns>The <c>EGLSurface</c> associated with the context handle.</returns>
+        public IntPtr GetEglSurface(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            return context.EglSurface;
+        }
     }
 }

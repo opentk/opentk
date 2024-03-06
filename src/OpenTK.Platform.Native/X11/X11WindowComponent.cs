@@ -2667,5 +2667,29 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Extents?
         }
+
+        /// <summary>
+        /// Returns the X11 <c>Display</c> used by OpenTK.
+        /// </summary>
+        /// <returns>The X11 <c>Display</c> handle.</returns>
+        public IntPtr GetX11Display()
+        {
+            return X11.Display.Value;
+        }
+
+        /// <summary>
+        /// Returns the X11 <c>Window</c> handle associated with this window.
+        /// </summary>
+        /// <param name="handle">The window handle to get the associated X11 <c>Window</c> from.</param>
+        /// <returns>The X11 <c>Window</c> associated with the window handle.</returns>
+        public IntPtr GetX11Window(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: XID is an `unsigned long int` which is IntPtr but
+            // currently we have it as ulong.
+            // - Noggin_bops 2024-03-06
+            return (IntPtr)xwindow.Window.Id;
+        }
     }
 }

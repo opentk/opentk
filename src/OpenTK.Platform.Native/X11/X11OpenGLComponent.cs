@@ -346,5 +346,29 @@ namespace OpenTK.Platform.Native.X11
             XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
             glXSwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
         }
+
+        /// <summary>
+        /// Gets the <c>GLXContext</c> associated with this OpenGL context.
+        /// </summary>
+        /// <param name="handle">A handle to the OpenGL context to get the <c>GLXContext</c> from.</param>
+        /// <returns>The <c>GLXContext</c> associated with the OpenGL context.</returns>
+        public IntPtr GetGLXContext(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
+
+            return xhandle.Context.Value;
+        }
+
+        /// <summary>
+        /// Gets the <c>GLXWindow</c> associated with this OpenGL context.
+        /// </summary>
+        /// <param name="handle">A handle to the OpenGL context to get the <c>GLXWindow</c> from.</param>
+        /// <returns>The <c>GLXWindow</c> associated with the OpenGL context.</returns>
+        public IntPtr GetGLXWindow(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
+
+            return xhandle.GLXWindow.Value;
+        }
     }
 }

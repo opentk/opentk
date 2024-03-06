@@ -427,6 +427,7 @@ namespace OpenTK.Platform.Native.macOS
                 (int)FlipYCoordinate(visible.origin.y));
         }
 
+        // FIXME: Document this!
         public void GetSafeArea(DisplayHandle handle, out Box2i area)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
@@ -541,5 +542,19 @@ namespace OpenTK.Platform.Native.macOS
 
             //float factor = (float)objc_msgSend_nfloat(nsscreen.Screen, selBackingScaleFactor);
         }
+
+        /// <summary>
+        /// Returns the <c>CGDirectDisplayID</c> associated with this display handle.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the associated <c>CGDirectDisplayID</c> from.</param>
+        /// <returns>The <c>CGDirectDisplayID</c> associated with the display handle.</returns>
+        public uint GetDirectDisplayID(DisplayHandle handle)
+        {
+            NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
+            
+            return nsscreen.DirectDisplayID;
+        }
+
+        // FIXME: Do we want to expose other native things like NSScreen or UnitNumber?
     }
 }

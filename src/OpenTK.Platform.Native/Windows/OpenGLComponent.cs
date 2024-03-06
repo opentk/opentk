@@ -771,5 +771,19 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
         }
+
+        /// <summary>
+        /// Gets the win32 <c>HGLRC</c> opengl context handle associated with the context.
+        /// This OpenGL context is associated with the window or surface that was used to create this context.
+        /// Modifying the context outsite of OpenTK functions may cause side effects when calling OpenTK functions.
+        /// </summary>
+        /// <param name="handle">The OpenGL context to get the associated win32 <c>HGLRC</c> handle from.</param>
+        /// <returns>The native <c>HGLRC</c> context handle.</returns>
+        public IntPtr GetHGLRC(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            return hglrc.HGlrc;
+        }
     }
 }
