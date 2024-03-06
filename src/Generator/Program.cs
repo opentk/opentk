@@ -32,6 +32,7 @@ namespace Generator
                         {
                             { "BufferTargetARB", "BufferTarget" },
                             { "BufferAccessARB", "BufferAccess" },
+                            { "BufferUsageARB", "BufferUsage" },
                             { "BufferPNameARB", "BufferPName" },
                             { "ProgramPropertyARB", "ProgramProperty" },
                             { "BlendEquationModeEXT", "BlendEquationMode" },

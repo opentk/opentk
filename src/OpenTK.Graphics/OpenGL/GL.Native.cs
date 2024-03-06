@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:43 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -305,7 +305,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage">Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferData.xhtml" /></remarks>
-        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
+        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v4.4 | GL_ARB_buffer_storage]</b> <b>[entry point: <c>glBufferStorage</c>]</b><br/> Creates and initializes a buffer object&apos;s immutable data    store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glBufferStorage, which must be one of the buffer binding targets in the following table: </param>
@@ -5288,7 +5288,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void BlitNamedFramebuffer(int readFramebuffer, int drawFramebuffer, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitNamedFramebuffer_fnptr(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glBufferDataARB</c>]</b><br/>  </summary>
-            public static void BufferDataARB(BufferTarget target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
+            public static void BufferDataARB(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer]</b> <b>[entry point: <c>glBufferPageCommitmentARB</c>]</b><br/>  </summary>
             public static void BufferPageCommitmentARB(All target, IntPtr offset, nint size, bool commit) => GLPointers._glBufferPageCommitmentARB_fnptr((uint)target, offset, size, (byte)(commit ? 1 : 0));

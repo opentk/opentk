@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:44 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -51,7 +51,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBufferData.xml" /></remarks>
-        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
+        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glBufferSubData</c>]</b><br/> Updates a subset of a buffer object&apos;s data store.. </summary>
         /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>

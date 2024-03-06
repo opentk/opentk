@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:44 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -842,7 +842,7 @@ namespace OpenTK.Graphics.OpenGLES1
         ElementArrayBuffer = 34963,
     }
     ///<summary>Used in <see cref="GL.BufferData" /></summary>
-    public enum BufferUsageARB : uint
+    public enum BufferUsage : uint
     {
         StaticDraw = 35044,
         DynamicDraw = 35048,

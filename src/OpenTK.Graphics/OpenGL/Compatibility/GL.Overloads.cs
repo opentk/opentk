@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:44 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -274,14 +274,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 Bitmap(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData(BufferTarget target, nint size, IntPtr data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData(BufferTarget target, nint size, IntPtr data, BufferUsage usage)
         {
             void* data_vptr = (void*)data;
             BufferData(target, size, data_vptr, usage);
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -290,8 +290,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, T1[] data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, T1[] data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -300,8 +300,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -18269,14 +18269,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     BindVertexBuffers(first, count, buffers_ptr, offsets_ptr, strides_ptr);
                 }
             }
-            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsageARB)"/>
-            public static unsafe void BufferDataARB(BufferTarget target, nint size, IntPtr data, BufferUsageARB usage)
+            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsage)"/>
+            public static unsafe void BufferDataARB(BufferTarget target, nint size, IntPtr data, BufferUsage usage)
             {
                 void* data_vptr = (void*)data;
                 BufferDataARB(target, size, data_vptr, usage);
             }
-            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsageARB)"/>
-            public static unsafe void BufferDataARB<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsageARB usage)
+            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsage)"/>
+            public static unsafe void BufferDataARB<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 nint size = (nint)(data.Length * sizeof(T1));
@@ -18285,8 +18285,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     BufferDataARB(target, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsageARB)"/>
-            public static unsafe void BufferDataARB<T1>(BufferTarget target, T1[] data, BufferUsageARB usage)
+            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsage)"/>
+            public static unsafe void BufferDataARB<T1>(BufferTarget target, T1[] data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 nint size = (nint)(data.Length * sizeof(T1));
@@ -18295,8 +18295,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     BufferDataARB(target, size, data_ptr, usage);
                 }
             }
-            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsageARB)"/>
-            public static unsafe void BufferDataARB<T1>(BufferTarget target, nint size, in T1 data, BufferUsageARB usage)
+            /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsage)"/>
+            public static unsafe void BufferDataARB<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)

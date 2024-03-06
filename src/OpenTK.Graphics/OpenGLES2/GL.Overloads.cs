@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-11-22 16:45:44 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -19,14 +19,14 @@ namespace OpenTK.Graphics.OpenGLES2
             BindAttribLocation(program, index, name_ptr);
             Marshal.FreeCoTaskMem((IntPtr)name_ptr);
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData(BufferTarget target, nint size, IntPtr data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData(BufferTarget target, nint size, IntPtr data, BufferUsage usage)
         {
             void* data_vptr = (void*)data;
             BufferData(target, size, data_vptr, usage);
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -35,8 +35,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, T1[] data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, T1[] data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -45,8 +45,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
