@@ -1869,7 +1869,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <summary>
-        /// Returns the <c>NSVeiw</c> used by the specified window handle.
+        /// Returns the <c>NSView</c> used by the specified window handle.
         /// The Objective-C object returned is a subclass of <c>NSView</c> called <c>NSOpenTKView</c>
         /// </summary>
         /// <param name="handle">A handle to a window to get the associated <c>NSView</c> from.</param>
