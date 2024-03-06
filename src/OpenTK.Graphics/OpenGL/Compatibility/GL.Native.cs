@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:49 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -91,14 +91,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="target"> Specifies the target to which the buffer object is bound, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffer.xhtml" /></remarks>
-        public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
+        public static void BindBuffer(BufferTarget target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
         
         /// <summary> <b>[requires: v3.0 | GL_ARB_uniform_buffer_object]</b> <b>[entry point: <c>glBindBufferBase</c>]</b><br/> Bind a buffer object to an indexed buffer target. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
         /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
         /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBufferBase.xhtml" /></remarks>
-        public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
+        public static void BindBufferBase(BufferTarget target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
         
         /// <summary> <b>[requires: v3.0 | GL_ARB_uniform_buffer_object]</b> <b>[entry point: <c>glBindBufferRange</c>]</b><br/> Bind a range within a buffer object to an indexed buffer target. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER, or GL_SHADER_STORAGE_BUFFER. </param>
@@ -107,7 +107,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="offset"> The starting offset in basic machine units into the buffer object buffer. </param>
         /// <param name="size"> The amount of data in machine units that can be read from the buffer object while used as an indexed target. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBufferRange.xhtml" /></remarks>
-        public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
+        public static void BindBufferRange(BufferTarget target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
         
         /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindBuffersBase</c>]</b><br/> Bind one or more buffer objects to a sequence of indexed buffer targets. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
@@ -115,7 +115,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="count"> Specify the number of contiguous binding points to which to bind buffers. </param>
         /// <param name="buffers"> A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffersBase.xhtml" /></remarks>
-        public static void BindBuffersBase(BufferTargetARB target, uint first, int count, int* buffers) => GLPointers._glBindBuffersBase_fnptr((uint)target, first, count, buffers);
+        public static void BindBuffersBase(BufferTarget target, uint first, int count, int* buffers) => GLPointers._glBindBuffersBase_fnptr((uint)target, first, count, buffers);
         
         /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindBuffersRange</c>]</b><br/> Bind ranges of one or more buffer objects to a sequence of indexed buffer targets. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
@@ -125,7 +125,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="offsets"> A pointer to an array of offsets into the corresponding buffer in buffers to bind, or NULL if buffers is NULL. </param>
         /// <param name="sizes"> A pointer to an array of sizes of the corresponding buffer in buffers to bind, or NULL if buffers is NULL. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffersRange.xhtml" /></remarks>
-        public static void BindBuffersRange(BufferTargetARB target, uint first, int count, int* buffers, IntPtr* offsets, nint* sizes) => GLPointers._glBindBuffersRange_fnptr((uint)target, first, count, buffers, offsets, sizes);
+        public static void BindBuffersRange(BufferTarget target, uint first, int count, int* buffers, IntPtr* offsets, nint* sizes) => GLPointers._glBindBuffersRange_fnptr((uint)target, first, count, buffers, offsets, sizes);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindFragDataLocation</c>]</b><br/> Bind a user-defined varying out variable to a fragment shader color number. </summary>
         /// <param name="program"> The name of the program containing varying out variable whose binding to modify </param>
@@ -157,7 +157,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
         /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted stores. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindImageTexture.xhtml" /></remarks>
-        public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
+        public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccess access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
         
         /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindImageTextures</c>]</b><br/> Bind one or more named texture images to a sequence of consecutive image units. </summary>
         /// <param name="first"> Specifies the first image unit to which a texture is to be bound. </param>
@@ -259,26 +259,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v1.4 | GL_ARB_imaging]</b> <b>[entry point: <c>glBlendEquation</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendEquation.xhtml" /></remarks>
-        public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
+        public static void BlendEquation(BlendEquationMode mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v4.0]</b> <b>[entry point: <c>glBlendEquationi</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="buf"> for glBlendEquationi, specifies the index of the draw buffer for which to set the blend equation. </param>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendEquation.xhtml" /></remarks>
-        public static void BlendEquationi(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationi_fnptr(buf, (uint)mode);
+        public static void BlendEquationi(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationi_fnptr(buf, (uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendEquationSeparate</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendEquationSeparate.xhtml" /></remarks>
-        public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparate_fnptr((uint)modeRGB, (uint)modeAlpha);
+        public static void BlendEquationSeparate(BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparate_fnptr((uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v4.0]</b> <b>[entry point: <c>glBlendEquationSeparatei</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="buf"> for glBlendEquationSeparatei, specifies the index of the draw buffer for which to set the blend equations. </param>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendEquationSeparate.xhtml" /></remarks>
-        public static void BlendEquationSeparatei(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparatei_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+        public static void BlendEquationSeparatei(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparatei_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glBlendFunc</c>]</b><br/> Specify pixel arithmetic. </summary>
         /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
@@ -346,7 +346,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage">Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferData.xhtml" /></remarks>
-        public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
+        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v4.4 | GL_ARB_buffer_storage]</b> <b>[entry point: <c>glBufferStorage</c>]</b><br/> Creates and initializes a buffer object&apos;s immutable data    store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glBufferStorage, which must be one of the buffer binding targets in the following table: </param>
@@ -362,7 +362,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="size"> Specifies the size in bytes of the data store region being replaced. </param>
         /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBufferSubData.xhtml" /></remarks>
-        public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
+        public static void BufferSubData(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glCallList</c>]</b><br/> Execute a display list. </summary>
         /// <param name="list"> Specifies the integer name of the display list to be executed. </param>
@@ -446,7 +446,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="type"> The type of the data in memory addressed by data. </param>
         /// <param name="data"> The address of a memory location storing the data to be replicated into the buffer&apos;s data store. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glClearBufferSubData.xhtml" /></remarks>
-        public static void ClearBufferSubData(BufferTargetARB target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearBufferSubData_fnptr((uint)target, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
+        public static void ClearBufferSubData(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearBufferSubData_fnptr((uint)target, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glClearBufferuiv</c>]</b><br/> Clear individual buffers of a framebuffer. </summary>
         /// <param name="buffer"> Specify the buffer to clear. </param>
@@ -1620,7 +1620,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="offset"> Specifies the start of the buffer subrange, in basic machine units. </param>
         /// <param name="length"> Specifies the length of the buffer subrange, in basic machine units. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFlushMappedBufferRange.xhtml" /></remarks>
-        public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
+        public static void FlushMappedBufferRange(BufferTarget target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glFlushMappedNamedBufferRange</c>]</b><br/> Indicate modifications to a range of a mapped buffer. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glFlushMappedNamedBufferRange. </param>
@@ -1927,7 +1927,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGet.xhtml" /></remarks>
-        public static void GetBooleani_v(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleani_v_fnptr((uint)target, index, (byte*)data);
+        public static void GetBooleani_v(BufferTarget target, uint index, bool* data) => GLPointers._glGetBooleani_v_fnptr((uint)target, index, (byte*)data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glGetBooleanv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned for non-indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
@@ -1940,21 +1940,21 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="value"> Specifies the name of the buffer object parameter to query. </param>
         /// <param name="data"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetBufferParameteri64v(BufferTargetARB target, BufferPNameARB pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferParameteri64v(BufferTarget target, BufferPName pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
         /// <param name="value"> Specifies the name of the buffer object parameter to query. </param>
         /// <param name="data"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferParameteriv(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetBufferPointerv</c>]</b><br/> Return the pointer to a mapped buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="pname"> Specifies the name of the pointer to be returned. Must be GL_BUFFER_MAP_POINTER. </param>
         /// <param name="parameters"> Returns the pointer value specified by pname. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferPointerv.xhtml" /></remarks>
-        public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointerv_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferPointerv(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointerv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glGetBufferSubData</c>]</b><br/> Returns a subset of a buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferSubData, which must be one of the buffer binding targets in the following table: </param>
@@ -1962,7 +1962,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="size"> Specifies the size in bytes of the data store region being returned. </param>
         /// <param name="data"> Specifies a pointer to the location where buffer object data is returned. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferSubData.xhtml" /></remarks>
-        public static void GetBufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubData_fnptr((uint)target, offset, size, data);
+        public static void GetBufferSubData(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubData_fnptr((uint)target, offset, size, data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glGetClipPlane</c>]</b><br/> Return the coefficients of the specified clipping plane. </summary>
         /// <param name="plane"> Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. They are identified by symbolic names of the form GL_CLIP_PLANE i where i ranges from 0 to the value of GL_MAX_CLIP_PLANES - 1. </param>
@@ -2177,14 +2177,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="pname">!!missing documentation!!</param>
         /// <param name="parameters">!!missing documentation!!</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetNamedBufferParameteri64v(int buffer, BufferPNameARB pname, long* parameters) => GLPointers._glGetNamedBufferParameteri64v_fnptr(buffer, (uint)pname, parameters);
+        public static void GetNamedBufferParameteri64v(int buffer, BufferPName pname, long* parameters) => GLPointers._glGetNamedBufferParameteri64v_fnptr(buffer, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
         /// <param name="pname">!!missing documentation!!</param>
         /// <param name="parameters">!!missing documentation!!</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetNamedBufferParameteriv(int buffer, BufferPNameARB pname, int* parameters) => GLPointers._glGetNamedBufferParameteriv_fnptr(buffer, (uint)pname, parameters);
+        public static void GetNamedBufferParameteriv(int buffer, BufferPName pname, int* parameters) => GLPointers._glGetNamedBufferParameteriv_fnptr(buffer, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferPointerv</c>]</b><br/> Return the pointer to a mapped buffer object&apos;s data store. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferPointerv. </param>
@@ -2385,7 +2385,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgram.xhtml" /></remarks>
-        public static void GetProgramiv(int program, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
+        public static void GetProgramiv(int program, ProgramProperty pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v4.1 | GL_ARB_separate_shader_objects]</b> <b>[entry point: <c>glGetProgramPipelineInfoLog</c>]</b><br/> Retrieve the info log string from a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object from which to retrieve the info log. </param>
@@ -3303,7 +3303,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBuffer, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="access"> Specifies the access policy for glMapBuffer and glMapNamedBuffer, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object&apos;s mapped data store. The symbolic constant must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBuffer.xhtml" /></remarks>
-        public static void* MapBuffer(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBuffer_fnptr((uint)target, (uint)access);
+        public static void* MapBuffer(BufferTarget target, BufferAccess access) => GLPointers._glMapBuffer_fnptr((uint)target, (uint)access);
         
         /// <summary> <b>[requires: v3.0 | GL_ARB_map_buffer_range]</b> <b>[entry point: <c>glMapBufferRange</c>]</b><br/> Map all or part of a buffer object&apos;s data store into the client&apos;s address space. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
@@ -3311,7 +3311,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="length"> Specifies the length of the range to be mapped. </param>
         /// <param name="access"> Specifies a combination of access flags indicating the desired access to the mapped range. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBufferRange.xhtml" /></remarks>
-        public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
+        public static void* MapBufferRange(BufferTarget target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[removed in: v3.2]</b> <b>[entry point: <c>glMapGrid1d</c>]</b><br/> Define a one- or two-dimensional mesh. </summary>
         /// <param name="un"> Specifies the number of partitions in the grid range interval [u1, u2]. Must be positive. </param>
@@ -3351,7 +3351,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="buffer"> Specifies the name of the buffer object for glMapNamedBuffer. </param>
         /// <param name="access"> Specifies the access policy for glMapBuffer and glMapNamedBuffer, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object&apos;s mapped data store. The symbolic constant must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBuffer.xhtml" /></remarks>
-        public static void* MapNamedBuffer(int buffer, BufferAccessARB access) => GLPointers._glMapNamedBuffer_fnptr(buffer, (uint)access);
+        public static void* MapNamedBuffer(int buffer, BufferAccess access) => GLPointers._glMapNamedBuffer_fnptr(buffer, (uint)access);
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glMapNamedBufferRange</c>]</b><br/> Map all or part of a buffer object&apos;s data store into the client&apos;s address space. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glMapNamedBufferRange. </param>
@@ -5842,7 +5842,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v1.5]</b> <b>[entry point: <c>glUnmapBuffer</c>]</b><br/> Release the mapping of a buffer object&apos;s data store into the client&apos;s address space. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glUnmapBuffer, which must be one of the buffer binding targets in the following table: </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUnmapBuffer.xhtml" /></remarks>
-        public static bool UnmapBuffer(BufferTargetARB target) => GLPointers._glUnmapBuffer_fnptr((uint)target) != 0;
+        public static bool UnmapBuffer(BufferTarget target) => GLPointers._glUnmapBuffer_fnptr((uint)target) != 0;
         
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glUnmapNamedBuffer</c>]</b><br/> Release the mapping of a buffer object&apos;s data store into the client&apos;s address space. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glUnmapNamedBuffer. </param>
@@ -6749,10 +6749,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BeginPerfMonitorAMD(uint monitor) => GLPointers._glBeginPerfMonitorAMD_fnptr(monitor);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend]</b> <b>[entry point: <c>glBlendEquationIndexedAMD</c>]</b><br/>  </summary>
-            public static void BlendEquationIndexedAMD(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationIndexedAMD_fnptr(buf, (uint)mode);
+            public static void BlendEquationIndexedAMD(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationIndexedAMD_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend]</b> <b>[entry point: <c>glBlendEquationSeparateIndexedAMD</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateIndexedAMD(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateIndexedAMD_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateIndexedAMD(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateIndexedAMD_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend]</b> <b>[entry point: <c>glBlendFuncIndexedAMD</c>]</b><br/>  </summary>
             public static void BlendFuncIndexedAMD(uint buf, All src, All dst) => GLPointers._glBlendFuncIndexedAMD_fnptr(buf, (uint)src, (uint)dst);
@@ -6999,7 +6999,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void FinishObjectAPPLE(ObjectTypeAPPLE obj, int name) => GLPointers._glFinishObjectAPPLE_fnptr((uint)obj, name);
             
             /// <summary> <b>[requires: GL_APPLE_flush_buffer_range]</b> <b>[entry point: <c>glFlushMappedBufferRangeAPPLE</c>]</b><br/>  </summary>
-            public static void FlushMappedBufferRangeAPPLE(BufferTargetARB target, IntPtr offset, nint size) => GLPointers._glFlushMappedBufferRangeAPPLE_fnptr((uint)target, offset, size);
+            public static void FlushMappedBufferRangeAPPLE(BufferTarget target, IntPtr offset, nint size) => GLPointers._glFlushMappedBufferRangeAPPLE_fnptr((uint)target, offset, size);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_range]</b> <b>[entry point: <c>glFlushVertexArrayRangeAPPLE</c>]</b><br/>  </summary>
             public static void FlushVertexArrayRangeAPPLE(int length, void* pointer) => GLPointers._glFlushVertexArrayRangeAPPLE_fnptr(length, pointer);
@@ -7097,14 +7097,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BindAttribLocationARB(GLHandleARB programObj, uint index, byte* name) => GLPointers._glBindAttribLocationARB_fnptr((IntPtr)programObj, index, name);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glBindBufferARB</c>]</b><br/>  </summary>
-            public static void BindBufferARB(BufferTargetARB target, int buffer) => GLPointers._glBindBufferARB_fnptr((uint)target, buffer);
+            public static void BindBufferARB(BufferTarget target, int buffer) => GLPointers._glBindBufferARB_fnptr((uint)target, buffer);
             
             /// <summary> <b>[requires: v3.0 | GL_ARB_uniform_buffer_object]</b> <b>[entry point: <c>glBindBufferBase</c>]</b><br/> Bind a buffer object to an indexed buffer target. </summary>
             /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
             /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
             /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBufferBase.xhtml" /></remarks>
-            public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
+            public static void BindBufferBase(BufferTarget target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
             
             /// <summary> <b>[requires: v3.0 | GL_ARB_uniform_buffer_object]</b> <b>[entry point: <c>glBindBufferRange</c>]</b><br/> Bind a range within a buffer object to an indexed buffer target. </summary>
             /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER, or GL_SHADER_STORAGE_BUFFER. </param>
@@ -7113,7 +7113,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="offset"> The starting offset in basic machine units into the buffer object buffer. </param>
             /// <param name="size"> The amount of data in machine units that can be read from the buffer object while used as an indexed target. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBufferRange.xhtml" /></remarks>
-            public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
+            public static void BindBufferRange(BufferTarget target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
             
             /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindBuffersBase</c>]</b><br/> Bind one or more buffer objects to a sequence of indexed buffer targets. </summary>
             /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
@@ -7121,7 +7121,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="count"> Specify the number of contiguous binding points to which to bind buffers. </param>
             /// <param name="buffers"> A pointer to an array of names of buffer objects to bind to the targets on the specified binding point, or NULL. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffersBase.xhtml" /></remarks>
-            public static void BindBuffersBase(BufferTargetARB target, uint first, int count, int* buffers) => GLPointers._glBindBuffersBase_fnptr((uint)target, first, count, buffers);
+            public static void BindBuffersBase(BufferTarget target, uint first, int count, int* buffers) => GLPointers._glBindBuffersBase_fnptr((uint)target, first, count, buffers);
             
             /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindBuffersRange</c>]</b><br/> Bind ranges of one or more buffer objects to a sequence of indexed buffer targets. </summary>
             /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
@@ -7131,7 +7131,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="offsets"> A pointer to an array of offsets into the corresponding buffer in buffers to bind, or NULL if buffers is NULL. </param>
             /// <param name="sizes"> A pointer to an array of sizes of the corresponding buffer in buffers to bind, or NULL if buffers is NULL. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindBuffersRange.xhtml" /></remarks>
-            public static void BindBuffersRange(BufferTargetARB target, uint first, int count, int* buffers, IntPtr* offsets, nint* sizes) => GLPointers._glBindBuffersRange_fnptr((uint)target, first, count, buffers, offsets, sizes);
+            public static void BindBuffersRange(BufferTarget target, uint first, int count, int* buffers, IntPtr* offsets, nint* sizes) => GLPointers._glBindBuffersRange_fnptr((uint)target, first, count, buffers, offsets, sizes);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_blend_func_extended]</b> <b>[entry point: <c>glBindFragDataLocationIndexed</c>]</b><br/> Bind a user-defined varying out variable to a fragment shader color number and index. </summary>
             /// <param name="program"> The name of the program containing varying out variable whose binding to modify </param>
@@ -7156,7 +7156,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
             /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted stores. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindImageTexture.xhtml" /></remarks>
-            public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
+            public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccess access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
             
             /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind]</b> <b>[entry point: <c>glBindImageTextures</c>]</b><br/> Bind one or more named texture images to a sequence of consecutive image units. </summary>
             /// <param name="first"> Specifies the first image unit to which a texture is to be bound. </param>
@@ -7244,13 +7244,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v1.4 | GL_ARB_imaging]</b> <b>[entry point: <c>glBlendEquation</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
             /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBlendEquation.xhtml" /></remarks>
-            public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
+            public static void BlendEquation(BlendEquationMode mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend]</b> <b>[entry point: <c>glBlendEquationiARB</c>]</b><br/>  </summary>
-            public static void BlendEquationiARB(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationiARB_fnptr(buf, (uint)mode);
+            public static void BlendEquationiARB(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationiARB_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend]</b> <b>[entry point: <c>glBlendEquationSeparateiARB</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateiARB(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateiARB_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateiARB(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateiARB_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend]</b> <b>[entry point: <c>glBlendFunciARB</c>]</b><br/>  </summary>
             public static void BlendFunciARB(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunciARB_fnptr(buf, (uint)src, (uint)dst);
@@ -7289,7 +7289,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BlitNamedFramebuffer(int readFramebuffer, int drawFramebuffer, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitNamedFramebuffer_fnptr(readFramebuffer, drawFramebuffer, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glBufferDataARB</c>]</b><br/>  </summary>
-            public static void BufferDataARB(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
+            public static void BufferDataARB(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer]</b> <b>[entry point: <c>glBufferPageCommitmentARB</c>]</b><br/>  </summary>
             public static void BufferPageCommitmentARB(All target, IntPtr offset, nint size, bool commit) => GLPointers._glBufferPageCommitmentARB_fnptr((uint)target, offset, size, (byte)(commit ? 1 : 0));
@@ -7303,7 +7303,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BufferStorage(BufferStorageTarget target, nint size, void* data, BufferStorageMask flags) => GLPointers._glBufferStorage_fnptr((uint)target, size, data, (uint)flags);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glBufferSubDataARB</c>]</b><br/>  </summary>
-            public static void BufferSubDataARB(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubDataARB_fnptr((uint)target, offset, size, data);
+            public static void BufferSubDataARB(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubDataARB_fnptr((uint)target, offset, size, data);
             
             /// <summary> <b>[requires: v3.0 | GL_ARB_framebuffer_object]</b> <b>[entry point: <c>glCheckFramebufferStatus</c>]</b><br/> Check the completeness status of a framebuffer. </summary>
             /// <param name="target"> Specify the target to which the framebuffer is bound for glCheckFramebufferStatus, and the target against which framebuffer completeness of framebuffer is checked for glCheckNamedFramebufferStatus. </param>
@@ -7337,7 +7337,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="type"> The type of the data in memory addressed by data. </param>
             /// <param name="data"> The address of a memory location storing the data to be replicated into the buffer&apos;s data store. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glClearBufferSubData.xhtml" /></remarks>
-            public static void ClearBufferSubData(BufferTargetARB target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearBufferSubData_fnptr((uint)target, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
+            public static void ClearBufferSubData(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearBufferSubData_fnptr((uint)target, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_ES2_compatibility]</b> <b>[entry point: <c>glClearDepthf</c>]</b><br/> Specify the clear value for the depth buffer. </summary>
             /// <param name="depth"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
@@ -8031,7 +8031,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="offset"> Specifies the start of the buffer subrange, in basic machine units. </param>
             /// <param name="length"> Specifies the length of the buffer subrange, in basic machine units. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFlushMappedBufferRange.xhtml" /></remarks>
-            public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
+            public static void FlushMappedBufferRange(BufferTarget target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glFlushMappedNamedBufferRange</c>]</b><br/> Indicate modifications to a range of a mapped buffer. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glFlushMappedNamedBufferRange. </param>
@@ -8244,13 +8244,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static int GetAttribLocationARB(GLHandleARB programObj, byte* name) => GLPointers._glGetAttribLocationARB_fnptr((IntPtr)programObj, name);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferParameterivARB</c>]</b><br/>  </summary>
-            public static void GetBufferParameterivARB(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferParameterivARB(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferPointervARB</c>]</b><br/>  </summary>
-            public static void GetBufferPointervARB_(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervARB_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferSubDataARB</c>]</b><br/>  </summary>
-            public static void GetBufferSubDataARB(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
+            public static void GetBufferSubDataARB(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> <b>[entry point: <c>glGetColorTable</c>]</b><br/> Retrieve contents of a color lookup table. </summary>
             /// <param name="target"> Must be GL_COLOR_TABLE, GL_POST_CONVOLUTION_COLOR_TABLE, or GL_POST_COLOR_MATRIX_COLOR_TABLE. </param>
@@ -8460,14 +8460,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="pname">!!missing documentation!!</param>
             /// <param name="parameters">!!missing documentation!!</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-            public static void GetNamedBufferParameteri64v(int buffer, BufferPNameARB pname, long* parameters) => GLPointers._glGetNamedBufferParameteri64v_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameteri64v(int buffer, BufferPName pname, long* parameters) => GLPointers._glGetNamedBufferParameteri64v_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
             /// <param name="pname">!!missing documentation!!</param>
             /// <param name="parameters">!!missing documentation!!</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetBufferParameter.xhtml" /></remarks>
-            public static void GetNamedBufferParameteriv(int buffer, BufferPNameARB pname, int* parameters) => GLPointers._glGetNamedBufferParameteriv_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameteriv(int buffer, BufferPName pname, int* parameters) => GLPointers._glGetNamedBufferParameteriv_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferPointerv</c>]</b><br/> Return the pointer to a mapped buffer object&apos;s data store. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferPointerv. </param>
@@ -8602,7 +8602,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetProgramInterfaceiv(int program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters) => GLPointers._glGetProgramInterfaceiv_fnptr(program, (uint)programInterface, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program]</b> <b>[entry point: <c>glGetProgramivARB</c>]</b><br/>  </summary>
-            public static void GetProgramivARB(ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramivARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetProgramivARB(ProgramTarget target, ProgramProperty pname, int* parameters) => GLPointers._glGetProgramivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program]</b> <b>[entry point: <c>glGetProgramLocalParameterdvARB</c>]</b><br/>  </summary>
             public static void GetProgramLocalParameterdvARB(ProgramTarget target, uint index, double* parameters) => GLPointers._glGetProgramLocalParameterdvARB_fnptr((uint)target, index, parameters);
@@ -9157,7 +9157,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void MakeTextureHandleResidentARB(ulong handle) => GLPointers._glMakeTextureHandleResidentARB_fnptr(handle);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glMapBufferARB</c>]</b><br/>  </summary>
-            public static void* MapBufferARB(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferARB_fnptr((uint)target, (uint)access);
+            public static void* MapBufferARB(BufferTarget target, BufferAccess access) => GLPointers._glMapBufferARB_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: v3.0 | GL_ARB_map_buffer_range]</b> <b>[entry point: <c>glMapBufferRange</c>]</b><br/> Map all or part of a buffer object&apos;s data store into the client&apos;s address space. </summary>
             /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
@@ -9165,13 +9165,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="length"> Specifies the length of the range to be mapped. </param>
             /// <param name="access"> Specifies a combination of access flags indicating the desired access to the mapped range. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBufferRange.xhtml" /></remarks>
-            public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
+            public static void* MapBufferRange(BufferTarget target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glMapNamedBuffer</c>]</b><br/> Map all of a buffer object&apos;s data store into the client&apos;s address space. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glMapNamedBuffer. </param>
             /// <param name="access"> Specifies the access policy for glMapBuffer and glMapNamedBuffer, indicating whether it will be possible to read from, write to, or both read from and write to the buffer object&apos;s mapped data store. The symbolic constant must be GL_READ_ONLY, GL_WRITE_ONLY, or GL_READ_WRITE. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glMapBuffer.xhtml" /></remarks>
-            public static void* MapNamedBuffer(int buffer, BufferAccessARB access) => GLPointers._glMapNamedBuffer_fnptr(buffer, (uint)access);
+            public static void* MapNamedBuffer(int buffer, BufferAccess access) => GLPointers._glMapNamedBuffer_fnptr(buffer, (uint)access);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glMapNamedBufferRange</c>]</b><br/> Map all or part of a buffer object&apos;s data store into the client&apos;s address space. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glMapNamedBufferRange. </param>
@@ -10566,7 +10566,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void UniformSubroutinesuiv(ShaderType shadertype, int count, uint* indices) => GLPointers._glUniformSubroutinesuiv_fnptr((uint)shadertype, count, indices);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glUnmapBufferARB</c>]</b><br/>  </summary>
-            public static bool UnmapBufferARB(BufferTargetARB target) => GLPointers._glUnmapBufferARB_fnptr((uint)target) != 0;
+            public static bool UnmapBufferARB(BufferTarget target) => GLPointers._glUnmapBufferARB_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> <b>[entry point: <c>glUnmapNamedBuffer</c>]</b><br/> Release the mapping of a buffer object&apos;s data store into the client&apos;s address space. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glUnmapNamedBuffer. </param>
@@ -11347,13 +11347,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BeginVertexShaderEXT() => GLPointers._glBeginVertexShaderEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback]</b> <b>[entry point: <c>glBindBufferBaseEXT</c>]</b><br/>  </summary>
-            public static void BindBufferBaseEXT(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseEXT_fnptr((uint)target, index, buffer);
+            public static void BindBufferBaseEXT(BufferTarget target, uint index, int buffer) => GLPointers._glBindBufferBaseEXT_fnptr((uint)target, index, buffer);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback]</b> <b>[entry point: <c>glBindBufferOffsetEXT</c>]</b><br/>  </summary>
-            public static void BindBufferOffsetEXT(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetEXT_fnptr((uint)target, index, buffer, offset);
+            public static void BindBufferOffsetEXT(BufferTarget target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetEXT_fnptr((uint)target, index, buffer, offset);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback]</b> <b>[entry point: <c>glBindBufferRangeEXT</c>]</b><br/>  </summary>
-            public static void BindBufferRangeEXT(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeEXT_fnptr((uint)target, index, buffer, offset, size);
+            public static void BindBufferRangeEXT(BufferTarget target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeEXT_fnptr((uint)target, index, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4]</b> <b>[entry point: <c>glBindFragDataLocationEXT</c>]</b><br/>  </summary>
             public static void BindFragDataLocationEXT(int program, uint color, byte* name) => GLPointers._glBindFragDataLocationEXT_fnptr(program, color, name);
@@ -11362,7 +11362,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BindFramebufferEXT(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebufferEXT_fnptr((uint)target, framebuffer);
             
             /// <summary> <b>[requires: GL_EXT_shader_image_load_store]</b> <b>[entry point: <c>glBindImageTextureEXT</c>]</b><br/>  </summary>
-            public static void BindImageTextureEXT(uint index, int texture, int level, bool layered, int layer, BufferAccessARB access, int format) => GLPointers._glBindImageTextureEXT_fnptr(index, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, format);
+            public static void BindImageTextureEXT(uint index, int texture, int level, bool layered, int layer, BufferAccess access, int format) => GLPointers._glBindImageTextureEXT_fnptr(index, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, format);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader]</b> <b>[entry point: <c>glBindLightParameterEXT</c>]</b><br/>  </summary>
             public static uint BindLightParameterEXT(LightName light, LightParameter value) => GLPointers._glBindLightParameterEXT_fnptr((uint)light, (uint)value);
@@ -11431,10 +11431,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BlendColorEXT(float red, float green, float blue, float alpha) => GLPointers._glBlendColorEXT_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_EXT_blend_minmax]</b> <b>[entry point: <c>glBlendEquationEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationEXT(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
+            public static void BlendEquationEXT(BlendEquationMode mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_blend_equation_separate]</b> <b>[entry point: <c>glBlendEquationSeparateEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateEXT(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateEXT_fnptr((uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateEXT(BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateEXT_fnptr((uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_EXT_blend_func_separate]</b> <b>[entry point: <c>glBlendFuncSeparateEXT</c>]</b><br/>  </summary>
             public static void BlendFuncSeparateEXT(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparateEXT_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
@@ -11452,7 +11452,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BufferStorageExternalEXT(All target, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glBufferStorageExternalEXT_fnptr((uint)target, offset, size, clientBuffer, (uint)flags);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b> <b>[entry point: <c>glBufferStorageMemEXT</c>]</b><br/>  </summary>
-            public static void BufferStorageMemEXT(BufferTargetARB target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
+            public static void BufferStorageMemEXT(BufferTarget target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object]</b> <b>[entry point: <c>glCheckFramebufferStatusEXT</c>]</b><br/>  </summary>
             public static FramebufferStatus CheckFramebufferStatusEXT(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatusEXT_fnptr((uint)target);
@@ -11776,7 +11776,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static uint GenVertexShadersEXT(uint range) => GLPointers._glGenVertexShadersEXT_fnptr(range);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2]</b> <b>[entry point: <c>glGetBooleanIndexedvEXT</c>]</b><br/>  </summary>
-            public static void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleanIndexedvEXT_fnptr((uint)target, index, (byte*)data);
+            public static void GetBooleanIndexedvEXT(BufferTarget target, uint index, bool* data) => GLPointers._glGetBooleanIndexedvEXT_fnptr((uint)target, index, (byte*)data);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture]</b> <b>[entry point: <c>glGetColorTableEXT</c>]</b><br/>  </summary>
             public static void GetColorTableEXT(ColorTableTarget target, PixelFormat format, PixelType type, void* data) => GLPointers._glGetColorTableEXT_fnptr((uint)target, (uint)format, (uint)type, data);
@@ -11902,7 +11902,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexParameterivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferParameterivEXT</c>]</b><br/>  </summary>
-            public static void GetNamedBufferParameterivEXT(int buffer, BufferPNameARB pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferPointervEXT</c>]</b><br/>  </summary>
             public static void GetNamedBufferPointervEXT_(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
@@ -11917,7 +11917,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, int* parameters) => GLPointers._glGetNamedFramebufferParameterivEXT_fnptr(framebuffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedProgramivEXT</c>]</b><br/>  </summary>
-            public static void GetNamedProgramivEXT(int program, ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetNamedProgramivEXT_fnptr(program, (uint)target, (uint)pname, parameters);
+            public static void GetNamedProgramivEXT(int program, ProgramTarget target, ProgramProperty pname, int* parameters) => GLPointers._glGetNamedProgramivEXT_fnptr(program, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedProgramLocalParameterdvEXT</c>]</b><br/>  </summary>
             public static void GetNamedProgramLocalParameterdvEXT(int program, ProgramTarget target, uint index, double* parameters) => GLPointers._glGetNamedProgramLocalParameterdvEXT_fnptr(program, (uint)target, index, parameters);
@@ -12124,7 +12124,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void LockArraysEXT(int first, int count) => GLPointers._glLockArraysEXT_fnptr(first, count);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMapNamedBufferEXT</c>]</b><br/>  </summary>
-            public static void* MapNamedBufferEXT(int buffer, BufferAccessARB access) => GLPointers._glMapNamedBufferEXT_fnptr(buffer, (uint)access);
+            public static void* MapNamedBufferEXT(int buffer, BufferAccess access) => GLPointers._glMapNamedBufferEXT_fnptr(buffer, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMapNamedBufferRangeEXT</c>]</b><br/>  </summary>
             public static void* MapNamedBufferRangeEXT(int buffer, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapNamedBufferRangeEXT_fnptr(buffer, offset, length, (uint)access);
@@ -13508,13 +13508,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BeginVideoCaptureNV(uint video_capture_slot) => GLPointers._glBeginVideoCaptureNV_fnptr(video_capture_slot);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b> <b>[entry point: <c>glBindBufferBaseNV</c>]</b><br/>  </summary>
-            public static void BindBufferBaseNV(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseNV_fnptr((uint)target, index, buffer);
+            public static void BindBufferBaseNV(BufferTarget target, uint index, int buffer) => GLPointers._glBindBufferBaseNV_fnptr((uint)target, index, buffer);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b> <b>[entry point: <c>glBindBufferOffsetNV</c>]</b><br/>  </summary>
-            public static void BindBufferOffsetNV(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetNV_fnptr((uint)target, index, buffer, offset);
+            public static void BindBufferOffsetNV(BufferTarget target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetNV_fnptr((uint)target, index, buffer, offset);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b> <b>[entry point: <c>glBindBufferRangeNV</c>]</b><br/>  </summary>
-            public static void BindBufferRangeNV(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeNV_fnptr((uint)target, index, buffer, offset, size);
+            public static void BindBufferRangeNV(BufferTarget target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeNV_fnptr((uint)target, index, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glBindProgramNV</c>]</b><br/>  </summary>
             public static void BindProgramNV(VertexAttribEnumNV target, int id) => GLPointers._glBindProgramNV_fnptr((uint)target, id);
@@ -13523,7 +13523,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BindShadingRateImageNV(int texture) => GLPointers._glBindShadingRateImageNV_fnptr(texture);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2]</b> <b>[entry point: <c>glBindTransformFeedbackNV</c>]</b><br/>  </summary>
-            public static void BindTransformFeedbackNV(BufferTargetARB target, int id) => GLPointers._glBindTransformFeedbackNV_fnptr((uint)target, id);
+            public static void BindTransformFeedbackNV(BufferTarget target, int id) => GLPointers._glBindTransformFeedbackNV_fnptr((uint)target, id);
             
             /// <summary> <b>[requires: GL_NV_video_capture]</b> <b>[entry point: <c>glBindVideoCaptureStreamBufferNV</c>]</b><br/>  </summary>
             public static void BindVideoCaptureStreamBufferNV(uint video_capture_slot, uint stream, All frame_region, IntPtr offset) => GLPointers._glBindVideoCaptureStreamBufferNV_fnptr(video_capture_slot, stream, (uint)frame_region, offset);
@@ -13541,7 +13541,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void BufferAddressRangeNV(All pname, uint index, ulong address, nint length) => GLPointers._glBufferAddressRangeNV_fnptr((uint)pname, index, address, length);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment]</b> <b>[entry point: <c>glBufferAttachMemoryNV</c>]</b><br/>  </summary>
-            public static void BufferAttachMemoryNV(BufferTargetARB target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
+            public static void BufferAttachMemoryNV(BufferTarget target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b> <b>[entry point: <c>glBufferPageCommitmentMemNV</c>]</b><br/>  </summary>
             public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glBufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
@@ -13769,7 +13769,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetActiveVaryingNV(int program, uint index, int bufSize, int* length, int* size, All* type, byte* name) => GLPointers._glGetActiveVaryingNV_fnptr(program, index, bufSize, length, size, (uint*)type, name);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load]</b> <b>[entry point: <c>glGetBufferParameterui64vNV</c>]</b><br/>  </summary>
-            public static void GetBufferParameterui64vNV(BufferTargetARB target, All pname, ulong* parameters) => GLPointers._glGetBufferParameterui64vNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferParameterui64vNV(BufferTarget target, All pname, ulong* parameters) => GLPointers._glGetBufferParameterui64vNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners]</b> <b>[entry point: <c>glGetCombinerInputParameterfvNV</c>]</b><br/>  </summary>
             public static void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerInputParameterfvNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)pname, parameters);
@@ -13835,7 +13835,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetMultisamplefvNV(GetMultisamplePNameNV pname, uint index, float* val) => GLPointers._glGetMultisamplefvNV_fnptr((uint)pname, index, val);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load]</b> <b>[entry point: <c>glGetNamedBufferParameterui64vNV</c>]</b><br/>  </summary>
-            public static void GetNamedBufferParameterui64vNV(int buffer, BufferPNameARB pname, ulong* parameters) => GLPointers._glGetNamedBufferParameterui64vNV_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameterui64vNV(int buffer, BufferPName pname, ulong* parameters) => GLPointers._glGetNamedBufferParameterui64vNV_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query]</b> <b>[entry point: <c>glGetOcclusionQueryivNV</c>]</b><br/>  </summary>
             public static void GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname, int* parameters) => GLPointers._glGetOcclusionQueryivNV_fnptr(id, (uint)pname, parameters);

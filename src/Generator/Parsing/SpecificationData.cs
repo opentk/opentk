@@ -149,9 +149,10 @@ namespace Generator.Parsing
         GLX,
     }
 
-    /// <param name="Name">The name of the referenced enum group.</param>
+    /// <param name="OriginalName">The name of the referenced enum group (as seen in the xml files).</param>
+    /// <param name="TranslatedName">The name of the referenced enum group (as seen in OpenTK).</param>
     /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    internal record GroupRef(string Name, GLFile Namespace);
+    internal record GroupRef(string OriginalName, string TranslatedName, GLFile Namespace);
 
     internal abstract record GLType();
 

@@ -47,12 +47,12 @@ namespace OpenTK.Graphics.OpenGLES2
         }
 
         /// <summary>
-        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramPropertyARB, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
         /// </summary>
         public static void GetProgramInfoLog(int program, out string info)
         {
             int length = default;
-            GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);
+            GL.GetProgrami(program, ProgramProperty.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;

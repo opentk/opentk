@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -31,7 +31,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="target"> Specifies the target to which the buffer is bound. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
         /// <param name="buffer">Specifies the name of a buffer object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBindBuffer.xml" /></remarks>
-        public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
+        public static void BindBuffer(BufferTarget target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glBindTexture</c>]</b><br/> Bind a named texture to a texturing target. </summary>
         /// <param name="target">Specifies the target to which the texture is bound. Must be GL_TEXTURE_2D.</param>
@@ -51,7 +51,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
         /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBufferData.xml" /></remarks>
-        public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
+        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glBufferSubData</c>]</b><br/> Updates a subset of a buffer object&apos;s data store.. </summary>
         /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
@@ -59,7 +59,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="size">Specifies the size in bytes of the data store region being replaced.</param>
         /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBufferSubData.xml" /></remarks>
-        public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
+        public static void BufferSubData(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glClear</c>]</b><br/> Clear buffers to preset values. </summary>
         /// <param name="mask">Bitwise OR of masks that indicate the buffers to be cleared. Valid masks are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT.</param>
@@ -351,7 +351,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="pname"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_SIZE or GL_BUFFER_USAGE. </param>
         /// <param name="parameters">Returns the requested parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGetBufferParameteriv.xml" /></remarks>
-        public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferParameteriv(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glGetClipPlanef</c>]</b><br/> Return the coefficients of the specified clipping    plane. </summary>
         /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
@@ -951,13 +951,13 @@ namespace OpenTK.Graphics.OpenGLES1
         public static unsafe partial class EXT
         {
             /// <summary> <b>[requires: GL_EXT_blend_minmax]</b> <b>[entry point: <c>glBlendEquationEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationEXT(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
+            public static void BlendEquationEXT(BlendEquationMode mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_discard_framebuffer]</b> <b>[entry point: <c>glDiscardFramebufferEXT</c>]</b><br/>  </summary>
             public static void DiscardFramebufferEXT(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments) => GLPointers._glDiscardFramebufferEXT_fnptr((uint)target, numAttachments, (uint*)attachments);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range]</b> <b>[entry point: <c>glFlushMappedBufferRangeEXT</c>]</b><br/>  </summary>
-            public static void FlushMappedBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
+            public static void FlushMappedBufferRangeEXT(BufferTarget target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
             
             /// <summary> <b>[requires: GL_EXT_multisampled_render_to_texture]</b> <b>[entry point: <c>glFramebufferTexture2DMultisampleEXT</c>]</b><br/>  </summary>
             public static void FramebufferTexture2DMultisampleEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._glFramebufferTexture2DMultisampleEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
@@ -975,7 +975,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void InsertEventMarkerEXT(int length, byte* marker) => GLPointers._glInsertEventMarkerEXT_fnptr(length, marker);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range]</b> <b>[entry point: <c>glMapBufferRangeEXT</c>]</b><br/>  </summary>
-            public static void* MapBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
+            public static void* MapBufferRangeEXT(BufferTarget target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_multi_draw_arrays]</b> <b>[entry point: <c>glMultiDrawArraysEXT</c>]</b><br/>  </summary>
             public static void MultiDrawArraysEXT(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawArraysEXT_fnptr((uint)mode, first, count, primcount);
@@ -1153,10 +1153,10 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void BlendColorxOES(int red, int green, int blue, int alpha) => GLPointers._glBlendColorxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_blend_subtract]</b> <b>[entry point: <c>glBlendEquationOES</c>]</b><br/>  </summary>
-            public static void BlendEquationOES(BlendEquationModeEXT mode) => GLPointers._glBlendEquationOES_fnptr((uint)mode);
+            public static void BlendEquationOES(BlendEquationMode mode) => GLPointers._glBlendEquationOES_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_OES_blend_equation_separate]</b> <b>[entry point: <c>glBlendEquationSeparateOES</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateOES(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateOES_fnptr((uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateOES(BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateOES_fnptr((uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_OES_blend_func_separate]</b> <b>[entry point: <c>glBlendFuncSeparateOES</c>]</b><br/>  </summary>
             public static void BlendFuncSeparateOES(BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateOES_fnptr((uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
@@ -1320,7 +1320,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glGetBufferPointervOES</c>]</b><br/>  </summary>
-            public static void GetBufferPointervOES_(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervOES_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_single_precision]</b> <b>[entry point: <c>glGetClipPlanefOES</c>]</b><br/>  </summary>
             public static void GetClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
@@ -1426,7 +1426,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void Map2xOES(MapTarget target, int u1, int u2, int ustride, int uorder, int v1, int v2, int vstride, int vorder, int points) => GLPointers._glMap2xOES_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glMapBufferOES</c>]</b><br/>  </summary>
-            public static void* MapBufferOES(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
+            public static void* MapBufferOES(BufferTarget target, BufferAccess access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b> <b>[entry point: <c>glMapGrid1xOES</c>]</b><br/>  </summary>
             public static void MapGrid1xOES(int n, int u1, int u2) => GLPointers._glMapGrid1xOES_fnptr(n, u1, u2);

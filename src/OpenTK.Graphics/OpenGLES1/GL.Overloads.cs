@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,14 +12,14 @@ namespace OpenTK.Graphics.OpenGLES1
 {
     public static unsafe partial class GL
     {
-        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData(BufferTargetARB target, nint size, IntPtr data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData(BufferTarget target, nint size, IntPtr data, BufferUsage usage)
         {
             void* data_vptr = (void*)data;
             BufferData(target, size, data_vptr, usage);
         }
-        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTargetARB target, ReadOnlySpan<T1> data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, ReadOnlySpan<T1> data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -28,8 +28,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTargetARB target, T1[] data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, T1[] data, BufferUsage usage)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -38,8 +38,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
-        public static unsafe void BufferData<T1>(BufferTargetARB target, nint size, in T1 data, BufferUsageARB usage)
+        /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
+        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -47,14 +47,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
-        public static unsafe void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, IntPtr data)
+        /// <inheritdoc cref="BufferSubData(BufferTarget, IntPtr, nint, void*)"/>
+        public static unsafe void BufferSubData(BufferTarget target, IntPtr offset, nint size, IntPtr data)
         {
             void* data_vptr = (void*)data;
             BufferSubData(target, offset, size, data_vptr);
         }
-        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
-        public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, ReadOnlySpan<T1> data)
+        /// <inheritdoc cref="BufferSubData(BufferTarget, IntPtr, nint, void*)"/>
+        public static unsafe void BufferSubData<T1>(BufferTarget target, IntPtr offset, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -63,8 +63,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
-        public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, T1[] data)
+        /// <inheritdoc cref="BufferSubData(BufferTarget, IntPtr, nint, void*)"/>
+        public static unsafe void BufferSubData<T1>(BufferTarget target, IntPtr offset, T1[] data)
             where T1 : unmanaged
         {
             nint size = (nint)(data.Length * sizeof(T1));
@@ -73,8 +73,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
-        public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, nint size, in T1 data)
+        /// <inheritdoc cref="BufferSubData(BufferTarget, IntPtr, nint, void*)"/>
+        public static unsafe void BufferSubData<T1>(BufferTarget target, IntPtr offset, nint size, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -514,32 +514,32 @@ namespace OpenTK.Graphics.OpenGLES1
             GetBooleanv(pname, data);
             return data_val;
         }
-        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, Span<int> parameters)
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
             {
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, int[] parameters)
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
             {
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, ref int parameters)
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
-        public static unsafe int GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname)
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
+        public static unsafe int GetBufferParameteri(BufferTarget target, BufferPName pname)
         {
             int parameters_val;
             int* parameters = &parameters_val;
@@ -3337,13 +3337,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="GetBufferPointervOES(BufferTargetARB, BufferPointerNameARB, void**)"/>
-            public static unsafe void GetBufferPointervOES(BufferTargetARB target, BufferPointerNameARB pname, void** parameters)
+            /// <inheritdoc cref="GetBufferPointervOES(BufferTarget, BufferPointerNameARB, void**)"/>
+            public static unsafe void GetBufferPointervOES(BufferTarget target, BufferPointerNameARB pname, void** parameters)
             {
                 GetBufferPointervOES_(target, pname, parameters);
             }
-            /// <inheritdoc cref="GetBufferPointervOES(BufferTargetARB, BufferPointerNameARB, void**)"/>
-            public static unsafe void* GetBufferPointervOES(BufferTargetARB target, BufferPointerNameARB pname)
+            /// <inheritdoc cref="GetBufferPointervOES(BufferTarget, BufferPointerNameARB, void**)"/>
+            public static unsafe void* GetBufferPointervOES(BufferTarget target, BufferPointerNameARB pname)
             {
                 void* parameters_val;
                 void** parameters = &parameters_val;

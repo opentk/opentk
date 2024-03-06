@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-06 16:25:59 GMT+01:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -2529,7 +2529,7 @@ namespace OpenTK.Graphics.OpenGLES2
         Float = 5126,
     }
     ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationi" />, <see cref="GL.BlendEquationSeparate" />, ...</summary>
-    public enum BlendEquationModeEXT : uint
+    public enum BlendEquationMode : uint
     {
         FuncAdd = 32774,
         FuncAddExt = 32774,
@@ -2578,7 +2578,7 @@ namespace OpenTK.Graphics.OpenGLES2
         Stencil = 6146,
     }
     ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.OES.MapBufferOES" /></summary>
-    public enum BufferAccessARB : uint
+    public enum BufferAccess : uint
     {
         ReadOnly = 35000,
         WriteOnly = 35001,
@@ -2622,7 +2622,7 @@ namespace OpenTK.Graphics.OpenGLES2
         MultisampleBufferBit7Qcom = 2147483648,
     }
     ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" /></summary>
-    public enum BufferPNameARB : uint
+    public enum BufferPName : uint
     {
         BufferSize = 34660,
         BufferUsage = 34661,
@@ -2667,7 +2667,7 @@ namespace OpenTK.Graphics.OpenGLES2
         AtomicCounterBuffer = 37568,
     }
     ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
-    public enum BufferTargetARB : uint
+    public enum BufferTarget : uint
     {
         ArrayBuffer = 34962,
         ElementArrayBuffer = 34963,
@@ -2684,7 +2684,7 @@ namespace OpenTK.Graphics.OpenGLES2
         AtomicCounterBuffer = 37568,
     }
     ///<summary>Used in <see cref="GL.BufferData" /></summary>
-    public enum BufferUsageARB : uint
+    public enum BufferUsage : uint
     {
         StreamDraw = 35040,
         StreamRead = 35041,
@@ -4354,7 +4354,7 @@ namespace OpenTK.Graphics.OpenGLES2
         ProgramSeparable = 33368,
     }
     ///<summary>Used in <see cref="GL.GetProgramiv" /></summary>
-    public enum ProgramPropertyARB : uint
+    public enum ProgramProperty : uint
     {
         ComputeWorkGroupSize = 33383,
         ProgramBinaryLength = 34625,
