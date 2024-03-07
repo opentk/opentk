@@ -42,8 +42,10 @@ namespace OpenTK.Platform.Native.ANGLE
             IntPtr extensionsPtr = Egl.QueryString(EGL_NO_DISPLAY, Egl.EXTENSIONS);
             string extensionsStr = Marshal.PtrToStringAnsi(extensionsPtr)!;
             Extensions = extensionsStr.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            Console.WriteLine(Extensions);
+            Logger?.LogDebug($"EGL extensions: {string.Join(", ", Extensions)}");
 
+            // FIXME: Investigate if this component could be modified to handle normal EGL too.
+            // - Noggin_bops 2024-03-07
             if (Extensions.Contains("EGL_ANGLE_platform_angle") == false)
             {
                 throw new PalException(this, "To create an ANGLE context 'EGL_ANGLE_platform_angle' extension must be supported.");
@@ -57,8 +59,8 @@ namespace OpenTK.Platform.Native.ANGLE
             bool success = Egl.Initialize(eglDisplay, out int major, out int minor);
             if (success == false)
             {
-                // FIXME: eglGetError?
-                throw new PalException(this, "EGL couldn't initialize successfully.");
+                ErrorCode error = Egl.GetError();
+                throw new PalException(this, $"EGL couldn't initialize successfully. {error}");
             }
 
             eglVersion = new Version(major, minor);
@@ -83,17 +85,23 @@ namespace OpenTK.Platform.Native.ANGLE
         }
 
         /// <inheritdoc/>
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
+        public unsafe OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
+            // We have to send a Window* to egl, so we need a local variable we can store the Window in
+            // so we can take the pointer to this variable.
+            // - Noggin_bops 2024-03-07
+            IntPtr xwin = ((IntPtr?)(handle as X11.XWindowHandle)?.Window.Id) ?? 0;
+
             // FIXME: Can we use an SDL window to create an ANGLE context?
             IntPtr windowHandle = handle switch
             {
                 Windows.HWND hwnd => hwnd.HWnd,
-                X11.XWindowHandle xwindow => (IntPtr)xwindow.Window.Id,
+                X11.XWindowHandle => (IntPtr)(&xwin),
                 macOS.NSWindowHandle nswindow => nswindow.Window,
 
                 _ => throw new PlatformNotSupportedException($"OpenTK doesn't support creating an ANGLE context using {handle.GetType()}.")
             };
+
             // FIXME: OpenGL ES settings? ANGLE specific settings?
             OpenGLGraphicsApiHints? settings = handle.GraphicsApiHints as OpenGLGraphicsApiHints;
             if (settings == null)
@@ -284,6 +292,39 @@ namespace OpenTK.Platform.Native.ANGLE
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
             Egl.SwapBuffers(eglDisplay, context.EglSurface);
+        }
+
+        /// <summary>
+        /// Returns the <c>EGLDisplay</c> used by OpenTK.
+        /// </summary>
+        /// <returns>The <c>EGLDisplay</c> used by OpenTK.</returns>
+        public IntPtr GetEglDisplay()
+        {
+            return eglDisplay;
+        }
+
+        /// <summary>
+        /// Returns the <c>EGLContext</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLContext</c> from.</param>
+        /// <returns>The <c>EGLContext</c> associated with the context handle.</returns>
+        public IntPtr GetEglContext(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            return context.EglContext;
+        }
+
+        /// <summary>
+        /// Returns the <c>EGLSurface</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>EGLSurface</c> from.</param>
+        /// <returns>The <c>EGLSurface</c> associated with the context handle.</returns>
+        public IntPtr GetEglSurface(OpenGLContextHandle handle)
+        {
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            return context.EglSurface;
         }
     }
 }

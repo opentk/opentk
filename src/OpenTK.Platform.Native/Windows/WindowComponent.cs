@@ -94,10 +94,9 @@ namespace OpenTK.Platform.Native.Windows
             wndClass.lpszClassName = CLASS_NAME;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-
             if (wndClassAtom == 0)
             {
-                throw new Win32Exception("RegisterClassEx failed!");
+                throw new Win32Exception();
             }
 
             HelperHWnd = Win32.CreateWindowEx(
@@ -113,10 +112,9 @@ namespace OpenTK.Platform.Native.Windows
                 IntPtr.Zero,
                 HInstance,
                 IntPtr.Zero);
-
             if (HelperHWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("Failed to create helper window");
+                throw new Win32Exception();
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
@@ -196,7 +194,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            //Console.WriteLine("WinProc " + message + " " + hWnd);
+            // Console.WriteLine("WinProc " + uMsg + " " + hWnd);
             switch (uMsg)
             {
                 case WM.KEYDOWN:
@@ -235,9 +233,12 @@ namespace OpenTK.Platform.Native.Windows
 
                         Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
                         Key key = KeyboardComponent.ToKey(scancode, vk, extended);
-                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        //Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key down: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
 
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown));
+                        // FIXME: Should this be before or after we change the keyboard state?
+                        KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+                        KeyboardComponent.KeyStateChanged(code, true);
+                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown, modifiers));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -249,33 +250,84 @@ namespace OpenTK.Platform.Native.Windows
                         // FIXME: It seems there is a bug when both left and right GUI are
                         // pressed in short succession where only one WM_KEYUP message gets sent.
 
-                        // FIXME: Holding down both shift keys results in only one WM_KEYUP message.
-
                         bool sysKey = uMsg == WM.SYSKEYUP;
 
-                        ulong vk = wParam.ToUInt64();
+                        VK vk = (VK)wParam;
                         long l = lParam.ToInt64();
                         int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        // FIXME: Should we peek messages like in keydown?
-                        if (uMsg == WM.SYSKEYUP && (VK)vk == VK.Control)
+                        if (vk == VK.Control && extended == false)
                         {
-                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                            // Pressing Alt-gr sends VK_CONTROL followed by VK_MENU
+                            int time = Win32.GetMessageTime();
+
+                            if (Win32.PeekMessage(out Win32.MSG msg, IntPtr.Zero, 0, 0, PM.NoRemove))
+                            {
+                                if (msg.message == WM.KEYDOWN || msg.message == WM.SYSKEYDOWN)
+                                {
+                                    bool isExtended = (msg.lParam.ToInt64() & (1 << 24)) != 0;
+                                    if ((VK)msg.wParam.ToUInt64() == VK.Menu && isExtended && msg.time == time)
+                                    {
+                                        // This message is the VK_CONTROL message triggered from pressing Alt-Gr
+                                        // So we should ignore this message and only handle the Alt-Gr message.
+                                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                                    }
+                                }
+                            }
                         }
 
-                        Scancode code = KeyboardComponent.ToScancode(scancode, (VK)vk, extended);
-                        Key key = KeyboardComponent.ToKey(scancode, (VK)vk, extended);
-                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {(VK)vk}, Win: 0x{scancode:X}, Extended: {extended}");
+                        Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
+                        Key key = KeyboardComponent.ToKey(scancode, vk, extended);
+                        //Logger?.LogDebug($"{(sysKey ? "Sys " : "")}Key up: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+
+                        // FIXME: Should this be before or after we change the keyboard state?
+                        KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
+                        // FIXME: Detect more specifically the case where both shift keys have been pressed at the same time.
+                        // Instead of always releasing both.
+                        if (code == Scancode.LeftShift || code == Scancode.RightShift)
+                        {
+                            Scancode otherCode = code == Scancode.LeftShift ? Scancode.RightShift : Scancode.LeftShift;
+                            Key otherKey = code == Scancode.LeftShift ? Key.RightShift : Key.LeftShift;
+
+                            // If the state of the key changed when we released it we send an event about it.
+                            // FIXME: Should this change the modifiers??
+                            if (KeyboardComponent.KeyStateChanged(otherCode, false))
+                            {
+                                EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, otherKey, otherCode, modifiers));
+                            }
+                        }
 
                         // Print screen only generates a WM_KEYUP event, so we need to send the KeyDown event here.
                         // - 2023-02-13 NogginBops
                         if (code == Scancode.PrintScreen)
                         {
-                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false));
+                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false, modifiers));
                         }
-                        
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code));
+
+                        KeyboardComponent.KeyStateChanged(code, false);
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code, modifiers));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SYSCOMMAND:
+                    {
+                        switch ((SC)((int)wParam & 0xfff0))
+                        {
+                            case SC.KeyMenu:
+                                {
+                                    // Don't open the menu.
+                                    // FIXME: Add a setting so we can re-enable this for
+                                    // the people who want to add a windows menu manually.
+                                    // Do we want this per window, or just global toggle?
+                                    // Maybe detect if there is a win32 menubar and allow
+                                    // it in that case?
+                                    // - Noggin_bops 2023-11-14
+                                    return 0;
+                                }
+                            default: break;
+                        }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -483,8 +535,14 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (button != null)
                         {
+                            // FIXME: Figure this out more properly
+                            // FIXME: Keep track of which buttons we are pressing?
+                            Win32.SetCapture(hWnd);
+
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -535,8 +593,17 @@ namespace OpenTK.Platform.Native.Windows
 
                         if (button != null)
                         {
+                            // FIXME: Figure this out better
+                            bool success = Win32.ReleaseCapture();
+                            if (success == false)
+                            {
+                                throw new Win32Exception();
+                            }
+
+                            KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
+
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -553,6 +620,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
+                        MouseComponent.RegisterMouseWheelDelta((0, delta));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -569,6 +637,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
+                        MouseComponent.RegisterMouseWheelDelta((delta, 0));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -768,7 +837,7 @@ namespace OpenTK.Platform.Native.Windows
                         Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
 
                         // FIXME: Some other way of notifying the DisplayComponent that things have changed.
-                        DisplayComponent.UpdateMonitors();
+                        DisplayComponent.UpdateMonitors(true, Logger);
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DPICHANGED:
@@ -859,7 +928,11 @@ namespace OpenTK.Platform.Native.Windows
                         const long IMM_ERROR_NODATA = -1;
                         const long IMM_ERROR_GENERAL = -2;
 
-                        HWND h = HWndDict[hWnd];
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h) == false)
+                        {
+                            // This can happen if we have a composition active when we close the window.
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
 
                         GCS gcs = (GCS)lParam;
 
@@ -870,7 +943,7 @@ namespace OpenTK.Platform.Native.Windows
                             long length = Win32.ImmGetCompositionString(hmic, GCS.CompStr, (Span<byte>)null, 0);
                             if (length == IMM_ERROR_NODATA || length == IMM_ERROR_GENERAL)
                             {
-                                throw new Win32Exception("IME error");
+                                throw new Win32Exception();
                             }
                             else
                             {
@@ -879,7 +952,7 @@ namespace OpenTK.Platform.Native.Windows
                                 long written = Win32.ImmGetCompositionString(hmic, GCS.CompStr, bytes, (uint)bytes.Length);
                                 if (written == IMM_ERROR_NODATA || written == IMM_ERROR_GENERAL)
                                 {
-                                    throw new Win32Exception("IME error");
+                                    throw new Win32Exception();
                                 }
 
                                 string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
@@ -890,6 +963,7 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
+                                // FIXME: Length?
                                 EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, IMECursor, 0));
                             }
                         }
@@ -919,12 +993,19 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(h, composition));
+                                // FIXME: Will this always trigger a WM_CHAR message?
+                                // For now we assume it will, if we send this here we later get a
+                                // WM_CHAR with the same text causing duplicate IME input.
+                                // - Noggin_bops 2023-11-13
+                                //EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, composition));
                             }
                         }
 
                         Win32.ImmReleaseContext(hWnd, hmic);
 
+                        // We pass this message forward to get the default IME window to show up
+                        // and for the result string to get posted to WM_CHAR.
+                        // - Noggin_bops 2023-11-13
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.INPUTLANGCHANGE:
@@ -1009,6 +1090,12 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Set HWND.WindowState!
             HWND hwnd = new HWND(hWnd, hints);
 
+            // Set the default cursor for the window.
+            HCursor hcursor = new HCursor();
+            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, OCR.Normal, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
+            hcursor.Mode = HCursor.CursorMode.SystemCursor;
+            SetCursor(hwnd, hcursor);
+
             HWndDict.Add(hwnd.HWnd, hwnd);
 
             return hwnd;
@@ -1084,10 +1171,9 @@ namespace OpenTK.Platform.Native.Windows
             HWND hwnd = handle.As<HWND>(this);
 
             bool success = Win32.SetWindowText(hwnd.HWnd, title);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window title");
+                throw new Win32Exception();
             }
         }
 
@@ -1166,15 +1252,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetWindowRect failed");
-            }
-
-            x = lpRect.left;
-            y = lpRect.top;
+            GetBounds(hwnd, out x, out y, out _, out _);
         }
 
         /// <inheritdoc/>
@@ -1184,10 +1262,9 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position");
+                throw new Win32Exception();
             }
         }
 
@@ -1196,15 +1273,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetWindowRect failed");
-            }
-
-            width = lpRect.right - lpRect.left;
-            height = lpRect.bottom - lpRect.top;
+            GetBounds(hwnd, out _, out _, out width, out height);
         }
 
         /// <inheritdoc/>
@@ -1214,10 +1283,39 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, width, height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window size");
+                throw new Win32Exception();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            bool success = Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT lpRect);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            x = lpRect.left;
+            y = lpRect.top;
+            width = lpRect.Width;
+            height = lpRect.Height;
+        }
+
+        /// <inheritdoc/>
+        public void SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
+            bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, width, height, SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
@@ -1229,10 +1327,9 @@ namespace OpenTK.Platform.Native.Windows
             Win32.POINT point = new Win32.POINT(0, 0);
 
             bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
-
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed");
+                throw new Win32Exception();
             }
 
             x = point.X;
@@ -1252,18 +1349,16 @@ namespace OpenTK.Platform.Native.Windows
             // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
             // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
-
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed");
+                throw new Win32Exception();
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, rect.left, rect.top, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position");
+                throw new Win32Exception();
             }
         }
 
@@ -1272,15 +1367,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
-
-            if (success == false)
-            {
-                throw new Win32Exception("GetClientRect failed");
-            }
-
-            width = lpRect.right;
-            height = lpRect.bottom;
+            GetClientBounds(hwnd, out _, out _, out width, out height);
         }
 
         /// <inheritdoc/>
@@ -1297,18 +1384,60 @@ namespace OpenTK.Platform.Native.Windows
             // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
             // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
-
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed");
+                throw new Win32Exception();
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, rect.Width, rect.Height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
-
             if (success == false)
             {
-                throw new Win32Exception("SetWindowPos failed");
+                throw new Win32Exception();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            x = lpRect.left;
+            y = lpRect.top;
+            width = lpRect.Width;
+            height = lpRect.Height;
+        }
+
+        /// <inheritdoc/>
+        public void SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.RECT rect = new Win32.RECT(x, y, x + width, y + height);
+
+            WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
+
+            // This assumes the window doesn't have a menu bar or scroll bars. For now our windows don't have those, but it's possible that could change.
+            // A user could also modify the window manually so that it has a menubar or scrollbar.
+            // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
+            // - 2023-06-28 Noggin_bops
+            bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
+            success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, rect.left, rect.top, rect.Width, rect.Height, SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
+            if (success == false)
+            {
+                throw new Win32Exception();
             }
         }
 
@@ -1882,7 +2011,7 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.ScreenToClient(hwnd.HWnd, ref point);
             if (success == false)
             {
-                throw new Win32Exception("ScreenToClient failed.");
+                throw new Win32Exception();
             }
 
             clientX = point.X;
@@ -1900,11 +2029,24 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed.");
+                throw new Win32Exception();
             }
 
             x = point.X;
             y = point.Y;
+        }
+
+        /// <summary>
+        /// Returns the underlying win32 <c>HWND</c> for the specified window.
+        /// Modifying things about the window outside of OpenTK functions may cause inconsistent behaviour of OpenTK functions.
+        /// </summary>
+        /// <param name="handle">The window to get the <c>HWND</c> from.</param>
+        /// <returns>The <c>HWND</c> of the window.</returns>
+        public IntPtr GetHWND(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.HWnd;
         }
     }
 }

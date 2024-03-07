@@ -10,21 +10,21 @@ namespace OpenTK.Platform.Native.macOS
 {
     public unsafe class MacOSOpenGLComponent : IOpenGLComponent
     {
-        internal static ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext");
-        internal static ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat");
+        internal static readonly ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext");
+        internal static readonly ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat");
 
-        internal static SEL selInitWithAttributes = sel_registerName("initWithAttributes:"u8);
-        internal static SEL selInitWithFormatShareContext = sel_registerName("initWithFormat:shareContext:"u8);
-        internal static SEL selSetView = sel_registerName("setView:"u8);
-        internal static SEL selSetWantsBestResolutionOpenGLSurface = sel_registerName("setWantsBestResolutionOpenGLSurface:"u8);
-        internal static SEL selUpdate = sel_registerName("update"u8);
-        internal static SEL selClearCurrentContext = sel_registerName("clearCurrentContext"u8);
-        internal static SEL selCurrentContext = sel_registerName("currentContext"u8);
-        internal static SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
-        internal static SEL selClearDrawable = sel_registerName("clearDrawable"u8);
-        internal static SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
+        internal static readonly SEL selInitWithAttributes = sel_registerName("initWithAttributes:"u8);
+        internal static readonly SEL selInitWithFormatShareContext = sel_registerName("initWithFormat:shareContext:"u8);
+        internal static readonly SEL selSetView = sel_registerName("setView:"u8);
+        internal static readonly SEL selSetWantsBestResolutionOpenGLSurface = sel_registerName("setWantsBestResolutionOpenGLSurface:"u8);
+        internal static readonly SEL selUpdate = sel_registerName("update"u8);
+        internal static readonly SEL selClearCurrentContext = sel_registerName("clearCurrentContext"u8);
+        internal static readonly SEL selCurrentContext = sel_registerName("currentContext"u8);
+        internal static readonly SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
+        internal static readonly SEL selClearDrawable = sel_registerName("clearDrawable"u8);
+        internal static readonly SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
 
-        internal static IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
+        internal static readonly IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
 
         internal static Dictionary<IntPtr, NSOpenGLContext> NSOpenGLContextDict = new Dictionary<nint, NSOpenGLContext>();
 
@@ -173,6 +173,8 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext);
 
             // We do this so the window component can implement SwapBuffers.
+            // And so we can call [Context update] when the window resizes or moves
+            // - Noggin_bops 2023-11-11
             nswindow.Context = nscontext;
 
             NSOpenGLContextDict.Add(nscontext.Context, nscontext);
@@ -284,6 +286,18 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
             objc_msgSend(nscontext.Context, selFlushBuffer);
+        }
+
+        /// <summary>
+        /// Returns the <c>NSOpenGLContext</c> associated with the specified context handle.
+        /// </summary>
+        /// <param name="handle">A handle to an OpenGL context to get the associated <c>NSOpenGLContext</c> from.</param>
+        /// <returns>The <c>NSOpenGLContext</c> associated with the context handle.</returns>
+        public IntPtr GetNSOpenGLContext(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+
+            return nscontext.Context;
         }
     }
 }

@@ -1,18 +1,14 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
@@ -263,13 +259,15 @@ namespace OpenTK.Platform.Native.SDL
                                 _ => throw new PalException(this, $"Got unknown mouse button: {buttonEvent.which}"),
                             };
 
+                            KeyModifier modifiers = SDLKeyboardComponent.FromSDL(SDL_GetModState());
+
                             if (buttonEvent.type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button, modifiers));
                             }
                             else
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button, modifiers));
                             }
 
                             break;
@@ -287,6 +285,8 @@ namespace OpenTK.Platform.Native.SDL
                             // FIXME: I don't think this is distance! We want to precisely determine what should be put in the distance field.
                             Vector2 distance = new Vector2(mouseWheel.preciseX, mouseWheel.preciseY);
 
+                            // FIXME: should we use the precise values instead?
+                            SDLMouseComponent.RegisterMouseWheelDelta(scroll);
                             EventQueue.Raise(sdlWindow, PlatformEventType.Scroll, new ScrollEventArgs(sdlWindow, scroll, distance));
 
                             break;
@@ -391,15 +391,17 @@ namespace OpenTK.Platform.Native.SDL
                             Key key = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.sym, Logger);
                             Scancode scancode = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.scancode, Logger);
 
+                            KeyModifier modifiers = SDLKeyboardComponent.FromSDL(SDL_GetModState());
+
                             bool repeat = keyboardEvent.repeat > 0;
 
                             if (keyboardEvent.type == SDL_EventType.SDL_KEYDOWN)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat, modifiers));
                             }
                             else if (keyboardEvent.type == SDL_EventType.SDL_KEYUP)
                             {
-                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode));
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode, modifiers));
                             }
 
                             break;
@@ -589,9 +591,12 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME: This gets the client position!!
-            SDL_GetWindowPosition(window.Window, out x, out y);
-            throw new NotImplementedException();
+            // Get the client position and compensate using the border size.
+            SDL_GetWindowPosition(window.Window, out int clientX, out int clientY);
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out _, out _);
+
+            x = clientX - left;
+            y = clientY - top;
         }
 
         /// <inheritdoc/>
@@ -599,9 +604,11 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME: This sets the client position!!
-            SDL_SetWindowPosition(window.Window, x, y);
-            throw new NotImplementedException();
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out _, out _);
+
+            // SDL_SetWindowPosition sets the client position of the window,
+            // so we query the insets of the window to compensate.
+            SDL_SetWindowPosition(window.Window, x + left, y + top);
         }
 
         /// <inheritdoc/>
@@ -609,9 +616,12 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME: This sets the client position!!
-            SDL_GetWindowSize(window.Window, out width, out height);
-            throw new NotImplementedException();
+            // Get the client size and compensate using the border size.
+            SDL_GetWindowSize(window.Window, out int clientWidth, out int clientHeight);
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
+
+            width = clientWidth + left + right;
+            height = clientHeight + top + bottom;
         }
 
         /// <inheritdoc/>
@@ -619,7 +629,43 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
+
+            int clientWidth = Math.Max(width - left - right, 0);
+            int clientHeight = Math.Max(height - top - bottom, 0);
+
+            SDL_SetWindowSize(window.Window, clientWidth, clientHeight);
+        }
+
+        /// <inheritdoc/>
+        public void GetBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowPosition(window.Window, out int clientX, out int clientY);
+            SDL_GetWindowSize(window.Window, out int clientWidth, out int clientHeight);
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
+
+            x = clientX - left;
+            y = clientY - top;
+            width = clientWidth + left + right;
+            height = clientHeight + top + bottom;
+        }
+
+        /// <inheritdoc/>
+        public void SetBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
+
+            int clientX = x + left;
+            int clientY = y + top;
+            int clientWidth = Math.Max(width - left - right, 0);
+            int clientHeight = Math.Max(height - top - bottom, 0);
+
+            SDL_SetWindowPosition(window.Window, clientX, clientY);
+            SDL_SetWindowSize(window.Window, clientWidth, clientHeight);
         }
 
         /// <inheritdoc/>
@@ -651,6 +697,24 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            SDL_SetWindowSize(window.Window, width, height);
+        }
+
+        /// <inheritdoc/>
+        public void GetClientBounds(WindowHandle handle, out int x, out int y, out int width, out int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowPosition(window.Window, out x, out y);
+            SDL_GetWindowSize(window.Window, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        public void SetClientBounds(WindowHandle handle, int x, int y, int width, int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_SetWindowPosition(window.Window, x, y);
             SDL_SetWindowSize(window.Window, width, height);
         }
 

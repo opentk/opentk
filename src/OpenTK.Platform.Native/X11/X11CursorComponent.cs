@@ -115,6 +115,30 @@ namespace OpenTK.Platform.Native.X11
                     // https://unix.stackexchange.com/questions/684139/what-do-these-xcursor-names-mean
                     shape = XCursorShape.BottomRightCorner;
                     break;
+                case SystemCursorType.ArrowN:
+                    shape = XCursorShape.TopSide;
+                    break;
+                case SystemCursorType.ArrowE:
+                    shape = XCursorShape.RightSide;
+                    break;
+                case SystemCursorType.ArrowS:
+                    shape = XCursorShape.BottomSide;
+                    break;
+                case SystemCursorType.ArrowW:
+                    shape = XCursorShape.LeftSide;
+                    break;
+                case SystemCursorType.ArrowNE:
+                    shape = XCursorShape.TopRightCorner;
+                    break;
+                case SystemCursorType.ArrowSE:
+                    shape = XCursorShape.BottomRightCorner;
+                    break;
+                case SystemCursorType.ArrowSW:
+                    shape = XCursorShape.BottomLeftCorner;
+                    break;
+                case SystemCursorType.ArrowNW:
+                    shape = XCursorShape.TopLeftCorner;
+                    break;
                 case SystemCursorType.ArrowUp:
                     shape = XCursorShape.SBUpArrow;
                     break;

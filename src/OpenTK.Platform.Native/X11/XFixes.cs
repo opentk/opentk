@@ -23,6 +23,46 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* Status */ XFixesQueryVersion (XDisplayPtr dpy, ref int major_version_return, ref int minor_version_return);
 
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XFixesVersion();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XFixesChangeSaveSet(XDisplayPtr dpy, XWindow win, int mode, int target, int map);
+
+        internal enum SelectionEvent
+        {
+            SetSelectionOwner,
+            SelectionWindowDestroy,
+            SelectionClientClose,
+        }
+
+        internal enum SelectionEventMask : ulong
+        {
+            SetSelectionOwnerNotifyMask = 1L << SelectionEvent.SetSelectionOwner,
+            SelectionWindowDestroyNotifyMask = 1L << SelectionEvent.SelectionWindowDestroy,
+            SelectionClientCloseNotifyMask = 1L << SelectionEvent.SelectionClientClose,
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XFixesSelectSelectionInput(XDisplayPtr dpy, XWindow win, XAtom selection, SelectionEventMask eventMask);
+
+        internal struct XFixesSelectionNotifyEvent
+        {
+            public XEventType type;      /* FocusIn or FocusOut */
+            public ulong serial;         /* # of last request processed by server */
+            public int send_event;       /* true if this came from a SendEvent request */
+            public XDisplayPtr display;  /* Display the event was read from */
+            public XWindow window;       /* window of event */
+            public int subtype;
+            public XWindow owner;
+            public XAtom selection;
+            public XTime timestamp;
+            public XTime selection_timestamp;
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XFixesSelectCursorInput(XDisplayPtr dpy, XWindow win, ulong eventMask);
+
         internal unsafe struct XFixesCursorImage {
 
             public short x, y;
@@ -41,7 +81,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern XFixesCursorImage* XFixesGetCursorImage (XDisplayPtr dpy);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XID /* PointerBarrier */ XFixesCreatePointerBarrier(
+        internal static extern XPointerBarrier XFixesCreatePointerBarrier(
             XDisplayPtr dpy, 
             XWindow w, 
             int x1, int y1,

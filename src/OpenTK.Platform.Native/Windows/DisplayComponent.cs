@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Native.Windows
             return monitorHandle;
         }
 
-        internal static void UpdateMonitors()
+        internal static void UpdateMonitors(bool sendEvents, ILogger? logger)
         {
             List<HMonitor> newDisplays = new List<HMonitor>();
 
@@ -190,8 +190,6 @@ namespace OpenTK.Platform.Native.Windows
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
                     }
-
-                    monitorIndex++;
                 }
             }
 
@@ -204,17 +202,27 @@ namespace OpenTK.Platform.Native.Windows
             {
                 _displays.Remove(removed);
 
-                EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
-                Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+                if (sendEvents)
+                {
+                    EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
+                    logger?.LogDebug($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+                }
             }
 
             foreach (HMonitor connected in newDisplays)
             {
                 _displays.Add(connected);
 
-                EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
-                Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+                if (sendEvents)
+                {
+                    EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
+                    logger?.LogDebug($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+                }
             }
+
+            // FIXME: Maybe make sure that the primary display is always at the beginning of the list?
+            // Right now the primary display is not guaranteed to be first in the DisplayConnectionChanged events...
+            // - Noggin_bops 2024-02-28
 
             HMonitor? primary = null;
             foreach (HMonitor display in _displays)
@@ -235,12 +243,13 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (primary != oldPrimary)
                 {
-                    Console.WriteLine("New primary monitor!");
+                    
+                    logger?.LogDebug("New primary monitor!");
                 }
             }
             else
             {
-                Console.WriteLine("Could not find primary monitor!");
+                logger?.LogWarning("Could not find primary monitor!");
             }
         }
 
@@ -290,7 +299,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            UpdateMonitors();
+            UpdateMonitors(false, Logger);
         }
 
         /// <inheritdoc/>
@@ -299,13 +308,15 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public int GetDisplayCount()
         {
-            int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
-            if (count == 0)
-            {
-                throw new Exception("GetSystemMetrics(SM_CMONITOR) failed.");
-            }
+            // Better to just return how many displays we know of so we
+            // don't get weird out of bounds exceptions for "legal" code.
+            return _displays.Count;
 
-            return count;
+            //int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
+            //if (count == 0)
+            //{
+            //    throw new Exception("GetSystemMetrics(SM_CMONITOR) failed.");
+            //}
         }
 
         // FIXME: Indices for monitors is ill defined.
@@ -451,6 +462,30 @@ namespace OpenTK.Platform.Native.Windows
 
             scaleX = dpiX / DefaultDPI;
             scaleY = dpiY / DefaultDPI;
+        }
+
+        /// <summary>
+        /// Returns the win32 adapter string associated with this display.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the adapter name for.</param>
+        /// <returns>The win32 adapter name for the display.</returns>
+        public string GetAdapter(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.AdapterName;
+        }
+
+        /// <summary>
+        /// Returns the win32 mointor device name string associated with this display.
+        /// </summary>
+        /// <param name="handle">A handle to a display to get the monitor name for.</param>
+        /// <returns>The win32 monitor name for the display.</returns>
+        public string GetMonitor(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.DeviceName;
         }
     }
 }

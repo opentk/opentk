@@ -199,6 +199,27 @@ void main()
             }
         }
 
+        public void HandleEvent(EventArgs args)
+        {
+            if (args is WindowResizeEventArgs resize)
+            {
+                var prevContext = Program.OpenGLComp.GetCurrentContext();
+                Program.OpenGLComp.SetCurrentContext(Context);
+
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+
+                // Re-render the window to make resize live.
+                Render();
+
+                Program.OpenGLComp.SetCurrentContext(prevContext);
+            }
+        }
+
+        public void Update(float deltaTime)
+        {
+
+        }
+
         public void Render()
         {
             GL.ClearColor(new Color4<Rgba>(0.05f, 0.05f, 0.1f, 1.0f));

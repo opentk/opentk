@@ -38,6 +38,19 @@ namespace OpenTK.Backends.Tests
         void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES);
 
         /// <summary>
+        /// Called for every <see cref="WindowEventArgs"/> related to this window, and for
+        /// window agnostic events.
+        /// </summary>
+        /// <param name="args">The event args.</param>
+        void HandleEvent(EventArgs args);
+
+        /// <summary>
+        /// Update the application logic.
+        /// </summary>
+        /// <param name="deltaTime">The time since the last call to Update.</param>
+        void Update(float deltaTime);
+
+        /// <summary>
         /// Render the application view.
         /// </summary>
         void Render();
@@ -74,18 +87,6 @@ namespace OpenTK.Backends.Tests
             }
         }
 
-        private static ITestApp Create(Type type)
-        {
-            ConstructorInfo? ctor = type.GetConstructor(Array.Empty<Type>());
-
-            if (ctor == null)
-            {
-                throw new Exception("No suitable constructor found");
-            }
-
-            return (ITestApp)ctor.Invoke(null);
-        }
-
         /// <summary>
         /// Create a test app instance.
         /// </summary>
@@ -93,7 +94,7 @@ namespace OpenTK.Backends.Tests
         /// <returns>A test app.</returns>
         public static ITestApp Create(int index)
         {
-            return Create(All[index]);
+            return (ITestApp)Activator.CreateInstance(All[index])!;
         }
     }
 }

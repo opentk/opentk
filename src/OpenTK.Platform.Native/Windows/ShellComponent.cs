@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Native.Windows
     public class ShellComponent : IShellComponent
     {
         /// <inheritdoc/>
-        public string Name => "Win32 Shell Component";
+        public string Name => "Win32ShellComponent";
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Shell;
@@ -35,6 +35,9 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Exception("ShellComponent can only initialize the Shell component.");
             }
+
+            // Set the inital theme so we can detect changes later.
+            LastTheme = GetCurrentTheme();
         }
 
         /// <inheritdoc/>

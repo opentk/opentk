@@ -23,6 +23,8 @@ namespace OpenTK.Platform.Native.macOS
     [DebuggerDisplay("{Handle}")]
     internal struct SEL
     {
+        public static SEL Null => new SEL(0);
+
         public IntPtr Handle;
 
         public SEL(IntPtr handle)
@@ -31,7 +33,13 @@ namespace OpenTK.Platform.Native.macOS
         }
     }
 
-    internal struct CGPoint
+    internal struct objc_super
+    {
+        public IntPtr /* id */ receiver;
+        public ObjCClass pclass;
+    }
+
+    internal struct CGPoint : IEquatable<CGPoint>
     {
         public static readonly CGPoint Zero = new CGPoint(0, 0);
 
@@ -44,9 +52,35 @@ namespace OpenTK.Platform.Native.macOS
             this.y = y;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return obj is CGPoint point && Equals(point);
+        }
+
+        public bool Equals(CGPoint other)
+        {
+            return x.Equals(other.x) &&
+                   y.Equals(other.y);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(x, y);
+        }
+
         public override string ToString()
         {
             return $"({x}, {y})";
+        }
+
+        public static bool operator ==(CGPoint left, CGPoint right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CGPoint left, CGPoint right)
+        {
+            return !(left == right);
         }
     }
     
@@ -54,6 +88,8 @@ namespace OpenTK.Platform.Native.macOS
     {
         public CGPoint origin;
         public CGPoint size;
+
+        public bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;
 
         public CGRect(CGPoint origin, CGPoint size)
         {
@@ -67,9 +103,56 @@ namespace OpenTK.Platform.Native.macOS
             size = new CGPoint(width, height);
         }
 
+        public bool Contains(CGPoint point)
+        {
+            if (point.x >= origin.x && point.x < origin.x + size.x &&
+                point.y >= origin.y && point.y < origin.y + size.y)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public override string ToString()
         {
             return $"{origin} - {size}";
+        }
+    }
+
+    internal struct NSEdgeInsets
+    {
+        public NFloat top;
+        public NFloat left;
+        public NFloat bottom;
+        public NFloat right;
+    }
+
+    internal struct NSRange
+    {
+        public nuint location;
+        public nuint length;
+
+        public static NSRange kEmptyRange = new NSRange((uint)nint.MaxValue, 0);
+
+        public NSRange(nuint location, nuint length)
+        {
+            this.location = location;
+            this.length = length;
+        }
+    }
+
+    internal struct NSSize
+    {
+        public NFloat width;
+        public NFloat height;
+
+        public NSSize(NFloat width, NFloat height)
+        {
+            this.width = width;
+            this.height = height;
         }
     }
 }

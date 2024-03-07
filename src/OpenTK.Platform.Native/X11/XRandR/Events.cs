@@ -39,12 +39,12 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public XDisplayPtr Display;
         public XWindow Window;
         public RRNotifySubType SubType;
-        public XID Output;
-        public XID Crtc;
-        public XID Mode;
-        public ushort Rotation;
-        public ushort Connection;
-        public ushort SubPixelOrder;
+        public RROutput Output;
+        public RRCrtc Crtc;
+        public RRMode Mode;
+        public Rotation Rotation;
+        public Connection Connection;
+        public SubpixelOrder SubPixelOrder;
     }
 
     internal struct XRRCrtcChangedNotifyEvent
@@ -55,10 +55,10 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public XDisplayPtr Display;
         public XWindow Window;
         public RRNotifySubType SubType;
-        public XID Output;
-        public XID Crtc;
-        public XID Mode;
-        public ushort Rotation;
+        public RROutput Output;
+        public RRCrtc Crtc;
+        public RRMode Mode;
+        public Rotation Rotation;
         public int X;
         public int Y;
         public uint Width;
@@ -73,7 +73,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public XDisplayPtr Display;
         public XWindow Window;
         public RRNotifySubType SubType;
-        public XID Output;
+        public RROutput Output;
         public XAtom Property;
         public XTime TimeStamp;
         public int State;

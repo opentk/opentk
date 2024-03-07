@@ -25,7 +25,7 @@ namespace OpenTK.Backends.Tests
         public InputData()
         {
             int[] values = (int[])Enum.GetValuesAsUnderlyingType<Key>();
-            KeysPressed = new bool[values.Max()];
+            KeysPressed = new bool[values.Max() + 1];
         }
     }
 
@@ -74,17 +74,13 @@ namespace OpenTK.Backends.Tests
             IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             var io = ImGui.GetIO();
-            io.Fonts.AddFontDefault();
-
+            
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 
             CreateDeviceResources();
             SetKeyMappings();
 
             SetPerFrameImGuiData(1f / 60f);
-
-            ImGui.NewFrame();
-            _frameBegun = true;
         }
 
         public void WindowResized(int width, int height)
@@ -120,7 +116,7 @@ namespace OpenTK.Backends.Tests
             LabelObject(ObjectIdentifier.Buffer, _indexBuffer, "EBO: ImGui");
             GL.BufferData(BufferTarget.ElementArrayBuffer, _indexBufferSize, IntPtr.Zero, BufferUsage.DynamicDraw);
 
-            RecreateFontDeviceTexture();
+            //RecreateFontDeviceTexture();
 
             string VertexSource = @"#version 330 core
 
@@ -220,6 +216,14 @@ void main()
         public void RecreateFontDeviceTexture()
         {
             ImGuiIOPtr io = ImGui.GetIO();
+
+            if (_fontTexture != 0)
+            {
+                GL.DeleteTexture(_fontTexture);
+                _fontTexture = 0;
+                io.Fonts.SetTexID(0);
+            }
+
             io.Fonts.GetTexDataAsRGBA32(out IntPtr pixels, out int width, out int height, out int bytesPerPixel);
 
             int mips = (int)Math.Floor(Math.Log(Math.Max(width, height), 2));
@@ -251,7 +255,7 @@ void main()
 
             io.Fonts.SetTexID((IntPtr)_fontTexture);
 
-            io.Fonts.ClearTexData();
+            //io.Fonts.ClearTexData();
         }
 
         /// <summary>
@@ -265,6 +269,10 @@ void main()
                 ImGui.Render();
                 RenderImDrawData(ImGui.GetDrawData());
             }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
@@ -274,7 +282,7 @@ void main()
         {
             if (_frameBegun)
             {
-                ImGui.Render();
+                throw new Exception();
             }
 
             SetPerFrameImGuiData(deltaSeconds);
@@ -298,45 +306,14 @@ void main()
             io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
         }
 
-        readonly List<char> PressedChars = new List<char>();
-
         private void UpdateImGuiInput(InputData data)
         {
             ImGuiIOPtr io = ImGui.GetIO();
-
-            //io.MouseDown[0] = data.LeftMouse;
-            //io.MouseDown[1] = data.RightMouse;
-            //io.MouseDown[2] = data.MiddleMouse;
-
-            var screenPoint = data.MousePosition;
-            var point = screenPoint;//wnd.PointToClient(screenPoint);
-            //io.MousePos = new System.Numerics.Vector2(point.X, point.Y);
-
-            /*Key[] keys = Enum.GetValues<Key>();
-            for (int i = 0; i < keys.Length; i++)
-            {
-                if (keys[i] == Key.Unknown)
-                {
-                    continue;
-                }
-                io.KeysDown[(int)keys[i]] = data.KeysPressed[i];
-            }*/
-
-            //foreach (var c in PressedChars)
-            //{
-            //    io.AddInputCharacter(c);
-            //}
-            //PressedChars.Clear();
 
             io.KeyCtrl = data.KeysPressed[(int)Key.LeftControl] || data.KeysPressed[(int)Key.RightControl];
             io.KeyAlt = data.KeysPressed[(int)Key.LeftAlt] || data.KeysPressed[(int)Key.RightAlt];
             io.KeyShift = data.KeysPressed[(int)Key.LeftShift] || data.KeysPressed[(int)Key.RightShift];
             io.KeySuper = data.KeysPressed[(int)Key.LeftGUI] || data.KeysPressed[(int)Key.RightGUI];
-        }
-
-        internal void PressChar(char keyChar)
-        {
-            PressedChars.Add(keyChar);
         }
 
         internal void MouseScroll(Vector2 offset)
@@ -406,7 +383,7 @@ void main()
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer);
             for (int i = 0; i < draw_data.CmdListsCount; i++)
             {
-                ImDrawListPtr cmd_list = draw_data.CmdListsRange[i];
+                ImDrawListPtr cmd_list = draw_data.CmdLists[i];
 
                 int vertexSize = cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>();
                 if (vertexSize > _vertexBufferSize)
@@ -460,7 +437,7 @@ void main()
             // Render command lists
             for (int n = 0; n < draw_data.CmdListsCount; n++)
             {
-                ImDrawListPtr cmd_list = draw_data.CmdListsRange[n];
+                ImDrawListPtr cmd_list = draw_data.CmdLists[n];
 
                 GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>(), cmd_list.VtxBuffer.Data);
                 CheckGLError($"Data Vert {n}");

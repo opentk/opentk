@@ -1,3 +1,5 @@
+using System;
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -18,7 +20,7 @@ namespace OpenTK.Core.Platform
         Button2,
 
         /// <summary>
-        /// The tertiary mouse button (usually in the mouse wheel)
+        /// The tertiary mouse button (usually in the mouse wheel).
         /// </summary>
         Button3,
 
@@ -45,6 +47,53 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Auxiliary mouse button.
         /// </summary>
-        Button8
+        Button8,
+    }
+
+    /// <summary>
+    /// Mouse button flags.
+    /// </summary>
+    [Flags]
+    public enum MouseButtonFlags
+    {
+        /// <summary>
+        /// Indicates that the primary mouse button (usually the left one) is pressed.
+        /// </summary>
+        Button1 = 1 << MouseButton.Button1,
+
+        /// <summary>
+        /// Indicates that the secondary mouse button (usually the right one) is pressed.
+        /// </summary>
+        Button2 = 1 << MouseButton.Button2,
+
+        /// <summary>
+        /// Indicates that the tertiary mouse button (usually in the mouse wheel) is pressed.
+        /// </summary>
+        Button3 = 1 << MouseButton.Button3,
+
+        /// <summary>
+        /// Indicates that auxiliary mouse button 1 is pressed.
+        /// </summary>
+        Button4 = 1 << MouseButton.Button4,
+
+        /// <summary>
+        /// Indicates that auxiliary mouse button 2 is pressed.
+        /// </summary>
+        Button5 = 1 << MouseButton.Button5,
+
+        /// <summary>
+        /// Indicates that auxiliary mouse button 3 is pressed.
+        /// </summary>
+        Button6 = 1 << MouseButton.Button6,
+
+        /// <summary>
+        /// Indicates that auxiliary mouse button 4 is pressed.
+        /// </summary>
+        Button7 = 1 << MouseButton.Button7,
+
+        /// <summary>
+        /// Indicates that auxiliary mouse button 5 is pressed.
+        /// </summary>
+        Button8 = 1 << MouseButton.Button8,
     }
 }

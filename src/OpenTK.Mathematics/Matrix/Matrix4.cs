@@ -1117,7 +1117,7 @@ namespace OpenTK.Mathematics
             out Matrix4 result
         )
         {
-            if (fovy <= 0 || fovy > Math.PI)
+            if (fovy <= 0 || fovy > MathF.PI)
             {
                 throw new ArgumentOutOfRangeException(nameof(fovy));
             }
@@ -1137,10 +1137,10 @@ namespace OpenTK.Mathematics
                 throw new ArgumentOutOfRangeException(nameof(depthFar));
             }
 
-            var maxY = depthNear * MathF.Tan(0.5f * fovy);
-            var minY = -maxY;
-            var minX = minY * aspect;
-            var maxX = maxY * aspect;
+            float maxY = depthNear * MathF.Tan(0.5f * fovy);
+            float minY = -maxY;
+            float minX = minY * aspect;
+            float maxX = maxY * aspect;
 
             CreatePerspectiveOffCenter(minX, maxX, minY, maxY, depthNear, depthFar, out result);
         }

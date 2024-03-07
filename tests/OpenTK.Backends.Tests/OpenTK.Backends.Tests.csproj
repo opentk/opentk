@@ -7,6 +7,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
+    
+    <!-- This is somehow broken on one of my machines... somehow https://github.com/dotnet/runtime/pull/89303 is supposed to fix this in .net 8? -->
     <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
@@ -32,8 +34,9 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="ImGui.NET" Version="1.89.7.1" />
     <PackageReference Include="StbImageSharp" Version="2.27.13" />
+    <PackageReference Include="ImGui.NET" Version="1.89.9.3" />
+    <PackageReference Include="OpenTK.redist.SDL" Version="2.26.5-pre20230414185304" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,19 +61,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="d3dcompiler_47.dll">
+    <None Update="win32-x64/d3dcompiler_47.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libEGL.dll">
+    <None Update="win32-x64/libEGL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libGLESv1_CM.dll">
+    <None Update="win32-x64/libGLESv1_CM.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libGLESv2.dll">
+    <None Update="win32-x64/libGLESv2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="linux-x64/angle-linux-binaries.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Cute Light Green Normal Select.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\NotoSans\NotoSansJP-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\NotoSans\OFL.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ProggyVector\LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\ProggyVector\ProggyVectorDotted.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Wikipedia-Flags-UN-United-Nations-Flag.ico">
@@ -79,6 +97,15 @@
     <None Update="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\ProggyVector\ProggyVector-Dotted.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\NotoSans\" />
+    <Folder Include="win32-x64/" />
+    <Folder Include="linux-x64/" />
   </ItemGroup>
 
 </Project>

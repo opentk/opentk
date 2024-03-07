@@ -151,6 +151,9 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern void SDL_SetWindowSize(SDL_WindowPtr window, int w, int h);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_GetWindowBordersSize(SDL_WindowPtr window, out int top, out int left, out int bottom, out int right);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_GetWindowSize(SDL_WindowPtr window, out int w, out int h);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
@@ -483,6 +486,9 @@ namespace OpenTK.Platform.Native.SDL
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
 
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern byte* SDL_GetKeyboardState(out int numkeys);
+
         internal struct SDL_CursorPtr : IEquatable<SDL_CursorPtr>
         {
             public static SDL_CursorPtr Null => new SDL_CursorPtr(0);
@@ -638,6 +644,9 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_Keymod SDL_GetModState();
 
     }
 #pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0

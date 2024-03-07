@@ -27,7 +27,6 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
-
             OpenTKSelection = XInternAtom(X11.Display, "OpenTK_Selection", false);
 
             image_png = XInternAtom(X11.Display, "image/png", false);
@@ -42,75 +41,13 @@ namespace OpenTK.Platform.Native.X11
         /// <summary>
         /// Custom atom used to receive clipboard data.
         /// </summary>
-        private XAtom OpenTKSelection;
+        internal static XAtom OpenTKSelection;
 
         // FIXME: Figure out which image formats we support?
-        private XAtom image_png;
-        private XAtom image_bmp;
+        private static XAtom image_png;
+        private static XAtom image_bmp;
 
-        private XAtom text_urilist;
-
-        private struct pollfd {
-            public int fd;
-            public short events;
-            public short revents;
-        }
-
-        [DllImport("libc", CallingConvention = CallingConvention.Cdecl, SetLastError = true)]
-        private static unsafe extern int poll(pollfd* fds, uint nfds, int timeout);
-
-        private static unsafe bool Poll(pollfd* fds, int count, int timeout)
-        {
-            while (true)
-            {
-                int result = poll(fds, (uint)count, timeout);
-                int errno = Marshal.GetLastSystemError();
-
-                const int EINTR = 4;
-                const int EAGAIN = 11;
-
-                if (result > 0)
-                {
-                    return true;
-                }
-                else if (result < 0 && errno != EINTR && errno != EAGAIN)
-                {
-                    return false;
-                }
-                else // (result == 0)
-                {
-                    return false;
-                }
-            }
-        }
-
-        private static unsafe bool WaitForXEvents()
-        {
-            const short POLLIN = 0x0001;
-            
-            pollfd fd = new pollfd(){
-                fd = XConnectionNumber(X11.Display),
-                events = POLLIN,
-            };
-
-            while (XPending(X11.Display) == 0)
-            {
-                // poll with no timeout.
-                if (Poll(&fd, 1, -1) == false)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private static unsafe bool IsSelectionPropertyNewValueNotify(XDisplayPtr display, ref XEvent @event, IntPtr pointer)
-        {
-            XEvent* notification = (XEvent*)pointer;
-            return @event.Type == XEventType.PropertyNotify &&
-                @event.Property.state == PropertyState.PropertyNewValue &&
-                @event.Property.window == notification->Selection.requestor &&
-                @event.Property.atom == notification->Selection.property;
-        }
+        private static XAtom text_urilist;
 
         private unsafe byte[] ReadINCRData(XEvent notification)
         {
@@ -118,10 +55,10 @@ namespace OpenTK.Platform.Native.X11
 
             while (true)
             {
-                while (XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification)) == false)
+                while (XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification)) == false)
                 {
                     // FIXME: Wait for events!
-                    WaitForXEvents();
+                    X11.WaitForXEvents();
                 }
 
                 XGetWindowProperty(X11.Display,
@@ -153,28 +90,30 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        /// <inheritdoc/>
-        public IReadOnlyList<ClipboardFormat> SupportedFormats => throw new NotImplementedException();
+        private static readonly ClipboardFormat[] _supportedFormats = { ClipboardFormat.Text, ClipboardFormat.Files };
 
         /// <inheritdoc/>
-        public unsafe ClipboardFormat GetClipboardFormat()
+        public IReadOnlyList<ClipboardFormat> SupportedFormats => _supportedFormats;
+
+        // FIXME: What if we've not initialized the clipboard component
+        internal static unsafe ClipboardFormat GetSelectionFormat(XAtom selection, XAtom property)
         {
             XConvertSelection(
                     X11.Display,
-                    X11.Atoms[KnownAtoms.CLIPBOARD],
+                    selection,
                     X11.Atoms[KnownAtoms.TARGETS],
-                    OpenTKSelection,
+                    property,
                     X11WindowComponent.HelperWindow,
                     XTime.CurrentTime);
 
             XEvent notification;
             while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
             {
-                WaitForXEvents();
+                X11.WaitForXEvents();
             }
 
             // Find the event and remove it from the queue
-            XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+            XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
             XGetWindowProperty(X11.Display,
                 notification.Selection.requestor,
@@ -231,6 +170,12 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
+        public unsafe ClipboardFormat GetClipboardFormat()
+        {
+            return GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], OpenTKSelection);
+        }
+
+        /// <inheritdoc/>
         public void SetClipboardText(string text)
         {
             throw new NotImplementedException();
@@ -256,11 +201,11 @@ namespace OpenTK.Platform.Native.X11
                 XEvent notification;
                 while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
                 {
-                    WaitForXEvents();
+                    X11.WaitForXEvents();
                 }
 
                 // Find the event and remove it from the queue
-                XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+                XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
                 XGetWindowProperty(X11.Display,
                     notification.Selection.requestor,
@@ -350,11 +295,11 @@ namespace OpenTK.Platform.Native.X11
             XEvent notification;
             while (XCheckTypedWindowEvent(X11.Display, X11WindowComponent.HelperWindow, XEventType.SelectionNotify, out notification) == false)
             {
-                WaitForXEvents();
+                X11.WaitForXEvents();
             }
 
             // Find the event and remove it from the queue
-            XCheckIfEvent(X11.Display, out _, IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
+            XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
             XGetWindowProperty(X11.Display,
                 notification.Selection.requestor,
@@ -386,8 +331,15 @@ namespace OpenTK.Platform.Native.X11
                     else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
                 }
 
+                if (data != IntPtr.Zero)
+                {
+                    XFree(data);
+                }
+
                 return files;
             }
         }
+
+        // FIXME: Platform specific API for getting and setting the current selection string?
     }
 }

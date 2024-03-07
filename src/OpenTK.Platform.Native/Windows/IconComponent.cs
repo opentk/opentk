@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HIcon hicon = new HIcon();
 
-            IDI idi = default;
+            IDI idi;
             switch (systemIcon)
             {
                 case SystemIconType.Default:
@@ -107,7 +107,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
             if (colorBitmap == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateDIBSection failed.");
+                throw new Win32Exception();
             }
 
             Span<byte> bitmapData = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
@@ -128,7 +128,7 @@ namespace OpenTK.Platform.Native.Windows
             // It's not defined in wingdi.h and nothing online mentions it.
             if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
             {
-                throw new Win32Exception("CreateBitmap failed.");
+                throw new Win32Exception();
             }
 
             Win32.ICONINFO iconinfo = new Win32.ICONINFO()
@@ -143,7 +143,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hIcon = Win32.CreateIconIndirect(in iconinfo);
             if (hIcon == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateIconIndirect() failed.");
+                throw new Win32Exception();
             }
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
@@ -267,7 +267,7 @@ namespace OpenTK.Platform.Native.Windows
                         bool success = Win32.DestroyIcon(hicon.Icon);
                         if (success == false)
                         {
-                            throw new Win32Exception("DestroyIcon failed.");
+                            throw new Win32Exception();
                         }
 
                         // Delete the mask and color bitmaps.
@@ -329,7 +329,7 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.CURSORINFO cinfo = default;
                 cinfo.cbSize = (uint)sizeof(Win32.CURSORINFO);
                 if (Win32.GetCursorInfo(ref cinfo) == false)
-                    throw new Win32Exception("GetCursorInfo failed.");
+                    throw new Win32Exception();
             }
 
             // See https://stackoverflow.com/a/13295280

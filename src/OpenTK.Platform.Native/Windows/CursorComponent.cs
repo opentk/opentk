@@ -51,7 +51,7 @@ namespace OpenTK.Platform.Native.Windows
                     ocr = OCR.Normal;
                     break;
                 case SystemCursorType.Loading:
-                    ocr = OCR.Wait;
+                    ocr = OCR.AppStarting;
                     break;
                 case SystemCursorType.Wait:
                     ocr = OCR.Wait;
@@ -74,15 +74,23 @@ namespace OpenTK.Platform.Native.Windows
                 case SystemCursorType.ArrowFourway:
                     ocr = OCR.SizeAll;
                     break;
+                case SystemCursorType.ArrowN:
+                case SystemCursorType.ArrowS:
                 case SystemCursorType.ArrowNS:
                     ocr = OCR.SizeNS;
                     break;
+                case SystemCursorType.ArrowW:
+                case SystemCursorType.ArrowE:
                 case SystemCursorType.ArrowEW:
                     ocr = OCR.SizeWE;
                     break;
+                case SystemCursorType.ArrowNE:
+                case SystemCursorType.ArrowSW:
                 case SystemCursorType.ArrowNESW:
                     ocr = OCR.SizeNESW;
                     break;
+                case SystemCursorType.ArrowNW:
+                case SystemCursorType.ArrowSE:
                 case SystemCursorType.ArrowNWSE:
                     ocr = OCR.SizeNWSE;
                     break;
@@ -97,10 +105,9 @@ namespace OpenTK.Platform.Native.Windows
             // We might want to handle this differently in the future.
             hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, ocr, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
             hcursor.Mode = HCursor.CursorMode.SystemCursor;
-
             if (hcursor.Cursor == IntPtr.Zero)
             {
-                throw new Win32Exception($"Could not load cursor '{ocr}'");
+                throw new Win32Exception();
             }
 
             return hcursor;
@@ -136,7 +143,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
             if (colorBitmap == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateDIBSection failed.");
+                throw new Win32Exception();
             }
 
             Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
@@ -157,7 +164,7 @@ namespace OpenTK.Platform.Native.Windows
             // It's not defined in wingdi.h and nothing online mentions it.
             if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
             {
-                throw new Win32Exception("CreateBitmap failed.");
+                throw new Win32Exception();
             }
 
             Win32.ICONINFO iconinfo = new Win32.ICONINFO()
@@ -172,7 +179,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
             if (hcursorIcon == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateIconIndirect() failed.");
+                throw new Win32Exception();
             }
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
@@ -199,23 +206,23 @@ namespace OpenTK.Platform.Native.Windows
             // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
             IntPtr hDC = Win32.GetDC(IntPtr.Zero);
             IntPtr hAndMaskDC = Win32.CreateCompatibleDC(hDC);
-            if (hAndMaskDC == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleDC() failed.");
+            if (hAndMaskDC == IntPtr.Zero) throw new Win32Exception();
             IntPtr hXorMaskDC = Win32.CreateCompatibleDC(hDC);
-            if (hXorMaskDC == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleDC() failed.");
+            if (hXorMaskDC == IntPtr.Zero) throw new Win32Exception();
 
             // Make sure to call CreateCompatibleBitmap with the window DC as the
             // newly created DC is initialized with a mono-chromatic 1x1 pixel bitmap by default.
             // And we don't want to create a bitmap with a monochrome format.
             // See https://www.codeproject.com/Articles/224754/Guide-to-Win32-Memory-DC#:~:text=Avoid%20a%20Common%20Mistake
             IntPtr hAndMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
-            if (hAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleBitmap() failed.");
+            if (hAndMaskBitmap == IntPtr.Zero) throw new Win32Exception();
             IntPtr hXorMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
-            if (hXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleBitmap() failed.");
+            if (hXorMaskBitmap == IntPtr.Zero) throw new Win32Exception();
 
             IntPtr hOldAndMaskBitmap = Win32.SelectObject(hAndMaskDC, hAndMaskBitmap);
-            if (hOldAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask SelectObject() failed.");
+            if (hOldAndMaskBitmap == IntPtr.Zero) throw new Win32Exception();
             IntPtr hOldXorMaskBitmap = Win32.SelectObject(hXorMaskDC, hXorMaskBitmap);
-            if (hOldXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask SelectObject() failed.");
+            if (hOldXorMaskBitmap == IntPtr.Zero) throw new Win32Exception();
 
             for (int y = 0; y < height; y++)
             {
@@ -228,9 +235,9 @@ namespace OpenTK.Platform.Native.Windows
 
                     int success;
                     success = Win32.SetPixelV(hAndMaskDC, x, y, mask);
-                    if (success == 0) throw new Win32Exception("AndMask SetPixel() failed.");
+                    if (success == 0) throw new Win32Exception();
                     success = Win32.SetPixelV(hXorMaskDC, x, y, color);
-                    if (success == 0) throw new Win32Exception("XorMask SetPixel() failed.");
+                    if (success == 0) throw new Win32Exception();
                 }
             }
 
@@ -240,9 +247,9 @@ namespace OpenTK.Platform.Native.Windows
 
             bool deleted;
             deleted = Win32.DeleteDC(hAndMaskDC);
-            if (deleted == false) throw new Win32Exception("AndMask DeleteDC() failed.");
+            if (deleted == false) throw new Win32Exception();
             deleted = Win32.DeleteDC(hXorMaskDC);
-            if (deleted == false) throw new Win32Exception("XorMask DeleteDC() failed.");
+            if (deleted == false) throw new Win32Exception();
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
 
@@ -258,7 +265,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
             if (hcursorIcon == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateIconIndirect() failed.");
+                throw new Win32Exception();
             }
 
             hcursor.Cursor = hcursorIcon;
@@ -440,7 +447,7 @@ namespace OpenTK.Platform.Native.Windows
                         bool success = Win32.DestroyIcon(hcursor.Cursor);
                         if (success == false)
                         {
-                            throw new Win32Exception("DestroyIcon failed.");
+                            throw new Win32Exception();
                         }
 
                         // Delete the mask and color bitmaps.

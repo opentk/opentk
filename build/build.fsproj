@@ -26,7 +26,7 @@
     <!-- so we must later copy the nuget.exe out from this package into our own. -->
     <!-- This was not needed when we ran our build using an .fsx file using paket to download dependencies as -->
     <!-- paket downloaded these dependencies into a project local folder. -->
-    <PackageReference Include="NuGet.CommandLine" Version="6.7.0" GeneratePathProperty="true">
+    <PackageReference Include="NuGet.CommandLine" Version="6.9.1" GeneratePathProperty="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

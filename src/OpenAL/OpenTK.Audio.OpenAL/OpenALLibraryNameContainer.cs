@@ -18,6 +18,12 @@ namespace OpenTK.Audio.OpenAL
     public class OpenALLibraryNameContainer
     {
         /// <summary>
+        /// Overrides any platform detection logic and directly searches for the OpenAL library using the provided path.
+        /// If this is <c>null</c> then no override will happen.
+        /// </summary>
+        public static string OverridePath { get; set; } = null;
+
+        /// <summary>
         /// Gets the library name to use on Windows.
         /// </summary>
         public string Windows => "openal32.dll";
@@ -48,7 +54,11 @@ namespace OpenTK.Audio.OpenAL
         /// <returns>Library name.</returns>
         public string GetLibraryName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
+            if (OverridePath != null)
+            {
+                return OverridePath;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
             {
                 return Android;
             }

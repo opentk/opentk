@@ -301,49 +301,66 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Color3<Rgb> ToRgb(this in Color3<Hsl> color)
         {
-            float h = color.X;
-            float s = color.Y;
-            float l = color.Z;
+            var hue = color.X * 360.0f;
+            var saturation = color.Y;
+            var lightness = color.Z;
 
-            float hi = h * 6f;
-            float c = (1 - MathHelper.Abs((2 * l) - 1)) * s;
-            float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
+            var c = (1.0f - Math.Abs((2.0f * lightness) - 1.0f)) * saturation;
 
-            Color3<Rgb> rgb = new Color3<Rgb>(0, 0, 0);
-            switch (hi)
+            var h = hue / 60.0f;
+            var x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
+
+            float r, g, b;
+            if (h >= 0.0f && h < 1.0f)
             {
-                case 0:
-                    rgb.X = c;
-                    rgb.Y = x;
-                    break;
-                case 1:
-                    rgb.X = x;
-                    rgb.Y = c;
-                    break;
-                case 2:
-                    rgb.Y = c;
-                    rgb.Z = x;
-                    break;
-                case 3:
-                    rgb.Y = x;
-                    rgb.Z = c;
-                    break;
-                case 4:
-                    rgb.X = x;
-                    rgb.Z = c;
-                    break;
-                case 5:
-                    rgb.X = c;
-                    rgb.Z = x;
-                    break;
+                r = c;
+                g = x;
+                b = 0.0f;
+            }
+            else if (h >= 1.0f && h < 2.0f)
+            {
+                r = x;
+                g = c;
+                b = 0.0f;
+            }
+            else if (h >= 2.0f && h < 3.0f)
+            {
+                r = 0.0f;
+                g = c;
+                b = x;
+            }
+            else if (h >= 3.0f && h < 4.0f)
+            {
+                r = 0.0f;
+                g = x;
+                b = c;
+            }
+            else if (h >= 4.0f && h < 5.0f)
+            {
+                r = x;
+                g = 0.0f;
+                b = c;
+            }
+            else if (h >= 5.0f && h < 6.0f)
+            {
+                r = c;
+                g = 0.0f;
+                b = x;
+            }
+            else
+            {
+                r = 0.0f;
+                g = 0.0f;
+                b = 0.0f;
             }
 
-            float m = l - (c / 2);
-            rgb.X += m;
-            rgb.Y += m;
-            rgb.Z += m;
+            var m = lightness - (c / 2.0f);
+            if (m < 0)
+            {
+                m = 0;
+            }
 
-            return rgb;
+            return new Color3<Rgb>(r + m, g + m, b + m);
         }
 
         /// <summary>
@@ -354,56 +371,62 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Color3<Rgb> ToRgb(this in Color3<Hsv> color)
         {
-            float h = color.X;
-            float s = color.Y;
-            float v = color.Z;
+            float hue = color.X * 360.0f;
+            float saturation = color.Y;
+            float value = color.Z;
 
-            float c = v * s;
-            var x = c * (1.0f - Math.Abs(((h * 6) % 2.0f) - 1.0f));
+            float c = value * saturation;
 
-            byte hi = (byte)(h * 6);
+            float h = hue / 60.0f;
+            float x = c * (1.0f - Math.Abs((h % 2.0f) - 1.0f));
 
-            Color3<Rgb> rgb = new Color3<Rgb>(0, 0, 0);
-            switch (hi % 6)
+            float r, g, b;
+            if (h >= 0.0f && h < 1.0f)
             {
-                case 0:
-                    rgb.X = c;
-                    rgb.Y = x;
-                    rgb.Z = 0;
-                    break;
-                case 1:
-                    rgb.X = x;
-                    rgb.Y = c;
-                    rgb.Z = 0;
-                    break;
-                case 2:
-                    rgb.X = 0;
-                    rgb.Y = c;
-                    rgb.Z = x;
-                    break;
-                case 3:
-                    rgb.X = 0;
-                    rgb.Y = x;
-                    rgb.Z = c;
-                    break;
-                case 4:
-                    rgb.X = x;
-                    rgb.Y = 0;
-                    rgb.Z = c;
-                    break;
-                case 5:
-                    rgb.X = c;
-                    rgb.Y = 0;
-                    rgb.Z = x;
-                    break;
+                r = c;
+                g = x;
+                b = 0.0f;
+            }
+            else if (h >= 1.0f && h < 2.0f)
+            {
+                r = x;
+                g = c;
+                b = 0.0f;
+            }
+            else if (h >= 2.0f && h < 3.0f)
+            {
+                r = 0.0f;
+                g = c;
+                b = x;
+            }
+            else if (h >= 3.0f && h < 4.0f)
+            {
+                r = 0.0f;
+                g = x;
+                b = c;
+            }
+            else if (h >= 4.0f && h < 5.0f)
+            {
+                r = x;
+                g = 0.0f;
+                b = c;
+            }
+            else if (h >= 5.0f && h < 6.0f)
+            {
+                r = c;
+                g = 0.0f;
+                b = x;
+            }
+            else
+            {
+                r = 0.0f;
+                g = 0.0f;
+                b = 0.0f;
             }
 
-            float m = v - c;
-            rgb.X += m;
-            rgb.Y += m;
-            rgb.Z += m;
+            float m = value - c;
 
-            return rgb;
+            return new Color3<Rgb>(r + m, g + m, b + m);
         }
 
         /// <summary>
@@ -431,8 +454,16 @@ namespace OpenTK.Mathematics
             float ll = color.Z;
 
             float hv = hl;
-            float vv = ll + (sl * MathHelper.Min(ll, 1 - ll));
-            float sv = (vv == 0) ? 0 : (2 * (1 - (ll / vv)));
+            float vv = ll + (sl * MathF.Min(ll, 1 - ll));
+            float sv;
+            if (vv <= 2.0f * float.Epsilon)
+            {
+                sv = 0;
+            }
+            else
+            {
+                sv = 2 * (1 - (ll / vv));
+            }
 
             return new Color3<Hsv>(hv, sv, vv);
         }
@@ -449,29 +480,40 @@ namespace OpenTK.Mathematics
             float g = color.Y;
             float b = color.Z;
 
-            float v = Math.Max(r, Math.Max(g, b));
-            float c = Math.Min(r, Math.Min(g, b));
-            float l = v - (c / 2);
+            float max = Math.Max(r, Math.Max(g, b));
+            float min = Math.Min(r, Math.Min(g, b));
+            float diff = max - min;
 
-            float h = 0;
-            if (c != 0)
+            float h = 0.0f;
+            if (diff == 0)
             {
-                if (v == r)
+                h = 0.0f;
+            }
+            else if (max == r)
+            {
+                h = ((g - b) / diff) % 6.0f;
+                if (h < 0)
                 {
-                    h = 60 * (0 + ((g - b) / c));
-                }
-                else if (v == g)
-                {
-                    h = 60 * (2 + ((b - r) / c));
-                }
-                else if (v == b)
-                {
-                    h = 60 * (4 + ((r - g) / c));
+                    h += 6f;
                 }
             }
+            else if (max == g)
+            {
+                h = ((b - r) / diff) + 2.0f;
+            }
+            else if (max == b)
+            {
+                h = ((r - g) / diff) + 4.0f;
+            }
 
-            float s = (v == 0) ? 0 : (c / v);
-            return new Color3<Hsv>(h / 360f, s, v);
+            float hue = h * 60.0f / 360.0f;
+
+            float saturation = 0.0f;
+            if (max != 0.0f)
+            {
+                saturation = diff / max;
+            }
+            return new Color3<Hsv>(hue, saturation, max);
         }
 
         /// <summary>
@@ -499,7 +541,7 @@ namespace OpenTK.Mathematics
 
             float hl = hv;
             float ll = vv * (1 - (sv / 2));
-            float sl = (ll == 0 || ll == 1) ? 0 : ((vv - ll) / MathHelper.Min(ll, 1 - ll));
+            float sl = (ll == 0 || ll == 1) ? 0 : ((vv - ll) / MathF.Min(ll, 1 - ll));
 
             return new Color3<Hsl>(hl, sl, ll);
         }
@@ -516,31 +558,46 @@ namespace OpenTK.Mathematics
             float g = color.Y;
             float b = color.Z;
 
-            float xMax = Math.Max(r, Math.Max(g, b));
-            float xMin = Math.Min(r, Math.Min(g, b));
-            float v = xMax;
-            float c = xMax - Math.Min(r, Math.Min(g, b));
-            float l = v - (c / 2);
+            float max = MathF.Max(r, MathF.Max(g, b));
+            float min = MathF.Min(r, MathF.Min(g, b));
+            float diff = max - min;
 
-            float h = 0;
-            if (c != 0)
+            float h = 0.0f;
+            if (diff == 0)
             {
-                if (v == r)
+                h = 0.0f;
+            }
+            else if (max == r)
+            {
+                h = ((g - b) / diff) % 6;
+                if (h < 0)
                 {
-                    h = 60 * (0 + ((g - b) / c));
-                }
-                else if (v == g)
-                {
-                    h = 60 * (2 + ((b - r) / c));
-                }
-                else if (v == b)
-                {
-                    h = 60 * (4 + ((r - g) / c));
+                    h += 6;
                 }
             }
+            else if (max == g)
+            {
+                h = ((b - r) / diff) + 2.0f;
+            }
+            else if (max == b)
+            {
+                h = ((r - g) / diff) + 4.0f;
+            }
 
-            float s = (l == 0 || l == 1) ? 0 : ((v - l) / Math.Min(l, 1 - l));
-            return new Color3<Hsl>(h / 360f, s, l);
+            float hue = h / 6.0f;
+            if (hue < 0.0f)
+            {
+                hue += 1.0f;
+            }
+
+            float lightness = (max + min) / 2.0f;
+
+            float saturation = 0.0f;
+            if ((1.0f - Math.Abs((2.0f * lightness) - 1.0f)) != 0)
+            {
+                saturation = diff / (1.0f - Math.Abs((2.0f * lightness) - 1.0f));
+            }
+            return new Color3<Hsl>(hue, saturation, lightness);
         }
 
         /// <summary>

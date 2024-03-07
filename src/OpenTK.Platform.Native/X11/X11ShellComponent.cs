@@ -2,9 +2,11 @@
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,10 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal static unsafe byte* AsPtr(ReadOnlySpan<byte> span) => (byte*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(span));
+
+        internal IntPtr PortalDesktop;
+
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
@@ -30,7 +36,42 @@ namespace OpenTK.Platform.Native.X11
             {
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
+
+            unsafe {
+                GError* error = null;
+                PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
+                                                GBusType.G_BUS_TYPE_SESSION,
+                                                GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
+                                                IntPtr.Zero,
+                                                AsPtr("org.freedesktop.portal.Desktop"u8),
+                                                AsPtr("/org/freedesktop/portal/desktop"u8),
+                                                AsPtr("org.freedesktop.portal.Settings"u8),
+                                                IntPtr.Zero,
+                                                &error);
+                if (error != null)
+                {
+                    Logger?.LogWarning($"Could not open settings portal: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                    LibGio.g_clear_error(&error);
+                }
+
+                // FIXME: We can'r receive signals like this as we don't have a running
+                // main loop. This is an issue as we'd ideally like to avoid running a libgio
+                // main-loop as that is just a lot of effort for very little gain.
+                // - Noggin_bops 2024-02-25
+                ulong signal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
+            }
         }
+
+        [UnmanagedCallersOnly]
+        private static unsafe void settings_portal_changed_cb (IntPtr /* GDBusProxy* */ proxy,
+                                    byte* /* const char* */ sender_name,
+                                    byte* /* const char* */ signal_name,
+                                    IntPtr /* GVariant* */ parameters,
+                                    IntPtr userData)
+        {
+            Console.WriteLine("change!");
+        }
+
 
         /// <inheritdoc/>
         public void AllowScreenSaver(bool allow)
@@ -153,6 +194,8 @@ namespace OpenTK.Platform.Native.X11
                     // And highest battery percentage?
 
                     // FIXME: For now we don't report power saver info on linux.
+                    //  We can get this information from "org.freedesktop.portal.PowerProfileMonitor"
+                    // using dbus.
                     powerSaver = false;
 
                     // FIXME: Consider the case of multiple batteries.
@@ -177,15 +220,79 @@ namespace OpenTK.Platform.Native.X11
 
             static string? ReadPowerFile(string name, string key)
             {
-                try 
+                string path = Path.Combine("/sys/class/power_supply/",  name, key);
+                // Relying on exceptions here is *really* slow, so we
+                // just check if the file exists before we try to read it.
+                // The try-catch is to prevent a crash if the file
+                // gets removed between Exists and ReadAllText.
+                // - Noggin_bops 2024-02-25
+                if (File.Exists(path))
                 {
-                    return File.ReadAllText(Path.Combine("/sys/class/power_supply/",  name, key));
+                    try 
+                    {
+                        return File.ReadAllText(path);
+                    }
+                    // FIXME: Are there some exceptions we should let through?
+                    catch
+                    {
+                        return null;
+                    }
                 }
-                // FIXME: Are there some exceptions we should let through?
-                catch
+                else
                 {
                     return null;
                 }
+            }
+        }
+
+        internal bool TryReadColorScheme(out int scheme)
+        {
+            scheme = -1;
+
+            // Using libgio-2.0 to read the settings through dbus.
+            // This seems to be taking around 1.2ms on my machine
+            // which isn't great. We would like to listen to
+            // dbus messages about a setting change and keep
+            // a copy of the theme ourselves to make the function
+            // properly fast.
+            // - Noggin_bops 2024-02-25
+
+            unsafe {
+                GError* error = null;
+                // FIXME: Better name for this gvariant
+                IntPtr var = LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8));
+                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), var, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
+
+                if (error != null)
+                {
+                    if (error->domain == LibGio.g_dbus_error_quark())
+                    {
+                        if (error->code == (int)GDBusError.G_DBUS_ERROR_SERVICE_UNKNOWN)
+                        {
+                            Logger?.LogWarning($"Portal not found: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                            LibGio.g_clear_error(&error);
+                            return false;
+                        }
+                        else if (error->code == (int)GDBusError.G_DBUS_ERROR_UNKNOWN_METHOD)
+                        {
+                            Logger?.LogWarning($"Portal doesn't provide settings: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                            LibGio.g_clear_error(&error);
+                            return false;
+                        }
+                    }
+
+                    Logger?.LogError($"Couldn't read the color-scheme setting: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                    LibGio.g_clear_error(&error);
+                    return false;
+                }
+
+                LibGio.g_variant_get(ret, AsPtr("(v)"u8), out IntPtr child);
+                LibGio.g_variant_get(child, AsPtr("v"u8), out IntPtr value);
+
+                scheme = (int)LibGio.g_variant_get_uint32(value);
+
+                LibGio.g_clear_error(&error);
+                return true;
             }
         }
 
@@ -197,7 +304,28 @@ namespace OpenTK.Platform.Native.X11
             // https://wiki.archlinux.org/title/Dark_mode_switching
             // https://specifications.freedesktop.org/xsettings-spec/xsettings-latest.html
 
-            throw new NotImplementedException();
+            ThemeInfo info = default;
+            if (TryReadColorScheme(out int scheme))
+            {
+                switch (scheme)
+                {
+                    case 1: // Prefer dark
+                        info.Theme = AppTheme.Dark;
+                        break;
+                    case 2: // Prefer light
+                        info.Theme = AppTheme.Light;
+                        break;
+                    case 0: // No preference
+                    default: // Unknown values should be treated as no preference
+                        info.Theme = AppTheme.NoPreference;
+                        break;
+                }
+            }
+
+            // FIXME: Read something like org.gnome.desktop.interface.a11y high-contrast if available.
+            info.HighContrast = false;
+
+            return info;
         }
 
         /// <inheritdoc />

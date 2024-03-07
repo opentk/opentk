@@ -9,8 +9,11 @@ namespace OpenTK.Compute.OpenCL
     public class OpenCLLibraryNameContainer
     {
         /// <summary>
-        /// Gets the library name to use on Linux.
+        /// Overrides any platform detection logic and directly searches for the OpenCL library using the provided path.
+        /// If this is <c>null</c> then no override will happen.
         /// </summary>
+        public static string OverridePath { get; set; } = null;
+
         public string Linux => "libOpenCL.so.1";
 
         /// <summary>
@@ -36,7 +39,11 @@ namespace OpenTK.Compute.OpenCL
         /// <returns>Library name.</returns>
         public string GetLibraryName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
+            if (OverridePath != null)
+            {
+                return OverridePath;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
             {
                 return Android;
             }

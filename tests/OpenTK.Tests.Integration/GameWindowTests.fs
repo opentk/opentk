@@ -50,7 +50,7 @@ module GameWindow =
             use gw = openGW()
             let signals = System.Collections.Generic.List<string>()
             gw.add_Closing(fun _ -> signals.Add("Closing"))
-            gw.add_Closed(fun _ -> signals.Add("Closed"))
+            //gw.add_Closed(fun _ -> signals.Add("Closed"))
             
             Assert.Equal([], signals)
             gw.Close()
@@ -214,11 +214,11 @@ module GameWindow =
         [<Fact>]
         let ``Does RenderFrequency limit the timing of RenderFrame`` () =
             use gw = openGW()
-            gw.RenderFrequency <- 10.0
+            gw.UpdateFrequency <- 10.0
             let mutable calls = 0
             let mutable reportedElapsed = 0.0
             let totalCalls = 10
-            let expectedElapsed = 1.0/gw.RenderFrequency * (float totalCalls)
+            let expectedElapsed = 1.0/gw.UpdateFrequency * (float totalCalls)
             gw.add_RenderFrame(fun e -> calls <- calls+1; reportedElapsed <- reportedElapsed+e.Time; if calls = totalCalls then gw.Close())
             let st = new Stopwatch()
             st.Start()

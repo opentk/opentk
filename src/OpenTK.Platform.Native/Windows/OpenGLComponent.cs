@@ -65,7 +65,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (hDC == IntPtr.Zero)
             {
-                throw new Win32Exception("GetDC failed");
+                throw new Win32Exception();
             }
             uint nBytes;
             unchecked
@@ -76,7 +76,7 @@ namespace OpenTK.Platform.Native.Windows
             int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
             if (pixelFormatIndex == 0)
             {
-                throw new Win32Exception("ChoosePixelFormat failed");
+                throw new Win32Exception();
             }
 
             Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
@@ -102,20 +102,20 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
             if (success == false)
             {
-                throw new Win32Exception("SetPixelFormat failed");
+                throw new Win32Exception();
             }
 
             IntPtr hGLRC = Wgl.CreateContext(hDC);
             if (hGLRC == IntPtr.Zero)
             {
-                throw new Win32Exception("wglCreateContext failed");
+                throw new Win32Exception();
             }
 
             // FIXME: Maybe restore the context that was already there after?
             success = Wgl.MakeCurrent(hDC, hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglMakeCurrent failed to make helper context current");
+                throw new Win32Exception();
             }
 
             unsafe
@@ -162,7 +162,7 @@ namespace OpenTK.Platform.Native.Windows
             success = Wgl.DeleteContext(hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglDeleteContext failed for helper window");
+                throw new Win32Exception();
             }
         }
 
@@ -244,7 +244,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
             if (hDC == IntPtr.Zero)
             {
-                throw new Win32Exception("GetDC failed");
+                throw new Win32Exception();
             }
 
             byte depthBits;
@@ -271,7 +271,7 @@ namespace OpenTK.Platform.Native.Windows
                 success = Wgl.GetPixelFormatAttribivARB(hDC, 1, 0, 1, attrib, values);
                 if (success == false)
                 {
-                    throw new Win32Exception("GetPixelFormatAttribivARB failed to get number of pixel formats");
+                    throw new Win32Exception();
                 }
 
                 int numberOfFormats = values[0];
@@ -382,7 +382,7 @@ namespace OpenTK.Platform.Native.Windows
                 success = Wgl.GetPixelFormatAttribivARB(hDC, choosenFormat, 0, attrib.Length, attrib, values);
                 if (success == false)
                 {
-                    throw new Win32Exception("GetPixelFormatAttribivARB failed");
+                    throw new Win32Exception();
                 }
 
                 if (FindAttribute(WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
@@ -474,7 +474,7 @@ namespace OpenTK.Platform.Native.Windows
                 success = Win32.SetPixelFormat(hDC, choosenFormat, in pfd);
                 if (success == false)
                 {
-                    throw new Win32Exception("SetPixelFormat failed");
+                    throw new Win32Exception();
                 }
 
                 Logger?.LogDebug("Got pixel format from wgl_arb_pixel_format");
@@ -521,7 +521,7 @@ namespace OpenTK.Platform.Native.Windows
                 int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
                 if (pixelFormatIndex == 0)
                 {
-                    throw new Win32Exception("ChoosePixelFormat failed");
+                    throw new Win32Exception();
                 }
 
                 Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
@@ -547,7 +547,7 @@ namespace OpenTK.Platform.Native.Windows
                 success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
                 if (success == false)
                 {
-                    throw new Win32Exception("SetPixelFormat failed");
+                    throw new Win32Exception();
                 }
 
                 Logger?.LogDebug("Got pixel format from DescribePixelFormat");
@@ -608,7 +608,7 @@ namespace OpenTK.Platform.Native.Windows
                     hGLRC = Wgl.CreateContextAttribsARB(hDC, hshare, CollectionsMarshal.AsSpan(attribs));
                     if (hGLRC == IntPtr.Zero)
                     {
-                        throw new Win32Exception("wglCreateContextAttribsARB failed");
+                        throw new Win32Exception();
                     }
 
                     Logger?.LogDebug("Created context using wglCreateContextAttribsARB");
@@ -620,7 +620,7 @@ namespace OpenTK.Platform.Native.Windows
                     hGLRC = Wgl.CreateContext(hDC);
                     if (hGLRC == IntPtr.Zero)
                     {
-                        throw new Win32Exception("wglCreateContext failed");
+                        throw new Win32Exception();
                     }
 
                     Logger?.LogDebug("Created context using wglCreateContext");
@@ -631,7 +631,7 @@ namespace OpenTK.Platform.Native.Windows
             success = Wgl.MakeCurrent(hDC, hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglMakeCurrent failed to make helper context current");
+                throw new Win32Exception();
             }
 
             HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext);
@@ -648,11 +648,10 @@ namespace OpenTK.Platform.Native.Windows
             HGLRCDict.Remove(hglrc.HGlrc);
 
             bool success = Wgl.DeleteContext(hglrc.HGlrc);
-
             // FIXME: Do we add back the hglrc to HGLRCDict?
             if (success == false)
             {
-                throw new Win32Exception("wglDeleteContext failed");
+                throw new Win32Exception();
             }
         }
 
@@ -693,10 +692,9 @@ namespace OpenTK.Platform.Native.Windows
             {
                 // Make the hglrc not current
                 bool success = Wgl.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-
                 if (success == false)
                 {
-                    throw new Win32Exception("wglMakeCurrent failed when unbinding context");
+                    throw new Win32Exception();
                 }
             }
             else
@@ -772,6 +770,20 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <summary>
+        /// Gets the win32 <c>HGLRC</c> opengl context handle associated with the context.
+        /// This OpenGL context is associated with the window or surface that was used to create this context.
+        /// Modifying the context outsite of OpenTK functions may cause side effects when calling OpenTK functions.
+        /// </summary>
+        /// <param name="handle">The OpenGL context to get the associated win32 <c>HGLRC</c> handle from.</param>
+        /// <returns>The native <c>HGLRC</c> context handle.</returns>
+        public IntPtr GetHGLRC(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            return hglrc.HGlrc;
         }
     }
 }

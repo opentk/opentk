@@ -86,10 +86,33 @@ namespace OpenTK.Platform.Native
                 "libXcursor.so.1",
             },
 
+            ["Xkb"] = new string[]
+            {
+                "libX11.so",
+                "libX11.so.6",
+                "libX11.so.5",
+                "libX11.so.4",
+                "libX11.so.3",
+                "libX11.so.2",
+                "libX11.so.1",
+                "libX11.so.0",
+            },
+
+            ["XI2"] = new string[]
+            {
+                "libxcb-xinput.so.0",
+            },
+
             ["XScreenSaver"] = new string[]
             {
                 "libXss.so",
                 "libXss.so.1",
+            },
+
+            ["Gio"] = new string[]
+            {
+                "libgio-2.0.so",
+                "libgio-2.0.so.0",
             },
 
             ["SDL2"] = new string[]

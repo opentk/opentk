@@ -202,21 +202,23 @@ namespace OpenTK.Core.Platform
         /// </summary>
         RightControl,
         /// <summary>
-        /// The left alt key.
+        /// The left alt key (left Option on mac).
         /// </summary>
         LeftAlt,
         /// <summary>
-        /// The right alt (alt-gr) key.
+        /// The right alt (alt-gr) key (right Option on mac).
         /// </summary>
         RightAlt,
         /// <summary>
         /// The left "OS" key.
         /// On windows this is the left windows key.
+        /// On macOS this is the left Command key.
         /// </summary>
         LeftGUI,
         /// <summary>
         /// The right "OS" key.
         /// On windows this is the right windows key.
+        /// On macOS this is the right Command key.
         /// </summary>
         RightGUI,
 

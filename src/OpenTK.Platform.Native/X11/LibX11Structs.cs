@@ -485,5 +485,20 @@ namespace OpenTK.Platform.Native.X11
         public int chars_matched;
     }
 
+    /// <summary>
+    /// Part of XFixes 5.0+.
+    /// </summary>
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    internal readonly struct XPointerBarrier {
+        public readonly ulong Id { get; }
+
+        public static readonly XPointerBarrier None = new XPointerBarrier(0);
+
+        public XPointerBarrier(ulong id)
+        {
+            Id = id;
+        }
+    }
+
 #pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

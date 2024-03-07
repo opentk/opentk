@@ -27,13 +27,50 @@ namespace OpenTK.Backends.Tests
 
             try { SupportedFormats = Program.ClipboardComponent!.SupportedFormats.ToArray(); }
             catch { SupportedFormats = Array.Empty<ClipboardFormat>(); }
+
+            UpdateClipboardFormat();
         }
 
         string clipboardInputText = "";
 
-        public override void Paint()
+        ClipboardFormat currentFormat;
+        string? clipboardText;
+        AudioData? clipboardAudio;
+        Bitmap? clipboardBitmap;
+        string? clipboardHTML;
+        List<string>? clipboardFiles;
+
+        public void UpdateClipboardFormat()
         {
-            base.Paint();
+            currentFormat = Program.ClipboardComponent!.GetClipboardFormat();
+            switch (currentFormat)
+            {
+                case ClipboardFormat.None:
+                    break;
+                case ClipboardFormat.Text:
+                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
+                    break;
+                case ClipboardFormat.Audio:
+                    clipboardAudio = Program.ClipboardComponent!.GetClipboardAudio();
+                    break;
+                case ClipboardFormat.Bitmap:
+                    clipboardBitmap = Program.ClipboardComponent!.GetClipboardBitmap();
+                    break;
+                case ClipboardFormat.HTML:
+                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
+                    clipboardHTML = Program.ClipboardComponent!.GetClipboardHTML();
+                    break;
+                case ClipboardFormat.Files:
+                    clipboardFiles = Program.ClipboardComponent!.GetClipboardFiles();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public override void Paint(double deltaTime)
+        {
+            base.Paint(deltaTime);
 
             ImGui.SeparatorText("Supported Formats");
             ImGui.BeginDisabled();
@@ -64,12 +101,6 @@ namespace OpenTK.Backends.Tests
 
             // FIXME: Maybe tabs for each type?
 
-            // FIXME: Don't query the clipboard every frame, on win32 it hoggs the
-            // clipboard from other applications.
-            // Use the clipboard changed event. Maybe add a button to manually refresh?
-
-            ClipboardFormat currentFormat = Program.ClipboardComponent!.GetClipboardFormat();
-
             ImGui.Text($"Current format: {currentFormat}");
 
             switch (currentFormat)
@@ -78,7 +109,7 @@ namespace OpenTK.Backends.Tests
                     break;
                 case ClipboardFormat.Text:
                     {
-                        ImGui.Text($"Clipboard text: '{Program.ClipboardComponent.GetClipboardText()}'");
+                        ImGui.Text($"Clipboard text: '{clipboardText}'");
                         break;
                     }
                 case ClipboardFormat.Audio:
@@ -92,7 +123,7 @@ namespace OpenTK.Backends.Tests
                         // Display the bitmap.
 
                         // FIXME: Maybe cache the bitmap to avoid creating it again and again?
-                        Bitmap? bitmap = Program.ClipboardComponent.GetClipboardBitmap();
+                        Bitmap? bitmap = clipboardBitmap;
                         if (bitmap == null) break;
 
                         var mipmapLevels = MathF.ILogB(Math.Max(bitmap.Width, bitmap.Height));
@@ -131,12 +162,12 @@ namespace OpenTK.Backends.Tests
                     }
                 case ClipboardFormat.HTML:
                     {
-                        ImGui.Text($"Clipboard text (text): '{Program.ClipboardComponent.GetClipboardText()}'");
+                        ImGui.Text($"Clipboard text (text): '{clipboardText}'");
 
                         var contentRegion = ImGui.GetContentRegionAvail();
                         contentRegion.X = ImGui.CalcItemWidth();
 
-                        string html = Program.ClipboardComponent!.GetClipboardHTML() ?? "";
+                        string html = clipboardHTML ?? "";
                         //ImGui.BeginDisabled();
                         ImGui.InputTextMultiline("Clipboard text (HTML):", ref html, 16_384, contentRegion);
                         //ImGui.EndDisabled();
@@ -144,7 +175,7 @@ namespace OpenTK.Backends.Tests
                     }
                 case ClipboardFormat.Files:
                     {
-                        string[] files = Program.ClipboardComponent.GetClipboardFiles()?.ToArray() ?? Array.Empty<string>();
+                        string[] files = clipboardFiles?.ToArray() ?? Array.Empty<string>();
 
                         int index = -1;
                         ImGui.ListBox("Files", ref index, files, files.Length);

@@ -25,10 +25,10 @@ namespace OpenTK.Platform.Native.X11
             /* Padding to 64 bytes */
         }
 
-        [DllImport("linux-vdso.so.1", SetLastError = true)]
+        [DllImport("libc", SetLastError = true)]
         internal static extern int sysinfo(out sysinfo_struct info);
 
-        [DllImport("linux-vdso.so.1")]
+        [DllImport("libc")]
         internal static unsafe extern byte* strerror(int errnum);
     }
 }

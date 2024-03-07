@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.Windows
     public class ClipboardComponent : IClipboardComponent
     {
         /// <inheritdoc/>
-        public string Name => "Win32 Clipboard component";
+        public string Name => "Win32ClipboardComponent";
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;
@@ -44,12 +44,44 @@ namespace OpenTK.Platform.Native.Windows
         {
             if (CanIncludeInClipboardHistory is bool canIncludeInClipboardHistory)
             {
-                IntPtr data = Win32.SetClipboardData(CF_CanIncludeInClipboardHistory, new IntPtr(canIncludeInClipboardHistory ? 1 : 0));
+                IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, sizeof(uint));
+                if (hmem == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                // Write the data
+                unsafe
+                {
+                    uint* memory = (uint*)Win32.GlobalLock(hmem);
+                    if (memory == null)
+                    {
+                        int error = Marshal.GetLastWin32Error();
+                        Win32.GlobalFree(hmem);
+                        throw new Win32Exception(error);
+                    }
+
+                    *memory = canIncludeInClipboardHistory ? 1u : 0u;
+
+                    bool stillLocked = Win32.GlobalUnlock(hmem);
+                    if (stillLocked == false)
+                    {
+                        // If the function returns NO_ERROR then there is no error.
+                        int errorCode = Marshal.GetLastWin32Error();
+                        if (errorCode != 0)
+                        {
+                            throw new Win32Exception(errorCode);
+                        }
+                    }
+                }
+                
+                IntPtr data = Win32.SetClipboardData(CF_CanIncludeInClipboardHistory, hmem);
                 if (data == IntPtr.Zero)
                 {
                     int error = Marshal.GetLastWin32Error();
                     if (error != 0)
                     {
+                        Win32.GlobalFree(hmem);
                         throw new Win32Exception(error);
                     }
                 }
@@ -57,12 +89,44 @@ namespace OpenTK.Platform.Native.Windows
 
             if (CanUploadToCloudClipboard is bool canUploadToCloudClipboard)
             {
-                IntPtr data = Win32.SetClipboardData(CF_CanUploadToCloudClipboard, new IntPtr(canUploadToCloudClipboard ? 1 : 0));
+                IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, sizeof(uint));
+                if (hmem == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                // Write the data
+                unsafe
+                {
+                    uint* memory = (uint*)Win32.GlobalLock(hmem);
+                    if (memory == null)
+                    {
+                        int error = Marshal.GetLastWin32Error();
+                        Win32.GlobalFree(hmem);
+                        throw new Win32Exception(error);
+                    }
+
+                    *memory = canUploadToCloudClipboard ? 1u : 0u;
+
+                    bool stillLocked = Win32.GlobalUnlock(hmem);
+                    if (stillLocked == false)
+                    {
+                        // If the function returns NO_ERROR then there is no error.
+                        int errorCode = Marshal.GetLastWin32Error();
+                        if (errorCode != 0)
+                        {
+                            throw new Win32Exception(errorCode);
+                        }
+                    }
+                }
+
+                IntPtr data = Win32.SetClipboardData(CF_CanUploadToCloudClipboard, hmem);
                 if (data == IntPtr.Zero)
                 {
                     int error = Marshal.GetLastWin32Error();
                     if (error != 0)
                     {
+                        Win32.GlobalFree(hmem);
                         throw new Win32Exception(error);
                     }
                 }

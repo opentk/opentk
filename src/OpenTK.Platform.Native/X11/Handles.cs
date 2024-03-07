@@ -52,6 +52,10 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayHandle? FullscreenDisplay { get; set; } = null;
         public bool IsExclusiveFullscreen { get; set; } = false;
 
+        internal int XDnDVersion { get; set; }
+        internal XAtom XDnDType { get; set; }
+        internal XAtom XDnDSource { get; set; }
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,
@@ -110,10 +114,11 @@ namespace OpenTK.Platform.Native.X11
         /// </summary>
         public RRMode OldMode { get; set; } = RRMode.None;
 
-        public XDisplayHandle(RROutput output, RRCrtc crtc)
+        public XDisplayHandle(RROutput output, RRCrtc crtc, string name)
         {
             Output = output;
             Crtc = crtc;
+            Name = name;
         }
     }
 

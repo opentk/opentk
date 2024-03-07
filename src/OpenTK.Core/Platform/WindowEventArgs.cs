@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -190,17 +192,24 @@ namespace OpenTK.Core.Platform
         public bool IsRepeat { get; private set; }
 
         /// <summary>
+        /// The keyboard modifiers that where down while this key was pressed.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window which received this keypress.</param>
         /// <param name="key">The key that was pressed.</param>
         /// <param name="scancode">The scancode representing the key.</param>
         /// <param name="isRepeat">True if this event is triggered by holding down the key, false otherwise.</param>
-        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat) : base(window)
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was pressed.</param>
+        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
             IsRepeat = isRepeat;
+            Modifiers = modifiers;
         }
     }
 
@@ -225,15 +234,22 @@ namespace OpenTK.Core.Platform
         public Scancode Scancode { get; private set; }
 
         /// <summary>
+        /// The keyboard modifiers that where down while this key was released.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KeyUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window which received this keypress.</param>
         /// <param name="key">The key that was released.</param>
         /// <param name="scancode">The scancode representing the key.</param>
-        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode) : base(window)
+        /// <param name="modifiers">The keyboard modifiers that where down while this key was released.</param>
+        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode, KeyModifier modifiers) : base(window)
         {
             Key = key;
             Scancode = scancode;
+            Modifiers = modifiers;
         }
     }
 
@@ -405,13 +421,20 @@ namespace OpenTK.Core.Platform
         public MouseButton Button { get; private set; }
 
         /// <summary>
+        /// The active keyboard modifiers when the mouse button was pressed.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonDownEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that was clicked on.</param>
         /// <param name="button">The mouse button that was pressed.</param>
-        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button) : base(window)
+        /// <param name="modifiers">The modifiers that where active when the mouse button was pressed.</param>
+        public MouseButtonDownEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
         {
             Button = button;
+            Modifiers = modifiers;
         }
     }
 
@@ -426,13 +449,20 @@ namespace OpenTK.Core.Platform
         public MouseButton Button { get; private set; }
 
         /// <summary>
+        /// The active keyboard modifiers when the mouse button was released.
+        /// </summary>
+        public KeyModifier Modifiers { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MouseButtonUpEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that had input focus when the mouse is released.</param>
         /// <param name="button">The button that was released.</param>
-        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button) : base(window)
+        /// <param name="modifiers">The modifiers that where active when the mouse button was released.</param>
+        public MouseButtonUpEventArgs(WindowHandle window, MouseButton button, KeyModifier modifiers) : base(window)
         {
             Button = button;
+            Modifiers = modifiers;
         }
     }
 

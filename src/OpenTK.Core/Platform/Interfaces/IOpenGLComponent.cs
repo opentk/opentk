@@ -36,6 +36,8 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">The window for which the OpenGL context should be created.</param>
         /// <returns>An OpenGL context handle.</returns>
+        // FIXME: Rename to CreateContextFromWindow?
+        // Or just make CreateContext overloaded with both WindowHandle and SurfaceHandle?
         OpenGLContextHandle CreateFromWindow(WindowHandle handle);
 
         /// <summary>

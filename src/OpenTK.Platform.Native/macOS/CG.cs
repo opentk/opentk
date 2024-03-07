@@ -37,6 +37,10 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern double CGDisplayModeGetRefreshRate(IntPtr /* CGDisplayModeRef */ mode);
 
+        // Deprecated, but we don't have any better options...
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CFStringRef */ CGDisplayModeCopyPixelEncoding(IntPtr /* CGDisplayModeRef */ mode);
+
         // FIXME: Make return enum
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern DisplayModeIOFlags CGDisplayModeGetIOFlags(IntPtr /* CGDisplayModeRef */ mode);
@@ -49,6 +53,55 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern nint /* size_t */ CGDisplayPixelsWide(uint /* CGDirectDisplayID */ display);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGWarpMouseCursorPosition(CGPoint newCursorPosition);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint /* CGDirectDisplayID */ CGMainDisplayID();
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The y coordinate.</param>
+        /// <returns>The flipped y coordinate.</returns>
+        internal static float FlipYCoordinate(float y)
+        {
+            float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
+            return (height - 1) - y;
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The y coordinate.</param>
+        /// <returns>The flipped y coordinate.</returns>
+        internal static NFloat FlipYCoordinate(NFloat y)
+        {
+            NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
+            return (height - 1) - y;
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The coordinate to flip.</param>
+        /// <returns>The flipped coordinate.</returns>
+        internal static CGPoint FlipYCoordinate(CGPoint p)
+        {
+            NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
+            return new CGPoint(p.x, (height - 1) - p.y);
+        }
+
+        /// <summary>
+        /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
+        /// </summary>
+        /// <param name="y">The rectangle to flip.</param>
+        /// <returns>The flipped rectangle.</returns>
+        internal static CGRect FlipYCoordinate(CGRect rect)
+        {
+            // Get the upper left corner and invert that.
+            return new CGRect(FlipYCoordinate(new CGPoint(rect.origin.x, rect.origin.y + rect.size.y)), rect.size);
+        }
     }
 }
-
