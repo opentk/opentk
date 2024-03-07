@@ -285,7 +285,7 @@ Target.create "ReleaseOnGitHub" (fun _ ->
         { p with
             Body = String.Join(Environment.NewLine, release.Notes)
             Prerelease = (release.SemVer.PreRelease <> None)
-            TargetCommitish = Fake.Tools.Git.Information.getCurrentHash ()
+            TargetCommitish = Fake.Tools.Git.Information.getBranchName "."
         }
 
     GitHub.createClientWithToken token
