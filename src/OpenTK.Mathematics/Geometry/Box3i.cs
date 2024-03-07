@@ -558,28 +558,29 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box3i to encapsulate a given point.
+        /// Inflates this Box3i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
         /// </summary>
-        /// <param name="point">The point to query.</param>
-        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
-        public void Inflate(Vector3i point)
+        /// <param name="size">The size to inflate by.</param>
+        public void Inflate(Vector3i size)
         {
-            _min = Vector3i.ComponentMin(_min, point);
-            _max = Vector3i.ComponentMax(_max, point);
+            size = Vector3i.ComponentMax(size, -HalfSize);
+            _min -= size;
+            _max += size;
         }
 
         /// <summary>
-        /// Inflate this Box3i to encapsulate a given point.
+        /// Inflates this Box3i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in eOpenTK version 4.8.1 and earlier.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
-        public Box3i Inflated(Vector3i point)
+        public Box3i Inflated(Vector3i size)
         {
             // create a local copy of this box
             Box3i box = this;
-            box.Inflate(point);
+            box.Inflate(size);
             return box;
         }
 

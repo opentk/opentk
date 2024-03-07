@@ -41,7 +41,6 @@ namespace LocalTest
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
-                //RenderFrequency = 10,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -52,7 +51,7 @@ namespace LocalTest
                 Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible,
                 IsEventDriven = false,
                 Profile = ContextProfile.Core,
-                Size = (800, 600),
+                ClientSize = (800, 600),
                 StartFocused = true,
                 StartVisible = true,
                 Title = "Local OpenTK Test",
@@ -80,6 +79,11 @@ namespace LocalTest
             base.OnUnload();
         }
 
+        protected override void OnUpdateFrame(FrameEventArgs args)
+        {
+            base.OnUpdateFrame(args);
+        }
+
         float time = 0;
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -99,9 +103,11 @@ namespace LocalTest
             SwapBuffers();
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs args)
+        protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
         {
-            base.OnUpdateFrame(args);
+            base.OnFramebufferResize(e);
+
+            GL.Viewport(0, 0, e.Width, e.Height);
         }
 
         protected override void OnResize(ResizeEventArgs e)

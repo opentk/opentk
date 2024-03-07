@@ -552,28 +552,29 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Inflate this Box2d to encapsulate a given point.
+        /// Inflates this Box2d by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// Use the <see cref="Extend"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
         /// </summary>
-        /// <param name="point">The point to query.</param>
-        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
-        public void Inflate(Vector2d point)
+        /// <param name="size">The size to inflate by.</param>
+        public void Inflate(Vector2d size)
         {
-            _min = Vector2d.ComponentMin(_min, point);
-            _max = Vector2d.ComponentMax(_max, point);
+            size = Vector2d.ComponentMax(size, -HalfSize);
+            _min -= size;
+            _max += size;
         }
 
         /// <summary>
-        /// Inflate this Box2d to encapsulate a given point.
+        /// Inflates this Box2d by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// Use the <see cref="Extended"/> method for the point-encapsulation functionality in OpenTK version 4.8.1 and earlier.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
-        public Box2d Inflated(Vector2d point)
+        public Box2d Inflated(Vector2d size)
         {
             // create a local copy of this box
             Box2d box = this;
-            box.Inflate(point);
+            box.Inflate(size);
             return box;
         }
 

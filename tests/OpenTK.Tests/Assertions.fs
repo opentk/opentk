@@ -123,3 +123,11 @@ type internal Assert =
 
     static member EpsilonFromValue4Digits(v : float32) =
         MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v))) - 4.0f), 0.0001f)
+
+    static member AllComponentsPositiveOrZero(v : Vector2) =
+        if not (v.X >= 0.0f && v.Y >= 0.0f) then
+            raise <| new Xunit.Sdk.NotInRangeException(v, Vector2.Zero, null);
+
+    static member AllComponentsPositiveOrZero(v : Vector3) =
+        if not (v.X >= 0.0f && v.Y >= 0.0f && v.Z >= 0.0f) then
+            raise <| new Xunit.Sdk.NotInRangeException(v, Vector3.Zero, null);
