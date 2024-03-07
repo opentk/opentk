@@ -4,6 +4,7 @@ open System.Threading
 open Fake.Core
 open Fake.DotNet
 open Fake.DotNet.NuGet
+open Fake.Tools.Git
 open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
@@ -146,20 +147,6 @@ Target.create "GenerateBindings" (fun _ ->
 // Build Targets
 // ---------
 
-Target.create "Clean" <| fun _ ->
-    !! ("./src" </> "OpenTK.Graphics" </> "**/*.*")
-    ++ (nugetDir </> "*.nupkg")
-    -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
-    -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
-    -- ("./src" </> "OpenTK.Graphics" </> "Egl/*.*")
-    -- ("./src" </> "OpenTK.Graphics" </> "paket")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "GL.Manual.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "Compatibility" </> "GL.Manual.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES1" </> "GL.Manual.cs")
-    -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES3" </> "GL.Manual.cs")
-    |> Seq.iter(Shell.rm)
-
 Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple solutionFile |> ignore)
 
 // Generate assembly info files with the right version & up-to-date information
@@ -294,9 +281,15 @@ Target.create "ReleaseOnGitHub" (fun _ ->
 
     let files = !!"bin/*" |> Seq.toList
 
+    let setParams (p:GitHub.CreateReleaseParams) =
+        { p with
+            Body = String.Join(Environment.NewLine, release.Notes)
+            Prerelease = (release.SemVer.PreRelease <> None)
+            TargetCommitish = Fake.Tools.Git.Information.getCurrentHash ()
+        }
+
     GitHub.createClientWithToken token
-    |> GitHub.draftNewRelease gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    //|> GitHub.uploadFiles files
+    |> GitHub.createRelease gitOwner gitName release.NugetVersion setParams
     |> GitHub.publishDraft
     |> Async.RunSynchronously)
 
@@ -326,15 +319,16 @@ Target.create "All" ignore
 open Fake.Core.TargetOperators
 
 let dependencies = [
-    "Clean"
-      ==> "Restore"
+    "Restore"
       ==> "AssemblyInfo"
       //==> "UpdateSpec"
       //==> "UpdateBindingsRewrite"
-      ==> "GenerateBindings"
+      // We don't auto generate the bindings every build now
+      // as this causes generation timestamps to unecessarily update.
+      // - Noggin_bops 2024-03-07
+      //==> "GenerateBindings"
       ==> "Build"
-      //==> "RewriteBindings"
-    //  ==> "RunAllTests"
+      //==> "RunAllTests"
       ==> "All"
       ==> "CreateNuGetPackage"
       ==> "CreateMetaPackage"
