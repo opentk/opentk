@@ -61,16 +61,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="d3dcompiler_47.dll">
+    <None Update="win32-x64/d3dcompiler_47.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libEGL.dll">
+    <None Update="win32-x64/libEGL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libGLESv1_CM.dll">
+    <None Update="win32-x64/libGLESv1_CM.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libGLESv2.dll">
+    <None Update="win32-x64/libGLESv2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="linux-x64/angle-linux-binaries.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Cute Light Green Normal Select.cur">
@@ -101,6 +104,8 @@
 
   <ItemGroup>
     <Folder Include="Resources\NotoSans\" />
+    <Folder Include="win32-x64/" />
+    <Folder Include="linux-x64/" />
   </ItemGroup>
 
 </Project>

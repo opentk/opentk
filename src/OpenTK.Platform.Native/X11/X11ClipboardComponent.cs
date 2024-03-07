@@ -90,8 +90,10 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        private static readonly ClipboardFormat[] _supportedFormats = { ClipboardFormat.Text, ClipboardFormat.Files };
+
         /// <inheritdoc/>
-        public IReadOnlyList<ClipboardFormat> SupportedFormats => throw new NotImplementedException();
+        public IReadOnlyList<ClipboardFormat> SupportedFormats => _supportedFormats;
 
         // FIXME: What if we've not initialized the clipboard component
         internal static unsafe ClipboardFormat GetSelectionFormat(XAtom selection, XAtom property)

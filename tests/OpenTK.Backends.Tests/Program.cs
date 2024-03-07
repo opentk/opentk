@@ -2,6 +2,7 @@
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
+using OpenTK.Graphics.Egl;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
@@ -12,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Backends.Tests
@@ -84,7 +87,44 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = false;
+            PlatformComponents.PreferANGLE = true;
+
+            if (PlatformComponents.PreferANGLE)
+            {
+                if (OperatingSystem.IsLinux())
+                {
+                    // Because libdawn_native.so is >100mb and libGLESv2 is >50mb we can't upload the binary directly to git.
+                    // But the binaries compress really well (zip is < 40mb) so we store them as a zip file and unzip them if necessary.
+                    // - Noggin_bops 2024-03-07
+                    // FIXME: Good way to get the folder of the exe?
+                    string linuxDir = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "linux-x64");
+                    if (File.Exists(Path.Combine(linuxDir, "libEGL.so")) == false)
+                    {
+                        string zipFile = Path.Combine(linuxDir, "angle-linux-binaries.zip");
+                        ZipFile.ExtractToDirectory(zipFile, linuxDir);
+                    }
+                }
+
+                // If we are loading angle we want to hook into the DllImport resolver and
+                // make sure we load the correct binaries for each platform.
+                // - Noggin_bops 2024-03-07
+                NativeLibrary.SetDllImportResolver(typeof(Egl).Assembly, (name, assembly, path) => {
+                    if (name == "libEGL" && OperatingSystem.IsWindows())
+                    {
+                        name = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "win32-x64", "libEGL.dll");
+                        return NativeLibrary.Load(name, assembly, path);
+                    }
+                    else if (name == "libEGL" && OperatingSystem.IsLinux())
+                    {
+                        name = Path.Combine(Path.GetDirectoryName(typeof(Program).Assembly.Location)!, "linux-x64", "libEGL.so");
+                        return NativeLibrary.Load(name, assembly, path);
+                    }
+                    else
+                    {
+                        return NativeLibrary.Load(name, assembly, path);
+                    }
+                });
+            }
 
             // Init all of the components.
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger });
