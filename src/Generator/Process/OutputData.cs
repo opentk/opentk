@@ -192,6 +192,17 @@ namespace Generator.Writing
         }
     }
 
+    // This struct type is used internally to mark that this struct is opaque and needs to be converted to
+    // a pointer variant before it can be used.
+    // - Noggin_bops 2024-03-07
+    internal record CSOpaqueStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    {
+        internal override string ToCSString()
+        {
+            throw new InvalidOperationException($"Opaque type '{TypeName}' should never be used directly");
+        }
+    }
+
     internal record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         internal override string ToCSString()

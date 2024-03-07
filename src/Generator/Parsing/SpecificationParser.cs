@@ -469,7 +469,6 @@ namespace Generator.Parsing
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
             BaseCSType type = ParseType(str, handle, groupRef, nameMangler);
-            
             return type;
         }
 
@@ -493,7 +492,31 @@ namespace Generator.Parsing
 
                 BaseCSType? baseType = ParseType(withoutAsterisk, handle, group, nameMangler);
 
-                return new CSPointer(baseType, @const);
+                // Some structs are created as CSOpaqueStructs, this means that the only 
+                // valid way to use these is through a pointer. We intercept them here
+                // and create the proper CSStructPrimitive types from them.
+                // - Noggin_bops 2024-03-07
+                if (baseType is CSOpaqueStruct opaque)
+                {
+                    switch (opaque.TypeName)
+                    {
+                        // FIXME: Decide if we want `DisplayPtr`, `Display` or something like `XDisplay`?
+                        // - Noggin_bops 2024-03-07
+                        case "Display":
+                            return new CSStructPrimitive("DisplayPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "Screen":
+                            return new CSStructPrimitive("ScreenPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "XVisualInfo":
+                            return new CSStructPrimitive("XVisualInfoPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        default:
+                            throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
+                    }
+                }
+                else
+                {
+                    return new CSPointer(baseType, @const);
+                }
+
             }
             else
             {
@@ -646,13 +669,13 @@ namespace Generator.Parsing
 
                         "Bool" => new CSBool8(@const),
                         "Colormap" => new CSStructPrimitive("Colormap", @const, new CSPrimitive("nuint", @const)),
-                        "Display" => new CSStruct("Display", @const), // FIXME: This is just a struct?
+                        "Display" => new CSOpaqueStruct("Display", @const),
                         "Font" => new CSStructPrimitive("Font", @const, new CSPrimitive("nuint", @const)),
                         "Pixmap" => new CSStructPrimitive("Pixmap", @const, new CSPrimitive("nuint", @const)),
-                        "Screen" => new CSStruct("Screen", @const),
+                        "Screen" => new CSOpaqueStruct("Screen", @const),
                         "Status" => new CSPrimitive("int", @const), // FIXME: Maybe type?
                         "Window" => new CSStructPrimitive("Window", @const, new CSPrimitive("nuint", @const)),
-                        "XVisualInfo" => new CSStruct("XVisualInfo", @const),
+                        "XVisualInfo" => new CSOpaqueStruct("XVisualInfo", @const),
 
                         // FIXME: These types are conditionally removed from the header if _DM_BUFFER_H_ is not defined
                         // Should we have some way to say that specific functions should be ignored?

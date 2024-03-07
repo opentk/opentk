@@ -16,7 +16,7 @@ namespace Generator.Writing
         private const string BaseNamespace = "OpenTK";
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
 
-        internal record FileStrings(string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext)
+        internal record FileStrings(string FileNamePrefix, string ClassName, string Namespace, string LoaderClass, string LoaderBindingsContext)
         {
             /// <summary>Alias for <see cref="ClassName"/>.</summary>
             public string ApiName => ClassName;
@@ -33,9 +33,9 @@ namespace Generator.Writing
             {
                 FileStrings strings = pointers.File switch
                 {
-                    GLFile.GL => new FileStrings("GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
-                    GLFile.WGL => new FileStrings("Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
-                    GLFile.GLX => new FileStrings("Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
+                    GLFile.GL => new FileStrings("GL", "GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
+                    GLFile.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
+                    GLFile.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
                     _ => throw new Exception(),
                 };
 
@@ -54,19 +54,19 @@ namespace Generator.Writing
             // FIXME: Fix function pointers so we can merge this.
             FileStrings strings = @namespace.Name switch
             {
-                OutputApi.GL => new FileStrings("GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLCompat => new FileStrings("GL", "OpenGL.Compatibility", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLES1 => new FileStrings("GL", "OpenGLES1", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.GLES2 => new FileStrings("GL", "OpenGLES2", "GLLoader", "GLLoader.BindingsContext"),
-                OutputApi.WGL => new FileStrings("Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
-                OutputApi.GLX => new FileStrings("Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
+                OutputApi.GL => new FileStrings("GL", "GL", "OpenGL", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLCompat => new FileStrings("GL", "GL", "OpenGL.Compatibility", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLES1 => new FileStrings("GL", "GL", "OpenGLES1", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.GLES2 => new FileStrings("GL", "GL", "OpenGLES2", "GLLoader", "GLLoader.BindingsContext"),
+                OutputApi.WGL => new FileStrings("WGL", "Wgl", "Wgl", "WGLLoader", "WGLLoader.BindingsContext"),
+                OutputApi.GLX => new FileStrings("GLX", "Glx", "Glx", "GLXLoader", "GLXLoader.BindingsContext"),
                 _ => throw new Exception($"This is not a valid output API ({@namespace.Name})"),
             };
 
             string directoryPath = Path.Combine(outputProjectPath, Path.Combine(strings.Namespace.Split('.')));
             if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
             var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
-            foreach (var file in files.Where(file => Path.GetFileName(file) != $"{strings.ClassName}.Manual.cs"))
+            foreach (var file in files.Where(file => Path.GetFileName(file) != $"{strings.FileNamePrefix}.Manual.cs"))
             {
                 File.Delete(file);
             }
@@ -80,7 +80,7 @@ namespace Generator.Writing
         // FIXME: Maybe we should nest this 
         private static void WriteFunctionPointers(string directoryPath, FileStrings strings, List<NativeFunction> nativeFunctions)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ClassName}.Pointers.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
@@ -231,7 +231,7 @@ namespace Generator.Writing
             SortedDictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ApiName}.Native.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
@@ -322,7 +322,7 @@ namespace Generator.Writing
             FileStrings strings,
             SortedDictionary<string, GLVendorFunctions> groups)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.ApiName}.Overloads.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{strings.FileNamePrefix}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
