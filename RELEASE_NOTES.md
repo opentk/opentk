@@ -1,3 +1,79 @@
+## 5.0-pre.10
+
+* Merged OpenTK 4.8.2 onto 5.0-pre.9. (@NogginBops)
+  This means that all changes from 4.8.2 are also in this release.
+
+* Moved `OpenTK.Color3` to `OpenTK.Mathematics.Color3`. (@NogginBops)
+
+* Fix `NativeWindow` so it properly loads OpenGL bindings without crashing. (@NogginBops)
+
+* Fix bindings generator locale issue that caused wrong results on certain locales. (@utkumaden)
+
+* Changed the name of some enum group to be more like OpenTK 4 groups.
+  Notable examples are `BufferTargetARB` -> `BufferTarget` and `BlendEquationModeEXT` -> `BlendEquationMode`. (@NogginBops)
+
+* Fix WGL and GLX bindings and loading. (@NogginBops)
+
+* Change EGL bindings to `DllImport` for `libEGL` instead of `libEGL.dll`. (@NogginBops)
+
+* Made bindings generator correctly bind function taking GLX opaque struct pointers like `Display*`. (@NogginBops)
+
+* Fixed WGL `GetProcAddress` bindings to correctly marshal strings. (@NogginBops)
+
+Platform Abstraction Layer 2.0 (PAL2):
+
+* Removed internal locks from `EventQueue`. (@utkumaden)
+
+* Add `IWindowComponent.GetBounds/SetBounds` + client bounds versions. (@NogginBops)
+
+* Add functions for getting native handles from PAL2 handles. (@NogginBops)
+
+* Added functions and event data for keyboard modifiers. (@NogginBops)
+
+* Win32: Fix sticky RightControl, LeftAlt, and RightAlt keys. (@NogginBops)
+
+* Win32: Fix duplicate `TextInput` events when using IME. (@NogginBops)
+
+* Win32: Fix `CanIncludeInClipboardHistory` and `CanUploadToCloudClipboard`. (@NogginBops)
+
+* X11: Implemented `X11KeyboardComponent.GetKeyboardModifiers()`. (@NogginBops)
+
+* X11: Implemented `X11MouseComponent.GetMouseState()`. (@NogginBops)
+
+* X11: Implemented `X11ShellComponent.GetPreferredTheme()`. (@NogginBops)
+
+* X11: Implemented `ClipboardUpdate`, `DisplayConnectionChanged`, `FileDrop`, `KeyDown`, and `KeyUp` events. (@NogginBops)
+
+* macOS: Implemented `MacOSWindowComponent.GetIcon/SetIcon`. (@NogginBops)
+
+* macOS: Implemented `MacOSWindowComponent.SetSize/SetClientSize`. (@NogginBops)
+
+* macOS: Implemented `MacOSWindowComponent.[Set/Get][Max/Min]ClientSize`. (@NogginBops)
+
+* macOS: Implemented `MacOSWindowComponent.GetDisplay`. (@NogginBops)
+
+* macOS: Implemented window hit test callback for `HitType.Draggable`. (@NogginBops)
+
+* macOS: Implemented `MacOSWindowComponent.SetCursor`. (@NogginBops)
+
+* macOS: Implemented `MacOSMouseComponent.SetPosition`. (@NogginBops)
+
+* macOS: Implemented `MacOSDisplayComponent` fully. (@NogginBops)
+
+* macOS: Implemented `MacOSCursorComponent` fully. (@NogginBops)
+
+* macOS: Implemented basic `KeyDown`/`KeyUp`. (@NogginBops)
+
+* macOS: Implemented `MacOSKeyboardComponent.GetKeyboardState/GetKeyboardModifiers`. (@NogginBops)
+
+* macOS: Implemented `MacOSIconComponent` fully. (@NogginBops)
+
+* macOS: Implemented `MacOSShellComponent` fully. (@NogginBops)
+
+* macOS: Implemented `Focus`, `WindowMove`/`WindowResize`, `WindowModeChange`, `MouseEnter`, `KeyDown`/`KeyUp`, `TextInput`, `ThemeChange`, and `DisplayConnectionChanged` events. (@NogginBops)
+
+* ANGLE: Made `ANGLEOpenGLComponent` work with the X11 backend. (@NogginBops)
+
 ## 5.0-pre.9
 
 * Merged PAL2 into OpenTK 5.0. Platform Abstraction Layer 2.0 is an experimental api that represents the future of windowing in OpenTK. (@NogginBops, @utkumaden)
