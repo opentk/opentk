@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:49 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:58 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -13,7 +13,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int ChoosePixelFormat_Lazy(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
-            _ChoosePixelFormat_fnptr = (delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("ChoosePixelFormat");
+            _ChoosePixelFormat_fnptr = (delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("ChoosePixelFormat");
             return _ChoosePixelFormat_fnptr(hDc, pPfd);
         }
         
@@ -22,7 +22,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int DescribePixelFormat_Lazy(IntPtr hdc, int ipfd, uint cjpfd, PixelFormatDescriptor* ppfd)
         {
-            _DescribePixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("DescribePixelFormat");
+            _DescribePixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("DescribePixelFormat");
             return _DescribePixelFormat_fnptr(hdc, ipfd, cjpfd, ppfd);
         }
         
@@ -31,7 +31,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
         {
-            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)GLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
+            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)WGLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
             return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
         }
         
@@ -40,7 +40,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int GetPixelFormat_Lazy(IntPtr hdc)
         {
-            _GetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("GetPixelFormat");
+            _GetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("GetPixelFormat");
             return _GetPixelFormat_fnptr(hdc);
         }
         
@@ -49,7 +49,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int SetPixelFormat_Lazy(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
-            _SetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("SetPixelFormat");
+            _SetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("SetPixelFormat");
             return _SetPixelFormat_fnptr(hdc, ipfd, ppfd);
         }
         
@@ -58,7 +58,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int SwapBuffers_Lazy(IntPtr hdc)
         {
-            _SwapBuffers_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("SwapBuffers");
+            _SwapBuffers_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("SwapBuffers");
             return _SwapBuffers_fnptr(hdc);
         }
         
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static void* wglAllocateMemoryNV_Lazy(int size, float readfreq, float writefreq, float priority)
         {
-            _wglAllocateMemoryNV_fnptr = (delegate* unmanaged<int, float, float, float, void*>)GLLoader.BindingsContext.GetProcAddress("wglAllocateMemoryNV");
+            _wglAllocateMemoryNV_fnptr = (delegate* unmanaged<int, float, float, float, void*>)WGLLoader.BindingsContext.GetProcAddress("wglAllocateMemoryNV");
             return _wglAllocateMemoryNV_fnptr(size, readfreq, writefreq, priority);
         }
         
@@ -76,7 +76,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglAssociateImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pEvent, IntPtr* pAddress, uint* pSize, uint count)
         {
-            _wglAssociateImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, IntPtr*, uint*, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglAssociateImageBufferEventsI3D");
+            _wglAssociateImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, IntPtr*, uint*, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglAssociateImageBufferEventsI3D");
             return _wglAssociateImageBufferEventsI3D_fnptr(hDC, pEvent, pAddress, pSize, count);
         }
         
@@ -85,7 +85,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBeginFrameTrackingI3D_Lazy()
         {
-            _wglBeginFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("wglBeginFrameTrackingI3D");
+            _wglBeginFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglBeginFrameTrackingI3D");
             return _wglBeginFrameTrackingI3D_fnptr();
         }
         
@@ -94,7 +94,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static byte wglBindDisplayColorTableEXT_Lazy(ushort id)
         {
-            _wglBindDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)GLLoader.BindingsContext.GetProcAddress("wglBindDisplayColorTableEXT");
+            _wglBindDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)WGLLoader.BindingsContext.GetProcAddress("wglBindDisplayColorTableEXT");
             return _wglBindDisplayColorTableEXT_fnptr(id);
         }
         
@@ -103,7 +103,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBindSwapBarrierNV_Lazy(uint group, uint barrier)
         {
-            _wglBindSwapBarrierNV_fnptr = (delegate* unmanaged<uint, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglBindSwapBarrierNV");
+            _wglBindSwapBarrierNV_fnptr = (delegate* unmanaged<uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindSwapBarrierNV");
             return _wglBindSwapBarrierNV_fnptr(group, barrier);
         }
         
@@ -112,7 +112,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBindTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
-            _wglBindTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)GLLoader.BindingsContext.GetProcAddress("wglBindTexImageARB");
+            _wglBindTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindTexImageARB");
             return _wglBindTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
@@ -121,7 +121,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBindVideoCaptureDeviceNV_Lazy(uint uVideoSlot, IntPtr hDevice)
         {
-            _wglBindVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<uint, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglBindVideoCaptureDeviceNV");
+            _wglBindVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<uint, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoCaptureDeviceNV");
             return _wglBindVideoCaptureDeviceNV_fnptr(uVideoSlot, hDevice);
         }
         
@@ -130,7 +130,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBindVideoDeviceNV_Lazy(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, int* piAttribList)
         {
-            _wglBindVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglBindVideoDeviceNV");
+            _wglBindVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoDeviceNV");
             return _wglBindVideoDeviceNV_fnptr(hDc, uVideoSlot, hVideoDevice, piAttribList);
         }
         
@@ -139,7 +139,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglBindVideoImageNV_Lazy(IntPtr hVideoDevice, IntPtr hPbuffer, int iVideoBuffer)
         {
-            _wglBindVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int>)GLLoader.BindingsContext.GetProcAddress("wglBindVideoImageNV");
+            _wglBindVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglBindVideoImageNV");
             return _wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, iVideoBuffer);
         }
         
@@ -148,7 +148,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static void wglBlitContextFramebufferAMD_Lazy(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
         {
-            _wglBlitContextFramebufferAMD_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("wglBlitContextFramebufferAMD");
+            _wglBlitContextFramebufferAMD_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int, int, uint, uint, void>)WGLLoader.BindingsContext.GetProcAddress("wglBlitContextFramebufferAMD");
             _wglBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
         
@@ -157,7 +157,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglChoosePixelFormatARB_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
-            _wglChoosePixelFormatARB_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatARB");
+            _wglChoosePixelFormatARB_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatARB");
             return _wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
@@ -166,7 +166,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglChoosePixelFormatEXT_Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
         {
-            _wglChoosePixelFormatEXT_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatEXT");
+            _wglChoosePixelFormatEXT_fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglChoosePixelFormatEXT");
             return _wglChoosePixelFormatEXT_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
         }
         
@@ -175,7 +175,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglCopyContext_Lazy(IntPtr hglrcSrc, IntPtr hglrcDst, uint mask)
         {
-            _wglCopyContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglCopyContext");
+            _wglCopyContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglCopyContext");
             return _wglCopyContext_fnptr(hglrcSrc, hglrcDst, mask);
         }
         
@@ -184,7 +184,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglCopyImageSubDataNV_Lazy(IntPtr hSrcRC, uint srcName, uint srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, uint dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
         {
-            _wglCopyImageSubDataNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, int>)GLLoader.BindingsContext.GetProcAddress("wglCopyImageSubDataNV");
+            _wglCopyImageSubDataNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, int, int, int, int, IntPtr, uint, uint, int, int, int, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglCopyImageSubDataNV");
             return _wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
         }
         
@@ -193,7 +193,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAffinityDCNV_Lazy(IntPtr* phGpuList)
         {
-            _wglCreateAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateAffinityDCNV");
+            _wglCreateAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAffinityDCNV");
             return _wglCreateAffinityDCNV_fnptr(phGpuList);
         }
         
@@ -202,7 +202,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAssociatedContextAMD_Lazy(uint id)
         {
-            _wglCreateAssociatedContextAMD_fnptr = (delegate* unmanaged<uint, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAMD");
+            _wglCreateAssociatedContextAMD_fnptr = (delegate* unmanaged<uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAMD");
             return _wglCreateAssociatedContextAMD_fnptr(id);
         }
         
@@ -211,7 +211,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateAssociatedContextAttribsAMD_Lazy(uint id, IntPtr hShareContext, int* attribList)
         {
-            _wglCreateAssociatedContextAttribsAMD_fnptr = (delegate* unmanaged<uint, IntPtr, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAttribsAMD");
+            _wglCreateAssociatedContextAttribsAMD_fnptr = (delegate* unmanaged<uint, IntPtr, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateAssociatedContextAttribsAMD");
             return _wglCreateAssociatedContextAttribsAMD_fnptr(id, hShareContext, attribList);
         }
         
@@ -220,7 +220,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateBufferRegionARB_Lazy(IntPtr hDC, int iLayerPlane, uint uType)
         {
-            _wglCreateBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, uint, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateBufferRegionARB");
+            _wglCreateBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateBufferRegionARB");
             return _wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, uType);
         }
         
@@ -229,7 +229,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateContext_Lazy(IntPtr hDc)
         {
-            _wglCreateContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateContext");
+            _wglCreateContext_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateContext");
             return _wglCreateContext_fnptr(hDc);
         }
         
@@ -238,7 +238,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateContextAttribsARB_Lazy(IntPtr hDC, IntPtr hShareContext, int* attribList)
         {
-            _wglCreateContextAttribsARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateContextAttribsARB");
+            _wglCreateContextAttribsARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateContextAttribsARB");
             return _wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
         }
         
@@ -247,7 +247,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static byte wglCreateDisplayColorTableEXT_Lazy(ushort id)
         {
-            _wglCreateDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)GLLoader.BindingsContext.GetProcAddress("wglCreateDisplayColorTableEXT");
+            _wglCreateDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, byte>)WGLLoader.BindingsContext.GetProcAddress("wglCreateDisplayColorTableEXT");
             return _wglCreateDisplayColorTableEXT_fnptr(id);
         }
         
@@ -256,7 +256,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateImageBufferI3D_Lazy(IntPtr hDC, uint dwSize, uint uFlags)
         {
-            _wglCreateImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateImageBufferI3D");
+            _wglCreateImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateImageBufferI3D");
             return _wglCreateImageBufferI3D_fnptr(hDC, dwSize, uFlags);
         }
         
@@ -265,7 +265,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreateLayerContext_Lazy(IntPtr hDc, int level)
         {
-            _wglCreateLayerContext_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreateLayerContext");
+            _wglCreateLayerContext_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreateLayerContext");
             return _wglCreateLayerContext_fnptr(hDc, level);
         }
         
@@ -274,7 +274,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreatePbufferARB_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
-            _wglCreatePbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreatePbufferARB");
+            _wglCreatePbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreatePbufferARB");
             return _wglCreatePbufferARB_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
@@ -283,7 +283,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglCreatePbufferEXT_Lazy(IntPtr hDC, int iPixelFormat, int iWidth, int iHeight, int* piAttribList)
         {
-            _wglCreatePbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglCreatePbufferEXT");
+            _wglCreatePbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglCreatePbufferEXT");
             return _wglCreatePbufferEXT_fnptr(hDC, iPixelFormat, iWidth, iHeight, piAttribList);
         }
         
@@ -292,7 +292,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDelayBeforeSwapNV_Lazy(IntPtr hDC, float seconds)
         {
-            _wglDelayBeforeSwapNV_fnptr = (delegate* unmanaged<IntPtr, float, int>)GLLoader.BindingsContext.GetProcAddress("wglDelayBeforeSwapNV");
+            _wglDelayBeforeSwapNV_fnptr = (delegate* unmanaged<IntPtr, float, int>)WGLLoader.BindingsContext.GetProcAddress("wglDelayBeforeSwapNV");
             return _wglDelayBeforeSwapNV_fnptr(hDC, seconds);
         }
         
@@ -301,7 +301,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDeleteAssociatedContextAMD_Lazy(IntPtr hglrc)
         {
-            _wglDeleteAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDeleteAssociatedContextAMD");
+            _wglDeleteAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteAssociatedContextAMD");
             return _wglDeleteAssociatedContextAMD_fnptr(hglrc);
         }
         
@@ -310,7 +310,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static void wglDeleteBufferRegionARB_Lazy(IntPtr hRegion)
         {
-            _wglDeleteBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, void>)GLLoader.BindingsContext.GetProcAddress("wglDeleteBufferRegionARB");
+            _wglDeleteBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, void>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteBufferRegionARB");
             _wglDeleteBufferRegionARB_fnptr(hRegion);
         }
         
@@ -319,7 +319,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDeleteContext_Lazy(IntPtr oldContext)
         {
-            _wglDeleteContext_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDeleteContext");
+            _wglDeleteContext_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteContext");
             return _wglDeleteContext_fnptr(oldContext);
         }
         
@@ -328,7 +328,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDeleteDCNV_Lazy(IntPtr hdc)
         {
-            _wglDeleteDCNV_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDeleteDCNV");
+            _wglDeleteDCNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDeleteDCNV");
             return _wglDeleteDCNV_fnptr(hdc);
         }
         
@@ -337,7 +337,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDescribeLayerPlane_Lazy(IntPtr hDc, int pixelFormat, int layerPlane, uint nBytes, LayerPlaneDescriptor* plpd)
         {
-            _wglDescribeLayerPlane_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("wglDescribeLayerPlane");
+            _wglDescribeLayerPlane_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDescribeLayerPlane");
             return _wglDescribeLayerPlane_fnptr(hDc, pixelFormat, layerPlane, nBytes, plpd);
         }
         
@@ -346,7 +346,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static void wglDestroyDisplayColorTableEXT_Lazy(ushort id)
         {
-            _wglDestroyDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, void>)GLLoader.BindingsContext.GetProcAddress("wglDestroyDisplayColorTableEXT");
+            _wglDestroyDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort, void>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyDisplayColorTableEXT");
             _wglDestroyDisplayColorTableEXT_fnptr(id);
         }
         
@@ -355,7 +355,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDestroyImageBufferI3D_Lazy(IntPtr hDC, IntPtr pAddress)
         {
-            _wglDestroyImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDestroyImageBufferI3D");
+            _wglDestroyImageBufferI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyImageBufferI3D");
             return _wglDestroyImageBufferI3D_fnptr(hDC, pAddress);
         }
         
@@ -364,7 +364,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDestroyPbufferARB_Lazy(IntPtr hPbuffer)
         {
-            _wglDestroyPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferARB");
+            _wglDestroyPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferARB");
             return _wglDestroyPbufferARB_fnptr(hPbuffer);
         }
         
@@ -373,7 +373,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDestroyPbufferEXT_Lazy(IntPtr hPbuffer)
         {
-            _wglDestroyPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferEXT");
+            _wglDestroyPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDestroyPbufferEXT");
             return _wglDestroyPbufferEXT_fnptr(hPbuffer);
         }
         
@@ -382,7 +382,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDisableFrameLockI3D_Lazy()
         {
-            _wglDisableFrameLockI3D_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("wglDisableFrameLockI3D");
+            _wglDisableFrameLockI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglDisableFrameLockI3D");
             return _wglDisableFrameLockI3D_fnptr();
         }
         
@@ -391,7 +391,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDisableGenlockI3D_Lazy(IntPtr hDC)
         {
-            _wglDisableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDisableGenlockI3D");
+            _wglDisableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDisableGenlockI3D");
             return _wglDisableGenlockI3D_fnptr(hDC);
         }
         
@@ -400,7 +400,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXCloseDeviceNV_Lazy(IntPtr hDevice)
         {
-            _wglDXCloseDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDXCloseDeviceNV");
+            _wglDXCloseDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXCloseDeviceNV");
             return _wglDXCloseDeviceNV_fnptr(hDevice);
         }
         
@@ -409,7 +409,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXLockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
-            _wglDXLockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglDXLockObjectsNV");
+            _wglDXLockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXLockObjectsNV");
             return _wglDXLockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
@@ -418,7 +418,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXObjectAccessNV_Lazy(IntPtr hObject, uint access)
         {
-            _wglDXObjectAccessNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglDXObjectAccessNV");
+            _wglDXObjectAccessNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXObjectAccessNV");
             return _wglDXObjectAccessNV_fnptr(hObject, access);
         }
         
@@ -427,7 +427,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglDXOpenDeviceNV_Lazy(void* dxDevice)
         {
-            _wglDXOpenDeviceNV_fnptr = (delegate* unmanaged<void*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglDXOpenDeviceNV");
+            _wglDXOpenDeviceNV_fnptr = (delegate* unmanaged<void*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglDXOpenDeviceNV");
             return _wglDXOpenDeviceNV_fnptr(dxDevice);
         }
         
@@ -436,7 +436,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglDXRegisterObjectNV_Lazy(IntPtr hDevice, void* dxObject, uint name, uint type, uint access)
         {
-            _wglDXRegisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, void*, uint, uint, uint, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglDXRegisterObjectNV");
+            _wglDXRegisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, void*, uint, uint, uint, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglDXRegisterObjectNV");
             return _wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, type, access);
         }
         
@@ -445,7 +445,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXSetResourceShareHandleNV_Lazy(void* dxObject, IntPtr shareHandle)
         {
-            _wglDXSetResourceShareHandleNV_fnptr = (delegate* unmanaged<void*, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDXSetResourceShareHandleNV");
+            _wglDXSetResourceShareHandleNV_fnptr = (delegate* unmanaged<void*, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXSetResourceShareHandleNV");
             return _wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
         }
         
@@ -454,7 +454,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXUnlockObjectsNV_Lazy(IntPtr hDevice, int count, IntPtr* hObjects)
         {
-            _wglDXUnlockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglDXUnlockObjectsNV");
+            _wglDXUnlockObjectsNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXUnlockObjectsNV");
             return _wglDXUnlockObjectsNV_fnptr(hDevice, count, hObjects);
         }
         
@@ -463,7 +463,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglDXUnregisterObjectNV_Lazy(IntPtr hDevice, IntPtr hObject)
         {
-            _wglDXUnregisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglDXUnregisterObjectNV");
+            _wglDXUnregisterObjectNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglDXUnregisterObjectNV");
             return _wglDXUnregisterObjectNV_fnptr(hDevice, hObject);
         }
         
@@ -472,7 +472,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnableFrameLockI3D_Lazy()
         {
-            _wglEnableFrameLockI3D_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("wglEnableFrameLockI3D");
+            _wglEnableFrameLockI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglEnableFrameLockI3D");
             return _wglEnableFrameLockI3D_fnptr();
         }
         
@@ -481,7 +481,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnableGenlockI3D_Lazy(IntPtr hDC)
         {
-            _wglEnableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglEnableGenlockI3D");
+            _wglEnableGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnableGenlockI3D");
             return _wglEnableGenlockI3D_fnptr(hDC);
         }
         
@@ -490,7 +490,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEndFrameTrackingI3D_Lazy()
         {
-            _wglEndFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("wglEndFrameTrackingI3D");
+            _wglEndFrameTrackingI3D_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglEndFrameTrackingI3D");
             return _wglEndFrameTrackingI3D_fnptr();
         }
         
@@ -499,7 +499,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static uint wglEnumerateVideoCaptureDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
-            _wglEnumerateVideoCaptureDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint>)GLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoCaptureDevicesNV");
+            _wglEnumerateVideoCaptureDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint>)WGLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoCaptureDevicesNV");
             return _wglEnumerateVideoCaptureDevicesNV_fnptr(hDc, phDeviceList);
         }
         
@@ -508,7 +508,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnumerateVideoDevicesNV_Lazy(IntPtr hDc, IntPtr* phDeviceList)
         {
-            _wglEnumerateVideoDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoDevicesNV");
+            _wglEnumerateVideoDevicesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumerateVideoDevicesNV");
             return _wglEnumerateVideoDevicesNV_fnptr(hDc, phDeviceList);
         }
         
@@ -517,7 +517,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnumGpuDevicesNV_Lazy(IntPtr hGpu, uint iDeviceIndex, _GPU_DEVICE* lpGpuDevice)
         {
-            _wglEnumGpuDevicesNV_fnptr = (delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumGpuDevicesNV");
+            _wglEnumGpuDevicesNV_fnptr = (delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpuDevicesNV");
             return _wglEnumGpuDevicesNV_fnptr(hGpu, iDeviceIndex, lpGpuDevice);
         }
         
@@ -526,7 +526,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnumGpusFromAffinityDCNV_Lazy(IntPtr hAffinityDC, uint iGpuIndex, IntPtr* hGpu)
         {
-            _wglEnumGpusFromAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumGpusFromAffinityDCNV");
+            _wglEnumGpusFromAffinityDCNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpusFromAffinityDCNV");
             return _wglEnumGpusFromAffinityDCNV_fnptr(hAffinityDC, iGpuIndex, hGpu);
         }
         
@@ -535,7 +535,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglEnumGpusNV_Lazy(uint iGpuIndex, IntPtr* phGpu)
         {
-            _wglEnumGpusNV_fnptr = (delegate* unmanaged<uint, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumGpusNV");
+            _wglEnumGpusNV_fnptr = (delegate* unmanaged<uint, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglEnumGpusNV");
             return _wglEnumGpusNV_fnptr(iGpuIndex, phGpu);
         }
         
@@ -544,7 +544,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static void wglFreeMemoryNV_Lazy(void* pointer)
         {
-            _wglFreeMemoryNV_fnptr = (delegate* unmanaged<void*, void>)GLLoader.BindingsContext.GetProcAddress("wglFreeMemoryNV");
+            _wglFreeMemoryNV_fnptr = (delegate* unmanaged<void*, void>)WGLLoader.BindingsContext.GetProcAddress("wglFreeMemoryNV");
             _wglFreeMemoryNV_fnptr(pointer);
         }
         
@@ -553,7 +553,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGenlockSampleRateI3D_Lazy(IntPtr hDC, uint uRate)
         {
-            _wglGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglGenlockSampleRateI3D");
+            _wglGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSampleRateI3D");
             return _wglGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
@@ -562,7 +562,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint uDelay)
         {
-            _wglGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglGenlockSourceDelayI3D");
+            _wglGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceDelayI3D");
             return _wglGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
@@ -571,7 +571,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint uEdge)
         {
-            _wglGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglGenlockSourceEdgeI3D");
+            _wglGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceEdgeI3D");
             return _wglGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
@@ -580,7 +580,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGenlockSourceI3D_Lazy(IntPtr hDC, uint uSource)
         {
-            _wglGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglGenlockSourceI3D");
+            _wglGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglGenlockSourceI3D");
             return _wglGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
@@ -589,7 +589,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static uint wglGetContextGPUIDAMD_Lazy(IntPtr hglrc)
         {
-            _wglGetContextGPUIDAMD_fnptr = (delegate* unmanaged<IntPtr, uint>)GLLoader.BindingsContext.GetProcAddress("wglGetContextGPUIDAMD");
+            _wglGetContextGPUIDAMD_fnptr = (delegate* unmanaged<IntPtr, uint>)WGLLoader.BindingsContext.GetProcAddress("wglGetContextGPUIDAMD");
             return _wglGetContextGPUIDAMD_fnptr(hglrc);
         }
         
@@ -598,7 +598,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentAssociatedContextAMD_Lazy()
         {
-            _wglGetCurrentAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetCurrentAssociatedContextAMD");
+            _wglGetCurrentAssociatedContextAMD_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentAssociatedContextAMD");
             return _wglGetCurrentAssociatedContextAMD_fnptr();
         }
         
@@ -607,7 +607,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentContext_Lazy()
         {
-            _wglGetCurrentContext_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetCurrentContext");
+            _wglGetCurrentContext_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentContext");
             return _wglGetCurrentContext_fnptr();
         }
         
@@ -616,7 +616,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentDC_Lazy()
         {
-            _wglGetCurrentDC_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetCurrentDC");
+            _wglGetCurrentDC_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentDC");
             return _wglGetCurrentDC_fnptr();
         }
         
@@ -625,7 +625,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentReadDCARB_Lazy()
         {
-            _wglGetCurrentReadDCARB_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCARB");
+            _wglGetCurrentReadDCARB_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCARB");
             return _wglGetCurrentReadDCARB_fnptr();
         }
         
@@ -634,7 +634,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetCurrentReadDCEXT_Lazy()
         {
-            _wglGetCurrentReadDCEXT_fnptr = (delegate* unmanaged<IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCEXT");
+            _wglGetCurrentReadDCEXT_fnptr = (delegate* unmanaged<IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetCurrentReadDCEXT");
             return _wglGetCurrentReadDCEXT_fnptr();
         }
         
@@ -643,7 +643,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
-            _wglGetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetDigitalVideoParametersI3D");
+            _wglGetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetDigitalVideoParametersI3D");
             return _wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -652,7 +652,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static byte* wglGetExtensionsStringARB_Lazy(IntPtr hdc)
         {
-            _wglGetExtensionsStringARB_fnptr = (delegate* unmanaged<IntPtr, byte*>)GLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringARB");
+            _wglGetExtensionsStringARB_fnptr = (delegate* unmanaged<IntPtr, byte*>)WGLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringARB");
             return _wglGetExtensionsStringARB_fnptr(hdc);
         }
         
@@ -661,7 +661,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static byte* wglGetExtensionsStringEXT_Lazy()
         {
-            _wglGetExtensionsStringEXT_fnptr = (delegate* unmanaged<byte*>)GLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringEXT");
+            _wglGetExtensionsStringEXT_fnptr = (delegate* unmanaged<byte*>)WGLLoader.BindingsContext.GetProcAddress("wglGetExtensionsStringEXT");
             return _wglGetExtensionsStringEXT_fnptr();
         }
         
@@ -670,7 +670,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetFrameUsageI3D_Lazy(float* pUsage)
         {
-            _wglGetFrameUsageI3D_fnptr = (delegate* unmanaged<float*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetFrameUsageI3D");
+            _wglGetFrameUsageI3D_fnptr = (delegate* unmanaged<float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetFrameUsageI3D");
             return _wglGetFrameUsageI3D_fnptr(pUsage);
         }
         
@@ -679,7 +679,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
-            _wglGetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGammaTableI3D");
+            _wglGetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGammaTableI3D");
             return _wglGetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
@@ -688,7 +688,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
-            _wglGetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGammaTableParametersI3D");
+            _wglGetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGammaTableParametersI3D");
             return _wglGetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -697,7 +697,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSampleRateI3D_Lazy(IntPtr hDC, uint* uRate)
         {
-            _wglGetGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGenlockSampleRateI3D");
+            _wglGetGenlockSampleRateI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSampleRateI3D");
             return _wglGetGenlockSampleRateI3D_fnptr(hDC, uRate);
         }
         
@@ -706,7 +706,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceDelayI3D_Lazy(IntPtr hDC, uint* uDelay)
         {
-            _wglGetGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceDelayI3D");
+            _wglGetGenlockSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceDelayI3D");
             return _wglGetGenlockSourceDelayI3D_fnptr(hDC, uDelay);
         }
         
@@ -715,7 +715,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceEdgeI3D_Lazy(IntPtr hDC, uint* uEdge)
         {
-            _wglGetGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceEdgeI3D");
+            _wglGetGenlockSourceEdgeI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceEdgeI3D");
             return _wglGetGenlockSourceEdgeI3D_fnptr(hDC, uEdge);
         }
         
@@ -724,7 +724,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGenlockSourceI3D_Lazy(IntPtr hDC, uint* uSource)
         {
-            _wglGetGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceI3D");
+            _wglGetGenlockSourceI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGenlockSourceI3D");
             return _wglGetGenlockSourceI3D_fnptr(hDC, uSource);
         }
         
@@ -733,7 +733,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static uint wglGetGPUIDsAMD_Lazy(uint maxCount, uint* ids)
         {
-            _wglGetGPUIDsAMD_fnptr = (delegate* unmanaged<uint, uint*, uint>)GLLoader.BindingsContext.GetProcAddress("wglGetGPUIDsAMD");
+            _wglGetGPUIDsAMD_fnptr = (delegate* unmanaged<uint, uint*, uint>)WGLLoader.BindingsContext.GetProcAddress("wglGetGPUIDsAMD");
             return _wglGetGPUIDsAMD_fnptr(maxCount, ids);
         }
         
@@ -742,7 +742,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetGPUInfoAMD_Lazy(uint id, int property, uint dataType, uint size, void* data)
         {
-            _wglGetGPUInfoAMD_fnptr = (delegate* unmanaged<uint, int, uint, uint, void*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetGPUInfoAMD");
+            _wglGetGPUInfoAMD_fnptr = (delegate* unmanaged<uint, int, uint, uint, void*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetGPUInfoAMD");
             return _wglGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
         
@@ -751,7 +751,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
-            _wglGetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetLayerPaletteEntries");
+            _wglGetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetLayerPaletteEntries");
             return _wglGetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
@@ -760,7 +760,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetMscRateOML_Lazy(IntPtr hdc, int* numerator, int* denominator)
         {
-            _wglGetMscRateOML_fnptr = (delegate* unmanaged<IntPtr, int*, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetMscRateOML");
+            _wglGetMscRateOML_fnptr = (delegate* unmanaged<IntPtr, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetMscRateOML");
             return _wglGetMscRateOML_fnptr(hdc, numerator, denominator);
         }
         
@@ -769,7 +769,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetPbufferDCARB_Lazy(IntPtr hPbuffer)
         {
-            _wglGetPbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCARB");
+            _wglGetPbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCARB");
             return _wglGetPbufferDCARB_fnptr(hPbuffer);
         }
         
@@ -778,7 +778,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static IntPtr wglGetPbufferDCEXT_Lazy(IntPtr hPbuffer)
         {
-            _wglGetPbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCEXT");
+            _wglGetPbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetPbufferDCEXT");
             return _wglGetPbufferDCEXT_fnptr(hPbuffer);
         }
         
@@ -787,7 +787,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribfvARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
-            _wglGetPixelFormatAttribfvARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvARB");
+            _wglGetPixelFormatAttribfvARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvARB");
             return _wglGetPixelFormatAttribfvARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
@@ -796,7 +796,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribfvEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, float* pfValues)
         {
-            _wglGetPixelFormatAttribfvEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvEXT");
+            _wglGetPixelFormatAttribfvEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribfvEXT");
             return _wglGetPixelFormatAttribfvEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, pfValues);
         }
         
@@ -805,7 +805,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribivARB_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
-            _wglGetPixelFormatAttribivARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivARB");
+            _wglGetPixelFormatAttribivARB_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivARB");
             return _wglGetPixelFormatAttribivARB_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
@@ -814,16 +814,16 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetPixelFormatAttribivEXT_Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
         {
-            _wglGetPixelFormatAttribivEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivEXT");
+            _wglGetPixelFormatAttribivEXT_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetPixelFormatAttribivEXT");
             return _wglGetPixelFormatAttribivEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
         /// <summary><b>[entry point: <c>wglGetProcAddress</c>]</b></summary>
-        public static delegate* unmanaged<char*, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
+        public static delegate* unmanaged<byte*, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static IntPtr wglGetProcAddress_Lazy(char* lpszProc)
+        private static IntPtr wglGetProcAddress_Lazy(byte* lpszProc)
         {
-            _wglGetProcAddress_fnptr = (delegate* unmanaged<char*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetProcAddress");
+            _wglGetProcAddress_fnptr = (delegate* unmanaged<byte*, IntPtr>)WGLLoader.BindingsContext.GetProcAddress("wglGetProcAddress");
             return _wglGetProcAddress_fnptr(lpszProc);
         }
         
@@ -832,7 +832,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetSwapIntervalEXT_Lazy()
         {
-            _wglGetSwapIntervalEXT_fnptr = (delegate* unmanaged<int>)GLLoader.BindingsContext.GetProcAddress("wglGetSwapIntervalEXT");
+            _wglGetSwapIntervalEXT_fnptr = (delegate* unmanaged<int>)WGLLoader.BindingsContext.GetProcAddress("wglGetSwapIntervalEXT");
             return _wglGetSwapIntervalEXT_fnptr();
         }
         
@@ -841,7 +841,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetSyncValuesOML_Lazy(IntPtr hdc, long* ust, long* msc, long* sbc)
         {
-            _wglGetSyncValuesOML_fnptr = (delegate* unmanaged<IntPtr, long*, long*, long*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetSyncValuesOML");
+            _wglGetSyncValuesOML_fnptr = (delegate* unmanaged<IntPtr, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetSyncValuesOML");
             return _wglGetSyncValuesOML_fnptr(hdc, ust, msc, sbc);
         }
         
@@ -850,7 +850,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetVideoDeviceNV_Lazy(IntPtr hDC, int numDevices, IntPtr* hVideoDevice)
         {
-            _wglGetVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetVideoDeviceNV");
+            _wglGetVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetVideoDeviceNV");
             return _wglGetVideoDeviceNV_fnptr(hDC, numDevices, hVideoDevice);
         }
         
@@ -859,7 +859,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglGetVideoInfoNV_Lazy(IntPtr hpVideoDevice, ulong* pulCounterOutputPbuffer, ulong* pulCounterOutputVideo)
         {
-            _wglGetVideoInfoNV_fnptr = (delegate* unmanaged<IntPtr, ulong*, ulong*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetVideoInfoNV");
+            _wglGetVideoInfoNV_fnptr = (delegate* unmanaged<IntPtr, ulong*, ulong*, int>)WGLLoader.BindingsContext.GetProcAddress("wglGetVideoInfoNV");
             return _wglGetVideoInfoNV_fnptr(hpVideoDevice, pulCounterOutputPbuffer, pulCounterOutputVideo);
         }
         
@@ -868,7 +868,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglIsEnabledFrameLockI3D_Lazy(int* pFlag)
         {
-            _wglIsEnabledFrameLockI3D_fnptr = (delegate* unmanaged<int*, int>)GLLoader.BindingsContext.GetProcAddress("wglIsEnabledFrameLockI3D");
+            _wglIsEnabledFrameLockI3D_fnptr = (delegate* unmanaged<int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglIsEnabledFrameLockI3D");
             return _wglIsEnabledFrameLockI3D_fnptr(pFlag);
         }
         
@@ -877,7 +877,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglIsEnabledGenlockI3D_Lazy(IntPtr hDC, int* pFlag)
         {
-            _wglIsEnabledGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglIsEnabledGenlockI3D");
+            _wglIsEnabledGenlockI3D_fnptr = (delegate* unmanaged<IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglIsEnabledGenlockI3D");
             return _wglIsEnabledGenlockI3D_fnptr(hDC, pFlag);
         }
         
@@ -886,7 +886,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglJoinSwapGroupNV_Lazy(IntPtr hDC, uint group)
         {
-            _wglJoinSwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglJoinSwapGroupNV");
+            _wglJoinSwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglJoinSwapGroupNV");
             return _wglJoinSwapGroupNV_fnptr(hDC, group);
         }
         
@@ -895,7 +895,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static byte wglLoadDisplayColorTableEXT_Lazy(ushort* table, uint length)
         {
-            _wglLoadDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort*, uint, byte>)GLLoader.BindingsContext.GetProcAddress("wglLoadDisplayColorTableEXT");
+            _wglLoadDisplayColorTableEXT_fnptr = (delegate* unmanaged<ushort*, uint, byte>)WGLLoader.BindingsContext.GetProcAddress("wglLoadDisplayColorTableEXT");
             return _wglLoadDisplayColorTableEXT_fnptr(table, length);
         }
         
@@ -904,7 +904,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglLockVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
-            _wglLockVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglLockVideoCaptureDeviceNV");
+            _wglLockVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglLockVideoCaptureDeviceNV");
             return _wglLockVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
@@ -913,7 +913,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglMakeAssociatedContextCurrentAMD_Lazy(IntPtr hglrc)
         {
-            _wglMakeAssociatedContextCurrentAMD_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglMakeAssociatedContextCurrentAMD");
+            _wglMakeAssociatedContextCurrentAMD_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeAssociatedContextCurrentAMD");
             return _wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
         }
         
@@ -922,7 +922,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglMakeContextCurrentARB_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
-            _wglMakeContextCurrentARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentARB");
+            _wglMakeContextCurrentARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentARB");
             return _wglMakeContextCurrentARB_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
@@ -931,7 +931,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglMakeContextCurrentEXT_Lazy(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc)
         {
-            _wglMakeContextCurrentEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentEXT");
+            _wglMakeContextCurrentEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeContextCurrentEXT");
             return _wglMakeContextCurrentEXT_fnptr(hDrawDC, hReadDC, hglrc);
         }
         
@@ -940,7 +940,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglMakeCurrent_Lazy(IntPtr hDc, IntPtr newContext)
         {
-            _wglMakeCurrent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglMakeCurrent");
+            _wglMakeCurrent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglMakeCurrent");
             return _wglMakeCurrent_fnptr(hDc, newContext);
         }
         
@@ -949,7 +949,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryCurrentContextNV_Lazy(int iAttribute, int* piValue)
         {
-            _wglQueryCurrentContextNV_fnptr = (delegate* unmanaged<int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryCurrentContextNV");
+            _wglQueryCurrentContextNV_fnptr = (delegate* unmanaged<int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryCurrentContextNV");
             return _wglQueryCurrentContextNV_fnptr(iAttribute, piValue);
         }
         
@@ -958,7 +958,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryFrameCountNV_Lazy(IntPtr hDC, uint* count)
         {
-            _wglQueryFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryFrameCountNV");
+            _wglQueryFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameCountNV");
             return _wglQueryFrameCountNV_fnptr(hDC, count);
         }
         
@@ -967,7 +967,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryFrameLockMasterI3D_Lazy(int* pFlag)
         {
-            _wglQueryFrameLockMasterI3D_fnptr = (delegate* unmanaged<int*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryFrameLockMasterI3D");
+            _wglQueryFrameLockMasterI3D_fnptr = (delegate* unmanaged<int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameLockMasterI3D");
             return _wglQueryFrameLockMasterI3D_fnptr(pFlag);
         }
         
@@ -976,7 +976,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryFrameTrackingI3D_Lazy(uint* pFrameCount, uint* pMissedFrames, float* pLastMissedUsage)
         {
-            _wglQueryFrameTrackingI3D_fnptr = (delegate* unmanaged<uint*, uint*, float*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryFrameTrackingI3D");
+            _wglQueryFrameTrackingI3D_fnptr = (delegate* unmanaged<uint*, uint*, float*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryFrameTrackingI3D");
             return _wglQueryFrameTrackingI3D_fnptr(pFrameCount, pMissedFrames, pLastMissedUsage);
         }
         
@@ -985,7 +985,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryGenlockMaxSourceDelayI3D_Lazy(IntPtr hDC, uint* uMaxLineDelay, uint* uMaxPixelDelay)
         {
-            _wglQueryGenlockMaxSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryGenlockMaxSourceDelayI3D");
+            _wglQueryGenlockMaxSourceDelayI3D_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryGenlockMaxSourceDelayI3D");
             return _wglQueryGenlockMaxSourceDelayI3D_fnptr(hDC, uMaxLineDelay, uMaxPixelDelay);
         }
         
@@ -994,7 +994,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryMaxSwapGroupsNV_Lazy(IntPtr hDC, uint* maxGroups, uint* maxBarriers)
         {
-            _wglQueryMaxSwapGroupsNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryMaxSwapGroupsNV");
+            _wglQueryMaxSwapGroupsNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryMaxSwapGroupsNV");
             return _wglQueryMaxSwapGroupsNV_fnptr(hDC, maxGroups, maxBarriers);
         }
         
@@ -1003,7 +1003,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryPbufferARB_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
-            _wglQueryPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryPbufferARB");
+            _wglQueryPbufferARB_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryPbufferARB");
             return _wglQueryPbufferARB_fnptr(hPbuffer, iAttribute, piValue);
         }
         
@@ -1012,7 +1012,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryPbufferEXT_Lazy(IntPtr hPbuffer, int iAttribute, int* piValue)
         {
-            _wglQueryPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryPbufferEXT");
+            _wglQueryPbufferEXT_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryPbufferEXT");
             return _wglQueryPbufferEXT_fnptr(hPbuffer, iAttribute, piValue);
         }
         
@@ -1021,7 +1021,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQuerySwapGroupNV_Lazy(IntPtr hDC, uint* group, uint* barrier)
         {
-            _wglQuerySwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglQuerySwapGroupNV");
+            _wglQuerySwapGroupNV_fnptr = (delegate* unmanaged<IntPtr, uint*, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQuerySwapGroupNV");
             return _wglQuerySwapGroupNV_fnptr(hDC, group, barrier);
         }
         
@@ -1030,7 +1030,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglQueryVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice, int iAttribute, int* piValue)
         {
-            _wglQueryVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglQueryVideoCaptureDeviceNV");
+            _wglQueryVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglQueryVideoCaptureDeviceNV");
             return _wglQueryVideoCaptureDeviceNV_fnptr(hDc, hDevice, iAttribute, piValue);
         }
         
@@ -1039,7 +1039,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglRealizeLayerPalette_Lazy(IntPtr hdc, int iLayerPlane, int bRealize)
         {
-            _wglRealizeLayerPalette_fnptr = (delegate* unmanaged<IntPtr, int, int, int>)GLLoader.BindingsContext.GetProcAddress("wglRealizeLayerPalette");
+            _wglRealizeLayerPalette_fnptr = (delegate* unmanaged<IntPtr, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglRealizeLayerPalette");
             return _wglRealizeLayerPalette_fnptr(hdc, iLayerPlane, bRealize);
         }
         
@@ -1048,7 +1048,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleaseImageBufferEventsI3D_Lazy(IntPtr hDC, IntPtr* pAddress, uint count)
         {
-            _wglReleaseImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglReleaseImageBufferEventsI3D");
+            _wglReleaseImageBufferEventsI3D_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseImageBufferEventsI3D");
             return _wglReleaseImageBufferEventsI3D_fnptr(hDC, pAddress, count);
         }
         
@@ -1057,7 +1057,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleasePbufferDCARB_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
-            _wglReleasePbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCARB");
+            _wglReleasePbufferDCARB_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCARB");
             return _wglReleasePbufferDCARB_fnptr(hPbuffer, hDC);
         }
         
@@ -1066,7 +1066,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleasePbufferDCEXT_Lazy(IntPtr hPbuffer, IntPtr hDC)
         {
-            _wglReleasePbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCEXT");
+            _wglReleasePbufferDCEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleasePbufferDCEXT");
             return _wglReleasePbufferDCEXT_fnptr(hPbuffer, hDC);
         }
         
@@ -1075,7 +1075,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleaseTexImageARB_Lazy(IntPtr hPbuffer, int iBuffer)
         {
-            _wglReleaseTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)GLLoader.BindingsContext.GetProcAddress("wglReleaseTexImageARB");
+            _wglReleaseTexImageARB_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseTexImageARB");
             return _wglReleaseTexImageARB_fnptr(hPbuffer, iBuffer);
         }
         
@@ -1084,7 +1084,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoCaptureDeviceNV_Lazy(IntPtr hDc, IntPtr hDevice)
         {
-            _wglReleaseVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglReleaseVideoCaptureDeviceNV");
+            _wglReleaseVideoCaptureDeviceNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoCaptureDeviceNV");
             return _wglReleaseVideoCaptureDeviceNV_fnptr(hDc, hDevice);
         }
         
@@ -1093,7 +1093,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoDeviceNV_Lazy(IntPtr hVideoDevice)
         {
-            _wglReleaseVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglReleaseVideoDeviceNV");
+            _wglReleaseVideoDeviceNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoDeviceNV");
             return _wglReleaseVideoDeviceNV_fnptr(hVideoDevice);
         }
         
@@ -1102,7 +1102,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglReleaseVideoImageNV_Lazy(IntPtr hPbuffer, int iVideoBuffer)
         {
-            _wglReleaseVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, int, int>)GLLoader.BindingsContext.GetProcAddress("wglReleaseVideoImageNV");
+            _wglReleaseVideoImageNV_fnptr = (delegate* unmanaged<IntPtr, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglReleaseVideoImageNV");
             return _wglReleaseVideoImageNV_fnptr(hPbuffer, iVideoBuffer);
         }
         
@@ -1111,7 +1111,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglResetFrameCountNV_Lazy(IntPtr hDC)
         {
-            _wglResetFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglResetFrameCountNV");
+            _wglResetFrameCountNV_fnptr = (delegate* unmanaged<IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglResetFrameCountNV");
             return _wglResetFrameCountNV_fnptr(hDC);
         }
         
@@ -1120,7 +1120,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglRestoreBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc)
         {
-            _wglRestoreBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int>)GLLoader.BindingsContext.GetProcAddress("wglRestoreBufferRegionARB");
+            _wglRestoreBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglRestoreBufferRegionARB");
             return _wglRestoreBufferRegionARB_fnptr(hRegion, x, y, width, height, xSrc, ySrc);
         }
         
@@ -1129,7 +1129,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSaveBufferRegionARB_Lazy(IntPtr hRegion, int x, int y, int width, int height)
         {
-            _wglSaveBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int>)GLLoader.BindingsContext.GetProcAddress("wglSaveBufferRegionARB");
+            _wglSaveBufferRegionARB_fnptr = (delegate* unmanaged<IntPtr, int, int, int, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSaveBufferRegionARB");
             return _wglSaveBufferRegionARB_fnptr(hRegion, x, y, width, height);
         }
         
@@ -1138,7 +1138,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSendPbufferToVideoNV_Lazy(IntPtr hPbuffer, int iBufferType, ulong* pulCounterPbuffer, int bBlock)
         {
-            _wglSendPbufferToVideoNV_fnptr = (delegate* unmanaged<IntPtr, int, ulong*, int, int>)GLLoader.BindingsContext.GetProcAddress("wglSendPbufferToVideoNV");
+            _wglSendPbufferToVideoNV_fnptr = (delegate* unmanaged<IntPtr, int, ulong*, int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSendPbufferToVideoNV");
             return _wglSendPbufferToVideoNV_fnptr(hPbuffer, iBufferType, pulCounterPbuffer, bBlock);
         }
         
@@ -1147,7 +1147,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
-            _wglSetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetDigitalVideoParametersI3D");
+            _wglSetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetDigitalVideoParametersI3D");
             return _wglSetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -1156,7 +1156,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetGammaTableI3D_Lazy(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue)
         {
-            _wglSetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetGammaTableI3D");
+            _wglSetGammaTableI3D_fnptr = (delegate* unmanaged<IntPtr, int, ushort*, ushort*, ushort*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetGammaTableI3D");
             return _wglSetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
         }
         
@@ -1165,7 +1165,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetGammaTableParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
-            _wglSetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetGammaTableParametersI3D");
+            _wglSetGammaTableParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetGammaTableParametersI3D");
             return _wglSetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
@@ -1174,7 +1174,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
-            _wglSetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetLayerPaletteEntries");
+            _wglSetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetLayerPaletteEntries");
             return _wglSetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
@@ -1183,7 +1183,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetPbufferAttribARB_Lazy(IntPtr hPbuffer, int* piAttribList)
         {
-            _wglSetPbufferAttribARB_fnptr = (delegate* unmanaged<IntPtr, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetPbufferAttribARB");
+            _wglSetPbufferAttribARB_fnptr = (delegate* unmanaged<IntPtr, int*, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetPbufferAttribARB");
             return _wglSetPbufferAttribARB_fnptr(hPbuffer, piAttribList);
         }
         
@@ -1192,7 +1192,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSetStereoEmitterState3DL_Lazy(IntPtr hDC, uint uState)
         {
-            _wglSetStereoEmitterState3DL_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglSetStereoEmitterState3DL");
+            _wglSetStereoEmitterState3DL_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglSetStereoEmitterState3DL");
             return _wglSetStereoEmitterState3DL_fnptr(hDC, uState);
         }
         
@@ -1201,7 +1201,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglShareLists_Lazy(IntPtr hrcSrvShare, IntPtr hrcSrvSource)
         {
-            _wglShareLists_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglShareLists");
+            _wglShareLists_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglShareLists");
             return _wglShareLists_fnptr(hrcSrvShare, hrcSrvSource);
         }
         
@@ -1210,7 +1210,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static long wglSwapBuffersMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder)
         {
-            _wglSwapBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long>)GLLoader.BindingsContext.GetProcAddress("wglSwapBuffersMscOML");
+            _wglSwapBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long>)WGLLoader.BindingsContext.GetProcAddress("wglSwapBuffersMscOML");
             return _wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
         }
         
@@ -1219,7 +1219,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSwapIntervalEXT_Lazy(int interval)
         {
-            _wglSwapIntervalEXT_fnptr = (delegate* unmanaged<int, int>)GLLoader.BindingsContext.GetProcAddress("wglSwapIntervalEXT");
+            _wglSwapIntervalEXT_fnptr = (delegate* unmanaged<int, int>)WGLLoader.BindingsContext.GetProcAddress("wglSwapIntervalEXT");
             return _wglSwapIntervalEXT_fnptr(interval);
         }
         
@@ -1228,7 +1228,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglSwapLayerBuffers_Lazy(IntPtr hdc, uint fuFlags)
         {
-            _wglSwapLayerBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffers");
+            _wglSwapLayerBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffers");
             return _wglSwapLayerBuffers_fnptr(hdc, fuFlags);
         }
         
@@ -1237,7 +1237,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static long wglSwapLayerBuffersMscOML_Lazy(IntPtr hdc, int fuPlanes, long target_msc, long divisor, long remainder)
         {
-            _wglSwapLayerBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, int, long, long, long, long>)GLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffersMscOML");
+            _wglSwapLayerBuffersMscOML_fnptr = (delegate* unmanaged<IntPtr, int, long, long, long, long>)WGLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffersMscOML");
             return _wglSwapLayerBuffersMscOML_fnptr(hdc, fuPlanes, target_msc, divisor, remainder);
         }
         
@@ -1246,7 +1246,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmaps_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
-            _wglUseFontBitmaps_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontBitmaps");
+            _wglUseFontBitmaps_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmaps");
             return _wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
         }
         
@@ -1255,7 +1255,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmapsA_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
-            _wglUseFontBitmapsA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsA");
+            _wglUseFontBitmapsA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsA");
             return _wglUseFontBitmapsA_fnptr(hDC, first, count, listBase);
         }
         
@@ -1264,7 +1264,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontBitmapsW_Lazy(IntPtr hDC, uint first, uint count, uint listBase)
         {
-            _wglUseFontBitmapsW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsW");
+            _wglUseFontBitmapsW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontBitmapsW");
             return _wglUseFontBitmapsW_fnptr(hDC, first, count, listBase);
         }
         
@@ -1273,7 +1273,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlines_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
-            _wglUseFontOutlines_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontOutlines");
+            _wglUseFontOutlines_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlines");
             return _wglUseFontOutlines_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1282,7 +1282,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlinesA_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
-            _wglUseFontOutlinesA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesA");
+            _wglUseFontOutlinesA_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesA");
             return _wglUseFontOutlinesA_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1291,7 +1291,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglUseFontOutlinesW_Lazy(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf)
         {
-            _wglUseFontOutlinesW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesW");
+            _wglUseFontOutlinesW_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, float, float, int, IntPtr, int>)WGLLoader.BindingsContext.GetProcAddress("wglUseFontOutlinesW");
             return _wglUseFontOutlinesW_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
         }
         
@@ -1300,7 +1300,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglWaitForMscOML_Lazy(IntPtr hdc, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc)
         {
-            _wglWaitForMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long*, long*, long*, int>)GLLoader.BindingsContext.GetProcAddress("wglWaitForMscOML");
+            _wglWaitForMscOML_fnptr = (delegate* unmanaged<IntPtr, long, long, long, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglWaitForMscOML");
             return _wglWaitForMscOML_fnptr(hdc, target_msc, divisor, remainder, ust, msc, sbc);
         }
         
@@ -1309,7 +1309,7 @@ namespace OpenTK.Graphics.Wgl
         [UnmanagedCallersOnly]
         private static int wglWaitForSbcOML_Lazy(IntPtr hdc, long target_sbc, long* ust, long* msc, long* sbc)
         {
-            _wglWaitForSbcOML_fnptr = (delegate* unmanaged<IntPtr, long, long*, long*, long*, int>)GLLoader.BindingsContext.GetProcAddress("wglWaitForSbcOML");
+            _wglWaitForSbcOML_fnptr = (delegate* unmanaged<IntPtr, long, long*, long*, long*, int>)WGLLoader.BindingsContext.GetProcAddress("wglWaitForSbcOML");
             return _wglWaitForSbcOML_fnptr(hdc, target_sbc, ust, msc, sbc);
         }
         

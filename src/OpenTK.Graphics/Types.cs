@@ -45,18 +45,50 @@ namespace OpenTK.Graphics
     namespace Glx
     {
         /// <summary>
-        /// Opaque struct for X11 display.
+        /// Opaque struct pointer for X11 <c>Display*</c>.
         /// </summary>
-        public struct Display { }
-
-        public struct DisplayPtr {
+        public struct DisplayPtr
+        {
+            /// <summary>
+            /// The underlying pointer value.
+            /// </summary>
             public IntPtr Value;
+
+            /// <summary>
+            /// Constructs a new <c>Display*</c> wrapper struct from a <c>Display</c> pointer.
+            /// </summary>
+            /// <param name="value">The display pointer.</param>
+            public DisplayPtr(IntPtr value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator IntPtr(DisplayPtr handle) => handle.Value;
+            public static explicit operator DisplayPtr(IntPtr ptr) => new DisplayPtr(ptr);
         }
 
         /// <summary>
-        /// Opaque struct for X11 screen.
+        /// Opaque struct pointer for X11 <c>Screen*</c>.
         /// </summary>
-        public struct Screen { }
+        public struct ScreenPtr
+        {
+            /// <summary>
+            /// The underlying pointer value.
+            /// </summary>
+            public IntPtr Value;
+
+            /// <summary>
+            /// Constructs a new <c>Screen*</c> wrapper struct from a <c>Screen</c> pointer.
+            /// </summary>
+            /// <param name="value">The screen pointer.</param>
+            public ScreenPtr(IntPtr value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator IntPtr(ScreenPtr handle) => handle.Value;
+            public static explicit operator ScreenPtr(IntPtr ptr) => new ScreenPtr(ptr);
+        }
 
         /// <summary>
         /// An X11 window handle.
@@ -151,9 +183,27 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Opaque struct for X11 XVisualInfo.
+        /// Opaque struct pointer for X11 <c>XVisualInfo*</c>.
         /// </summary>
-        public struct XVisualInfo { }
+        public struct XVisualInfoPtr 
+        {
+            /// <summary>
+            /// The underlying pointer value.
+            /// </summary>
+            public IntPtr Value;
+
+            /// <summary>
+            /// Constructs a new <c>XVisualInfo*</c> wrapper struct from a <c>XVisualInfo</c> pointer.
+            /// </summary>
+            /// <param name="value">The screen pointer.</param>
+            public XVisualInfoPtr(IntPtr value)
+            {
+                Value = value;
+            }
+
+            public static explicit operator IntPtr(XVisualInfoPtr handle) => handle.Value;
+            public static explicit operator XVisualInfoPtr(IntPtr ptr) => new XVisualInfoPtr(ptr);
+        }
 
         /// <summary>
         /// A GLX GLXFBConfigID handle.

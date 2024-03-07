@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -187,11 +187,11 @@ namespace OpenTK.Graphics.Wgl
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetProcAddress(char*)"/>
+        /// <inheritdoc cref="GetProcAddress(byte*)"/>
         public static unsafe IntPtr GetProcAddress(string lpszProc)
         {
             IntPtr returnValue;
-            char* lpszProc_ptr = (char*)Marshal.StringToCoTaskMemAuto(lpszProc);
+            byte* lpszProc_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(lpszProc);
             returnValue = GetProcAddress(lpszProc_ptr);
             Marshal.FreeCoTaskMem((IntPtr)lpszProc_ptr);
             return returnValue;

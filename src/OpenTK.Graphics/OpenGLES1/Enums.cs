@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -741,7 +741,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Float = 5126,
     }
     ///<summary>Used in <see cref="GL.EXT.BlendEquationEXT" />, <see cref="GL.OES.BlendEquationOES" />, <see cref="GL.OES.BlendEquationSeparateOES" /></summary>
-    public enum BlendEquationModeEXT : uint
+    public enum BlendEquationMode : uint
     {
         FuncAddExt = 32774,
         MinExt = 32775,
@@ -774,7 +774,7 @@ namespace OpenTK.Graphics.OpenGLES1
         True = 1,
     }
     ///<summary>Used in <see cref="GL.OES.MapBufferOES" /></summary>
-    public enum BufferAccessARB : uint
+    public enum BufferAccess : uint
     {
     }
     ///<summary>Used in <see cref="GL.QCOM.EndTilingQCOM" />, <see cref="GL.QCOM.StartTilingQCOM" /></summary>
@@ -815,7 +815,7 @@ namespace OpenTK.Graphics.OpenGLES1
         MultisampleBufferBit7Qcom = 2147483648,
     }
     ///<summary>Used in <see cref="GL.GetBufferParameteriv" /></summary>
-    public enum BufferPNameARB : uint
+    public enum BufferPName : uint
     {
         BufferSize = 34660,
         BufferUsage = 34661,
@@ -836,13 +836,13 @@ namespace OpenTK.Graphics.OpenGLES1
         ElementArrayBuffer = 34963,
     }
     ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BufferData" />, <see cref="GL.BufferSubData" />, ...</summary>
-    public enum BufferTargetARB : uint
+    public enum BufferTarget : uint
     {
         ArrayBuffer = 34962,
         ElementArrayBuffer = 34963,
     }
     ///<summary>Used in <see cref="GL.BufferData" /></summary>
-    public enum BufferUsageARB : uint
+    public enum BufferUsage : uint
     {
         StaticDraw = 35044,
         DynamicDraw = 35048,

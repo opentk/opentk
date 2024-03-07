@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-16 17:21:50 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -49,14 +49,14 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="target"> Specifies the target to which the buffer object is bound, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBuffer.xhtml" /></remarks>
-        public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
+        public static void BindBuffer(BufferTarget target, int buffer) => GLPointers._glBindBuffer_fnptr((uint)target, buffer);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindBufferBase</c>]</b><br/> Bind a buffer object to an indexed buffer target. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_SHADER_STORAGE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER or GL_UNIFORM_BUFFER. </param>
         /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
         /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBufferBase.xhtml" /></remarks>
-        public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
+        public static void BindBufferBase(BufferTarget target, uint index, int buffer) => GLPointers._glBindBufferBase_fnptr((uint)target, index, buffer);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindBufferRange</c>]</b><br/> Bind a range within a buffer object to an indexed buffer target. </summary>
         /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_SHADER_STORAGE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER or GL_UNIFORM_BUFFER. </param>
@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="offset"> The starting offset in basic machine units into the buffer object buffer. </param>
         /// <param name="size"> The amount of data in machine units that can be read from the buffet object while used as an indexed target. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindBufferRange.xhtml" /></remarks>
-        public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
+        public static void BindBufferRange(BufferTarget target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRange_fnptr((uint)target, index, buffer, offset, size);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBindFramebuffer</c>]</b><br/> Bind a framebuffer to a framebuffer target. </summary>
         /// <param name="target"> Specifies the framebuffer target of the binding operation. </param>
@@ -82,7 +82,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
         /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted loads and stores. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindImageTexture.xhtml" /></remarks>
-        public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
+        public static void BindImageTexture(uint unit, int texture, int level, bool layered, int layer, BufferAccess access, InternalFormat format) => GLPointers._glBindImageTexture_fnptr(unit, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glBindProgramPipeline</c>]</b><br/> Bind a program pipeline to the current context. </summary>
         /// <param name="pipeline"> Specifies the name of the pipeline object to bind to the context. </param>
@@ -141,26 +141,26 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendEquation</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquation.xhtml" /></remarks>
-        public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
+        public static void BlendEquation(BlendEquationMode mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendEquationi</c>]</b><br/> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
         /// <param name="buf"> for glBlendEquationi, specifies the index of the draw buffer for which to set the blend equation. </param>
         /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquation.xhtml" /></remarks>
-        public static void BlendEquationi(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationi_fnptr(buf, (uint)mode);
+        public static void BlendEquationi(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationi_fnptr(buf, (uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendEquationSeparate</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquationSeparate.xhtml" /></remarks>
-        public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparate_fnptr((uint)modeRGB, (uint)modeAlpha);
+        public static void BlendEquationSeparate(BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparate_fnptr((uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v3.2]</b> <b>[entry point: <c>glBlendEquationSeparatei</c>]</b><br/> Set the RGB blend equation and the alpha blend equation separately. </summary>
         /// <param name="buf"> for glBlendEquationSeparatei, specifies the index of the draw buffer for which to set the blend equations. </param>
         /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBlendEquationSeparate.xhtml" /></remarks>
-        public static void BlendEquationSeparatei(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparatei_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+        public static void BlendEquationSeparatei(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparatei_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBlendFunc</c>]</b><br/> Specify pixel arithmetic. </summary>
         /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
@@ -212,7 +212,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="data"> Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied. </param>
         /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBufferData.xhtml" /></remarks>
-        public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
+        public static void BufferData(BufferTarget target, nint size, void* data, BufferUsage usage) => GLPointers._glBufferData_fnptr((uint)target, size, data, (uint)usage);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glBufferSubData</c>]</b><br/> Updates a subset of a buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glBufferSubData, which must be one of the buffer binding targets in the following table: </param>
@@ -220,7 +220,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="size"> Specifies the size in bytes of the data store region being replaced. </param>
         /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBufferSubData.xhtml" /></remarks>
-        public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
+        public static void BufferSubData(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubData_fnptr((uint)target, offset, size, data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glCheckFramebufferStatus</c>]</b><br/> Check the completeness status of a framebuffer. </summary>
         /// <param name="target"> Specify the target of the framebuffer completeness check. </param>
@@ -727,7 +727,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="offset"> Specifies the start of the buffer subrange, in basic machine units. </param>
         /// <param name="length"> Specifies the length of the buffer subrange, in basic machine units. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glFlushMappedBufferRange.xhtml" /></remarks>
-        public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
+        public static void FlushMappedBufferRange(BufferTarget target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glFramebufferParameteri</c>]</b><br/> Set a named parameter of a framebuffer. </summary>
         /// <param name="target"> The target of the operation, which must be GL_READ_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER or GL_FRAMEBUFFER. </param>
@@ -901,7 +901,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGet.xhtml" /></remarks>
-        public static void GetBooleani_v(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleani_v_fnptr((uint)target, index, (byte*)data);
+        public static void GetBooleani_v(BufferTarget target, uint index, bool* data) => GLPointers._glGetBooleani_v_fnptr((uint)target, index, (byte*)data);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetBooleanv</c>]</b><br/> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
@@ -914,21 +914,21 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
         /// <param name="data"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetBufferParameteri64v(BufferTargetARB target, BufferPNameARB pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferParameteri64v(BufferTarget target, BufferPName pname, long* parameters) => GLPointers._glGetBufferParameteri64v_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glGetBufferParameteriv</c>]</b><br/> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
         /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
         /// <param name="data"> Returns the requested parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferParameter.xhtml" /></remarks>
-        public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferParameteriv(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetBufferPointerv</c>]</b><br/> Return the pointer to a mapped buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="pname"> Specifies the pointer to be returned. The symbolic constant must be GL_BUFFER_MAP_POINTER. </param>
         /// <param name="parameters"> Returns the pointer value specified by pname. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetBufferPointerv.xhtml" /></remarks>
-        public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointerv_fnptr((uint)target, (uint)pname, parameters);
+        public static void GetBufferPointerv(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointerv_fnptr((uint)target, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> <b>[entry point: <c>glGetDebugMessageLog</c>]</b><br/> Retrieve messages from the debug message log. </summary>
         /// <param name="count"> The number of debug messages to retrieve from the log. </param>
@@ -1096,7 +1096,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_ATTACHED_SHADERS, GL_COMPUTE_WORK_GROUP_SIZE, GL_DELETE_STATUS, GL_GEOMETRY_LINKED_INPUT_TYPE, GL_GEOMETRY_LINKED_OUTPUT_TYPE, GL_GEOMETRY_LINKED_VERTICES_OUT, GL_GEOMETRY_SHADER_INVOCATIONS, GL_INFO_LOG_LENGTH, GL_LINK_STATUS, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_PROGRAM_SEPARABLE, GL_TESS_CONTROL_OUTPUT_VERTICES, GL_TESS_GEN_MODE, GL_TESS_GEN_POINT_MODE, GL_TESS_GEN_SPACING, GL_TESS_GEN_VERTEX_ORDER, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH and GL_VALIDATE_STATUS.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetProgramiv.xhtml" /></remarks>
-        public static void GetProgramiv(int program, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
+        public static void GetProgramiv(int program, ProgramProperty pname, int* parameters) => GLPointers._glGetProgramiv_fnptr(program, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glGetProgramPipelineInfoLog</c>]</b><br/> Retrieve the info log string from a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object from which to retrieve the info log. </param>
@@ -1491,7 +1491,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="length"> Specifies the length of the range to be mapped. </param>
         /// <param name="access"> Specifies a combination of access flags indicating the desired access to the range. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMapBufferRange.xhtml" /></remarks>
-        public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
+        public static void* MapBufferRange(BufferTarget target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRange_fnptr((uint)target, offset, length, (uint)access);
         
         /// <summary> <b>[requires: v3.1]</b> <b>[entry point: <c>glMemoryBarrier</c>]</b><br/> Defines a barrier ordering memory transactions. </summary>
         /// <param name="barriers"> Specifies the barriers to insert. Must be a bitwise combination of GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT, GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT, GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT, GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_SHADER_STORAGE_BARRIER_BIT. If the special value GL_ALL_BARRIER_BITS is specified, all supported barriers will be inserted. </param>
@@ -2453,7 +2453,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glUnmapBuffer</c>]</b><br/> Map a section of a buffer object&apos;s data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glMapBufferRange.xhtml" /></remarks>
-        public static bool UnmapBuffer(BufferTargetARB target) => GLPointers._glUnmapBuffer_fnptr((uint)target) != 0;
+        public static bool UnmapBuffer(BufferTarget target) => GLPointers._glUnmapBuffer_fnptr((uint)target) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glUseProgram</c>]</b><br/> Installs a program object as part of current rendering state. </summary>
         /// <param name="program">Specifies the handle of the program object whose executables are to be used as part of current rendering state.</param>
@@ -2754,13 +2754,13 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void BindProgramPipelineEXT(int pipeline) => GLPointers._glBindProgramPipelineEXT_fnptr(pipeline);
             
             /// <summary> <b>[requires: GL_EXT_blend_minmax]</b> <b>[entry point: <c>glBlendEquationEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationEXT(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
+            public static void BlendEquationEXT(BlendEquationMode mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendEquationiEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationiEXT(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationiEXT_fnptr(buf, (uint)mode);
+            public static void BlendEquationiEXT(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationiEXT_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendEquationSeparateiEXT</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateiEXT(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateiEXT_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateiEXT(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateiEXT_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendFunciEXT</c>]</b><br/>  </summary>
             public static void BlendFunciEXT(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunciEXT_fnptr(buf, (uint)src, (uint)dst);
@@ -2781,7 +2781,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void BufferStorageExternalEXT(All target, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glBufferStorageExternalEXT_fnptr((uint)target, offset, size, clientBuffer, (uint)flags);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b> <b>[entry point: <c>glBufferStorageMemEXT</c>]</b><br/>  </summary>
-            public static void BufferStorageMemEXT(BufferTargetARB target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
+            public static void BufferStorageMemEXT(BufferTarget target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_shader_pixel_local_storage2]</b> <b>[entry point: <c>glClearPixelLocalStorageuiEXT</c>]</b><br/>  </summary>
             public static void ClearPixelLocalStorageuiEXT(int offset, int n, uint* values) => GLPointers._glClearPixelLocalStorageuiEXT_fnptr(offset, n, values);
@@ -2877,7 +2877,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void EndQueryEXT(QueryTarget target) => GLPointers._glEndQueryEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range]</b> <b>[entry point: <c>glFlushMappedBufferRangeEXT</c>]</b><br/>  </summary>
-            public static void FlushMappedBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
+            public static void FlushMappedBufferRangeEXT(BufferTarget target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
             
             /// <summary> <b>[requires: GL_EXT_shader_framebuffer_fetch_non_coherent]</b> <b>[entry point: <c>glFramebufferFetchBarrierEXT</c>]</b><br/>  </summary>
             public static void FramebufferFetchBarrierEXT() => GLPointers._glFramebufferFetchBarrierEXT_fnptr();
@@ -3018,7 +3018,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void LabelObjectEXT(All type, uint obj, int length, byte* label) => GLPointers._glLabelObjectEXT_fnptr((uint)type, obj, length, label);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range]</b> <b>[entry point: <c>glMapBufferRangeEXT</c>]</b><br/>  </summary>
-            public static void* MapBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
+            public static void* MapBufferRangeEXT(BufferTarget target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b> <b>[entry point: <c>glMemoryObjectParameterivEXT</c>]</b><br/>  </summary>
             public static void MemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, int* parameters) => GLPointers._glMemoryObjectParameterivEXT_fnptr(memoryObject, (uint)pname, parameters);
@@ -3574,7 +3574,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void BlitFramebufferNV(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferNV_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment]</b> <b>[entry point: <c>glBufferAttachMemoryNV</c>]</b><br/>  </summary>
-            public static void BufferAttachMemoryNV(BufferTargetARB target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
+            public static void BufferAttachMemoryNV(BufferTarget target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b> <b>[entry point: <c>glBufferPageCommitmentMemNV</c>]</b><br/>  </summary>
             public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glBufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
@@ -4205,10 +4205,10 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void BindVertexArrayOES(int array) => GLPointers._glBindVertexArrayOES_fnptr(array);
             
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendEquationiOES</c>]</b><br/>  </summary>
-            public static void BlendEquationiOES(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationiOES_fnptr(buf, (uint)mode);
+            public static void BlendEquationiOES(uint buf, BlendEquationMode mode) => GLPointers._glBlendEquationiOES_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendEquationSeparateiOES</c>]</b><br/>  </summary>
-            public static void BlendEquationSeparateiOES(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateiOES_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateiOES(uint buf, BlendEquationMode modeRGB, BlendEquationMode modeAlpha) => GLPointers._glBlendEquationSeparateiOES_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed]</b> <b>[entry point: <c>glBlendFunciOES</c>]</b><br/>  </summary>
             public static void BlendFunciOES(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunciOES_fnptr(buf, (uint)src, (uint)dst);
@@ -4271,7 +4271,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glGetBufferPointervOES</c>]</b><br/>  </summary>
-            public static void GetBufferPointervOES_(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervOES_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_viewport_array]</b> <b>[entry point: <c>glGetFloati_vOES</c>]</b><br/>  </summary>
             public static void GetFloati_vOES(GetPName target, uint index, float* data) => GLPointers._glGetFloati_vOES_fnptr((uint)target, index, data);
@@ -4298,7 +4298,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static bool IsVertexArrayOES(int array) => GLPointers._glIsVertexArrayOES_fnptr(array) != 0;
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glMapBufferOES</c>]</b><br/>  </summary>
-            public static void* MapBufferOES(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
+            public static void* MapBufferOES(BufferTarget target, BufferAccess access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: GL_OES_sample_shading]</b> <b>[entry point: <c>glMinSampleShadingOES</c>]</b><br/>  </summary>
             public static void MinSampleShadingOES(float value) => GLPointers._glMinSampleShadingOES_fnptr(value);

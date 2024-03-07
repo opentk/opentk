@@ -298,7 +298,7 @@ namespace Generator.Parsing
                 string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
                 string mangledName = NameMangler.MangleParameterName(paramName);
 
-                BaseCSType type = ParsePType(element, currentFile, out GroupRef? groupRef);
+                BaseCSType type = ParsePType(element, currentFile, nameMangler, out GroupRef? groupRef);
                 if (groupRef != null) referencedEnumGroups.Add(groupRef);
 
                 string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
@@ -310,7 +310,7 @@ namespace Generator.Parsing
                 paramList.Add(new Parameter(type, kind, mangledName, paramLength));
             }
 
-            BaseCSType returnType = ParsePType(proto, currentFile, out GroupRef? returnGroup);
+            BaseCSType returnType = ParsePType(proto, currentFile, nameMangler, out GroupRef? returnGroup);
             if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
             
             string functionName = nameMangler.MangleFunctionName(entryPoint);
@@ -434,24 +434,13 @@ namespace Generator.Parsing
             else throw new Exception($"Could not parse expression '{expression}'");
         }
 
-        private static BaseCSType ParsePType(XElement t, GLFile currentFile, out GroupRef? groupRef)
+        private static BaseCSType ParsePType(XElement t, GLFile currentFile, NameMangler nameMangler, out GroupRef? groupRef)
         {
             string? group = t.Attribute("group")?.Value;
             if (group != null)
-            {
-                if (group.StartsWith("gl::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
-                else if (group.StartsWith("wgl::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
-                else if (group.StartsWith("glx::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
-                else
-                    groupRef = new GroupRef(group, currentFile);
-            }
+                groupRef = GroupRefFromString(group, currentFile, nameMangler);
             else
-            {
                 groupRef = null;
-            }
 
             string? className = t.Attribute("class")?.Value;
             HandleType? handle = className switch
@@ -479,12 +468,11 @@ namespace Generator.Parsing
 
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
-            BaseCSType type = ParseType(str, handle, groupRef);
-            
+            BaseCSType type = ParseType(str, handle, groupRef, nameMangler);
             return type;
         }
 
-        private static BaseCSType ParseType(string type, HandleType? handle, GroupRef? group)
+        private static BaseCSType ParseType(string type, HandleType? handle, GroupRef? group, NameMangler nameMangler)
         {
             type = type.Trim();
 
@@ -502,9 +490,33 @@ namespace Generator.Parsing
                     withoutAsterisk = withoutAsterisk[0..^"const".Length];
                 }
 
-                BaseCSType? baseType = ParseType(withoutAsterisk, handle, group);
+                BaseCSType? baseType = ParseType(withoutAsterisk, handle, group, nameMangler);
 
-                return new CSPointer(baseType, @const);
+                // Some structs are created as CSOpaqueStructs, this means that the only 
+                // valid way to use these is through a pointer. We intercept them here
+                // and create the proper CSStructPrimitive types from them.
+                // - Noggin_bops 2024-03-07
+                if (baseType is CSOpaqueStruct opaque)
+                {
+                    switch (opaque.TypeName)
+                    {
+                        // FIXME: Decide if we want `DisplayPtr`, `Display` or something like `XDisplay`?
+                        // - Noggin_bops 2024-03-07
+                        case "Display":
+                            return new CSStructPrimitive("DisplayPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "Screen":
+                            return new CSStructPrimitive("ScreenPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        case "XVisualInfo":
+                            return new CSStructPrimitive("XVisualInfoPtr", opaque.Constant, CSPrimitive.IntPtr(true));
+                        default:
+                            throw new Exception($"Unknown opaque struct type {opaque.TypeName}.");
+                    }
+                }
+                else
+                {
+                    return new CSPointer(baseType, @const);
+                }
+
             }
             else
             {
@@ -547,7 +559,7 @@ namespace Generator.Parsing
                         _ => throw new Exception("This should not happen!"),
                     };
 
-                    return new CSEnum(group.Name, group, baseType, @const);
+                    return new CSEnum(group.TranslatedName, group, baseType, @const);
                 }
 
                 BaseCSType csType;
@@ -555,10 +567,10 @@ namespace Generator.Parsing
                     csType = type switch
                     {
                         "void" => new CSVoid(@const),
-                        "GLenum" => new CSEnum(group?.Name ?? "All", group, CSPrimitive.Uint(@const), @const),
+                        "GLenum" => new CSEnum(group?.TranslatedName ?? "All", group, CSPrimitive.Uint(@const), @const),
                         "GLboolean" => new CSBool8(@const),
                         "GLbitfield" => group != null ?
-                                            new CSEnum(group.Name, group, CSPrimitive.Uint(@const), @const) :
+                                            new CSEnum(group.TranslatedName, group, CSPrimitive.Uint(@const), @const) :
                                             CSPrimitive.Uint(@const),
                         "GLvoid" => new CSVoid(@const),
                         "GLbyte" => CSPrimitive.Sbyte(@const),
@@ -614,6 +626,9 @@ namespace Generator.Parsing
                         "DWORD" => CSPrimitive.Uint(@const),
                         "FLOAT" => CSPrimitive.Float(@const),
                         "HANDLE" => CSPrimitive.IntPtr(@const),
+                        // FIXME: Do we want types for types like HDC and HGLRC
+                        // that we could use both here and in PAL2?
+                        // - Noggin_bops 2024-03-06
                         "HDC" => CSPrimitive.IntPtr(@const),
                         "HGLRC" => CSPrimitive.IntPtr(@const),
                         "INT" => CSPrimitive.Int(@const),
@@ -621,7 +636,7 @@ namespace Generator.Parsing
                         "INT64" => CSPrimitive.Long(@const),
                         "PROC" => new CSFunctionPointer("???", @const),
                         "RECT" => new CSStruct("Rect", @const),
-                        "LPCSTR" => new CSPointer(new CSChar16(true), @const),
+                        "LPCSTR" => new CSPointer(new CSChar8(true), @const),
                         "LPVOID" => CSPrimitive.IntPtr(@const),
                         "UINT" => CSPrimitive.Uint(@const),
                         "USHORT" => CSPrimitive.Ushort(@const),
@@ -654,13 +669,13 @@ namespace Generator.Parsing
 
                         "Bool" => new CSBool8(@const),
                         "Colormap" => new CSStructPrimitive("Colormap", @const, new CSPrimitive("nuint", @const)),
-                        "Display" => new CSStruct("Display", @const), // FIXME: This is just a struct?
+                        "Display" => new CSOpaqueStruct("Display", @const),
                         "Font" => new CSStructPrimitive("Font", @const, new CSPrimitive("nuint", @const)),
                         "Pixmap" => new CSStructPrimitive("Pixmap", @const, new CSPrimitive("nuint", @const)),
-                        "Screen" => new CSStruct("Screen", @const),
+                        "Screen" => new CSOpaqueStruct("Screen", @const),
                         "Status" => new CSPrimitive("int", @const), // FIXME: Maybe type?
                         "Window" => new CSStructPrimitive("Window", @const, new CSPrimitive("nuint", @const)),
-                        "XVisualInfo" => new CSStruct("XVisualInfo", @const),
+                        "XVisualInfo" => new CSOpaqueStruct("XVisualInfo", @const),
 
                         // FIXME: These types are conditionally removed from the header if _DM_BUFFER_H_ is not defined
                         // Should we have some way to say that specific functions should be ignored?
@@ -726,7 +741,7 @@ namespace Generator.Parsing
                 // - 2023-03-25 NogginBops
                 if (@namespace == "GLXStrings") continue;
 
-                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile);
+                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile, nameMangler);
 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
@@ -749,7 +764,7 @@ namespace Generator.Parsing
 
                     string? alias = @enum.Attribute("alias")?.Value;
 
-                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFile);
+                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFile, nameMangler);
                     // Mark this with all of the groups from the parent tag.
                     groups = ArrayUtil.MergeDeduplicate(groups, parentGroups);
 
@@ -831,7 +846,7 @@ namespace Generator.Parsing
             };
         }
 
-        internal static GroupRef[] ParseGroups(string? groups, GLFile currentFile)
+        internal static GroupRef[] ParseGroups(string? groups, GLFile currentFile, NameMangler nameMangler)
         {
             if (groups == null) return Array.Empty<GroupRef>();
 
@@ -839,20 +854,41 @@ namespace Generator.Parsing
             GroupRef[] groupRefs = new GroupRef[rawGroups.Length];
             for (int i = 0; i < rawGroups.Length; i++)
             {
-                string group = rawGroups[i];
-                if (group.StartsWith("gl::"))
-                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
-                else if (group.StartsWith("wgl::"))
-                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
-                else if (group.StartsWith("glx::"))
-                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
-                else
-                    groupRefs[i] = new GroupRef(group, currentFile);
+                groupRefs[i] = GroupRefFromString(rawGroups[i], currentFile, nameMangler);
             }
 
             return groupRefs;
         }
 
+        internal static GroupRef GroupRefFromString(string group, GLFile currentFile, NameMangler nameMangler)
+        {
+            string name;
+            GLFile file;
+            if (group.StartsWith("gl::"))
+            {
+                name = NameMangler.RemoveStart(group, "gl::");
+                file = GLFile.GL;
+            }
+            else if (group.StartsWith("wgl::"))
+            {
+                name = NameMangler.RemoveStart(group, "wgl::");
+                file = GLFile.WGL;
+            }
+            else if (group.StartsWith("glx::"))
+            {
+                name = NameMangler.RemoveStart(group, "glx::");
+                file = GLFile.GLX;
+            }
+            else
+            {
+                name = group;
+                file = currentFile;
+            }
+
+            string translatedName = nameMangler.TranslateEnumGroupName(name);
+
+            return new GroupRef(name, translatedName, file);
+        }
 
 
         internal static List<Feature> ParseFeatures(XElement input)

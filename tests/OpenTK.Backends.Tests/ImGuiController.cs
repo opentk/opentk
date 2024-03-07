@@ -107,14 +107,14 @@ namespace OpenTK.Backends.Tests
             LabelObject(ObjectIdentifier.VertexArray, _vertexArray, "VAO: ImGui");
 
             _vertexBuffer = GL.GenBuffer();
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, _vertexBuffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer);
             LabelObject(ObjectIdentifier.Buffer, _vertexBuffer, "VBO: ImGui");
-            GL.BufferData(BufferTargetARB.ArrayBuffer, _vertexBufferSize, IntPtr.Zero, BufferUsageARB.DynamicDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, _vertexBufferSize, IntPtr.Zero, BufferUsage.DynamicDraw);
 
             _indexBuffer = GL.GenBuffer();
-            GL.BindBuffer(BufferTargetARB.ElementArrayBuffer, _indexBuffer);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _indexBuffer);
             LabelObject(ObjectIdentifier.Buffer, _indexBuffer, "EBO: ImGui");
-            GL.BufferData(BufferTargetARB.ElementArrayBuffer, _indexBufferSize, IntPtr.Zero, BufferUsageARB.DynamicDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, _indexBufferSize, IntPtr.Zero, BufferUsage.DynamicDraw);
 
             //RecreateFontDeviceTexture();
 
@@ -205,7 +205,7 @@ void main()
             GL.EnableVertexAttribArray(2);
 
             GL.BindVertexArray(prevVAO);
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, prevArrayBuffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, prevArrayBuffer);
 
             CheckGLError("End of ImGui setup");
         }
@@ -380,7 +380,7 @@ void main()
             // Bind the element buffer (thru the VAO) so that we can resize it.
             GL.BindVertexArray(_vertexArray);
             // Bind the vertex buffer so that we can resize it.
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, _vertexBuffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBuffer);
             for (int i = 0; i < draw_data.CmdListsCount; i++)
             {
                 ImDrawListPtr cmd_list = draw_data.CmdLists[i];
@@ -390,7 +390,7 @@ void main()
                 {
                     int newSize = (int)Math.Max(_vertexBufferSize * 1.5f, vertexSize);
 
-                    GL.BufferData(BufferTargetARB.ArrayBuffer, newSize, IntPtr.Zero, BufferUsageARB.DynamicDraw);
+                    GL.BufferData(BufferTarget.ArrayBuffer, newSize, IntPtr.Zero, BufferUsage.DynamicDraw);
                     _vertexBufferSize = newSize;
 
                     Console.WriteLine($"Resized dear imgui vertex buffer to new size {_vertexBufferSize}");
@@ -400,7 +400,7 @@ void main()
                 if (indexSize > _indexBufferSize)
                 {
                     int newSize = (int)Math.Max(_indexBufferSize * 1.5f, indexSize);
-                    GL.BufferData(BufferTargetARB.ElementArrayBuffer, newSize, IntPtr.Zero, BufferUsageARB.DynamicDraw);
+                    GL.BufferData(BufferTarget.ElementArrayBuffer, newSize, IntPtr.Zero, BufferUsage.DynamicDraw);
                     _indexBufferSize = newSize;
 
                     Console.WriteLine($"Resized dear imgui index buffer to new size {_indexBufferSize}");
@@ -429,7 +429,7 @@ void main()
 
             GL.Enable(EnableCap.Blend);
             GL.Enable(EnableCap.ScissorTest);
-            GL.BlendEquation(BlendEquationModeEXT.FuncAdd);
+            GL.BlendEquation(BlendEquationMode.FuncAdd);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Disable(EnableCap.CullFace);
             GL.Disable(EnableCap.DepthTest);
@@ -439,10 +439,10 @@ void main()
             {
                 ImDrawListPtr cmd_list = draw_data.CmdLists[n];
 
-                GL.BufferSubData(BufferTargetARB.ArrayBuffer, IntPtr.Zero, cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>(), cmd_list.VtxBuffer.Data);
+                GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>(), cmd_list.VtxBuffer.Data);
                 CheckGLError($"Data Vert {n}");
 
-                GL.BufferSubData(BufferTargetARB.ElementArrayBuffer, IntPtr.Zero, cmd_list.IdxBuffer.Size * sizeof(ushort), cmd_list.IdxBuffer.Data);
+                GL.BufferSubData(BufferTarget.ElementArrayBuffer, IntPtr.Zero, cmd_list.IdxBuffer.Size * sizeof(ushort), cmd_list.IdxBuffer.Data);
                 CheckGLError($"Data Idx {n}");
 
                 for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
@@ -485,8 +485,8 @@ void main()
             GL.UseProgram(prevProgram);
             GL.BindVertexArray(prevVAO);
             GL.Scissor(prevScissorBox[0], prevScissorBox[1], prevScissorBox[2], prevScissorBox[3]);
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, prevArrayBuffer);
-            GL.BlendEquationSeparate((BlendEquationModeEXT)prevBlendEquationRgb, (BlendEquationModeEXT)prevBlendEquationAlpha);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, prevArrayBuffer);
+            GL.BlendEquationSeparate((BlendEquationMode)prevBlendEquationRgb, (BlendEquationMode)prevBlendEquationAlpha);
             GL.BlendFuncSeparate(
                 (BlendingFactor)prevBlendFuncSrcRgb,
                 (BlendingFactor)prevBlendFuncDstRgb,
@@ -542,7 +542,7 @@ void main()
             GL.LinkProgram(program);
 
             int success = 0;
-            GL.GetProgrami(program, ProgramPropertyARB.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);

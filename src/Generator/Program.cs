@@ -28,6 +28,15 @@ namespace Generator
                         FunctionPrefix = "gl",
                         EnumPrefixes = new List<string> { "GL_" },
                         ExtensionPrefix = "GL_",
+                        EnumGroupNameTranslationTable =
+                        {
+                            { "BufferTargetARB", "BufferTarget" },
+                            { "BufferAccessARB", "BufferAccess" },
+                            { "BufferUsageARB", "BufferUsage" },
+                            { "BufferPNameARB", "BufferPName" },
+                            { "ProgramPropertyARB", "ProgramProperty" },
+                            { "BlendEquationModeEXT", "BlendEquationMode" },
+                        }
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.

@@ -176,12 +176,11 @@ namespace Generator.Writing
         }
     }
 
-    // FIXME: Maybe combine TypeName and GroupRef.
-    internal record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    internal record CSEnum(string TranslatedTypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
         internal override string ToCSString()
         {
-            return TypeName;
+            return TranslatedTypeName;
         }
     }
 
@@ -190,6 +189,17 @@ namespace Generator.Writing
         internal override string ToCSString()
         {
             return StructName;
+        }
+    }
+
+    // This struct type is used internally to mark that this struct is opaque and needs to be converted to
+    // a pointer variant before it can be used.
+    // - Noggin_bops 2024-03-07
+    internal record CSOpaqueStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    {
+        internal override string ToCSString()
+        {
+            throw new InvalidOperationException($"Opaque type '{TypeName}' should never be used directly");
         }
     }
 
