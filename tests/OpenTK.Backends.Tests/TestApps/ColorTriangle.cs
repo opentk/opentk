@@ -141,10 +141,10 @@ void main()
             if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, (uint)VAO, -1, "VAO: Color Triangle");
 
             VBO = GL.GenBuffer();
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, VBO);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, (uint)VBO, -1, "VBO: Color Triangle");
 
-            GL.BufferData(BufferTargetARB.ArrayBuffer, Vertices, BufferUsageARB.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, Vertices, BufferUsage.StaticDraw);
 
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), 0);
@@ -182,7 +182,7 @@ void main()
                 GL.AttachShader(program, fragment);
 
                 GL.LinkProgram(program);
-                GL.GetProgrami(program, ProgramPropertyARB.LinkStatus, ref status);
+                GL.GetProgrami(program, ProgramProperty.LinkStatus, ref status);
                 if (status == 0)
                 {
                     GL.GetProgramInfoLog(program, out string info);
@@ -214,7 +214,7 @@ void main()
         public void Deinitialize()
         {
             GL.BindVertexArray(0);
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
             GL.UseProgram(0);
 
             GL.DeleteVertexArray(VAO);

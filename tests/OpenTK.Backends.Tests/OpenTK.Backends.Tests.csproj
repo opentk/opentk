@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
-    <Win32Resource>icons.res</Win32Resource>
+    <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
   <ItemGroup>
