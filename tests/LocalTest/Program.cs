@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Common.Input;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
@@ -48,6 +49,9 @@ namespace LocalTest
         protected override void OnLoad()
         {
             base.OnLoad();
+
+            string ver = GLFW.GetVersionString();
+            Console.WriteLine($"GLFW version: {ver}");
         }
 
         protected override void OnUnload()

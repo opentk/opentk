@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using static OpenTK.Windowing.GraphicsLibraryFramework.GLFWNative;
 
@@ -26,6 +27,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets an integer equal to GLFW_DONT_CARE. This can be used for several window hints to use the platform default.
         /// </summary>
         public const int DontCare = -1;
+
+        public const int AnyPosition = unchecked((int)0x80000000);
 
         /// <summary>
         /// <para>
@@ -141,7 +144,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </summary>
         /// <param name="hintInt">The <see cref="InitHintInt"/> to set.</param>
-        /// <param name="value">The new value of the <see cref="InitHintBool"/>.</param>
+        /// <param name="value">The new value of the <see cref="InitHintInt"/>.</param>
         /// <remarks>
         /// <para>
         /// This function may be called before <see cref="Init"/>.
@@ -154,6 +157,99 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static void InitHint(InitHintInt hintInt, int value) => glfwInitHint((int)hintInt, value);
+
+        /// <summary>
+        /// <para>
+        /// This function sets hints for the next initialization of GLFW.
+        /// </para>
+        /// <para>
+        /// The values you set hints to are never reset by GLFW, but they only take effect during initialization.
+        /// </para>
+        /// <para>
+        /// Once GLFW has been initialized,
+        /// any values you set will be ignored until the library is terminated and initialized again.
+        /// </para>
+        /// <para>Some hints are platform specific.
+        /// These may be set on any platform but they will only affect their specific platform.
+        /// Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.
+        /// </para>
+        /// </summary>
+        /// <param name="hintInt">The <see cref="InitHintPlatform"/> to set.</param>
+        /// <param name="value">The new value of the <see cref="InitHintPlatform"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// This function may be called before <see cref="Init"/>.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.InvalidValue"/>.
+        /// </para>
+        /// </remarks>
+        public static void InitHint(InitHintPlatform hintInt, Platform value) => glfwInitHint((int)hintInt, (int)value);
+
+        /// <summary>
+        /// <para>
+        /// This function sets hints for the next initialization of GLFW.
+        /// </para>
+        /// <para>
+        /// The values you set hints to are never reset by GLFW, but they only take effect during initialization.
+        /// </para>
+        /// <para>
+        /// Once GLFW has been initialized,
+        /// any values you set will be ignored until the library is terminated and initialized again.
+        /// </para>
+        /// <para>Some hints are platform specific.
+        /// These may be set on any platform but they will only affect their specific platform.
+        /// Other platforms will ignore them. Setting these hints requires no platform specific headers or functions.
+        /// </para>
+        /// </summary>
+        /// <param name="hintInt">The <see cref="InitHintANGLEPlatformType"/> to set.</param>
+        /// <param name="value">The new value of the <see cref="InitHintANGLEPlatformType"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// This function may be called before <see cref="Init"/>.
+        /// </para>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.InvalidValue"/>.
+        /// </para>
+        /// </remarks>
+        public static void InitHint(InitHintANGLEPlatformType hintInt, ANGLEPlatformType value) => glfwInitHint((int)hintInt, (int)value);
+
+        /// <summary>
+        /// To use the default allocator, call this function with a NULL argument.
+        ///
+        /// If you specify an allocator struct, every member must be a valid function pointer.
+        /// If any member is NULL, this function will emit GLFW_INVALID_VALUE and the init allocator will be unchanged.
+        ///
+        /// The functions in the allocator must fulfill a number of requirements.
+        /// See the documentation for <see cref="GLFWallocatefun"/> , <see cref="GLFWreallocatefun"/> and <see cref="GLFWdeallocatefun"/> for details.
+        /// </summary>
+        /// <param name="allocator">The allocator to use at the next initialization, or <see cref="Unsafe.NullRef{GLFWallocator}"/> to use the default one.</param>
+        public static unsafe void InitAllocator(ref GLFWallocator allocator) => glfwInitAllocator(allocator);
+
+        /// <summary>
+        /// This function sets the vkGetInstanceProcAddr function that GLFW will use for all Vulkan related entry point queries.
+        ///
+        /// This feature is mostly useful on macOS,
+        /// if your copy of the Vulkan loader is in a location where GLFW cannot find it through dynamic loading,
+        /// or if you are still using the static library version of the loader.
+        ///
+        /// If set to NULL, GLFW will try to load the Vulkan loader dynamically by its standard name and get this function from there.
+        /// This is the default behavior.
+        ///
+        /// The standard name of the loader is vulkan-1.dll on Windows, libvulkan.so.1 on Linux and other Unix-like systems and libvulkan.1.dylib on macOS.
+        /// If your code is also loading it via these names then you probably don't need to use this function.
+        ///
+        /// The function address you set is never reset by GLFW, but it only takes effect during initialization.
+        /// Once GLFW has been initialized, any updates will be ignored until the library is terminated and initialized again.
+        /// </summary>
+        /// <param name="loader">The address of the function to use, or NULL.</param>
+        public static unsafe void InitVulkanLoader(IntPtr loader) => glfwInitVulkanLoader(loader);
 
         /// <summary>
         /// <para>
@@ -308,6 +404,21 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             description = desc;
             return code;
         }
+
+        /// <summary>
+        /// This function returns the platform that was selected during initialization.
+        /// The returned value will be one of <see cref="Platform.Win32"/>, <see cref="Platform.Cocoa"/>, <see cref="Platform.Wayland"/>, <see cref="Platform.X11"/> or <see cref="Platform.Null"/>.
+        /// </summary>
+        /// <returns>The currently selected platform, or zero if an error occurred.</returns>
+        public static unsafe Platform GetPlatform() => glfwGetPlatform();
+
+        /// <summary>
+        /// This function returns whether the library was compiled with support for the specified platform.
+        /// The platform must be one of <see cref="Platform.Win32"/>, <see cref="Platform.Cocoa"/>, <see cref="Platform.Wayland"/>, <see cref="Platform.X11"/> or <see cref="Platform.Null"/>.
+        /// </summary>
+        /// <param name="platform">The platform to query.</param>
+        /// <returns><c>true</c> if the platform is supported, or <c>false</c> otherwise.</returns>
+        public static unsafe bool PlatformSupported(Platform platform) => glfwPlatformSupported(platform) == GLFW_TRUE;
 
         /// <summary>
         /// <para>
@@ -5016,6 +5127,51 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// This function returns the window title, encoded as UTF-8, of the specified
+        /// window. This is the title set previously by <see cref="glfwCreateWindow(int, int, byte*, Monitor*, Window*)"/>
+        /// or <see cref="glfwSetWindowTitle(Window*, byte*)"/>.
+        ///
+        /// The returned title is currently a copy of the title last set by <see cref="glfwCreateWindow(int, int, byte*, Monitor*, Window*)"/>
+        /// or <see cref="glfwSetWindowTitle(Window*, byte*)"/>.
+        /// It does not include any additional text which may be appended by the platform or another program.
+        ///
+        /// The returned string is allocated and freed by GLFW.
+        /// You should not free it yourself.
+        /// It is valid until the next call to <see cref="glfwCreateWindow(int, int, byte*, Monitor*, Window*)"/>
+        /// or <see cref="glfwSetWindowTitle(Window*, byte*)"/>, or until the library is terminated.
+        ///
+        /// This function must only be called from the main thread.
+        ///
+        /// Added in version 3.4.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The UTF-8 encoded window title, or `NULL` if an error occurred.</returns>
+        /// <seealso cref="SetWindowTitleRaw(Window*, byte*)"/>
+        public static unsafe byte* GetWindowTitleRaw(Window* window) => glfwGetWindowTitle(window);
+
+        /// <summary>
+        /// This function returns the window title, of the specified
+        /// window. This is the title set previously by <see cref="glfwCreateWindow(int, int, byte*, Monitor*, Window*)"/>
+        /// or <see cref="glfwSetWindowTitle(Window*, byte*)"/>.
+        ///
+        /// The returned title is currently a copy of the title last set by <see cref="glfwCreateWindow(int, int, byte*, Monitor*, Window*)"/>
+        /// or <see cref="glfwSetWindowTitle(Window*, byte*)"/>.
+        /// It does not include any additional text which may be appended by the platform or another program.
+        ///
+        /// This function must only be called from the main thread.
+        ///
+        /// Added in version 3.4.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The window title, or `NULL` if an error occurred.</returns>
+        public static unsafe string GetWindowTitle(Window* window)
+        {
+            byte* titlePtr = glfwGetWindowTitle(window);
+            string title = Marshal.PtrToStringUTF8((IntPtr)titlePtr);
+            return title;
+        }
+
+        /// <summary>
         /// <para>
         /// This function sets the window title, encoded as UTF-8, of the specified window.
         /// </para>
@@ -5885,6 +6041,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window to query.</param>
         /// <returns>The <c>NSWindow</c> of the specified window, or <c>nil</c> if an error occurred.</returns>
         public static unsafe IntPtr GetCocoaWindow(Window* window) => glfwGetCocoaWindow(window);
+
+        /// <summary>
+        /// Returns the <c>NSView</c> of the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The <c>NSView</c> of the specified window, or <c>nil</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetCocoaView(Window* window) => glfwGetCocoaView(window);
 
         /// <summary>
         /// Returns the <c>NSOpenGLContext</c> of the specified window.

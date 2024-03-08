@@ -11,5 +11,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
     /// </remarks>
     public enum InitHintInt
     {
+        /// <summary>
+        /// Specifies whether to use libdecor for window decorations where available.
+        /// Possible values are <see cref="WaylandLibDecor.PreferLibDecor"/> and <see cref="WaylandLibDecor.DisableLibDecor"/>. This is ignored on other platforms.
+        /// </summary>
+        WaylandLibDecor = 0x00053001,
     }
 }
