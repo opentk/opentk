@@ -32,6 +32,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// and providing the application with a virtual cursor position.
         /// This virtual position is provided normally via both the cursor position callback and through polling.
         /// </summary>
-        CursorDisabled = 0x00034003
+        CursorDisabled = 0x00034003,
+
+        /// <summary>
+        /// Makes the cursor visible and confines it to the content area of the window.
+        /// </summary>
+        CursorCaptured = 0x00034003,
     }
 }

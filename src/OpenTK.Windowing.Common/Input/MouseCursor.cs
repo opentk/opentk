@@ -32,18 +32,56 @@ namespace OpenTK.Windowing.Common.Input
         public static MouseCursor Crosshair { get; } = new MouseCursor(StandardShape.Crosshair);
 
         /// <summary>
+        /// Gets the default pointing hand cursor for this platform.
+        /// </summary>
+        public static MouseCursor PointingHand { get; } = new MouseCursor(StandardShape.PointingHand);
+
+        /// <summary>
+        /// Gets the default pointing hand cursor for this platform.
+        /// </summary>
+        public static MouseCursor ResizeEW { get; } = new MouseCursor(StandardShape.ResizeEW);
+
+        /// <summary>
+        /// Gets the default pointing hand cursor for this platform.
+        /// </summary>
+        public static MouseCursor ResizeNS { get; } = new MouseCursor(StandardShape.ResizeNS);
+
+        /// <summary>
+        /// Gets the default northwest southeast diagonal resize cursor for this platform.
+        /// </summary>
+        public static MouseCursor ResizeNWSE { get; } = new MouseCursor(StandardShape.ResizeNWSE);
+
+        /// <summary>
+        /// Gets the default notheast southwest diagonal resize cursor for this platform.
+        /// </summary>
+        public static MouseCursor ResizeNESW { get; } = new MouseCursor(StandardShape.ResizeNESW);
+
+        /// <summary>
+        /// Gets the default omni-directional diagonal resize cursor for this platform.
+        /// </summary>
+        public static MouseCursor ResizeAll { get; } = new MouseCursor(StandardShape.ResizeNESW);
+
+        /// <summary>
+        /// Gets the default operation-not-allowed cursor for this platform.
+        /// </summary>
+        public static MouseCursor NotAllowed { get; } = new MouseCursor(StandardShape.NotAllowed);
+
+        /// <summary>
         /// Gets the default hand cursor for this platform.
         /// </summary>
+        [Obsolete("Use " + nameof(PointingHand) + " instead.")]
         public static MouseCursor Hand { get; } = new MouseCursor(StandardShape.Hand);
 
         /// <summary>
         /// Gets the default vertical resize cursor for this platform.
         /// </summary>
+        [Obsolete("Use " + nameof(PointingHand) + " instead.")]
         public static MouseCursor VResize { get; } = new MouseCursor(StandardShape.VResize);
 
         /// <summary>
         /// Gets the default horizontal cursor for this platform.
         /// </summary>
+        [Obsolete("Use " + nameof(PointingHand) + " instead.")]
         public static MouseCursor HResize { get; } = new MouseCursor(StandardShape.HResize);
 
         /// <summary>
@@ -130,19 +168,57 @@ namespace OpenTK.Windowing.Common.Input
             Crosshair,
 
             /// <summary>
-            /// A hand cursor.
+            /// A pointing hand cursor.
             /// </summary>
-            Hand,
+            PointingHand,
 
             /// <summary>
             /// A horizontal resize cursor.
             /// </summary>
-            HResize,
+            ResizeEW,
 
             /// <summary>
             /// A vertical resize cursor.
             /// </summary>
-            VResize,
+            ResizeNS,
+
+            /// <summary>
+            /// A diagonal northwest southeast resize cursor.
+            /// </summary>
+            ResizeNWSE,
+
+            /// <summary>
+            /// A diagonal northeast southwest resize cursor.
+            /// </summary>
+            ResizeNESW,
+
+            /// <summary>
+            /// An omni-directional resize cursor.
+            /// </summary>
+            ResizeAll,
+
+            /// <summary>
+            /// An operation-not-allowed cursor.
+            /// </summary>
+            NotAllowed,
+
+            /// <summary>
+            /// A hand cursor.
+            /// </summary>
+            [Obsolete("Use " + nameof(PointingHand) + " instead.")]
+            Hand = PointingHand,
+
+            /// <summary>
+            /// A horizontal resize cursor.
+            /// </summary>
+            [Obsolete("Use " + nameof(ResizeEW) + " instead.")]
+            HResize = ResizeEW,
+
+            /// <summary>
+            /// A vertical resize cursor.
+            /// </summary>
+            [Obsolete("Use " + nameof(ResizeNS) + " instead.")]
+            VResize = ResizeNS,
         }
     }
 }

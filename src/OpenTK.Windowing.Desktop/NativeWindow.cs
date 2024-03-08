@@ -1990,12 +1990,23 @@ namespace OpenTK.Windowing.Desktop
                     return CursorShape.IBeam;
                 case MouseCursor.StandardShape.Crosshair:
                     return CursorShape.Crosshair;
-                case MouseCursor.StandardShape.Hand:
-                    return CursorShape.Hand;
-                case MouseCursor.StandardShape.HResize:
-                    return CursorShape.HResize;
-                case MouseCursor.StandardShape.VResize:
-                    return CursorShape.VResize;
+                // case MouseCursor.StandardShape.Hand:
+                case MouseCursor.StandardShape.PointingHand:
+                    return CursorShape.PointingHand;
+                // case MouseCursor.StandardShape.HResize:
+                case MouseCursor.StandardShape.ResizeEW:
+                    return CursorShape.ResizeEW;
+                // case MouseCursor.StandardShape.VResize:
+                case MouseCursor.StandardShape.ResizeNS:
+                    return CursorShape.ResizeNS;
+                case MouseCursor.StandardShape.ResizeNWSE:
+                    return CursorShape.ResizeNWSE;
+                case MouseCursor.StandardShape.ResizeNESW:
+                    return CursorShape.ResizeNESW;
+                case MouseCursor.StandardShape.ResizeAll:
+                    return CursorShape.ResizeAll;
+                case MouseCursor.StandardShape.NotAllowed:
+                    return CursorShape.NotAllowed;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(shape), shape, null);
             }
