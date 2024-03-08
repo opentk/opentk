@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -753,6 +753,49 @@ namespace OpenTK.Mathematics
             result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
             result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
             result.W = (blend.W * (b.W - a.W)) + a.W;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector4 Slerp(Vector4 a, Vector4 b, float t)
+        {
+            float cosTheta = Dot(a, b);
+            float theta = MathF.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+            float bcoef = MathF.Sin(t * theta) / sinTheta;
+            return (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector4 a, in Vector4 b, float t, out Vector4 result)
+        {
+            Dot(in a, in b, out float cosTheta);
+            float theta = MathF.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+            float bcoef = MathF.Sin(t * theta) / sinTheta;
+            result = (acoef * a) + (bcoef * b);
         }
 
         /// <summary>

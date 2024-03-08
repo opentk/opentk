@@ -436,6 +436,13 @@ module Vector2 =
             let vRes = Vector2.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
 
+        [<Property>]
+        let ``Slerp returns enpoints`` (a : Vector3, b : Vector3) = 
+            let c = Vector3.Slerp(a, b, 0.0f)
+            let d = Vector3.Slerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =
         //
