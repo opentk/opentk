@@ -86,22 +86,22 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a value indicating whether the Half is zero.
         /// </summary>
-        public bool IsZero => _bits == 0 || _bits == 0x8000;
+        public readonly bool IsZero => _bits == 0 || _bits == 0x8000;
 
         /// <summary>
         /// Gets a value indicating whether the Half represents Not A Number (NaN).
         /// </summary>
-        public bool IsNaN => (_bits & 0x7C00) == 0x7C00 && (_bits & 0x03FF) != 0x0000;
+        public readonly bool IsNaN => (_bits & 0x7C00) == 0x7C00 && (_bits & 0x03FF) != 0x0000;
 
         /// <summary>
         /// Gets a value indicating whether the Half represents positive infinity.
         /// </summary>
-        public bool IsPositiveInfinity => _bits == 31744;
+        public readonly bool IsPositiveInfinity => _bits == 31744;
 
         /// <summary>
         /// Gets a value indicating whether the Half represents negative infinity.
         /// </summary>
-        public bool IsNegativeInfinity => _bits == 64512;
+        public readonly bool IsNegativeInfinity => _bits == 64512;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Half"/> struct with <paramref name="f"/> being converted
@@ -182,7 +182,7 @@ namespace OpenTK.Mathematics
         /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
         [Pure]
-        private ushort SingleToHalf(int si32)
+        private readonly ushort SingleToHalf(int si32)
         {
             // Our floating point number, F, is represented by the bit pattern in integer i.
             // Disassemble that bit pattern into the sign, S, the exponent, E, and the significand, M.
@@ -279,7 +279,7 @@ namespace OpenTK.Mathematics
         /// Ported from OpenEXR's IlmBase 1.0.1.
         /// </summary>
         [Pure]
-        private int HalfToFloat(ushort ui16)
+        private readonly int HalfToFloat(ushort ui16)
         {
             var sign = (ui16 >> 15) & 0x00000001;
             var exponent = (ui16 >> 10) & 0x0000001f;
@@ -431,7 +431,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public readonly void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("bits", _bits);
         }
@@ -450,19 +450,19 @@ namespace OpenTK.Mathematics
         /// Writes the Half into a Stream.
         /// </summary>
         /// <param name="bin">A BinaryWriter instance associated with an open Stream.</param>
-        public void ToBinaryStream(BinaryWriter bin)
+        public readonly void ToBinaryStream(BinaryWriter bin)
         {
             bin.Write(_bits);
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(_bits);
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return base.Equals(obj);
         }
@@ -473,7 +473,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">OpenTK.Half object to compare to this instance..</param>
         /// <returns>True, if other is equal to this instance; false otherwise.</returns>
         [Pure]
-        public bool Equals(Half other)
+        public readonly bool Equals(Half other)
         {
             const int maxUlps = 1;
 
@@ -526,7 +526,7 @@ namespace OpenTK.Mathematics
         ///  </para>
         /// </returns>
         [Pure]
-        public int CompareTo(Half other)
+        public readonly int CompareTo(Half other)
         {
             return ((float)this).CompareTo(other);
         }

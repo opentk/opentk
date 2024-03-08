@@ -37,7 +37,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private static ConcurrentQueue<ExceptionDispatchInfo> _callbackExceptions = new ConcurrentQueue<ExceptionDispatchInfo>();
+        private static readonly ConcurrentQueue<ExceptionDispatchInfo> _callbackExceptions = new ConcurrentQueue<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1466,7 +1466,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         // This list must only ever be accessed from the main thread, inside RethrowCallbackExceptionsIfNeeded().
-        private static List<ExceptionDispatchInfo> _localThreadExceptions = new List<ExceptionDispatchInfo>();
+        private static readonly List<ExceptionDispatchInfo> _localThreadExceptions = new List<ExceptionDispatchInfo>();
 
         private static void RethrowCallbackExceptionsIfNeeded()
         {
@@ -1499,7 +1499,7 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Updates the input state in preparation for a call to <see cref="GLFW.PollEvents"/> or <see cref="GLFW.WaitEvents"/>.
-        /// Do not call this function if you are calling <see cref="ProcessEvents()"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
+        /// Do not call this function if you are calling <see cref="ProcessEvents(double)"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
         /// </summary>
         public unsafe void NewInputFrame()
         {
@@ -1651,7 +1651,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> here.
         /// </remarks>
         /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
@@ -1664,7 +1664,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> here.
         /// </remarks>
         /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>
@@ -1687,7 +1687,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
@@ -1700,7 +1700,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> here.
         /// </remarks>
         /// <param name="button">The button to check.</param>
         /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>

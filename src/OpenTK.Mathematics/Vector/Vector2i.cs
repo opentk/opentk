@@ -64,7 +64,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public int this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -99,27 +99,27 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the manhattan length of the vector.
         /// </summary>
-        public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
+        public readonly int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
 
         /// <summary>
         /// Gets the squared euclidean length of the vector.
         /// </summary>
-        public int EuclideanLengthSquared => (X * X) + (Y * Y);
+        public readonly int EuclideanLengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the euclidean length of the vector.
         /// </summary>
-        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
+        public readonly float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2i PerpendicularRight => new Vector2i(Y, -X);
+        public readonly Vector2i PerpendicularRight => new Vector2i(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2i PerpendicularLeft => new Vector2i(-Y, X);
+        public readonly Vector2i PerpendicularLeft => new Vector2i(-Y, X);
 
         /// <summary>
         /// Defines a unit-length <see cref="Vector2i"/> that points towards the X-axis.
@@ -382,7 +382,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2i Yx
         {
-            get => new Vector2i(Y, X);
+            readonly get => new Vector2i(Y, X);
             set
             {
                 Y = value.X;
@@ -394,7 +394,7 @@ namespace OpenTK.Mathematics
         /// Gets a <see cref="Vector2"/> object with the same component values as the <see cref="Vector2i"/> instance.
         /// </summary>
         /// <returns>The resulting <see cref="Vector3"/> instance.</returns>
-        public Vector2 ToVector2()
+        public readonly Vector2 ToVector2()
         {
             return new Vector2(X, Y);
         }
@@ -629,7 +629,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{2} {1})",
@@ -645,14 +645,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector2i other)
+        public readonly bool Equals(Vector2i other)
         {
             return X == other.X &&
                    Y == other.Y;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -663,7 +663,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out int x, out int y)
+        public readonly void Deconstruct(out int x, out int y)
         {
             x = X;
             y = Y;

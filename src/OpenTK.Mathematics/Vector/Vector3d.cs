@@ -115,7 +115,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 2.</exception>
         public double this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -161,7 +161,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public readonly double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -172,7 +172,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+        public readonly double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -183,13 +183,13 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public double LengthSquared => (X * X) + (Y * Y) + (Z * Z);
+        public readonly double LengthSquared => (X * X) + (Y * Y) + (Z * Z);
 
         /// <summary>
         /// Returns a copy of the Vector3d scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector3d Normalized()
+        public readonly Vector3d Normalized()
         {
             var v = this;
             v.Normalize();
@@ -1116,7 +1116,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Xz
         {
-            get => new Vector2d(X, Z);
+            readonly get => new Vector2d(X, Z);
             set
             {
                 X = value.X;
@@ -1130,7 +1130,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yx
         {
-            get => new Vector2d(Y, X);
+            readonly get => new Vector2d(Y, X);
             set
             {
                 Y = value.X;
@@ -1144,7 +1144,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yz
         {
-            get => new Vector2d(Y, Z);
+            readonly get => new Vector2d(Y, Z);
             set
             {
                 Y = value.X;
@@ -1158,7 +1158,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Zx
         {
-            get => new Vector2d(Z, X);
+            readonly get => new Vector2d(Z, X);
             set
             {
                 Z = value.X;
@@ -1172,7 +1172,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Zy
         {
-            get => new Vector2d(Z, Y);
+            readonly get => new Vector2d(Z, Y);
             set
             {
                 Z = value.X;
@@ -1186,7 +1186,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Xzy
         {
-            get => new Vector3d(X, Z, Y);
+            readonly get => new Vector3d(X, Z, Y);
             set
             {
                 X = value.X;
@@ -1201,7 +1201,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Yxz
         {
-            get => new Vector3d(Y, X, Z);
+            readonly get => new Vector3d(Y, X, Z);
             set
             {
                 Y = value.X;
@@ -1216,7 +1216,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Yzx
         {
-            get => new Vector3d(Y, Z, X);
+            readonly get => new Vector3d(Y, Z, X);
             set
             {
                 Y = value.X;
@@ -1231,7 +1231,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Zxy
         {
-            get => new Vector3d(Z, X, Y);
+            readonly get => new Vector3d(Z, X, Y);
             set
             {
                 Z = value.X;
@@ -1246,7 +1246,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Zyx
         {
-            get => new Vector3d(Z, Y, X);
+            readonly get => new Vector3d(Z, Y, X);
             set
             {
                 Z = value.X;
@@ -1499,7 +1499,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{3} {1}{3} {2})",
@@ -1516,7 +1516,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public bool Equals(Vector3d other)
+        public readonly bool Equals(Vector3d other)
         {
             return X == other.X &&
                    Y == other.Y &&
@@ -1524,7 +1524,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
         }
@@ -1536,7 +1536,7 @@ namespace OpenTK.Mathematics
         /// <param name="y">The Y component of the vector.</param>
         /// <param name="z">The Z component of the vector.</param>
         [Pure]
-        public void Deconstruct(out double x, out double y, out double z)
+        public readonly void Deconstruct(out double x, out double y, out double z)
         {
             x = X;
             y = Y;

@@ -58,7 +58,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The identity matrix.
         /// </summary>
-        public static Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
+        public static readonly Matrix4d Identity = new Matrix4d(Vector4d.UnitX, Vector4d.UnitY, Vector4d.UnitZ, Vector4d.UnitW);
+
+        /// <summary>
+        /// The zero matrix.
+        /// </summary>
+        public static readonly Matrix4d Zero = new Matrix4d(Vector4d.Zero, Vector4d.Zero, Vector4d.Zero, Vector4d.Zero);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix4d"/> struct.
@@ -136,7 +141,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the determinant of this matrix.
         /// </summary>
-        public double Determinant => (Row0.X * Row1.Y * Row2.Z * Row3.W) - (Row0.X * Row1.Y * Row2.W * Row3.Z) +
+        public readonly double Determinant => (Row0.X * Row1.Y * Row2.Z * Row3.W) - (Row0.X * Row1.Y * Row2.W * Row3.Z) +
                                      (Row0.X * Row1.Z * Row2.W * Row3.Y) - (Row0.X * Row1.Z * Row2.Y * Row3.W)
                                      + (Row0.X * Row1.W * Row2.Y * Row3.Z) - (Row0.X * Row1.W * Row2.Z * Row3.Y) -
                                      (Row0.Y * Row1.Z * Row2.W * Row3.X) + (Row0.Y * Row1.Z * Row2.X * Row3.W)
@@ -155,7 +160,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector4d Column0
         {
-            get => new Vector4d(Row0.X, Row1.X, Row2.X, Row3.X);
+            readonly get => new Vector4d(Row0.X, Row1.X, Row2.X, Row3.X);
             set
             {
                 Row0.X = value.X;
@@ -170,7 +175,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector4d Column1
         {
-            get => new Vector4d(Row0.Y, Row1.Y, Row2.Y, Row3.Y);
+            readonly get => new Vector4d(Row0.Y, Row1.Y, Row2.Y, Row3.Y);
             set
             {
                 Row0.Y = value.X;
@@ -185,7 +190,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector4d Column2
         {
-            get => new Vector4d(Row0.Z, Row1.Z, Row2.Z, Row3.Z);
+            readonly get => new Vector4d(Row0.Z, Row1.Z, Row2.Z, Row3.Z);
             set
             {
                 Row0.Z = value.X;
@@ -200,7 +205,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector4d Column3
         {
-            get => new Vector4d(Row0.W, Row1.W, Row2.W, Row3.W);
+            readonly get => new Vector4d(Row0.W, Row1.W, Row2.W, Row3.W);
             set
             {
                 Row0.W = value.X;
@@ -215,7 +220,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M11
         {
-            get => Row0.X;
+            readonly get => Row0.X;
             set => Row0.X = value;
         }
 
@@ -224,7 +229,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M12
         {
-            get => Row0.Y;
+            readonly get => Row0.Y;
             set => Row0.Y = value;
         }
 
@@ -233,7 +238,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M13
         {
-            get => Row0.Z;
+            readonly get => Row0.Z;
             set => Row0.Z = value;
         }
 
@@ -242,7 +247,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M14
         {
-            get => Row0.W;
+            readonly get => Row0.W;
             set => Row0.W = value;
         }
 
@@ -251,7 +256,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M21
         {
-            get => Row1.X;
+            readonly get => Row1.X;
             set => Row1.X = value;
         }
 
@@ -260,7 +265,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M22
         {
-            get => Row1.Y;
+            readonly get => Row1.Y;
             set => Row1.Y = value;
         }
 
@@ -269,7 +274,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M23
         {
-            get => Row1.Z;
+            readonly get => Row1.Z;
             set => Row1.Z = value;
         }
 
@@ -278,7 +283,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M24
         {
-            get => Row1.W;
+            readonly get => Row1.W;
             set => Row1.W = value;
         }
 
@@ -287,7 +292,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M31
         {
-            get => Row2.X;
+            readonly get => Row2.X;
             set => Row2.X = value;
         }
 
@@ -296,7 +301,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M32
         {
-            get => Row2.Y;
+            readonly get => Row2.Y;
             set => Row2.Y = value;
         }
 
@@ -305,7 +310,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M33
         {
-            get => Row2.Z;
+            readonly get => Row2.Z;
             set => Row2.Z = value;
         }
 
@@ -314,7 +319,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M34
         {
-            get => Row2.W;
+            readonly get => Row2.W;
             set => Row2.W = value;
         }
 
@@ -323,7 +328,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M41
         {
-            get => Row3.X;
+            readonly get => Row3.X;
             set => Row3.X = value;
         }
 
@@ -332,7 +337,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M42
         {
-            get => Row3.Y;
+            readonly get => Row3.Y;
             set => Row3.Y = value;
         }
 
@@ -341,7 +346,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M43
         {
-            get => Row3.Z;
+            readonly get => Row3.Z;
             set => Row3.Z = value;
         }
 
@@ -350,7 +355,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public double M44
         {
-            get => Row3.W;
+            readonly get => Row3.W;
             set => Row3.W = value;
         }
 
@@ -359,7 +364,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector4d Diagonal
         {
-            get => new Vector4d(Row0.X, Row1.Y, Row2.Z, Row3.W);
+            readonly get => new Vector4d(Row0.X, Row1.Y, Row2.Z, Row3.W);
             set
             {
                 Row0.X = value.X;
@@ -372,7 +377,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the trace of the matrix, the sum of the values along the diagonal.
         /// </summary>
-        public double Trace => Row0.X + Row1.Y + Row2.Z + Row3.W;
+        public readonly double Trace => Row0.X + Row1.Y + Row2.Z + Row3.W;
 
         /// <summary>
         /// Gets or sets the value at a specified row and column.
@@ -382,7 +387,7 @@ namespace OpenTK.Mathematics
         /// <returns>The element at the given row and column index.</returns>
         public double this[int rowIndex, int columnIndex]
         {
-            get
+            readonly get
             {
                 if (rowIndex == 0)
                 {
@@ -443,6 +448,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns an inverted copy of this instance.
+        /// </summary>
+        /// <remarks>
+        /// If the matrix is singular this function does not throw an exception,
+        /// instead it returns the original un-inverted matrix.
+        /// </remarks>
+        /// <returns>The inverted copy.</returns>
+        public readonly Matrix4d Inverted()
+        {
+            var m = this;
+            if (m.Determinant != 0)
+            {
+                m.Invert();
+            }
+
+            return m;
+        }
+
+        /// <summary>
         /// Converts this instance into its transpose.
         /// </summary>
         public void Transpose()
@@ -451,13 +475,13 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a normalized copy of this instance.
+        /// Returns a transposed copy of this instance.
         /// </summary>
-        /// <returns>The normalized copy.</returns>
-        public Matrix4d Normalized()
+        /// <returns>The transposed copy.</returns>
+        public readonly Matrix4d Transposed()
         {
-            var m = this;
-            m.Normalize();
+            Matrix4d m = this;
+            m.Transpose();
             return m;
         }
 
@@ -474,17 +498,40 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns an inverted copy of this instance.
+        /// Returns a normalized copy of this instance.
         /// </summary>
-        /// <returns>The inverted copy.</returns>
-        public Matrix4d Inverted()
+        /// <returns>The normalized copy.</returns>
+        public readonly Matrix4d Normalized()
         {
             var m = this;
-            if (m.Determinant != 0)
-            {
-                m.Invert();
-            }
+            m.Normalize();
+            return m;
+        }
 
+        /// <summary>
+        /// Swizzles this instance. Switches places of the rows of the matrix.
+        /// </summary>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        public void Swizzle(int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3)
+        {
+            this = Swizzle(this, rowForRow0, rowForRow1, rowForRow2, rowForRow3);
+        }
+
+        /// <summary>
+        /// Returns a swizzled copy of this instance.
+        /// </summary>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        /// <returns>The swizzled copy.</returns>
+        public readonly Matrix4d Swizzled(int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3)
+        {
+            Matrix4d m = this;
+            m.Swizzle(rowForRow0, rowForRow1, rowForRow2, rowForRow3);
             return m;
         }
 
@@ -492,7 +539,7 @@ namespace OpenTK.Mathematics
         /// Returns a copy of this Matrix4d without translation.
         /// </summary>
         /// <returns>The matrix without translation.</returns>
-        public Matrix4d ClearTranslation()
+        public readonly Matrix4d ClearTranslation()
         {
             var m = this;
             m.Row3.Xyz = Vector3d.Zero;
@@ -503,7 +550,7 @@ namespace OpenTK.Mathematics
         /// Returns a copy of this Matrix4d without scale.
         /// </summary>
         /// <returns>The matrix without scaling.</returns>
-        public Matrix4d ClearScale()
+        public readonly Matrix4d ClearScale()
         {
             var m = this;
             m.Row0.Xyz = m.Row0.Xyz.Normalized();
@@ -516,7 +563,7 @@ namespace OpenTK.Mathematics
         /// Returns a copy of this Matrix4d without rotation.
         /// </summary>
         /// <returns>The matrix without rotation.</returns>
-        public Matrix4d ClearRotation()
+        public readonly Matrix4d ClearRotation()
         {
             var m = this;
             m.Row0.Xyz = new Vector3d(m.Row0.Xyz.Length, 0, 0);
@@ -529,7 +576,7 @@ namespace OpenTK.Mathematics
         /// Returns a copy of this Matrix4d without projection.
         /// </summary>
         /// <returns>The matrix without projection.</returns>
-        public Matrix4d ClearProjection()
+        public readonly Matrix4d ClearProjection()
         {
             var m = this;
             m.Column3 = Vector4d.Zero;
@@ -540,7 +587,7 @@ namespace OpenTK.Mathematics
         /// Returns the translation component of this instance.
         /// </summary>
         /// <returns>The translation.</returns>
-        public Vector3d ExtractTranslation()
+        public readonly Vector3d ExtractTranslation()
         {
             return Row3.Xyz;
         }
@@ -549,7 +596,7 @@ namespace OpenTK.Mathematics
         /// Returns the scale component of this instance.
         /// </summary>
         /// <returns>The scale.</returns>
-        public Vector3d ExtractScale()
+        public readonly Vector3d ExtractScale()
         {
             return new Vector3d(Row0.Xyz.Length, Row1.Xyz.Length, Row2.Xyz.Length);
         }
@@ -563,7 +610,7 @@ namespace OpenTK.Mathematics
         /// </param>
         /// <returns>The rotation.</returns>
         [Pure]
-        public Quaterniond ExtractRotation(bool rowNormalize = true)
+        public readonly Quaterniond ExtractRotation(bool rowNormalize = true)
         {
             var row0 = Row0.Xyz;
             var row1 = Row1.Xyz;
@@ -629,7 +676,7 @@ namespace OpenTK.Mathematics
         /// Returns the projection component of this instance.
         /// </summary>
         /// <returns>The projection.</returns>
-        public Vector4d ExtractProjection()
+        public readonly Vector4d ExtractProjection()
         {
             return Column3;
         }
@@ -688,6 +735,62 @@ namespace OpenTK.Mathematics
         public static Matrix4d CreateFromAxisAngle(Vector3d axis, double angle)
         {
             CreateFromAxisAngle(axis, angle, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Build a rotation matrix from the specified quaternion.
+        /// </summary>
+        /// <param name="q">Quaternion to translate.</param>
+        /// <param name="result">Matrix result.</param>
+        public static void CreateFromQuaternion(in Quaterniond q, out Matrix4d result)
+        {
+            // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
+            // with the caviat that opentk uses row-major matrices so the matrix we create is transposed
+            double sqx = q.X * q.X;
+            double sqy = q.Y * q.Y;
+            double sqz = q.Z * q.Z;
+            double sqw = q.W * q.W;
+
+            double xy = q.X * q.Y;
+            double xz = q.X * q.Z;
+            double xw = q.X * q.W;
+
+            double yz = q.Y * q.Z;
+            double yw = q.Y * q.W;
+
+            double zw = q.Z * q.W;
+
+            double s2 = 2d / (sqx + sqy + sqz + sqw);
+
+            result.Row0.X = 1d - (s2 * (sqy + sqz));
+            result.Row1.Y = 1d - (s2 * (sqx + sqz));
+            result.Row2.Z = 1d - (s2 * (sqx + sqy));
+
+            result.Row0.Y = s2 * (xy + zw);
+            result.Row1.X = s2 * (xy - zw);
+
+            result.Row2.X = s2 * (xz + yw);
+            result.Row0.Z = s2 * (xz - yw);
+
+            result.Row2.Y = s2 * (yz - xw);
+            result.Row1.Z = s2 * (yz + xw);
+
+            result.Row0.W = 0;
+            result.Row1.W = 0;
+            result.Row2.W = 0;
+            result.Row3 = new Vector4d(0, 0, 0, 1d);
+        }
+
+        /// <summary>
+        /// Builds a rotation matrix from a quaternion.
+        /// </summary>
+        /// <param name="q">The quaternion to rotate by.</param>
+        /// <returns>A matrix instance.</returns>
+        [Pure]
+        public static Matrix4d CreateFromQuaternion(Quaterniond q)
+        {
+            CreateFromQuaternion(in q, out Matrix4d result);
             return result;
         }
 
@@ -823,6 +926,139 @@ namespace OpenTK.Mathematics
         {
             CreateTranslation(vector.X, vector.Y, vector.Z, out Matrix4d result);
             return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x, y, and z axes.</param>
+        /// <returns>A scale matrix.</returns>
+        [Pure]
+        public static Matrix4d CreateScale(double scale)
+        {
+            CreateScale(scale, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x, y, and z axes.</param>
+        /// <returns>A scale matrix.</returns>
+        [Pure]
+        public static Matrix4d CreateScale(Vector3d scale)
+        {
+            CreateScale(in scale, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <param name="z">Scale factor for the z axis.</param>
+        /// <returns>A scale matrix.</returns>
+        [Pure]
+        public static Matrix4d CreateScale(double x, double y, double z)
+        {
+            CreateScale(x, y, z, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Single scale factor for the x, y, and z axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(double scale, out Matrix4d result)
+        {
+            result = Identity;
+            result.Row0.X = scale;
+            result.Row1.Y = scale;
+            result.Row2.Z = scale;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="scale">Scale factors for the x, y, and z axes.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(in Vector3d scale, out Matrix4d result)
+        {
+            result = Identity;
+            result.Row0.X = scale.X;
+            result.Row1.Y = scale.Y;
+            result.Row2.Z = scale.Z;
+        }
+
+        /// <summary>
+        /// Creates a scale matrix.
+        /// </summary>
+        /// <param name="x">Scale factor for the x axis.</param>
+        /// <param name="y">Scale factor for the y axis.</param>
+        /// <param name="z">Scale factor for the z axis.</param>
+        /// <param name="result">A scale matrix.</param>
+        public static void CreateScale(double x, double y, double z, out Matrix4d result)
+        {
+            result = Identity;
+            result.Row0.X = x;
+            result.Row1.Y = y;
+            result.Row2.Z = z;
+        }
+
+        /// <summary>
+        /// Create a swizzle matrix that can be used to change the row order of matrices.
+        /// </summary>
+        /// <remarks>
+        /// If you are looking to swizzle vectors there are properties like <see cref="Vector3.Zyx"/> that can do this more effectively.
+        /// </remarks>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        /// <returns>The resulting swizzle matrix.</returns>
+        public static Matrix4d CreateSwizzle(int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3)
+        {
+            CreateSwizzle(rowForRow0, rowForRow1, rowForRow2, rowForRow3, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Create a swizzle matrix that can be used to change the row order of matrices.
+        /// </summary>
+        /// /// <remarks>
+        /// If you are looking to swizzle vectors there are properties like <see cref="Vector3.Zyx"/> that can do this more effectively.
+        /// </remarks>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        /// <param name="result">The resulting swizzle matrix.</param>
+        public static void CreateSwizzle(int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3, out Matrix4d result)
+        {
+            if (rowForRow0 < 0 || rowForRow0 >= 4)
+            {
+                throw new IndexOutOfRangeException($"{nameof(rowForRow0)} must be a number between 0 and 3. Got {rowForRow0}.");
+            }
+            if (rowForRow1 < 0 || rowForRow1 >= 4)
+            {
+                throw new IndexOutOfRangeException($"{nameof(rowForRow1)} must be a number between 0 and 3. Got {rowForRow1}.");
+            }
+            if (rowForRow2 < 0 || rowForRow2 >= 4)
+            {
+                throw new IndexOutOfRangeException($"{nameof(rowForRow2)} must be a number between 0 and 3. Got {rowForRow2}.");
+            }
+            if (rowForRow3 < 0 || rowForRow3 >= 4)
+            {
+                throw new IndexOutOfRangeException($"{nameof(rowForRow3)} must be a number between 0 and 3. Got {rowForRow3}.");
+            }
+
+            result = Zero;
+            result[0, rowForRow0] = 1.0;
+            result[1, rowForRow1] = 1.0;
+            result[2, rowForRow2] = 1.0;
+            result[3, rowForRow3] = 1.0;
         }
 
         /// <summary>
@@ -1099,67 +1335,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Build a rotation matrix from the specified quaternion.
-        /// </summary>
-        /// <param name="q">Quaternion to translate.</param>
-        /// <param name="result">Matrix result.</param>
-        public static void CreateFromQuaternion(in Quaterniond q, out Matrix4d result)
-        {
-            // Adapted from https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Quaternion-derived_rotation_matrix
-            // with the caviat that opentk uses row-major matrices so the matrix we create is transposed
-            double sqx = q.X * q.X;
-            double sqy = q.Y * q.Y;
-            double sqz = q.Z * q.Z;
-            double sqw = q.W * q.W;
-
-            double xy = q.X * q.Y;
-            double xz = q.X * q.Z;
-            double xw = q.X * q.W;
-
-            double yz = q.Y * q.Z;
-            double yw = q.Y * q.W;
-
-            double zw = q.Z * q.W;
-
-            double s2 = 2d / (sqx + sqy + sqz + sqw);
-
-            result.Row0.X = 1d - (s2 * (sqy + sqz));
-            result.Row1.Y = 1d - (s2 * (sqx + sqz));
-            result.Row2.Z = 1d - (s2 * (sqx + sqy));
-
-            result.Row0.Y = s2 * (xy + zw);
-            result.Row1.X = s2 * (xy - zw);
-
-            result.Row2.X = s2 * (xz + yw);
-            result.Row0.Z = s2 * (xz - yw);
-
-            result.Row2.Y = s2 * (yz - xw);
-            result.Row1.Z = s2 * (yz + xw);
-
-            result.Row0.W = 0;
-            result.Row1.W = 0;
-            result.Row2.W = 0;
-            result.Row3 = new Vector4d(0, 0, 0, 1d);
-        }
-
-        /// <summary>
-        /// Builds a rotation matrix from a quaternion.
-        /// </summary>
-        /// <param name="q">The quaternion to rotate by.</param>
-        /// <returns>A matrix instance.</returns>
-        [Pure]
-        public static Matrix4d CreateFromQuaternion(Quaterniond q)
-        {
-            CreateFromQuaternion(in q, out Matrix4d result);
-            return result;
-        }
-
-        /// <summary>
         /// Build a scaling matrix.
         /// </summary>
         /// <param name="scale">Single scale factor for x,y and z axes.</param>
         /// <returns>A scaling matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateScale) + " instead.")]
         public static Matrix4d Scale(double scale)
         {
             return Scale(scale, scale, scale);
@@ -1171,6 +1352,7 @@ namespace OpenTK.Mathematics
         /// <param name="scale">Scale factors for x,y and z axes.</param>
         /// <returns>A scaling matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateScale) + " instead.")]
         public static Matrix4d Scale(Vector3d scale)
         {
             return Scale(scale.X, scale.Y, scale.Z);
@@ -1184,6 +1366,7 @@ namespace OpenTK.Mathematics
         /// <param name="z">Scale factor for z-axis.</param>
         /// <returns>A scaling matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateScale) + " instead.")]
         public static Matrix4d Scale(double x, double y, double z)
         {
             Matrix4d result;
@@ -1200,6 +1383,7 @@ namespace OpenTK.Mathematics
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the x-axis.</param>
         /// <returns>A rotation matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateRotationX) + " instead.")]
         public static Matrix4d RotateX(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1219,6 +1403,7 @@ namespace OpenTK.Mathematics
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the y-axis.</param>
         /// <returns>A rotation matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateRotationY) + " instead.")]
         public static Matrix4d RotateY(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1238,6 +1423,7 @@ namespace OpenTK.Mathematics
         /// <param name="angle">The angle in radians to rotate counter-clockwise around the z-axis.</param>
         /// <returns>A rotation matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateRotationZ) + " instead.")]
         public static Matrix4d RotateZ(double angle)
         {
             var cos = Math.Cos(angle);
@@ -1260,6 +1446,7 @@ namespace OpenTK.Mathematics
         /// </param>
         /// <returns>A rotation matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateFromAxisAngle) + " instead.")]
         public static Matrix4d Rotate(Vector3d axis, double angle)
         {
             var cos = Math.Cos(-angle);
@@ -1301,6 +1488,7 @@ namespace OpenTK.Mathematics
         /// <param name="q">The quaternion.</param>
         /// <returns>A rotation matrix.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreateFromQuaternion) + " instead.")]
         public static Matrix4d Rotate(Quaterniond q)
         {
             q.ToAxisAngle(out Vector3d axis, out double angle);
@@ -1386,6 +1574,7 @@ namespace OpenTK.Mathematics
         /// <param name="depthFar">Distance to the far clip plane.</param>
         /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreatePerspectiveOffCenter) + " instead.")]
         public static Matrix4d Frustum(double left, double right, double bottom, double top, double depthNear, double depthFar)
         {
             var invRL = 1.0 / (right - left);
@@ -1409,6 +1598,7 @@ namespace OpenTK.Mathematics
         /// <param name="depthFar">Distance to the far clip plane.</param>
         /// <returns>A projection matrix that transforms camera space to raster space.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(CreatePerspectiveFieldOfView) + " instead.")]
         public static Matrix4d Perspective(double fovy, double aspect, double depthNear, double depthFar)
         {
             var yMax = depthNear * Math.Tan(0.5f * fovy);
@@ -1655,8 +1845,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Matrix4d Invert(in Matrix4d mat)
         {
-            Matrix4d result;
-            Invert(mat, out result);
+            Invert(mat, out Matrix4d result);
             return result;
         }
 
@@ -1682,6 +1871,71 @@ namespace OpenTK.Mathematics
             result.Row1 = mat.Column1;
             result.Row2 = mat.Column2;
             result.Row3 = mat.Column3;
+        }
+
+        /// <summary>
+        /// Swizzles a matrix, i.e. switches rows of the matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to swizzle.</param>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        /// <returns>The swizzled matrix.</returns>
+        /// <exception cref="IndexOutOfRangeException">If any of the rows are outside of the range [0, 3].</exception>
+        public static Matrix4d Swizzle(Matrix4d mat, int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3)
+        {
+            Swizzle(mat, rowForRow0, rowForRow1, rowForRow2, rowForRow3, out Matrix4d result);
+            return result;
+        }
+
+        /// <summary>
+        /// Swizzles a matrix, i.e. switches rows of the matrix.
+        /// </summary>
+        /// <param name="mat">The matrix to swizzle.</param>
+        /// <param name="rowForRow0">Which row to place in <see cref="Row0"/>.</param>
+        /// <param name="rowForRow1">Which row to place in <see cref="Row1"/>.</param>
+        /// <param name="rowForRow2">Which row to place in <see cref="Row2"/>.</param>
+        /// <param name="rowForRow3">Which row to place in <see cref="Row3"/>.</param>
+        /// <param name="result">The swizzled matrix.</param>
+        /// <exception cref="IndexOutOfRangeException">If any of the rows are outside of the range [0, 3].</exception>
+        public static void Swizzle(in Matrix4d mat, int rowForRow0, int rowForRow1, int rowForRow2, int rowForRow3, out Matrix4d result)
+        {
+            result.Row0 = rowForRow0 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                3 => mat.Row3,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow0)} must be a number between 0 and 3. Got {rowForRow0}."),
+            };
+
+            result.Row1 = rowForRow1 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                3 => mat.Row3,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow1)} must be a number between 0 and 3. Got {rowForRow1}."),
+            };
+
+            result.Row2 = rowForRow2 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                3 => mat.Row3,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow2)} must be a number between 0 and 3. Got {rowForRow2}."),
+            };
+
+            result.Row3 = rowForRow3 switch
+            {
+                0 => mat.Row0,
+                1 => mat.Row1,
+                2 => mat.Row2,
+                3 => mat.Row3,
+                _ => throw new IndexOutOfRangeException($"{nameof(rowForRow3)} must be a number between 0 and 2. Got {rowForRow3}."),
+            };
         }
 
         /// <summary>
@@ -1757,25 +2011,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             var row0 = Row0.ToString(format, formatProvider);
             var row1 = Row1.ToString(format, formatProvider);
@@ -1788,7 +2042,7 @@ namespace OpenTK.Mathematics
         /// Returns the hashcode for this instance.
         /// </summary>
         /// <returns>A System.Int32 containing the unique hashcode for this instance.</returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Row0, Row1, Row2, Row3);
         }
@@ -1799,7 +2053,7 @@ namespace OpenTK.Mathematics
         /// <param name="obj">The object to compare to.</param>
         /// <returns>True if the instances are equal; false otherwise.</returns>
         [Pure]
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Matrix4d && Equals((Matrix4d)obj);
         }
@@ -1810,7 +2064,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">A matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         [Pure]
-        public bool Equals(Matrix4d other)
+        public readonly bool Equals(Matrix4d other)
         {
             return
                 Row0 == other.Row0 &&
