@@ -437,11 +437,25 @@ module Vector2 =
             Assert.Equal(r, vRes)
 
         [<Property>]
-        let ``Slerp returns enpoints`` (a : Vector3, b : Vector3) = 
-            let c = Vector3.Slerp(a, b, 0.0f)
-            let d = Vector3.Slerp(a, b, 1.0f)
+        let ``Lerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Lerp(a, b, 0.0f)
+            let d = Vector2.Lerp(a, b, 1.0f)
             Assert.ApproximatelyEquivalent(a, c);
             Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Slerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Slerp(a, b, 0.0f)
+            let d = Vector2.Slerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Elerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Elerp(Vector2.Abs(a), Vector2.Abs(b), 0.0f)
+            let d = Vector2.Elerp(Vector2.Abs(a), Vector2.Abs(b), 1.0f)
+            Assert.ApproximatelyEquivalent(Vector2.Abs(a), c);
+            Assert.ApproximatelyEquivalent(Vector2.Abs(b), d);
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =

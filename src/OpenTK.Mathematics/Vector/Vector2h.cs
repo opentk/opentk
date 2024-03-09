@@ -383,9 +383,9 @@ namespace OpenTK.Mathematics
         [Pure]
         public static byte[] GetBytes(Vector2h h)
         {
-            var result = new byte[SizeInBytes];
+            byte[] result = new byte[SizeInBytes];
 
-            var temp = Half.GetBytes(h.X);
+            byte[] temp = Half.GetBytes(h.X);
             result[0] = temp[0];
             result[1] = temp[1];
             temp = Half.GetBytes(h.Y);

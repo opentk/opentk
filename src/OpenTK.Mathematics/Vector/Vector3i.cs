@@ -152,6 +152,19 @@ namespace OpenTK.Mathematics
         public readonly float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector3i Abs()
+        {
+            Vector3i result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            result.Z = Math.Abs(result.Z);
+            return result;
+        }
+
+        /// <summary>
         /// Defines a unit-length Vector3i that points towards the X-axis.
         /// </summary>
         public static readonly Vector3i UnitX = new Vector3i(1, 0, 0);
@@ -424,6 +437,31 @@ namespace OpenTK.Mathematics
             result.X = MathHelper.Clamp(vec.X, min.X, max.X);
             result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
             result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector3i Abs(Vector3i vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            vec.Z = Math.Abs(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector3i vec, out Vector3i result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
+            result.Z = Math.Abs(vec.Z);
         }
 
         /// <summary>
