@@ -141,9 +141,9 @@ module Vector2 =
     module ``Simple Properties`` =
         //
         [<Property>]
-        let ``Vector equality is by component`` (a : Vector2,b : Vector2) =
+        let ``Vector equality is by component`` (a : Vector2, b : Vector2) =
             //
-            Assert.Equal((a.X = b.X && a.Y = b.Y),(a = b))
+            Assert.Equal((a.X = b.X && a.Y = b.Y), (a = b))
 
         [<Property>]
         let ``Vector length is always >= 0`` (a : Vector2) =
