@@ -700,6 +700,27 @@ module Vector4 =
             let vRes = Vector4.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
 
+        [<Property>]
+        let ``Lerp returns enpoints`` (a : Vector4, b : Vector4) = 
+            let c = Vector4.Lerp(a, b, 0.0f)
+            let d = Vector4.Lerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Slerp returns enpoints`` (a : Vector4, b : Vector4) = 
+            let c = Vector4.Slerp(a, b, 0.0f)
+            let d = Vector4.Slerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Elerp returns enpoints`` (a : Vector4, b : Vector4) = 
+            let c = Vector4.Elerp(Vector4.Abs(a), Vector4.Abs(b), 0.0f)
+            let d = Vector4.Elerp(Vector4.Abs(a), Vector4.Abs(b), 1.0f)
+            Assert.ApproximatelyEquivalent(Vector4.Abs(a), c);
+            Assert.ApproximatelyEquivalent(Vector4.Abs(b), d);
+
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =
         //

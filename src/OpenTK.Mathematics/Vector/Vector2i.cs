@@ -122,6 +122,18 @@ namespace OpenTK.Mathematics
         public readonly Vector2i PerpendicularLeft => new Vector2i(-Y, X);
 
         /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector2i Abs()
+        {
+            Vector2i result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            return result;
+        }
+
+        /// <summary>
         /// Defines a unit-length <see cref="Vector2i"/> that points towards the X-axis.
         /// </summary>
         public static readonly Vector2i UnitX = new Vector2i(1, 0);
@@ -374,6 +386,29 @@ namespace OpenTK.Mathematics
         {
             result.X = MathHelper.Clamp(vec.X, min.X, max.X);
             result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector2i Abs(Vector2i vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector2i vec, out Vector2i result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
         }
 
         /// <summary>

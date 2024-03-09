@@ -15,6 +15,9 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
+
+            var res = Vector3.Elerp((1e-45f, 1, 1), (1, 1, 4), 0.3f);
+
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,

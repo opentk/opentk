@@ -196,6 +196,20 @@ namespace OpenTK.Mathematics
         public readonly float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector4i Abs()
+        {
+            Vector4i result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            result.Z = Math.Abs(result.Z);
+            result.W = Math.Abs(result.W);
+            return result;
+        }
+
+        /// <summary>
         /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.
         /// </summary>
         public static readonly Vector4i UnitX = new Vector4i(1, 0, 0, 0);
@@ -485,6 +499,33 @@ namespace OpenTK.Mathematics
             result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
             result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
             result.W = MathHelper.Clamp(vec.W, min.W, max.W);
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector4i Abs(Vector4i vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            vec.Z = Math.Abs(vec.Z);
+            vec.W = Math.Abs(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector4i vec, out Vector4i result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
+            result.Z = Math.Abs(vec.Z);
+            result.W = Math.Abs(vec.W);
         }
 
         /// <summary>

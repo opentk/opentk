@@ -794,6 +794,8 @@ namespace OpenTK.Mathematics
         /// http://www.beyond3d.com/content/articles/8/.
         /// </remarks>
         [Pure]
+        // FIXME: Use hardware rsqrt instead of this.
+        // This is slower than 1.0f/MathF.Sqrt(x)...
         public static float InverseSqrtFast(float x)
         {
             unsafe
@@ -1141,7 +1143,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
+        /// <param name="t">Value of the interpolation between a and b. Clamped to [0, 1].</param>
         /// <returns>The interpolated result between the a and b values.</returns>
         [Pure]
         public static float Lerp(float start, float end, float t)
@@ -1155,13 +1157,41 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
+        /// <param name="t">Value of the interpolation between a and b. Clamped to [0, 1].</param>
         /// <returns>The interpolated result between the a and b values.</returns>
         [Pure]
         public static double Lerp(double start, double end, double t)
         {
             t = Math.Clamp(t, 0, 1);
             return start + (t * (end - start));
+        }
+
+        /// <summary>
+        /// Exponentially interpolates between a and b by t.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// Useful for scaling and zooms where constant change in t should result in a multiplicative change in output.
+        /// </summary>
+        /// <param name="start">Start value. Must be non-negative.</param>
+        /// <param name="end">End value. Must be non-negative.</param>
+        /// <param name="t">Value of the interpolation between a and b. Not clamped.</param>
+        /// <returns>The interpolated result between the a and b values.</returns>
+        public static float Elerp(float start, float end, float t)
+        {
+            return start + MathF.Pow(end / start, t);
+        }
+
+        /// <summary>
+        /// Exponentially interpolates between a and b by t.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// Useful for scaling and zooms where constant change in t should result in a multiplicative change in output.
+        /// </summary>
+        /// <param name="start">Start value.</param>
+        /// <param name="end">End value.</param>
+        /// <param name="t">Value of the interpolation between a and b. Not clamped.</param>
+        /// <returns>The interpolated result between the a and b values.</returns>
+        public static double Elerp(double start, double end, double t)
+        {
+            return start + Math.Pow(end / start, t);
         }
 
         /// <summary>

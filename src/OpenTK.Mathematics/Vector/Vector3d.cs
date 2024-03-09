@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -191,7 +191,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public readonly Vector3d Normalized()
         {
-            var v = this;
+            Vector3d v = this;
             v.Normalize();
             return v;
         }
@@ -201,7 +201,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0 / Length;
+            double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -212,10 +212,23 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+            double scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
             X *= scale;
             Y *= scale;
             Z *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector3d Abs()
+        {
+            Vector3d result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            result.Z = Math.Abs(result.Z);
+            return result;
         }
 
         /// <summary>
@@ -547,6 +560,31 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector3d Abs(Vector3d vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            vec.Z = Math.Abs(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector3d vec, out Vector3d result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
+            result.Z = Math.Abs(vec.Z);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -604,7 +642,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d Normalize(Vector3d vec)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -618,7 +656,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector3d vec, out Vector3d result)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -632,7 +671,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d NormalizeFast(Vector3d vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -646,7 +685,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector3d vec, out Vector3d result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -762,6 +801,82 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector3d Slerp(Vector3d a, Vector3d b, double t)
+        {
+            double cosTheta = Dot(a, b);
+            double theta = Math.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+            double bcoef = Math.Sin(t * theta) / sinTheta;
+            return (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector3d a, in Vector3d b, double t, out Vector3d result)
+        {
+            Dot(in a, in b, out double cosTheta);
+            double theta = Math.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+            double bcoef = Math.Sin(t * theta) / sinTheta;
+            result = (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static Vector3d Elerp(Vector3d a, Vector3d b, double t)
+        {
+            a.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            a.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+            a.Z = Math.Pow(a.Z, 1 - t) * Math.Pow(b.Z, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static void Elerp(in Vector3d a, in Vector3d b, double t, out Vector3d result)
+        {
+            result.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            result.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+            result.Z = Math.Pow(a.Z, 1 - t) * Math.Pow(b.Z, t);
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
@@ -773,7 +888,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d BaryCentric(Vector3d a, Vector3d b, Vector3d c, double u, double v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector3d result);
             return result;
         }
 
@@ -800,12 +915,12 @@ namespace OpenTK.Mathematics
             out Vector3d result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector3d ab);
+            Multiply(in ab, u, out Vector3d abU);
+            Add(in a, in abU, out Vector3d uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector3d ac);
+            Multiply(in ac, v, out Vector3d acV);
             Add(in uPos, in acV, out result);
         }
 
@@ -874,7 +989,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed normal.</param>
         public static void TransformNormal(in Vector3d norm, in Matrix4d mat, out Vector3d result)
         {
-            var inverse = Matrix4d.Invert(mat);
+            Matrix4d inverse = Matrix4d.Invert(mat);
             TransformNormalInverse(in norm, in inverse, out result);
         }
 
@@ -1062,7 +1177,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformPerspective(in Vector3d vec, in Matrix4d mat, out Vector3d result)
         {
-            var v = new Vector4d(vec.X, vec.Y, vec.Z, 1);
+            Vector4d v = new Vector4d(vec.X, vec.Y, vec.Z, 1);
             Vector4d.TransformRow(in v, in mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;

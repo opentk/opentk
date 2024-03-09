@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -154,7 +154,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public readonly Vector2 Normalized()
         {
-            var v = this;
+            Vector2 v = this;
             v.Normalize();
             return v;
         }
@@ -164,7 +164,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0f / Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
         }
@@ -174,9 +174,21 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+            float scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector2 Abs()
+        {
+            Vector2 result = this;
+            result.X = MathF.Abs(result.X);
+            result.Y = MathF.Abs(result.Y);
+            return result;
         }
 
         /// <summary>
@@ -495,6 +507,29 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector2 Abs(Vector2 vec)
+        {
+            vec.X = MathF.Abs(vec.X);
+            vec.Y = MathF.Abs(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector2 vec, out Vector2 result)
+        {
+            result.X = MathF.Abs(vec.X);
+            result.Y = MathF.Abs(vec.Y);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -550,7 +585,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 Normalize(Vector2 vec)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -563,7 +598,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector2 vec, out Vector2 result)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -576,7 +611,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 NormalizeFast(Vector2 vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            float scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -589,7 +624,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2 vec, out Vector2 result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            float scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -697,6 +732,80 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector2 Slerp(Vector2 a, Vector2 b, float t)
+        {
+            float cosTheta = Dot(a, b);
+            float theta = MathF.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+            float bcoef = MathF.Sin(t * theta) / sinTheta;
+            return (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector2 a, in Vector2 b, float t, out Vector2 result)
+        {
+            Dot(in a, in b, out float cosTheta);
+            float theta = MathF.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+            float bcoef = MathF.Sin(t * theta) / sinTheta;
+            result = (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static Vector2 Elerp(Vector2 a, Vector2 b, float t)
+        {
+            a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            a.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static void Elerp(in Vector2 a, in Vector2 b, float t, out Vector2 result)
+        {
+            result.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            result.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
@@ -708,7 +817,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 BaryCentric(Vector2 a, Vector2 b, Vector2 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector2 result);
             return result;
         }
 
@@ -734,12 +843,12 @@ namespace OpenTK.Mathematics
             out Vector2 result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector2 ab);
+            Multiply(in ab, u, out Vector2 abU);
+            Add(in a, in abU, out Vector2 uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector2 ac);
+            Multiply(in ac, v, out Vector2 acV);
             Add(in uPos, in acV, out result);
         }
 
