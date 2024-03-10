@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 
 namespace OpenTK.Compute.OpenCL
@@ -3406,13 +3407,425 @@ namespace OpenTK.Compute.OpenCL
         Size = 0x1094
     }
 
+    /// <summary>
+    /// <para>
+    ///     Specifies the information to query using
+    ///     <c><see cref="CL.GetEventInfo(CLEvent,
+    ///     EventInfo, out byte[])">GetKernelInfo()</see></c>.
+    /// </para>
+    /// <para>
+    ///     Original documentation
+    ///     <b><u><see href="https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#event-info-table">here</see></u></b>.
+    /// </para>
+    /// </summary>
+    public enum EventInfo : uint
+    {
+        /// <summary>
+        /// <para>
+        ///     Return the command-queue associated with event.
+        ///     For user event objects, a NULL value is returned.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLCommandQueue">CLCommandQueue</see></c>
+        /// </para>
+        /// </summary>
+        CommandQueue = 0x11D0,
+
+        /// <summary>
+        /// <para>
+        ///     Return the command type associated with event as described in
+        ///     <c><see cref="OpenCL.CommandType">CommandType</see></c>.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.CommandType">CommandType</see></c>
+        /// </para>
+        /// </summary>
+        CommandType = 0x11D1,
+
+        /// <summary>
+        /// <para>
+        ///     Return the event reference count.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c>uint</c>
+        /// </para>
+        /// </summary>
+        ReferenceCount = 0x11D2,
+
+        /// <summary>
+        /// <para>
+        ///     Return the execution status of the command identified by event.
+        /// </para>
+        /// <para>
+        ///     Error code given by a negative integer value. (command was abnormally terminated
+        ///     - this may be caused by a bad memory access etc.). These error codes come
+        ///     from the same set of error codes that are returned from the platform
+        ///     or runtime API calls as return values or <c>errcode_ret</c> values.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="OpenCL.CommandExecutionStatus">
+        ///     CommandExecutionStatus</see></c>
+        /// </para>
+        /// </summary>
+        CommandExecutionStatus = 0x11D3,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Return the context associated with event.
+        /// </para>
+        /// <para>
+        ///     <i><u>Return Type:</u></i> <c><see cref="CLContext">CLContext</see></c>
+        /// </para>
+        /// </summary>
+        Context = 0x11D4
+    }
+
+    /// <summary>
+    ///     Valid values for the execution status of a command.
+    /// </summary>
     public enum CommandExecutionStatus : int
     {
-        Error = -0x1,
+        /// <summary>
+        ///     The command has completed
+        /// </summary>
         Complete = 0x0,
+
+        /// <summary>
+        ///     Device is currently executing this command
+        /// </summary>
         Running = 0x1,
+
+        /// <summary>
+        ///     Enqueued command has been submitted by the host to the device associated with the command-queue
+        /// </summary>
         Submitted = 0x2,
+
+        /// <summary>
+        ///     Command has been enqueued in the command-queue
+        /// </summary>
         Queued = 0x3
+    }
+
+    /// <summary>
+    ///     Supported command types.
+    /// </summary>
+    public enum CommandType : uint
+    {
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueNDRangeKernel(CLCommandQueue,
+        ///     CLKernel, uint, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNDRangeKernel()</see></c>
+        /// </summary>
+        NDRangeKernel = 0x11F0,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueTask(CLCommandQueue,
+        ///     CLKernel, uint, CLEvent[], out CLEvent)">EnqueueTask()</see></c>
+        /// </summary>
+        Task = 0x11F1,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueNativeKernel(CLCommandQueue,
+        ///     IntPtr, IntPtr[], UIntPtr, uint, IntPtr[], IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueNativeKernel()</see></c>
+        /// </summary>
+        NativeKernel = 0x11F2,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueReadBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     UIntPtr, UIntPtr, IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueReadBuffer()</see></c>
+        /// </summary>
+        ReadBuffer = 0x11F3,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueWriteBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     UIntPtr, UIntPtr, IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueWriteBuffer()</see></c>
+        /// </summary>
+        WriteBuffer = 0x11F4,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueCopyBuffer(CLCommandQueue, CLBuffer,
+        ///     CLBuffer, UIntPtr, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueCopyBuffer()</see></c>
+        /// </summary>
+        CopyBuffer = 0x11F5,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueReadImage(CLCommandQueue, CLImage, bool,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueReadImage()</see></c>
+        /// </summary>
+        ReadImage = 0x11F6,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueWriteImage(CLCommandQueue, CLImage, bool,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueWriteImage()</see></c>
+        /// </summary>
+        WriteImage = 0x11F7,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueCopyImage(CLCommandQueue, CLImage,
+        ///     CLImage, UIntPtr[], UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueCopyImage()</see></c>
+        /// </summary>
+        CopyImage = 0x11F8,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueCopyImageToBuffer(CLCommandQueue,
+        ///     CLImage, CLBuffer, UIntPtr[], UIntPtr[], UIntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueCopyImageToBuffer()</see></c>
+        /// </summary>
+        CopyImageToBuffer = 0x11F9,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueCopyBufferToImage(CLCommandQueue,
+        ///     CLBuffer, CLImage, UIntPtr, UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueCopyBufferToImage()</see></c>
+        /// </summary>
+        CopyBufferToImage = 0x11FA,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueMapBuffer(CLCommandQueue, CLBuffer, bool,
+        ///     MapFlags, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapBuffer()</see></c>
+        /// </summary>
+        MapBuffer = 0x11FB,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueMapImage(CLCommandQueue, CLImage, bool, MapFlags,
+        ///     UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent, out CLResultCode)">EnqueueMapImage()</see></c>
+        /// </summary>
+        MapImage = 0x11FC,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueUnmapMemoryObject(CLCommandQueue, CLBuffer,
+        ///     IntPtr, uint, CLEvent[], out CLEvent)">EnqueueUnmapMemoryObject()</see></c>
+        /// </summary>
+        UnmapMemoryObject = 0x11FD,
+
+        /// <summary>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueMarker(CLCommandQueue, CLEvent)">EnqueueMarker()</see></c>
+        ///     and <c><see cref="CL.EnqueueMarkerWithWaitList(CLCommandQueue, uint,
+        ///     IntPtr[], IntPtr, uint, CLEvent[], out CLEvent)">EnqueueMarkerWithWaitList()</see></c>
+        /// </summary>
+        Marker = 0x11FE,
+
+        /// #TODO
+        /// <summary>
+        ///     Extension value. Currently not implemented
+        /// </summary>
+        AquireGLObjects = 0x11FF,
+
+        /// #TODO
+        /// <summary>
+        ///     Extension value. Currently not implemented
+        /// </summary>
+        ReleaseGLObjects = 0x1200,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueReadBufferRect(CLCommandQueue, CLBuffer, bool,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, UIntPtr,
+        ///     UIntPtr, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueReadBufferRect()</see></c>
+        /// </para>
+        /// </summary>
+        ReadBufferRect = 0x1201,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueWriteBufferRect(CLCommandQueue, CLBuffer, bool,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, UIntPtr, UIntPtr,
+        ///     IntPtr, uint, CLEvent[], out CLEvent)">EnqueueWriteBufferRect()</see></c>
+        /// </para>
+        /// </summary>
+        WriteBufferRect = 0x1202,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueCopyBufferRect(CLCommandQueue, CLBuffer, CLBuffer,
+        ///     UIntPtr[], UIntPtr[], UIntPtr[], UIntPtr, UIntPtr, UIntPtr,
+        ///     UIntPtr, uint, CLEvent[], out CLEvent)">EnqueueCopyBufferRect()</see></c>
+        /// </para>
+        /// </summary>
+        CopyBufferRect = 0x1203,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.1.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.CreateUserEvent(CLContext, out CLResultCode)">CreateUserEvent()</see></c>
+        /// </para>
+        /// </summary>
+        User = 0x1204,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueBarrier(CLCommandQueue)">EnqueueBarrier()</see></c>
+        ///     and <c><see cref="CL.EnqueueBarrierWithWaitList(CLCommandQueue, uint,
+        ///     IntPtr[], IntPtr, uint, CLEvent[], out CLEvent)">EnqueueBarrierWithWaitList()</see></c>
+        /// </para>
+        /// </summary>
+        Barrier = 0x1205,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueMigrateMemoryObjects(CLCommandQueue, uint,
+        ///     IntPtr[], MemoryMigrationFlags, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueMigrateMemoryObjects()</see></c>
+        /// </para>
+        /// </summary>
+        MigrateMemoryObjects = 0x1206,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueFillBuffer(CLCommandQueue, CLBuffer,
+        ///     IntPtr, UIntPtr, UIntPtr, UIntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueFillBuffer()</see></c>
+        /// </para>
+        /// </summary>
+        FillBuffer = 0x1207,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 1.2.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueFillImage(CLCommandQueue, CLImage,
+        ///     IntPtr, UIntPtr[], UIntPtr[], uint,
+        ///     CLEvent[], out CLEvent)">EnqueueFillImage()</see></c>
+        /// </para>
+        /// </summary>
+        FillImage = 0x1208,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSVMFree(CLCommandQueue, uint, IntPtr[],
+        ///     IntPtr, IntPtr, uint, CLEvent[], out CLEvent)">EnqueueSVMFree()</see></c>
+        /// </para>
+        /// </summary>
+        SVMFree = 0x1209,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSvmMemoryCopy(CLCommandQueue, bool, IntPtr,
+        ///     IntPtr, UIntPtr, uint, CLEvent[], out CLEvent)">EnqueueSvmMemoryCopy()</see></c>
+        /// </para>
+        /// </summary>
+        SVMMemoryCopy = 0x120A,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSvmMemoryFill(CLCommandQueue, IntPtr, IntPtr,
+        ///     UIntPtr, UIntPtr, uint, CLEvent[], out CLEvent)">EnqueueSvmMemoryFill()</see></c>
+        /// </para>
+        /// </summary>
+        SVMMemoryFill = 0x120B,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSvmMap(CLCommandQueue, bool, MapFlags, IntPtr,
+        ///     UIntPtr, uint, CLEvent[], out CLEvent)">EnqueueSvmMap()</see></c>
+        /// </para>
+        /// </summary>
+        SVMMap = 0x120C,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 2.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSVMUnmap(CLCommandQueue, IntPtr, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueSVMUnmap()</see></c>
+        /// </para>
+        /// </summary>
+        SVMUnmap = 0x120D,
+
+        /// <summary>
+        /// <para>
+        ///     <i><pre>Missing before verison 3.0.</pre></i>
+        /// </para>
+        /// <para>
+        ///     Type for events created by
+        ///     <c><see cref="CL.EnqueueSvmMigrateMemory(CLCommandQueue, uint, IntPtr[],
+        ///     UIntPtr[], MemoryMigrationFlags, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueSvmMigrateMemory()</see></c>
+        /// </para>
+        /// <para>
+        ///     Prior to OpenCL 3.0, implementations should return
+        ///     <c><see cref="MigrateMemoryObjects">MigrateMemoryObjects</see></c>,
+        ///     but may return an implementation-defined event command type for
+        ///     <c><see cref="CL.EnqueueSvmMigrateMemory(CLCommandQueue, uint, IntPtr[],
+        ///     UIntPtr[], MemoryMigrationFlags, uint,
+        ///     CLEvent[], out CLEvent)">EnqueueSvmMigrateMemory()</see></c>.
+        /// </para>
+        /// </summary>
+        SVMMigrateMemory = 0x120E
     }
 
     #endregion
@@ -5737,14 +6150,6 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Other
-    public enum EventInfo : uint
-    {
-        CommandQueue = 0x11D0,
-        CommandType = 0x11D1,
-        ReferenceCount = 0x11D2,
-        CommandExecutionStatus = 0x11D3,
-        Context = 0x11D4
-    }
 
     public enum ProfilingInfo : uint
     {
