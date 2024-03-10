@@ -118,5 +118,11 @@ namespace OpenTK.Compute.OpenCL
         public Version Version;
         public string Name;
     }
+
+    public struct CLBufferRegion
+    {
+        public UIntPtr Origin;
+        public UIntPtr Size;
+    }
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 }

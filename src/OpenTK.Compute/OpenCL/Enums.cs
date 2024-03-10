@@ -4862,8 +4862,37 @@ namespace OpenTK.Compute.OpenCL
     #endregion
 
     #region Buffer
+
+    /// <summary>
+    /// <para>
+    ///     <i><pre>Missing before verison 1.1.</pre></i>
+    /// </para>
+    /// <para>
+    ///     Type of buffer object to be created by
+    ///     <c><see cref="CL.CreateSubBuffer(CLBuffer, MemoryFlags, BufferCreateType,
+    ///     IntPtr, out CLResultCode)">CreateSubBuffer()</see></c>.
+    /// </para>
+    /// </summary>
     public enum BufferCreateType : uint
     {
+        /// <summary>
+        /// <para>
+        ///     Create a buffer object that represents a specific region in <c>buffer</c>.
+        /// </para>
+        /// <para>
+        ///     <c>buffer_create_info</c> is a pointer to a
+        ///     <c><see cref="CLBufferRegion">CLBufferRegion</see></c> structure
+        ///     specifying a region of the buffer.
+        /// </para>
+        /// <para>
+        ///     If <c>buffer</c> is created with <c><see cref="MemoryFlags.UseHostPtr">UseHostPtr</see></c>,
+        ///     the <c>host_ptr</c> associated with the buffer object returned is <c>host_ptr + origin</c>.
+        /// </para>
+        /// <para>
+        ///     The buffer object returned references the data store allocated for buffer
+        ///     and points to the region specified by <c>buffer_create_info</c> in this data store.
+        /// </para>
+        /// </summary>
         Region = 0x1220
     }
 
