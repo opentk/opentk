@@ -38,6 +38,8 @@ namespace OpenTK.Compute.OpenCL
         }
 
         public static implicit operator IntPtr(CLPipe pipe) => pipe.Handle;
+
+        public static explicit operator CLMemoryObject(CLPipe pipe) => new CLMemoryObject(pipe.Handle);
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
