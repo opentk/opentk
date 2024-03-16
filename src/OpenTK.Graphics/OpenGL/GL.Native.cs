@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-16 14:26:26 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -6874,7 +6874,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetVertexAttribLui64vARB(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader]</b> <b>[entry point: <c>glGetVertexAttribPointervARB</c>]</b><br/>  </summary>
-            public static void GetVertexAttribPointervARB_(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervARB(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> <b>[entry point: <c>glHistogram</c>]</b><br/>  </summary>
             public static void Histogram(HistogramTargetEXT target, int width, InternalFormat internalformat, bool sink) => GLPointers._glHistogram_fnptr((uint)target, width, (uint)internalformat, (byte)(sink ? 1 : 0));
@@ -11819,7 +11819,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glGetVertexAttribPointervNV</c>]</b><br/>  </summary>
-            public static void GetVertexAttribPointervNV_(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervNV(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_NV_video_capture]</b> <b>[entry point: <c>glGetVideoCaptureivNV</c>]</b><br/>  </summary>
             public static void GetVideoCaptureivNV(uint video_capture_slot, All pname, int* parameters) => GLPointers._glGetVideoCaptureivNV_fnptr(video_capture_slot, (uint)pname, parameters);

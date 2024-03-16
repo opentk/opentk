@@ -113,7 +113,9 @@ namespace Generator.Process
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (overload.NativeFunction.EntryPoint.StartsWith("glGet")
+            if (overload.NativeFunction.EntryPoint.StartsWith("glGet") &&
+                overload.NativeFunction.EntryPoint.StartsWith("glGetUniform") == false &&
+                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexAttrib") == false
                 // FIXME: It might be better to be more selective about what
                 // functions we overload like this to reduce the number of
                 // garbage overloads generated.
@@ -144,6 +146,16 @@ namespace Generator.Process
                     pointer.BaseType is not CSVoid &&
                     pointer.BaseType is not CSChar8)
                 {
+                    if (overload.InputParameters[^1].Length is not null)
+                    {
+                        // If there is a length and it's not "1", we don't generate an overload.
+                        if (overload.InputParameters[^1].Length is Constant constant && constant.Value != 1)
+                        {
+                            newOverloads = null;
+                            return false;
+                        }
+                    }
+
                     string newReturnName = $"{overload.InputParameters[^1].Name}_val";
                     var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
 
@@ -1349,115 +1361,88 @@ namespace Generator.Process
             // FIXME: We want to be able to handle more than just one Span and Array overload
             // functions like "glShaderSource" can take more than one array.
             //
-            List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
-            var genericTypes = overload.GenericTypes;
+            List<Parameter> newArrayParams = new List<Parameter>(overload.InputParameters);
+            List<Parameter> newSpanParams = new List<Parameter>(overload.InputParameters);
+            string[] genericTypes = overload.GenericTypes;
             Overload arrayOverload = overload;
             Overload spanOverload = overload;
-            for (int i = newParams.Count - 1; i >= 0; i--)
+
+            // FIXME: We would ideally combine all span and array overloads into a single overload layer
+            // to reduce fixed() nesting in the generated code.
+            // - Noggin_bops 2024-03-16
+            for (int i = 0; i < overload.InputParameters.Length; i++)
             {
-                var param = newParams[i];
+                Parameter param = overload.InputParameters[i];
 
-                if (param.Type is CSPointer pt)
+                if (param.Type is CSPointer pointer)
                 {
-                    if (pt.BaseType is CSChar8)
+                    if (pointer.BaseType is CSChar8)
                     {
-                        Logger.Warning(
-                            $"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                        Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         continue;
                     }
-                    else if (pt.BaseType is CSPointer)
+                    else if (pointer.BaseType is CSPointer)
                     {
-                        Logger.Warning(
-                            $"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                        Logger.Warning($"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         continue;
-                    }
-                }
-
-                if (param.Length != null)
-                {
-                    string? lengthParamName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
-                    var pointerParam = newParams[i];
-                    if (pointerParam.Type is not CSPointer pointer)
-                        throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
-
-                    Parameter? oldLength = null;
-                    int spanArrayParameterIndex = i;
-                    Parameter? paramToBeRemoved = null;
-                    bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1 && lengthParamName != null;
-                    if (shouldCalculateLength)
-                    {
-                        // If this is the only len attribute that references this parameter,
-                        // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
-                        // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
-                        int lengthParamIndex =
-                            Array.FindIndex(overload.InputParameters, p => p.Name == lengthParamName);
-                        oldLength = overload.InputParameters[lengthParamIndex];
-
-                        paramToBeRemoved = oldLength;
-                        newParams.Remove(oldLength);
-
-                        if (lengthParamIndex < i)
-                        {
-                            spanArrayParameterIndex--;
-                            i--;
-                        }
-                    }
-
-                    BaseCSType baseType;
-                    if (pointer.BaseType is CSVoid)
-                    {
-                        genericTypes = genericTypes.MakeCopyAndGrow(1);
-                        genericTypes[^1] = $"T{genericTypes.Length}";
-                        baseType = new CSGenericType(genericTypes[^1]);
                     }
                     else
                     {
-                        baseType = pointer.BaseType;
+                        // If the parameter has length 1 there is no point in having an array overload.
+                        // We leave it to be ref overloaded instead.
+                        // - Noggin_bops 2024-03-16
+                        if (param.Length is Constant constant && constant.Value == 1)
+                        {
+                            continue;
+                        }
+
+                        BaseCSType baseType;
+                        if (pointer.BaseType is CSVoid)
+                        {
+                            genericTypes = genericTypes.MakeCopyAndGrow(1);
+                            genericTypes[^1] = $"T{genericTypes.Length}";
+                            baseType = new CSGenericType(genericTypes[^1]);
+                        }
+                        else
+                        {
+                            baseType = pointer.BaseType;
+                        }
+
+                        bool isBaseTypeConstant = false;
+                        if (pointer.BaseType is IConstantCSType constantType)
+                        {
+                            isBaseTypeConstant = constantType.Constant;
+                        }
+
+                        var spanNameTable = overload.NameTable.New();
+                        var arrayNameTable = overload.NameTable.New();
+
+                        spanNameTable.Rename(param, $"{param.Name}_ptr");
+                        arrayNameTable.Rename(param, $"{param.Name}_ptr");
+
+                        newArrayParams[i] = newArrayParams[i] with { Type = new CSArray(baseType) };
+                        newSpanParams[i] = newSpanParams[i] with { Type = new CSSpan(baseType, isBaseTypeConstant) };
+
+                        var arrayLayer = new SpanOrArrayLayer(param, newArrayParams[i]);
+                        var spanLayer = new SpanOrArrayLayer(param, newSpanParams[i]);
+
+                        arrayOverload = arrayOverload with
+                        {
+                            NestedOverload = arrayOverload,
+                            MarshalLayerToNested = arrayLayer,
+                            InputParameters = newArrayParams.ToArray(),
+                            NameTable = arrayNameTable,
+                            GenericTypes = genericTypes
+                        };
+                        spanOverload = spanOverload with
+                        {
+                            NestedOverload = spanOverload,
+                            MarshalLayerToNested = spanLayer,
+                            InputParameters = newSpanParams.ToArray(),
+                            NameTable = spanNameTable,
+                            GenericTypes = genericTypes
+                        };
                     }
-
-                    bool isBaseTypeConstant = false;
-                    if (pointer.BaseType is IConstantCSType constantType)
-                    {
-                        isBaseTypeConstant = constantType.Constant;
-                    }
-
-                    var spanNameTable = overload.NameTable.New();
-                    var arrayNameTable = overload.NameTable.New();
-
-                    spanNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-                    arrayNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-
-                    var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-                    var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-
-                    newSpanParams[spanArrayParameterIndex] = newSpanParams[spanArrayParameterIndex] with
-                    {
-                        Type = new CSSpan(baseType, isBaseTypeConstant)
-                    };
-                    newArrayParams[spanArrayParameterIndex] = newArrayParams[spanArrayParameterIndex] with
-                    {
-                        Type = new CSArray(baseType)
-                    };
-
-                    var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[spanArrayParameterIndex], oldLength, expr, baseType);
-                    var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[spanArrayParameterIndex], oldLength, expr, baseType);
-
-                    spanOverload = spanOverload with
-                    {
-                        NestedOverload = spanOverload,
-                        MarshalLayerToNested = spanLayer,
-                        InputParameters = newSpanParams,
-                        NameTable = spanNameTable,
-                        GenericTypes = genericTypes
-                    };
-                    arrayOverload = arrayOverload with
-                    {
-                        NestedOverload = arrayOverload,
-                        MarshalLayerToNested = arrayLayer,
-                        InputParameters = newArrayParams,
-                        NameTable = arrayNameTable,
-                        GenericTypes = genericTypes
-                    };
                 }
             }
 
@@ -1480,28 +1465,12 @@ namespace Generator.Process
 
         private record SpanOrArrayLayer(
             Parameter PointerParameter,
-            Parameter SpanOrArrayParameter,
-            Parameter? LengthParameter,
-            Func<string, string> ParameterExpression,
-            BaseCSType BaseType) : IOverloadLayer
+            Parameter SpanOrArrayParameter) : IOverloadLayer
         {
             private CsScope _csScope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                // NOTE: We are casting the length field to the target mathType because some of
-                // the functions don't take `int` types directly, instead they take an `IntPtr`.
-                // But that is fine because we can cast `int`s to `IntPtr`.
-                // This is slightly fragile but it's fine for now.
-                // - Noggin_bops 2021-01-22
-                if (LengthParameter != null)
-                {
-                    var byteSize = BaseType is CSGenericType ? $" * sizeof({BaseType.ToCSString()})" : "";
-                    var lengthExpression = ParameterExpression(nameTable[SpanOrArrayParameter]);
-                    writer.WriteLine(
-                        $"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = ({LengthParameter.Type.ToCSString()})({lengthExpression}{byteSize});");
-                }
-
                 writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
                 _csScope = writer.CsScope();
             }
