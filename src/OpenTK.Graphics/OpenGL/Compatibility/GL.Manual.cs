@@ -30,12 +30,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         }
 
         /// <summary>
-        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramPropertyARB, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, out int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, out int, out string)"/>.
         /// </summary>
         public static void GetShaderInfoLog(int shader, out string info)
         {
-            int length = default;
-            GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
+            GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, out int length);
             if (length == 0)
             {
                 info = string.Empty;
@@ -47,12 +46,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         }
 
         /// <summary>
-        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramProperty, out int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, out int, out string)"/>.
         /// </summary>
         public static void GetProgramInfoLog(int program, out string info)
         {
-            int length = default;
-            GL.GetProgrami(program, ProgramProperty.InfoLogLength, ref length);
+            GL.GetProgrami(program, ProgramProperty.InfoLogLength, out int length);
             if (length == 0)
             {
                 info = string.Empty;
