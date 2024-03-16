@@ -546,7 +546,7 @@ namespace Generator.Parsing
                 //   Right now we blindly substituting the type for the enumName.
                 if (group != null && (type == "GLuint" || type == "GLint" || type == "INT" || type == "UINT" || type == "INT32" || type == "int" || type == "int32_t"))
                 {
-                    Console.WriteLine($"Making {type} into group {group}");
+                    Logger.Info($"Making {type} into group {group.TranslatedName}");
                     CSPrimitive baseType = type switch
                     {
                         "GLint" => new CSPrimitive("int", @const),
