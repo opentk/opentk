@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 14:26:26 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -1076,7 +1076,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetPointervKHR</c>]</b><br/>  </summary>
-            public static void GetPointervKHR_(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
+            public static void GetPointervKHR(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glObjectLabel</c>]</b><br/>  </summary>
             public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => GLPointers._glObjectLabel_fnptr((uint)identifier, name, length, label);
@@ -1320,7 +1320,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glGetBufferPointervOES</c>]</b><br/>  </summary>
-            public static void GetBufferPointervOES_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervOES(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_single_precision]</b> <b>[entry point: <c>glGetClipPlanefOES</c>]</b><br/>  </summary>
             public static void GetClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);

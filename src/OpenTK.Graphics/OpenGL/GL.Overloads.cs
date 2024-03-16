@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 14:26:26 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -958,15 +958,7 @@ namespace OpenTK.Graphics.OpenGL
             int buffer;
             int n = 1;
             Unsafe.SkipInit(out buffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
+            int* buffers_handle = &buffer;
             CreateBuffers(n, buffers_handle);
             return buffer;
         }
@@ -975,16 +967,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out buffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
-            CreateBuffers(n, buffers_handle);
+            fixed(int* buffers_handle = &buffer)
+            {
+                CreateBuffers(n, buffers_handle);
+            }
         }
         /// <inheritdoc cref="CreateBuffers(int, int*)"/>
         public static unsafe void CreateBuffers(int n, Span<int> buffers)
@@ -1016,15 +1002,7 @@ namespace OpenTK.Graphics.OpenGL
             int framebuffer;
             int n = 1;
             Unsafe.SkipInit(out framebuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
+            int* framebuffers_handle = &framebuffer;
             CreateFramebuffers(n, framebuffers_handle);
             return framebuffer;
         }
@@ -1033,16 +1011,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out framebuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
-            CreateFramebuffers(n, framebuffers_handle);
+            fixed(int* framebuffers_handle = &framebuffer)
+            {
+                CreateFramebuffers(n, framebuffers_handle);
+            }
         }
         /// <inheritdoc cref="CreateFramebuffers(int, int*)"/>
         public static unsafe void CreateFramebuffers(int n, Span<int> framebuffers)
@@ -1074,15 +1046,7 @@ namespace OpenTK.Graphics.OpenGL
             int pipeline;
             int n = 1;
             Unsafe.SkipInit(out pipeline);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
+            int* pipelines_handle = &pipeline;
             CreateProgramPipelines(n, pipelines_handle);
             return pipeline;
         }
@@ -1091,16 +1055,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out pipeline);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
-            CreateProgramPipelines(n, pipelines_handle);
+            fixed(int* pipelines_handle = &pipeline)
+            {
+                CreateProgramPipelines(n, pipelines_handle);
+            }
         }
         /// <inheritdoc cref="CreateProgramPipelines(int, int*)"/>
         public static unsafe void CreateProgramPipelines(int n, Span<int> pipelines)
@@ -1132,15 +1090,7 @@ namespace OpenTK.Graphics.OpenGL
             int id;
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+            int* ids_handle = &id;
             CreateQueries(target, n, ids_handle);
             return id;
         }
@@ -1149,16 +1099,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-            CreateQueries(target, n, ids_handle);
+            fixed(int* ids_handle = &id)
+            {
+                CreateQueries(target, n, ids_handle);
+            }
         }
         /// <inheritdoc cref="CreateQueries(QueryTarget, int, int*)"/>
         public static unsafe void CreateQueries(QueryTarget target, int n, Span<int> ids)
@@ -1190,15 +1134,7 @@ namespace OpenTK.Graphics.OpenGL
             int renderbuffer;
             int n = 1;
             Unsafe.SkipInit(out renderbuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
+            int* renderbuffers_handle = &renderbuffer;
             CreateRenderbuffers(n, renderbuffers_handle);
             return renderbuffer;
         }
@@ -1207,16 +1143,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out renderbuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
-            CreateRenderbuffers(n, renderbuffers_handle);
+            fixed(int* renderbuffers_handle = &renderbuffer)
+            {
+                CreateRenderbuffers(n, renderbuffers_handle);
+            }
         }
         /// <inheritdoc cref="CreateRenderbuffers(int, int*)"/>
         public static unsafe void CreateRenderbuffers(int n, Span<int> renderbuffers)
@@ -1248,15 +1178,7 @@ namespace OpenTK.Graphics.OpenGL
             int sampler;
             int n = 1;
             Unsafe.SkipInit(out sampler);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
+            int* samplers_handle = &sampler;
             CreateSamplers(n, samplers_handle);
             return sampler;
         }
@@ -1265,16 +1187,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out sampler);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
-            CreateSamplers(n, samplers_handle);
+            fixed(int* samplers_handle = &sampler)
+            {
+                CreateSamplers(n, samplers_handle);
+            }
         }
         /// <inheritdoc cref="CreateSamplers(int, int*)"/>
         public static unsafe void CreateSamplers(int n, Span<int> samplers)
@@ -1313,15 +1229,7 @@ namespace OpenTK.Graphics.OpenGL
             int texture;
             int n = 1;
             Unsafe.SkipInit(out texture);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
+            int* textures_handle = &texture;
             CreateTextures(target, n, textures_handle);
             return texture;
         }
@@ -1330,16 +1238,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out texture);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
-            CreateTextures(target, n, textures_handle);
+            fixed(int* textures_handle = &texture)
+            {
+                CreateTextures(target, n, textures_handle);
+            }
         }
         /// <inheritdoc cref="CreateTextures(TextureTarget, int, int*)"/>
         public static unsafe void CreateTextures(TextureTarget target, int n, Span<int> textures)
@@ -1371,15 +1273,7 @@ namespace OpenTK.Graphics.OpenGL
             int id;
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+            int* ids_handle = &id;
             CreateTransformFeedbacks(n, ids_handle);
             return id;
         }
@@ -1388,16 +1282,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-            CreateTransformFeedbacks(n, ids_handle);
+            fixed(int* ids_handle = &id)
+            {
+                CreateTransformFeedbacks(n, ids_handle);
+            }
         }
         /// <inheritdoc cref="CreateTransformFeedbacks(int, int*)"/>
         public static unsafe void CreateTransformFeedbacks(int n, Span<int> ids)
@@ -1429,15 +1317,7 @@ namespace OpenTK.Graphics.OpenGL
             int array;
             int n = 1;
             Unsafe.SkipInit(out array);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
+            int* arrays_handle = &array;
             CreateVertexArrays(n, arrays_handle);
             return array;
         }
@@ -1446,16 +1326,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out array);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
-            CreateVertexArrays(n, arrays_handle);
+            fixed(int* arrays_handle = &array)
+            {
+                CreateVertexArrays(n, arrays_handle);
+            }
         }
         /// <inheritdoc cref="CreateVertexArrays(int, int*)"/>
         public static unsafe void CreateVertexArrays(int n, Span<int> arrays)
@@ -2014,15 +1888,7 @@ namespace OpenTK.Graphics.OpenGL
             int buffer;
             int n = 1;
             Unsafe.SkipInit(out buffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
+            int* buffers_handle = &buffer;
             GenBuffers(n, buffers_handle);
             return buffer;
         }
@@ -2031,16 +1897,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out buffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
-            GenBuffers(n, buffers_handle);
+            fixed(int* buffers_handle = &buffer)
+            {
+                GenBuffers(n, buffers_handle);
+            }
         }
         /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe void GenBuffers(int n, Span<int> buffers)
@@ -2072,15 +1932,7 @@ namespace OpenTK.Graphics.OpenGL
             int framebuffer;
             int n = 1;
             Unsafe.SkipInit(out framebuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
+            int* framebuffers_handle = &framebuffer;
             GenFramebuffers(n, framebuffers_handle);
             return framebuffer;
         }
@@ -2089,16 +1941,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out framebuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
-            GenFramebuffers(n, framebuffers_handle);
+            fixed(int* framebuffers_handle = &framebuffer)
+            {
+                GenFramebuffers(n, framebuffers_handle);
+            }
         }
         /// <inheritdoc cref="GenFramebuffers(int, int*)"/>
         public static unsafe void GenFramebuffers(int n, Span<int> framebuffers)
@@ -2130,15 +1976,7 @@ namespace OpenTK.Graphics.OpenGL
             int pipeline;
             int n = 1;
             Unsafe.SkipInit(out pipeline);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
+            int* pipelines_handle = &pipeline;
             GenProgramPipelines(n, pipelines_handle);
             return pipeline;
         }
@@ -2147,16 +1985,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out pipeline);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
-            GenProgramPipelines(n, pipelines_handle);
+            fixed(int* pipelines_handle = &pipeline)
+            {
+                GenProgramPipelines(n, pipelines_handle);
+            }
         }
         /// <inheritdoc cref="GenProgramPipelines(int, int*)"/>
         public static unsafe void GenProgramPipelines(int n, Span<int> pipelines)
@@ -2188,15 +2020,7 @@ namespace OpenTK.Graphics.OpenGL
             int id;
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+            int* ids_handle = &id;
             GenQueries(n, ids_handle);
             return id;
         }
@@ -2205,16 +2029,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-            GenQueries(n, ids_handle);
+            fixed(int* ids_handle = &id)
+            {
+                GenQueries(n, ids_handle);
+            }
         }
         /// <inheritdoc cref="GenQueries(int, int*)"/>
         public static unsafe void GenQueries(int n, Span<int> ids)
@@ -2246,15 +2064,7 @@ namespace OpenTK.Graphics.OpenGL
             int renderbuffer;
             int n = 1;
             Unsafe.SkipInit(out renderbuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
+            int* renderbuffers_handle = &renderbuffer;
             GenRenderbuffers(n, renderbuffers_handle);
             return renderbuffer;
         }
@@ -2263,16 +2073,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out renderbuffer);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
-            GenRenderbuffers(n, renderbuffers_handle);
+            fixed(int* renderbuffers_handle = &renderbuffer)
+            {
+                GenRenderbuffers(n, renderbuffers_handle);
+            }
         }
         /// <inheritdoc cref="GenRenderbuffers(int, int*)"/>
         public static unsafe void GenRenderbuffers(int n, Span<int> renderbuffers)
@@ -2304,15 +2108,7 @@ namespace OpenTK.Graphics.OpenGL
             int sampler;
             int count = 1;
             Unsafe.SkipInit(out sampler);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
+            int* samplers_handle = &sampler;
             GenSamplers(count, samplers_handle);
             return sampler;
         }
@@ -2321,16 +2117,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int count = 1;
             Unsafe.SkipInit(out sampler);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
-            GenSamplers(count, samplers_handle);
+            fixed(int* samplers_handle = &sampler)
+            {
+                GenSamplers(count, samplers_handle);
+            }
         }
         /// <inheritdoc cref="GenSamplers(int, int*)"/>
         public static unsafe void GenSamplers(int count, Span<int> samplers)
@@ -2362,15 +2152,7 @@ namespace OpenTK.Graphics.OpenGL
             int texture;
             int n = 1;
             Unsafe.SkipInit(out texture);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
+            int* textures_handle = &texture;
             GenTextures(n, textures_handle);
             return texture;
         }
@@ -2379,16 +2161,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out texture);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
-            GenTextures(n, textures_handle);
+            fixed(int* textures_handle = &texture)
+            {
+                GenTextures(n, textures_handle);
+            }
         }
         /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe void GenTextures(int n, Span<int> textures)
@@ -2420,15 +2196,7 @@ namespace OpenTK.Graphics.OpenGL
             int id;
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+            int* ids_handle = &id;
             GenTransformFeedbacks(n, ids_handle);
             return id;
         }
@@ -2437,16 +2205,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out id);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-            GenTransformFeedbacks(n, ids_handle);
+            fixed(int* ids_handle = &id)
+            {
+                GenTransformFeedbacks(n, ids_handle);
+            }
         }
         /// <inheritdoc cref="GenTransformFeedbacks(int, int*)"/>
         public static unsafe void GenTransformFeedbacks(int n, Span<int> ids)
@@ -2478,15 +2240,7 @@ namespace OpenTK.Graphics.OpenGL
             int array;
             int n = 1;
             Unsafe.SkipInit(out array);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
+            int* arrays_handle = &array;
             GenVertexArrays(n, arrays_handle);
             return array;
         }
@@ -2495,16 +2249,10 @@ namespace OpenTK.Graphics.OpenGL
         {
             int n = 1;
             Unsafe.SkipInit(out array);
-            // FIXME: This could be a problem for the overloads that take an out parameter
-            // as this parameter could *potentially* move while inside of this function
-            // which would mean that the new value never gets written to the out parameter.
-            // Making for a nasty bug.
-            // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-            // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-            // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-            // - 2021-05-18
-            int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
-            GenVertexArrays(n, arrays_handle);
+            fixed(int* arrays_handle = &array)
+            {
+                GenVertexArrays(n, arrays_handle);
+            }
         }
         /// <inheritdoc cref="GenVertexArrays(int, int*)"/>
         public static unsafe void GenVertexArrays(int n, Span<int> arrays)
@@ -2547,23 +2295,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
-        public static unsafe void GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname, ref int parameters)
+        public static unsafe int GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
+        public static unsafe void GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
-        public static unsafe int GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetActiveAttrib(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-        public static unsafe string GetActiveAttrib(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type)
+        public static unsafe string GetActiveAttrib(int program, uint index, int bufSize, out int length, out int size, out AttributeType type)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -2578,7 +2328,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetActiveAttrib(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-        public static unsafe void GetActiveAttrib(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type, out string name)
+        public static unsafe void GetActiveAttrib(int program, uint index, int bufSize, out int length, out int size, out AttributeType type, out string name)
         {
             fixed (int* length_ptr = &length)
             fixed (int* size_ptr = &size)
@@ -2591,7 +2341,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveSubroutineName(int, ShaderType, uint, int, int*, byte*)"/>
-        public static unsafe string GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, ref int length)
+        public static unsafe string GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, out int length)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -2604,7 +2354,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetActiveSubroutineName(int, ShaderType, uint, int, int*, byte*)"/>
-        public static unsafe void GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, ref int length, out string name)
+        public static unsafe void GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, out int length, out string name)
         {
             fixed (int* length_ptr = &length)
             {
@@ -2631,23 +2381,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
-        public static unsafe void GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname, ref int values)
+        public static unsafe int GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname)
+        {
+            int values;
+            int* values_ptr = &values;
+            {
+                GetActiveSubroutineUniformiv(program, shadertype, index, pname, values_ptr);
+            }
+            return values;
+        }
+        /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
+        public static unsafe void GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname, out int values)
         {
             fixed (int* values_ptr = &values)
             {
                 GetActiveSubroutineUniformiv(program, shadertype, index, pname, values_ptr);
             }
         }
-        /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
-        public static unsafe int GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname)
-        {
-            int values_val;
-            int* values = &values_val;
-            GetActiveSubroutineUniformiv(program, shadertype, index, pname, values);
-            return values_val;
-        }
         /// <inheritdoc cref="GetActiveSubroutineUniformName(int, ShaderType, uint, int, int*, byte*)"/>
-        public static unsafe string GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, ref int length)
+        public static unsafe string GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, out int length)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -2660,7 +2412,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetActiveSubroutineUniformName(int, ShaderType, uint, int, int*, byte*)"/>
-        public static unsafe void GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, ref int length, out string name)
+        public static unsafe void GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, out int length, out string name)
         {
             fixed (int* length_ptr = &length)
             {
@@ -2671,7 +2423,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveUniform(int, uint, int, int*, int*, UniformType*, byte*)"/>
-        public static unsafe string GetActiveUniform(int program, uint index, int bufSize, ref int length, ref int size, ref UniformType type)
+        public static unsafe string GetActiveUniform(int program, uint index, int bufSize, out int length, out int size, out UniformType type)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -2686,7 +2438,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetActiveUniform(int, uint, int, int*, int*, UniformType*, byte*)"/>
-        public static unsafe void GetActiveUniform(int program, uint index, int bufSize, ref int length, ref int size, ref UniformType type, out string name)
+        public static unsafe void GetActiveUniform(int program, uint index, int bufSize, out int length, out int size, out UniformType type, out string name)
         {
             fixed (int* length_ptr = &length)
             fixed (int* size_ptr = &size)
@@ -2715,23 +2467,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
-        public static unsafe void GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname, ref int parameters)
+        public static unsafe int GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
+        public static unsafe void GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
-        public static unsafe int GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetActiveUniformBlockName(int, uint, int, int*, byte*)"/>
-        public static unsafe string GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, ref int length)
+        public static unsafe string GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, out int length)
         {
             string uniformBlockName;
             fixed (int* length_ptr = &length)
@@ -2744,7 +2498,7 @@ namespace OpenTK.Graphics.OpenGL
             return uniformBlockName;
         }
         /// <inheritdoc cref="GetActiveUniformBlockName(int, uint, int, int*, byte*)"/>
-        public static unsafe void GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, ref int length, out string uniformBlockName)
+        public static unsafe void GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, out int length, out string uniformBlockName)
         {
             fixed (int* length_ptr = &length)
             {
@@ -2755,7 +2509,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveUniformName(int, uint, int, int*, byte*)"/>
-        public static unsafe string GetActiveUniformName(int program, uint uniformIndex, int bufSize, ref int length)
+        public static unsafe string GetActiveUniformName(int program, uint uniformIndex, int bufSize, out int length)
         {
             string uniformName;
             fixed (int* length_ptr = &length)
@@ -2768,7 +2522,7 @@ namespace OpenTK.Graphics.OpenGL
             return uniformName;
         }
         /// <inheritdoc cref="GetActiveUniformName(int, uint, int, int*, byte*)"/>
-        public static unsafe void GetActiveUniformName(int program, uint uniformIndex, int bufSize, ref int length, out string uniformName)
+        public static unsafe void GetActiveUniformName(int program, uint uniformIndex, int bufSize, out int length, out string uniformName)
         {
             fixed (int* length_ptr = &length)
             {
@@ -2801,7 +2555,18 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, ref int parameters)
+        public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            fixed (uint* uniformIndices_ptr = &uniformIndices)
+            {
+                GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
+        public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, out int parameters)
         {
             fixed (uint* uniformIndices_ptr = &uniformIndices)
             fixed (int* parameters_ptr = &parameters)
@@ -2809,41 +2574,8 @@ namespace OpenTK.Graphics.OpenGL
                 GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe int GetActiveUniformsi(int program, int uniformCount, ReadOnlySpan<uint> uniformIndices, UniformPName pname)
-        {
-            int parameters_val;
-            fixed (uint* uniformIndices_ptr = uniformIndices)
-            {
-                int* parameters = &parameters_val;
-                GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-            }
-            return parameters_val;
-        }
-        /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe int GetActiveUniformsi(int program, int uniformCount, uint[] uniformIndices, UniformPName pname)
-        {
-            int parameters_val;
-            fixed (uint* uniformIndices_ptr = uniformIndices)
-            {
-                int* parameters = &parameters_val;
-                GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-            }
-            return parameters_val;
-        }
-        /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
-        {
-            int parameters_val;
-            fixed (uint* uniformIndices_ptr = &uniformIndices)
-            {
-                int* parameters = &parameters_val;
-                GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-            }
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetAttachedShaders(int, int, int*, int*)"/>
-        public static unsafe void GetAttachedShaders(int program, int maxCount, ref int count, Span<int> shaders)
+        public static unsafe void GetAttachedShaders(int program, int maxCount, out int count, Span<int> shaders)
         {
             fixed (int* count_ptr = &count)
             {
@@ -2854,7 +2586,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetAttachedShaders(int, int, int*, int*)"/>
-        public static unsafe void GetAttachedShaders(int program, int maxCount, ref int count, int[] shaders)
+        public static unsafe void GetAttachedShaders(int program, int maxCount, out int count, int[] shaders)
         {
             fixed (int* count_ptr = &count)
             {
@@ -2865,24 +2597,13 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetAttachedShaders(int, int, int*, int*)"/>
-        public static unsafe void GetAttachedShaders(int program, int maxCount, ref int count, ref int shaders)
+        public static unsafe void GetAttachedShaders(int program, int maxCount, out int count, ref int shaders)
         {
             fixed (int* count_ptr = &count)
             fixed (int* shaders_ptr = &shaders)
             {
                 GetAttachedShaders(program, maxCount, count_ptr, shaders_ptr);
             }
-        }
-        /// <inheritdoc cref="GetAttachedShaders(int, int, int*, int*)"/>
-        public static unsafe int GetAttachedShaders(int program, int maxCount, ref int count)
-        {
-            int shaders_val;
-            fixed (int* count_ptr = &count)
-            {
-                int* shaders = &shaders_val;
-                GetAttachedShaders(program, maxCount, count_ptr, shaders);
-            }
-            return shaders_val;
         }
         /// <inheritdoc cref="GetAttribLocation(int, byte*)"/>
         public static unsafe int GetAttribLocation(int program, string name)
@@ -2910,20 +2631,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetBooleani_v(BufferTarget, uint, bool*)"/>
-        public static unsafe void GetBoolean(BufferTarget target, uint index, ref bool data)
+        public static unsafe bool GetBoolean(BufferTarget target, uint index)
+        {
+            bool data;
+            bool* data_ptr = &data;
+            {
+                GetBooleani_v(target, index, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetBooleani_v(BufferTarget, uint, bool*)"/>
+        public static unsafe void GetBoolean(BufferTarget target, uint index, out bool data)
         {
             fixed (bool* data_ptr = &data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetBooleani_v(BufferTarget, uint, bool*)"/>
-        public static unsafe bool GetBoolean(BufferTarget target, uint index)
-        {
-            bool data_val;
-            bool* data = &data_val;
-            GetBooleani_v(target, index, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
         public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
@@ -2942,20 +2665,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
-        public static unsafe void GetBoolean(GetPName pname, ref bool data)
+        public static unsafe bool GetBoolean(GetPName pname)
+        {
+            bool data;
+            bool* data_ptr = &data;
+            {
+                GetBooleanv(pname, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
+        public static unsafe void GetBoolean(GetPName pname, out bool data)
         {
             fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
-        public static unsafe bool GetBoolean(GetPName pname)
-        {
-            bool data_val;
-            bool* data = &data_val;
-            GetBooleanv(pname, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetBufferParameteri64v(BufferTarget, BufferPName, long*)"/>
         public static unsafe void GetBufferParameteri64(BufferTarget target, BufferPName pname, Span<long> parameters)
@@ -2974,20 +2699,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetBufferParameteri64v(BufferTarget, BufferPName, long*)"/>
-        public static unsafe void GetBufferParameteri64(BufferTarget target, BufferPName pname, ref long parameters)
+        public static unsafe long GetBufferParameteri64(BufferTarget target, BufferPName pname)
+        {
+            long parameters;
+            long* parameters_ptr = &parameters;
+            {
+                GetBufferParameteri64v(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetBufferParameteri64v(BufferTarget, BufferPName, long*)"/>
+        public static unsafe void GetBufferParameteri64(BufferTarget target, BufferPName pname, out long parameters)
         {
             fixed (long* parameters_ptr = &parameters)
             {
                 GetBufferParameteri64v(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetBufferParameteri64v(BufferTarget, BufferPName, long*)"/>
-        public static unsafe long GetBufferParameteri64(BufferTarget target, BufferPName pname)
-        {
-            long parameters_val;
-            long* parameters = &parameters_val;
-            GetBufferParameteri64v(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
         public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, Span<int> parameters)
@@ -3006,33 +2733,27 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
-        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, ref int parameters)
+        public static unsafe int GetBufferParameteri(BufferTarget target, BufferPName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetBufferParameteriv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
+        public static unsafe void GetBufferParameteri(BufferTarget target, BufferPName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv(BufferTarget, BufferPName, int*)"/>
-        public static unsafe int GetBufferParameteri(BufferTarget target, BufferPName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetBufferParameteriv(target, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetBufferPointerv(BufferTarget, BufferPointerNameARB, void**)"/>
         public static unsafe void GetBufferPointer(BufferTarget target, BufferPointerNameARB pname, void** parameters)
         {
             GetBufferPointerv(target, pname, parameters);
-        }
-        /// <inheritdoc cref="GetBufferPointerv(BufferTarget, BufferPointerNameARB, void**)"/>
-        public static unsafe void* GetBufferPointer(BufferTarget target, BufferPointerNameARB pname)
-        {
-            void* parameters_val;
-            void** parameters = &parameters_val;
-            GetBufferPointerv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetBufferSubData(BufferTarget, IntPtr, nint, void*)"/>
         public static unsafe void GetBufferSubData(BufferTarget target, IntPtr offset, nint size, IntPtr data)
@@ -3092,7 +2813,18 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetCompressedTexImage(TextureTarget, int, void*)"/>
-        public static unsafe void GetCompressedTexImage<T1>(TextureTarget target, int level, ref T1 img)
+        public static unsafe T1 GetCompressedTexImage<T1>(TextureTarget target, int level)
+            where T1 : unmanaged
+        {
+            T1 img;
+            void* img_ptr = &img;
+            {
+                GetCompressedTexImage(target, level, img_ptr);
+            }
+            return img;
+        }
+        /// <inheritdoc cref="GetCompressedTexImage(TextureTarget, int, void*)"/>
+        public static unsafe void GetCompressedTexImage<T1>(TextureTarget target, int level, out T1 img)
             where T1 : unmanaged
         {
             fixed (void* img_ptr = &img)
@@ -3250,20 +2982,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
-        public static unsafe void GetDouble(GetPName target, uint index, ref double data)
+        public static unsafe double GetDouble(GetPName target, uint index)
+        {
+            double data;
+            double* data_ptr = &data;
+            {
+                GetDoublei_v(target, index, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
+        public static unsafe void GetDouble(GetPName target, uint index, out double data)
         {
             fixed (double* data_ptr = &data)
             {
                 GetDoublei_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
-        public static unsafe double GetDouble(GetPName target, uint index)
-        {
-            double data_val;
-            double* data = &data_val;
-            GetDoublei_v(target, index, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetDoublev(GetPName, double*)"/>
         public static unsafe void GetDouble(GetPName pname, Span<double> data)
@@ -3282,20 +3016,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetDoublev(GetPName, double*)"/>
-        public static unsafe void GetDouble(GetPName pname, ref double data)
+        public static unsafe double GetDouble(GetPName pname)
+        {
+            double data;
+            double* data_ptr = &data;
+            {
+                GetDoublev(pname, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetDoublev(GetPName, double*)"/>
+        public static unsafe void GetDouble(GetPName pname, out double data)
         {
             fixed (double* data_ptr = &data)
             {
                 GetDoublev(pname, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetDoublev(GetPName, double*)"/>
-        public static unsafe double GetDouble(GetPName pname)
-        {
-            double data_val;
-            double* data = &data_val;
-            GetDoublev(pname, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
         public static unsafe void GetFloat(GetPName target, uint index, Span<float> data)
@@ -3314,20 +3050,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
-        public static unsafe void GetFloat(GetPName target, uint index, ref float data)
+        public static unsafe float GetFloat(GetPName target, uint index)
+        {
+            float data;
+            float* data_ptr = &data;
+            {
+                GetFloati_v(target, index, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
+        public static unsafe void GetFloat(GetPName target, uint index, out float data)
         {
             fixed (float* data_ptr = &data)
             {
                 GetFloati_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
-        public static unsafe float GetFloat(GetPName target, uint index)
-        {
-            float data_val;
-            float* data = &data_val;
-            GetFloati_v(target, index, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe void GetFloat(GetPName pname, Span<float> data)
@@ -3346,20 +3084,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
-        public static unsafe void GetFloat(GetPName pname, ref float data)
+        public static unsafe float GetFloat(GetPName pname)
+        {
+            float data;
+            float* data_ptr = &data;
+            {
+                GetFloatv(pname, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
+        public static unsafe void GetFloat(GetPName pname, out float data)
         {
             fixed (float* data_ptr = &data)
             {
                 GetFloatv(pname, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
-        public static unsafe float GetFloat(GetPName pname)
-        {
-            float data_val;
-            float* data = &data_val;
-            GetFloatv(pname, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetFragDataIndex(int, byte*)"/>
         public static unsafe int GetFragDataIndex(int program, string name)
@@ -3396,20 +3136,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-        public static unsafe void GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, ref int parameters)
+        public static unsafe int GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
+        public static unsafe void GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-        public static unsafe int GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
         public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, Span<int> parameters)
@@ -3428,20 +3170,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-        public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, ref int parameters)
+        public static unsafe int GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetFramebufferParameteriv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
+        public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetFramebufferParameteriv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-        public static unsafe int GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetFramebufferParameteriv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetInteger64i_v(GetPName, uint, long*)"/>
         public static unsafe void GetInteger64(GetPName target, uint index, Span<long> data)
@@ -3460,20 +3204,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetInteger64i_v(GetPName, uint, long*)"/>
-        public static unsafe void GetInteger64(GetPName target, uint index, ref long data)
+        public static unsafe long GetInteger64(GetPName target, uint index)
+        {
+            long data;
+            long* data_ptr = &data;
+            {
+                GetInteger64i_v(target, index, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetInteger64i_v(GetPName, uint, long*)"/>
+        public static unsafe void GetInteger64(GetPName target, uint index, out long data)
         {
             fixed (long* data_ptr = &data)
             {
                 GetInteger64i_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetInteger64i_v(GetPName, uint, long*)"/>
-        public static unsafe long GetInteger64(GetPName target, uint index)
-        {
-            long data_val;
-            long* data = &data_val;
-            GetInteger64i_v(target, index, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
         public static unsafe void GetInteger64(GetPName pname, Span<long> data)
@@ -3492,20 +3238,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
-        public static unsafe void GetInteger64(GetPName pname, ref long data)
+        public static unsafe long GetInteger64(GetPName pname)
+        {
+            long data;
+            long* data_ptr = &data;
+            {
+                GetInteger64v(pname, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
+        public static unsafe void GetInteger64(GetPName pname, out long data)
         {
             fixed (long* data_ptr = &data)
             {
                 GetInteger64v(pname, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
-        public static unsafe long GetInteger64(GetPName pname)
-        {
-            long data_val;
-            long* data = &data_val;
-            GetInteger64v(pname, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
         public static unsafe void GetInteger(GetPName target, uint index, Span<int> data)
@@ -3524,20 +3272,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
-        public static unsafe void GetInteger(GetPName target, uint index, ref int data)
+        public static unsafe int GetInteger(GetPName target, uint index)
+        {
+            int data;
+            int* data_ptr = &data;
+            {
+                GetIntegeri_v(target, index, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
+        public static unsafe void GetInteger(GetPName target, uint index, out int data)
         {
             fixed (int* data_ptr = &data)
             {
                 GetIntegeri_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
-        public static unsafe int GetInteger(GetPName target, uint index)
-        {
-            int data_val;
-            int* data = &data_val;
-            GetIntegeri_v(target, index, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
         public static unsafe void GetInteger(GetPName pname, Span<int> data)
@@ -3556,20 +3306,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
-        public static unsafe void GetInteger(GetPName pname, ref int data)
+        public static unsafe int GetInteger(GetPName pname)
+        {
+            int data;
+            int* data_ptr = &data;
+            {
+                GetIntegerv(pname, data_ptr);
+            }
+            return data;
+        }
+        /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
+        public static unsafe void GetInteger(GetPName pname, out int data)
         {
             fixed (int* data_ptr = &data)
             {
                 GetIntegerv(pname, data_ptr);
             }
-        }
-        /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
-        public static unsafe int GetInteger(GetPName pname)
-        {
-            int data_val;
-            int* data = &data_val;
-            GetIntegerv(pname, data);
-            return data_val;
         }
         /// <inheritdoc cref="GetInternalformati64v(TextureTarget, InternalFormat, InternalFormatPName, int, long*)"/>
         public static unsafe void GetInternalformati64(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, Span<long> parameters)
@@ -3595,14 +3347,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetInternalformati64v(target, internalformat, pname, count, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetInternalformati64v(TextureTarget, InternalFormat, InternalFormatPName, int, long*)"/>
-        public static unsafe long GetInternalformati64(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count)
-        {
-            long parameters_val;
-            long* parameters = &parameters_val;
-            GetInternalformati64v(target, internalformat, pname, count, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetInternalformativ(TextureTarget, InternalFormat, InternalFormatPName, int, int*)"/>
         public static unsafe void GetInternalformati(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, Span<int> parameters)
         {
@@ -3627,14 +3371,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetInternalformativ(target, internalformat, pname, count, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetInternalformativ(TextureTarget, InternalFormat, InternalFormatPName, int, int*)"/>
-        public static unsafe int GetInternalformati(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetInternalformativ(target, internalformat, pname, count, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
         public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
         {
@@ -3652,20 +3388,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
-        public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, ref float val)
+        public static unsafe float GetMultisamplef(GetMultisamplePNameNV pname, uint index)
+        {
+            float val;
+            float* val_ptr = &val;
+            {
+                GetMultisamplefv(pname, index, val_ptr);
+            }
+            return val;
+        }
+        /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
+        public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, out float val)
         {
             fixed (float* val_ptr = &val)
             {
                 GetMultisamplefv(pname, index, val_ptr);
             }
-        }
-        /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
-        public static unsafe float GetMultisamplef(GetMultisamplePNameNV pname, uint index)
-        {
-            float val_val;
-            float* val = &val_val;
-            GetMultisamplefv(pname, index, val);
-            return val_val;
         }
         /// <inheritdoc cref="GetNamedBufferParameteri64v(int, BufferPName, long*)"/>
         public static unsafe void GetNamedBufferParameteri64(int buffer, BufferPName pname, Span<long> parameters)
@@ -3691,14 +3429,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetNamedBufferParameteri64v(buffer, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetNamedBufferParameteri64v(int, BufferPName, long*)"/>
-        public static unsafe long GetNamedBufferParameteri64(int buffer, BufferPName pname)
-        {
-            long parameters_val;
-            long* parameters = &parameters_val;
-            GetNamedBufferParameteri64v(buffer, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetNamedBufferParameteriv(int, BufferPName, int*)"/>
         public static unsafe void GetNamedBufferParameteri(int buffer, BufferPName pname, Span<int> parameters)
         {
@@ -3723,26 +3453,10 @@ namespace OpenTK.Graphics.OpenGL
                 GetNamedBufferParameteriv(buffer, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetNamedBufferParameteriv(int, BufferPName, int*)"/>
-        public static unsafe int GetNamedBufferParameteri(int buffer, BufferPName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetNamedBufferParameteriv(buffer, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetNamedBufferPointerv(int, BufferPointerNameARB, void**)"/>
         public static unsafe void GetNamedBufferPointer(int buffer, BufferPointerNameARB pname, void** parameters)
         {
             GetNamedBufferPointerv(buffer, pname, parameters);
-        }
-        /// <inheritdoc cref="GetNamedBufferPointerv(int, BufferPointerNameARB, void**)"/>
-        public static unsafe void* GetNamedBufferPointer(int buffer, BufferPointerNameARB pname)
-        {
-            void* parameters_val;
-            void** parameters = &parameters_val;
-            GetNamedBufferPointerv(buffer, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetNamedBufferSubData(int, IntPtr, nint, void*)"/>
         public static unsafe void GetNamedBufferSubData(int buffer, IntPtr offset, nint size, IntPtr data)
@@ -3801,14 +3515,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetNamedFramebufferAttachmentParameteriv(int, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-        public static unsafe int GetNamedFramebufferAttachmentParameteri(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetNamedFramebufferParameteriv(int, GetFramebufferParameter, int*)"/>
         public static unsafe void GetNamedFramebufferParameteri(int framebuffer, GetFramebufferParameter pname, Span<int> param)
         {
@@ -3833,14 +3539,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetNamedFramebufferParameteriv(framebuffer, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetNamedFramebufferParameteriv(int, GetFramebufferParameter, int*)"/>
-        public static unsafe int GetNamedFramebufferParameteri(int framebuffer, GetFramebufferParameter pname)
-        {
-            int param_val;
-            int* param = &param_val;
-            GetNamedFramebufferParameteriv(framebuffer, pname, param);
-            return param_val;
-        }
         /// <inheritdoc cref="GetNamedRenderbufferParameteriv(int, RenderbufferParameterName, int*)"/>
         public static unsafe void GetNamedRenderbufferParameteri(int renderbuffer, RenderbufferParameterName pname, Span<int> parameters)
         {
@@ -3864,14 +3562,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetNamedRenderbufferParameteriv(renderbuffer, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetNamedRenderbufferParameteriv(int, RenderbufferParameterName, int*)"/>
-        public static unsafe int GetNamedRenderbufferParameteri(int renderbuffer, RenderbufferParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetNamedRenderbufferParameteriv(renderbuffer, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetnCompressedTexImage(TextureTarget, int, int, void*)"/>
         public static unsafe void GetnCompressedTexImage(TextureTarget target, int lod, int bufSize, IntPtr pixels)
@@ -3963,14 +3653,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetnUniformdv(program, location, bufSize, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetnUniformdv(int, int, int, double*)"/>
-        public static unsafe double GetnUniformd(int program, int location, int bufSize)
-        {
-            double parameters_val;
-            double* parameters = &parameters_val;
-            GetnUniformdv(program, location, bufSize, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetnUniformfv(int, int, int, float*)"/>
         public static unsafe void GetnUniformf(int program, int location, int bufSize, Span<float> parameters)
         {
@@ -3994,14 +3676,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetnUniformfv(program, location, bufSize, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetnUniformfv(int, int, int, float*)"/>
-        public static unsafe float GetnUniformf(int program, int location, int bufSize)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetnUniformfv(program, location, bufSize, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetnUniformiv(int, int, int, int*)"/>
         public static unsafe void GetnUniformi(int program, int location, int bufSize, Span<int> parameters)
@@ -4027,14 +3701,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetnUniformiv(program, location, bufSize, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetnUniformiv(int, int, int, int*)"/>
-        public static unsafe int GetnUniformi(int program, int location, int bufSize)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetnUniformiv(program, location, bufSize, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetnUniformuiv(int, int, int, uint*)"/>
         public static unsafe void GetnUniformui(int program, int location, int bufSize, Span<uint> parameters)
         {
@@ -4059,16 +3725,8 @@ namespace OpenTK.Graphics.OpenGL
                 GetnUniformuiv(program, location, bufSize, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetnUniformuiv(int, int, int, uint*)"/>
-        public static unsafe uint GetnUniformui(int program, int location, int bufSize)
-        {
-            uint parameters_val;
-            uint* parameters = &parameters_val;
-            GetnUniformuiv(program, location, bufSize, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-        public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length)
+        public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length)
         {
             string label;
             fixed (int* length_ptr = &length)
@@ -4081,7 +3739,7 @@ namespace OpenTK.Graphics.OpenGL
             return label;
         }
         /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-        public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length, out string label)
+        public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length, out string label)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4092,7 +3750,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length)
+        public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length)
         {
             string label;
             fixed (int* length_ptr = &length)
@@ -4106,7 +3764,7 @@ namespace OpenTK.Graphics.OpenGL
             return label;
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length, out string label)
+        public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length, out string label)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4118,7 +3776,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe string GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length)
+        public static unsafe string GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length)
             where T1 : unmanaged
         {
             string label;
@@ -4135,7 +3793,7 @@ namespace OpenTK.Graphics.OpenGL
             return label;
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe void GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length, out string label)
+        public static unsafe void GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length, out string label)
             where T1 : unmanaged
         {
             fixed (int* length_ptr = &length)
@@ -4150,7 +3808,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe string GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, ref int length)
+        public static unsafe string GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length)
             where T1 : unmanaged
         {
             string label;
@@ -4167,7 +3825,7 @@ namespace OpenTK.Graphics.OpenGL
             return label;
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe void GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, ref int length, out string label)
+        public static unsafe void GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length, out string label)
             where T1 : unmanaged
         {
             fixed (int* length_ptr = &length)
@@ -4182,7 +3840,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length)
+        public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length)
             where T1 : unmanaged
         {
             string label;
@@ -4197,7 +3855,7 @@ namespace OpenTK.Graphics.OpenGL
             return label;
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length, out string label)
+        public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length, out string label)
             where T1 : unmanaged
         {
             fixed (void* ptr_ptr = &ptr)
@@ -4210,7 +3868,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-        public static unsafe void GetProgramBinary(int program, int bufSize, ref int length, ref All binaryFormat, IntPtr binary)
+        public static unsafe void GetProgramBinary(int program, int bufSize, out int length, out All binaryFormat, IntPtr binary)
         {
             fixed (int* length_ptr = &length)
             fixed (All* binaryFormat_ptr = &binaryFormat)
@@ -4220,7 +3878,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, Span<T1> binary)
+        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, Span<T1> binary)
             where T1 : unmanaged
         {
             fixed (int* length_ptr = &length)
@@ -4233,7 +3891,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, T1[] binary)
+        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, T1[] binary)
             where T1 : unmanaged
         {
             fixed (int* length_ptr = &length)
@@ -4246,7 +3904,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, ref T1 binary)
+        public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, ref T1 binary)
             where T1 : unmanaged
         {
             fixed (int* length_ptr = &length)
@@ -4257,7 +3915,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramInfoLog(int, int, int*, byte*)"/>
-        public static unsafe string GetProgramInfoLog(int program, int bufSize, ref int length)
+        public static unsafe string GetProgramInfoLog(int program, int bufSize, out int length)
         {
             string infoLog;
             fixed (int* length_ptr = &length)
@@ -4270,7 +3928,7 @@ namespace OpenTK.Graphics.OpenGL
             return infoLog;
         }
         /// <inheritdoc cref="GetProgramInfoLog(int, int, int*, byte*)"/>
-        public static unsafe void GetProgramInfoLog(int program, int bufSize, ref int length, out string infoLog)
+        public static unsafe void GetProgramInfoLog(int program, int bufSize, out int length, out string infoLog)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4297,20 +3955,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
-        public static unsafe void GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname, ref int parameters)
+        public static unsafe int GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetProgramInterfaceiv(program, programInterface, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
+        public static unsafe void GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetProgramInterfaceiv(program, programInterface, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
-        public static unsafe int GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetProgramInterfaceiv(program, programInterface, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetProgramiv(int, ProgramProperty, int*)"/>
         public static unsafe void GetProgrami(int program, ProgramProperty pname, Span<int> parameters)
@@ -4329,23 +3989,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramiv(int, ProgramProperty, int*)"/>
-        public static unsafe void GetProgrami(int program, ProgramProperty pname, ref int parameters)
+        public static unsafe int GetProgrami(int program, ProgramProperty pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetProgramiv(program, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetProgramiv(int, ProgramProperty, int*)"/>
+        public static unsafe void GetProgrami(int program, ProgramProperty pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetProgramiv(program, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetProgramiv(int, ProgramProperty, int*)"/>
-        public static unsafe int GetProgrami(int program, ProgramProperty pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetProgramiv(program, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetProgramPipelineInfoLog(int, int, int*, byte*)"/>
-        public static unsafe string GetProgramPipelineInfoLog(int pipeline, int bufSize, ref int length)
+        public static unsafe string GetProgramPipelineInfoLog(int pipeline, int bufSize, out int length)
         {
             string infoLog;
             fixed (int* length_ptr = &length)
@@ -4358,7 +4020,7 @@ namespace OpenTK.Graphics.OpenGL
             return infoLog;
         }
         /// <inheritdoc cref="GetProgramPipelineInfoLog(int, int, int*, byte*)"/>
-        public static unsafe void GetProgramPipelineInfoLog(int pipeline, int bufSize, ref int length, out string infoLog)
+        public static unsafe void GetProgramPipelineInfoLog(int pipeline, int bufSize, out int length, out string infoLog)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4385,20 +4047,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
-        public static unsafe void GetProgramPipelinei(int pipeline, PipelineParameterName pname, ref int parameters)
+        public static unsafe int GetProgramPipelinei(int pipeline, PipelineParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetProgramPipelineiv(pipeline, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
+        public static unsafe void GetProgramPipelinei(int pipeline, PipelineParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetProgramPipelineiv(pipeline, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
-        public static unsafe int GetProgramPipelinei(int pipeline, PipelineParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetProgramPipelineiv(pipeline, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetProgramResourceIndex(int, ProgramInterface, byte*)"/>
         public static unsafe uint GetProgramResourceIndex(int program, ProgramInterface programInterface, string name)
@@ -4410,7 +4074,7 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, ref int length, Span<int> parameters)
+        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, out int length, Span<int> parameters)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4424,7 +4088,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, ref int length, int[] parameters)
+        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, out int length, int[] parameters)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4438,7 +4102,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, ref int length, ref int parameters)
+        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, out int length, ref int parameters)
         {
             fixed (ProgramResourceProperty* props_ptr = &props)
             fixed (int* length_ptr = &length)
@@ -4446,46 +4110,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, ref int length)
-        {
-            int parameters_val;
-            fixed (int* length_ptr = &length)
-            {
-                fixed (ProgramResourceProperty* props_ptr = props)
-                {
-                    int* parameters = &parameters_val;
-                    GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                }
-            }
-            return parameters_val;
-        }
-        /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, ref int length)
-        {
-            int parameters_val;
-            fixed (int* length_ptr = &length)
-            {
-                fixed (ProgramResourceProperty* props_ptr = props)
-                {
-                    int* parameters = &parameters_val;
-                    GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                }
-            }
-            return parameters_val;
-        }
-        /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, ref int length)
-        {
-            int parameters_val;
-            fixed (ProgramResourceProperty* props_ptr = &props)
-            fixed (int* length_ptr = &length)
-            {
-                int* parameters = &parameters_val;
-                GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-            }
-            return parameters_val;
         }
         /// <inheritdoc cref="GetProgramResourceLocation(int, ProgramInterface, byte*)"/>
         public static unsafe int GetProgramResourceLocation(int program, ProgramInterface programInterface, string name)
@@ -4506,7 +4130,7 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="GetProgramResourceName(int, ProgramInterface, uint, int, int*, byte*)"/>
-        public static unsafe string GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, ref int length)
+        public static unsafe string GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, out int length)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -4519,7 +4143,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetProgramResourceName(int, ProgramInterface, uint, int, int*, byte*)"/>
-        public static unsafe void GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, ref int length, out string name)
+        public static unsafe void GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, out int length, out string name)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4530,20 +4154,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
-        public static unsafe void GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname, ref int values)
+        public static unsafe int GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname)
+        {
+            int values;
+            int* values_ptr = &values;
+            {
+                GetProgramStageiv(program, shadertype, pname, values_ptr);
+            }
+            return values;
+        }
+        /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
+        public static unsafe void GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname, out int values)
         {
             fixed (int* values_ptr = &values)
             {
                 GetProgramStageiv(program, shadertype, pname, values_ptr);
             }
-        }
-        /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
-        public static unsafe int GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname)
-        {
-            int values_val;
-            int* values = &values_val;
-            GetProgramStageiv(program, shadertype, pname, values);
-            return values_val;
         }
         /// <inheritdoc cref="GetQueryBufferObjecti64v(int, int, QueryObjectParameterName, IntPtr)"/>
         public static unsafe void GetQueryBufferObjecti64(int id, int buffer, QueryObjectParameterName pname, IntPtr offset)
@@ -4582,20 +4208,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
-        public static unsafe void GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname, ref int parameters)
+        public static unsafe int GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetQueryIndexediv(target, index, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
+        public static unsafe void GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetQueryIndexediv(target, index, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
-        public static unsafe int GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetQueryIndexediv(target, index, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetQueryiv(QueryTarget, QueryParameterName, int*)"/>
         public static unsafe void GetQueryi(QueryTarget target, QueryParameterName pname, Span<int> parameters)
@@ -4614,20 +4242,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryiv(QueryTarget, QueryParameterName, int*)"/>
-        public static unsafe void GetQueryi(QueryTarget target, QueryParameterName pname, ref int parameters)
+        public static unsafe int GetQueryi(QueryTarget target, QueryParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetQueryiv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryiv(QueryTarget, QueryParameterName, int*)"/>
+        public static unsafe void GetQueryi(QueryTarget target, QueryParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetQueryiv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryiv(QueryTarget, QueryParameterName, int*)"/>
-        public static unsafe int GetQueryi(QueryTarget target, QueryParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetQueryiv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
         public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, Span<long> parameters)
@@ -4646,20 +4276,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
-        public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, ref long parameters)
+        public static unsafe long GetQueryObjecti64(int id, QueryObjectParameterName pname)
+        {
+            long parameters;
+            long* parameters_ptr = &parameters;
+            {
+                GetQueryObjecti64v(id, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
+        public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, out long parameters)
         {
             fixed (long* parameters_ptr = &parameters)
             {
                 GetQueryObjecti64v(id, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
-        public static unsafe long GetQueryObjecti64(int id, QueryObjectParameterName pname)
-        {
-            long parameters_val;
-            long* parameters = &parameters_val;
-            GetQueryObjecti64v(id, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetQueryObjectiv(int, QueryObjectParameterName, int*)"/>
         public static unsafe void GetQueryObjecti(int id, QueryObjectParameterName pname, Span<int> parameters)
@@ -4678,20 +4310,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryObjectiv(int, QueryObjectParameterName, int*)"/>
-        public static unsafe void GetQueryObjecti(int id, QueryObjectParameterName pname, ref int parameters)
+        public static unsafe int GetQueryObjecti(int id, QueryObjectParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetQueryObjectiv(id, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryObjectiv(int, QueryObjectParameterName, int*)"/>
+        public static unsafe void GetQueryObjecti(int id, QueryObjectParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetQueryObjectiv(id, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryObjectiv(int, QueryObjectParameterName, int*)"/>
-        public static unsafe int GetQueryObjecti(int id, QueryObjectParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetQueryObjectiv(id, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
         public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, Span<ulong> parameters)
@@ -4710,20 +4344,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
-        public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, ref ulong parameters)
+        public static unsafe ulong GetQueryObjectui64(int id, QueryObjectParameterName pname)
+        {
+            ulong parameters;
+            ulong* parameters_ptr = &parameters;
+            {
+                GetQueryObjectui64v(id, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
+        public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, out ulong parameters)
         {
             fixed (ulong* parameters_ptr = &parameters)
             {
                 GetQueryObjectui64v(id, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
-        public static unsafe ulong GetQueryObjectui64(int id, QueryObjectParameterName pname)
-        {
-            ulong parameters_val;
-            ulong* parameters = &parameters_val;
-            GetQueryObjectui64v(id, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetQueryObjectuiv(int, QueryObjectParameterName, uint*)"/>
         public static unsafe void GetQueryObjectui(int id, QueryObjectParameterName pname, Span<uint> parameters)
@@ -4742,20 +4378,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetQueryObjectuiv(int, QueryObjectParameterName, uint*)"/>
-        public static unsafe void GetQueryObjectui(int id, QueryObjectParameterName pname, ref uint parameters)
+        public static unsafe uint GetQueryObjectui(int id, QueryObjectParameterName pname)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetQueryObjectuiv(id, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetQueryObjectuiv(int, QueryObjectParameterName, uint*)"/>
+        public static unsafe void GetQueryObjectui(int id, QueryObjectParameterName pname, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
                 GetQueryObjectuiv(id, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetQueryObjectuiv(int, QueryObjectParameterName, uint*)"/>
-        public static unsafe uint GetQueryObjectui(int id, QueryObjectParameterName pname)
-        {
-            uint parameters_val;
-            uint* parameters = &parameters_val;
-            GetQueryObjectuiv(id, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
         public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
@@ -4774,20 +4412,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-        public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, ref int parameters)
+        public static unsafe int GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetRenderbufferParameteriv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
+        public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetRenderbufferParameteriv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-        public static unsafe int GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetRenderbufferParameteriv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
         public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, Span<float> parameters)
@@ -4806,20 +4446,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
-        public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, ref float parameters)
+        public static unsafe float GetSamplerParameterf(int sampler, SamplerParameterF pname)
+        {
+            float parameters;
+            float* parameters_ptr = &parameters;
+            {
+                GetSamplerParameterfv(sampler, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+        public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, out float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
                 GetSamplerParameterfv(sampler, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
-        public static unsafe float GetSamplerParameterf(int sampler, SamplerParameterF pname)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetSamplerParameterfv(sampler, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
         public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, Span<int> parameters)
@@ -4838,20 +4480,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
-        public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, ref int parameters)
+        public static unsafe int GetSamplerParameterIi(int sampler, SamplerParameterI pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetSamplerParameterIiv(sampler, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
+        public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetSamplerParameterIiv(sampler, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
-        public static unsafe int GetSamplerParameterIi(int sampler, SamplerParameterI pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetSamplerParameterIiv(sampler, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
         public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, Span<uint> parameters)
@@ -4870,20 +4514,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-        public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, ref uint parameters)
+        public static unsafe uint GetSamplerParameterIui(int sampler, SamplerParameterI pname)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetSamplerParameterIuiv(sampler, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
+        public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
                 GetSamplerParameterIuiv(sampler, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-        public static unsafe uint GetSamplerParameterIui(int sampler, SamplerParameterI pname)
-        {
-            uint parameters_val;
-            uint* parameters = &parameters_val;
-            GetSamplerParameterIuiv(sampler, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
         public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, Span<int> parameters)
@@ -4902,23 +4548,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
-        public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, ref int parameters)
+        public static unsafe int GetSamplerParameteri(int sampler, SamplerParameterI pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetSamplerParameteriv(sampler, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+        public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetSamplerParameteriv(sampler, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
-        public static unsafe int GetSamplerParameteri(int sampler, SamplerParameterI pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetSamplerParameteriv(sampler, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetShaderInfoLog(int, int, int*, byte*)"/>
-        public static unsafe string GetShaderInfoLog(int shader, int bufSize, ref int length)
+        public static unsafe string GetShaderInfoLog(int shader, int bufSize, out int length)
         {
             string infoLog;
             fixed (int* length_ptr = &length)
@@ -4931,7 +4579,7 @@ namespace OpenTK.Graphics.OpenGL
             return infoLog;
         }
         /// <inheritdoc cref="GetShaderInfoLog(int, int, int*, byte*)"/>
-        public static unsafe void GetShaderInfoLog(int shader, int bufSize, ref int length, out string infoLog)
+        public static unsafe void GetShaderInfoLog(int shader, int bufSize, out int length, out string infoLog)
         {
             fixed (int* length_ptr = &length)
             {
@@ -4958,23 +4606,38 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetShaderiv(int, ShaderParameterName, int*)"/>
-        public static unsafe void GetShaderi(int shader, ShaderParameterName pname, ref int parameters)
+        public static unsafe int GetShaderi(int shader, ShaderParameterName pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetShaderiv(shader, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetShaderiv(int, ShaderParameterName, int*)"/>
+        public static unsafe void GetShaderi(int shader, ShaderParameterName pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetShaderiv(shader, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetShaderiv(int, ShaderParameterName, int*)"/>
-        public static unsafe int GetShaderi(int shader, ShaderParameterName pname)
+        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range)
         {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetShaderiv(shader, pname, parameters);
-            return parameters_val;
+            int precision;
+            int* precision_ptr = &precision;
+            {
+                fixed (int* range_ptr = range)
+                {
+                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+                }
+            }
+            return precision;
         }
         /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range, ref int precision)
+        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range, out int precision)
         {
             fixed (int* precision_ptr = &precision)
             {
@@ -4985,7 +4648,20 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range, ref int precision)
+        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range)
+        {
+            int precision;
+            int* precision_ptr = &precision;
+            {
+                fixed (int* range_ptr = range)
+                {
+                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+                }
+            }
+            return precision;
+        }
+        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range, out int precision)
         {
             fixed (int* precision_ptr = &precision)
             {
@@ -4996,7 +4672,18 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range, ref int precision)
+        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range)
+        {
+            int precision;
+            int* precision_ptr = &precision;
+            fixed (int* range_ptr = &range)
+            {
+                GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+            }
+            return precision;
+        }
+        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+        public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range, out int precision)
         {
             fixed (int* range_ptr = &range)
             fixed (int* precision_ptr = &precision)
@@ -5004,41 +4691,8 @@ namespace OpenTK.Graphics.OpenGL
                 GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
             }
         }
-        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range)
-        {
-            int precision_val;
-            fixed (int* range_ptr = range)
-            {
-                int* precision = &precision_val;
-                GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-            }
-            return precision_val;
-        }
-        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range)
-        {
-            int precision_val;
-            fixed (int* range_ptr = range)
-            {
-                int* precision = &precision_val;
-                GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-            }
-            return precision_val;
-        }
-        /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-        public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range)
-        {
-            int precision_val;
-            fixed (int* range_ptr = &range)
-            {
-                int* precision = &precision_val;
-                GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-            }
-            return precision_val;
-        }
         /// <inheritdoc cref="GetShaderSource(int, int, int*, byte*)"/>
-        public static unsafe string GetShaderSource(int shader, int bufSize, ref int length)
+        public static unsafe string GetShaderSource(int shader, int bufSize, out int length)
         {
             string source;
             fixed (int* length_ptr = &length)
@@ -5051,7 +4705,7 @@ namespace OpenTK.Graphics.OpenGL
             return source;
         }
         /// <inheritdoc cref="GetShaderSource(int, int, int*, byte*)"/>
-        public static unsafe void GetShaderSource(int shader, int bufSize, ref int length, out string source)
+        public static unsafe void GetShaderSource(int shader, int bufSize, out int length, out string source)
         {
             fixed (int* length_ptr = &length)
             {
@@ -5098,7 +4752,7 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, Span<int> values)
+        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, Span<int> values)
         {
             fixed (int* length_ptr = &length)
             {
@@ -5109,7 +4763,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, int[] values)
+        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, int[] values)
         {
             fixed (int* length_ptr = &length)
             {
@@ -5120,24 +4774,13 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, ref int values)
+        public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, ref int values)
         {
             fixed (int* length_ptr = &length)
             fixed (int* values_ptr = &values)
             {
                 GetSynciv(sync, pname, count, length_ptr, values_ptr);
             }
-        }
-        /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-        public static unsafe int GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length)
-        {
-            int values_val;
-            fixed (int* length_ptr = &length)
-            {
-                int* values = &values_val;
-                GetSynciv(sync, pname, count, length_ptr, values);
-            }
-            return values_val;
         }
         /// <inheritdoc cref="GetTexImage(TextureTarget, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void GetTexImage(TextureTarget target, int level, PixelFormat format, PixelType type, IntPtr pixels)
@@ -5164,7 +4807,18 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexImage(TextureTarget, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void GetTexImage<T1>(TextureTarget target, int level, PixelFormat format, PixelType type, ref T1 pixels)
+        public static unsafe T1 GetTexImage<T1>(TextureTarget target, int level, PixelFormat format, PixelType type)
+            where T1 : unmanaged
+        {
+            T1 pixels;
+            void* pixels_ptr = &pixels;
+            {
+                GetTexImage(target, level, format, type, pixels_ptr);
+            }
+            return pixels;
+        }
+        /// <inheritdoc cref="GetTexImage(TextureTarget, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void GetTexImage<T1>(TextureTarget target, int level, PixelFormat format, PixelType type, out T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -5189,20 +4843,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexLevelParameterfv(TextureTarget, int, GetTextureParameter, float*)"/>
-        public static unsafe void GetTexLevelParameterf(TextureTarget target, int level, GetTextureParameter pname, ref float parameters)
+        public static unsafe float GetTexLevelParameterf(TextureTarget target, int level, GetTextureParameter pname)
+        {
+            float parameters;
+            float* parameters_ptr = &parameters;
+            {
+                GetTexLevelParameterfv(target, level, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexLevelParameterfv(TextureTarget, int, GetTextureParameter, float*)"/>
+        public static unsafe void GetTexLevelParameterf(TextureTarget target, int level, GetTextureParameter pname, out float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
                 GetTexLevelParameterfv(target, level, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexLevelParameterfv(TextureTarget, int, GetTextureParameter, float*)"/>
-        public static unsafe float GetTexLevelParameterf(TextureTarget target, int level, GetTextureParameter pname)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetTexLevelParameterfv(target, level, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTexLevelParameteriv(TextureTarget, int, GetTextureParameter, int*)"/>
         public static unsafe void GetTexLevelParameteri(TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
@@ -5221,20 +4877,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexLevelParameteriv(TextureTarget, int, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexLevelParameteri(TextureTarget target, int level, GetTextureParameter pname, ref int parameters)
+        public static unsafe int GetTexLevelParameteri(TextureTarget target, int level, GetTextureParameter pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetTexLevelParameteriv(target, level, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexLevelParameteriv(TextureTarget, int, GetTextureParameter, int*)"/>
+        public static unsafe void GetTexLevelParameteri(TextureTarget target, int level, GetTextureParameter pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetTexLevelParameteriv(target, level, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexLevelParameteriv(TextureTarget, int, GetTextureParameter, int*)"/>
-        public static unsafe int GetTexLevelParameteri(TextureTarget target, int level, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTexLevelParameteriv(target, level, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> parameters)
@@ -5253,20 +4911,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
-        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, ref float parameters)
+        public static unsafe float GetTexParameterf(TextureTarget target, GetTextureParameter pname)
+        {
+            float parameters;
+            float* parameters_ptr = &parameters;
+            {
+                GetTexParameterfv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
+        public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, out float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
-        public static unsafe float GetTexParameterf(TextureTarget target, GetTextureParameter pname)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetTexParameterfv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTexParameterIiv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameterIi(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -5285,20 +4945,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexParameterIiv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameterIi(TextureTarget target, GetTextureParameter pname, ref int parameters)
+        public static unsafe int GetTexParameterIi(TextureTarget target, GetTextureParameter pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetTexParameterIiv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexParameterIiv(TextureTarget, GetTextureParameter, int*)"/>
+        public static unsafe void GetTexParameterIi(TextureTarget target, GetTextureParameter pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetTexParameterIiv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexParameterIiv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe int GetTexParameterIi(TextureTarget target, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTexParameterIiv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTexParameterIuiv(TextureTarget, GetTextureParameter, uint*)"/>
         public static unsafe void GetTexParameterIui(TextureTarget target, GetTextureParameter pname, Span<uint> parameters)
@@ -5317,20 +4979,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexParameterIuiv(TextureTarget, GetTextureParameter, uint*)"/>
-        public static unsafe void GetTexParameterIui(TextureTarget target, GetTextureParameter pname, ref uint parameters)
+        public static unsafe uint GetTexParameterIui(TextureTarget target, GetTextureParameter pname)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetTexParameterIuiv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexParameterIuiv(TextureTarget, GetTextureParameter, uint*)"/>
+        public static unsafe void GetTexParameterIui(TextureTarget target, GetTextureParameter pname, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
                 GetTexParameterIuiv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexParameterIuiv(TextureTarget, GetTextureParameter, uint*)"/>
-        public static unsafe uint GetTexParameterIui(TextureTarget target, GetTextureParameter pname)
-        {
-            uint parameters_val;
-            uint* parameters = &parameters_val;
-            GetTexParameterIuiv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -5349,20 +5013,22 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, ref int parameters)
+        public static unsafe int GetTexParameteri(TextureTarget target, GetTextureParameter pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetTexParameteriv(target, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
+        public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
-        public static unsafe int GetTexParameteri(TextureTarget target, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTexParameteriv(target, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTextureImage(int, int, PixelFormat, PixelType, int, void*)"/>
         public static unsafe void GetTextureImage(int texture, int level, PixelFormat format, PixelType type, int bufSize, IntPtr pixels)
@@ -5421,14 +5087,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetTextureLevelParameterfv(texture, level, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTextureLevelParameterfv(int, int, GetTextureParameter, float*)"/>
-        public static unsafe float GetTextureLevelParameterf(int texture, int level, GetTextureParameter pname)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetTextureLevelParameterfv(texture, level, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetTextureLevelParameteriv(int, int, GetTextureParameter, int*)"/>
         public static unsafe void GetTextureLevelParameteri(int texture, int level, GetTextureParameter pname, Span<int> parameters)
         {
@@ -5452,14 +5110,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetTextureLevelParameteriv(texture, level, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTextureLevelParameteriv(int, int, GetTextureParameter, int*)"/>
-        public static unsafe int GetTextureLevelParameteri(int texture, int level, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTextureLevelParameteriv(texture, level, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTextureParameterfv(int, GetTextureParameter, float*)"/>
         public static unsafe void GetTextureParameterf(int texture, GetTextureParameter pname, Span<float> parameters)
@@ -5485,14 +5135,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetTextureParameterfv(texture, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTextureParameterfv(int, GetTextureParameter, float*)"/>
-        public static unsafe float GetTextureParameterf(int texture, GetTextureParameter pname)
-        {
-            float parameters_val;
-            float* parameters = &parameters_val;
-            GetTextureParameterfv(texture, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetTextureParameterIiv(int, GetTextureParameter, int*)"/>
         public static unsafe void GetTextureParameterIi(int texture, GetTextureParameter pname, Span<int> parameters)
         {
@@ -5516,14 +5158,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetTextureParameterIiv(texture, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTextureParameterIiv(int, GetTextureParameter, int*)"/>
-        public static unsafe int GetTextureParameterIi(int texture, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTextureParameterIiv(texture, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTextureParameterIuiv(int, GetTextureParameter, uint*)"/>
         public static unsafe void GetTextureParameterIui(int texture, GetTextureParameter pname, Span<uint> parameters)
@@ -5549,14 +5183,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetTextureParameterIuiv(texture, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTextureParameterIuiv(int, GetTextureParameter, uint*)"/>
-        public static unsafe uint GetTextureParameterIui(int texture, GetTextureParameter pname)
-        {
-            uint parameters_val;
-            uint* parameters = &parameters_val;
-            GetTextureParameterIuiv(texture, pname, parameters);
-            return parameters_val;
-        }
         /// <inheritdoc cref="GetTextureParameteriv(int, GetTextureParameter, int*)"/>
         public static unsafe void GetTextureParameteri(int texture, GetTextureParameter pname, Span<int> parameters)
         {
@@ -5580,14 +5206,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetTextureParameteriv(texture, pname, parameters_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTextureParameteriv(int, GetTextureParameter, int*)"/>
-        public static unsafe int GetTextureParameteri(int texture, GetTextureParameter pname)
-        {
-            int parameters_val;
-            int* parameters = &parameters_val;
-            GetTextureParameteriv(texture, pname, parameters);
-            return parameters_val;
         }
         /// <inheritdoc cref="GetTextureSubImage(int, int, int, int, int, int, int, int, PixelFormat, PixelType, int, void*)"/>
         public static unsafe void GetTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, int bufSize, IntPtr pixels)
@@ -5646,14 +5264,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetTransformFeedbacki_v(xfb, pname, index, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetTransformFeedbacki_v(int, TransformFeedbackPName, uint, int*)"/>
-        public static unsafe int GetTransformFeedback(int xfb, TransformFeedbackPName pname, uint index)
-        {
-            int param_val;
-            int* param = &param_val;
-            GetTransformFeedbacki_v(xfb, pname, index, param);
-            return param_val;
-        }
         /// <inheritdoc cref="GetTransformFeedbacki64_v(int, TransformFeedbackPName, uint, long*)"/>
         public static unsafe void GetTransformFeedbacki64_(int xfb, TransformFeedbackPName pname, uint index, Span<long> param)
         {
@@ -5677,14 +5287,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetTransformFeedbacki64_v(xfb, pname, index, param_ptr);
             }
-        }
-        /// <inheritdoc cref="GetTransformFeedbacki64_v(int, TransformFeedbackPName, uint, long*)"/>
-        public static unsafe long GetTransformFeedbacki64_(int xfb, TransformFeedbackPName pname, uint index)
-        {
-            long param_val;
-            long* param = &param_val;
-            GetTransformFeedbacki64_v(xfb, pname, index, param);
-            return param_val;
         }
         /// <inheritdoc cref="GetTransformFeedbackiv(int, TransformFeedbackPName, int*)"/>
         public static unsafe void GetTransformFeedbacki(int xfb, TransformFeedbackPName pname, Span<int> param)
@@ -5710,16 +5312,8 @@ namespace OpenTK.Graphics.OpenGL
                 GetTransformFeedbackiv(xfb, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetTransformFeedbackiv(int, TransformFeedbackPName, int*)"/>
-        public static unsafe int GetTransformFeedbacki(int xfb, TransformFeedbackPName pname)
-        {
-            int param_val;
-            int* param = &param_val;
-            GetTransformFeedbackiv(xfb, pname, param);
-            return param_val;
-        }
         /// <inheritdoc cref="GetTransformFeedbackVarying(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-        public static unsafe string GetTransformFeedbackVarying(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type)
+        public static unsafe string GetTransformFeedbackVarying(int program, uint index, int bufSize, out int length, out int size, out AttributeType type)
         {
             string name;
             fixed (int* length_ptr = &length)
@@ -5734,7 +5328,7 @@ namespace OpenTK.Graphics.OpenGL
             return name;
         }
         /// <inheritdoc cref="GetTransformFeedbackVarying(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-        public static unsafe void GetTransformFeedbackVarying(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type, out string name)
+        public static unsafe void GetTransformFeedbackVarying(int program, uint index, int bufSize, out int length, out int size, out AttributeType type, out string name)
         {
             fixed (int* length_ptr = &length)
             fixed (int* size_ptr = &size)
@@ -5772,7 +5366,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetUniformdv(int, int, double*)"/>
-        public static unsafe void GetUniformd(int program, int location, ref double parameters)
+        public static unsafe double GetUniformd(int program, int location)
+        {
+            double parameters;
+            double* parameters_ptr = &parameters;
+            {
+                GetUniformdv(program, location, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetUniformdv(int, int, double*)"/>
+        public static unsafe void GetUniformd(int program, int location, out double parameters)
         {
             fixed (double* parameters_ptr = &parameters)
             {
@@ -5796,7 +5400,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetUniformfv(int, int, float*)"/>
-        public static unsafe void GetUniformf(int program, int location, ref float parameters)
+        public static unsafe float GetUniformf(int program, int location)
+        {
+            float parameters;
+            float* parameters_ptr = &parameters;
+            {
+                GetUniformfv(program, location, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetUniformfv(int, int, float*)"/>
+        public static unsafe void GetUniformf(int program, int location, out float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -5820,7 +5434,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetUniformIndices(int, int, byte**, uint*)"/>
-        public static unsafe void GetUniformIndices(int program, int uniformCount, byte** uniformNames, ref uint uniformIndices)
+        public static unsafe uint GetUniformIndices(int program, int uniformCount, byte** uniformNames)
+        {
+            uint uniformIndices;
+            uint* uniformIndices_ptr = &uniformIndices;
+            {
+                GetUniformIndices(program, uniformCount, uniformNames, uniformIndices_ptr);
+            }
+            return uniformIndices;
+        }
+        /// <inheritdoc cref="GetUniformIndices(int, int, byte**, uint*)"/>
+        public static unsafe void GetUniformIndices(int program, int uniformCount, byte** uniformNames, out uint uniformIndices)
         {
             fixed (uint* uniformIndices_ptr = &uniformIndices)
             {
@@ -5844,7 +5468,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetUniformiv(int, int, int*)"/>
-        public static unsafe void GetUniformi(int program, int location, ref int parameters)
+        public static unsafe int GetUniformi(int program, int location)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetUniformiv(program, location, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetUniformiv(int, int, int*)"/>
+        public static unsafe void GetUniformi(int program, int location, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -5861,7 +5495,17 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="GetUniformSubroutineuiv(ShaderType, int, uint*)"/>
-        public static unsafe void GetUniformSubroutineui(ShaderType shadertype, int location, ref uint parameters)
+        public static unsafe uint GetUniformSubroutineui(ShaderType shadertype, int location)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetUniformSubroutineuiv(shadertype, location, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetUniformSubroutineuiv(ShaderType, int, uint*)"/>
+        public static unsafe void GetUniformSubroutineui(ShaderType shadertype, int location, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
@@ -5885,7 +5529,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetUniformuiv(int, int, uint*)"/>
-        public static unsafe void GetUniformui(int program, int location, ref uint parameters)
+        public static unsafe uint GetUniformui(int program, int location)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetUniformuiv(program, location, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetUniformuiv(int, int, uint*)"/>
+        public static unsafe void GetUniformui(int program, int location, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
@@ -5916,14 +5570,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetVertexArrayIndexed64iv(vaobj, index, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetVertexArrayIndexed64iv(int, uint, VertexArrayPName, long*)"/>
-        public static unsafe long GetVertexArrayIndexed64iv(int vaobj, uint index, VertexArrayPName pname)
-        {
-            long param_val;
-            long* param = &param_val;
-            GetVertexArrayIndexed64iv(vaobj, index, pname, param);
-            return param_val;
-        }
         /// <inheritdoc cref="GetVertexArrayIndexediv(int, uint, VertexArrayPName, int*)"/>
         public static unsafe void GetVertexArrayIndexedi(int vaobj, uint index, VertexArrayPName pname, Span<int> param)
         {
@@ -5948,14 +5594,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetVertexArrayIndexediv(vaobj, index, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetVertexArrayIndexediv(int, uint, VertexArrayPName, int*)"/>
-        public static unsafe int GetVertexArrayIndexedi(int vaobj, uint index, VertexArrayPName pname)
-        {
-            int param_val;
-            int* param = &param_val;
-            GetVertexArrayIndexediv(vaobj, index, pname, param);
-            return param_val;
-        }
         /// <inheritdoc cref="GetVertexArrayiv(int, VertexArrayPName, int*)"/>
         public static unsafe void GetVertexArrayi(int vaobj, VertexArrayPName pname, Span<int> param)
         {
@@ -5979,14 +5617,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 GetVertexArrayiv(vaobj, pname, param_ptr);
             }
-        }
-        /// <inheritdoc cref="GetVertexArrayiv(int, VertexArrayPName, int*)"/>
-        public static unsafe int GetVertexArrayi(int vaobj, VertexArrayPName pname)
-        {
-            int param_val;
-            int* param = &param_val;
-            GetVertexArrayiv(vaobj, pname, param);
-            return param_val;
         }
         /// <inheritdoc cref="GetVertexAttribdv(uint, VertexAttribPropertyARB, double*)"/>
         public static unsafe void GetVertexAttribd(uint index, VertexAttribPropertyARB pname, Span<double> parameters)
@@ -6037,7 +5667,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetVertexAttribIiv(uint, VertexAttribEnum, int*)"/>
-        public static unsafe void GetVertexAttribIi(uint index, VertexAttribEnum pname, ref int parameters)
+        public static unsafe int GetVertexAttribIi(uint index, VertexAttribEnum pname)
+        {
+            int parameters;
+            int* parameters_ptr = &parameters;
+            {
+                GetVertexAttribIiv(index, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetVertexAttribIiv(uint, VertexAttribEnum, int*)"/>
+        public static unsafe void GetVertexAttribIi(uint index, VertexAttribEnum pname, out int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -6045,7 +5685,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetVertexAttribIuiv(uint, VertexAttribEnum, uint*)"/>
-        public static unsafe void GetVertexAttribIui(uint index, VertexAttribEnum pname, ref uint parameters)
+        public static unsafe uint GetVertexAttribIui(uint index, VertexAttribEnum pname)
+        {
+            uint parameters;
+            uint* parameters_ptr = &parameters;
+            {
+                GetVertexAttribIuiv(index, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetVertexAttribIuiv(uint, VertexAttribEnum, uint*)"/>
+        public static unsafe void GetVertexAttribIui(uint index, VertexAttribEnum pname, out uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
@@ -6093,7 +5743,17 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetVertexAttribLdv(uint, VertexAttribEnum, double*)"/>
-        public static unsafe void GetVertexAttribLd(uint index, VertexAttribEnum pname, ref double parameters)
+        public static unsafe double GetVertexAttribLd(uint index, VertexAttribEnum pname)
+        {
+            double parameters;
+            double* parameters_ptr = &parameters;
+            {
+                GetVertexAttribLdv(index, pname, parameters_ptr);
+            }
+            return parameters;
+        }
+        /// <inheritdoc cref="GetVertexAttribLdv(uint, VertexAttribEnum, double*)"/>
+        public static unsafe void GetVertexAttribLd(uint index, VertexAttribEnum pname, out double parameters)
         {
             fixed (double* parameters_ptr = &parameters)
             {
@@ -10586,7 +10246,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeletePerfMonitorsAMD(int, uint*)"/>
-            public static unsafe void DeletePerfMonitorsAMD(int n, ref uint monitors)
+            public static unsafe void DeletePerfMonitorsAMD(int n, in uint monitors)
             {
                 fixed (uint* monitors_ptr = &monitors)
                 {
@@ -10749,14 +10409,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetFramebufferParameterfvAMD(target, pname, numsamples, pixelindex, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFramebufferParameterfvAMD(FramebufferTarget, FramebufferAttachmentParameterName, uint, uint, int, float*)"/>
-            public static unsafe float GetFramebufferParameterfvAMD(FramebufferTarget target, FramebufferAttachmentParameterName pname, uint numsamples, uint pixelindex, int size)
-            {
-                float values_val;
-                float* values = &values_val;
-                GetFramebufferParameterfvAMD(target, pname, numsamples, pixelindex, size, values);
-                return values_val;
-            }
             /// <inheritdoc cref="GetNamedFramebufferParameterfvAMD(int, All, uint, uint, int, float*)"/>
             public static unsafe void GetNamedFramebufferParameterfvAMD(int framebuffer, All pname, uint numsamples, uint pixelindex, int size, Span<float> values)
             {
@@ -10781,16 +10433,21 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedFramebufferParameterfvAMD(framebuffer, pname, numsamples, pixelindex, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedFramebufferParameterfvAMD(int, All, uint, uint, int, float*)"/>
-            public static unsafe float GetNamedFramebufferParameterfvAMD(int framebuffer, All pname, uint numsamples, uint pixelindex, int size)
+            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
+            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, Span<uint> data)
             {
-                float values_val;
-                float* values = &values_val;
-                GetNamedFramebufferParameterfvAMD(framebuffer, pname, numsamples, pixelindex, size, values);
-                return values_val;
+                int bytesWritten;
+                int* bytesWritten_ptr = &bytesWritten;
+                {
+                    fixed (uint* data_ptr = data)
+                    {
+                        GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten_ptr);
+                    }
+                }
+                return bytesWritten;
             }
             /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, Span<uint> data, ref int bytesWritten)
+            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, Span<uint> data, out int bytesWritten)
             {
                 fixed (int* bytesWritten_ptr = &bytesWritten)
                 {
@@ -10801,7 +10458,20 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, uint[] data, ref int bytesWritten)
+            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, uint[] data)
+            {
+                int bytesWritten;
+                int* bytesWritten_ptr = &bytesWritten;
+                {
+                    fixed (uint* data_ptr = data)
+                    {
+                        GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten_ptr);
+                    }
+                }
+                return bytesWritten;
+            }
+            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
+            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, uint[] data, out int bytesWritten)
             {
                 fixed (int* bytesWritten_ptr = &bytesWritten)
                 {
@@ -10812,46 +10482,24 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, ref uint data, ref int bytesWritten)
+            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, ref uint data)
+            {
+                int bytesWritten;
+                int* bytesWritten_ptr = &bytesWritten;
+                fixed (uint* data_ptr = &data)
+                {
+                    GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten_ptr);
+                }
+                return bytesWritten;
+            }
+            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
+            public static unsafe void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, ref uint data, out int bytesWritten)
             {
                 fixed (uint* data_ptr = &data)
                 fixed (int* bytesWritten_ptr = &bytesWritten)
                 {
                     GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, Span<uint> data)
-            {
-                int bytesWritten_val;
-                fixed (uint* data_ptr = data)
-                {
-                    int* bytesWritten = &bytesWritten_val;
-                    GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
-            }
-            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, uint[] data)
-            {
-                int bytesWritten_val;
-                fixed (uint* data_ptr = data)
-                {
-                    int* bytesWritten = &bytesWritten_val;
-                    GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
-            }
-            /// <inheritdoc cref="GetPerfMonitorCounterDataAMD(uint, All, int, uint*, int*)"/>
-            public static unsafe int GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, ref uint data)
-            {
-                int bytesWritten_val;
-                fixed (uint* data_ptr = &data)
-                {
-                    int* bytesWritten = &bytesWritten_val;
-                    GetPerfMonitorCounterDataAMD(monitor, pname, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
             }
             /// <inheritdoc cref="GetPerfMonitorCounterInfoAMD(uint, uint, All, void*)"/>
             public static unsafe void GetPerfMonitorCounterInfoAMD(uint group, uint counter, All pname, IntPtr data)
@@ -10878,7 +10526,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCounterInfoAMD(uint, uint, All, void*)"/>
-            public static unsafe void GetPerfMonitorCounterInfoAMD<T1>(uint group, uint counter, All pname, ref T1 data)
+            public static unsafe T1 GetPerfMonitorCounterInfoAMD<T1>(uint group, uint counter, All pname)
+                where T1 : unmanaged
+            {
+                T1 data;
+                void* data_ptr = &data;
+                {
+                    GetPerfMonitorCounterInfoAMD(group, counter, pname, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetPerfMonitorCounterInfoAMD(uint, uint, All, void*)"/>
+            public static unsafe void GetPerfMonitorCounterInfoAMD<T1>(uint group, uint counter, All pname, out T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -10887,7 +10546,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCountersAMD(uint, int*, int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorCountersAMD(uint group, ref int numCounters, ref int maxActiveCounters, int counterSize, Span<uint> counters)
+            public static unsafe void GetPerfMonitorCountersAMD(uint group, out int numCounters, out int maxActiveCounters, int counterSize, Span<uint> counters)
             {
                 fixed (int* numCounters_ptr = &numCounters)
                 fixed (int* maxActiveCounters_ptr = &maxActiveCounters)
@@ -10899,7 +10558,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCountersAMD(uint, int*, int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorCountersAMD(uint group, ref int numCounters, ref int maxActiveCounters, int counterSize, uint[] counters)
+            public static unsafe void GetPerfMonitorCountersAMD(uint group, out int numCounters, out int maxActiveCounters, int counterSize, uint[] counters)
             {
                 fixed (int* numCounters_ptr = &numCounters)
                 fixed (int* maxActiveCounters_ptr = &maxActiveCounters)
@@ -10911,7 +10570,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCountersAMD(uint, int*, int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorCountersAMD(uint group, ref int numCounters, ref int maxActiveCounters, int counterSize, ref uint counters)
+            public static unsafe void GetPerfMonitorCountersAMD(uint group, out int numCounters, out int maxActiveCounters, int counterSize, ref uint counters)
             {
                 fixed (int* numCounters_ptr = &numCounters)
                 fixed (int* maxActiveCounters_ptr = &maxActiveCounters)
@@ -10920,20 +10579,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfMonitorCountersAMD(group, numCounters_ptr, maxActiveCounters_ptr, counterSize, counters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfMonitorCountersAMD(uint, int*, int*, int, uint*)"/>
-            public static unsafe uint GetPerfMonitorCountersAMD(uint group, ref int numCounters, ref int maxActiveCounters, int counterSize)
-            {
-                uint counters_val;
-                fixed (int* numCounters_ptr = &numCounters)
-                fixed (int* maxActiveCounters_ptr = &maxActiveCounters)
-                {
-                    uint* counters = &counters_val;
-                    GetPerfMonitorCountersAMD(group, numCounters_ptr, maxActiveCounters_ptr, counterSize, counters);
-                }
-                return counters_val;
-            }
             /// <inheritdoc cref="GetPerfMonitorCounterStringAMD(uint, uint, int, int*, byte*)"/>
-            public static unsafe string GetPerfMonitorCounterStringAMD(uint group, uint counter, int bufSize, ref int length)
+            public static unsafe string GetPerfMonitorCounterStringAMD(uint group, uint counter, int bufSize, out int length)
             {
                 string counterString;
                 fixed (int* length_ptr = &length)
@@ -10946,7 +10593,7 @@ namespace OpenTK.Graphics.OpenGL
                 return counterString;
             }
             /// <inheritdoc cref="GetPerfMonitorCounterStringAMD(uint, uint, int, int*, byte*)"/>
-            public static unsafe void GetPerfMonitorCounterStringAMD(uint group, uint counter, int bufSize, ref int length, out string counterString)
+            public static unsafe void GetPerfMonitorCounterStringAMD(uint group, uint counter, int bufSize, out int length, out string counterString)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -10957,7 +10604,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorGroupsAMD(int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorGroupsAMD(ref int numGroups, int groupsSize, Span<uint> groups)
+            public static unsafe void GetPerfMonitorGroupsAMD(out int numGroups, int groupsSize, Span<uint> groups)
             {
                 fixed (int* numGroups_ptr = &numGroups)
                 {
@@ -10968,7 +10615,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorGroupsAMD(int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorGroupsAMD(ref int numGroups, int groupsSize, uint[] groups)
+            public static unsafe void GetPerfMonitorGroupsAMD(out int numGroups, int groupsSize, uint[] groups)
             {
                 fixed (int* numGroups_ptr = &numGroups)
                 {
@@ -10979,7 +10626,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorGroupsAMD(int*, int, uint*)"/>
-            public static unsafe void GetPerfMonitorGroupsAMD(ref int numGroups, int groupsSize, ref uint groups)
+            public static unsafe void GetPerfMonitorGroupsAMD(out int numGroups, int groupsSize, ref uint groups)
             {
                 fixed (int* numGroups_ptr = &numGroups)
                 fixed (uint* groups_ptr = &groups)
@@ -10987,19 +10634,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfMonitorGroupsAMD(numGroups_ptr, groupsSize, groups_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfMonitorGroupsAMD(int*, int, uint*)"/>
-            public static unsafe uint GetPerfMonitorGroupsAMD(ref int numGroups, int groupsSize)
-            {
-                uint groups_val;
-                fixed (int* numGroups_ptr = &numGroups)
-                {
-                    uint* groups = &groups_val;
-                    GetPerfMonitorGroupsAMD(numGroups_ptr, groupsSize, groups);
-                }
-                return groups_val;
-            }
             /// <inheritdoc cref="GetPerfMonitorGroupStringAMD(uint, int, int*, byte*)"/>
-            public static unsafe string GetPerfMonitorGroupStringAMD(uint group, int bufSize, ref int length)
+            public static unsafe string GetPerfMonitorGroupStringAMD(uint group, int bufSize, out int length)
             {
                 string groupString;
                 fixed (int* length_ptr = &length)
@@ -11012,7 +10648,7 @@ namespace OpenTK.Graphics.OpenGL
                 return groupString;
             }
             /// <inheritdoc cref="GetPerfMonitorGroupStringAMD(uint, int, int*, byte*)"/>
-            public static unsafe void GetPerfMonitorGroupStringAMD(uint group, int bufSize, ref int length, out string groupString)
+            public static unsafe void GetPerfMonitorGroupStringAMD(uint group, int bufSize, out int length, out string groupString)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -11039,7 +10675,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformi64vNV(int, int, long*)"/>
-            public static unsafe void GetUniformi64vNV(int program, int location, ref long parameters)
+            public static unsafe long GetUniformi64vNV(int program, int location)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetUniformi64vNV(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformi64vNV(int, int, long*)"/>
+            public static unsafe void GetUniformi64vNV(int program, int location, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
@@ -11063,7 +10709,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformui64vNV(int, int, ulong*)"/>
-            public static unsafe void GetUniformui64vNV(int program, int location, ref ulong parameters)
+            public static unsafe ulong GetUniformui64vNV(int program, int location)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetUniformui64vNV(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformui64vNV(int, int, ulong*)"/>
+            public static unsafe void GetUniformui64vNV(int program, int location, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
@@ -11519,7 +11175,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD(uint, bool, uint, int, uint*)"/>
-            public static unsafe void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, ref uint counterList)
+            public static unsafe void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, in uint counterList)
             {
                 fixed (uint* counterList_ptr = &counterList)
                 {
@@ -12037,7 +11693,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="FlushVertexArrayRangeAPPLE(int, void*)"/>
-            public static unsafe void FlushVertexArrayRangeAPPLE<T1>(int length, ref T1 pointer)
+            public static unsafe void FlushVertexArrayRangeAPPLE<T1>(int length, in T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -12110,33 +11766,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectParameterivAPPLE(All, uint, All, int*)"/>
-            public static unsafe void GetObjectParameterivAPPLE(All objectType, uint name, All pname, ref int parameters)
+            public static unsafe int GetObjectParameterivAPPLE(All objectType, uint name, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetObjectParameterivAPPLE(objectType, name, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetObjectParameterivAPPLE(All, uint, All, int*)"/>
+            public static unsafe void GetObjectParameterivAPPLE(All objectType, uint name, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetObjectParameterivAPPLE(objectType, name, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetObjectParameterivAPPLE(All, uint, All, int*)"/>
-            public static unsafe int GetObjectParameterivAPPLE(All objectType, uint name, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetObjectParameterivAPPLE(objectType, name, pname, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetTexParameterPointervAPPLE(All, All, void**)"/>
-            public static unsafe void GetTexParameterPointervAPPLE(All target, All pname, void** parameters)
-            {
-                GetTexParameterPointervAPPLE_(target, pname, parameters);
-            }
-            /// <inheritdoc cref="GetTexParameterPointervAPPLE(All, All, void**)"/>
-            public static unsafe void* GetTexParameterPointervAPPLE(All target, All pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetTexParameterPointervAPPLE_(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="MapVertexAttrib1dAPPLE(uint, uint, double, double, int, int, double*)"/>
             public static unsafe void MapVertexAttrib1dAPPLE(uint index, uint size, double u1, double u2, int stride, int order, ReadOnlySpan<double> points)
@@ -12354,7 +11999,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="VertexArrayRangeAPPLE(int, void*)"/>
-            public static unsafe void VertexArrayRangeAPPLE<T1>(int length, ref T1 pointer)
+            public static unsafe void VertexArrayRangeAPPLE<T1>(int length, in T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -13496,15 +13141,7 @@ namespace OpenTK.Graphics.OpenGL
                 int buffer;
                 int n = 1;
                 Unsafe.SkipInit(out buffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
+                int* buffers_handle = &buffer;
                 CreateBuffers(n, buffers_handle);
                 return buffer;
             }
@@ -13513,16 +13150,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out buffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
-                CreateBuffers(n, buffers_handle);
+                fixed(int* buffers_handle = &buffer)
+                {
+                    CreateBuffers(n, buffers_handle);
+                }
             }
             /// <inheritdoc cref="CreateBuffers(int, int*)"/>
             public static unsafe void CreateBuffers(int n, Span<int> buffers)
@@ -13554,15 +13185,7 @@ namespace OpenTK.Graphics.OpenGL
                 int framebuffer;
                 int n = 1;
                 Unsafe.SkipInit(out framebuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
+                int* framebuffers_handle = &framebuffer;
                 CreateFramebuffers(n, framebuffers_handle);
                 return framebuffer;
             }
@@ -13571,16 +13194,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out framebuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
-                CreateFramebuffers(n, framebuffers_handle);
+                fixed(int* framebuffers_handle = &framebuffer)
+                {
+                    CreateFramebuffers(n, framebuffers_handle);
+                }
             }
             /// <inheritdoc cref="CreateFramebuffers(int, int*)"/>
             public static unsafe void CreateFramebuffers(int n, Span<int> framebuffers)
@@ -13612,15 +13229,7 @@ namespace OpenTK.Graphics.OpenGL
                 int pipeline;
                 int n = 1;
                 Unsafe.SkipInit(out pipeline);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
+                int* pipelines_handle = &pipeline;
                 CreateProgramPipelines(n, pipelines_handle);
                 return pipeline;
             }
@@ -13629,16 +13238,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out pipeline);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
-                CreateProgramPipelines(n, pipelines_handle);
+                fixed(int* pipelines_handle = &pipeline)
+                {
+                    CreateProgramPipelines(n, pipelines_handle);
+                }
             }
             /// <inheritdoc cref="CreateProgramPipelines(int, int*)"/>
             public static unsafe void CreateProgramPipelines(int n, Span<int> pipelines)
@@ -13670,15 +13273,7 @@ namespace OpenTK.Graphics.OpenGL
                 int id;
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+                int* ids_handle = &id;
                 CreateQueries(target, n, ids_handle);
                 return id;
             }
@@ -13687,16 +13282,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-                CreateQueries(target, n, ids_handle);
+                fixed(int* ids_handle = &id)
+                {
+                    CreateQueries(target, n, ids_handle);
+                }
             }
             /// <inheritdoc cref="CreateQueries(QueryTarget, int, int*)"/>
             public static unsafe void CreateQueries(QueryTarget target, int n, Span<int> ids)
@@ -13728,15 +13317,7 @@ namespace OpenTK.Graphics.OpenGL
                 int renderbuffer;
                 int n = 1;
                 Unsafe.SkipInit(out renderbuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
+                int* renderbuffers_handle = &renderbuffer;
                 CreateRenderbuffers(n, renderbuffers_handle);
                 return renderbuffer;
             }
@@ -13745,16 +13326,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out renderbuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
-                CreateRenderbuffers(n, renderbuffers_handle);
+                fixed(int* renderbuffers_handle = &renderbuffer)
+                {
+                    CreateRenderbuffers(n, renderbuffers_handle);
+                }
             }
             /// <inheritdoc cref="CreateRenderbuffers(int, int*)"/>
             public static unsafe void CreateRenderbuffers(int n, Span<int> renderbuffers)
@@ -13786,15 +13361,7 @@ namespace OpenTK.Graphics.OpenGL
                 int sampler;
                 int n = 1;
                 Unsafe.SkipInit(out sampler);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
+                int* samplers_handle = &sampler;
                 CreateSamplers(n, samplers_handle);
                 return sampler;
             }
@@ -13803,16 +13370,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out sampler);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
-                CreateSamplers(n, samplers_handle);
+                fixed(int* samplers_handle = &sampler)
+                {
+                    CreateSamplers(n, samplers_handle);
+                }
             }
             /// <inheritdoc cref="CreateSamplers(int, int*)"/>
             public static unsafe void CreateSamplers(int n, Span<int> samplers)
@@ -13888,15 +13449,7 @@ namespace OpenTK.Graphics.OpenGL
                 int texture;
                 int n = 1;
                 Unsafe.SkipInit(out texture);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
+                int* textures_handle = &texture;
                 CreateTextures(target, n, textures_handle);
                 return texture;
             }
@@ -13905,16 +13458,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out texture);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
-                CreateTextures(target, n, textures_handle);
+                fixed(int* textures_handle = &texture)
+                {
+                    CreateTextures(target, n, textures_handle);
+                }
             }
             /// <inheritdoc cref="CreateTextures(TextureTarget, int, int*)"/>
             public static unsafe void CreateTextures(TextureTarget target, int n, Span<int> textures)
@@ -13946,15 +13493,7 @@ namespace OpenTK.Graphics.OpenGL
                 int id;
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+                int* ids_handle = &id;
                 CreateTransformFeedbacks(n, ids_handle);
                 return id;
             }
@@ -13963,16 +13502,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-                CreateTransformFeedbacks(n, ids_handle);
+                fixed(int* ids_handle = &id)
+                {
+                    CreateTransformFeedbacks(n, ids_handle);
+                }
             }
             /// <inheritdoc cref="CreateTransformFeedbacks(int, int*)"/>
             public static unsafe void CreateTransformFeedbacks(int n, Span<int> ids)
@@ -14004,15 +13537,7 @@ namespace OpenTK.Graphics.OpenGL
                 int array;
                 int n = 1;
                 Unsafe.SkipInit(out array);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
+                int* arrays_handle = &array;
                 CreateVertexArrays(n, arrays_handle);
                 return array;
             }
@@ -14021,16 +13546,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out array);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
-                CreateVertexArrays(n, arrays_handle);
+                fixed(int* arrays_handle = &array)
+                {
+                    CreateVertexArrays(n, arrays_handle);
+                }
             }
             /// <inheritdoc cref="CreateVertexArrays(int, int*)"/>
             public static unsafe void CreateVertexArrays(int n, Span<int> arrays)
@@ -14629,15 +14148,7 @@ namespace OpenTK.Graphics.OpenGL
                 int framebuffer;
                 int n = 1;
                 Unsafe.SkipInit(out framebuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
+                int* framebuffers_handle = &framebuffer;
                 GenFramebuffers(n, framebuffers_handle);
                 return framebuffer;
             }
@@ -14646,16 +14157,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out framebuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* framebuffers_handle = (int*)Unsafe.AsPointer(ref framebuffer);
-                GenFramebuffers(n, framebuffers_handle);
+                fixed(int* framebuffers_handle = &framebuffer)
+                {
+                    GenFramebuffers(n, framebuffers_handle);
+                }
             }
             /// <inheritdoc cref="GenFramebuffers(int, int*)"/>
             public static unsafe void GenFramebuffers(int n, Span<int> framebuffers)
@@ -14687,15 +14192,7 @@ namespace OpenTK.Graphics.OpenGL
                 int pipeline;
                 int n = 1;
                 Unsafe.SkipInit(out pipeline);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
+                int* pipelines_handle = &pipeline;
                 GenProgramPipelines(n, pipelines_handle);
                 return pipeline;
             }
@@ -14704,16 +14201,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out pipeline);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* pipelines_handle = (int*)Unsafe.AsPointer(ref pipeline);
-                GenProgramPipelines(n, pipelines_handle);
+                fixed(int* pipelines_handle = &pipeline)
+                {
+                    GenProgramPipelines(n, pipelines_handle);
+                }
             }
             /// <inheritdoc cref="GenProgramPipelines(int, int*)"/>
             public static unsafe void GenProgramPipelines(int n, Span<int> pipelines)
@@ -14793,15 +14284,7 @@ namespace OpenTK.Graphics.OpenGL
                 int renderbuffer;
                 int n = 1;
                 Unsafe.SkipInit(out renderbuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
+                int* renderbuffers_handle = &renderbuffer;
                 GenRenderbuffers(n, renderbuffers_handle);
                 return renderbuffer;
             }
@@ -14810,16 +14293,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out renderbuffer);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* renderbuffers_handle = (int*)Unsafe.AsPointer(ref renderbuffer);
-                GenRenderbuffers(n, renderbuffers_handle);
+                fixed(int* renderbuffers_handle = &renderbuffer)
+                {
+                    GenRenderbuffers(n, renderbuffers_handle);
+                }
             }
             /// <inheritdoc cref="GenRenderbuffers(int, int*)"/>
             public static unsafe void GenRenderbuffers(int n, Span<int> renderbuffers)
@@ -14851,15 +14328,7 @@ namespace OpenTK.Graphics.OpenGL
                 int sampler;
                 int count = 1;
                 Unsafe.SkipInit(out sampler);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
+                int* samplers_handle = &sampler;
                 GenSamplers(count, samplers_handle);
                 return sampler;
             }
@@ -14868,16 +14337,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int count = 1;
                 Unsafe.SkipInit(out sampler);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* samplers_handle = (int*)Unsafe.AsPointer(ref sampler);
-                GenSamplers(count, samplers_handle);
+                fixed(int* samplers_handle = &sampler)
+                {
+                    GenSamplers(count, samplers_handle);
+                }
             }
             /// <inheritdoc cref="GenSamplers(int, int*)"/>
             public static unsafe void GenSamplers(int count, Span<int> samplers)
@@ -14909,15 +14372,7 @@ namespace OpenTK.Graphics.OpenGL
                 int id;
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
+                int* ids_handle = &id;
                 GenTransformFeedbacks(n, ids_handle);
                 return id;
             }
@@ -14926,16 +14381,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out id);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* ids_handle = (int*)Unsafe.AsPointer(ref id);
-                GenTransformFeedbacks(n, ids_handle);
+                fixed(int* ids_handle = &id)
+                {
+                    GenTransformFeedbacks(n, ids_handle);
+                }
             }
             /// <inheritdoc cref="GenTransformFeedbacks(int, int*)"/>
             public static unsafe void GenTransformFeedbacks(int n, Span<int> ids)
@@ -14967,15 +14416,7 @@ namespace OpenTK.Graphics.OpenGL
                 int array;
                 int n = 1;
                 Unsafe.SkipInit(out array);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
+                int* arrays_handle = &array;
                 GenVertexArrays(n, arrays_handle);
                 return array;
             }
@@ -14984,16 +14425,10 @@ namespace OpenTK.Graphics.OpenGL
             {
                 int n = 1;
                 Unsafe.SkipInit(out array);
-                // FIXME: This could be a problem for the overloads that take an out parameter
-                // as this parameter could *potentially* move while inside of this function
-                // which would mean that the new value never gets written to the out parameter.
-                // Making for a nasty bug.
-                // The reason we don't use a fixed expression here is because of the "single out parameter to return value" overloading step
-                // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
-                // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
-                // - 2021-05-18
-                int* arrays_handle = (int*)Unsafe.AsPointer(ref array);
-                GenVertexArrays(n, arrays_handle);
+                fixed(int* arrays_handle = &array)
+                {
+                    GenVertexArrays(n, arrays_handle);
+                }
             }
             /// <inheritdoc cref="GenVertexArrays(int, int*)"/>
             public static unsafe void GenVertexArrays(int n, Span<int> arrays)
@@ -15036,23 +14471,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
-            public static unsafe void GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname, ref int parameters)
+            public static unsafe int GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
+            public static unsafe void GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetActiveAtomicCounterBufferiv(int, uint, AtomicCounterBufferPName, int*)"/>
-            public static unsafe int GetActiveAtomicCounterBufferi(int program, uint bufferIndex, AtomicCounterBufferPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetActiveAttribARB(GLHandleARB, uint, int, int*, int*, AttributeType*, byte*)"/>
-            public static unsafe string GetActiveAttribARB(GLHandleARB programObj, uint index, int maxLength, ref int length, ref int size, ref AttributeType type)
+            public static unsafe string GetActiveAttribARB(GLHandleARB programObj, uint index, int maxLength, out int length, out int size, out AttributeType type)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -15067,7 +14504,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetActiveAttribARB(GLHandleARB, uint, int, int*, int*, AttributeType*, byte*)"/>
-            public static unsafe void GetActiveAttribARB(GLHandleARB programObj, uint index, int maxLength, ref int length, ref int size, ref AttributeType type, out string name)
+            public static unsafe void GetActiveAttribARB(GLHandleARB programObj, uint index, int maxLength, out int length, out int size, out AttributeType type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
@@ -15080,7 +14517,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveSubroutineName(int, ShaderType, uint, int, int*, byte*)"/>
-            public static unsafe string GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, ref int length)
+            public static unsafe string GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, out int length)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -15093,7 +14530,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetActiveSubroutineName(int, ShaderType, uint, int, int*, byte*)"/>
-            public static unsafe void GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, ref int length, out string name)
+            public static unsafe void GetActiveSubroutineName(int program, ShaderType shadertype, uint index, int bufSize, out int length, out string name)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -15120,23 +14557,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
-            public static unsafe void GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname, ref int values)
+            public static unsafe int GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname)
+            {
+                int values;
+                int* values_ptr = &values;
+                {
+                    GetActiveSubroutineUniformiv(program, shadertype, index, pname, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
+            public static unsafe void GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname, out int values)
             {
                 fixed (int* values_ptr = &values)
                 {
                     GetActiveSubroutineUniformiv(program, shadertype, index, pname, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetActiveSubroutineUniformiv(int, ShaderType, uint, SubroutineParameterName, int*)"/>
-            public static unsafe int GetActiveSubroutineUniformi(int program, ShaderType shadertype, uint index, SubroutineParameterName pname)
-            {
-                int values_val;
-                int* values = &values_val;
-                GetActiveSubroutineUniformiv(program, shadertype, index, pname, values);
-                return values_val;
-            }
             /// <inheritdoc cref="GetActiveSubroutineUniformName(int, ShaderType, uint, int, int*, byte*)"/>
-            public static unsafe string GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, ref int length)
+            public static unsafe string GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, out int length)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -15149,7 +14588,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetActiveSubroutineUniformName(int, ShaderType, uint, int, int*, byte*)"/>
-            public static unsafe void GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, ref int length, out string name)
+            public static unsafe void GetActiveSubroutineUniformName(int program, ShaderType shadertype, uint index, int bufSize, out int length, out string name)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -15160,7 +14599,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveUniformARB(GLHandleARB, uint, int, int*, int*, UniformType*, byte*)"/>
-            public static unsafe string GetActiveUniformARB(GLHandleARB programObj, uint index, int maxLength, ref int length, ref int size, ref UniformType type)
+            public static unsafe string GetActiveUniformARB(GLHandleARB programObj, uint index, int maxLength, out int length, out int size, out UniformType type)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -15175,7 +14614,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetActiveUniformARB(GLHandleARB, uint, int, int*, int*, UniformType*, byte*)"/>
-            public static unsafe void GetActiveUniformARB(GLHandleARB programObj, uint index, int maxLength, ref int length, ref int size, ref UniformType type, out string name)
+            public static unsafe void GetActiveUniformARB(GLHandleARB programObj, uint index, int maxLength, out int length, out int size, out UniformType type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
@@ -15204,23 +14643,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
-            public static unsafe void GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname, ref int parameters)
+            public static unsafe int GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
+            public static unsafe void GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetActiveUniformBlockiv(int, uint, UniformBlockPName, int*)"/>
-            public static unsafe int GetActiveUniformBlocki(int program, uint uniformBlockIndex, UniformBlockPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetActiveUniformBlockiv(program, uniformBlockIndex, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetActiveUniformBlockName(int, uint, int, int*, byte*)"/>
-            public static unsafe string GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, ref int length)
+            public static unsafe string GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, out int length)
             {
                 string uniformBlockName;
                 fixed (int* length_ptr = &length)
@@ -15233,7 +14674,7 @@ namespace OpenTK.Graphics.OpenGL
                 return uniformBlockName;
             }
             /// <inheritdoc cref="GetActiveUniformBlockName(int, uint, int, int*, byte*)"/>
-            public static unsafe void GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, ref int length, out string uniformBlockName)
+            public static unsafe void GetActiveUniformBlockName(int program, uint uniformBlockIndex, int bufSize, out int length, out string uniformBlockName)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -15244,7 +14685,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveUniformName(int, uint, int, int*, byte*)"/>
-            public static unsafe string GetActiveUniformName(int program, uint uniformIndex, int bufSize, ref int length)
+            public static unsafe string GetActiveUniformName(int program, uint uniformIndex, int bufSize, out int length)
             {
                 string uniformName;
                 fixed (int* length_ptr = &length)
@@ -15257,7 +14698,7 @@ namespace OpenTK.Graphics.OpenGL
                 return uniformName;
             }
             /// <inheritdoc cref="GetActiveUniformName(int, uint, int, int*, byte*)"/>
-            public static unsafe void GetActiveUniformName(int program, uint uniformIndex, int bufSize, ref int length, out string uniformName)
+            public static unsafe void GetActiveUniformName(int program, uint uniformIndex, int bufSize, out int length, out string uniformName)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -15290,7 +14731,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, ref int parameters)
+            public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                fixed (uint* uniformIndices_ptr = &uniformIndices)
+                {
+                    GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
+            public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, out int parameters)
             {
                 fixed (uint* uniformIndices_ptr = &uniformIndices)
                 fixed (int* parameters_ptr = &parameters)
@@ -15298,41 +14750,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe int GetActiveUniformsi(int program, int uniformCount, ReadOnlySpan<uint> uniformIndices, UniformPName pname)
-            {
-                int parameters_val;
-                fixed (uint* uniformIndices_ptr = uniformIndices)
-                {
-                    int* parameters = &parameters_val;
-                    GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe int GetActiveUniformsi(int program, int uniformCount, uint[] uniformIndices, UniformPName pname)
-            {
-                int parameters_val;
-                fixed (uint* uniformIndices_ptr = uniformIndices)
-                {
-                    int* parameters = &parameters_val;
-                    GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
-            {
-                int parameters_val;
-                fixed (uint* uniformIndices_ptr = &uniformIndices)
-                {
-                    int* parameters = &parameters_val;
-                    GetActiveUniformsiv(program, uniformCount, uniformIndices_ptr, pname, parameters);
-                }
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetAttachedObjectsARB(GLHandleARB, int, int*, GLHandleARB*)"/>
-            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, ref int count, Span<GLHandleARB> obj)
+            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, out int count, Span<GLHandleARB> obj)
             {
                 fixed (int* count_ptr = &count)
                 {
@@ -15343,7 +14762,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetAttachedObjectsARB(GLHandleARB, int, int*, GLHandleARB*)"/>
-            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, ref int count, GLHandleARB[] obj)
+            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, out int count, GLHandleARB[] obj)
             {
                 fixed (int* count_ptr = &count)
                 {
@@ -15354,24 +14773,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetAttachedObjectsARB(GLHandleARB, int, int*, GLHandleARB*)"/>
-            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, ref int count, ref GLHandleARB obj)
+            public static unsafe void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, out int count, ref GLHandleARB obj)
             {
                 fixed (int* count_ptr = &count)
                 fixed (GLHandleARB* obj_ptr = &obj)
                 {
                     GetAttachedObjectsARB(containerObj, maxCount, count_ptr, obj_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetAttachedObjectsARB(GLHandleARB, int, int*, GLHandleARB*)"/>
-            public static unsafe GLHandleARB GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, ref int count)
-            {
-                GLHandleARB obj_val;
-                fixed (int* count_ptr = &count)
-                {
-                    GLHandleARB* obj = &obj_val;
-                    GetAttachedObjectsARB(containerObj, maxCount, count_ptr, obj);
-                }
-                return obj_val;
             }
             /// <inheritdoc cref="GetAttribLocationARB(GLHandleARB, byte*)"/>
             public static unsafe int GetAttribLocationARB(GLHandleARB programObj, string name)
@@ -15399,33 +14807,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetBufferParameterivARB(BufferTarget, BufferPName, int*)"/>
-            public static unsafe void GetBufferParameterivARB(BufferTarget target, BufferPName pname, ref int parameters)
+            public static unsafe int GetBufferParameterivARB(BufferTarget target, BufferPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetBufferParameterivARB(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetBufferParameterivARB(BufferTarget, BufferPName, int*)"/>
+            public static unsafe void GetBufferParameterivARB(BufferTarget target, BufferPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetBufferParameterivARB(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetBufferParameterivARB(BufferTarget, BufferPName, int*)"/>
-            public static unsafe int GetBufferParameterivARB(BufferTarget target, BufferPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetBufferParameterivARB(target, pname, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetBufferPointervARB(BufferTarget, BufferPointerNameARB, void**)"/>
-            public static unsafe void GetBufferPointervARB(BufferTarget target, BufferPointerNameARB pname, void** parameters)
-            {
-                GetBufferPointervARB_(target, pname, parameters);
-            }
-            /// <inheritdoc cref="GetBufferPointervARB(BufferTarget, BufferPointerNameARB, void**)"/>
-            public static unsafe void* GetBufferPointervARB(BufferTarget target, BufferPointerNameARB pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetBufferPointervARB_(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetBufferSubDataARB(BufferTarget, IntPtr, nint, void*)"/>
             public static unsafe void GetBufferSubDataARB(BufferTarget target, IntPtr offset, nint size, IntPtr data)
@@ -15485,7 +14882,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTable(ColorTableTarget, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, ref T1 table)
+            public static unsafe T1 GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 table;
+                void* table_ptr = &table;
+                {
+                    GetColorTable(target, format, type, table_ptr);
+                }
+                return table;
+            }
+            /// <inheritdoc cref="GetColorTable(ColorTableTarget, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, out T1 table)
                 where T1 : unmanaged
             {
                 fixed (void* table_ptr = &table)
@@ -15510,20 +14918,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void GetColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, ref float parameters)
+            public static unsafe float GetColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameterfv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
+            public static unsafe void GetColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetColorTableParameterfv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe float GetColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetColorTableParameterfv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetColorTableParameteriv(ColorTableTarget, ColorTableParameterPName, int*)"/>
             public static unsafe void GetColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname, Span<int> parameters)
@@ -15542,20 +14952,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameteriv(ColorTableTarget, ColorTableParameterPName, int*)"/>
-            public static unsafe void GetColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname, ref int parameters)
+            public static unsafe int GetColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameteriv(ColorTableTarget, ColorTableParameterPName, int*)"/>
+            public static unsafe void GetColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetColorTableParameteriv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameteriv(ColorTableTarget, ColorTableParameterPName, int*)"/>
-            public static unsafe int GetColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetColorTableParameteriv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCompressedTexImageARB(TextureTarget, int, void*)"/>
             public static unsafe void GetCompressedTexImageARB(TextureTarget target, int level, IntPtr img)
@@ -15582,7 +14994,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCompressedTexImageARB(TextureTarget, int, void*)"/>
-            public static unsafe void GetCompressedTexImageARB<T1>(TextureTarget target, int level, ref T1 img)
+            public static unsafe T1 GetCompressedTexImageARB<T1>(TextureTarget target, int level)
+                where T1 : unmanaged
+            {
+                T1 img;
+                void* img_ptr = &img;
+                {
+                    GetCompressedTexImageARB(target, level, img_ptr);
+                }
+                return img;
+            }
+            /// <inheritdoc cref="GetCompressedTexImageARB(TextureTarget, int, void*)"/>
+            public static unsafe void GetCompressedTexImageARB<T1>(TextureTarget target, int level, out T1 img)
                 where T1 : unmanaged
             {
                 fixed (void* img_ptr = &img)
@@ -15681,7 +15104,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionFilter(ConvolutionTarget, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, ref T1 image)
+            public static unsafe T1 GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 image;
+                void* image_ptr = &image;
+                {
+                    GetConvolutionFilter(target, format, type, image_ptr);
+                }
+                return image;
+            }
+            /// <inheritdoc cref="GetConvolutionFilter(ConvolutionTarget, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, out T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -15706,20 +15140,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionParameterfv(ConvolutionTarget, ConvolutionParameter, float*)"/>
-            public static unsafe void GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname, ref float parameters)
+            public static unsafe float GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetConvolutionParameterfv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetConvolutionParameterfv(ConvolutionTarget, ConvolutionParameter, float*)"/>
+            public static unsafe void GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetConvolutionParameterfv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterfv(ConvolutionTarget, ConvolutionParameter, float*)"/>
-            public static unsafe float GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetConvolutionParameterfv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetConvolutionParameteriv(ConvolutionTarget, ConvolutionParameter, int*)"/>
             public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, Span<int> parameters)
@@ -15738,20 +15174,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionParameteriv(ConvolutionTarget, ConvolutionParameter, int*)"/>
-            public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, ref int parameters)
+            public static unsafe int GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetConvolutionParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetConvolutionParameteriv(ConvolutionTarget, ConvolutionParameter, int*)"/>
+            public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetConvolutionParameteriv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetConvolutionParameteriv(ConvolutionTarget, ConvolutionParameter, int*)"/>
-            public static unsafe int GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetConvolutionParameteriv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetDebugMessageLogARB(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLogARB(uint count, int bufSize, Span<DebugSource> sources, Span<DebugType> types, Span<uint> ids, Span<DebugSeverity> severities, Span<int> lengths, out string messageLog)
@@ -15837,20 +15275,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
-            public static unsafe void GetDouble(GetPName target, uint index, ref double data)
+            public static unsafe double GetDouble(GetPName target, uint index)
+            {
+                double data;
+                double* data_ptr = &data;
+                {
+                    GetDoublei_v(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
+            public static unsafe void GetDouble(GetPName target, uint index, out double data)
             {
                 fixed (double* data_ptr = &data)
                 {
                     GetDoublei_v(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetDoublei_v(GetPName, uint, double*)"/>
-            public static unsafe double GetDouble(GetPName target, uint index)
-            {
-                double data_val;
-                double* data = &data_val;
-                GetDoublei_v(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
             public static unsafe void GetFloat(GetPName target, uint index, Span<float> data)
@@ -15869,20 +15309,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
-            public static unsafe void GetFloat(GetPName target, uint index, ref float data)
+            public static unsafe float GetFloat(GetPName target, uint index)
+            {
+                float data;
+                float* data_ptr = &data;
+                {
+                    GetFloati_v(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
+            public static unsafe void GetFloat(GetPName target, uint index, out float data)
             {
                 fixed (float* data_ptr = &data)
                 {
                     GetFloati_v(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFloati_v(GetPName, uint, float*)"/>
-            public static unsafe float GetFloat(GetPName target, uint index)
-            {
-                float data_val;
-                float* data = &data_val;
-                GetFloati_v(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetFragDataIndex(int, byte*)"/>
             public static unsafe int GetFragDataIndex(int program, string name)
@@ -15910,20 +15352,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, ref int parameters)
+            public static unsafe int GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe void GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFramebufferAttachmentParameteriv(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFramebufferAttachmentParameteriv(target, attachment, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, Span<int> parameters)
@@ -15942,20 +15386,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, ref int parameters)
+            public static unsafe int GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFramebufferParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe void GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferParameteriv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFramebufferParameteriv(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetFramebufferParameteri(FramebufferTarget target, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFramebufferParameteriv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogram(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetHistogram(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
@@ -15982,7 +15428,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogram(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
+            public static unsafe T1 GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 values;
+                void* values_ptr = &values;
+                {
+                    GetHistogram(target, reset, format, type, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetHistogram(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, out T1 values)
                 where T1 : unmanaged
             {
                 fixed (void* values_ptr = &values)
@@ -16007,20 +15464,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramParameterfv(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
-            public static unsafe void GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref float parameters)
+            public static unsafe float GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetHistogramParameterfv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetHistogramParameterfv(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
+            public static unsafe void GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetHistogramParameterfv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetHistogramParameterfv(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
-            public static unsafe float GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetHistogramParameterfv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogramParameteriv(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
@@ -16039,23 +15498,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramParameteriv(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref int parameters)
+            public static unsafe int GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetHistogramParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetHistogramParameteriv(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
+            public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetHistogramParameteriv(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetHistogramParameteriv(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe int GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetHistogramParameteriv(target, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetInfoLogARB(GLHandleARB, int, int*, byte*)"/>
-            public static unsafe string GetInfoLogARB(GLHandleARB obj, int maxLength, ref int length)
+            public static unsafe string GetInfoLogARB(GLHandleARB obj, int maxLength, out int length)
             {
                 string infoLog;
                 fixed (int* length_ptr = &length)
@@ -16068,7 +15529,7 @@ namespace OpenTK.Graphics.OpenGL
                 return infoLog;
             }
             /// <inheritdoc cref="GetInfoLogARB(GLHandleARB, int, int*, byte*)"/>
-            public static unsafe void GetInfoLogARB(GLHandleARB obj, int maxLength, ref int length, out string infoLog)
+            public static unsafe void GetInfoLogARB(GLHandleARB obj, int maxLength, out int length, out string infoLog)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -16095,20 +15556,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
-            public static unsafe void GetInteger64(GetPName pname, ref long data)
+            public static unsafe long GetInteger64(GetPName pname)
+            {
+                long data;
+                long* data_ptr = &data;
+                {
+                    GetInteger64v(pname, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
+            public static unsafe void GetInteger64(GetPName pname, out long data)
             {
                 fixed (long* data_ptr = &data)
                 {
                     GetInteger64v(pname, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetInteger64v(GetPName, long*)"/>
-            public static unsafe long GetInteger64(GetPName pname)
-            {
-                long data_val;
-                long* data = &data_val;
-                GetInteger64v(pname, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
             public static unsafe void GetInteger(GetPName target, uint index, Span<int> data)
@@ -16127,20 +15590,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
-            public static unsafe void GetInteger(GetPName target, uint index, ref int data)
+            public static unsafe int GetInteger(GetPName target, uint index)
+            {
+                int data;
+                int* data_ptr = &data;
+                {
+                    GetIntegeri_v(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
+            public static unsafe void GetInteger(GetPName target, uint index, out int data)
             {
                 fixed (int* data_ptr = &data)
                 {
                     GetIntegeri_v(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetIntegeri_v(GetPName, uint, int*)"/>
-            public static unsafe int GetInteger(GetPName target, uint index)
-            {
-                int data_val;
-                int* data = &data_val;
-                GetIntegeri_v(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetInternalformati64v(TextureTarget, InternalFormat, InternalFormatPName, int, long*)"/>
             public static unsafe void GetInternalformati64(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, Span<long> parameters)
@@ -16166,14 +15631,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetInternalformati64v(target, internalformat, pname, count, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetInternalformati64v(TextureTarget, InternalFormat, InternalFormatPName, int, long*)"/>
-            public static unsafe long GetInternalformati64(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetInternalformati64v(target, internalformat, pname, count, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetInternalformativ(TextureTarget, InternalFormat, InternalFormatPName, int, int*)"/>
             public static unsafe void GetInternalformati(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, Span<int> parameters)
             {
@@ -16197,14 +15654,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetInternalformativ(target, internalformat, pname, count, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetInternalformativ(TextureTarget, InternalFormat, InternalFormatPName, int, int*)"/>
-            public static unsafe int GetInternalformati(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetInternalformativ(target, internalformat, pname, count, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMinmax(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetMinmax(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
@@ -16231,7 +15680,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmax(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
+            public static unsafe T1 GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 values;
+                void* values_ptr = &values;
+                {
+                    GetMinmax(target, reset, format, type, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetMinmax(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, out T1 values)
                 where T1 : unmanaged
             {
                 fixed (void* values_ptr = &values)
@@ -16256,20 +15716,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmaxParameterfv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
-            public static unsafe void GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref float parameters)
+            public static unsafe float GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMinmaxParameterfv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMinmaxParameterfv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
+            public static unsafe void GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMinmaxParameterfv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMinmaxParameterfv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
-            public static unsafe float GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMinmaxParameterfv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMinmaxParameteriv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
             public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, Span<int> parameters)
@@ -16288,20 +15750,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmaxParameteriv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
-            public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref int parameters)
+            public static unsafe int GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMinmaxParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMinmaxParameteriv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
+            public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMinmaxParameteriv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMinmaxParameteriv(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
-            public static unsafe int GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMinmaxParameteriv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
             public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
@@ -16320,20 +15784,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
-            public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, ref float val)
+            public static unsafe float GetMultisamplef(GetMultisamplePNameNV pname, uint index)
+            {
+                float val;
+                float* val_ptr = &val;
+                {
+                    GetMultisamplefv(pname, index, val_ptr);
+                }
+                return val;
+            }
+            /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
+            public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, out float val)
             {
                 fixed (float* val_ptr = &val)
                 {
                     GetMultisamplefv(pname, index, val_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultisamplefv(GetMultisamplePNameNV, uint, float*)"/>
-            public static unsafe float GetMultisamplef(GetMultisamplePNameNV pname, uint index)
-            {
-                float val_val;
-                float* val = &val_val;
-                GetMultisamplefv(pname, index, val);
-                return val_val;
             }
             /// <inheritdoc cref="GetNamedBufferParameteri64v(int, BufferPName, long*)"/>
             public static unsafe void GetNamedBufferParameteri64(int buffer, BufferPName pname, Span<long> parameters)
@@ -16359,14 +15825,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedBufferParameteri64v(buffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedBufferParameteri64v(int, BufferPName, long*)"/>
-            public static unsafe long GetNamedBufferParameteri64(int buffer, BufferPName pname)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetNamedBufferParameteri64v(buffer, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetNamedBufferParameteriv(int, BufferPName, int*)"/>
             public static unsafe void GetNamedBufferParameteri(int buffer, BufferPName pname, Span<int> parameters)
             {
@@ -16391,26 +15849,10 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedBufferParameteriv(buffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedBufferParameteriv(int, BufferPName, int*)"/>
-            public static unsafe int GetNamedBufferParameteri(int buffer, BufferPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedBufferParameteriv(buffer, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetNamedBufferPointerv(int, BufferPointerNameARB, void**)"/>
             public static unsafe void GetNamedBufferPointer(int buffer, BufferPointerNameARB pname, void** parameters)
             {
                 GetNamedBufferPointerv(buffer, pname, parameters);
-            }
-            /// <inheritdoc cref="GetNamedBufferPointerv(int, BufferPointerNameARB, void**)"/>
-            public static unsafe void* GetNamedBufferPointer(int buffer, BufferPointerNameARB pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetNamedBufferPointerv(buffer, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetNamedBufferSubData(int, IntPtr, nint, void*)"/>
             public static unsafe void GetNamedBufferSubData(int buffer, IntPtr offset, nint size, IntPtr data)
@@ -16469,14 +15911,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedFramebufferAttachmentParameteriv(int, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetNamedFramebufferAttachmentParameteri(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedFramebufferAttachmentParameteriv(framebuffer, attachment, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetNamedFramebufferParameteriv(int, GetFramebufferParameter, int*)"/>
             public static unsafe void GetNamedFramebufferParameteri(int framebuffer, GetFramebufferParameter pname, Span<int> param)
             {
@@ -16500,14 +15934,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetNamedFramebufferParameteriv(framebuffer, pname, param_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedFramebufferParameteriv(int, GetFramebufferParameter, int*)"/>
-            public static unsafe int GetNamedFramebufferParameteri(int framebuffer, GetFramebufferParameter pname)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetNamedFramebufferParameteriv(framebuffer, pname, param);
-                return param_val;
             }
             /// <inheritdoc cref="GetNamedRenderbufferParameteriv(int, RenderbufferParameterName, int*)"/>
             public static unsafe void GetNamedRenderbufferParameteri(int renderbuffer, RenderbufferParameterName pname, Span<int> parameters)
@@ -16533,16 +15959,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedRenderbufferParameteriv(renderbuffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedRenderbufferParameteriv(int, RenderbufferParameterName, int*)"/>
-            public static unsafe int GetNamedRenderbufferParameteri(int renderbuffer, RenderbufferParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedRenderbufferParameteriv(renderbuffer, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetNamedStringARB(int, byte*, int, int*, byte*)"/>
-            public static unsafe string GetNamedStringARB(int namelen, string name, int bufSize, ref int stringlen)
+            public static unsafe string GetNamedStringARB(int namelen, string name, int bufSize, out int stringlen)
             {
                 string str;
                 fixed (int* stringlen_ptr = &stringlen)
@@ -16557,7 +15975,7 @@ namespace OpenTK.Graphics.OpenGL
                 return str;
             }
             /// <inheritdoc cref="GetNamedStringARB(int, byte*, int, int*, byte*)"/>
-            public static unsafe void GetNamedStringARB(int namelen, string name, int bufSize, ref int stringlen, out string str)
+            public static unsafe void GetNamedStringARB(int namelen, string name, int bufSize, out int stringlen, out string str)
             {
                 fixed (int* stringlen_ptr = &stringlen)
                 {
@@ -16590,7 +16008,19 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedStringivARB(int, byte*, All, int*)"/>
-            public static unsafe void GetNamedStringivARB(int namelen, string name, All pname, ref int parameters)
+            public static unsafe int GetNamedStringivARB(int namelen, string name, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    byte* name_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(name);
+                    GetNamedStringivARB(namelen, name_ptr, pname, parameters_ptr);
+                    Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedStringivARB(int, byte*, All, int*)"/>
+            public static unsafe void GetNamedStringivARB(int namelen, string name, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -16598,16 +16028,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedStringivARB(namelen, name_ptr, pname, parameters_ptr);
                     Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedStringivARB(int, byte*, All, int*)"/>
-            public static unsafe int GetNamedStringivARB(int namelen, string name, All pname)
-            {
-                int parameters_val;
-                byte* name_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(name);
-                int* parameters = &parameters_val;
-                GetNamedStringivARB(namelen, name_ptr, pname, parameters);
-                Marshal.FreeCoTaskMem((IntPtr)name_ptr);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetnColorTableARB(ColorTableTarget, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void GetnColorTableARB(ColorTableTarget target, PixelFormat format, PixelType type, int bufSize, IntPtr table)
@@ -16765,14 +16185,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnMapdvARB(target, query, bufSize, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnMapdvARB(MapTarget, MapQuery, int, double*)"/>
-            public static unsafe double GetnMapdvARB(MapTarget target, MapQuery query, int bufSize)
-            {
-                double v_val;
-                double* v = &v_val;
-                GetnMapdvARB(target, query, bufSize, v);
-                return v_val;
-            }
             /// <inheritdoc cref="GetnMapfvARB(MapTarget, MapQuery, int, float*)"/>
             public static unsafe void GetnMapfvARB(MapTarget target, MapQuery query, int bufSize, Span<float> v)
             {
@@ -16797,14 +16209,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnMapfvARB(target, query, bufSize, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnMapfvARB(MapTarget, MapQuery, int, float*)"/>
-            public static unsafe float GetnMapfvARB(MapTarget target, MapQuery query, int bufSize)
-            {
-                float v_val;
-                float* v = &v_val;
-                GetnMapfvARB(target, query, bufSize, v);
-                return v_val;
-            }
             /// <inheritdoc cref="GetnMapivARB(MapTarget, MapQuery, int, int*)"/>
             public static unsafe void GetnMapivARB(MapTarget target, MapQuery query, int bufSize, Span<int> v)
             {
@@ -16828,14 +16232,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnMapivARB(target, query, bufSize, v_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnMapivARB(MapTarget, MapQuery, int, int*)"/>
-            public static unsafe int GetnMapivARB(MapTarget target, MapQuery query, int bufSize)
-            {
-                int v_val;
-                int* v = &v_val;
-                GetnMapivARB(target, query, bufSize, v);
-                return v_val;
             }
             /// <inheritdoc cref="GetnMinmaxARB(MinmaxTargetEXT, bool, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void GetnMinmaxARB(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, int bufSize, IntPtr values)
@@ -16894,14 +16290,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnPixelMapfvARB(map, bufSize, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnPixelMapfvARB(PixelMap, int, float*)"/>
-            public static unsafe float GetnPixelMapfvARB(PixelMap map, int bufSize)
-            {
-                float values_val;
-                float* values = &values_val;
-                GetnPixelMapfvARB(map, bufSize, values);
-                return values_val;
-            }
             /// <inheritdoc cref="GetnPixelMapuivARB(PixelMap, int, uint*)"/>
             public static unsafe void GetnPixelMapuivARB(PixelMap map, int bufSize, Span<uint> values)
             {
@@ -16925,14 +16313,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnPixelMapuivARB(map, bufSize, values_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnPixelMapuivARB(PixelMap, int, uint*)"/>
-            public static unsafe uint GetnPixelMapuivARB(PixelMap map, int bufSize)
-            {
-                uint values_val;
-                uint* values = &values_val;
-                GetnPixelMapuivARB(map, bufSize, values);
-                return values_val;
             }
             /// <inheritdoc cref="GetnPixelMapusvARB(PixelMap, int, ushort*)"/>
             public static unsafe void GetnPixelMapusvARB(PixelMap map, int bufSize, Span<ushort> values)
@@ -16958,14 +16338,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnPixelMapusvARB(map, bufSize, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnPixelMapusvARB(PixelMap, int, ushort*)"/>
-            public static unsafe ushort GetnPixelMapusvARB(PixelMap map, int bufSize)
-            {
-                ushort values_val;
-                ushort* values = &values_val;
-                GetnPixelMapusvARB(map, bufSize, values);
-                return values_val;
-            }
             /// <inheritdoc cref="GetnPolygonStippleARB(int, byte*)"/>
             public static unsafe void GetnPolygonStippleARB(int bufSize, Span<byte> pattern)
             {
@@ -16989,14 +16361,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnPolygonStippleARB(bufSize, pattern_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnPolygonStippleARB(int, byte*)"/>
-            public static unsafe byte GetnPolygonStippleARB(int bufSize)
-            {
-                byte pattern_val;
-                byte* pattern = &pattern_val;
-                GetnPolygonStippleARB(bufSize, pattern);
-                return pattern_val;
             }
             /// <inheritdoc cref="GetnSeparableFilterARB(SeparableTargetEXT, PixelFormat, PixelType, int, void*, int, void*, void*)"/>
             public static unsafe void GetnSeparableFilterARB(SeparableTargetEXT target, PixelFormat format, PixelType type, int rowBufSize, IntPtr row, int columnBufSize, IntPtr column, IntPtr span)
@@ -17110,14 +16474,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformdvARB(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformdvARB(int, int, int, double*)"/>
-            public static unsafe double GetnUniformdvARB(int program, int location, int bufSize)
-            {
-                double parameters_val;
-                double* parameters = &parameters_val;
-                GetnUniformdvARB(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformfvARB(int, int, int, float*)"/>
             public static unsafe void GetnUniformfvARB(int program, int location, int bufSize, Span<float> parameters)
             {
@@ -17141,14 +16497,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnUniformfvARB(program, location, bufSize, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnUniformfvARB(int, int, int, float*)"/>
-            public static unsafe float GetnUniformfvARB(int program, int location, int bufSize)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetnUniformfvARB(program, location, bufSize, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetnUniformi64vARB(int, int, int, long*)"/>
             public static unsafe void GetnUniformi64vARB(int program, int location, int bufSize, Span<long> parameters)
@@ -17174,14 +16522,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformi64vARB(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformi64vARB(int, int, int, long*)"/>
-            public static unsafe long GetnUniformi64vARB(int program, int location, int bufSize)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetnUniformi64vARB(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformivARB(int, int, int, int*)"/>
             public static unsafe void GetnUniformivARB(int program, int location, int bufSize, Span<int> parameters)
             {
@@ -17205,14 +16545,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnUniformivARB(program, location, bufSize, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnUniformivARB(int, int, int, int*)"/>
-            public static unsafe int GetnUniformivARB(int program, int location, int bufSize)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetnUniformivARB(program, location, bufSize, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetnUniformui64vARB(int, int, int, ulong*)"/>
             public static unsafe void GetnUniformui64vARB(int program, int location, int bufSize, Span<ulong> parameters)
@@ -17238,14 +16570,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformui64vARB(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformui64vARB(int, int, int, ulong*)"/>
-            public static unsafe ulong GetnUniformui64vARB(int program, int location, int bufSize)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetnUniformui64vARB(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformuivARB(int, int, int, uint*)"/>
             public static unsafe void GetnUniformuivARB(int program, int location, int bufSize, Span<uint> parameters)
             {
@@ -17270,14 +16594,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformuivARB(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformuivARB(int, int, int, uint*)"/>
-            public static unsafe uint GetnUniformuivARB(int program, int location, int bufSize)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetnUniformuivARB(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetObjectParameterfvARB(GLHandleARB, All, float*)"/>
             public static unsafe void GetObjectParameterfvARB(GLHandleARB obj, All pname, Span<float> parameters)
             {
@@ -17295,20 +16611,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectParameterfvARB(GLHandleARB, All, float*)"/>
-            public static unsafe void GetObjectParameterfvARB(GLHandleARB obj, All pname, ref float parameters)
+            public static unsafe float GetObjectParameterfvARB(GLHandleARB obj, All pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetObjectParameterfvARB(obj, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetObjectParameterfvARB(GLHandleARB, All, float*)"/>
+            public static unsafe void GetObjectParameterfvARB(GLHandleARB obj, All pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetObjectParameterfvARB(obj, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetObjectParameterfvARB(GLHandleARB, All, float*)"/>
-            public static unsafe float GetObjectParameterfvARB(GLHandleARB obj, All pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetObjectParameterfvARB(obj, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetObjectParameterivARB(GLHandleARB, All, int*)"/>
             public static unsafe void GetObjectParameterivARB(GLHandleARB obj, All pname, Span<int> parameters)
@@ -17327,23 +16645,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectParameterivARB(GLHandleARB, All, int*)"/>
-            public static unsafe void GetObjectParameterivARB(GLHandleARB obj, All pname, ref int parameters)
+            public static unsafe int GetObjectParameterivARB(GLHandleARB obj, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetObjectParameterivARB(obj, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetObjectParameterivARB(GLHandleARB, All, int*)"/>
+            public static unsafe void GetObjectParameterivARB(GLHandleARB obj, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetObjectParameterivARB(obj, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectParameterivARB(GLHandleARB, All, int*)"/>
-            public static unsafe int GetObjectParameterivARB(GLHandleARB obj, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetObjectParameterivARB(obj, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-            public static unsafe void GetProgramBinary(int program, int bufSize, ref int length, ref All binaryFormat, IntPtr binary)
+            public static unsafe void GetProgramBinary(int program, int bufSize, out int length, out All binaryFormat, IntPtr binary)
             {
                 fixed (int* length_ptr = &length)
                 fixed (All* binaryFormat_ptr = &binaryFormat)
@@ -17353,7 +16673,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, Span<T1> binary)
+            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, Span<T1> binary)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -17366,7 +16686,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, T1[] binary)
+            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, T1[] binary)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -17379,7 +16699,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramBinary(int, int, int*, All*, void*)"/>
-            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, ref int length, ref All binaryFormat, ref T1 binary)
+            public static unsafe void GetProgramBinary<T1>(int program, int bufSize, out int length, out All binaryFormat, ref T1 binary)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -17454,36 +16774,40 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
-            public static unsafe void GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname, ref int parameters)
+            public static unsafe int GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetProgramInterfaceiv(program, programInterface, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
+            public static unsafe void GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetProgramInterfaceiv(program, programInterface, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetProgramInterfaceiv(int, ProgramInterface, ProgramInterfacePName, int*)"/>
-            public static unsafe int GetProgramInterfacei(int program, ProgramInterface programInterface, ProgramInterfacePName pname)
+            /// <inheritdoc cref="GetProgramivARB(ProgramTarget, ProgramProperty, int*)"/>
+            public static unsafe int GetProgramivARB(ProgramTarget target, ProgramProperty pname)
             {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetProgramInterfaceiv(program, programInterface, pname, parameters);
-                return parameters_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetProgramivARB(target, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetProgramivARB(ProgramTarget, ProgramProperty, int*)"/>
-            public static unsafe void GetProgramivARB(ProgramTarget target, ProgramProperty pname, ref int parameters)
+            public static unsafe void GetProgramivARB(ProgramTarget target, ProgramProperty pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetProgramivARB(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramivARB(ProgramTarget, ProgramProperty, int*)"/>
-            public static unsafe int GetProgramivARB(ProgramTarget target, ProgramProperty pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetProgramivARB(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetProgramLocalParameterdvARB(ProgramTarget, uint, double*)"/>
             public static unsafe void GetProgramLocalParameterdvARB(ProgramTarget target, uint index, Span<double> parameters)
@@ -17534,7 +16858,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramPipelineInfoLog(int, int, int*, byte*)"/>
-            public static unsafe string GetProgramPipelineInfoLog(int pipeline, int bufSize, ref int length)
+            public static unsafe string GetProgramPipelineInfoLog(int pipeline, int bufSize, out int length)
             {
                 string infoLog;
                 fixed (int* length_ptr = &length)
@@ -17547,7 +16871,7 @@ namespace OpenTK.Graphics.OpenGL
                 return infoLog;
             }
             /// <inheritdoc cref="GetProgramPipelineInfoLog(int, int, int*, byte*)"/>
-            public static unsafe void GetProgramPipelineInfoLog(int pipeline, int bufSize, ref int length, out string infoLog)
+            public static unsafe void GetProgramPipelineInfoLog(int pipeline, int bufSize, out int length, out string infoLog)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -17574,20 +16898,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
-            public static unsafe void GetProgramPipelinei(int pipeline, PipelineParameterName pname, ref int parameters)
+            public static unsafe int GetProgramPipelinei(int pipeline, PipelineParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetProgramPipelineiv(pipeline, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
+            public static unsafe void GetProgramPipelinei(int pipeline, PipelineParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetProgramPipelineiv(pipeline, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramPipelineiv(int, PipelineParameterName, int*)"/>
-            public static unsafe int GetProgramPipelinei(int pipeline, PipelineParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetProgramPipelineiv(pipeline, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetProgramResourceIndex(int, ProgramInterface, byte*)"/>
             public static unsafe uint GetProgramResourceIndex(int program, ProgramInterface programInterface, string name)
@@ -17599,7 +16925,7 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, ref int length, Span<int> parameters)
+            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, out int length, Span<int> parameters)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -17613,7 +16939,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, ref int length, int[] parameters)
+            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, out int length, int[] parameters)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -17627,7 +16953,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, ref int length, ref int parameters)
+            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, out int length, ref int parameters)
             {
                 fixed (ProgramResourceProperty* props_ptr = &props)
                 fixed (int* length_ptr = &length)
@@ -17635,46 +16961,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<ProgramResourceProperty> props, int count, ref int length)
-            {
-                int parameters_val;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (ProgramResourceProperty* props_ptr = props)
-                    {
-                        int* parameters = &parameters_val;
-                        GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                    }
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty[] props, int count, ref int length)
-            {
-                int parameters_val;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (ProgramResourceProperty* props_ptr = props)
-                    {
-                        int* parameters = &parameters_val;
-                        GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                    }
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe int GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, ref int length)
-            {
-                int parameters_val;
-                fixed (ProgramResourceProperty* props_ptr = &props)
-                fixed (int* length_ptr = &length)
-                {
-                    int* parameters = &parameters_val;
-                    GetProgramResourceiv(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                }
-                return parameters_val;
             }
             /// <inheritdoc cref="GetProgramResourceLocation(int, ProgramInterface, byte*)"/>
             public static unsafe int GetProgramResourceLocation(int program, ProgramInterface programInterface, string name)
@@ -17695,7 +16981,7 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetProgramResourceName(int, ProgramInterface, uint, int, int*, byte*)"/>
-            public static unsafe string GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, ref int length)
+            public static unsafe string GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, out int length)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -17708,7 +16994,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetProgramResourceName(int, ProgramInterface, uint, int, int*, byte*)"/>
-            public static unsafe void GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, ref int length, out string name)
+            public static unsafe void GetProgramResourceName(int program, ProgramInterface programInterface, uint index, int bufSize, out int length, out string name)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -17719,20 +17005,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
-            public static unsafe void GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname, ref int values)
+            public static unsafe int GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname)
+            {
+                int values;
+                int* values_ptr = &values;
+                {
+                    GetProgramStageiv(program, shadertype, pname, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
+            public static unsafe void GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname, out int values)
             {
                 fixed (int* values_ptr = &values)
                 {
                     GetProgramStageiv(program, shadertype, pname, values_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramStageiv(int, ShaderType, ProgramStagePName, int*)"/>
-            public static unsafe int GetProgramStagei(int program, ShaderType shadertype, ProgramStagePName pname)
-            {
-                int values_val;
-                int* values = &values_val;
-                GetProgramStageiv(program, shadertype, pname, values);
-                return values_val;
             }
             /// <inheritdoc cref="GetProgramStringARB(ProgramTarget, ProgramStringProperty, void*)"/>
             public static unsafe void GetProgramStringARB(ProgramTarget target, ProgramStringProperty pname, IntPtr str)
@@ -17759,7 +17047,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramStringARB(ProgramTarget, ProgramStringProperty, void*)"/>
-            public static unsafe void GetProgramStringARB<T1>(ProgramTarget target, ProgramStringProperty pname, ref T1 str)
+            public static unsafe T1 GetProgramStringARB<T1>(ProgramTarget target, ProgramStringProperty pname)
+                where T1 : unmanaged
+            {
+                T1 str;
+                void* str_ptr = &str;
+                {
+                    GetProgramStringARB(target, pname, str_ptr);
+                }
+                return str;
+            }
+            /// <inheritdoc cref="GetProgramStringARB(ProgramTarget, ProgramStringProperty, void*)"/>
+            public static unsafe void GetProgramStringARB<T1>(ProgramTarget target, ProgramStringProperty pname, out T1 str)
                 where T1 : unmanaged
             {
                 fixed (void* str_ptr = &str)
@@ -17804,20 +17103,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
-            public static unsafe void GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname, ref int parameters)
+            public static unsafe int GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetQueryIndexediv(target, index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
+            public static unsafe void GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetQueryIndexediv(target, index, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryIndexediv(QueryTarget, uint, QueryParameterName, int*)"/>
-            public static unsafe int GetQueryIndexedi(QueryTarget target, uint index, QueryParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetQueryIndexediv(target, index, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryivARB(QueryTarget, QueryParameterName, int*)"/>
             public static unsafe void GetQueryivARB(QueryTarget target, QueryParameterName pname, Span<int> parameters)
@@ -17836,20 +17137,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryivARB(QueryTarget, QueryParameterName, int*)"/>
-            public static unsafe void GetQueryivARB(QueryTarget target, QueryParameterName pname, ref int parameters)
+            public static unsafe int GetQueryivARB(QueryTarget target, QueryParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetQueryivARB(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryivARB(QueryTarget, QueryParameterName, int*)"/>
+            public static unsafe void GetQueryivARB(QueryTarget target, QueryParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetQueryivARB(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryivARB(QueryTarget, QueryParameterName, int*)"/>
-            public static unsafe int GetQueryivARB(QueryTarget target, QueryParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetQueryivARB(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
             public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, Span<long> parameters)
@@ -17868,20 +17171,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
-            public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, ref long parameters)
+            public static unsafe long GetQueryObjecti64(int id, QueryObjectParameterName pname)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetQueryObjecti64v(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
+            public static unsafe void GetQueryObjecti64(int id, QueryObjectParameterName pname, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
                     GetQueryObjecti64v(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjecti64v(int, QueryObjectParameterName, long*)"/>
-            public static unsafe long GetQueryObjecti64(int id, QueryObjectParameterName pname)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetQueryObjecti64v(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryObjectivARB(int, QueryObjectParameterName, int*)"/>
             public static unsafe void GetQueryObjectivARB(int id, QueryObjectParameterName pname, Span<int> parameters)
@@ -17900,20 +17205,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjectivARB(int, QueryObjectParameterName, int*)"/>
-            public static unsafe void GetQueryObjectivARB(int id, QueryObjectParameterName pname, ref int parameters)
+            public static unsafe int GetQueryObjectivARB(int id, QueryObjectParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetQueryObjectivARB(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjectivARB(int, QueryObjectParameterName, int*)"/>
+            public static unsafe void GetQueryObjectivARB(int id, QueryObjectParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetQueryObjectivARB(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjectivARB(int, QueryObjectParameterName, int*)"/>
-            public static unsafe int GetQueryObjectivARB(int id, QueryObjectParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetQueryObjectivARB(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
             public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, Span<ulong> parameters)
@@ -17932,20 +17239,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
-            public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, ref ulong parameters)
+            public static unsafe ulong GetQueryObjectui64(int id, QueryObjectParameterName pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetQueryObjectui64v(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
+            public static unsafe void GetQueryObjectui64(int id, QueryObjectParameterName pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
                     GetQueryObjectui64v(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjectui64v(int, QueryObjectParameterName, ulong*)"/>
-            public static unsafe ulong GetQueryObjectui64(int id, QueryObjectParameterName pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetQueryObjectui64v(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryObjectuivARB(int, QueryObjectParameterName, uint*)"/>
             public static unsafe void GetQueryObjectuivARB(int id, QueryObjectParameterName pname, Span<uint> parameters)
@@ -17964,20 +17273,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjectuivARB(int, QueryObjectParameterName, uint*)"/>
-            public static unsafe void GetQueryObjectuivARB(int id, QueryObjectParameterName pname, ref uint parameters)
+            public static unsafe uint GetQueryObjectuivARB(int id, QueryObjectParameterName pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetQueryObjectuivARB(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjectuivARB(int, QueryObjectParameterName, uint*)"/>
+            public static unsafe void GetQueryObjectuivARB(int id, QueryObjectParameterName pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetQueryObjectuivARB(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjectuivARB(int, QueryObjectParameterName, uint*)"/>
-            public static unsafe uint GetQueryObjectuivARB(int id, QueryObjectParameterName pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetQueryObjectuivARB(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
@@ -17996,20 +17307,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, ref int parameters)
+            public static unsafe int GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetRenderbufferParameteriv(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
+            public static unsafe void GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetRenderbufferParameteriv(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetRenderbufferParameteriv(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe int GetRenderbufferParameteri(RenderbufferTarget target, RenderbufferParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetRenderbufferParameteriv(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
             public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, Span<float> parameters)
@@ -18028,20 +17341,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
-            public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, ref float parameters)
+            public static unsafe float GetSamplerParameterf(int sampler, SamplerParameterF pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameterfv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetSamplerParameterfv(sampler, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
-            public static unsafe float GetSamplerParameterf(int sampler, SamplerParameterF pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetSamplerParameterfv(sampler, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
             public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, Span<int> parameters)
@@ -18060,20 +17375,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
-            public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, ref int parameters)
+            public static unsafe int GetSamplerParameterIi(int sampler, SamplerParameterI pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameterIiv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
+            public static unsafe void GetSamplerParameterIi(int sampler, SamplerParameterI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetSamplerParameterIiv(sampler, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSamplerParameterIiv(int, SamplerParameterI, int*)"/>
-            public static unsafe int GetSamplerParameterIi(int sampler, SamplerParameterI pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetSamplerParameterIiv(sampler, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
             public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, Span<uint> parameters)
@@ -18092,20 +17409,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-            public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, ref uint parameters)
+            public static unsafe uint GetSamplerParameterIui(int sampler, SamplerParameterI pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameterIuiv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
+            public static unsafe void GetSamplerParameterIui(int sampler, SamplerParameterI pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetSamplerParameterIuiv(sampler, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-            public static unsafe uint GetSamplerParameterIui(int sampler, SamplerParameterI pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetSamplerParameterIuiv(sampler, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
             public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, Span<int> parameters)
@@ -18124,20 +17443,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
-            public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, ref int parameters)
+            public static unsafe int GetSamplerParameteri(int sampler, SamplerParameterI pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameteriv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetSamplerParameteriv(sampler, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
-            public static unsafe int GetSamplerParameteri(int sampler, SamplerParameterI pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetSamplerParameteriv(sampler, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSeparableFilter(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
             public static unsafe void GetSeparableFilter(SeparableTargetEXT target, PixelFormat format, PixelType type, IntPtr row, IntPtr column, IntPtr span)
@@ -18182,7 +17503,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSeparableFilter(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
-            public static unsafe void GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, ref T1 row, ref T2 column, ref T3 span)
+            public static unsafe T3 GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, out T1 row, out T2 column)
+                where T1 : unmanaged
+                where T2 : unmanaged
+                where T3 : unmanaged
+            {
+                T3 span;
+                void* span_ptr = &span;
+                fixed (void* row_ptr = &row)
+                fixed (void* column_ptr = &column)
+                {
+                    GetSeparableFilter(target, format, type, row_ptr, column_ptr, span_ptr);
+                }
+                return span;
+            }
+            /// <inheritdoc cref="GetSeparableFilter(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
+            public static unsafe void GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, out T1 row, out T2 column, out T3 span)
                 where T1 : unmanaged
                 where T2 : unmanaged
                 where T3 : unmanaged
@@ -18195,7 +17531,20 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range, ref int precision)
+            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range)
+            {
+                int precision;
+                int* precision_ptr = &precision;
+                {
+                    fixed (int* range_ptr = range)
+                    {
+                        GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+                    }
+                }
+                return precision;
+            }
+            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range, out int precision)
             {
                 fixed (int* precision_ptr = &precision)
                 {
@@ -18206,7 +17555,20 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range, ref int precision)
+            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range)
+            {
+                int precision;
+                int* precision_ptr = &precision;
+                {
+                    fixed (int* range_ptr = range)
+                    {
+                        GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+                    }
+                }
+                return precision;
+            }
+            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range, out int precision)
             {
                 fixed (int* precision_ptr = &precision)
                 {
@@ -18217,7 +17579,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range, ref int precision)
+            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range)
+            {
+                int precision;
+                int* precision_ptr = &precision;
+                fixed (int* range_ptr = &range)
+                {
+                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
+                }
+                return precision;
+            }
+            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
+            public static unsafe void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range, out int precision)
             {
                 fixed (int* range_ptr = &range)
                 fixed (int* precision_ptr = &precision)
@@ -18225,41 +17598,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision_ptr);
                 }
             }
-            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, Span<int> range)
-            {
-                int precision_val;
-                fixed (int* range_ptr = range)
-                {
-                    int* precision = &precision_val;
-                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-                }
-                return precision_val;
-            }
-            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int[] range)
-            {
-                int precision_val;
-                fixed (int* range_ptr = range)
-                {
-                    int* precision = &precision_val;
-                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-                }
-                return precision_val;
-            }
-            /// <inheritdoc cref="GetShaderPrecisionFormat(ShaderType, PrecisionType, int*, int*)"/>
-            public static unsafe int GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, ref int range)
-            {
-                int precision_val;
-                fixed (int* range_ptr = &range)
-                {
-                    int* precision = &precision_val;
-                    GetShaderPrecisionFormat(shadertype, precisiontype, range_ptr, precision);
-                }
-                return precision_val;
-            }
             /// <inheritdoc cref="GetShaderSourceARB(GLHandleARB, int, int*, byte*)"/>
-            public static unsafe string GetShaderSourceARB(GLHandleARB obj, int maxLength, ref int length)
+            public static unsafe string GetShaderSourceARB(GLHandleARB obj, int maxLength, out int length)
             {
                 string source;
                 fixed (int* length_ptr = &length)
@@ -18272,7 +17612,7 @@ namespace OpenTK.Graphics.OpenGL
                 return source;
             }
             /// <inheritdoc cref="GetShaderSourceARB(GLHandleARB, int, int*, byte*)"/>
-            public static unsafe void GetShaderSourceARB(GLHandleARB obj, int maxLength, ref int length, out string source)
+            public static unsafe void GetShaderSourceARB(GLHandleARB obj, int maxLength, out int length, out string source)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -18301,7 +17641,7 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, Span<int> values)
+            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, Span<int> values)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -18312,7 +17652,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, int[] values)
+            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, int[] values)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -18323,24 +17663,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length, ref int values)
+            public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, int count, out int length, ref int values)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* values_ptr = &values)
                 {
                     GetSynciv(sync, pname, count, length_ptr, values_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSynciv(GLSync, SyncParameterName, int, int*, int*)"/>
-            public static unsafe int GetSynci(GLSync sync, SyncParameterName pname, int count, ref int length)
-            {
-                int values_val;
-                fixed (int* length_ptr = &length)
-                {
-                    int* values = &values_val;
-                    GetSynciv(sync, pname, count, length_ptr, values);
-                }
-                return values_val;
             }
             /// <inheritdoc cref="GetTextureImage(int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void GetTextureImage(int texture, int level, PixelFormat format, PixelType type, int bufSize, IntPtr pixels)
@@ -18399,14 +17728,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetTextureLevelParameterfv(texture, level, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTextureLevelParameterfv(int, int, GetTextureParameter, float*)"/>
-            public static unsafe float GetTextureLevelParameterf(int texture, int level, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetTextureLevelParameterfv(texture, level, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetTextureLevelParameteriv(int, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureLevelParameteri(int texture, int level, GetTextureParameter pname, Span<int> parameters)
             {
@@ -18430,14 +17751,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetTextureLevelParameteriv(texture, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureLevelParameteriv(int, int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureLevelParameteri(int texture, int level, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureLevelParameteriv(texture, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterfv(int, GetTextureParameter, float*)"/>
             public static unsafe void GetTextureParameterf(int texture, GetTextureParameter pname, Span<float> parameters)
@@ -18463,14 +17776,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetTextureParameterfv(texture, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTextureParameterfv(int, GetTextureParameter, float*)"/>
-            public static unsafe float GetTextureParameterf(int texture, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetTextureParameterfv(texture, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetTextureParameterIiv(int, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureParameterIi(int texture, GetTextureParameter pname, Span<int> parameters)
             {
@@ -18494,14 +17799,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetTextureParameterIiv(texture, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureParameterIiv(int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureParameterIi(int texture, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureParameterIiv(texture, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterIuiv(int, GetTextureParameter, uint*)"/>
             public static unsafe void GetTextureParameterIui(int texture, GetTextureParameter pname, Span<uint> parameters)
@@ -18527,14 +17824,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetTextureParameterIuiv(texture, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTextureParameterIuiv(int, GetTextureParameter, uint*)"/>
-            public static unsafe uint GetTextureParameterIui(int texture, GetTextureParameter pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetTextureParameterIuiv(texture, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetTextureParameteriv(int, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureParameteri(int texture, GetTextureParameter pname, Span<int> parameters)
             {
@@ -18558,14 +17847,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetTextureParameteriv(texture, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureParameteriv(int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureParameteri(int texture, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureParameteriv(texture, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureSubImage(int, int, int, int, int, int, int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void GetTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, int bufSize, IntPtr pixels)
@@ -18624,14 +17905,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetTransformFeedbacki_v(xfb, pname, index, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTransformFeedbacki_v(int, TransformFeedbackPName, uint, int*)"/>
-            public static unsafe int GetTransformFeedback(int xfb, TransformFeedbackPName pname, uint index)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetTransformFeedbacki_v(xfb, pname, index, param);
-                return param_val;
-            }
             /// <inheritdoc cref="GetTransformFeedbacki64_v(int, TransformFeedbackPName, uint, long*)"/>
             public static unsafe void GetTransformFeedbacki64_(int xfb, TransformFeedbackPName pname, uint index, Span<long> param)
             {
@@ -18656,14 +17929,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetTransformFeedbacki64_v(xfb, pname, index, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTransformFeedbacki64_v(int, TransformFeedbackPName, uint, long*)"/>
-            public static unsafe long GetTransformFeedbacki64_(int xfb, TransformFeedbackPName pname, uint index)
-            {
-                long param_val;
-                long* param = &param_val;
-                GetTransformFeedbacki64_v(xfb, pname, index, param);
-                return param_val;
-            }
             /// <inheritdoc cref="GetTransformFeedbackiv(int, TransformFeedbackPName, int*)"/>
             public static unsafe void GetTransformFeedbacki(int xfb, TransformFeedbackPName pname, Span<int> param)
             {
@@ -18687,14 +17952,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetTransformFeedbackiv(xfb, pname, param_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTransformFeedbackiv(int, TransformFeedbackPName, int*)"/>
-            public static unsafe int GetTransformFeedbacki(int xfb, TransformFeedbackPName pname)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetTransformFeedbackiv(xfb, pname, param);
-                return param_val;
             }
             /// <inheritdoc cref="GetUniformBlockIndex(int, byte*)"/>
             public static unsafe uint GetUniformBlockIndex(int program, string uniformBlockName)
@@ -18722,7 +17979,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformdv(int, int, double*)"/>
-            public static unsafe void GetUniformd(int program, int location, ref double parameters)
+            public static unsafe double GetUniformd(int program, int location)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetUniformdv(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformdv(int, int, double*)"/>
+            public static unsafe void GetUniformd(int program, int location, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -18746,7 +18013,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformfvARB(GLHandleARB, int, float*)"/>
-            public static unsafe void GetUniformfvARB(GLHandleARB programObj, int location, ref float parameters)
+            public static unsafe float GetUniformfvARB(GLHandleARB programObj, int location)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetUniformfvARB(programObj, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformfvARB(GLHandleARB, int, float*)"/>
+            public static unsafe void GetUniformfvARB(GLHandleARB programObj, int location, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -18770,7 +18047,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformi64vARB(int, int, long*)"/>
-            public static unsafe void GetUniformi64vARB(int program, int location, ref long parameters)
+            public static unsafe long GetUniformi64vARB(int program, int location)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetUniformi64vARB(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformi64vARB(int, int, long*)"/>
+            public static unsafe void GetUniformi64vARB(int program, int location, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
@@ -18794,7 +18081,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformIndices(int, int, byte**, uint*)"/>
-            public static unsafe void GetUniformIndices(int program, int uniformCount, byte** uniformNames, ref uint uniformIndices)
+            public static unsafe uint GetUniformIndices(int program, int uniformCount, byte** uniformNames)
+            {
+                uint uniformIndices;
+                uint* uniformIndices_ptr = &uniformIndices;
+                {
+                    GetUniformIndices(program, uniformCount, uniformNames, uniformIndices_ptr);
+                }
+                return uniformIndices;
+            }
+            /// <inheritdoc cref="GetUniformIndices(int, int, byte**, uint*)"/>
+            public static unsafe void GetUniformIndices(int program, int uniformCount, byte** uniformNames, out uint uniformIndices)
             {
                 fixed (uint* uniformIndices_ptr = &uniformIndices)
                 {
@@ -18818,7 +18115,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformivARB(GLHandleARB, int, int*)"/>
-            public static unsafe void GetUniformivARB(GLHandleARB programObj, int location, ref int parameters)
+            public static unsafe int GetUniformivARB(GLHandleARB programObj, int location)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetUniformivARB(programObj, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformivARB(GLHandleARB, int, int*)"/>
+            public static unsafe void GetUniformivARB(GLHandleARB programObj, int location, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -18835,7 +18142,17 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetUniformSubroutineuiv(ShaderType, int, uint*)"/>
-            public static unsafe void GetUniformSubroutineui(ShaderType shadertype, int location, ref uint parameters)
+            public static unsafe uint GetUniformSubroutineui(ShaderType shadertype, int location)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetUniformSubroutineuiv(shadertype, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformSubroutineuiv(ShaderType, int, uint*)"/>
+            public static unsafe void GetUniformSubroutineui(ShaderType shadertype, int location, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -18859,7 +18176,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformui64vARB(int, int, ulong*)"/>
-            public static unsafe void GetUniformui64vARB(int program, int location, ref ulong parameters)
+            public static unsafe ulong GetUniformui64vARB(int program, int location)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetUniformui64vARB(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformui64vARB(int, int, ulong*)"/>
+            public static unsafe void GetUniformui64vARB(int program, int location, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
@@ -18890,14 +18217,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetVertexArrayIndexed64iv(vaobj, index, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVertexArrayIndexed64iv(int, uint, VertexArrayPName, long*)"/>
-            public static unsafe long GetVertexArrayIndexed64iv(int vaobj, uint index, VertexArrayPName pname)
-            {
-                long param_val;
-                long* param = &param_val;
-                GetVertexArrayIndexed64iv(vaobj, index, pname, param);
-                return param_val;
-            }
             /// <inheritdoc cref="GetVertexArrayIndexediv(int, uint, VertexArrayPName, int*)"/>
             public static unsafe void GetVertexArrayIndexedi(int vaobj, uint index, VertexArrayPName pname, Span<int> param)
             {
@@ -18922,14 +18241,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetVertexArrayIndexediv(vaobj, index, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVertexArrayIndexediv(int, uint, VertexArrayPName, int*)"/>
-            public static unsafe int GetVertexArrayIndexedi(int vaobj, uint index, VertexArrayPName pname)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetVertexArrayIndexediv(vaobj, index, pname, param);
-                return param_val;
-            }
             /// <inheritdoc cref="GetVertexArrayiv(int, VertexArrayPName, int*)"/>
             public static unsafe void GetVertexArrayi(int vaobj, VertexArrayPName pname, Span<int> param)
             {
@@ -18953,14 +18264,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetVertexArrayiv(vaobj, pname, param_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVertexArrayiv(int, VertexArrayPName, int*)"/>
-            public static unsafe int GetVertexArrayi(int vaobj, VertexArrayPName pname)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetVertexArrayiv(vaobj, pname, param);
-                return param_val;
             }
             /// <inheritdoc cref="GetVertexAttribdvARB(uint, VertexAttribPropertyARB, double*)"/>
             public static unsafe void GetVertexAttribdvARB(uint index, VertexAttribPropertyARB pname, Span<double> parameters)
@@ -19051,7 +18354,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribLdv(uint, VertexAttribEnum, double*)"/>
-            public static unsafe void GetVertexAttribLd(uint index, VertexAttribEnum pname, ref double parameters)
+            public static unsafe double GetVertexAttribLd(uint index, VertexAttribEnum pname)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribLdv(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribLdv(uint, VertexAttribEnum, double*)"/>
+            public static unsafe void GetVertexAttribLd(uint index, VertexAttribEnum pname, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -24607,68 +23920,76 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetArrayObjectfvATI(EnableCap, ArrayObjectPNameATI, float*)"/>
-            public static unsafe void GetArrayObjectfvATI(EnableCap array, ArrayObjectPNameATI pname, ref float parameters)
+            public static unsafe float GetArrayObjectfvATI(EnableCap array, ArrayObjectPNameATI pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetArrayObjectfvATI(array, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetArrayObjectfvATI(EnableCap, ArrayObjectPNameATI, float*)"/>
+            public static unsafe void GetArrayObjectfvATI(EnableCap array, ArrayObjectPNameATI pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetArrayObjectfvATI(array, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetArrayObjectfvATI(EnableCap, ArrayObjectPNameATI, float*)"/>
-            public static unsafe float GetArrayObjectfvATI(EnableCap array, ArrayObjectPNameATI pname)
+            /// <inheritdoc cref="GetArrayObjectivATI(EnableCap, ArrayObjectPNameATI, int*)"/>
+            public static unsafe int GetArrayObjectivATI(EnableCap array, ArrayObjectPNameATI pname)
             {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetArrayObjectfvATI(array, pname, parameters);
-                return parameters_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetArrayObjectivATI(array, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetArrayObjectivATI(EnableCap, ArrayObjectPNameATI, int*)"/>
-            public static unsafe void GetArrayObjectivATI(EnableCap array, ArrayObjectPNameATI pname, ref int parameters)
+            public static unsafe void GetArrayObjectivATI(EnableCap array, ArrayObjectPNameATI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetArrayObjectivATI(array, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetArrayObjectivATI(EnableCap, ArrayObjectPNameATI, int*)"/>
-            public static unsafe int GetArrayObjectivATI(EnableCap array, ArrayObjectPNameATI pname)
+            /// <inheritdoc cref="GetObjectBufferfvATI(int, ArrayObjectPNameATI, float*)"/>
+            public static unsafe float GetObjectBufferfvATI(int buffer, ArrayObjectPNameATI pname)
             {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetArrayObjectivATI(array, pname, parameters);
-                return parameters_val;
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetObjectBufferfvATI(buffer, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetObjectBufferfvATI(int, ArrayObjectPNameATI, float*)"/>
-            public static unsafe void GetObjectBufferfvATI(int buffer, ArrayObjectPNameATI pname, ref float parameters)
+            public static unsafe void GetObjectBufferfvATI(int buffer, ArrayObjectPNameATI pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetObjectBufferfvATI(buffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectBufferfvATI(int, ArrayObjectPNameATI, float*)"/>
-            public static unsafe float GetObjectBufferfvATI(int buffer, ArrayObjectPNameATI pname)
+            /// <inheritdoc cref="GetObjectBufferivATI(int, ArrayObjectPNameATI, int*)"/>
+            public static unsafe int GetObjectBufferivATI(int buffer, ArrayObjectPNameATI pname)
             {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetObjectBufferfvATI(buffer, pname, parameters);
-                return parameters_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetObjectBufferivATI(buffer, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetObjectBufferivATI(int, ArrayObjectPNameATI, int*)"/>
-            public static unsafe void GetObjectBufferivATI(int buffer, ArrayObjectPNameATI pname, ref int parameters)
+            public static unsafe void GetObjectBufferivATI(int buffer, ArrayObjectPNameATI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetObjectBufferivATI(buffer, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetObjectBufferivATI(int, ArrayObjectPNameATI, int*)"/>
-            public static unsafe int GetObjectBufferivATI(int buffer, ArrayObjectPNameATI pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetObjectBufferivATI(buffer, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTexBumpParameterfvATI(GetTexBumpParameterATI, float*)"/>
             public static unsafe void GetTexBumpParameterfvATI(GetTexBumpParameterATI pname, Span<float> param)
@@ -24687,20 +24008,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexBumpParameterfvATI(GetTexBumpParameterATI, float*)"/>
-            public static unsafe void GetTexBumpParameterfvATI(GetTexBumpParameterATI pname, ref float param)
+            public static unsafe float GetTexBumpParameterfvATI(GetTexBumpParameterATI pname)
+            {
+                float param;
+                float* param_ptr = &param;
+                {
+                    GetTexBumpParameterfvATI(pname, param_ptr);
+                }
+                return param;
+            }
+            /// <inheritdoc cref="GetTexBumpParameterfvATI(GetTexBumpParameterATI, float*)"/>
+            public static unsafe void GetTexBumpParameterfvATI(GetTexBumpParameterATI pname, out float param)
             {
                 fixed (float* param_ptr = &param)
                 {
                     GetTexBumpParameterfvATI(pname, param_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexBumpParameterfvATI(GetTexBumpParameterATI, float*)"/>
-            public static unsafe float GetTexBumpParameterfvATI(GetTexBumpParameterATI pname)
-            {
-                float param_val;
-                float* param = &param_val;
-                GetTexBumpParameterfvATI(pname, param);
-                return param_val;
             }
             /// <inheritdoc cref="GetTexBumpParameterivATI(GetTexBumpParameterATI, int*)"/>
             public static unsafe void GetTexBumpParameterivATI(GetTexBumpParameterATI pname, Span<int> param)
@@ -24719,52 +24042,58 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexBumpParameterivATI(GetTexBumpParameterATI, int*)"/>
-            public static unsafe void GetTexBumpParameterivATI(GetTexBumpParameterATI pname, ref int param)
+            public static unsafe int GetTexBumpParameterivATI(GetTexBumpParameterATI pname)
+            {
+                int param;
+                int* param_ptr = &param;
+                {
+                    GetTexBumpParameterivATI(pname, param_ptr);
+                }
+                return param;
+            }
+            /// <inheritdoc cref="GetTexBumpParameterivATI(GetTexBumpParameterATI, int*)"/>
+            public static unsafe void GetTexBumpParameterivATI(GetTexBumpParameterATI pname, out int param)
             {
                 fixed (int* param_ptr = &param)
                 {
                     GetTexBumpParameterivATI(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexBumpParameterivATI(GetTexBumpParameterATI, int*)"/>
-            public static unsafe int GetTexBumpParameterivATI(GetTexBumpParameterATI pname)
+            /// <inheritdoc cref="GetVariantArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
+            public static unsafe float GetVariantArrayObjectfvATI(uint id, ArrayObjectPNameATI pname)
             {
-                int param_val;
-                int* param = &param_val;
-                GetTexBumpParameterivATI(pname, param);
-                return param_val;
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetVariantArrayObjectfvATI(id, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetVariantArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
-            public static unsafe void GetVariantArrayObjectfvATI(uint id, ArrayObjectPNameATI pname, ref float parameters)
+            public static unsafe void GetVariantArrayObjectfvATI(uint id, ArrayObjectPNameATI pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetVariantArrayObjectfvATI(id, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVariantArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
-            public static unsafe float GetVariantArrayObjectfvATI(uint id, ArrayObjectPNameATI pname)
+            /// <inheritdoc cref="GetVariantArrayObjectivATI(uint, ArrayObjectPNameATI, int*)"/>
+            public static unsafe int GetVariantArrayObjectivATI(uint id, ArrayObjectPNameATI pname)
             {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetVariantArrayObjectfvATI(id, pname, parameters);
-                return parameters_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVariantArrayObjectivATI(id, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetVariantArrayObjectivATI(uint, ArrayObjectPNameATI, int*)"/>
-            public static unsafe void GetVariantArrayObjectivATI(uint id, ArrayObjectPNameATI pname, ref int parameters)
+            public static unsafe void GetVariantArrayObjectivATI(uint id, ArrayObjectPNameATI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetVariantArrayObjectivATI(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVariantArrayObjectivATI(uint, ArrayObjectPNameATI, int*)"/>
-            public static unsafe int GetVariantArrayObjectivATI(uint id, ArrayObjectPNameATI pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetVariantArrayObjectivATI(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVertexAttribArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
             public static unsafe void GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname, Span<float> parameters)
@@ -24783,7 +24112,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
-            public static unsafe void GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname, ref float parameters)
+            public static unsafe float GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribArrayObjectfvATI(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribArrayObjectfvATI(uint, ArrayObjectPNameATI, float*)"/>
+            public static unsafe void GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -24807,7 +24146,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribArrayObjectivATI(uint, ArrayObjectPNameATI, int*)"/>
-            public static unsafe void GetVertexAttribArrayObjectivATI(uint index, ArrayObjectPNameATI pname, ref int parameters)
+            public static unsafe int GetVertexAttribArrayObjectivATI(uint index, ArrayObjectPNameATI pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribArrayObjectivATI(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribArrayObjectivATI(uint, ArrayObjectPNameATI, int*)"/>
+            public static unsafe void GetVertexAttribArrayObjectivATI(uint index, ArrayObjectPNameATI pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -26901,20 +26250,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT(BufferTarget, uint, bool*)"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTarget target, uint index, ref bool data)
+            public static unsafe bool GetBooleanIndexedvEXT(BufferTarget target, uint index)
+            {
+                bool data;
+                bool* data_ptr = &data;
+                {
+                    GetBooleanIndexedvEXT(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetBooleanIndexedvEXT(BufferTarget, uint, bool*)"/>
+            public static unsafe void GetBooleanIndexedvEXT(BufferTarget target, uint index, out bool data)
             {
                 fixed (bool* data_ptr = &data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetBooleanIndexedvEXT(BufferTarget, uint, bool*)"/>
-            public static unsafe bool GetBooleanIndexedvEXT(BufferTarget target, uint index)
-            {
-                bool data_val;
-                bool* data = &data_val;
-                GetBooleanIndexedvEXT(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetColorTableEXT(ColorTableTarget, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetColorTableEXT(ColorTableTarget target, PixelFormat format, PixelType type, IntPtr data)
@@ -26941,7 +26292,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableEXT(ColorTableTarget, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetColorTableEXT<T1>(ColorTableTarget target, PixelFormat format, PixelType type, ref T1 data)
+            public static unsafe T1 GetColorTableEXT<T1>(ColorTableTarget target, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 data;
+                void* data_ptr = &data;
+                {
+                    GetColorTableEXT(target, format, type, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetColorTableEXT(ColorTableTarget, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetColorTableEXT<T1>(ColorTableTarget target, PixelFormat format, PixelType type, out T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -26966,20 +26328,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameterfvEXT(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname, ref float parameters)
+            public static unsafe float GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameterfvEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameterfvEXT(ColorTableTarget, ColorTableParameterPName, float*)"/>
+            public static unsafe void GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetColorTableParameterfvEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameterfvEXT(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe float GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetColorTableParameterfvEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetColorTableParameterivEXT(ColorTableTarget, ColorTableParameterPName, int*)"/>
             public static unsafe void GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname, Span<int> parameters)
@@ -26998,20 +26362,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameterivEXT(ColorTableTarget, ColorTableParameterPName, int*)"/>
-            public static unsafe void GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname, ref int parameters)
+            public static unsafe int GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameterivEXT(ColorTableTarget, ColorTableParameterPName, int*)"/>
+            public static unsafe void GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetColorTableParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameterivEXT(ColorTableTarget, ColorTableParameterPName, int*)"/>
-            public static unsafe int GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetColorTableParameterivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCompressedMultiTexImageEXT(TextureUnit, TextureTarget, int, void*)"/>
             public static unsafe void GetCompressedMultiTexImageEXT(TextureUnit texunit, TextureTarget target, int lod, IntPtr img)
@@ -27038,7 +26404,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCompressedMultiTexImageEXT(TextureUnit, TextureTarget, int, void*)"/>
-            public static unsafe void GetCompressedMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int lod, ref T1 img)
+            public static unsafe T1 GetCompressedMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int lod)
+                where T1 : unmanaged
+            {
+                T1 img;
+                void* img_ptr = &img;
+                {
+                    GetCompressedMultiTexImageEXT(texunit, target, lod, img_ptr);
+                }
+                return img;
+            }
+            /// <inheritdoc cref="GetCompressedMultiTexImageEXT(TextureUnit, TextureTarget, int, void*)"/>
+            public static unsafe void GetCompressedMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int lod, out T1 img)
                 where T1 : unmanaged
             {
                 fixed (void* img_ptr = &img)
@@ -27071,7 +26448,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCompressedTextureImageEXT(int, TextureTarget, int, void*)"/>
-            public static unsafe void GetCompressedTextureImageEXT<T1>(int texture, TextureTarget target, int lod, ref T1 img)
+            public static unsafe T1 GetCompressedTextureImageEXT<T1>(int texture, TextureTarget target, int lod)
+                where T1 : unmanaged
+            {
+                T1 img;
+                void* img_ptr = &img;
+                {
+                    GetCompressedTextureImageEXT(texture, target, lod, img_ptr);
+                }
+                return img;
+            }
+            /// <inheritdoc cref="GetCompressedTextureImageEXT(int, TextureTarget, int, void*)"/>
+            public static unsafe void GetCompressedTextureImageEXT<T1>(int texture, TextureTarget target, int lod, out T1 img)
                 where T1 : unmanaged
             {
                 fixed (void* img_ptr = &img)
@@ -27104,7 +26492,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionFilterEXT(ConvolutionTargetEXT, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetConvolutionFilterEXT<T1>(ConvolutionTargetEXT target, PixelFormat format, PixelType type, ref T1 image)
+            public static unsafe T1 GetConvolutionFilterEXT<T1>(ConvolutionTargetEXT target, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 image;
+                void* image_ptr = &image;
+                {
+                    GetConvolutionFilterEXT(target, format, type, image_ptr);
+                }
+                return image;
+            }
+            /// <inheritdoc cref="GetConvolutionFilterEXT(ConvolutionTargetEXT, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetConvolutionFilterEXT<T1>(ConvolutionTargetEXT target, PixelFormat format, PixelType type, out T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -27129,20 +26528,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionParameterfvEXT(ConvolutionTargetEXT, ConvolutionParameter, float*)"/>
-            public static unsafe void GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, ref float parameters)
+            public static unsafe float GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetConvolutionParameterfvEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetConvolutionParameterfvEXT(ConvolutionTargetEXT, ConvolutionParameter, float*)"/>
+            public static unsafe void GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetConvolutionParameterfvEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterfvEXT(ConvolutionTargetEXT, ConvolutionParameter, float*)"/>
-            public static unsafe float GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetConvolutionParameterfvEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetConvolutionParameterivEXT(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
             public static unsafe void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, Span<int> parameters)
@@ -27161,20 +26562,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionParameterivEXT(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, ref int parameters)
+            public static unsafe int GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetConvolutionParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetConvolutionParameterivEXT(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
+            public static unsafe void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetConvolutionParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterivEXT(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe int GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetConvolutionParameterivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetDoublei_vEXT(GetPName, uint, double*)"/>
             public static unsafe void GetDoublei_vEXT(GetPName pname, uint index, Span<double> parameters)
@@ -27193,20 +26596,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetDoublei_vEXT(GetPName, uint, double*)"/>
-            public static unsafe void GetDoublei_vEXT(GetPName pname, uint index, ref double parameters)
+            public static unsafe double GetDoublei_vEXT(GetPName pname, uint index)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetDoublei_vEXT(pname, index, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetDoublei_vEXT(GetPName, uint, double*)"/>
+            public static unsafe void GetDoublei_vEXT(GetPName pname, uint index, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
                     GetDoublei_vEXT(pname, index, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetDoublei_vEXT(GetPName, uint, double*)"/>
-            public static unsafe double GetDoublei_vEXT(GetPName pname, uint index)
-            {
-                double parameters_val;
-                double* parameters = &parameters_val;
-                GetDoublei_vEXT(pname, index, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetDoubleIndexedvEXT(GetPName, uint, double*)"/>
             public static unsafe void GetDoubleIndexedvEXT(GetPName target, uint index, Span<double> data)
@@ -27225,20 +26630,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetDoubleIndexedvEXT(GetPName, uint, double*)"/>
-            public static unsafe void GetDoubleIndexedvEXT(GetPName target, uint index, ref double data)
+            public static unsafe double GetDoubleIndexedvEXT(GetPName target, uint index)
+            {
+                double data;
+                double* data_ptr = &data;
+                {
+                    GetDoubleIndexedvEXT(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetDoubleIndexedvEXT(GetPName, uint, double*)"/>
+            public static unsafe void GetDoubleIndexedvEXT(GetPName target, uint index, out double data)
             {
                 fixed (double* data_ptr = &data)
                 {
                     GetDoubleIndexedvEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetDoubleIndexedvEXT(GetPName, uint, double*)"/>
-            public static unsafe double GetDoubleIndexedvEXT(GetPName target, uint index)
-            {
-                double data_val;
-                double* data = &data_val;
-                GetDoubleIndexedvEXT(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetFloati_vEXT(GetPName, uint, float*)"/>
             public static unsafe void GetFloati_vEXT(GetPName pname, uint index, Span<float> parameters)
@@ -27257,20 +26664,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFloati_vEXT(GetPName, uint, float*)"/>
-            public static unsafe void GetFloati_vEXT(GetPName pname, uint index, ref float parameters)
+            public static unsafe float GetFloati_vEXT(GetPName pname, uint index)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetFloati_vEXT(pname, index, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFloati_vEXT(GetPName, uint, float*)"/>
+            public static unsafe void GetFloati_vEXT(GetPName pname, uint index, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetFloati_vEXT(pname, index, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFloati_vEXT(GetPName, uint, float*)"/>
-            public static unsafe float GetFloati_vEXT(GetPName pname, uint index)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetFloati_vEXT(pname, index, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFloatIndexedvEXT(GetPName, uint, float*)"/>
             public static unsafe void GetFloatIndexedvEXT(GetPName target, uint index, Span<float> data)
@@ -27289,20 +26698,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFloatIndexedvEXT(GetPName, uint, float*)"/>
-            public static unsafe void GetFloatIndexedvEXT(GetPName target, uint index, ref float data)
+            public static unsafe float GetFloatIndexedvEXT(GetPName target, uint index)
+            {
+                float data;
+                float* data_ptr = &data;
+                {
+                    GetFloatIndexedvEXT(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetFloatIndexedvEXT(GetPName, uint, float*)"/>
+            public static unsafe void GetFloatIndexedvEXT(GetPName target, uint index, out float data)
             {
                 fixed (float* data_ptr = &data)
                 {
                     GetFloatIndexedvEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFloatIndexedvEXT(GetPName, uint, float*)"/>
-            public static unsafe float GetFloatIndexedvEXT(GetPName target, uint index)
-            {
-                float data_val;
-                float* data = &data_val;
-                GetFloatIndexedvEXT(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetFragDataLocationEXT(int, byte*)"/>
             public static unsafe int GetFragDataLocationEXT(int program, string name)
@@ -27330,20 +26741,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivEXT(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferAttachmentParameterivEXT(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, ref int parameters)
+            public static unsafe int GetFramebufferAttachmentParameterivEXT(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFramebufferAttachmentParameterivEXT(target, attachment, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFramebufferAttachmentParameterivEXT(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe void GetFramebufferAttachmentParameterivEXT(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferAttachmentParameterivEXT(target, attachment, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFramebufferAttachmentParameterivEXT(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetFramebufferAttachmentParameterivEXT(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFramebufferAttachmentParameterivEXT(target, attachment, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
             public static unsafe void GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, Span<int> parameters)
@@ -27362,20 +26775,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
-            public static unsafe void GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, ref int parameters)
+            public static unsafe int GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFramebufferParameterivEXT(framebuffer, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
+            public static unsafe void GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferParameterivEXT(framebuffer, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
-            public static unsafe int GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFramebufferParameterivEXT(framebuffer, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogramEXT(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetHistogramEXT(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
@@ -27402,7 +26817,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramEXT(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetHistogramEXT<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
+            public static unsafe T1 GetHistogramEXT<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 values;
+                void* values_ptr = &values;
+                {
+                    GetHistogramEXT(target, reset, format, type, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetHistogramEXT(HistogramTargetEXT, bool, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetHistogramEXT<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, out T1 values)
                 where T1 : unmanaged
             {
                 fixed (void* values_ptr = &values)
@@ -27427,20 +26853,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramParameterfvEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
-            public static unsafe void GetHistogramParameterfvEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref float parameters)
+            public static unsafe float GetHistogramParameterfvEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetHistogramParameterfvEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetHistogramParameterfvEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
+            public static unsafe void GetHistogramParameterfvEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetHistogramParameterfvEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetHistogramParameterfvEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, float*)"/>
-            public static unsafe float GetHistogramParameterfvEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetHistogramParameterfvEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogramParameterivEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
@@ -27459,20 +26887,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramParameterivEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref int parameters)
+            public static unsafe int GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetHistogramParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetHistogramParameterivEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
+            public static unsafe void GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetHistogramParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetHistogramParameterivEXT(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe int GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetHistogramParameterivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetIntegerIndexedvEXT(GetPName, uint, int*)"/>
             public static unsafe void GetIntegerIndexedvEXT(GetPName target, uint index, Span<int> data)
@@ -27491,20 +26921,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetIntegerIndexedvEXT(GetPName, uint, int*)"/>
-            public static unsafe void GetIntegerIndexedvEXT(GetPName target, uint index, ref int data)
+            public static unsafe int GetIntegerIndexedvEXT(GetPName target, uint index)
+            {
+                int data;
+                int* data_ptr = &data;
+                {
+                    GetIntegerIndexedvEXT(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetIntegerIndexedvEXT(GetPName, uint, int*)"/>
+            public static unsafe void GetIntegerIndexedvEXT(GetPName target, uint index, out int data)
             {
                 fixed (int* data_ptr = &data)
                 {
                     GetIntegerIndexedvEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetIntegerIndexedvEXT(GetPName, uint, int*)"/>
-            public static unsafe int GetIntegerIndexedvEXT(GetPName target, uint index)
-            {
-                int data_val;
-                int* data = &data_val;
-                GetIntegerIndexedvEXT(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
             public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
@@ -27523,20 +26955,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
+            public static unsafe bool GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value)
+            {
+                bool data;
+                bool* data_ptr = &data;
+                {
+                    GetInvariantBooleanvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetInvariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, out bool data)
             {
                 fixed (bool* data_ptr = &data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetInvariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe bool GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value)
-            {
-                bool data_val;
-                bool* data = &data_val;
-                GetInvariantBooleanvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetInvariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
             public static unsafe void GetInvariantFloatvEXT(uint id, GetVariantValueEXT value, Span<float> data)
@@ -27555,20 +26989,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetInvariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe void GetInvariantFloatvEXT(uint id, GetVariantValueEXT value, ref float data)
+            public static unsafe float GetInvariantFloatvEXT(uint id, GetVariantValueEXT value)
+            {
+                float data;
+                float* data_ptr = &data;
+                {
+                    GetInvariantFloatvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetInvariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
+            public static unsafe void GetInvariantFloatvEXT(uint id, GetVariantValueEXT value, out float data)
             {
                 fixed (float* data_ptr = &data)
                 {
                     GetInvariantFloatvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetInvariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe float GetInvariantFloatvEXT(uint id, GetVariantValueEXT value)
-            {
-                float data_val;
-                float* data = &data_val;
-                GetInvariantFloatvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetInvariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
             public static unsafe void GetInvariantIntegervEXT(uint id, GetVariantValueEXT value, Span<int> data)
@@ -27587,20 +27023,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetInvariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe void GetInvariantIntegervEXT(uint id, GetVariantValueEXT value, ref int data)
+            public static unsafe int GetInvariantIntegervEXT(uint id, GetVariantValueEXT value)
+            {
+                int data;
+                int* data_ptr = &data;
+                {
+                    GetInvariantIntegervEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetInvariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
+            public static unsafe void GetInvariantIntegervEXT(uint id, GetVariantValueEXT value, out int data)
             {
                 fixed (int* data_ptr = &data)
                 {
                     GetInvariantIntegervEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetInvariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe int GetInvariantIntegervEXT(uint id, GetVariantValueEXT value)
-            {
-                int data_val;
-                int* data = &data_val;
-                GetInvariantIntegervEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
             public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
@@ -27619,20 +27057,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
+            public static unsafe bool GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value)
+            {
+                bool data;
+                bool* data_ptr = &data;
+                {
+                    GetLocalConstantBooleanvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetLocalConstantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, out bool data)
             {
                 fixed (bool* data_ptr = &data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetLocalConstantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe bool GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value)
-            {
-                bool data_val;
-                bool* data = &data_val;
-                GetLocalConstantBooleanvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetLocalConstantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
             public static unsafe void GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value, Span<float> data)
@@ -27651,20 +27091,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLocalConstantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe void GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value, ref float data)
+            public static unsafe float GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value)
+            {
+                float data;
+                float* data_ptr = &data;
+                {
+                    GetLocalConstantFloatvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetLocalConstantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
+            public static unsafe void GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value, out float data)
             {
                 fixed (float* data_ptr = &data)
                 {
                     GetLocalConstantFloatvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetLocalConstantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe float GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value)
-            {
-                float data_val;
-                float* data = &data_val;
-                GetLocalConstantFloatvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetLocalConstantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
             public static unsafe void GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value, Span<int> data)
@@ -27683,20 +27125,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLocalConstantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe void GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value, ref int data)
+            public static unsafe int GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value)
+            {
+                int data;
+                int* data_ptr = &data;
+                {
+                    GetLocalConstantIntegervEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetLocalConstantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
+            public static unsafe void GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value, out int data)
             {
                 fixed (int* data_ptr = &data)
                 {
                     GetLocalConstantIntegervEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetLocalConstantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe int GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value)
-            {
-                int data_val;
-                int* data = &data_val;
-                GetLocalConstantIntegervEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetMemoryObjectParameterivEXT(uint, MemoryObjectParameterName, int*)"/>
             public static unsafe void GetMemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, Span<int> parameters)
@@ -27721,14 +27165,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetMemoryObjectParameterivEXT(memoryObject, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMemoryObjectParameterivEXT(uint, MemoryObjectParameterName, int*)"/>
-            public static unsafe int GetMemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMemoryObjectParameterivEXT(memoryObject, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMinmaxEXT(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetMinmaxEXT(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
@@ -27755,7 +27191,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmaxEXT(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetMinmaxEXT<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
+            public static unsafe T1 GetMinmaxEXT<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 values;
+                void* values_ptr = &values;
+                {
+                    GetMinmaxEXT(target, reset, format, type, values_ptr);
+                }
+                return values;
+            }
+            /// <inheritdoc cref="GetMinmaxEXT(MinmaxTargetEXT, bool, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetMinmaxEXT<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, out T1 values)
                 where T1 : unmanaged
             {
                 fixed (void* values_ptr = &values)
@@ -27780,20 +27227,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmaxParameterfvEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
-            public static unsafe void GetMinmaxParameterfvEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref float parameters)
+            public static unsafe float GetMinmaxParameterfvEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMinmaxParameterfvEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMinmaxParameterfvEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
+            public static unsafe void GetMinmaxParameterfvEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMinmaxParameterfvEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMinmaxParameterfvEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, float*)"/>
-            public static unsafe float GetMinmaxParameterfvEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMinmaxParameterfvEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMinmaxParameterivEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
             public static unsafe void GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, Span<int> parameters)
@@ -27812,20 +27261,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMinmaxParameterivEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
-            public static unsafe void GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref int parameters)
+            public static unsafe int GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMinmaxParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMinmaxParameterivEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
+            public static unsafe void GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMinmaxParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMinmaxParameterivEXT(MinmaxTargetEXT, GetMinmaxParameterPNameEXT, int*)"/>
-            public static unsafe int GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMinmaxParameterivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexEnvfvEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, float*)"/>
             public static unsafe void GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, Span<float> parameters)
@@ -27844,20 +27295,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexEnvfvEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, float*)"/>
-            public static unsafe void GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, ref float parameters)
+            public static unsafe float GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMultiTexEnvfvEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexEnvfvEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, float*)"/>
+            public static unsafe void GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMultiTexEnvfvEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexEnvfvEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, float*)"/>
-            public static unsafe float GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMultiTexEnvfvEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexEnvivEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
@@ -27876,20 +27329,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexEnvivEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
+            public static unsafe int GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMultiTexEnvivEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexEnvivEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, int*)"/>
+            public static unsafe void GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMultiTexEnvivEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexEnvivEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe int GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMultiTexEnvivEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexGendvEXT(TextureUnit, TextureCoordName, TextureGenParameter, double*)"/>
             public static unsafe void GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, Span<double> parameters)
@@ -27908,20 +27363,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexGendvEXT(TextureUnit, TextureCoordName, TextureGenParameter, double*)"/>
-            public static unsafe void GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref double parameters)
+            public static unsafe double GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetMultiTexGendvEXT(texunit, coord, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexGendvEXT(TextureUnit, TextureCoordName, TextureGenParameter, double*)"/>
+            public static unsafe void GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
                     GetMultiTexGendvEXT(texunit, coord, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexGendvEXT(TextureUnit, TextureCoordName, TextureGenParameter, double*)"/>
-            public static unsafe double GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
-            {
-                double parameters_val;
-                double* parameters = &parameters_val;
-                GetMultiTexGendvEXT(texunit, coord, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexGenfvEXT(TextureUnit, TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, Span<float> parameters)
@@ -27940,20 +27397,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexGenfvEXT(TextureUnit, TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref float parameters)
+            public static unsafe float GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMultiTexGenfvEXT(texunit, coord, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexGenfvEXT(TextureUnit, TextureCoordName, TextureGenParameter, float*)"/>
+            public static unsafe void GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMultiTexGenfvEXT(texunit, coord, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexGenfvEXT(TextureUnit, TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe float GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMultiTexGenfvEXT(texunit, coord, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexGenivEXT(TextureUnit, TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
@@ -27972,20 +27431,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexGenivEXT(TextureUnit, TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref int parameters)
+            public static unsafe int GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMultiTexGenivEXT(texunit, coord, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexGenivEXT(TextureUnit, TextureCoordName, TextureGenParameter, int*)"/>
+            public static unsafe void GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMultiTexGenivEXT(texunit, coord, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexGenivEXT(TextureUnit, TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe int GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMultiTexGenivEXT(texunit, coord, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexImageEXT(TextureUnit, TextureTarget, int, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetMultiTexImageEXT(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type, IntPtr pixels)
@@ -28012,7 +27473,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexImageEXT(TextureUnit, TextureTarget, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type, ref T1 pixels)
+            public static unsafe T1 GetMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 pixels;
+                void* pixels_ptr = &pixels;
+                {
+                    GetMultiTexImageEXT(texunit, target, level, format, type, pixels_ptr);
+                }
+                return pixels;
+            }
+            /// <inheritdoc cref="GetMultiTexImageEXT(TextureUnit, TextureTarget, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetMultiTexImageEXT<T1>(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type, out T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -28037,20 +27509,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexLevelParameterfvEXT(TextureUnit, TextureTarget, int, GetTextureParameter, float*)"/>
-            public static unsafe void GetMultiTexLevelParameterfvEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, ref float parameters)
+            public static unsafe float GetMultiTexLevelParameterfvEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMultiTexLevelParameterfvEXT(texunit, target, level, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexLevelParameterfvEXT(TextureUnit, TextureTarget, int, GetTextureParameter, float*)"/>
+            public static unsafe void GetMultiTexLevelParameterfvEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMultiTexLevelParameterfvEXT(texunit, target, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexLevelParameterfvEXT(TextureUnit, TextureTarget, int, GetTextureParameter, float*)"/>
-            public static unsafe float GetMultiTexLevelParameterfvEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMultiTexLevelParameterfvEXT(texunit, target, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexLevelParameterivEXT(TextureUnit, TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
@@ -28069,20 +27543,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexLevelParameterivEXT(TextureUnit, TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMultiTexLevelParameterivEXT(texunit, target, level, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexLevelParameterivEXT(TextureUnit, TextureTarget, int, GetTextureParameter, int*)"/>
+            public static unsafe void GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMultiTexLevelParameterivEXT(texunit, target, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexLevelParameterivEXT(TextureUnit, TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe int GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMultiTexLevelParameterivEXT(texunit, target, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexParameterfvEXT(TextureUnit, TextureTarget, GetTextureParameter, float*)"/>
             public static unsafe void GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, Span<float> parameters)
@@ -28101,20 +27577,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexParameterfvEXT(TextureUnit, TextureTarget, GetTextureParameter, float*)"/>
-            public static unsafe void GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, ref float parameters)
+            public static unsafe float GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMultiTexParameterfvEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexParameterfvEXT(TextureUnit, TextureTarget, GetTextureParameter, float*)"/>
+            public static unsafe void GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMultiTexParameterfvEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexParameterfvEXT(TextureUnit, TextureTarget, GetTextureParameter, float*)"/>
-            public static unsafe float GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMultiTexParameterfvEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexParameterIivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -28133,20 +27611,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexParameterIivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMultiTexParameterIivEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexParameterIivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMultiTexParameterIivEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexParameterIivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMultiTexParameterIivEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexParameterIuivEXT(TextureUnit, TextureTarget, GetTextureParameter, uint*)"/>
             public static unsafe void GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, Span<uint> parameters)
@@ -28165,20 +27645,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexParameterIuivEXT(TextureUnit, TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe void GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, ref uint parameters)
+            public static unsafe uint GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetMultiTexParameterIuivEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexParameterIuivEXT(TextureUnit, TextureTarget, GetTextureParameter, uint*)"/>
+            public static unsafe void GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetMultiTexParameterIuivEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexParameterIuivEXT(TextureUnit, TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe uint GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetMultiTexParameterIuivEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultiTexParameterivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -28197,20 +27679,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMultiTexParameterivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMultiTexParameterivEXT(texunit, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMultiTexParameterivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMultiTexParameterivEXT(texunit, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMultiTexParameterivEXT(TextureUnit, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMultiTexParameterivEXT(texunit, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetNamedBufferParameterivEXT(int, BufferPName, int*)"/>
             public static unsafe void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, Span<int> parameters)
@@ -28229,33 +27713,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedBufferParameterivEXT(int, BufferPName, int*)"/>
-            public static unsafe void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, ref int parameters)
+            public static unsafe int GetNamedBufferParameterivEXT(int buffer, BufferPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetNamedBufferParameterivEXT(buffer, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedBufferParameterivEXT(int, BufferPName, int*)"/>
+            public static unsafe void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetNamedBufferParameterivEXT(buffer, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedBufferParameterivEXT(int, BufferPName, int*)"/>
-            public static unsafe int GetNamedBufferParameterivEXT(int buffer, BufferPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedBufferParameterivEXT(buffer, pname, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetNamedBufferPointervEXT(int, BufferPointerNameARB, void**)"/>
-            public static unsafe void GetNamedBufferPointervEXT(int buffer, BufferPointerNameARB pname, void** parameters)
-            {
-                GetNamedBufferPointervEXT_(buffer, pname, parameters);
-            }
-            /// <inheritdoc cref="GetNamedBufferPointervEXT(int, BufferPointerNameARB, void**)"/>
-            public static unsafe void* GetNamedBufferPointervEXT(int buffer, BufferPointerNameARB pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetNamedBufferPointervEXT_(buffer, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetNamedBufferSubDataEXT(int, IntPtr, nint, void*)"/>
             public static unsafe void GetNamedBufferSubDataEXT(int buffer, IntPtr offset, nint size, IntPtr data)
@@ -28282,7 +27755,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedBufferSubDataEXT(int, IntPtr, nint, void*)"/>
-            public static unsafe void GetNamedBufferSubDataEXT<T1>(int buffer, IntPtr offset, nint size, ref T1 data)
+            public static unsafe T1 GetNamedBufferSubDataEXT<T1>(int buffer, IntPtr offset, nint size)
+                where T1 : unmanaged
+            {
+                T1 data;
+                void* data_ptr = &data;
+                {
+                    GetNamedBufferSubDataEXT(buffer, offset, size, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetNamedBufferSubDataEXT(int, IntPtr, nint, void*)"/>
+            public static unsafe void GetNamedBufferSubDataEXT<T1>(int buffer, IntPtr offset, nint size, out T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -28307,20 +27791,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedFramebufferAttachmentParameterivEXT(int, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetNamedFramebufferAttachmentParameterivEXT(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, ref int parameters)
+            public static unsafe int GetNamedFramebufferAttachmentParameterivEXT(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetNamedFramebufferAttachmentParameterivEXT(framebuffer, attachment, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedFramebufferAttachmentParameterivEXT(int, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe void GetNamedFramebufferAttachmentParameterivEXT(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetNamedFramebufferAttachmentParameterivEXT(framebuffer, attachment, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedFramebufferAttachmentParameterivEXT(int, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetNamedFramebufferAttachmentParameterivEXT(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedFramebufferAttachmentParameterivEXT(framebuffer, attachment, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetNamedFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
             public static unsafe void GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, Span<int> parameters)
@@ -28339,36 +27825,40 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
-            public static unsafe void GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, ref int parameters)
+            public static unsafe int GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetNamedFramebufferParameterivEXT(framebuffer, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
+            public static unsafe void GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetNamedFramebufferParameterivEXT(framebuffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedFramebufferParameterivEXT(int, GetFramebufferParameter, int*)"/>
-            public static unsafe int GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname)
+            /// <inheritdoc cref="GetNamedProgramivEXT(int, ProgramTarget, ProgramProperty, int*)"/>
+            public static unsafe int GetNamedProgramivEXT(int program, ProgramTarget target, ProgramProperty pname)
             {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedFramebufferParameterivEXT(framebuffer, pname, parameters);
-                return parameters_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetNamedProgramivEXT(program, target, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetNamedProgramivEXT(int, ProgramTarget, ProgramProperty, int*)"/>
-            public static unsafe void GetNamedProgramivEXT(int program, ProgramTarget target, ProgramProperty pname, ref int parameters)
+            public static unsafe void GetNamedProgramivEXT(int program, ProgramTarget target, ProgramProperty pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetNamedProgramivEXT(program, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedProgramivEXT(int, ProgramTarget, ProgramProperty, int*)"/>
-            public static unsafe int GetNamedProgramivEXT(int program, ProgramTarget target, ProgramProperty pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedProgramivEXT(program, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetNamedProgramLocalParameterdvEXT(int, ProgramTarget, uint, double*)"/>
             public static unsafe void GetNamedProgramLocalParameterdvEXT(int program, ProgramTarget target, uint index, Span<double> parameters)
@@ -28491,7 +27981,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedProgramStringEXT(int, ProgramTarget, ProgramStringProperty, void*)"/>
-            public static unsafe void GetNamedProgramStringEXT<T1>(int program, ProgramTarget target, ProgramStringProperty pname, ref T1 str)
+            public static unsafe T1 GetNamedProgramStringEXT<T1>(int program, ProgramTarget target, ProgramStringProperty pname)
+                where T1 : unmanaged
+            {
+                T1 str;
+                void* str_ptr = &str;
+                {
+                    GetNamedProgramStringEXT(program, target, pname, str_ptr);
+                }
+                return str;
+            }
+            /// <inheritdoc cref="GetNamedProgramStringEXT(int, ProgramTarget, ProgramStringProperty, void*)"/>
+            public static unsafe void GetNamedProgramStringEXT<T1>(int program, ProgramTarget target, ProgramStringProperty pname, out T1 str)
                 where T1 : unmanaged
             {
                 fixed (void* str_ptr = &str)
@@ -28516,23 +28017,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedRenderbufferParameterivEXT(int, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetNamedRenderbufferParameterivEXT(int renderbuffer, RenderbufferParameterName pname, ref int parameters)
+            public static unsafe int GetNamedRenderbufferParameterivEXT(int renderbuffer, RenderbufferParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetNamedRenderbufferParameterivEXT(renderbuffer, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedRenderbufferParameterivEXT(int, RenderbufferParameterName, int*)"/>
+            public static unsafe void GetNamedRenderbufferParameterivEXT(int renderbuffer, RenderbufferParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetNamedRenderbufferParameterivEXT(renderbuffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetNamedRenderbufferParameterivEXT(int, RenderbufferParameterName, int*)"/>
-            public static unsafe int GetNamedRenderbufferParameterivEXT(int renderbuffer, RenderbufferParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetNamedRenderbufferParameterivEXT(renderbuffer, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetObjectLabelEXT(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelEXT(All type, uint obj, int bufSize, ref int length)
+            public static unsafe string GetObjectLabelEXT(All type, uint obj, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -28545,7 +28048,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectLabelEXT(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelEXT(All type, uint obj, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectLabelEXT(All type, uint obj, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -28572,20 +28075,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPixelTransformParameterfvEXT(All, All, float*)"/>
-            public static unsafe void GetPixelTransformParameterfvEXT(All target, All pname, ref float parameters)
+            public static unsafe float GetPixelTransformParameterfvEXT(All target, All pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetPixelTransformParameterfvEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetPixelTransformParameterfvEXT(All, All, float*)"/>
+            public static unsafe void GetPixelTransformParameterfvEXT(All target, All pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetPixelTransformParameterfvEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPixelTransformParameterfvEXT(All, All, float*)"/>
-            public static unsafe float GetPixelTransformParameterfvEXT(All target, All pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetPixelTransformParameterfvEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetPixelTransformParameterivEXT(All, All, int*)"/>
             public static unsafe void GetPixelTransformParameterivEXT(All target, All pname, Span<int> parameters)
@@ -28604,62 +28109,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPixelTransformParameterivEXT(All, All, int*)"/>
-            public static unsafe void GetPixelTransformParameterivEXT(All target, All pname, ref int parameters)
+            public static unsafe int GetPixelTransformParameterivEXT(All target, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetPixelTransformParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetPixelTransformParameterivEXT(All, All, int*)"/>
+            public static unsafe void GetPixelTransformParameterivEXT(All target, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetPixelTransformParameterivEXT(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPixelTransformParameterivEXT(All, All, int*)"/>
-            public static unsafe int GetPixelTransformParameterivEXT(All target, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetPixelTransformParameterivEXT(target, pname, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetPointeri_vEXT(All, uint, void**)"/>
-            public static unsafe void GetPointeri_vEXT(All pname, uint index, void** parameters)
-            {
-                GetPointeri_vEXT_(pname, index, parameters);
-            }
-            /// <inheritdoc cref="GetPointeri_vEXT(All, uint, void**)"/>
-            public static unsafe void* GetPointeri_vEXT(All pname, uint index)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetPointeri_vEXT_(pname, index, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetPointerIndexedvEXT(All, uint, void**)"/>
-            public static unsafe void GetPointerIndexedvEXT(All target, uint index, void** data)
-            {
-                GetPointerIndexedvEXT_(target, index, data);
-            }
-            /// <inheritdoc cref="GetPointerIndexedvEXT(All, uint, void**)"/>
-            public static unsafe void* GetPointerIndexedvEXT(All target, uint index)
-            {
-                void* data_val;
-                void** data = &data_val;
-                GetPointerIndexedvEXT_(target, index, data);
-                return data_val;
-            }
-            /// <inheritdoc cref="GetPointervEXT(GetPointervPName, void**)"/>
-            public static unsafe void GetPointervEXT(GetPointervPName pname, void** parameters)
-            {
-                GetPointervEXT_(pname, parameters);
-            }
-            /// <inheritdoc cref="GetPointervEXT(GetPointervPName, void**)"/>
-            public static unsafe void* GetPointervEXT(GetPointervPName pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetPointervEXT_(pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetProgramPipelineInfoLogEXT(int, int, int*, byte*)"/>
-            public static unsafe string GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, ref int length)
+            public static unsafe string GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, out int length)
             {
                 string infoLog;
                 fixed (int* length_ptr = &length)
@@ -28672,7 +28140,7 @@ namespace OpenTK.Graphics.OpenGL
                 return infoLog;
             }
             /// <inheritdoc cref="GetProgramPipelineInfoLogEXT(int, int, int*, byte*)"/>
-            public static unsafe void GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, ref int length, out string infoLog)
+            public static unsafe void GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, out int length, out string infoLog)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -28706,14 +28174,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetProgramPipelineivEXT(pipeline, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetProgramPipelineivEXT(int, PipelineParameterName, int*)"/>
-            public static unsafe int GetProgramPipelineivEXT(int pipeline, PipelineParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetProgramPipelineivEXT(pipeline, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetQueryObjecti64vEXT(int, QueryObjectParameterName, long*)"/>
             public static unsafe void GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname, Span<long> parameters)
             {
@@ -28731,20 +28191,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjecti64vEXT(int, QueryObjectParameterName, long*)"/>
-            public static unsafe void GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname, ref long parameters)
+            public static unsafe long GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetQueryObjecti64vEXT(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjecti64vEXT(int, QueryObjectParameterName, long*)"/>
+            public static unsafe void GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
                     GetQueryObjecti64vEXT(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjecti64vEXT(int, QueryObjectParameterName, long*)"/>
-            public static unsafe long GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetQueryObjecti64vEXT(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetQueryObjectui64vEXT(int, QueryObjectParameterName, ulong*)"/>
             public static unsafe void GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname, Span<ulong> parameters)
@@ -28763,20 +28225,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetQueryObjectui64vEXT(int, QueryObjectParameterName, ulong*)"/>
-            public static unsafe void GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname, ref ulong parameters)
+            public static unsafe ulong GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetQueryObjectui64vEXT(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetQueryObjectui64vEXT(int, QueryObjectParameterName, ulong*)"/>
+            public static unsafe void GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
                     GetQueryObjectui64vEXT(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetQueryObjectui64vEXT(int, QueryObjectParameterName, ulong*)"/>
-            public static unsafe ulong GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetQueryObjectui64vEXT(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetRenderbufferParameterivEXT(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
@@ -28795,20 +28259,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetRenderbufferParameterivEXT(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe void GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname, ref int parameters)
+            public static unsafe int GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetRenderbufferParameterivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetRenderbufferParameterivEXT(RenderbufferTarget, RenderbufferParameterName, int*)"/>
+            public static unsafe void GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetRenderbufferParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetRenderbufferParameterivEXT(RenderbufferTarget, RenderbufferParameterName, int*)"/>
-            public static unsafe int GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetRenderbufferParameterivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSemaphoreParameterui64vEXT(uint, SemaphoreParameterName, ulong*)"/>
             public static unsafe void GetSemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname, Span<ulong> parameters)
@@ -28833,14 +28299,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetSemaphoreParameterui64vEXT(semaphore, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSemaphoreParameterui64vEXT(uint, SemaphoreParameterName, ulong*)"/>
-            public static unsafe ulong GetSemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetSemaphoreParameterui64vEXT(semaphore, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSeparableFilterEXT(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
             public static unsafe void GetSeparableFilterEXT(SeparableTargetEXT target, PixelFormat format, PixelType type, IntPtr row, IntPtr column, IntPtr span)
@@ -28885,7 +28343,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSeparableFilterEXT(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
-            public static unsafe void GetSeparableFilterEXT<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, ref T1 row, ref T2 column, ref T3 span)
+            public static unsafe T3 GetSeparableFilterEXT<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, out T1 row, out T2 column)
+                where T1 : unmanaged
+                where T2 : unmanaged
+                where T3 : unmanaged
+            {
+                T3 span;
+                void* span_ptr = &span;
+                fixed (void* row_ptr = &row)
+                fixed (void* column_ptr = &column)
+                {
+                    GetSeparableFilterEXT(target, format, type, row_ptr, column_ptr, span_ptr);
+                }
+                return span;
+            }
+            /// <inheritdoc cref="GetSeparableFilterEXT(SeparableTargetEXT, PixelFormat, PixelType, void*, void*, void*)"/>
+            public static unsafe void GetSeparableFilterEXT<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, out T1 row, out T2 column, out T3 span)
                 where T1 : unmanaged
                 where T2 : unmanaged
                 where T3 : unmanaged
@@ -28914,20 +28387,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexParameterIivEXT(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexParameterIivEXT(TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTexParameterIivEXT(TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTexParameterIivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexParameterIivEXT(TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetTexParameterIivEXT(TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTexParameterIivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexParameterIivEXT(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetTexParameterIivEXT(TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTexParameterIivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTexParameterIuivEXT(TextureTarget, GetTextureParameter, uint*)"/>
             public static unsafe void GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname, Span<uint> parameters)
@@ -28946,20 +28421,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexParameterIuivEXT(TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe void GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname, ref uint parameters)
+            public static unsafe uint GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetTexParameterIuivEXT(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexParameterIuivEXT(TextureTarget, GetTextureParameter, uint*)"/>
+            public static unsafe void GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetTexParameterIuivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexParameterIuivEXT(TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe uint GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetTexParameterIuivEXT(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureImageEXT(int, TextureTarget, int, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetTextureImageEXT(int texture, TextureTarget target, int level, PixelFormat format, PixelType type, IntPtr pixels)
@@ -28986,7 +28463,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureImageEXT(int, TextureTarget, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetTextureImageEXT<T1>(int texture, TextureTarget target, int level, PixelFormat format, PixelType type, ref T1 pixels)
+            public static unsafe T1 GetTextureImageEXT<T1>(int texture, TextureTarget target, int level, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 pixels;
+                void* pixels_ptr = &pixels;
+                {
+                    GetTextureImageEXT(texture, target, level, format, type, pixels_ptr);
+                }
+                return pixels;
+            }
+            /// <inheritdoc cref="GetTextureImageEXT(int, TextureTarget, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetTextureImageEXT<T1>(int texture, TextureTarget target, int level, PixelFormat format, PixelType type, out T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -29011,20 +28499,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureLevelParameterfvEXT(int, TextureTarget, int, GetTextureParameter, float*)"/>
-            public static unsafe void GetTextureLevelParameterfvEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, ref float parameters)
+            public static unsafe float GetTextureLevelParameterfvEXT(int texture, TextureTarget target, int level, GetTextureParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetTextureLevelParameterfvEXT(texture, target, level, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureLevelParameterfvEXT(int, TextureTarget, int, GetTextureParameter, float*)"/>
+            public static unsafe void GetTextureLevelParameterfvEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetTextureLevelParameterfvEXT(texture, target, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureLevelParameterfvEXT(int, TextureTarget, int, GetTextureParameter, float*)"/>
-            public static unsafe float GetTextureLevelParameterfvEXT(int texture, TextureTarget target, int level, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetTextureLevelParameterfvEXT(texture, target, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureLevelParameterivEXT(int, TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
@@ -29043,20 +28533,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureLevelParameterivEXT(int, TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTextureLevelParameterivEXT(texture, target, level, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureLevelParameterivEXT(int, TextureTarget, int, GetTextureParameter, int*)"/>
+            public static unsafe void GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTextureLevelParameterivEXT(texture, target, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureLevelParameterivEXT(int, TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureLevelParameterivEXT(texture, target, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterfvEXT(int, TextureTarget, GetTextureParameter, float*)"/>
             public static unsafe void GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname, Span<float> parameters)
@@ -29075,20 +28567,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureParameterfvEXT(int, TextureTarget, GetTextureParameter, float*)"/>
-            public static unsafe void GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname, ref float parameters)
+            public static unsafe float GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetTextureParameterfvEXT(texture, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureParameterfvEXT(int, TextureTarget, GetTextureParameter, float*)"/>
+            public static unsafe void GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetTextureParameterfvEXT(texture, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureParameterfvEXT(int, TextureTarget, GetTextureParameter, float*)"/>
-            public static unsafe float GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetTextureParameterfvEXT(texture, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterIivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -29107,20 +28601,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureParameterIivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTextureParameterIivEXT(texture, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureParameterIivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTextureParameterIivEXT(texture, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureParameterIivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureParameterIivEXT(texture, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterIuivEXT(int, TextureTarget, GetTextureParameter, uint*)"/>
             public static unsafe void GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname, Span<uint> parameters)
@@ -29139,20 +28635,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureParameterIuivEXT(int, TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe void GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname, ref uint parameters)
+            public static unsafe uint GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetTextureParameterIuivEXT(texture, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureParameterIuivEXT(int, TextureTarget, GetTextureParameter, uint*)"/>
+            public static unsafe void GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetTextureParameterIuivEXT(texture, target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTextureParameterIuivEXT(int, TextureTarget, GetTextureParameter, uint*)"/>
-            public static unsafe uint GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetTextureParameterIuivEXT(texture, target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTextureParameterivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -29171,23 +28669,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTextureParameterivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTextureParameterivEXT(texture, target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTextureParameterivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTextureParameterivEXT(texture, target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTextureParameterivEXT(int, TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTextureParameterivEXT(texture, target, pname, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetTransformFeedbackVaryingEXT(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-            public static unsafe string GetTransformFeedbackVaryingEXT(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type)
+            public static unsafe string GetTransformFeedbackVaryingEXT(int program, uint index, int bufSize, out int length, out int size, out AttributeType type)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -29202,7 +28702,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetTransformFeedbackVaryingEXT(int, uint, int, int*, int*, AttributeType*, byte*)"/>
-            public static unsafe void GetTransformFeedbackVaryingEXT(int program, uint index, int bufSize, ref int length, ref int size, ref AttributeType type, out string name)
+            public static unsafe void GetTransformFeedbackVaryingEXT(int program, uint index, int bufSize, out int length, out int size, out AttributeType type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
@@ -29231,7 +28731,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformuivEXT(int, int, uint*)"/>
-            public static unsafe void GetUniformuivEXT(int program, int location, ref uint parameters)
+            public static unsafe uint GetUniformuivEXT(int program, int location)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetUniformuivEXT(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformuivEXT(int, int, uint*)"/>
+            public static unsafe void GetUniformuivEXT(int program, int location, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -29255,20 +28765,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUnsignedBytei_vEXT(All, uint, byte*)"/>
-            public static unsafe void GetUnsignedBytei_vEXT(All target, uint index, ref byte data)
+            public static unsafe byte GetUnsignedBytei_vEXT(All target, uint index)
+            {
+                byte data;
+                byte* data_ptr = &data;
+                {
+                    GetUnsignedBytei_vEXT(target, index, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetUnsignedBytei_vEXT(All, uint, byte*)"/>
+            public static unsafe void GetUnsignedBytei_vEXT(All target, uint index, out byte data)
             {
                 fixed (byte* data_ptr = &data)
                 {
                     GetUnsignedBytei_vEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetUnsignedBytei_vEXT(All, uint, byte*)"/>
-            public static unsafe byte GetUnsignedBytei_vEXT(All target, uint index)
-            {
-                byte data_val;
-                byte* data = &data_val;
-                GetUnsignedBytei_vEXT(target, index, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetUnsignedBytevEXT(GetPName, byte*)"/>
             public static unsafe void GetUnsignedBytevEXT(GetPName pname, Span<byte> data)
@@ -29287,20 +28799,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUnsignedBytevEXT(GetPName, byte*)"/>
-            public static unsafe void GetUnsignedBytevEXT(GetPName pname, ref byte data)
+            public static unsafe byte GetUnsignedBytevEXT(GetPName pname)
+            {
+                byte data;
+                byte* data_ptr = &data;
+                {
+                    GetUnsignedBytevEXT(pname, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetUnsignedBytevEXT(GetPName, byte*)"/>
+            public static unsafe void GetUnsignedBytevEXT(GetPName pname, out byte data)
             {
                 fixed (byte* data_ptr = &data)
                 {
                     GetUnsignedBytevEXT(pname, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetUnsignedBytevEXT(GetPName, byte*)"/>
-            public static unsafe byte GetUnsignedBytevEXT(GetPName pname)
-            {
-                byte data_val;
-                byte* data = &data_val;
-                GetUnsignedBytevEXT(pname, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
             public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
@@ -29319,20 +28833,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
+            public static unsafe bool GetVariantBooleanvEXT(uint id, GetVariantValueEXT value)
+            {
+                bool data;
+                bool* data_ptr = &data;
+                {
+                    GetVariantBooleanvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetVariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, out bool data)
             {
                 fixed (bool* data_ptr = &data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVariantBooleanvEXT(uint, GetVariantValueEXT, bool*)"/>
-            public static unsafe bool GetVariantBooleanvEXT(uint id, GetVariantValueEXT value)
-            {
-                bool data_val;
-                bool* data = &data_val;
-                GetVariantBooleanvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetVariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
             public static unsafe void GetVariantFloatvEXT(uint id, GetVariantValueEXT value, Span<float> data)
@@ -29351,20 +28867,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe void GetVariantFloatvEXT(uint id, GetVariantValueEXT value, ref float data)
+            public static unsafe float GetVariantFloatvEXT(uint id, GetVariantValueEXT value)
+            {
+                float data;
+                float* data_ptr = &data;
+                {
+                    GetVariantFloatvEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetVariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
+            public static unsafe void GetVariantFloatvEXT(uint id, GetVariantValueEXT value, out float data)
             {
                 fixed (float* data_ptr = &data)
                 {
                     GetVariantFloatvEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVariantFloatvEXT(uint, GetVariantValueEXT, float*)"/>
-            public static unsafe float GetVariantFloatvEXT(uint id, GetVariantValueEXT value)
-            {
-                float data_val;
-                float* data = &data_val;
-                GetVariantFloatvEXT(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetVariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
             public static unsafe void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, Span<int> data)
@@ -29383,33 +28901,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, ref int data)
+            public static unsafe int GetVariantIntegervEXT(uint id, GetVariantValueEXT value)
+            {
+                int data;
+                int* data_ptr = &data;
+                {
+                    GetVariantIntegervEXT(id, value, data_ptr);
+                }
+                return data;
+            }
+            /// <inheritdoc cref="GetVariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
+            public static unsafe void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, out int data)
             {
                 fixed (int* data_ptr = &data)
                 {
                     GetVariantIntegervEXT(id, value, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVariantIntegervEXT(uint, GetVariantValueEXT, int*)"/>
-            public static unsafe int GetVariantIntegervEXT(uint id, GetVariantValueEXT value)
-            {
-                int data_val;
-                int* data = &data_val;
-                GetVariantIntegervEXT(id, value, data);
-                return data_val;
-            }
-            /// <inheritdoc cref="GetVariantPointervEXT(uint, GetVariantValueEXT, void**)"/>
-            public static unsafe void GetVariantPointervEXT(uint id, GetVariantValueEXT value, void** data)
-            {
-                GetVariantPointervEXT_(id, value, data);
-            }
-            /// <inheritdoc cref="GetVariantPointervEXT(uint, GetVariantValueEXT, void**)"/>
-            public static unsafe void* GetVariantPointervEXT(uint id, GetVariantValueEXT value)
-            {
-                void* data_val;
-                void** data = &data_val;
-                GetVariantPointervEXT_(id, value, data);
-                return data_val;
             }
             /// <inheritdoc cref="GetVertexArrayIntegeri_vEXT(int, uint, VertexArrayPName, int*)"/>
             public static unsafe void GetVertexArrayIntegeri_vEXT(int vaobj, uint index, VertexArrayPName pname, Span<int> param)
@@ -29435,14 +28942,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetVertexArrayIntegeri_vEXT(vaobj, index, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVertexArrayIntegeri_vEXT(int, uint, VertexArrayPName, int*)"/>
-            public static unsafe int GetVertexArrayIntegeri_vEXT(int vaobj, uint index, VertexArrayPName pname)
-            {
-                int param_val;
-                int* param = &param_val;
-                GetVertexArrayIntegeri_vEXT(vaobj, index, pname, param);
-                return param_val;
-            }
             /// <inheritdoc cref="GetVertexArrayIntegervEXT(int, VertexArrayPName, int*)"/>
             public static unsafe void GetVertexArrayIntegervEXT(int vaobj, VertexArrayPName pname, Span<int> param)
             {
@@ -29467,42 +28966,18 @@ namespace OpenTK.Graphics.OpenGL
                     GetVertexArrayIntegervEXT(vaobj, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVertexArrayIntegervEXT(int, VertexArrayPName, int*)"/>
-            public static unsafe int GetVertexArrayIntegervEXT(int vaobj, VertexArrayPName pname)
+            /// <inheritdoc cref="GetVertexAttribIivEXT(uint, VertexAttribEnum, int*)"/>
+            public static unsafe int GetVertexAttribIivEXT(uint index, VertexAttribEnum pname)
             {
-                int param_val;
-                int* param = &param_val;
-                GetVertexArrayIntegervEXT(vaobj, pname, param);
-                return param_val;
-            }
-            /// <inheritdoc cref="GetVertexArrayPointeri_vEXT(int, uint, VertexArrayPName, void**)"/>
-            public static unsafe void GetVertexArrayPointeri_vEXT(int vaobj, uint index, VertexArrayPName pname, void** param)
-            {
-                GetVertexArrayPointeri_vEXT_(vaobj, index, pname, param);
-            }
-            /// <inheritdoc cref="GetVertexArrayPointeri_vEXT(int, uint, VertexArrayPName, void**)"/>
-            public static unsafe void* GetVertexArrayPointeri_vEXT(int vaobj, uint index, VertexArrayPName pname)
-            {
-                void* param_val;
-                void** param = &param_val;
-                GetVertexArrayPointeri_vEXT_(vaobj, index, pname, param);
-                return param_val;
-            }
-            /// <inheritdoc cref="GetVertexArrayPointervEXT(int, VertexArrayPName, void**)"/>
-            public static unsafe void GetVertexArrayPointervEXT(int vaobj, VertexArrayPName pname, void** param)
-            {
-                GetVertexArrayPointervEXT_(vaobj, pname, param);
-            }
-            /// <inheritdoc cref="GetVertexArrayPointervEXT(int, VertexArrayPName, void**)"/>
-            public static unsafe void* GetVertexArrayPointervEXT(int vaobj, VertexArrayPName pname)
-            {
-                void* param_val;
-                void** param = &param_val;
-                GetVertexArrayPointervEXT_(vaobj, pname, param);
-                return param_val;
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribIivEXT(index, pname, parameters_ptr);
+                }
+                return parameters;
             }
             /// <inheritdoc cref="GetVertexAttribIivEXT(uint, VertexAttribEnum, int*)"/>
-            public static unsafe void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, ref int parameters)
+            public static unsafe void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -29510,7 +28985,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribIuivEXT(uint, VertexAttribEnum, uint*)"/>
-            public static unsafe void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, ref uint parameters)
+            public static unsafe uint GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribIuivEXT(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribIuivEXT(uint, VertexAttribEnum, uint*)"/>
+            public static unsafe void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -29534,7 +29019,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribLdvEXT(uint, VertexAttribEnum, double*)"/>
-            public static unsafe void GetVertexAttribLdvEXT(uint index, VertexAttribEnum pname, ref double parameters)
+            public static unsafe double GetVertexAttribLdvEXT(uint index, VertexAttribEnum pname)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribLdvEXT(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribLdvEXT(uint, VertexAttribEnum, double*)"/>
+            public static unsafe void GetVertexAttribLdvEXT(uint index, VertexAttribEnum pname, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -29566,7 +29061,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ImportMemoryWin32HandleEXT(uint, ulong, ExternalHandleType, void*)"/>
-            public static unsafe void ImportMemoryWin32HandleEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, ref T1 handle)
+            public static unsafe void ImportMemoryWin32HandleEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, in T1 handle)
                 where T1 : unmanaged
             {
                 fixed (void* handle_ptr = &handle)
@@ -33880,20 +33375,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetImageTransformParameterfvHP(ImageTransformTargetHP, ImageTransformPNameHP, float*)"/>
-            public static unsafe void GetImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, ref float parameters)
+            public static unsafe float GetImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetImageTransformParameterfvHP(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetImageTransformParameterfvHP(ImageTransformTargetHP, ImageTransformPNameHP, float*)"/>
+            public static unsafe void GetImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetImageTransformParameterfvHP(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetImageTransformParameterfvHP(ImageTransformTargetHP, ImageTransformPNameHP, float*)"/>
-            public static unsafe float GetImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetImageTransformParameterfvHP(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetImageTransformParameterivHP(ImageTransformTargetHP, ImageTransformPNameHP, int*)"/>
             public static unsafe void GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, Span<int> parameters)
@@ -33912,20 +33409,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetImageTransformParameterivHP(ImageTransformTargetHP, ImageTransformPNameHP, int*)"/>
-            public static unsafe void GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, ref int parameters)
+            public static unsafe int GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetImageTransformParameterivHP(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetImageTransformParameterivHP(ImageTransformTargetHP, ImageTransformPNameHP, int*)"/>
+            public static unsafe void GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetImageTransformParameterivHP(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetImageTransformParameterivHP(ImageTransformTargetHP, ImageTransformPNameHP, int*)"/>
-            public static unsafe int GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetImageTransformParameterivHP(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="ImageTransformParameterfvHP(ImageTransformTargetHP, ImageTransformPNameHP, float*)"/>
             public static unsafe void ImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, ReadOnlySpan<float> parameters)
@@ -34101,14 +33600,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetFirstPerfQueryIdINTEL(queryId_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFirstPerfQueryIdINTEL(uint*)"/>
-            public static unsafe uint GetFirstPerfQueryIdINTEL()
-            {
-                uint queryId_val;
-                uint* queryId = &queryId_val;
-                GetFirstPerfQueryIdINTEL(queryId);
-                return queryId_val;
-            }
             /// <inheritdoc cref="GetNextPerfQueryIdINTEL(uint, uint*)"/>
             public static unsafe void GetNextPerfQueryIdINTEL(uint queryId, Span<uint> nextQueryId)
             {
@@ -34132,14 +33623,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetNextPerfQueryIdINTEL(queryId, nextQueryId_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNextPerfQueryIdINTEL(uint, uint*)"/>
-            public static unsafe uint GetNextPerfQueryIdINTEL(uint queryId)
-            {
-                uint nextQueryId_val;
-                uint* nextQueryId = &nextQueryId_val;
-                GetNextPerfQueryIdINTEL(queryId, nextQueryId);
-                return nextQueryId_val;
             }
             /// <inheritdoc cref="GetPerfCounterInfoINTEL(uint, uint, uint, byte*, uint, byte*, uint*, uint*, uint*, uint*, ulong*)"/>
             public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, Span<uint> counterOffset, Span<uint> counterDataSize, Span<uint> counterTypeEnum, Span<uint> counterDataTypeEnum, Span<ulong> rawCounterMaxValue)
@@ -34211,78 +33694,6 @@ namespace OpenTK.Graphics.OpenGL
                     Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfCounterInfoINTEL(uint, uint, uint, byte*, uint, byte*, uint*, uint*, uint*, uint*, ulong*)"/>
-            public static unsafe ulong GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, Span<uint> counterOffset, Span<uint> counterDataSize, Span<uint> counterTypeEnum, Span<uint> counterDataTypeEnum)
-            {
-                ulong rawCounterMaxValue_val;
-                fixed (uint* counterDataTypeEnum_ptr = counterDataTypeEnum)
-                {
-                    fixed (uint* counterTypeEnum_ptr = counterTypeEnum)
-                    {
-                        fixed (uint* counterDataSize_ptr = counterDataSize)
-                        {
-                            fixed (uint* counterOffset_ptr = counterOffset)
-                            {
-                                var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
-                                var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
-                                ulong* rawCounterMaxValue = &rawCounterMaxValue_val;
-                                GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue);
-                                counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
-                                counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
-                            }
-                        }
-                    }
-                }
-                return rawCounterMaxValue_val;
-            }
-            /// <inheritdoc cref="GetPerfCounterInfoINTEL(uint, uint, uint, byte*, uint, byte*, uint*, uint*, uint*, uint*, ulong*)"/>
-            public static unsafe ulong GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, uint[] counterOffset, uint[] counterDataSize, uint[] counterTypeEnum, uint[] counterDataTypeEnum)
-            {
-                ulong rawCounterMaxValue_val;
-                fixed (uint* counterDataTypeEnum_ptr = counterDataTypeEnum)
-                {
-                    fixed (uint* counterTypeEnum_ptr = counterTypeEnum)
-                    {
-                        fixed (uint* counterDataSize_ptr = counterDataSize)
-                        {
-                            fixed (uint* counterOffset_ptr = counterOffset)
-                            {
-                                var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
-                                var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
-                                ulong* rawCounterMaxValue = &rawCounterMaxValue_val;
-                                GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue);
-                                counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
-                                counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
-                            }
-                        }
-                    }
-                }
-                return rawCounterMaxValue_val;
-            }
-            /// <inheritdoc cref="GetPerfCounterInfoINTEL(uint, uint, uint, byte*, uint, byte*, uint*, uint*, uint*, uint*, ulong*)"/>
-            public static unsafe ulong GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum)
-            {
-                ulong rawCounterMaxValue_val;
-                fixed (uint* counterOffset_ptr = &counterOffset)
-                fixed (uint* counterDataSize_ptr = &counterDataSize)
-                fixed (uint* counterTypeEnum_ptr = &counterTypeEnum)
-                fixed (uint* counterDataTypeEnum_ptr = &counterDataTypeEnum)
-                {
-                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
-                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
-                    ulong* rawCounterMaxValue = &rawCounterMaxValue_val;
-                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue);
-                    counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
-                    counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
-                }
-                return rawCounterMaxValue_val;
-            }
             /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
             public static unsafe void GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data, Span<uint> bytesWritten)
             {
@@ -34344,51 +33755,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data)
-            {
-                uint bytesWritten_val;
-                void* data_vptr = (void*)data;
-                uint* bytesWritten = &bytesWritten_val;
-                GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_vptr, bytesWritten);
-                return bytesWritten_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, Span<T1> data)
-                where T1 : unmanaged
-            {
-                uint bytesWritten_val;
-                fixed (void* data_ptr = data)
-                {
-                    uint* bytesWritten = &bytesWritten_val;
-                    GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, T1[] data)
-                where T1 : unmanaged
-            {
-                uint bytesWritten_val;
-                fixed (void* data_ptr = data)
-                {
-                    uint* bytesWritten = &bytesWritten_val;
-                    GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, ref T1 data)
-                where T1 : unmanaged
-            {
-                uint bytesWritten_val;
-                fixed (void* data_ptr = &data)
-                {
-                    uint* bytesWritten = &bytesWritten_val;
-                    GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten);
-                }
-                return bytesWritten_val;
-            }
             /// <inheritdoc cref="GetPerfQueryIdByNameINTEL(byte*, uint*)"/>
             public static unsafe void GetPerfQueryIdByNameINTEL(byte* queryName, Span<uint> queryId)
             {
@@ -34413,36 +33779,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfQueryIdByNameINTEL(queryName, queryId_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryIdByNameINTEL(byte*, uint*)"/>
-            public static unsafe uint GetPerfQueryIdByNameINTEL(byte* queryName)
-            {
-                uint queryId_val;
-                uint* queryId = &queryId_val;
-                GetPerfQueryIdByNameINTEL(queryName, queryId);
-                return queryId_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, Span<uint> dataSize, Span<uint> noCounters, Span<uint> noInstances, Span<PerformanceQueryCapsMaskINTEL> capsMask)
-            {
-                string queryName;
-                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = capsMask)
-                {
-                    fixed (uint* noInstances_ptr = noInstances)
-                    {
-                        fixed (uint* noCounters_ptr = noCounters)
-                        {
-                            fixed (uint* dataSize_ptr = dataSize)
-                            {
-                                var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                                GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
-                                queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                            }
-                        }
-                    }
-                }
-                return queryName;
-            }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
             public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, Span<uint> dataSize, Span<uint> noCounters, Span<uint> noInstances, Span<PerformanceQueryCapsMaskINTEL> capsMask)
             {
@@ -34462,28 +33798,6 @@ namespace OpenTK.Graphics.OpenGL
                         }
                     }
                 }
-            }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, uint[] dataSize, uint[] noCounters, uint[] noInstances, PerformanceQueryCapsMaskINTEL[] capsMask)
-            {
-                string queryName;
-                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = capsMask)
-                {
-                    fixed (uint* noInstances_ptr = noInstances)
-                    {
-                        fixed (uint* noCounters_ptr = noCounters)
-                        {
-                            fixed (uint* dataSize_ptr = dataSize)
-                            {
-                                var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                                GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
-                                queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                                Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                            }
-                        }
-                    }
-                }
-                return queryName;
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
             public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, uint[] dataSize, uint[] noCounters, uint[] noInstances, PerformanceQueryCapsMaskINTEL[] capsMask)
@@ -34506,22 +33820,6 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
-            {
-                string queryName;
-                fixed (uint* dataSize_ptr = &dataSize)
-                fixed (uint* noCounters_ptr = &noCounters)
-                fixed (uint* noInstances_ptr = &noInstances)
-                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
-                {
-                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
-                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                }
-                return queryName;
-            }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
             public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
@@ -34535,64 +33833,8 @@ namespace OpenTK.Graphics.OpenGL
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe PerformanceQueryCapsMaskINTEL GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, Span<uint> dataSize, Span<uint> noCounters, Span<uint> noInstances)
-            {
-                PerformanceQueryCapsMaskINTEL capsMask_val;
-                fixed (uint* noInstances_ptr = noInstances)
-                {
-                    fixed (uint* noCounters_ptr = noCounters)
-                    {
-                        fixed (uint* dataSize_ptr = dataSize)
-                        {
-                            var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                            PerformanceQueryCapsMaskINTEL* capsMask = &capsMask_val;
-                            GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask);
-                            queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                            Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                        }
-                    }
-                }
-                return capsMask_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe PerformanceQueryCapsMaskINTEL GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, uint[] dataSize, uint[] noCounters, uint[] noInstances)
-            {
-                PerformanceQueryCapsMaskINTEL capsMask_val;
-                fixed (uint* noInstances_ptr = noInstances)
-                {
-                    fixed (uint* noCounters_ptr = noCounters)
-                    {
-                        fixed (uint* dataSize_ptr = dataSize)
-                        {
-                            var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                            PerformanceQueryCapsMaskINTEL* capsMask = &capsMask_val;
-                            GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask);
-                            queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                            Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                        }
-                    }
-                }
-                return capsMask_val;
-            }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe PerformanceQueryCapsMaskINTEL GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances)
-            {
-                PerformanceQueryCapsMaskINTEL capsMask_val;
-                fixed (uint* dataSize_ptr = &dataSize)
-                fixed (uint* noCounters_ptr = &noCounters)
-                fixed (uint* noInstances_ptr = &noInstances)
-                {
-                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                    PerformanceQueryCapsMaskINTEL* capsMask = &capsMask_val;
-                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask);
-                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
-                }
-                return capsMask_val;
-            }
             /// <inheritdoc cref="MapTexture2DINTEL(int, int, uint, int*, All*)"/>
-            public static unsafe void* MapTexture2DINTEL(int texture, int level, uint access, ref int stride, ref All layout)
+            public static unsafe void* MapTexture2DINTEL(int texture, int level, uint access, out int stride, out All layout)
             {
                 void* returnValue;
                 fixed (int* stride_ptr = &stride)
@@ -34899,14 +34141,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformfv(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformfv(int, int, int, float*)"/>
-            public static unsafe float GetnUniformf(int program, int location, int bufSize)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetnUniformfv(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformfvKHR(int, int, int, float*)"/>
             public static unsafe void GetnUniformfvKHR(int program, int location, int bufSize, Span<float> parameters)
             {
@@ -34930,14 +34164,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnUniformfvKHR(program, location, bufSize, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnUniformfvKHR(int, int, int, float*)"/>
-            public static unsafe float GetnUniformfvKHR(int program, int location, int bufSize)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetnUniformfvKHR(program, location, bufSize, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetnUniformiv(int, int, int, int*)"/>
             public static unsafe void GetnUniformi(int program, int location, int bufSize, Span<int> parameters)
@@ -34963,14 +34189,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformiv(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformiv(int, int, int, int*)"/>
-            public static unsafe int GetnUniformi(int program, int location, int bufSize)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetnUniformiv(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformivKHR(int, int, int, int*)"/>
             public static unsafe void GetnUniformivKHR(int program, int location, int bufSize, Span<int> parameters)
             {
@@ -34994,14 +34212,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetnUniformivKHR(program, location, bufSize, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetnUniformivKHR(int, int, int, int*)"/>
-            public static unsafe int GetnUniformivKHR(int program, int location, int bufSize)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetnUniformivKHR(program, location, bufSize, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetnUniformuiv(int, int, int, uint*)"/>
             public static unsafe void GetnUniformui(int program, int location, int bufSize, Span<uint> parameters)
@@ -35027,14 +34237,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformuiv(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformuiv(int, int, int, uint*)"/>
-            public static unsafe uint GetnUniformui(int program, int location, int bufSize)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetnUniformuiv(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetnUniformuivKHR(int, int, int, uint*)"/>
             public static unsafe void GetnUniformuivKHR(int program, int location, int bufSize, Span<uint> parameters)
             {
@@ -35059,16 +34261,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetnUniformuivKHR(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformuivKHR(int, int, int, uint*)"/>
-            public static unsafe uint GetnUniformuivKHR(int program, int location, int bufSize)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetnUniformuivKHR(program, location, bufSize, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length)
+            public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -35081,7 +34275,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -35164,7 +34358,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -35178,7 +34372,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -35190,7 +34384,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35207,7 +34401,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabel<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -35222,7 +34416,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35239,7 +34433,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabel<T1>(T1[] ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -35254,7 +34448,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35269,7 +34463,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -35282,7 +34476,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -35296,7 +34490,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -35308,7 +34502,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35325,7 +34519,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabelKHR<T1>(ReadOnlySpan<T1> ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -35340,7 +34534,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35357,7 +34551,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabelKHR<T1>(T1[] ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (int* length_ptr = &length)
@@ -35372,7 +34566,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, ref int length)
+            public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -35387,7 +34581,7 @@ namespace OpenTK.Graphics.OpenGL
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -35403,27 +34597,6 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
             {
                 GetPointerv(pname, parameters);
-            }
-            /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
-            public static unsafe void* GetPointer(GetPointervPName pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetPointerv(pname, parameters);
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetPointervKHR(All, void**)"/>
-            public static unsafe void GetPointervKHR(All pname, void** parameters)
-            {
-                GetPointervKHR_(pname, parameters);
-            }
-            /// <inheritdoc cref="GetPointervKHR(All, void**)"/>
-            public static unsafe void* GetPointervKHR(All pname)
-            {
-                void* parameters_val;
-                void** parameters = &parameters_val;
-                GetPointervKHR_(pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="ObjectLabel(ObjectIdentifier, uint, int, byte*)"/>
             public static unsafe void ObjectLabel(ObjectIdentifier identifier, uint name, int length, string label)
@@ -35621,20 +34794,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFramebufferParameterivMESA(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe void GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname, ref int parameters)
+            public static unsafe int GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFramebufferParameterivMESA(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFramebufferParameterivMESA(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe void GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferParameterivMESA(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFramebufferParameterivMESA(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
-            public static unsafe int GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFramebufferParameterivMESA(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="WindowPos2dvMESA(double*)"/>
             public static unsafe void WindowPos2dvMESA(ReadOnlySpan<double> v)
@@ -36806,7 +35981,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetActiveVaryingNV(int, uint, int, int*, int*, All*, byte*)"/>
-            public static unsafe string GetActiveVaryingNV(int program, uint index, int bufSize, ref int length, ref int size, ref All type)
+            public static unsafe string GetActiveVaryingNV(int program, uint index, int bufSize, out int length, out int size, out All type)
             {
                 string name;
                 fixed (int* length_ptr = &length)
@@ -36821,7 +35996,7 @@ namespace OpenTK.Graphics.OpenGL
                 return name;
             }
             /// <inheritdoc cref="GetActiveVaryingNV(int, uint, int, int*, int*, All*, byte*)"/>
-            public static unsafe void GetActiveVaryingNV(int program, uint index, int bufSize, ref int length, ref int size, ref All type, out string name)
+            public static unsafe void GetActiveVaryingNV(int program, uint index, int bufSize, out int length, out int size, out All type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
@@ -36850,20 +36025,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetBufferParameterui64vNV(BufferTarget, All, ulong*)"/>
-            public static unsafe void GetBufferParameterui64vNV(BufferTarget target, All pname, ref ulong parameters)
+            public static unsafe ulong GetBufferParameterui64vNV(BufferTarget target, All pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetBufferParameterui64vNV(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetBufferParameterui64vNV(BufferTarget, All, ulong*)"/>
+            public static unsafe void GetBufferParameterui64vNV(BufferTarget target, All pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
                     GetBufferParameterui64vNV(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetBufferParameterui64vNV(BufferTarget, All, ulong*)"/>
-            public static unsafe ulong GetBufferParameterui64vNV(BufferTarget target, All pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetBufferParameterui64vNV(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCombinerInputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, float*)"/>
             public static unsafe void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, Span<float> parameters)
@@ -36882,20 +36059,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCombinerInputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, float*)"/>
-            public static unsafe void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, ref float parameters)
+            public static unsafe float GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetCombinerInputParameterfvNV(stage, portion, variable, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetCombinerInputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, float*)"/>
+            public static unsafe void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetCombinerInputParameterfvNV(stage, portion, variable, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetCombinerInputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, float*)"/>
-            public static unsafe float GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetCombinerInputParameterfvNV(stage, portion, variable, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCombinerInputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, int*)"/>
             public static unsafe void GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, Span<int> parameters)
@@ -36914,20 +36093,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCombinerInputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, int*)"/>
-            public static unsafe void GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, ref int parameters)
+            public static unsafe int GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetCombinerInputParameterivNV(stage, portion, variable, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetCombinerInputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, int*)"/>
+            public static unsafe void GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetCombinerInputParameterivNV(stage, portion, variable, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetCombinerInputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerVariableNV, CombinerParameterNV, int*)"/>
-            public static unsafe int GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetCombinerInputParameterivNV(stage, portion, variable, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCombinerOutputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, float*)"/>
             public static unsafe void GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, Span<float> parameters)
@@ -36946,20 +36127,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCombinerOutputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, float*)"/>
-            public static unsafe void GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, ref float parameters)
+            public static unsafe float GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetCombinerOutputParameterfvNV(stage, portion, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetCombinerOutputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, float*)"/>
+            public static unsafe void GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetCombinerOutputParameterfvNV(stage, portion, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetCombinerOutputParameterfvNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, float*)"/>
-            public static unsafe float GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetCombinerOutputParameterfvNV(stage, portion, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCombinerOutputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, int*)"/>
             public static unsafe void GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, Span<int> parameters)
@@ -36978,20 +36161,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCombinerOutputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, int*)"/>
-            public static unsafe void GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, ref int parameters)
+            public static unsafe int GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetCombinerOutputParameterivNV(stage, portion, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetCombinerOutputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, int*)"/>
+            public static unsafe void GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetCombinerOutputParameterivNV(stage, portion, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetCombinerOutputParameterivNV(CombinerStageNV, CombinerPortionNV, CombinerParameterNV, int*)"/>
-            public static unsafe int GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetCombinerOutputParameterivNV(stage, portion, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCombinerStageParameterfvNV(CombinerStageNV, CombinerParameterNV, float*)"/>
             public static unsafe void GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, Span<float> parameters)
@@ -37010,20 +36195,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetCombinerStageParameterfvNV(CombinerStageNV, CombinerParameterNV, float*)"/>
-            public static unsafe void GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, ref float parameters)
+            public static unsafe float GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetCombinerStageParameterfvNV(stage, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetCombinerStageParameterfvNV(CombinerStageNV, CombinerParameterNV, float*)"/>
+            public static unsafe void GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetCombinerStageParameterfvNV(stage, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetCombinerStageParameterfvNV(CombinerStageNV, CombinerParameterNV, float*)"/>
-            public static unsafe float GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetCombinerStageParameterfvNV(stage, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetCoverageModulationTableNV(int, float*)"/>
             public static unsafe void GetCoverageModulationTableNV(int bufSize, Span<float> v)
@@ -37049,14 +36236,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetCoverageModulationTableNV(bufSize, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetCoverageModulationTableNV(int, float*)"/>
-            public static unsafe float GetCoverageModulationTableNV(int bufSize)
-            {
-                float v_val;
-                float* v = &v_val;
-                GetCoverageModulationTableNV(bufSize, v);
-                return v_val;
-            }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
             public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, Span<int> parameters)
             {
@@ -37074,20 +36253,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
-            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, ref int parameters)
+            public static unsafe int GetFenceivNV(uint fence, FenceParameterNameNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFenceivNV(fence, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
+            public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFenceivNV(fence, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
-            public static unsafe int GetFenceivNV(uint fence, FenceParameterNameNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFenceivNV(fence, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFinalCombinerInputParameterfvNV(CombinerVariableNV, CombinerParameterNV, float*)"/>
             public static unsafe void GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname, Span<float> parameters)
@@ -37106,20 +36287,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFinalCombinerInputParameterfvNV(CombinerVariableNV, CombinerParameterNV, float*)"/>
-            public static unsafe void GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname, ref float parameters)
+            public static unsafe float GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetFinalCombinerInputParameterfvNV(variable, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFinalCombinerInputParameterfvNV(CombinerVariableNV, CombinerParameterNV, float*)"/>
+            public static unsafe void GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetFinalCombinerInputParameterfvNV(variable, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFinalCombinerInputParameterfvNV(CombinerVariableNV, CombinerParameterNV, float*)"/>
-            public static unsafe float GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetFinalCombinerInputParameterfvNV(variable, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFinalCombinerInputParameterivNV(CombinerVariableNV, CombinerParameterNV, int*)"/>
             public static unsafe void GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname, Span<int> parameters)
@@ -37138,20 +36321,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFinalCombinerInputParameterivNV(CombinerVariableNV, CombinerParameterNV, int*)"/>
-            public static unsafe void GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname, ref int parameters)
+            public static unsafe int GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFinalCombinerInputParameterivNV(variable, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFinalCombinerInputParameterivNV(CombinerVariableNV, CombinerParameterNV, int*)"/>
+            public static unsafe void GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFinalCombinerInputParameterivNV(variable, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFinalCombinerInputParameterivNV(CombinerVariableNV, CombinerParameterNV, int*)"/>
-            public static unsafe int GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFinalCombinerInputParameterivNV(variable, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetIntegerui64i_vNV(All, uint, ulong*)"/>
             public static unsafe void GetIntegerui64i_vNV(All value, uint index, Span<ulong> result)
@@ -37170,20 +36355,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetIntegerui64i_vNV(All, uint, ulong*)"/>
-            public static unsafe void GetIntegerui64i_vNV(All value, uint index, ref ulong result)
+            public static unsafe ulong GetIntegerui64i_vNV(All value, uint index)
+            {
+                ulong result;
+                ulong* result_ptr = &result;
+                {
+                    GetIntegerui64i_vNV(value, index, result_ptr);
+                }
+                return result;
+            }
+            /// <inheritdoc cref="GetIntegerui64i_vNV(All, uint, ulong*)"/>
+            public static unsafe void GetIntegerui64i_vNV(All value, uint index, out ulong result)
             {
                 fixed (ulong* result_ptr = &result)
                 {
                     GetIntegerui64i_vNV(value, index, result_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetIntegerui64i_vNV(All, uint, ulong*)"/>
-            public static unsafe ulong GetIntegerui64i_vNV(All value, uint index)
-            {
-                ulong result_val;
-                ulong* result = &result_val;
-                GetIntegerui64i_vNV(value, index, result);
-                return result_val;
             }
             /// <inheritdoc cref="GetIntegerui64vNV(All, ulong*)"/>
             public static unsafe void GetIntegerui64vNV(All value, Span<ulong> result)
@@ -37202,20 +36389,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetIntegerui64vNV(All, ulong*)"/>
-            public static unsafe void GetIntegerui64vNV(All value, ref ulong result)
+            public static unsafe ulong GetIntegerui64vNV(All value)
+            {
+                ulong result;
+                ulong* result_ptr = &result;
+                {
+                    GetIntegerui64vNV(value, result_ptr);
+                }
+                return result;
+            }
+            /// <inheritdoc cref="GetIntegerui64vNV(All, ulong*)"/>
+            public static unsafe void GetIntegerui64vNV(All value, out ulong result)
             {
                 fixed (ulong* result_ptr = &result)
                 {
                     GetIntegerui64vNV(value, result_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetIntegerui64vNV(All, ulong*)"/>
-            public static unsafe ulong GetIntegerui64vNV(All value)
-            {
-                ulong result_val;
-                ulong* result = &result_val;
-                GetIntegerui64vNV(value, result);
-                return result_val;
             }
             /// <inheritdoc cref="GetInternalformatSampleivNV(TextureTarget, InternalFormat, int, InternalFormatPName, int, int*)"/>
             public static unsafe void GetInternalformatSampleivNV(TextureTarget target, InternalFormat internalformat, int samples, InternalFormatPName pname, int count, Span<int> parameters)
@@ -37241,14 +36430,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetInternalformatSampleivNV(target, internalformat, samples, pname, count, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetInternalformatSampleivNV(TextureTarget, InternalFormat, int, InternalFormatPName, int, int*)"/>
-            public static unsafe int GetInternalformatSampleivNV(TextureTarget target, InternalFormat internalformat, int samples, InternalFormatPName pname, int count)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetInternalformatSampleivNV(target, internalformat, samples, pname, count, parameters);
-                return parameters_val;
-            }
             /// <inheritdoc cref="GetMapAttribParameterfvNV(EvalTargetNV, uint, MapAttribParameterNV, float*)"/>
             public static unsafe void GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, Span<float> parameters)
             {
@@ -37266,20 +36447,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapAttribParameterfvNV(EvalTargetNV, uint, MapAttribParameterNV, float*)"/>
-            public static unsafe void GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, ref float parameters)
+            public static unsafe float GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMapAttribParameterfvNV(target, index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMapAttribParameterfvNV(EvalTargetNV, uint, MapAttribParameterNV, float*)"/>
+            public static unsafe void GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMapAttribParameterfvNV(target, index, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMapAttribParameterfvNV(EvalTargetNV, uint, MapAttribParameterNV, float*)"/>
-            public static unsafe float GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMapAttribParameterfvNV(target, index, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMapAttribParameterivNV(EvalTargetNV, uint, MapAttribParameterNV, int*)"/>
             public static unsafe void GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, Span<int> parameters)
@@ -37298,20 +36481,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapAttribParameterivNV(EvalTargetNV, uint, MapAttribParameterNV, int*)"/>
-            public static unsafe void GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, ref int parameters)
+            public static unsafe int GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMapAttribParameterivNV(target, index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMapAttribParameterivNV(EvalTargetNV, uint, MapAttribParameterNV, int*)"/>
+            public static unsafe void GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMapAttribParameterivNV(target, index, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMapAttribParameterivNV(EvalTargetNV, uint, MapAttribParameterNV, int*)"/>
-            public static unsafe int GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMapAttribParameterivNV(target, index, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMapControlPointsNV(EvalTargetNV, uint, MapTypeNV, int, int, bool, void*)"/>
             public static unsafe void GetMapControlPointsNV(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, IntPtr points)
@@ -37338,7 +36523,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapControlPointsNV(EvalTargetNV, uint, MapTypeNV, int, int, bool, void*)"/>
-            public static unsafe void GetMapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, ref T1 points)
+            public static unsafe T1 GetMapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed)
+                where T1 : unmanaged
+            {
+                T1 points;
+                void* points_ptr = &points;
+                {
+                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed, points_ptr);
+                }
+                return points;
+            }
+            /// <inheritdoc cref="GetMapControlPointsNV(EvalTargetNV, uint, MapTypeNV, int, int, bool, void*)"/>
+            public static unsafe void GetMapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, out T1 points)
                 where T1 : unmanaged
             {
                 fixed (void* points_ptr = &points)
@@ -37363,20 +36559,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapParameterfvNV(EvalTargetNV, MapParameterNV, float*)"/>
-            public static unsafe void GetMapParameterfvNV(EvalTargetNV target, MapParameterNV pname, ref float parameters)
+            public static unsafe float GetMapParameterfvNV(EvalTargetNV target, MapParameterNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetMapParameterfvNV(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMapParameterfvNV(EvalTargetNV, MapParameterNV, float*)"/>
+            public static unsafe void GetMapParameterfvNV(EvalTargetNV target, MapParameterNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetMapParameterfvNV(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMapParameterfvNV(EvalTargetNV, MapParameterNV, float*)"/>
-            public static unsafe float GetMapParameterfvNV(EvalTargetNV target, MapParameterNV pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetMapParameterfvNV(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMapParameterivNV(EvalTargetNV, MapParameterNV, int*)"/>
             public static unsafe void GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname, Span<int> parameters)
@@ -37395,20 +36593,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapParameterivNV(EvalTargetNV, MapParameterNV, int*)"/>
-            public static unsafe void GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname, ref int parameters)
+            public static unsafe int GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMapParameterivNV(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMapParameterivNV(EvalTargetNV, MapParameterNV, int*)"/>
+            public static unsafe void GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMapParameterivNV(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMapParameterivNV(EvalTargetNV, MapParameterNV, int*)"/>
-            public static unsafe int GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMapParameterivNV(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMemoryObjectDetachedResourcesuivNV(uint, All, int, int, uint*)"/>
             public static unsafe void GetMemoryObjectDetachedResourcesuivNV(uint memory, All pname, int first, int count, Span<uint> parameters)
@@ -37433,14 +36633,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetMemoryObjectDetachedResourcesuivNV(memory, pname, first, count, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMemoryObjectDetachedResourcesuivNV(uint, All, int, int, uint*)"/>
-            public static unsafe uint GetMemoryObjectDetachedResourcesuivNV(uint memory, All pname, int first, int count)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetMemoryObjectDetachedResourcesuivNV(memory, pname, first, count, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMultisamplefvNV(GetMultisamplePNameNV, uint, float*)"/>
             public static unsafe void GetMultisamplefvNV(GetMultisamplePNameNV pname, uint index, Span<float> val)
@@ -37483,20 +36675,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetNamedBufferParameterui64vNV(int, BufferPName, ulong*)"/>
-            public static unsafe void GetNamedBufferParameterui64vNV(int buffer, BufferPName pname, ref ulong parameters)
+            public static unsafe ulong GetNamedBufferParameterui64vNV(int buffer, BufferPName pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetNamedBufferParameterui64vNV(buffer, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetNamedBufferParameterui64vNV(int, BufferPName, ulong*)"/>
+            public static unsafe void GetNamedBufferParameterui64vNV(int buffer, BufferPName pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
                     GetNamedBufferParameterui64vNV(buffer, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetNamedBufferParameterui64vNV(int, BufferPName, ulong*)"/>
-            public static unsafe ulong GetNamedBufferParameterui64vNV(int buffer, BufferPName pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetNamedBufferParameterui64vNV(buffer, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetOcclusionQueryivNV(uint, OcclusionQueryParameterNameNV, int*)"/>
             public static unsafe void GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname, Span<int> parameters)
@@ -37515,20 +36709,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetOcclusionQueryivNV(uint, OcclusionQueryParameterNameNV, int*)"/>
-            public static unsafe void GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname, ref int parameters)
+            public static unsafe int GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetOcclusionQueryivNV(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetOcclusionQueryivNV(uint, OcclusionQueryParameterNameNV, int*)"/>
+            public static unsafe void GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetOcclusionQueryivNV(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetOcclusionQueryivNV(uint, OcclusionQueryParameterNameNV, int*)"/>
-            public static unsafe int GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetOcclusionQueryivNV(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetOcclusionQueryuivNV(uint, OcclusionQueryParameterNameNV, uint*)"/>
             public static unsafe void GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname, Span<uint> parameters)
@@ -37547,20 +36743,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetOcclusionQueryuivNV(uint, OcclusionQueryParameterNameNV, uint*)"/>
-            public static unsafe void GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname, ref uint parameters)
+            public static unsafe uint GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetOcclusionQueryuivNV(id, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetOcclusionQueryuivNV(uint, OcclusionQueryParameterNameNV, uint*)"/>
+            public static unsafe void GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetOcclusionQueryuivNV(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetOcclusionQueryuivNV(uint, OcclusionQueryParameterNameNV, uint*)"/>
-            public static unsafe uint GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetOcclusionQueryuivNV(id, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetPathColorGenfvNV(PathColor, PathGenMode, float*)"/>
             public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, Span<float> value)
@@ -37579,20 +36777,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathColorGenfvNV(PathColor, PathGenMode, float*)"/>
-            public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, ref float value)
+            public static unsafe float GetPathColorGenfvNV(PathColor color, PathGenMode pname)
+            {
+                float value;
+                float* value_ptr = &value;
+                {
+                    GetPathColorGenfvNV(color, pname, value_ptr);
+                }
+                return value;
+            }
+            /// <inheritdoc cref="GetPathColorGenfvNV(PathColor, PathGenMode, float*)"/>
+            public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, out float value)
             {
                 fixed (float* value_ptr = &value)
                 {
                     GetPathColorGenfvNV(color, pname, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathColorGenfvNV(PathColor, PathGenMode, float*)"/>
-            public static unsafe float GetPathColorGenfvNV(PathColor color, PathGenMode pname)
-            {
-                float value_val;
-                float* value = &value_val;
-                GetPathColorGenfvNV(color, pname, value);
-                return value_val;
             }
             /// <inheritdoc cref="GetPathColorGenivNV(PathColor, PathGenMode, int*)"/>
             public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, Span<int> value)
@@ -37611,20 +36811,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathColorGenivNV(PathColor, PathGenMode, int*)"/>
-            public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, ref int value)
+            public static unsafe int GetPathColorGenivNV(PathColor color, PathGenMode pname)
+            {
+                int value;
+                int* value_ptr = &value;
+                {
+                    GetPathColorGenivNV(color, pname, value_ptr);
+                }
+                return value;
+            }
+            /// <inheritdoc cref="GetPathColorGenivNV(PathColor, PathGenMode, int*)"/>
+            public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, out int value)
             {
                 fixed (int* value_ptr = &value)
                 {
                     GetPathColorGenivNV(color, pname, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathColorGenivNV(PathColor, PathGenMode, int*)"/>
-            public static unsafe int GetPathColorGenivNV(PathColor color, PathGenMode pname)
-            {
-                int value_val;
-                int* value = &value_val;
-                GetPathColorGenivNV(color, pname, value);
-                return value_val;
             }
             /// <inheritdoc cref="GetPathCommandsNV(uint, byte*)"/>
             public static unsafe void GetPathCommandsNV(uint path, Span<byte> commands)
@@ -37643,20 +36845,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathCommandsNV(uint, byte*)"/>
-            public static unsafe void GetPathCommandsNV(uint path, ref byte commands)
+            public static unsafe byte GetPathCommandsNV(uint path)
+            {
+                byte commands;
+                byte* commands_ptr = &commands;
+                {
+                    GetPathCommandsNV(path, commands_ptr);
+                }
+                return commands;
+            }
+            /// <inheritdoc cref="GetPathCommandsNV(uint, byte*)"/>
+            public static unsafe void GetPathCommandsNV(uint path, out byte commands)
             {
                 fixed (byte* commands_ptr = &commands)
                 {
                     GetPathCommandsNV(path, commands_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathCommandsNV(uint, byte*)"/>
-            public static unsafe byte GetPathCommandsNV(uint path)
-            {
-                byte commands_val;
-                byte* commands = &commands_val;
-                GetPathCommandsNV(path, commands);
-                return commands_val;
             }
             /// <inheritdoc cref="GetPathCoordsNV(uint, float*)"/>
             public static unsafe void GetPathCoordsNV(uint path, Span<float> coords)
@@ -37675,20 +36879,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathCoordsNV(uint, float*)"/>
-            public static unsafe void GetPathCoordsNV(uint path, ref float coords)
+            public static unsafe float GetPathCoordsNV(uint path)
+            {
+                float coords;
+                float* coords_ptr = &coords;
+                {
+                    GetPathCoordsNV(path, coords_ptr);
+                }
+                return coords;
+            }
+            /// <inheritdoc cref="GetPathCoordsNV(uint, float*)"/>
+            public static unsafe void GetPathCoordsNV(uint path, out float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
                     GetPathCoordsNV(path, coords_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathCoordsNV(uint, float*)"/>
-            public static unsafe float GetPathCoordsNV(uint path)
-            {
-                float coords_val;
-                float* coords = &coords_val;
-                GetPathCoordsNV(path, coords);
-                return coords_val;
             }
             /// <inheritdoc cref="GetPathDashArrayNV(uint, float*)"/>
             public static unsafe void GetPathDashArrayNV(uint path, Span<float> dashArray)
@@ -37707,20 +36913,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathDashArrayNV(uint, float*)"/>
-            public static unsafe void GetPathDashArrayNV(uint path, ref float dashArray)
+            public static unsafe float GetPathDashArrayNV(uint path)
+            {
+                float dashArray;
+                float* dashArray_ptr = &dashArray;
+                {
+                    GetPathDashArrayNV(path, dashArray_ptr);
+                }
+                return dashArray;
+            }
+            /// <inheritdoc cref="GetPathDashArrayNV(uint, float*)"/>
+            public static unsafe void GetPathDashArrayNV(uint path, out float dashArray)
             {
                 fixed (float* dashArray_ptr = &dashArray)
                 {
                     GetPathDashArrayNV(path, dashArray_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathDashArrayNV(uint, float*)"/>
-            public static unsafe float GetPathDashArrayNV(uint path)
-            {
-                float dashArray_val;
-                float* dashArray = &dashArray_val;
-                GetPathDashArrayNV(path, dashArray);
-                return dashArray_val;
             }
             /// <inheritdoc cref="GetPathMetricRangeNV(PathMetricMask, uint, int, int, float*)"/>
             public static unsafe void GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride, Span<float> metrics)
@@ -37739,20 +36947,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathMetricRangeNV(PathMetricMask, uint, int, int, float*)"/>
-            public static unsafe void GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride, ref float metrics)
+            public static unsafe float GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride)
+            {
+                float metrics;
+                float* metrics_ptr = &metrics;
+                {
+                    GetPathMetricRangeNV(metricQueryMask, firstPathName, numPaths, stride, metrics_ptr);
+                }
+                return metrics;
+            }
+            /// <inheritdoc cref="GetPathMetricRangeNV(PathMetricMask, uint, int, int, float*)"/>
+            public static unsafe void GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride, out float metrics)
             {
                 fixed (float* metrics_ptr = &metrics)
                 {
                     GetPathMetricRangeNV(metricQueryMask, firstPathName, numPaths, stride, metrics_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathMetricRangeNV(PathMetricMask, uint, int, int, float*)"/>
-            public static unsafe float GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride)
-            {
-                float metrics_val;
-                float* metrics = &metrics_val;
-                GetPathMetricRangeNV(metricQueryMask, firstPathName, numPaths, stride, metrics);
-                return metrics_val;
             }
             /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
             public static unsafe void GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int stride, Span<float> metrics)
@@ -37773,7 +36983,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe void GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int stride, ref float metrics)
+            public static unsafe float GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int stride)
+            {
+                float metrics;
+                float* metrics_ptr = &metrics;
+                {
+                    void* paths_vptr = (void*)paths;
+                    GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_vptr, pathBase, stride, metrics_ptr);
+                }
+                return metrics;
+            }
+            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
+            public static unsafe void GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int stride, out float metrics)
             {
                 fixed (float* metrics_ptr = &metrics)
                 {
@@ -37806,7 +37027,19 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe void GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride, ref float metrics)
+            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride)
+                where T1 : unmanaged
+            {
+                float metrics;
+                float* metrics_ptr = &metrics;
+                fixed (void* paths_ptr = &paths)
+                {
+                    GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_ptr, pathBase, stride, metrics_ptr);
+                }
+                return metrics;
+            }
+            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
+            public static unsafe void GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride, out float metrics)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -37814,51 +37047,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_ptr, pathBase, stride, metrics_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe float GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int stride)
-            {
-                float metrics_val;
-                void* paths_vptr = (void*)paths;
-                float* metrics = &metrics_val;
-                GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_vptr, pathBase, stride, metrics);
-                return metrics_val;
-            }
-            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, int stride)
-                where T1 : unmanaged
-            {
-                float metrics_val;
-                fixed (void* paths_ptr = paths)
-                {
-                    float* metrics = &metrics_val;
-                    GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_ptr, pathBase, stride, metrics);
-                }
-                return metrics_val;
-            }
-            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, int stride)
-                where T1 : unmanaged
-            {
-                float metrics_val;
-                fixed (void* paths_ptr = paths)
-                {
-                    float* metrics = &metrics_val;
-                    GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_ptr, pathBase, stride, metrics);
-                }
-                return metrics_val;
-            }
-            /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride)
-                where T1 : unmanaged
-            {
-                float metrics_val;
-                fixed (void* paths_ptr = &paths)
-                {
-                    float* metrics = &metrics_val;
-                    GetPathMetricsNV(metricQueryMask, numPaths, pathNameType, paths_ptr, pathBase, stride, metrics);
-                }
-                return metrics_val;
             }
             /// <inheritdoc cref="GetPathParameterfvNV(uint, PathParameter, float*)"/>
             public static unsafe void GetPathParameterfvNV(uint path, PathParameter pname, Span<float> value)
@@ -37927,7 +37115,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe void GetPathSpacingNV(PathListMode pathListMode, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, ref float returnedSpacing)
+            public static unsafe float GetPathSpacingNV(PathListMode pathListMode, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
+            {
+                float returnedSpacing;
+                float* returnedSpacing_ptr = &returnedSpacing;
+                {
+                    void* paths_vptr = (void*)paths;
+                    GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_vptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing_ptr);
+                }
+                return returnedSpacing;
+            }
+            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
+            public static unsafe void GetPathSpacingNV(PathListMode pathListMode, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, out float returnedSpacing)
             {
                 fixed (float* returnedSpacing_ptr = &returnedSpacing)
                 {
@@ -37960,7 +37159,19 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe void GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, ref float returnedSpacing)
+            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
+                where T1 : unmanaged
+            {
+                float returnedSpacing;
+                float* returnedSpacing_ptr = &returnedSpacing;
+                fixed (void* paths_ptr = &paths)
+                {
+                    GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_ptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing_ptr);
+                }
+                return returnedSpacing;
+            }
+            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
+            public static unsafe void GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, out float returnedSpacing)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -37968,51 +37179,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_ptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe float GetPathSpacingNV(PathListMode pathListMode, int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
-            {
-                float returnedSpacing_val;
-                void* paths_vptr = (void*)paths;
-                float* returnedSpacing = &returnedSpacing_val;
-                GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_vptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing);
-                return returnedSpacing_val;
-            }
-            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
-                where T1 : unmanaged
-            {
-                float returnedSpacing_val;
-                fixed (void* paths_ptr = paths)
-                {
-                    float* returnedSpacing = &returnedSpacing_val;
-                    GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_ptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing);
-                }
-                return returnedSpacing_val;
-            }
-            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
-                where T1 : unmanaged
-            {
-                float returnedSpacing_val;
-                fixed (void* paths_ptr = paths)
-                {
-                    float* returnedSpacing = &returnedSpacing_val;
-                    GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_ptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing);
-                }
-                return returnedSpacing_val;
-            }
-            /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
-                where T1 : unmanaged
-            {
-                float returnedSpacing_val;
-                fixed (void* paths_ptr = &paths)
-                {
-                    float* returnedSpacing = &returnedSpacing_val;
-                    GetPathSpacingNV(pathListMode, numPaths, pathNameType, paths_ptr, pathBase, advanceScale, kerningScale, transformType, returnedSpacing);
-                }
-                return returnedSpacing_val;
             }
             /// <inheritdoc cref="GetPathTexGenfvNV(TextureUnit, PathGenMode, float*)"/>
             public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, Span<float> value)
@@ -38031,20 +37197,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathTexGenfvNV(TextureUnit, PathGenMode, float*)"/>
-            public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, ref float value)
+            public static unsafe float GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname)
+            {
+                float value;
+                float* value_ptr = &value;
+                {
+                    GetPathTexGenfvNV(texCoordSet, pname, value_ptr);
+                }
+                return value;
+            }
+            /// <inheritdoc cref="GetPathTexGenfvNV(TextureUnit, PathGenMode, float*)"/>
+            public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, out float value)
             {
                 fixed (float* value_ptr = &value)
                 {
                     GetPathTexGenfvNV(texCoordSet, pname, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathTexGenfvNV(TextureUnit, PathGenMode, float*)"/>
-            public static unsafe float GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname)
-            {
-                float value_val;
-                float* value = &value_val;
-                GetPathTexGenfvNV(texCoordSet, pname, value);
-                return value_val;
             }
             /// <inheritdoc cref="GetPathTexGenivNV(TextureUnit, PathGenMode, int*)"/>
             public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, Span<int> value)
@@ -38063,20 +37231,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPathTexGenivNV(TextureUnit, PathGenMode, int*)"/>
-            public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, ref int value)
+            public static unsafe int GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname)
+            {
+                int value;
+                int* value_ptr = &value;
+                {
+                    GetPathTexGenivNV(texCoordSet, pname, value_ptr);
+                }
+                return value;
+            }
+            /// <inheritdoc cref="GetPathTexGenivNV(TextureUnit, PathGenMode, int*)"/>
+            public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, out int value)
             {
                 fixed (int* value_ptr = &value)
                 {
                     GetPathTexGenivNV(texCoordSet, pname, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPathTexGenivNV(TextureUnit, PathGenMode, int*)"/>
-            public static unsafe int GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname)
-            {
-                int value_val;
-                int* value = &value_val;
-                GetPathTexGenivNV(texCoordSet, pname, value);
-                return value_val;
             }
             /// <inheritdoc cref="GetProgramEnvParameterIivNV(ProgramTarget, uint, int*)"/>
             public static unsafe void GetProgramEnvParameterIivNV(ProgramTarget target, uint index, Span<int> parameters)
@@ -38309,7 +37479,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<All> props, int count, ref int length, Span<float> parameters)
+            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<All> props, int count, out int length, Span<float> parameters)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -38323,7 +37493,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, All[] props, int count, ref int length, float[] parameters)
+            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, All[] props, int count, out int length, float[] parameters)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -38337,7 +37507,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, in All props, int count, ref int length, ref float parameters)
+            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, in All props, int count, out int length, ref float parameters)
             {
                 fixed (All* props_ptr = &props)
                 fixed (int* length_ptr = &length)
@@ -38345,46 +37515,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetProgramResourcefvNV(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe float GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, ReadOnlySpan<All> props, int count, ref int length)
-            {
-                float parameters_val;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (All* props_ptr = props)
-                    {
-                        float* parameters = &parameters_val;
-                        GetProgramResourcefvNV(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                    }
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe float GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, All[] props, int count, ref int length)
-            {
-                float parameters_val;
-                fixed (int* length_ptr = &length)
-                {
-                    fixed (All* props_ptr = props)
-                    {
-                        float* parameters = &parameters_val;
-                        GetProgramResourcefvNV(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                    }
-                }
-                return parameters_val;
-            }
-            /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe float GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, in All props, int count, ref int length)
-            {
-                float parameters_val;
-                fixed (All* props_ptr = &props)
-                fixed (int* length_ptr = &length)
-                {
-                    float* parameters = &parameters_val;
-                    GetProgramResourcefvNV(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters);
-                }
-                return parameters_val;
             }
             /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
             public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, Span<byte> program)
@@ -38403,20 +37533,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, ref byte program)
+            public static unsafe byte GetProgramStringNV(int id, VertexAttribEnumNV pname)
+            {
+                byte program;
+                byte* program_ptr = &program;
+                {
+                    GetProgramStringNV(id, pname, program_ptr);
+                }
+                return program;
+            }
+            /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
+            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, out byte program)
             {
                 fixed (byte* program_ptr = &program)
                 {
                     GetProgramStringNV(id, pname, program_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe byte GetProgramStringNV(int id, VertexAttribEnumNV pname)
-            {
-                byte program_val;
-                byte* program = &program_val;
-                GetProgramStringNV(id, pname, program);
-                return program_val;
             }
             /// <inheritdoc cref="GetProgramSubroutineParameteruivNV(All, uint, uint*)"/>
             public static unsafe void GetProgramSubroutineParameteruivNV(All target, uint index, Span<uint> param)
@@ -38435,20 +37567,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramSubroutineParameteruivNV(All, uint, uint*)"/>
-            public static unsafe void GetProgramSubroutineParameteruivNV(All target, uint index, ref uint param)
+            public static unsafe uint GetProgramSubroutineParameteruivNV(All target, uint index)
+            {
+                uint param;
+                uint* param_ptr = &param;
+                {
+                    GetProgramSubroutineParameteruivNV(target, index, param_ptr);
+                }
+                return param;
+            }
+            /// <inheritdoc cref="GetProgramSubroutineParameteruivNV(All, uint, uint*)"/>
+            public static unsafe void GetProgramSubroutineParameteruivNV(All target, uint index, out uint param)
             {
                 fixed (uint* param_ptr = &param)
                 {
                     GetProgramSubroutineParameteruivNV(target, index, param_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetProgramSubroutineParameteruivNV(All, uint, uint*)"/>
-            public static unsafe uint GetProgramSubroutineParameteruivNV(All target, uint index)
-            {
-                uint param_val;
-                uint* param = &param_val;
-                GetProgramSubroutineParameteruivNV(target, index, param);
-                return param_val;
             }
             /// <inheritdoc cref="GetSemaphoreParameterivNV(uint, SemaphoreParameterName, int*)"/>
             public static unsafe void GetSemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname, Span<int> parameters)
@@ -38474,29 +37608,23 @@ namespace OpenTK.Graphics.OpenGL
                     GetSemaphoreParameterivNV(semaphore, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetSemaphoreParameterivNV(uint, SemaphoreParameterName, int*)"/>
-            public static unsafe int GetSemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname)
+            /// <inheritdoc cref="GetShadingRateImagePaletteNV(uint, uint, All*)"/>
+            public static unsafe All GetShadingRateImagePaletteNV(uint viewport, uint entry)
             {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetSemaphoreParameterivNV(semaphore, pname, parameters);
-                return parameters_val;
+                All rate;
+                All* rate_ptr = &rate;
+                {
+                    GetShadingRateImagePaletteNV(viewport, entry, rate_ptr);
+                }
+                return rate;
             }
             /// <inheritdoc cref="GetShadingRateImagePaletteNV(uint, uint, All*)"/>
-            public static unsafe void GetShadingRateImagePaletteNV(uint viewport, uint entry, ref All rate)
+            public static unsafe void GetShadingRateImagePaletteNV(uint viewport, uint entry, out All rate)
             {
                 fixed (All* rate_ptr = &rate)
                 {
                     GetShadingRateImagePaletteNV(viewport, entry, rate_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetShadingRateImagePaletteNV(uint, uint, All*)"/>
-            public static unsafe All GetShadingRateImagePaletteNV(uint viewport, uint entry)
-            {
-                All rate_val;
-                All* rate = &rate_val;
-                GetShadingRateImagePaletteNV(viewport, entry, rate);
-                return rate_val;
             }
             /// <inheritdoc cref="GetShadingRateSampleLocationivNV(All, uint, uint, int*)"/>
             public static unsafe void GetShadingRateSampleLocationivNV(All rate, uint samples, uint index, Span<int> location)
@@ -38523,36 +37651,40 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTrackMatrixivNV(VertexAttribEnumNV, uint, VertexAttribEnumNV, int*)"/>
-            public static unsafe void GetTrackMatrixivNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname, ref int parameters)
+            public static unsafe int GetTrackMatrixivNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTrackMatrixivNV(target, address, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTrackMatrixivNV(VertexAttribEnumNV, uint, VertexAttribEnumNV, int*)"/>
+            public static unsafe void GetTrackMatrixivNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTrackMatrixivNV(target, address, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTrackMatrixivNV(VertexAttribEnumNV, uint, VertexAttribEnumNV, int*)"/>
-            public static unsafe int GetTrackMatrixivNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname)
+            /// <inheritdoc cref="GetTransformFeedbackVaryingNV(int, uint, int*)"/>
+            public static unsafe int GetTransformFeedbackVaryingNV(int program, uint index)
             {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTrackMatrixivNV(target, address, pname, parameters);
-                return parameters_val;
+                int location;
+                int* location_ptr = &location;
+                {
+                    GetTransformFeedbackVaryingNV(program, index, location_ptr);
+                }
+                return location;
             }
             /// <inheritdoc cref="GetTransformFeedbackVaryingNV(int, uint, int*)"/>
-            public static unsafe void GetTransformFeedbackVaryingNV(int program, uint index, ref int location)
+            public static unsafe void GetTransformFeedbackVaryingNV(int program, uint index, out int location)
             {
                 fixed (int* location_ptr = &location)
                 {
                     GetTransformFeedbackVaryingNV(program, index, location_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTransformFeedbackVaryingNV(int, uint, int*)"/>
-            public static unsafe int GetTransformFeedbackVaryingNV(int program, uint index)
-            {
-                int location_val;
-                int* location = &location_val;
-                GetTransformFeedbackVaryingNV(program, index, location);
-                return location_val;
             }
             /// <inheritdoc cref="GetUniformi64vNV(int, int, long*)"/>
             public static unsafe void GetUniformi64vNV(int program, int location, Span<long> parameters)
@@ -38571,7 +37703,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformi64vNV(int, int, long*)"/>
-            public static unsafe void GetUniformi64vNV(int program, int location, ref long parameters)
+            public static unsafe long GetUniformi64vNV(int program, int location)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetUniformi64vNV(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformi64vNV(int, int, long*)"/>
+            public static unsafe void GetUniformi64vNV(int program, int location, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
@@ -38595,7 +37737,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetUniformui64vNV(int, int, ulong*)"/>
-            public static unsafe void GetUniformui64vNV(int program, int location, ref ulong parameters)
+            public static unsafe ulong GetUniformui64vNV(int program, int location)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetUniformui64vNV(program, location, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetUniformui64vNV(int, int, ulong*)"/>
+            public static unsafe void GetUniformui64vNV(int program, int location, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
@@ -38612,7 +37764,17 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetVertexAttribdvNV(uint, VertexAttribEnumNV, double*)"/>
-            public static unsafe void GetVertexAttribdvNV(uint index, VertexAttribEnumNV pname, ref double parameters)
+            public static unsafe double GetVertexAttribdvNV(uint index, VertexAttribEnumNV pname)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribdvNV(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribdvNV(uint, VertexAttribEnumNV, double*)"/>
+            public static unsafe void GetVertexAttribdvNV(uint index, VertexAttribEnumNV pname, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -38620,7 +37782,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribfvNV(uint, VertexAttribEnumNV, float*)"/>
-            public static unsafe void GetVertexAttribfvNV(uint index, VertexAttribEnumNV pname, ref float parameters)
+            public static unsafe float GetVertexAttribfvNV(uint index, VertexAttribEnumNV pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribfvNV(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribfvNV(uint, VertexAttribEnumNV, float*)"/>
+            public static unsafe void GetVertexAttribfvNV(uint index, VertexAttribEnumNV pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -38628,7 +37800,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribIivEXT(uint, VertexAttribEnum, int*)"/>
-            public static unsafe void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, ref int parameters)
+            public static unsafe int GetVertexAttribIivEXT(uint index, VertexAttribEnum pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribIivEXT(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribIivEXT(uint, VertexAttribEnum, int*)"/>
+            public static unsafe void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -38636,7 +37818,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribIuivEXT(uint, VertexAttribEnum, uint*)"/>
-            public static unsafe void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, ref uint parameters)
+            public static unsafe uint GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribIuivEXT(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribIuivEXT(uint, VertexAttribEnum, uint*)"/>
+            public static unsafe void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -38644,7 +37836,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribivNV(uint, VertexAttribEnumNV, int*)"/>
-            public static unsafe void GetVertexAttribivNV(uint index, VertexAttribEnumNV pname, ref int parameters)
+            public static unsafe int GetVertexAttribivNV(uint index, VertexAttribEnumNV pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribivNV(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribivNV(uint, VertexAttribEnumNV, int*)"/>
+            public static unsafe void GetVertexAttribivNV(uint index, VertexAttribEnumNV pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -38668,7 +37870,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribLi64vNV(uint, VertexAttribEnum, long*)"/>
-            public static unsafe void GetVertexAttribLi64vNV(uint index, VertexAttribEnum pname, ref long parameters)
+            public static unsafe long GetVertexAttribLi64vNV(uint index, VertexAttribEnum pname)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribLi64vNV(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribLi64vNV(uint, VertexAttribEnum, long*)"/>
+            public static unsafe void GetVertexAttribLi64vNV(uint index, VertexAttribEnum pname, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
@@ -38692,7 +37904,17 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexAttribLui64vNV(uint, VertexAttribEnum, ulong*)"/>
-            public static unsafe void GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname, ref ulong parameters)
+            public static unsafe ulong GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetVertexAttribLui64vNV(index, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVertexAttribLui64vNV(uint, VertexAttribEnum, ulong*)"/>
+            public static unsafe void GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
@@ -38716,20 +37938,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoCaptureivNV(uint, All, int*)"/>
-            public static unsafe void GetVideoCaptureivNV(uint video_capture_slot, All pname, ref int parameters)
+            public static unsafe int GetVideoCaptureivNV(uint video_capture_slot, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVideoCaptureivNV(video_capture_slot, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoCaptureivNV(uint, All, int*)"/>
+            public static unsafe void GetVideoCaptureivNV(uint video_capture_slot, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetVideoCaptureivNV(video_capture_slot, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoCaptureivNV(uint, All, int*)"/>
-            public static unsafe int GetVideoCaptureivNV(uint video_capture_slot, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetVideoCaptureivNV(video_capture_slot, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoCaptureStreamdvNV(uint, uint, All, double*)"/>
             public static unsafe void GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname, Span<double> parameters)
@@ -38748,20 +37972,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoCaptureStreamdvNV(uint, uint, All, double*)"/>
-            public static unsafe void GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname, ref double parameters)
+            public static unsafe double GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname)
+            {
+                double parameters;
+                double* parameters_ptr = &parameters;
+                {
+                    GetVideoCaptureStreamdvNV(video_capture_slot, stream, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoCaptureStreamdvNV(uint, uint, All, double*)"/>
+            public static unsafe void GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname, out double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
                     GetVideoCaptureStreamdvNV(video_capture_slot, stream, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoCaptureStreamdvNV(uint, uint, All, double*)"/>
-            public static unsafe double GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname)
-            {
-                double parameters_val;
-                double* parameters = &parameters_val;
-                GetVideoCaptureStreamdvNV(video_capture_slot, stream, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoCaptureStreamfvNV(uint, uint, All, float*)"/>
             public static unsafe void GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname, Span<float> parameters)
@@ -38780,20 +38006,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoCaptureStreamfvNV(uint, uint, All, float*)"/>
-            public static unsafe void GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname, ref float parameters)
+            public static unsafe float GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetVideoCaptureStreamfvNV(video_capture_slot, stream, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoCaptureStreamfvNV(uint, uint, All, float*)"/>
+            public static unsafe void GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetVideoCaptureStreamfvNV(video_capture_slot, stream, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoCaptureStreamfvNV(uint, uint, All, float*)"/>
-            public static unsafe float GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetVideoCaptureStreamfvNV(video_capture_slot, stream, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoCaptureStreamivNV(uint, uint, All, int*)"/>
             public static unsafe void GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname, Span<int> parameters)
@@ -38812,20 +38040,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoCaptureStreamivNV(uint, uint, All, int*)"/>
-            public static unsafe void GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname, ref int parameters)
+            public static unsafe int GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVideoCaptureStreamivNV(video_capture_slot, stream, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoCaptureStreamivNV(uint, uint, All, int*)"/>
+            public static unsafe void GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetVideoCaptureStreamivNV(video_capture_slot, stream, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoCaptureStreamivNV(uint, uint, All, int*)"/>
-            public static unsafe int GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetVideoCaptureStreamivNV(video_capture_slot, stream, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoi64vNV(uint, All, long*)"/>
             public static unsafe void GetVideoi64vNV(uint video_slot, All pname, Span<long> parameters)
@@ -38844,20 +38074,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoi64vNV(uint, All, long*)"/>
-            public static unsafe void GetVideoi64vNV(uint video_slot, All pname, ref long parameters)
+            public static unsafe long GetVideoi64vNV(uint video_slot, All pname)
+            {
+                long parameters;
+                long* parameters_ptr = &parameters;
+                {
+                    GetVideoi64vNV(video_slot, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoi64vNV(uint, All, long*)"/>
+            public static unsafe void GetVideoi64vNV(uint video_slot, All pname, out long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
                 {
                     GetVideoi64vNV(video_slot, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoi64vNV(uint, All, long*)"/>
-            public static unsafe long GetVideoi64vNV(uint video_slot, All pname)
-            {
-                long parameters_val;
-                long* parameters = &parameters_val;
-                GetVideoi64vNV(video_slot, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoivNV(uint, All, int*)"/>
             public static unsafe void GetVideoivNV(uint video_slot, All pname, Span<int> parameters)
@@ -38876,20 +38108,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoivNV(uint, All, int*)"/>
-            public static unsafe void GetVideoivNV(uint video_slot, All pname, ref int parameters)
+            public static unsafe int GetVideoivNV(uint video_slot, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetVideoivNV(video_slot, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoivNV(uint, All, int*)"/>
+            public static unsafe void GetVideoivNV(uint video_slot, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetVideoivNV(video_slot, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoivNV(uint, All, int*)"/>
-            public static unsafe int GetVideoivNV(uint video_slot, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetVideoivNV(video_slot, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideoui64vNV(uint, All, ulong*)"/>
             public static unsafe void GetVideoui64vNV(uint video_slot, All pname, Span<ulong> parameters)
@@ -38908,20 +38142,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideoui64vNV(uint, All, ulong*)"/>
-            public static unsafe void GetVideoui64vNV(uint video_slot, All pname, ref ulong parameters)
+            public static unsafe ulong GetVideoui64vNV(uint video_slot, All pname)
+            {
+                ulong parameters;
+                ulong* parameters_ptr = &parameters;
+                {
+                    GetVideoui64vNV(video_slot, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideoui64vNV(uint, All, ulong*)"/>
+            public static unsafe void GetVideoui64vNV(uint video_slot, All pname, out ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
                     GetVideoui64vNV(video_slot, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideoui64vNV(uint, All, ulong*)"/>
-            public static unsafe ulong GetVideoui64vNV(uint video_slot, All pname)
-            {
-                ulong parameters_val;
-                ulong* parameters = &parameters_val;
-                GetVideoui64vNV(video_slot, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVideouivNV(uint, All, uint*)"/>
             public static unsafe void GetVideouivNV(uint video_slot, All pname, Span<uint> parameters)
@@ -38940,20 +38176,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVideouivNV(uint, All, uint*)"/>
-            public static unsafe void GetVideouivNV(uint video_slot, All pname, ref uint parameters)
+            public static unsafe uint GetVideouivNV(uint video_slot, All pname)
+            {
+                uint parameters;
+                uint* parameters_ptr = &parameters;
+                {
+                    GetVideouivNV(video_slot, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetVideouivNV(uint, All, uint*)"/>
+            public static unsafe void GetVideouivNV(uint video_slot, All pname, out uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetVideouivNV(video_slot, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetVideouivNV(uint, All, uint*)"/>
-            public static unsafe uint GetVideouivNV(uint video_slot, All pname)
-            {
-                uint parameters_val;
-                uint* parameters = &parameters_val;
-                GetVideouivNV(video_slot, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetVkProcAddrNV(byte*)"/>
             public static unsafe IntPtr GetVkProcAddrNV(string name)
@@ -40463,7 +39701,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="PointAlongPathNV(uint, int, int, float, float*, float*, float*, float*)"/>
-            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, out float x, out float y, out float tangentX, out float tangentY)
             {
                 bool returnValue;
                 fixed (float* x_ptr = &x)
@@ -44809,20 +44047,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe void GetConvolutionParameterxvOES(All target, All pname, ref int parameters)
+            public static unsafe int GetConvolutionParameterxvOES(All target, All pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetConvolutionParameterxvOES(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
+            public static unsafe void GetConvolutionParameterxvOES(All target, All pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
-            public static unsafe int GetConvolutionParameterxvOES(All target, All pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetConvolutionParameterxvOES(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe void GetFixedvOES(GetPName pname, Span<int> parameters)
@@ -44841,20 +44081,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
-            public static unsafe void GetFixedvOES(GetPName pname, ref int parameters)
+            public static unsafe int GetFixedvOES(GetPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFixedvOES(pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
+            public static unsafe void GetFixedvOES(GetPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFixedvOES(pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
-            public static unsafe int GetFixedvOES(GetPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFixedvOES(pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
@@ -44873,20 +44115,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref int parameters)
+            public static unsafe int GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetHistogramParameterxvOES(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
+            public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetHistogramParameterxvOES(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
-            public static unsafe int GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetHistogramParameterxvOES(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxOES(LightName light, LightParameter pname, Span<int> parameters)
@@ -44905,20 +44149,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxOES(LightName light, LightParameter pname, ref int parameters)
+            public static unsafe int GetLightxOES(LightName light, LightParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetLightxOES(light, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
+            public static unsafe void GetLightxOES(LightName light, LightParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetLightxOES(light, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
-            public static unsafe int GetLightxOES(LightName light, LightParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetLightxOES(light, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxvOES(LightName light, LightParameter pname, Span<int> parameters)
@@ -44937,20 +44183,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, ref int parameters)
+            public static unsafe int GetLightxvOES(LightName light, LightParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetLightxvOES(light, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
+            public static unsafe void GetLightxvOES(LightName light, LightParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetLightxvOES(light, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe int GetLightxvOES(LightName light, LightParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetLightxvOES(light, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
             public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, Span<int> v)
@@ -44969,20 +44217,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, ref int v)
+            public static unsafe int GetMapxvOES(MapTarget target, GetMapQuery query)
+            {
+                int v;
+                int* v_ptr = &v;
+                {
+                    GetMapxvOES(target, query, v_ptr);
+                }
+                return v;
+            }
+            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
+            public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, out int v)
             {
                 fixed (int* v_ptr = &v)
                 {
                     GetMapxvOES(target, query, v_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
-            public static unsafe int GetMapxvOES(MapTarget target, GetMapQuery query)
-            {
-                int v_val;
-                int* v = &v_val;
-                GetMapxvOES(target, query, v);
-                return v_val;
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> parameters)
@@ -45001,20 +44251,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, ref int parameters)
+            public static unsafe int GetMaterialxvOES(TriangleFace face, MaterialParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetMaterialxvOES(face, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe int GetMaterialxvOES(TriangleFace face, MaterialParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetMaterialxvOES(face, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
             public static unsafe void GetPixelMapx(PixelMap map, int size, Span<int> values)
@@ -45040,14 +44292,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetPixelMapxv(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
-            public static unsafe int GetPixelMapx(PixelMap map, int size)
-            {
-                int values_val;
-                int* values = &values_val;
-                GetPixelMapxv(map, size, values);
-                return values_val;
-            }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
             {
@@ -45065,20 +44309,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
+            public static unsafe int GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTexEnvxvOES(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
+            public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTexEnvxvOES(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe int GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTexEnvxvOES(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
@@ -45097,20 +44343,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ref int parameters)
+            public static unsafe int GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTexGenxvOES(coord, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
+            public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTexGenxvOES(coord, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe int GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTexGenxvOES(coord, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
@@ -45129,20 +44377,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
+            public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
-            public static unsafe int GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTexLevelParameterxvOES(target, level, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -45161,20 +44411,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, ref int parameters)
+            public static unsafe int GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetTexParameterxvOES(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetTexParameterxvOES(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe int GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetTexParameterxvOES(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="IndexxvOES(int*)"/>
             public static unsafe void IndexxvOES(in int component)
@@ -46238,20 +45490,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe void GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, ref float parameters)
+            public static unsafe float GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameterfvSGI(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
+            public static unsafe void GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetColorTableParameterfvSGI(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe float GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetColorTableParameterfvSGI(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetColorTableParameterivSGI(ColorTableTargetSGI, ColorTableParameterPName, int*)"/>
             public static unsafe void GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, Span<int> parameters)
@@ -46270,20 +45524,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableParameterivSGI(ColorTableTargetSGI, ColorTableParameterPName, int*)"/>
-            public static unsafe void GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, ref int parameters)
+            public static unsafe int GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetColorTableParameterivSGI(target, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetColorTableParameterivSGI(ColorTableTargetSGI, ColorTableParameterPName, int*)"/>
+            public static unsafe void GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetColorTableParameterivSGI(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetColorTableParameterivSGI(ColorTableTargetSGI, ColorTableParameterPName, int*)"/>
-            public static unsafe int GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetColorTableParameterivSGI(target, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetColorTableSGI(ColorTableTargetSGI, PixelFormat, PixelType, void*)"/>
             public static unsafe void GetColorTableSGI(ColorTableTargetSGI target, PixelFormat format, PixelType type, IntPtr table)
@@ -46310,7 +45566,18 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetColorTableSGI(ColorTableTargetSGI, PixelFormat, PixelType, void*)"/>
-            public static unsafe void GetColorTableSGI<T1>(ColorTableTargetSGI target, PixelFormat format, PixelType type, ref T1 table)
+            public static unsafe T1 GetColorTableSGI<T1>(ColorTableTargetSGI target, PixelFormat format, PixelType type)
+                where T1 : unmanaged
+            {
+                T1 table;
+                void* table_ptr = &table;
+                {
+                    GetColorTableSGI(target, format, type, table_ptr);
+                }
+                return table;
+            }
+            /// <inheritdoc cref="GetColorTableSGI(ColorTableTargetSGI, PixelFormat, PixelType, void*)"/>
+            public static unsafe void GetColorTableSGI<T1>(ColorTableTargetSGI target, PixelFormat format, PixelType type, out T1 table)
                 where T1 : unmanaged
             {
                 fixed (void* table_ptr = &table)
@@ -46386,20 +45653,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetDetailTexFuncSGIS(TextureTarget, float*)"/>
-            public static unsafe void GetDetailTexFuncSGIS(TextureTarget target, ref float points)
+            public static unsafe float GetDetailTexFuncSGIS(TextureTarget target)
+            {
+                float points;
+                float* points_ptr = &points;
+                {
+                    GetDetailTexFuncSGIS(target, points_ptr);
+                }
+                return points;
+            }
+            /// <inheritdoc cref="GetDetailTexFuncSGIS(TextureTarget, float*)"/>
+            public static unsafe void GetDetailTexFuncSGIS(TextureTarget target, out float points)
             {
                 fixed (float* points_ptr = &points)
                 {
                     GetDetailTexFuncSGIS(target, points_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetDetailTexFuncSGIS(TextureTarget, float*)"/>
-            public static unsafe float GetDetailTexFuncSGIS(TextureTarget target)
-            {
-                float points_val;
-                float* points = &points_val;
-                GetDetailTexFuncSGIS(target, points);
-                return points_val;
             }
             /// <inheritdoc cref="GetFogFuncSGIS(float*)"/>
             public static unsafe void GetFogFuncSGIS(Span<float> points)
@@ -46418,20 +45687,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFogFuncSGIS(float*)"/>
-            public static unsafe void GetFogFuncSGIS(ref float points)
+            public static unsafe float GetFogFuncSGIS()
+            {
+                float points;
+                float* points_ptr = &points;
+                {
+                    GetFogFuncSGIS(points_ptr);
+                }
+                return points;
+            }
+            /// <inheritdoc cref="GetFogFuncSGIS(float*)"/>
+            public static unsafe void GetFogFuncSGIS(out float points)
             {
                 fixed (float* points_ptr = &points)
                 {
                     GetFogFuncSGIS(points_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFogFuncSGIS(float*)"/>
-            public static unsafe float GetFogFuncSGIS()
-            {
-                float points_val;
-                float* points = &points_val;
-                GetFogFuncSGIS(points);
-                return points_val;
             }
             /// <inheritdoc cref="GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
             public static unsafe void GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, Span<float> parameters)
@@ -46450,20 +45721,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
-            public static unsafe void GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, ref float parameters)
+            public static unsafe float GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetPixelTexGenParameterfvSGIS(pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
+            public static unsafe void GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetPixelTexGenParameterfvSGIS(pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
-            public static unsafe float GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetPixelTexGenParameterfvSGIS(pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS, int*)"/>
             public static unsafe void GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, Span<int> parameters)
@@ -46482,20 +45755,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS, int*)"/>
-            public static unsafe void GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, ref int parameters)
+            public static unsafe int GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetPixelTexGenParameterivSGIS(pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS, int*)"/>
+            public static unsafe void GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetPixelTexGenParameterivSGIS(pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS, int*)"/>
-            public static unsafe int GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetPixelTexGenParameterivSGIS(pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetSharpenTexFuncSGIS(TextureTarget, float*)"/>
             public static unsafe void GetSharpenTexFuncSGIS(TextureTarget target, Span<float> points)
@@ -46514,20 +45789,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetSharpenTexFuncSGIS(TextureTarget, float*)"/>
-            public static unsafe void GetSharpenTexFuncSGIS(TextureTarget target, ref float points)
+            public static unsafe float GetSharpenTexFuncSGIS(TextureTarget target)
+            {
+                float points;
+                float* points_ptr = &points;
+                {
+                    GetSharpenTexFuncSGIS(target, points_ptr);
+                }
+                return points;
+            }
+            /// <inheritdoc cref="GetSharpenTexFuncSGIS(TextureTarget, float*)"/>
+            public static unsafe void GetSharpenTexFuncSGIS(TextureTarget target, out float points)
             {
                 fixed (float* points_ptr = &points)
                 {
                     GetSharpenTexFuncSGIS(target, points_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetSharpenTexFuncSGIS(TextureTarget, float*)"/>
-            public static unsafe float GetSharpenTexFuncSGIS(TextureTarget target)
-            {
-                float points_val;
-                float* points = &points_val;
-                GetSharpenTexFuncSGIS(target, points);
-                return points_val;
             }
             /// <inheritdoc cref="GetTexFilterFuncSGIS(TextureTarget, TextureFilterSGIS, float*)"/>
             public static unsafe void GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, Span<float> weights)
@@ -46546,20 +45823,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetTexFilterFuncSGIS(TextureTarget, TextureFilterSGIS, float*)"/>
-            public static unsafe void GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, ref float weights)
+            public static unsafe float GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter)
+            {
+                float weights;
+                float* weights_ptr = &weights;
+                {
+                    GetTexFilterFuncSGIS(target, filter, weights_ptr);
+                }
+                return weights;
+            }
+            /// <inheritdoc cref="GetTexFilterFuncSGIS(TextureTarget, TextureFilterSGIS, float*)"/>
+            public static unsafe void GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, out float weights)
             {
                 fixed (float* weights_ptr = &weights)
                 {
                     GetTexFilterFuncSGIS(target, filter, weights_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetTexFilterFuncSGIS(TextureTarget, TextureFilterSGIS, float*)"/>
-            public static unsafe float GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter)
-            {
-                float weights_val;
-                float* weights = &weights_val;
-                GetTexFilterFuncSGIS(target, filter, weights);
-                return weights_val;
             }
             /// <inheritdoc cref="PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
             public static unsafe void PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, ReadOnlySpan<float> parameters)
@@ -46799,7 +46078,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="FinishAsyncSGIX(uint*)"/>
-            public static unsafe int FinishAsyncSGIX(ref uint markerp)
+            public static unsafe int FinishAsyncSGIX(out uint markerp)
             {
                 int returnValue;
                 fixed (uint* markerp_ptr = &markerp)
@@ -46969,20 +46248,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFragmentLightfvSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, float*)"/>
-            public static unsafe void GetFragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, ref float parameters)
+            public static unsafe float GetFragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetFragmentLightfvSGIX(light, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFragmentLightfvSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, float*)"/>
+            public static unsafe void GetFragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetFragmentLightfvSGIX(light, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFragmentLightfvSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, float*)"/>
-            public static unsafe float GetFragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetFragmentLightfvSGIX(light, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFragmentLightivSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, int*)"/>
             public static unsafe void GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, Span<int> parameters)
@@ -47001,20 +46282,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFragmentLightivSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, int*)"/>
-            public static unsafe void GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, ref int parameters)
+            public static unsafe int GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFragmentLightivSGIX(light, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFragmentLightivSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, int*)"/>
+            public static unsafe void GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFragmentLightivSGIX(light, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFragmentLightivSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, int*)"/>
-            public static unsafe int GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFragmentLightivSGIX(light, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFragmentMaterialfvSGIX(TriangleFace, MaterialParameter, float*)"/>
             public static unsafe void GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, Span<float> parameters)
@@ -47033,20 +46316,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFragmentMaterialfvSGIX(TriangleFace, MaterialParameter, float*)"/>
-            public static unsafe void GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, ref float parameters)
+            public static unsafe float GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetFragmentMaterialfvSGIX(face, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFragmentMaterialfvSGIX(TriangleFace, MaterialParameter, float*)"/>
+            public static unsafe void GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetFragmentMaterialfvSGIX(face, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFragmentMaterialfvSGIX(TriangleFace, MaterialParameter, float*)"/>
-            public static unsafe float GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetFragmentMaterialfvSGIX(face, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetFragmentMaterialivSGIX(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, Span<int> parameters)
@@ -47065,20 +46350,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetFragmentMaterialivSGIX(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, ref int parameters)
+            public static unsafe int GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetFragmentMaterialivSGIX(face, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetFragmentMaterialivSGIX(TriangleFace, MaterialParameter, int*)"/>
+            public static unsafe void GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFragmentMaterialivSGIX(face, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetFragmentMaterialivSGIX(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe int GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetFragmentMaterialivSGIX(face, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetListParameterfvSGIX(int, ListParameterName, float*)"/>
             public static unsafe void GetListParameterfvSGIX(int list, ListParameterName pname, Span<float> parameters)
@@ -47097,20 +46384,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetListParameterfvSGIX(int, ListParameterName, float*)"/>
-            public static unsafe void GetListParameterfvSGIX(int list, ListParameterName pname, ref float parameters)
+            public static unsafe float GetListParameterfvSGIX(int list, ListParameterName pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetListParameterfvSGIX(list, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetListParameterfvSGIX(int, ListParameterName, float*)"/>
+            public static unsafe void GetListParameterfvSGIX(int list, ListParameterName pname, out float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
                     GetListParameterfvSGIX(list, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetListParameterfvSGIX(int, ListParameterName, float*)"/>
-            public static unsafe float GetListParameterfvSGIX(int list, ListParameterName pname)
-            {
-                float parameters_val;
-                float* parameters = &parameters_val;
-                GetListParameterfvSGIX(list, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="GetListParameterivSGIX(int, ListParameterName, int*)"/>
             public static unsafe void GetListParameterivSGIX(int list, ListParameterName pname, Span<int> parameters)
@@ -47129,20 +46418,22 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetListParameterivSGIX(int, ListParameterName, int*)"/>
-            public static unsafe void GetListParameterivSGIX(int list, ListParameterName pname, ref int parameters)
+            public static unsafe int GetListParameterivSGIX(int list, ListParameterName pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetListParameterivSGIX(list, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetListParameterivSGIX(int, ListParameterName, int*)"/>
+            public static unsafe void GetListParameterivSGIX(int list, ListParameterName pname, out int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetListParameterivSGIX(list, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="GetListParameterivSGIX(int, ListParameterName, int*)"/>
-            public static unsafe int GetListParameterivSGIX(int list, ListParameterName pname)
-            {
-                int parameters_val;
-                int* parameters = &parameters_val;
-                GetListParameterivSGIX(list, pname, parameters);
-                return parameters_val;
             }
             /// <inheritdoc cref="IglooInterfaceSGIX(All, void*)"/>
             public static unsafe void IglooInterfaceSGIX(All pname, IntPtr parameters)
@@ -47250,7 +46541,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="PollAsyncSGIX(uint*)"/>
-            public static unsafe int PollAsyncSGIX(ref uint markerp)
+            public static unsafe int PollAsyncSGIX(out uint markerp)
             {
                 int returnValue;
                 fixed (uint* markerp_ptr = &markerp)
@@ -47260,7 +46551,7 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="PollInstrumentsSGIX(int*)"/>
-            public static unsafe int PollInstrumentsSGIX(ref int marker_p)
+            public static unsafe int PollInstrumentsSGIX(out int marker_p)
             {
                 int returnValue;
                 fixed (int* marker_p_ptr = &marker_p)

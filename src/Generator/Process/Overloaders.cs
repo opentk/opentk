@@ -27,7 +27,7 @@ namespace Generator.Process
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
-            new GetReturnOverloader(),
+            //new GetReturnOverloader(),
             new BoolReturnOverloader(),
 
             new ColorTypeOverloader(),
@@ -1085,6 +1085,7 @@ namespace Generator.Process
 
             var nameTable = overload.NameTable.New();
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
+            nameTable.MarkFixed(overload.InputParameters[lengthParameterIndex]);
 
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
@@ -1123,8 +1124,7 @@ namespace Generator.Process
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
-                writer.WriteLine(
-                    $"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
+                writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
                 _csScope = writer.CsScope();
             }
 
@@ -1139,29 +1139,28 @@ namespace Generator.Process
             Parameter OutParameter,
             Parameter PointerParameter) : IOverloadLayer
         {
+            private CsScope? _csScope = null;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine($"Unsafe.SkipInit(out {nameTable[OutParameter]});");
-                // FIXME
-                writer.WriteLine("// FIXME: This could be a problem for the overloads that take an out parameter");
-                writer.WriteLine("// as this parameter could *potentially* move while inside of this function");
-                writer.WriteLine("// which would mean that the new value never gets written to the out parameter.");
-                writer.WriteLine("// Making for a nasty bug.");
-                writer.WriteLine(
-                    "// The reason we don't use a fixed expression here is because of the \"single out parameter to return value\" overloading step");
-                writer.WriteLine(
-                    "// that will make it so this tries to fix a local variable which is not allowed in C# for some reason.");
-                writer.WriteLine(
-                    "// If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk");
-                writer.WriteLine("// - 2021-05-18");
-
-                writer.WriteLine(
-                    $"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()})Unsafe.AsPointer(ref {nameTable[OutParameter]});");
+                if (nameTable.IsFixed(OutParameter))
+                {
+                    writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]};");
+                    _csScope = null;
+                }
+                else
+                {
+                    writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]})");
+                    _csScope = writer.CsScope();
+                }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
+                if (_csScope.HasValue)
+                    _csScope.Value.Dispose();
+
                 return returnName;
             }
         }
@@ -1542,8 +1541,67 @@ namespace Generator.Process
                         default:
                             throw new InvalidOperationException($"{pt} is not supported by the ref overloader.");
                     }
-                    // FIXME: When do we know it's an out ref mathType?
-                    CSRef.Type refType = constant ? CSRef.Type.In : CSRef.Type.Ref;
+
+                    bool outParamSuitable;
+                    if (parameter.Length != null)
+                    {
+                        if (parameter.Length is Constant c && c.Value == 1)
+                        {
+                            // The length is 1, in/out overload is suitable.
+                            outParamSuitable = true;
+                        }
+                        else if (parameter.Length is CompSize && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
+                        {
+                            // We assume that all glGet* functions with CompSize arguments are fine to mark as out
+                            outParamSuitable = true;
+                        }
+                        else
+                        {
+                            // Non-zero length, not suitable for out overload.
+                            outParamSuitable = false;
+                        }
+                    }
+                    else
+                    {
+                        // If there is no length parameter we have very little information
+                        // about if this parameter is suitable as an out parameter.
+                        // Therefore we take a safe bet that it's not suitable.
+                        // - Noggin_bops 2024-03-16
+                        outParamSuitable = false;
+                    }
+
+                    CSRef.Type refType;
+                    // This is a list of functions that either have in parameters not marked with const in gl.xml
+                    // or functions that use the same pointer parameter for both input and output.
+                    // - Noggin_bops 2024-03-16
+                    // FIXME: Check GLX for non-const in parameters and ref parameters!
+                    switch (overload.NativeFunction.EntryPoint)
+                    {
+                        // FIXME: glImportMemoryWin32HandleEXT should take a HANDLE object, i.e. IntPtr....
+                        case "glImportMemoryWin32HandleEXT"   when parameter.Name == "handle":       refType = CSRef.Type.In; break;
+                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList":  refType = CSRef.Type.In; break;
+                        case "glSharpenTexFuncSGIS"           when parameter.Name == "points":       refType = CSRef.Type.In; break;
+                        case "glVertexArrayRangeAPPLE"        when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+                        // FIXME: Should we have glCullParameter*vEXT here? They have len="4" and never get triggered...
+                        case "glCullParameterdvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
+                        case "glCullParameterfvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
+                        case "glDeletePerfMonitorsAMD"        when parameter.Name == "monitors":     refType = CSRef.Type.In; break;
+                        case "glFlushVertexArrayRangeAPPLE"   when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+
+                        case "wglDXLockObjectsNV"             when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
+                        case "wglDXOpenDeviceNV"              when parameter.Name == "dxDevice":     refType = CSRef.Type.In; break;
+                        case "wglDXRegisterObjectNV"          when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
+                        case "wglDXSetResourceShareHandleNV"  when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
+                        case "wglDXUnlockObjectsNV"           when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
+                        case "wglGetPixelFormatAttribfvEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
+                        case "wglGetPixelFormatAttribivEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
+
+                        // We do the special handling above so that we can assume that any parameter that is not marked
+                        // "const" here is an out parameter.
+                        // Any potential ref parameters should be handled above.
+                        // - Noggin_bops 2024-03-16
+                        default: refType = constant ? CSRef.Type.In : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref;  break;
+                    }
 
                     // Rename the parameter
                     nameTable.Rename(parameter, $"{parameter.Name}_ptr");
@@ -1584,10 +1642,24 @@ namespace Generator.Process
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
+                // First we take references to all already "fixed" variables.
                 for (int i = 0; i < RefParameters.Count; i++)
                 {
-                    string type = PointerParameters[i].Type.ToCSString();
-                    writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
+                    if (nameTable.IsFixed(RefParameters[i]))
+                    {
+                        string type = PointerParameters[i].Type.ToCSString();
+                        writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]};");
+                    }
+                }
+
+                // Second we fix all of the not already fixed parameters.
+                for (int i = 0; i < RefParameters.Count; i++)
+                {
+                    if (nameTable.IsFixed(RefParameters[i]) == false)
+                    {
+                        string type = PointerParameters[i].Type.ToCSString();
+                        writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
+                    }
                 }
 
                 _csScope = writer.CsScope();
@@ -1612,54 +1684,38 @@ namespace Generator.Process
                 return false;
             }
 
-            // Find the one and only out parameter, if there are more we do an early return.
-            Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
-            Parameter? outParameter = null;
-            CSRef? outType = null;
-            int newIndex = 0; // The destination index of parameters
-            for (int i = 0; i < oldParameters.Length; i++)
+            if (oldParameters[^1].Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
             {
-                var parameter = oldParameters[i];
-                if (parameter.Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
+                Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
+                Array.Copy(oldParameters, newParameters, newParameters.Length);
+                Parameter? outParameter = oldParameters[^1];
+                CSRef? outType = pRef;
+
+                NameTable nameTable = overload.NameTable.New();
+                nameTable.ReturnName = outParameter.Name;
+
+                // This is now a local variable.
+                nameTable.MarkFixed(outParameter);
+
+                newOverloads = new List<Overload>()
                 {
-                    if (outParameter != null)
+                    overload with
                     {
-                        newOverloads = null;
-                        return false;
-                    }
-
-                    outType = pRef;
-                    outParameter = parameter;
-                }
-                else if (newIndex != oldParameters.Length - 1)
-                {
-                    newParameters[newIndex] = parameter;
-                    newIndex++;
-                }
+                        NestedOverload = overload,
+                        InputParameters = newParameters,
+                        ReturnType = outType!.ReferencedType,
+                        MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
+                        NameTable = nameTable,
+                    },
+                    overload,
+                };
+                return true;
             }
-
-            if (outType == null || outParameter == null)
+            else
             {
                 newOverloads = null;
                 return false;
             }
-
-            var nameTable = overload.NameTable.New();
-            nameTable.ReturnName = outParameter.Name;
-
-            newOverloads = new List<Overload>()
-            {
-                overload with
-                {
-                    NestedOverload = overload,
-                    InputParameters = newParameters,
-                    ReturnType = outType!.ReferencedType,
-                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
-                    NameTable = nameTable,
-                },
-                overload,
-            };
-            return true;
         }
 
         private record OutToReturnOverloadLayer(Parameter OutParameter, CSRef OutType) : IOverloadLayer

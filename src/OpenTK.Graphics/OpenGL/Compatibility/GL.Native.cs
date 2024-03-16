@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 14:26:26 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -7014,7 +7014,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetObjectParameterivAPPLE(All objectType, uint name, All pname, int* parameters) => GLPointers._glGetObjectParameterivAPPLE_fnptr((uint)objectType, name, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_texture_range]</b> <b>[entry point: <c>glGetTexParameterPointervAPPLE</c>]</b><br/>  </summary>
-            public static void GetTexParameterPointervAPPLE_(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterPointervAPPLE(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_fence]</b> <b>[entry point: <c>glIsFenceAPPLE</c>]</b><br/>  </summary>
             public static bool IsFenceAPPLE(uint fence) => GLPointers._glIsFenceAPPLE_fnptr(fence) != 0;
@@ -8247,7 +8247,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetBufferParameterivARB(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferPointervARB</c>]</b><br/>  </summary>
-            public static void GetBufferPointervARB_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervARB(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferSubDataARB</c>]</b><br/>  </summary>
             public static void GetBufferSubDataARB(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
@@ -11905,7 +11905,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferPointervEXT</c>]</b><br/>  </summary>
-            public static void GetNamedBufferPointervEXT_(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferPointervEXT(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferSubDataEXT</c>]</b><br/>  </summary>
             public static void GetNamedBufferSubDataEXT(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glGetNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
@@ -11947,13 +11947,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetPixelTransformParameterivEXT(All target, All pname, int* parameters) => GLPointers._glGetPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetPointeri_vEXT</c>]</b><br/>  </summary>
-            public static void GetPointeri_vEXT_(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
+            public static void GetPointeri_vEXT(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetPointerIndexedvEXT</c>]</b><br/>  </summary>
-            public static void GetPointerIndexedvEXT_(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetPointerIndexedvEXT(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array]</b> <b>[entry point: <c>glGetPointervEXT</c>]</b><br/>  </summary>
-            public static void GetPointervEXT_(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
+            public static void GetPointervEXT(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b> <b>[entry point: <c>glGetProgramPipelineInfoLogEXT</c>]</b><br/>  </summary>
             public static void GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramPipelineInfoLogEXT_fnptr(pipeline, bufSize, length, infoLog);
@@ -12031,7 +12031,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetVariantIntegervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader]</b> <b>[entry point: <c>glGetVariantPointervEXT</c>]</b><br/>  </summary>
-            public static void GetVariantPointervEXT_(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
+            public static void GetVariantPointervEXT(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayIntegeri_vEXT</c>]</b><br/>  </summary>
             public static void GetVertexArrayIntegeri_vEXT(int vaobj, uint index, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
@@ -12040,10 +12040,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVertexArrayIntegervEXT(int vaobj, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayPointeri_vEXT</c>]</b><br/>  </summary>
-            public static void GetVertexArrayPointeri_vEXT_(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
+            public static void GetVertexArrayPointeri_vEXT(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayPointervEXT</c>]</b><br/>  </summary>
-            public static void GetVertexArrayPointervEXT_(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
+            public static void GetVertexArrayPointervEXT(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4]</b> <b>[entry point: <c>glGetVertexAttribIivEXT</c>]</b><br/>  </summary>
             public static void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, int* parameters) => GLPointers._glGetVertexAttribIivEXT_fnptr(index, (uint)pname, parameters);
@@ -13338,7 +13338,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetPointervKHR</c>]</b><br/>  </summary>
-            public static void GetPointervKHR_(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
+            public static void GetPointervKHR(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_parallel_shader_compile]</b> <b>[entry point: <c>glMaxShaderCompilerThreadsKHR</c>]</b><br/>  </summary>
             public static void MaxShaderCompilerThreadsKHR(uint count) => GLPointers._glMaxShaderCompilerThreadsKHR_fnptr(count);

@@ -42,7 +42,7 @@ namespace OpenTK.Graphics.OpenGLES2
             }
             else
             {
-                GL.GetShaderInfoLog(shader, length, ref length, out info);
+                GL.GetShaderInfoLog(shader, length, out length, out info);
             }
         }
 
@@ -59,7 +59,7 @@ namespace OpenTK.Graphics.OpenGLES2
             }
             else
             {
-                GL.GetProgramInfoLog(program, length, ref length, out info);
+                GL.GetProgramInfoLog(program, length, out length, out info);
             }
         }
 
