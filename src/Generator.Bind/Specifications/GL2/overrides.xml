@@ -22,6 +22,7 @@
       <param name="name">
         <type>StringName</type>
       </param>
+      <returns>String</returns>
     </function>
 
     <function name="TexImage1D" extension="Core">
@@ -461,6 +462,7 @@
       <param name="name">
         <type>StringNameIndexed</type>
       </param>
+      <returns>String</returns>
     </function>
 
     <!-- Version 3.1 -->
@@ -581,17 +583,6 @@
     </function>
 
     <!-- Version 3.3 -->
-
-    <function name="SamplerParameter" extension="Core">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-    <function name="SamplerParameterI" extension="Core">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-
-    <function name="GetSamplerParameter" extension="Core">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
 
     <function name="QueryCounter" extension="Core">
       <param name="target">
@@ -1926,6 +1917,7 @@
       <param name="name" index="0">
         <type>StringName</type>
       </param>
+      <returns>String</returns>
     </function>
     <function name="GetSync" extension="Core" obsolete="Use SyncParameterName overload instead">
       <param name="pname" index="1">
@@ -2294,7 +2286,7 @@
       </param>
     </function>
     <!-- generated from apitest against svn r3127 -->
-        <function name="BlendEquation" extension="Arb" obsolete="Use BlendEquationMode overload instead">
+    <function name="BlendEquation" extension="Arb" obsolete="Use BlendEquationMode overload instead">
       <param name="mode" index="1">
         <type>ArbDrawBuffersBlend</type>
       </param>
@@ -2335,29 +2327,9 @@
         <type>BeginMode</type>
       </param>
     </function>
-    <function name="GetSamplerParameter" extension="Core" obsolete="Use SamplerParameterName overload instead">
-      <param name="pname" index="1">
-        <type>SamplerParameter</type>
-      </param>
-    </function>
-    <function name="GetSamplerParameterI" extension="Core" obsolete="Use All overload instead">
-      <param name="pname" index="1">
-        <type>ArbSamplerObjects</type>
-      </param>
-    </function>
     <function name="ProgramParameter" extension="Core" obsolete="Use ProgramParameterName overload instead">
       <param name="pname" index="1">
         <type>AssemblyProgramParameterArb</type>
-      </param>
-    </function>
-    <function name="SamplerParameter" extension="Core" obsolete="Use SamplerParameterName overload instead">
-      <param name="pname" index="1">
-        <type>SamplerParameter</type>
-      </param>
-    </function>
-    <function name="SamplerParameterI" extension="Core" obsolete="Use SamplerParameterName overload instead">
-      <param name="pname" index="1">
-        <type>ArbSamplerObjects</type>
       </param>
     </function>
     <function name="StencilFuncSeparate" extension="Core" obsolete="Use StencilFace overload instead">
@@ -4463,23 +4435,6 @@
       <use enum="VERSION_4_5" token="INNOCENT_CONTEXT_RESET" />
       <use enum="VERSION_4_5" token="UNKNOWN_CONTEXT_RESET" />
     </enum>
-    <enum name="SamplerParameter">
-      <token name="TextureWrapS" value = "0x2802" />
-      <token name="TextureWrapT" value = "0x2803" />
-      <token name="TextureWrapR" value = "0x8072" />
-      <token name="TextureMinFilter" value = "0x2801" />
-      <token name="TextureMagFilter" value = "0x2800" />
-      <token name="TextureBorderColor" value = "0x1004" />
-      <token name="TextureMinLod" value = "0x813A" />
-      <token name="TextureMaxLod" value = "0x813B" />
-      <token name="TextureLodBias" value = "0x8501" />
-      <token name="TextureCompareMode" value = "0x884C" />
-      <token name="TextureCompareFunc" value = "0x884D" />
-      <token name="TextureMaxAnisotropyExt" value = "0x84FE" />
-    </enum>
-    <enum name="SamplerParameterName">
-      <reuse enum="SamplerParameter" />
-    </enum>
     <enum name="SeparableTarget">
       <token name="SEPARABLE_2D" value="0x8012" />
     </enum>
@@ -5289,7 +5244,7 @@
       <param name="bufferMode"><type>TransformFeedbackMode</type></param>
     </function>
 
-	<!-- Shader Queries [6.1.12] -->
+    <!-- Shader Queries [6.1.12] -->
     <function name="GetShader">
       <param name="pname"><type>ShaderParameter</type></param>
     </function>
@@ -5315,16 +5270,6 @@
     </function>
     <function name="BindTexture">
       <param name="target"><type>TextureTarget</type></param>
-    </function>
-
-    <!-- Sampler Objects [3.8.2] -->
-    <function name="SamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
-    </function>
-
-    <!-- Sampler Queries [6.1.5] -->
-    <function name="GetSamplerParameter">
-      <param name="pname"><type>SamplerParameterName</type></param>
     </function>
 
     <!-- Texture Image Specification [3.8.3-4] -->
@@ -5585,9 +5530,11 @@
     </function>
     <function name="GetString">
       <param name="name"><type>StringName</type></param>
+      <returns>String</returns>
     </function>
     <function name="GetStringi">
       <param name="name"><type>StringNameIndexed</type></param>
+      <returns>String</returns>
     </function>
 
     <!-- AMD_performance_monitors is not const-correct -->
@@ -7266,17 +7213,6 @@
       <use token="RENDERBUFFER_STENCIL_SIZE" />
       <use token="RENDERBUFFER_SAMPLES" />
       <use token="RENDERBUFFER_INTERNAL_FORMAT" />
-    </enum>
-    <enum name="SamplerParameterName">
-      <use token="TEXTURE_WRAP_S" />
-      <use token="TEXTURE_WRAP_T" />
-      <use token="TEXTURE_WRAP_R" />
-      <use token="TEXTURE_MIN_FILTER" />
-      <use token="TEXTURE_MAG_FILTER" />
-      <use token="TEXTURE_MIN_LOD" />
-      <use token="TEXTURE_MAX_LOD" />
-      <use token="TEXTURE_COMPARE_MODE" />
-      <use token="TEXTURE_COMPARE_FUNC" />
     </enum>
     <enum name="ShaderParameter">
       <use token="SHADER_TYPE" />

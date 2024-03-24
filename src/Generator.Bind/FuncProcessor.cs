@@ -562,6 +562,13 @@ namespace Bind
                 if (return_override != null)
                 {
                     d.ReturnType.CurrentType = return_override.Value;
+
+                    // If we replaced something with String we want to remove the pointer from the return type.
+                    // - 2024-03-24 Noggin_bops
+                    if (return_override.Value == "String")
+                    {
+                        d.ReturnType.Pointer--;
+                    }
                 }
             }
         }
@@ -581,6 +588,11 @@ namespace Bind
             string apiname, string apiversion)
         {
             ApplyReturnTypeReplacement(d, function_override);
+
+            if (d.Name.Contains("GetString"))
+            {
+                ;
+            }
 
             TranslateType(d.ReturnType, function_override, nav, enum_processor, enums, d.Category, apiname);
 
