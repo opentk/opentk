@@ -5007,6 +5007,12 @@
   </overload>
 
   <replace name="gles1">
+    <function name="GetString" extension="Core">
+      <returns>String</returns>
+    </function>
+  </replace>
+
+  <replace name="gles1">
     <!-- AMD_performance_monitors is not const-correct -->
     <function name="DeletePerfMonitors" extension="AMD">
       <param name="monitors"><flow>in</flow></param>
