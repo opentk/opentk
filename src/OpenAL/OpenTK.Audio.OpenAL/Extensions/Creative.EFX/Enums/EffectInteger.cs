@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid Int32 Effect/GetEffect parameters.
+    /// A list of valid Int32 <see cref="ALC.EFX.Effect(int, EffectInteger, int)"/>/<see cref="ALC.EFX.GetEffect(int, EffectInteger)"/> parameters.
     /// </summary>
     public enum EffectInteger
     {

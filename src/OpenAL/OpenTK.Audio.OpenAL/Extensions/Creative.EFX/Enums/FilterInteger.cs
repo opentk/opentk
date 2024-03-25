@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="int"/> Filter/GetFilter parameters.
+    /// A list of valid <see cref="int"/> <see cref="ALC.EFX.Filter(int, FilterInteger, int)"/>/<see cref="ALC.EFX.GetFilter(int, FilterInteger)"/> parameters.
     /// </summary>
     public enum FilterInteger
     {

@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// Filter type definitions to be used with EfxFilteri.FilterType.
+    /// Filter type definitions to be used with <see cref="FilterInteger.FilterType"/>.
     /// </summary>
     public enum FilterType
     {

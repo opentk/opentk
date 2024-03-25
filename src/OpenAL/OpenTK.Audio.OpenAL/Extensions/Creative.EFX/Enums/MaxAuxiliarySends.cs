@@ -10,8 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per
-    /// source.
+    /// May be passed at context construction time to indicate the number of desired auxiliary effect slot sends per source.
     /// </summary>
     public enum MaxAuxiliarySends
     {
