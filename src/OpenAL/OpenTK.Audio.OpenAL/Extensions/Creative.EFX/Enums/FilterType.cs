@@ -25,12 +25,12 @@ namespace OpenTK.Audio.OpenAL
         Lowpass = 0x0001,
 
         /// <summary>
-        /// Currently not implemented. A high-pass filter is used to remove low frequency content from a signal.
+        /// A high-pass filter is used to remove low frequency content from a signal.
         /// </summary>
         Highpass = 0x0002,
 
         /// <summary>
-        /// Currently not implemented. A band-pass filter is used to remove high and low frequency content from a signal.
+        /// A band-pass filter is used to remove high and low frequency content from a signal.
         /// </summary>
         Bandpass = 0x0003,
     }
