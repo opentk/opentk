@@ -21,6 +21,7 @@ namespace Bind.ES
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
             Settings.OverridesFiles.Add("GL2/ES/1.1/");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             // Khronos releases a combined 1.0+1.1 specification,
             // so we cannot distinguish between the two.

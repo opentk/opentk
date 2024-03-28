@@ -20,6 +20,7 @@ namespace Bind.ES
                 Settings.DefaultDocPath, "ES20");
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             Profile = "gles2";
             Version = "2.0";

@@ -476,11 +476,31 @@ namespace OpenTK.Convert
                 var words = ret.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 if (words[0] == "struct" || words[0] == "const")
                 {
-                    words[1] = group.Value;
+                    // Only replace groups on types that are 32-bits in size.
+                    // This affects glPathCommandsNV where a parameter has type GLubyte*
+                    // but is tagged with the group PathCoordType.
+                    // - Noggin_bops 2024-03-28
+                    if (words[1] == "GLint" ||
+                        words[1] == "GLuint" ||
+                        words[1] == "GLenum" ||
+                        words[1] == "GLbitfield")
+                    {
+                        words[1] = group.Value;
+                    }
                 }
                 else
                 {
-                    words[0] = group.Value;
+                    // Only replace groups on types that are 32-bits in size.
+                    // This affects glPathCommandsNV where a parameter has type GLubyte*
+                    // but is tagged with the group PathCoordType.
+                    // - Noggin_bops 2024-03-28
+                    if (words[0] == "GLint" ||
+                        words[0] == "GLuint" ||
+                        words[0] == "GLenum" ||
+                        words[0] == "GLbitfield")
+                    {
+                        words[0] = group.Value;
+                    }
                 }
 
                 ret = String.Join(" ", words);
