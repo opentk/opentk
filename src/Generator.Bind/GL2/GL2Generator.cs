@@ -51,6 +51,7 @@ namespace Bind.GL2
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
             Settings.OverridesFiles.Add("GL2/GL/");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             //Settings.DefaultCompatibility |=
             //    Settings.Legacy.UseDllImports | Settings.Legacy.UseWindowsCompatibleGL;
