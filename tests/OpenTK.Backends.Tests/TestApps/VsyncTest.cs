@@ -19,6 +19,8 @@ namespace OpenTK.Backends.Tests
 
         private bool UseOpenGLES;
 
+        private bool UseDwmFlush = false;
+
         public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             Window = window;
@@ -39,6 +41,18 @@ namespace OpenTK.Backends.Tests
                 Render();
 
                 Program.OpenGLComp.SetCurrentContext(prevContext);
+            }
+            else if (args is KeyDownEventArgs keyDown)
+            {
+                if (OperatingSystem.IsWindows())
+                {
+                    if (keyDown.Key == Key.V)
+                    {
+                        UseDwmFlush = !UseDwmFlush;
+                        (Program.OpenGLComp as OpenTK.Platform.Native.Windows.OpenGLComponent)?.UseDwmFlushIfApplicable(Context, UseDwmFlush);
+                        Console.WriteLine($"DwmFlush: {UseDwmFlush}");
+                    }
+                }
             }
         }
 

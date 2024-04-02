@@ -89,7 +89,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = true;
+            PlatformComponents.PreferANGLE = false;
 
             if (PlatformComponents.PreferANGLE)
             {
@@ -475,43 +475,123 @@ namespace OpenTK.Backends.Tests
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            if (args is WindowEventArgs windowEvent && windowEvent.Window != Window)
+            if (args is WindowEventArgs windowEvent)
             {
-                if (args is CloseEventArgs close2)
+                if (windowEvent.Window != Window)
                 {
-                    Console.WriteLine($"Closing window: '{WindowComp.GetTitle(close2.Window)}'");
-
-                    // If this is one of our other windows we want to gracefully close it before we delete the window.
-                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
-                    ApplicationWindow appWindow = ApplicationWindows[index];
-                    if (appWindow != null)
+                    if (args is CloseEventArgs close2)
                     {
-                        if (appWindow.Context != null)
+                        Console.WriteLine($"Closing window: '{WindowComp.GetTitle(close2.Window)}'");
+
+                        // If this is one of our other windows we want to gracefully close it before we delete the window.
+                        int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
+                        ApplicationWindow appWindow = ApplicationWindows[index];
+                        if (appWindow != null)
                         {
-                            if (appWindow.Application != null)
+                            if (appWindow.Context != null)
                             {
-                                // FIXME: Make there only be one place where we actually deinit applications.
-                                OpenGLComp.SetCurrentContext(appWindow.Context);
-                                appWindow.Application?.Deinitialize();
-                                OpenGLComp.SetCurrentContext(WindowContext);
+                                if (appWindow.Application != null)
+                                {
+                                    // FIXME: Make there only be one place where we actually deinit applications.
+                                    OpenGLComp.SetCurrentContext(appWindow.Context);
+                                    appWindow.Application?.Deinitialize();
+                                    OpenGLComp.SetCurrentContext(WindowContext);
+                                }
+
+                                OpenGLComp.DestroyContext(appWindow.Context);
                             }
 
-                            OpenGLComp.DestroyContext(appWindow.Context);
+                            ApplicationWindows.RemoveAt(index);
                         }
-                        
-                        ApplicationWindows.RemoveAt(index);
+
+                        WindowComp.Destroy(close2.Window);
+                        return;
                     }
-                    
-                    WindowComp.Destroy(close2.Window);
-                    return;
+                    else
+                    {
+                        // If this is a window event for an application window, send the event to that window.
+                        int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == windowEvent.Window);
+                        if (index != -1)
+                        {
+                            ApplicationWindows[index].Application?.HandleEvent(windowEvent);
+                        }
+                    }
                 }
                 else
                 {
-                    // If this is a window event for an application window, send the event to that window.
-                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == windowEvent.Window);
-                    if (index != -1)
+                    // Only update imgui stuff for the main window
+                    if (args is KeyDownEventArgs keyDown)
                     {
-                        ApplicationWindows[index].Application?.HandleEvent(windowEvent);
+                        ImGuiKey ikey = ToImgui(keyDown.Key);
+                        ImGui.GetIO().AddKeyEvent(ikey, true);
+                    }
+                    else if (args is KeyUpEventArgs keyUp)
+                    {
+                        ImGuiKey ikey = ToImgui(keyUp.Key);
+                        ImGui.GetIO().AddKeyEvent(ikey, false);
+                    }
+                    else if (args is TextInputEventArgs textInput)
+                    {
+                        ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
+                    }
+                    else if (args is MouseMoveEventArgs mouseMove)
+                    {
+                        ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
+                    }
+                    else if (args is ScrollEventArgs scroll)
+                    {
+                        ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
+                    }
+                    else if (args is MouseButtonDownEventArgs mouseDown)
+                    {
+                        int button = ((int)mouseDown.Button);
+                        ImGui.GetIO().AddMouseButtonEvent(button, true);
+                    }
+                    else if (args is MouseButtonUpEventArgs mouseUp)
+                    {
+                        int button = ((int)mouseUp.Button);
+                        ImGui.GetIO().AddMouseButtonEvent(button, false);
+                    }
+                    else if (args is WindowDpiChangeEventArgs dpiChange)
+                    {
+                        try
+                        {
+                            if (DisplayComponent != null)
+                            {
+                                // FIXME: Should we only scale on Y? or something else?
+                                float scale = MathF.Max(dpiChange.ScaleX, dpiChange.ScaleY);
+                                if (scale != 1)
+                                {
+                                    ImFontConfig config = new ImFontConfig();
+                                    config.FontDataOwnedByAtlas = 1;
+                                    config.OversampleH = 3;
+                                    config.OversampleV = 3;
+                                    config.PixelSnapH = 1;
+                                    config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                                    config.RasterizerMultiply = 1;
+                                    config.EllipsisChar = 0xFFFF;
+                                    unsafe
+                                    {
+                                        ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                                        ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+
+                                        // FIXME: This is not perfect and does introduce some visual artifacts
+                                        // if the window dpi changes multiple times.
+                                        // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
+                                        // Thought that would mean we have to update both styles if we want to change some styling.
+                                        ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
+                                        ImGui.GetStyle().ScaleAllSizes(scale);
+                                        CurrentImGuiScale = scale;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
+                        }
+
+                        ImGuiController.RecreateFontDeviceTexture();
                     }
                 }
             }
@@ -535,10 +615,6 @@ namespace OpenTK.Backends.Tests
             }
             else if (args is KeyDownEventArgs keyDown)
             {
-                ImGuiKey ikey = ToImgui(keyDown.Key);
-
-                ImGui.GetIO().AddKeyEvent(ikey, true);
-
                 // FIXME: Track modifiers!
 
                 InputData.KeysPressed[(int)keyDown.Key] = true;
@@ -547,35 +623,9 @@ namespace OpenTK.Backends.Tests
             }
             else if (args is KeyUpEventArgs keyUp)
             {
-                ImGuiKey ikey = ToImgui(keyUp.Key);
-
-                ImGui.GetIO().AddKeyEvent(ikey, false);
-
                 InputData.KeysPressed[(int)keyUp.Key] = false;
 
                 Logger.LogDebug($"Key Up: {keyUp.Key}, Scancode: {keyUp.Scancode}, Modifiers: {keyUp.Modifiers}");
-            }
-            else if (args is TextInputEventArgs textInput)
-            {
-                ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
-            }
-            else if (args is MouseMoveEventArgs mouseMove)
-            {
-                ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
-            }
-            else if (args is ScrollEventArgs scroll)
-            {
-                ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
-            }
-            else if (args is MouseButtonDownEventArgs mouseDown)
-            {
-                int button = ((int)mouseDown.Button);
-                ImGui.GetIO().AddMouseButtonEvent(button, true);
-            }
-            else if (args is MouseButtonUpEventArgs mouseUp)
-            {
-                int button = ((int)mouseUp.Button);
-                ImGui.GetIO().AddMouseButtonEvent(button, false);
             }
             else if (args is WindowResizeEventArgs resize)
             {
@@ -618,47 +668,6 @@ namespace OpenTK.Backends.Tests
             else if (args is FileDropEventArgs fileDrop)
             {
                 Logger.LogInfo($"Dropped files:\n\t{string.Join("\n\t", fileDrop.FilePaths)}");
-            }
-            else if (args is WindowDpiChangeEventArgs dpiChange)
-            {
-                try
-                {
-                    if (DisplayComponent != null)
-                    {
-                        // FIXME: Should we only scale on Y? or something else?
-                        float scale = MathF.Max(dpiChange.ScaleX, dpiChange.ScaleY);
-                        if (scale != 1)
-                        {
-                            ImFontConfig config = new ImFontConfig();
-                            config.FontDataOwnedByAtlas = 1;
-                            config.OversampleH = 3;
-                            config.OversampleV = 3;
-                            config.PixelSnapH = 1;
-                            config.GlyphMaxAdvanceX = float.PositiveInfinity;
-                            config.RasterizerMultiply = 1;
-                            config.EllipsisChar = 0xFFFF;
-                            unsafe
-                            {
-                                ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                                ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
-
-                                // FIXME: This is not perfect and does introduce some visual artifacts
-                                // if the window dpi changes multiple times.
-                                // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
-                                // Thought that would mean we have to update both styles if we want to change some styling.
-                                ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
-                                ImGui.GetStyle().ScaleAllSizes(scale);
-                                CurrentImGuiScale = scale;
-                            }
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
-                }
-
-                ImGuiController.RecreateFontDeviceTexture();
             }
             else if (args is DisplayConnectionChangedEventArgs displayChanged)
             {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
@@ -765,11 +766,44 @@ namespace OpenTK.Platform.Native.Windows
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
 
+            // FIXME: Don't do this for fullscreen windows?
+            if (hglrc.UseDwmFlush == true)
+            {
+                // FIXME: Should we always use
+                int result = Win32.DwmIsCompositionEnabled(out bool compositionEnabled);
+                if (result != Win32.S_OK)
+                {
+                    // FIXME: Does Win32Exception take hresult values?
+                    throw new Win32Exception(result);
+                }
+
+                if (OperatingSystem.IsWindowsVersionAtLeast(6, 2) || compositionEnabled)
+                {
+                    Win32.DwmFlush();
+                }
+            }
+
             bool success = Win32.SwapBuffers(hglrc.HDC);
             if (success == false)
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <summary>
+        /// Sets whether calls to <see cref="SwapBuffers(OpenGLContextHandle)"/> should use <c>DwmFlush()</c> to sync if DWM compositing is enabled.
+        /// This can improve vsync performance on systems with multiple monitors using different refresh rates, but is likely to break in a multi-window scenario.
+        /// If using multiple windows, only one window should have this property set.
+        ///
+        /// By default this value is set to <c>false</c>.
+        /// </summary>
+        /// <param name="handle">The OpenGL context that should <c>DwmFlush()</c> setting.</param>
+        /// <param name="enable">Whether to enable <c>DwmFlush()</c> sync or not.</param>
+        public void UseDwmFlushIfApplicable(OpenGLContextHandle handle, bool enable)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            hglrc.UseDwmFlush = enable;
         }
 
         /// <summary>

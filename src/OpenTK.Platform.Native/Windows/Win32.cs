@@ -547,6 +547,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HICON or HCURSOR */ CreateIconIndirect(in ICONINFO piconinfo);
 
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto)]
+        internal static extern IntPtr /* HDC */ CreateDC([MarshalAs(UnmanagedType.LPTStr)] string? pwszDriver, [MarshalAs(UnmanagedType.LPTStr)] string pwszDevice, [MarshalAs(UnmanagedType.LPTStr)] string? pszPort, IntPtr pdm);
+
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern IntPtr /* HDC */ CreateCompatibleDC(IntPtr /* HDC */ hdc);
 
@@ -1061,6 +1064,38 @@ namespace OpenTK.Platform.Native.Windows
             public POINT ptMinTrackSize;
             public POINT ptMaxTrackSize;
         }
+
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTWaitForVerticalBlankEvent(in D3DKMT_WAITFORVERTICALBLANKEVENT unnamedParam1);
+        internal struct D3DKMT_WAITFORVERTICALBLANKEVENT
+        {
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public uint /* D3DKMT_HANDLE */ hDevice;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTOpenAdapterFromHdc(D3DKMT_OPENADAPTERFROMHDC* unnamedParam1);
+
+        internal struct D3DKMT_OPENADAPTERFROMHDC
+        {
+            public IntPtr /* HDC */ hDc;
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public LUID AdapterLuid;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        internal struct LUID
+        {
+            uint LowPart;
+            int HighPart;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmFlush();
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmIsCompositionEnabled(out bool pfEnabled);
 
         [DllImport("dwmapi.dll")]
         internal static extern int /* HRESULT */ DwmGetWindowAttribute(
