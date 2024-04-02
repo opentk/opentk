@@ -50,6 +50,8 @@ namespace OpenTK.Backends.Tests
 
         public static List<ApplicationWindow> ApplicationWindows = new List<ApplicationWindow>();
 
+        public static bool UsingGLES = false;
+
         public static WindowHandle Window;
         public static OpenGLContextHandle WindowContext;
 
@@ -233,8 +235,8 @@ namespace OpenTK.Backends.Tests
             (WindowComp as MacOSWindowComponent)?.GetFramebufferSize(Window, out width, out height);
             GL.Viewport(0, 0, width, height);
 
-            bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
-            ImGuiController = new ImGuiController(width, height, useGLES);
+            UsingGLES = OpenGLComp is ANGLEOpenGLComponent;
+            ImGuiController = new ImGuiController(width, height, UsingGLES);
 
             float fontSize = 13f;
             try

@@ -59,7 +59,7 @@ namespace OpenTK.Backends.Tests
 
             for(int i = 0; i < numExtensions; i++)
             {
-                // FIXME: odd c# binding???
+                // FIXME: odd c# binding?
                 string? extension = GL.GetStringi(StringName.Extensions, (uint)i);
 
                 // Doubt this will ever hit.
@@ -173,10 +173,9 @@ namespace OpenTK.Backends.Tests
 
                         if (appWindow.Application != null)
                         {
-                            // FIXME: Make it only a single place where we actuall initialize test apps.
+                            // FIXME: Make it only a single place where we actually initialize test apps.
                             Program.OpenGLComp.SetCurrentContext(appWindow.Context);
-                            // FIXME: Proper check for GLES.
-                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
+                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, Program.UsingGLES);
                             Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
                         }
                     }
@@ -212,8 +211,7 @@ namespace OpenTK.Backends.Tests
                 if (appWindow.Context != null)
                 {
                     Program.OpenGLComp.SetCurrentContext(appWindow.Context);
-                    // FIXME: Proper check for GLES.
-                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
+                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, Program.UsingGLES);
                     Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
                 }
             }
@@ -221,12 +219,10 @@ namespace OpenTK.Backends.Tests
             ImGui.EndDisabled();
 
             ImGui.SeparatorText("Main Context Information");
-            ImGui.BeginDisabled();
-            ImGui.InputText("OpenGL Version", ref glVersion, 1024);
-            ImGui.InputText("GLSL Version", ref glslVersion, 1024);
-            ImGui.InputText("OpenGL Vendor", ref vendorString, 1024);
-            ImGui.InputText("OpenGL Renderer", ref renderer, 1024);
-            ImGui.EndDisabled();
+            ImGuiUtils.ReadonlyText("OpenGL Version", glVersion);
+            ImGuiUtils.ReadonlyText("GLSL Version", glslVersion);
+            ImGuiUtils.ReadonlyText("OpenGL Vendor", vendorString);
+            ImGuiUtils.ReadonlyText("OpenGL Renderer", renderer);
 
             ImGui.SeparatorText(extensionHeader);
             ImGui.InputText(string.Empty, ref savePath, 4096); ImGui.SameLine();

@@ -33,6 +33,11 @@ namespace OpenTK.Backends.Tests
             try { canCaptureCursor = WindowComponent.CanCaptureCursor; } catch { canCaptureCursor = false; }
             try { canSetIcon = WindowComponent.CanSetIcon; } catch { canSetIcon = false; }
 
+            if (Program.UsingGLES)
+            {
+                openglSettings.Version = new Version(3, 1);
+            }
+
             // FIXME: Make a useful hit test callback as part of this view.
             //WindowComponent.SetHitTestCallback(Program.Window, HitTest);
         }
