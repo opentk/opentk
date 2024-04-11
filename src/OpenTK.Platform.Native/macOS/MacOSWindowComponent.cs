@@ -96,6 +96,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly SEL selLevel = sel_registerName("level"u8);
         internal static readonly SEL selSetLevel = sel_registerName("setLevel:"u8);
+        internal static readonly SEL selHidesOnDeactivate = sel_registerName("hidesOnDeactivate"u8);
+        internal static readonly SEL selSetHidesOnDeactivate = sel_registerName("setHidesOnDeactivate:"u8);
 
         internal static readonly SEL selScreens = sel_registerName("screens"u8);
         internal static readonly SEL selCount = sel_registerName("count"u8);
@@ -1442,8 +1444,8 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            nswindow.MinWidth = width;
-            nswindow.MinHeight = height;
+            nswindow.MaxWidth = width;
+            nswindow.MaxHeight = height;
 
             float fWidth = width ?? 10000.0f;
             float fheight = height ?? 10000.0f;
@@ -1583,6 +1585,35 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
+            if (nswindow.InNonSpaceFullscreen)
+            {
+                // Undo changes.
+
+                // FIXME: BOOL
+                objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, false);
+
+                // Reapply window size limits
+                NFloat INF = NFloat.PositiveInfinity;
+                objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(nswindow.MaxWidth ?? INF, nswindow.MaxHeight ?? INF));
+                objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(nswindow.MinWidth ?? 0, nswindow.MinHeight ?? 0));
+
+                objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nswindow.PreviousStyleMask);
+                objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)nswindow.PreviousLevel);
+
+                // FIXME: BOOL
+                objc_msgSend(nswindow.Window, selSetFrame_Display, nswindow.PreviousFrame, true);
+
+                nswindow.InNonSpaceFullscreen = false;
+            }
+
+            NSWindowStyleMask mask = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+            // FIXME: Only go out of the space if we need to...
+            if (mask.HasFlag(NSWindowStyleMask.FullScreen))
+            {
+                // Go out of fullscreen.
+                objc_msgSend(nswindow.Window, selToggleFullScreen, IntPtr.Zero);
+            }
+
             switch (mode)
             {
                 case WindowMode.Hidden:
@@ -1647,9 +1678,7 @@ namespace OpenTK.Platform.Native.macOS
                 case WindowMode.WindowedFullscreen:
                     {
                         // FIXME: deminituarize, un-zoom or whatever else needs to be done.
-
-                        // FIXME: Add a menu item for fullscreen
-                        objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
+                        SetFullscreenDisplay(nswindow, null);
                         break;
                     }
                 case WindowMode.ExclusiveFullscreen:
@@ -1662,10 +1691,56 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <inheritdoc/>
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        /// <summary>
+        /// Put a window into 'windowed fullscreen' on a specific display without creating a space for it.
+        /// If <paramref name="display"/> is <c>null</c> then the window will be made fullscreen on the 'nearest' display.
+        /// </summary>
+        /// <param name="window">The window to make fullscreen.</param>
+        /// <param name="display">The display to make the window fullscreen on.</param>
+        public void SetFullscreenDisplayNoSpace(WindowHandle window, DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            if (display == null)
+            {
+                display = GetDisplay(window);
+            }
+
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+            NSScreenHandle nsscreen = display.As<NSScreenHandle>(this);
+
+            // Disable min/max size constraints while fullscreen.
+            objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(NFloat.PositiveInfinity, NFloat.PositiveInfinity));
+            objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(0, 0));
+
+            nswindow.PreviousStyleMask = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+            objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)NSWindowStyleMask.Borderless);
+
+            nswindow.PreviousLevel = (NSWindowLevel)objc_msgSend_IntPtr(nswindow.Window, selLevel);
+            objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)(NSWindowLevel.MainMenu + 1));
+
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, true);
+
+            // FIXME: Remember the original frame!
+            CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
+            // FIXME: Is this the correct frame to get?
+            nswindow.PreviousFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
+
+            objc_msgSend(nswindow.Window, selMakeKeyAndOrderFront, nswindow.Window);
+
+            nswindow.InNonSpaceFullscreen = true;
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            NSScreenHandle? nsscreen = display?.As<NSScreenHandle>(this);
+
+            // FIXME: Set the frame if we passed a screen.
+
+            objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
         }
 
         /// <inheritdoc/>

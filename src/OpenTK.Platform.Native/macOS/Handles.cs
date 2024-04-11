@@ -24,6 +24,12 @@ namespace OpenTK.Platform.Native.macOS
         public HitTest? HitTest { get; set; } = null;
         public bool BackgroundDragEnabled { get; set; } = false;
 
+        public bool InNonSpaceFullscreen { get; set; } = false;
+        public NSWindowLevel PreviousLevel { get; set; }
+        // FIXME: Should we store the intended style?
+        public NSWindowStyleMask PreviousStyleMask { get; set; }
+        public CGRect PreviousFrame { get; set; }
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;

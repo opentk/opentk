@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.macOS;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -195,6 +196,22 @@ namespace OpenTK.Backends.Tests
                 {
                     WindowComponent!.SetMode(window, WindowModes[modeIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
+                }
+
+                // FIXME: change to toggle!
+                if (ImGui.Button("Set windowed fullscreen"))
+                {
+                    DisplayHandle display = WindowComponent.GetDisplay(window);
+                    WindowComponent.SetFullscreenDisplay(window, display);
+                }
+
+                if (WindowComponent is MacOSWindowComponent macosWindowComponent)
+                {
+                    if (ImGui.Button("Set windowed fullscreen without opening its own space"))
+                    {
+                        DisplayHandle display = macosWindowComponent.GetDisplay(window);
+                        macosWindowComponent.SetFullscreenDisplayNoSpace(window, display);
+                    }
                 }
 
                 ImGui.AlignTextToFramePadding();
