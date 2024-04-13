@@ -139,7 +139,7 @@ namespace OpenTK.Platform.Native.macOS
         // See: https://github.com/libsdl-org/SDL/commit/35d90f17e1c7d3740c75641ef94b5e5c938c20c6
         // - Noggin_bops 2024-04-13
         internal static readonly SEL selSetMouseConfinementRect = sel_registerName("setMouseConfinementRect:"u8);
-        internal static readonly SEL selMouseConfinementRect = sel_registerName("mouseConfinementRect:"u8);
+        internal static readonly SEL selMouseConfinementRect = sel_registerName("mouseConfinementRect"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
