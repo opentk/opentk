@@ -67,6 +67,7 @@ namespace OpenTK.Backends.Tests
         string titleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
+        int captureModeIndex = 0;
         Vector2i windowPosition;
         Vector2i clientPosition;
 
@@ -75,6 +76,9 @@ namespace OpenTK.Backends.Tests
 
         WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
         string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+
+        CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
+        string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
 
         public override void Paint(double deltaTime)
         {
@@ -212,6 +216,14 @@ namespace OpenTK.Backends.Tests
                         DisplayHandle display = macosWindowComponent.GetDisplay(window);
                         macosWindowComponent.SetFullscreenDisplayNoSpace(window, display);
                     }
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Cursor capture mode"); ImGui.SameLine();
+                ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##captureMode"))
+                {
+                    WindowComponent.SetCursorCaptureMode(window, CaptureModes[captureModeIndex]);
                 }
 
                 ImGui.AlignTextToFramePadding();

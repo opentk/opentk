@@ -134,6 +134,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -415,6 +418,21 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: What framework?
             [DllImport(FoundationFramework)]
             static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
+        }
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr /* objc_property_t* */ class_copyPropertyList(ObjCClass cls, out uint outCount);
+
+        internal static string property_getName(IntPtr property) {
+
+            byte** name = property_getName(property);
+            return Marshal.PtrToStringUTF8((IntPtr)(*name))!;
+
+            // FIXME: For some reason we are getting a char** when the documentation says
+            // we should be getting a char*???
+            // - Noggin_bops 2024-04-13
+            [DllImport(FoundationFramework, CallingConvention = CallingConvention.Cdecl)]
+            static extern byte** /* char* */ property_getName(IntPtr /* objc_property_t */ property);
         }
 
         internal static IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, out IntPtr outValue)

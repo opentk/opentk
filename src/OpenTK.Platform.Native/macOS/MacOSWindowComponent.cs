@@ -134,8 +134,16 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selDefaultCenter = sel_registerName("defaultCenter"u8);
         internal static readonly SEL selAddObserver_selector_name_object = sel_registerName("addObserver:selector:name:object:"u8);
 
+        // The mouseConfinementRect property is not part of public headers, but
+        // somehow SDL developers figured out it exists...
+        // See: https://github.com/libsdl-org/SDL/commit/35d90f17e1c7d3740c75641ef94b5e5c938c20c6
+        // - Noggin_bops 2024-04-13
+        internal static readonly SEL selSetMouseConfinementRect = sel_registerName("setMouseConfinementRect:"u8);
+        internal static readonly SEL selMouseConfinementRect = sel_registerName("mouseConfinementRect:"u8);
+
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
+        internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
         internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication");
         internal static readonly ObjCClass NSMenuClass = objc_getClass("NSMenu"u8);
         internal static readonly ObjCClass NSMenuItemClass = objc_getClass("NSMenuItem"u8);
@@ -168,7 +176,7 @@ namespace OpenTK.Platform.Native.macOS
             {
                 throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
             }
-
+            
             // This method is called from the Quit menu option.
             class_addMethod(NSApplicationClass, selQuit, Menu_QuitInst, "v@:"u8);
 
@@ -224,7 +232,7 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             // Allocate a window class
-            NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
+            NSOpenTKWindowClass = objc_allocateClassPair(NSWindowClass, "NSOpenTKWindow"u8, 0);
 
             // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
             class_addIvar(NSOpenTKWindowClass, "otkPALWindowComponent"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
@@ -1585,25 +1593,36 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            if (nswindow.InNonSpaceFullscreen)
+            if (nswindow.FullscreenScreen != null)
             {
-                // Undo changes.
+                if (nswindow.InNonSpaceFullscreen)
+                {
+                    // FIXME: BOOL
+                    objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, false);
 
-                // FIXME: BOOL
-                objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, false);
+                    // Reapply window size limits
+                    NFloat INF = NFloat.PositiveInfinity;
+                    objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(nswindow.MaxWidth ?? INF, nswindow.MaxHeight ?? INF));
+                    objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(nswindow.MinWidth ?? 0, nswindow.MinHeight ?? 0));
 
-                // Reapply window size limits
-                NFloat INF = NFloat.PositiveInfinity;
-                objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(nswindow.MaxWidth ?? INF, nswindow.MaxHeight ?? INF));
-                objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(nswindow.MinWidth ?? 0, nswindow.MinHeight ?? 0));
+                    objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nswindow.PreviousStyleMask);
+                    objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)nswindow.PreviousLevel);
 
-                objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nswindow.PreviousStyleMask);
-                objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)nswindow.PreviousLevel);
+                    nswindow.InNonSpaceFullscreen = false;
+                }
+                else
+                {
+                    objc_msgSend(nswindow.Window, selToggleFullScreen, IntPtr.Zero);
+                }
 
+                // FIXME: There seems like there might be some timing related things going on here
+                // where running this code normally it doesn't reset the frame after being in it's own space
+                // but placing a breakpoint here and stepping through it the frame actually gets reset properly.
+                // - Noggin_bops 2024-04-13
                 // FIXME: BOOL
                 objc_msgSend(nswindow.Window, selSetFrame_Display, nswindow.PreviousFrame, true);
 
-                nswindow.InNonSpaceFullscreen = false;
+                nswindow.FullscreenScreen = null;
             }
 
             NSWindowStyleMask mask = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
@@ -1730,6 +1749,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nswindow.Window, selMakeKeyAndOrderFront, nswindow.Window);
 
             nswindow.InNonSpaceFullscreen = true;
+            nswindow.FullscreenScreen = nsscreen;
         }
 
         /// <inheritdoc/>
@@ -1738,7 +1758,20 @@ namespace OpenTK.Platform.Native.macOS
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
             NSScreenHandle? nsscreen = display?.As<NSScreenHandle>(this);
 
-            // FIXME: Set the frame if we passed a screen.
+            nswindow.PreviousFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+
+            if (nsscreen != null)
+            {
+                CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
+                // FIXME: BOOL
+                objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
+            }
+            else
+            {
+                nsscreen = GetDisplay(nswindow).As<NSScreenHandle>(this);
+            }
+
+            nswindow.FullscreenScreen = nsscreen;
 
             objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
         }
@@ -1752,7 +1785,9 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+            display = nswindow.FullscreenScreen;
+            return display != null;
         }
 
         /// <inheritdoc/>
@@ -1892,13 +1927,49 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            return nswindow.CursorCaptureMode;
         }
 
         /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Confined &&
+                mode != CursorCaptureMode.Confined)
+            {
+                // Remove the confinement rectangle.
+                NFloat INF = NFloat.PositiveInfinity;
+                CGRect rect = new CGRect(-INF, -INF, INF, INF);
+                objc_msgSend(nswindow.Window, selSetMouseConfinementRect, rect);
+            }
+
+            switch (mode)
+            {
+                case CursorCaptureMode.Normal:
+                    // Getting out of the other modes is handled above.
+                    nswindow.CursorCaptureMode = CursorCaptureMode.Normal;
+                    break;
+                case CursorCaptureMode.Confined:
+                    // This undocumented property was found by the SDL developers
+                    // See: https://github.com/libsdl-org/SDL/commit/35d90f17e1c7d3740c75641ef94b5e5c938c20c6
+                    // - Noggin_bops 2024-04-13
+                    CGRect rect = objc_msgSend_CGRect(nswindow.View, selFrame);
+                    objc_msgSend(nswindow.Window, selSetMouseConfinementRect, rect);
+                    nswindow.CursorCaptureMode = mode;
+                    break;
+                case CursorCaptureMode.Locked:
+                    // FIXME: Set the mode to locked
+                    // CGAssociateMouseAndMouseCursorPosition() to allow the mouse to move separately from the cursor
+                    // [NSCursor hide] can be used to hide the cursor
+                    // Then we need to disable this when we loose key status and enable it again when we get key status again
+                    // We also need to handle warping the cursor back to the center of the window every time the cursor moves.
+                    // - Noggin_bops 2024-04-13
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <inheritdoc/>
