@@ -26,6 +26,9 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly IntPtr /* NSString */ NSApplicationDidChangeScreenParametersNotification = GetStringConstant(AppKitLibrary, "NSApplicationDidChangeScreenParametersNotification"u8);
 
+        internal const byte YES = 1;
+        internal const byte NO = 0;
+
         // FIXME: Number type enum!
         internal const int kCFNumberIntType = 9;
 
@@ -406,13 +409,11 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern bool class_addProtocol(ObjCClass cls, IntPtr /* Protocol */ protocol);
 
-        internal static bool class_addMethod(ObjCClass cls, SEL name, Delegate imp, ReadOnlySpan<byte> types)
+        internal static bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, ReadOnlySpan<byte> types)
         {
-            // FIXME: Maybe avoid marshalling the delegate?
-            IntPtr impPtr = Marshal.GetFunctionPointerForDelegate(imp);
-            fixed(byte* ptr = types)
+            fixed (byte* ptr = types)
             {
-                return class_addMethod(cls, name, impPtr, ptr);
+                return class_addMethod(cls, name, imp, ptr);
             }
 
             // FIXME: What framework?
