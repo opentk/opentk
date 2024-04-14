@@ -141,6 +141,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selSetMouseConfinementRect = sel_registerName("setMouseConfinementRect:"u8);
         internal static readonly SEL selMouseConfinementRect = sel_registerName("mouseConfinementRect"u8);
 
+        internal static readonly SEL selHide = sel_registerName("hide"u8);
+        internal static readonly SEL selUnhide = sel_registerName("unhide"u8);
+
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
@@ -154,6 +157,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
         internal static readonly ObjCClass NSNotificationCenterClass = objc_getClass("NSNotificationCenter"u8);
+        internal static readonly ObjCClass NSCursorClass = objc_getClass("NSCursor"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
@@ -357,6 +361,13 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    CenterCursor(nswindow);
+                }
+
                 EventQueue.Raise(nswindow, PlatformEventType.Focus, new FocusEventArgs(nswindow, true));
             }
             else
@@ -394,6 +405,13 @@ namespace OpenTK.Platform.Native.macOS
                     objc_msgSend(nswindow.Context.Context, selUpdate);
                 }
 
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    //CenterCursor(nswindow);
+                }
+
                 CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
                 CGRect backing = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
                 // FIXME: Framebuffer size event?
@@ -419,6 +437,13 @@ namespace OpenTK.Platform.Native.macOS
                 if (nswindow.Context != null)
                 {
                     objc_msgSend(nswindow.Context.Context, selUpdate);
+                }
+
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    //CenterCursor(nswindow);
                 }
 
                 CGRect windowFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
@@ -804,7 +829,7 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetCursor => true;
 
         /// <inheritdoc/>
-        public bool CanCaptureCursor => throw new NotImplementedException();
+        public bool CanCaptureCursor => true;
 
         /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
@@ -1923,7 +1948,6 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_msgSend(nswindow.Window, selInvalidateCursorRectsForView, nswindow.View);
         }
-
         /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
@@ -1945,6 +1969,12 @@ namespace OpenTK.Platform.Native.macOS
                 objc_msgSend(nswindow.Window, selSetMouseConfinementRect, rect);
             }
 
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked &&
+                mode != CursorCaptureMode.Locked)
+            {
+                CG.CGAssociateMouseAndMouseCursorPosition(true);
+            }
+            
             switch (mode)
             {
                 case CursorCaptureMode.Normal:
@@ -1966,10 +1996,33 @@ namespace OpenTK.Platform.Native.macOS
                     // Then we need to disable this when we loose key status and enable it again when we get key status again
                     // We also need to handle warping the cursor back to the center of the window every time the cursor moves.
                     // - Noggin_bops 2024-04-13
+
+                    // FIXME: Do we need to call CGAssociateMouseAndMouseCursorPosition?
+                    // FIXME: We want to move the mouse display to the center of the screen.
+                    // objc_msgSend((IntPtr)NSCursorClass, selHide);
+
+                    CG.CGAssociateMouseAndMouseCursorPosition(false);
+
+                    CenterCursor(nswindow);
+
+                    nswindow.CursorCaptureMode = CursorCaptureMode.Locked;
                     break;
                 default:
                     break;
             }
+        }
+
+        private static void CenterCursor(NSWindowHandle nswindow)
+        {
+            CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
+            CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
+
+            CGPoint center = new CGPoint(screenFrame.origin.x + (screenFrame.size.x / 2),
+                                         screenFrame.origin.y + (screenFrame.size.y / 2));
+
+            CG.CGDisplayMoveCursorToPoint(CG.CGMainDisplayID(), center);
+            CG.CGWarpMouseCursorPosition(center);
+            nswindow.LastMousePosition = center;
         }
 
         /// <inheritdoc/>

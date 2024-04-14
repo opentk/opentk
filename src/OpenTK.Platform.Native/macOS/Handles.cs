@@ -1,5 +1,7 @@
 ﻿using System;
 using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
+
 namespace OpenTK.Platform.Native.macOS
 {
     internal class NSWindowHandle : WindowHandle
@@ -32,6 +34,8 @@ namespace OpenTK.Platform.Native.macOS
         public CGRect PreviousFrame { get; set; }
 
         public CursorCaptureMode CursorCaptureMode { get; set; } = CursorCaptureMode.Normal;
+        // FIXME: Should this be floats and not integers?
+        public CGPoint LastMousePosition { get; set; }
 
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {

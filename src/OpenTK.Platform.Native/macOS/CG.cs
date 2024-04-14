@@ -60,6 +60,12 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint /* CGDirectDisplayID */ CGMainDisplayID();
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGAssociateMouseAndMouseCursorPosition([MarshalAs(UnmanagedType.Bool)] bool connected);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGDisplayMoveCursorToPoint(uint /* CGDirectDisplayID */ display, CGPoint point);
+
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>

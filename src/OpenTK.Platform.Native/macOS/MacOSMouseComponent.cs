@@ -66,6 +66,8 @@ namespace OpenTK.Platform.Native.macOS
             float flippedY = CG.FlipYCoordinate(y);
 
             CGWarpMouseCursorPosition(new CGPoint(x, flippedY));
+
+            // FIXME: Should this generate an event?
         }
 
         // FIXME: This is only a 32-bit float and
