@@ -50,12 +50,12 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanCreateFromWindow => true;
 
         /// <inheritdoc/>
-        public bool CanCreateFromSurface => throw new NotImplementedException();
+        public bool CanCreateFromSurface => false;
 
         /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException("We currently do not support surfaces.");
         }
 
         /// <inheritdoc/>

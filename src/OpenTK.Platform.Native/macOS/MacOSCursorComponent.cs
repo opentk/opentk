@@ -91,7 +91,6 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public bool CanInspectSystemCursors => true;
 
-        // FIXME: Make two separate functions, one for loading animated cursors.
         // FIXME: Maybe do the string manipulation in UTF-8 for efficiency? ""u8 etc.
         internal static IntPtr[] LoadAnimatedHiddenCursor(string cursorName, SEL fallback, out double delay)
         {
@@ -159,6 +158,11 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: BOOL
             if (image == IntPtr.Zero || objc_msgSend_bool(image, selIsValid) == false)
             {
+                if (image != IntPtr.Zero)
+                {
+                    // If we got an image, release our reference to it.
+                    objc_msgSend(image, Release);
+                }
                 // We could not load the image.. return the fallback.
                 // FIXME: Can we avoid returning this array?
                 return objc_msgSend_IntPtr((IntPtr)NSCursorClass, fallback);
@@ -170,6 +174,8 @@ namespace OpenTK.Platform.Native.macOS
             double hotX = objc_msgSend_double(objc_msgSend_IntPtr(dict, selValueForKey, ToNSString("hotx"u8)), selDoubleValue);
             double hotY = objc_msgSend_double(objc_msgSend_IntPtr(dict, selValueForKey, ToNSString("hoty"u8)), selDoubleValue);
             CGPoint hotspot = new CGPoint((NFloat)hotX, (NFloat)hotY);
+
+            // FIXME: Make sure to release the reference to the allocated image, and other allocated things.
 
             if (frames > 1)
             {
