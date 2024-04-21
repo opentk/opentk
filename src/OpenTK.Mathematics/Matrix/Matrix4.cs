@@ -2132,8 +2132,24 @@ namespace OpenTK.Mathematics
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Matrix4 other)
         {
+#if NETCOREAPP3_1_OR_GREATER
+            if (Avx2.IsSupported)
+            {
+                Vector256<int> aLo = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in Row0)));
+                Vector256<int> bLo = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in other.Row0)));
+
+                Vector256<int> aHi = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in Row2)));
+                Vector256<int> bHi = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in other.Row2)));
+
+                bool loSame = Avx2.MoveMask(Avx2.CompareEqual(aLo, bLo).AsByte()) == unchecked((int)0xffffffffu);
+                bool hiSame = Avx2.MoveMask(Avx2.CompareEqual(aHi, bHi).AsByte()) == unchecked((int)0xffffffffu);
+                return loSame && hiSame;
+            }
+#endif
+
             return
                 Row0 == other.Row0 &&
                 Row1 == other.Row1 &&

@@ -23,7 +23,12 @@ SOFTWARE.
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#if NETCOREAPP3_1
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
+#endif
 
 namespace OpenTK.Mathematics
 {
@@ -1154,8 +1159,24 @@ namespace OpenTK.Mathematics
         /// <param name="other">An matrix to compare with this matrix.</param>
         /// <returns>true if the current matrix is equal to the matrix parameter; otherwise, false.</returns>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(Matrix3x4 other)
         {
+#if NETCOREAPP3_1_OR_GREATER
+            if (Avx2.IsSupported)
+            {
+                Vector256<int> aLo = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in Row0)));
+                Vector256<int> bLo = Unsafe.ReadUnaligned<Vector256<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in other.Row0)));
+
+                Vector128<int> aHi = Unsafe.ReadUnaligned<Vector128<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in Row2)));
+                Vector128<int> bHi = Unsafe.ReadUnaligned<Vector128<int>>(ref Unsafe.As<Vector4, byte>(ref Unsafe.AsRef(in other.Row2)));
+
+                bool loSame = Avx2.MoveMask(Avx2.CompareEqual(aLo, bLo).AsByte()) == unchecked((int)0xffffffffu);
+                bool hiSame = Sse2.MoveMask(Sse2.CompareEqual(aHi, bHi).AsByte()) == 0x0000ffff;
+                return loSame && hiSame;
+            }
+    #endif
+
             return
                 Row0 == other.Row0 &&
                 Row1 == other.Row1 &&
