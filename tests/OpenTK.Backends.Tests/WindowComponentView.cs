@@ -71,14 +71,14 @@ namespace OpenTK.Backends.Tests
         Vector2i windowPosition;
         Vector2i clientPosition;
 
-        WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
-        string[] WindowModeNames = Enum.GetNames<WindowMode>();
+        readonly static WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
+        readonly static string[] WindowModeNames = Enum.GetNames<WindowMode>();
 
-        WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
-        string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+        readonly static WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
+        readonly static string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
 
-        CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
-        string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
+        readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
+        readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
 
         public override void Paint(double deltaTime)
         {

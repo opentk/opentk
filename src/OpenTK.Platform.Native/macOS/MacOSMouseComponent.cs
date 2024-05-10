@@ -63,11 +63,8 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
-            float flippedY = CG.FlipYCoordinate(y);
-
-            CGWarpMouseCursorPosition(new CGPoint(x, flippedY));
-
-            // FIXME: Should this generate an event?
+            // CGWarpMouseCursorPosition uses top left relative coordinates.
+            CGWarpMouseCursorPosition(new CGPoint(x, y));
         }
 
         // FIXME: This is only a 32-bit float and

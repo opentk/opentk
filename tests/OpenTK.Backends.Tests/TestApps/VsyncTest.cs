@@ -56,8 +56,9 @@ namespace OpenTK.Backends.Tests
             }
         }
 
-        public void Update(float deltaTime)
+        public bool Update(float deltaTime)
         {
+            return false;
         }
 
         static readonly Color4<Rgba> Red = new Color4<Rgba>(1.0f, 0.0f, 0.0f, 1.0f);

@@ -74,7 +74,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static float FlipYCoordinate(float y)
         {
             float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static NFloat FlipYCoordinate(NFloat y)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static CGPoint FlipYCoordinate(CGPoint p)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return new CGPoint(p.x, (height - 1) - p.y);
+            return new CGPoint(p.x, height - p.y);
         }
 
         /// <summary>

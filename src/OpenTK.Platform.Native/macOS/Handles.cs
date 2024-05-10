@@ -36,6 +36,7 @@ namespace OpenTK.Platform.Native.macOS
         public CursorCaptureMode CursorCaptureMode { get; set; } = CursorCaptureMode.Normal;
         // FIXME: Should this be floats and not integers?
         public CGPoint LastMousePosition { get; set; }
+        public CGPoint VirtualCursorPosition { get; set; }
 
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {

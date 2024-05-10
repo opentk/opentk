@@ -36,6 +36,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selWindow = sel_registerName("window"u8);
         internal static readonly SEL selButtonNumber = sel_registerName("buttonNumber"u8);
         internal static readonly SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
+        internal static readonly SEL selDeltaX = sel_registerName("deltaX"u8);
+        internal static readonly SEL selDeltaY = sel_registerName("deltaY"u8);
         internal static readonly SEL selMouseLocation = sel_registerName("mouseLocation"u8);
         internal static readonly SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
         internal static readonly SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
@@ -359,7 +361,13 @@ namespace OpenTK.Platform.Native.macOS
                 {
                     // FIXME: While we are resizing we don't want to center
                     // the mosue cursor...
+                    CG.CGAssociateMouseAndMouseCursorPosition(false);
                     CenterCursor(nswindow);
+                }
+                else
+                {
+                    // We don't have a locked cursor anymore.
+                    CG.CGAssociateMouseAndMouseCursorPosition(true);
                 }
 
                 EventQueue.Raise(nswindow, PlatformEventType.Focus, new FocusEventArgs(nswindow, true));
@@ -564,25 +572,27 @@ namespace OpenTK.Platform.Native.macOS
                 return;
             }
 
+            IntPtr cursor;
             if (nswindow.Cursor != null)
             {
-                CGRect bounds = objc_msgSend_CGRect(view, selBounds);
                 switch (nswindow.Cursor.Mode)
                 {
                     // If the cursor is animated, pick the current frame.
                     case NSCursorHandle.CursorMode.SystemAnimatedCursor:
-                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame]);
+                        cursor = nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame];
                         break;
                     default:
-                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.Cursor);
+                        cursor = nswindow.Cursor.Cursor;
                         break;
                 }
             }
             else
             {
-                // Null cursor means it is hidden.
-                // FIXME: Hide the cursor? Should we do it here?
+                cursor = MacOSCursorComponent.GetInvisibleCursor();
             }
+
+            CGRect bounds = objc_msgSend_CGRect(view, selBounds);
+            objc_msgSend(view, selAddCursorRect_Cursor, bounds, cursor);
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_MouseEnteredInst = &NSOtkView_MouseEntered;
@@ -933,6 +943,9 @@ namespace OpenTK.Platform.Native.macOS
                             break;
                         }
                     case NSEventType.MouseMoved:
+                    case NSEventType.LeftMouseDragged:
+                    case NSEventType.RightMouseDragged:
+                    case NSEventType.OtherMouseDragged:
                         {
                             if (ProcessHitTest(@event))
                             {
@@ -950,32 +963,27 @@ namespace OpenTK.Platform.Native.macOS
                                 objc_msgSend_CGRect(nswindow.View, selBounds));
 
                             // FIXME: Coordinate space
-                            Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
+                            CGPoint pos = new CGPoint(pointRect.origin.x, backing.size.y - pointRect.origin.y);
 
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
+                            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                            {
+                                // Handle virtual cursor position
+                                NFloat dx = objc_msgSend_nfloat(@event, selDeltaX);
+                                NFloat dy = objc_msgSend_nfloat(@event, selDeltaY);
 
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
-                        }
-                    case NSEventType.LeftMouseDragged:
-                    case NSEventType.RightMouseDragged:
-                    case NSEventType.OtherMouseDragged:
-                        {
-                            CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                                nswindow.VirtualCursorPosition += new CGPoint(dx, dy);
 
-                            CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
+                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
+                            }
+                            else
+                            {
+                                // Do normal mouse events
+                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)pos));
 
-                            CGRect backing = objc_msgSend_CGRect(
-                                nswindow.Window,
-                                selConvertRectToBacking,
-                                objc_msgSend_CGRect(nswindow.View, selBounds));
+                                objc_msgSend(nsApplication, selSendEvent, @event);
+                            }
 
-                            // FIXME: Coordinate space
-                            Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
-
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
+                            nswindow.LastMousePosition = pos;
                             break;
                         }
                     case NSEventType.ScrollWheel:
@@ -1203,6 +1211,12 @@ namespace OpenTK.Platform.Native.macOS
         public void Destroy(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+            {
+                // Restore the cursor.
+                CG.CGAssociateMouseAndMouseCursorPosition(true);
+            }
 
             NSWindowDict.Remove(nswindow.Window);
 
@@ -1932,6 +1946,7 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_msgSend(nswindow.Window, selInvalidateCursorRectsForView, nswindow.View);
         }
+
         /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
@@ -1985,9 +2000,14 @@ namespace OpenTK.Platform.Native.macOS
                     // FIXME: We want to move the mouse display to the center of the screen.
                     // objc_msgSend((IntPtr)NSCursorClass, selHide);
 
-                    CG.CGAssociateMouseAndMouseCursorPosition(false);
+                    // FIXME: With multiple windows we only want to apply this
+                    // if this window is key...
 
-                    CenterCursor(nswindow);
+                    //CG.CGAssociateMouseAndMouseCursorPosition(false);
+
+                    //CenterCursor(nswindow);
+
+                    nswindow.VirtualCursorPosition = nswindow.LastMousePosition;
 
                     nswindow.CursorCaptureMode = CursorCaptureMode.Locked;
                     break;
@@ -2006,6 +2026,9 @@ namespace OpenTK.Platform.Native.macOS
 
             CGPoint center = new CGPoint(screenFrame.origin.x + (screenFrame.size.x / 2),
                                          screenFrame.origin.y + (screenFrame.size.y / 2));
+
+            // CGWarpMouseCursorPosition uses top-left coordinates.
+            center = CG.FlipYCoordinate(center);
 
             CG.CGDisplayMoveCursorToPoint(CG.CGMainDisplayID(), center);
             CG.CGWarpMouseCursorPosition(center);

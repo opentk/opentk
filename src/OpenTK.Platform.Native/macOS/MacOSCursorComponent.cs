@@ -18,6 +18,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSDictionaryClass = objc_getClass("NSDictionary"u8);
         internal static readonly ObjCClass NSUserDefaultsClass = objc_getClass("NSUserDefaults"u8);
         internal static readonly ObjCClass NSBitmapImageRep = objc_getClass("NSBitmapImageRep"u8);
+        internal static readonly ObjCClass NSDataClass = objc_getClass("NSData"u8);
+
 
         internal static readonly IntPtr NSCalibratedRGBColorSpace = GetStringConstant(AppKitLibrary, "NSCalibratedRGBColorSpace"u8);
 
@@ -60,8 +62,11 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selPersistentDomainForName = sel_registerName("persistentDomainForName:"u8);
 
         internal static readonly SEL selInitWithBitmapDataPlanes_PixelsWide_PixelsHigh_BitsPerSample_SamplesPerPixel_HasAlpha_IsPlanar_ColorSpaceName_BitmapFormat_BytesPerRow_BitsPerPixel = sel_registerName("initWithBitmapDataPlanes:pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha:isPlanar:colorSpaceName:bitmapFormat:bytesPerRow:bitsPerPixel:"u8);
+        internal static readonly SEL selInitWithData = sel_registerName("initWithData:"u8);
         internal static readonly SEL selBitmapData = sel_registerName("bitmapData"u8);
         internal static readonly SEL selSetSize = sel_registerName("setSize:"u8);
+
+        internal static readonly SEL selDataWithBytesNoCopy_Length_FreeWhenDone = sel_registerName("dataWithBytesNoCopy:length:freeWhenDone:"u8);
 
 
         // Keep a list of animated cursors?
@@ -90,6 +95,36 @@ namespace OpenTK.Platform.Native.macOS
 
         /// <inheritdoc/>
         public bool CanInspectSystemCursors => true;
+
+        static IntPtr InvisibleCursor;
+        internal static IntPtr GetInvisibleCursor()
+        {
+            if (InvisibleCursor == 0)
+            {
+                // Create the invisible cursor
+                // We could do this with a deferred drawingHandler that
+                // just returns true.
+                // For now we are taking a book from SDL and just create a
+                // transparent GIF that we make a cursor out of.
+                // - Noggin_bops 2024-05-10
+                unsafe
+                {
+                    // 16x16 transparent GIF.
+                    ReadOnlySpan<byte> cursorBytes = new byte[]{
+                        0x47, 0x49, 0x46, 0x38, 0x37, 0x61, 0x10, 0x00, 0x10, 0x00, 0x80,
+                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x21, 0xF9, 0x04,
+                        0x01, 0x00, 0x00, 0x01, 0x00, 0x2C, 0x00, 0x00, 0x00, 0x00, 0x10,
+                        0x00, 0x10, 0x00, 0x00, 0x02, 0x0E, 0x8C, 0x8F, 0xA9, 0xCB, 0xED,
+                        0x0F, 0xA3, 0x9C, 0xB4, 0xDA, 0x8B, 0xB3, 0x3E, 0x05, 0x00, 0x3B
+                    };
+                    IntPtr cursorBytesPtr = (IntPtr)Unsafe.AsPointer(ref MemoryMarshal.GetReference(cursorBytes));
+                    IntPtr cursorData = objc_msgSend_IntPtr((IntPtr)NSDataClass, selDataWithBytesNoCopy_Length_FreeWhenDone, cursorBytesPtr, (nuint)cursorBytes.Length, false);
+                    IntPtr cursorImage = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithData, cursorData);
+                    InvisibleCursor = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSCursorClass, Alloc), selInitWithImage_HotSpot, cursorImage, CGPoint.Zero);
+                }
+            }
+            return InvisibleCursor;
+        }
 
         // FIXME: Maybe do the string manipulation in UTF-8 for efficiency? ""u8 etc.
         internal static IntPtr[] LoadAnimatedHiddenCursor(string cursorName, SEL fallback, out double delay)

@@ -28,8 +28,9 @@ namespace OpenTK.Backends.Tests
         {
         }
 
-        public void Update(float deltaTime)
+        public bool Update(float deltaTime)
         {
+            return false;
         }
 
         public void Render()
