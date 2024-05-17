@@ -30,6 +30,7 @@ namespace OpenTK.Platform.Native
         private static IWindowComponent? _windowComponent;
         private static IShellComponent? _shellComponent;
         private static IJoystickComponent? _joystickComponent;
+        private static IDialogComponent? _dialogComponent;
 
         public static IWindowComponent Window => _windowComponent;
 
@@ -53,6 +54,8 @@ namespace OpenTK.Platform.Native
 
         public static IJoystickComponent Joystick => _joystickComponent;
 
+        public static IDialogComponent Dialog => _dialogComponent;
+
         public static void Init(ToolkitOptions options)
         {
             // FIXME: Figure out options...
@@ -68,6 +71,7 @@ namespace OpenTK.Platform.Native
             try { _iconComponent = PlatformComponents.CreateIconComponent(); } catch (NotSupportedException) { }
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
+            try { _dialogComponent = PlatformComponents.CreateDialogComponent(); } catch (NotSupportedException) { }
 
             if (_windowComponent != null)
                 _windowComponent.Logger = options.Logger;
@@ -91,6 +95,8 @@ namespace OpenTK.Platform.Native
                 _clipboardComponent.Logger = options.Logger;
             if (_joystickComponent != null)
                 _joystickComponent.Logger = options.Logger;
+            if (_dialogComponent != null)
+                _dialogComponent.Logger = options.Logger;
 
             // FIXME: Change initialize to take toolkit options
             // This will also allow us to potentially remove the need
@@ -108,6 +114,7 @@ namespace OpenTK.Platform.Native
             _iconComponent?.Initialize(PalComponents.WindowIcon);
             _clipboardComponent?.Initialize(PalComponents.Clipboard);
             _joystickComponent?.Initialize(PalComponents.Joystick);
+            _dialogComponent?.Initialize(PalComponents.Dialog);
         }
     }
 }

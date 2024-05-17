@@ -48,6 +48,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new SDL.SDLIconComponent(),
                 [PalComponents.Clipboard] = () => new SDL.SDLClipboardComponent(),
                 [PalComponents.Joystick] = () => new SDL.SDLJoystickComponent(),
+                //[PalComponents.Dialog] = () => new SDL.SDLDialogComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> win32Components =
@@ -63,6 +64,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new Windows.IconComponent(),
                 [PalComponents.Clipboard] = () => new Windows.ClipboardComponent(),
                 [PalComponents.Joystick] = () => new Windows.JoystickComponent(),
+                [PalComponents.Dialog] = () => new Windows.DialogComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> x11Components =
@@ -78,6 +80,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
                 [PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
+                //[PalComponents.Dialog] = () => new X11.X11DialogComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> macosComponents =
@@ -93,6 +96,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
                 //[PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
                 //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
+                //[PalComponents.Dialog] = () => new macOS.MacOSDialogComponent(),
             };
 
         /// <summary>
@@ -182,13 +186,13 @@ namespace OpenTK.Platform.Native
             }
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IWindowComponent CreateWindowComponent()
         {
             return GetPlatformComponent<IWindowComponent>(PalComponents.Window);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IOpenGLComponent CreateOpenGLComponent()
         {
             // FIXME: Should we do this here?
@@ -203,58 +207,64 @@ namespace OpenTK.Platform.Native
             }
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IDisplayComponent CreateDisplayComponent()
         {
             return GetPlatformComponent<IDisplayComponent>(PalComponents.Display);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IShellComponent CreateShellComponent()
         {
             return GetPlatformComponent<IShellComponent>(PalComponents.Shell);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IMouseComponent CreateMouseComponent()
         {
             return GetPlatformComponent<IMouseComponent>(PalComponents.MiceInput);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IKeyboardComponent CreateKeyboardComponent()
         {
             return GetPlatformComponent<IKeyboardComponent>(PalComponents.KeyboardInput);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static ICursorComponent CreateCursorComponent()
         {
             return GetPlatformComponent<ICursorComponent>(PalComponents.MouseCursor);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IIconComponent CreateIconComponent()
         {
             return GetPlatformComponent<IIconComponent>(PalComponents.WindowIcon);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IClipboardComponent CreateClipboardComponent()
         {
             return GetPlatformComponent<IClipboardComponent>(PalComponents.Clipboard);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static ISurfaceComponent CreateSurfaceComponent()
         {
             return GetPlatformComponent<ISurfaceComponent>(PalComponents.Surface);
         }
 
-        /// <inheritdoc cref="GetPlatformComponents"/>
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
         public static IJoystickComponent CreateJoystickComponent()
         {
             return GetPlatformComponent<IJoystickComponent>(PalComponents.Joystick);
+        }
+
+        /// <inheritdoc cref="GetPlatformComponent{TComp}(PalComponents)"/>
+        public static IDialogComponent CreateDialogComponent()
+        {
+            return GetPlatformComponent<IDialogComponent>(PalComponents.Dialog);
         }
     }
 }

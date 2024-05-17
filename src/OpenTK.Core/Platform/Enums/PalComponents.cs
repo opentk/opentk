@@ -97,5 +97,10 @@ namespace OpenTK.Core.Platform
         /// Abstraction layer provides the joystick component.
         /// </summary>
         Joystick = 1 << 12,
+
+        /// <summary>
+        /// Abstraction layer provides the dialog component.
+        /// </summary>
+        Dialog = 1 << 13,
     }
 }

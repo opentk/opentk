@@ -8,6 +8,7 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
 using OpenTK.Platform.Native.macOS;
+using OpenTK.Platform.Native.Windows;
 using StbImageSharp;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace OpenTK.Backends.Tests
         public static IClipboardComponent? ClipboardComponent;
         public static IShellComponent? ShellComponent;
         public static IJoystickComponent? JoystickComponent;
+        public static IDialogComponent? DialogComponent;
 
         public class ApplicationWindow
         {
@@ -141,6 +143,7 @@ namespace OpenTK.Backends.Tests
             ClipboardComponent = Toolkit.Clipboard;
             ShellComponent = Toolkit.Shell;
             JoystickComponent = Toolkit.Joystick;
+            DialogComponent = Toolkit.Dialog;
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
@@ -206,10 +209,10 @@ namespace OpenTK.Backends.Tests
                         // First, just load the .ico as a file.
                         handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
                         // Second, use a resx file and load that. This will result in a ico with a single resolution instead of adaptive.
-                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
+                        //handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
                         // Last, create a .rc file, add an icon to that resource file, add a target to your csproj to compile the .rc file
                         // use <Win32Resource> to include the resulting .res file in the exe.
-                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
+                        //handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
                     }
                     else
                     {
@@ -219,6 +222,9 @@ namespace OpenTK.Backends.Tests
 
                     if (handle != null)
                     {
+                        // FIXME: This doesn't seem to set the taskbar icon on windows?
+                        // Using the icon UI to set the icon does change the taskbar icon...
+                        // - Noggin_bops 2024-04-02
                         WindowComp.SetIcon(Window, handle);
                         (WindowComp as MacOSWindowComponent)?.SetDockIcon(Window, handle);
 
@@ -710,6 +716,7 @@ namespace OpenTK.Backends.Tests
                 case PalComponents.Clipboard: return ClipboardComponent;
                 case PalComponents.Shell: return ShellComponent;
                 case PalComponents.Joystick: return JoystickComponent;
+                case PalComponents.Dialog: return DialogComponent;
 
                 default: return null;
             }

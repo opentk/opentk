@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -151,6 +143,356 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>The window has a vertical scroll bar.</summary>
         VScroll = 0x200000
+    }
+
+    [Flags]
+    internal enum DialogStyles : uint
+    {
+        /// <summary>
+        /// Obsolete. The system automatically applies the three-dimensional look to dialog boxes created by applications.
+        /// </summary>
+        [Obsolete]
+        _3DLook = 0x0004,
+
+        /// <summary>
+        /// Indicates that the coordinates of the dialog box are screen coordinates. If this style is not specified, the coordinates are client coordinates.
+        /// </summary>
+        AbsAlign = 0x0001,
+
+        /// <summary>
+        /// Centers the dialog box in the working area of the monitor that contains the owner window.
+        /// If no owner window is specified, the dialog box is centered in the working area of a monitor determined by the system.
+        /// The working area is the area not obscured by the taskbar or any appbars.
+        /// </summary>
+        Center = 0x0800,
+
+        /// <summary>
+        /// Centers the dialog box on the mouse cursor.
+        /// </summary>
+        CenterMouse = 0x1000,
+
+        /// <summary>
+        /// Includes a question mark in the title bar of the dialog box.
+        /// When the user clicks the question mark, the cursor changes to a question mark with a pointer.
+        /// If the user then clicks a control in the dialog box, the control receives a WM_HELP message.
+        /// The control should pass the message to the dialog box procedure, which should call the function using the HELP_WM_HELP command.
+        /// The help application displays a pop-up window that typically contains help for the control.
+        /// Note that DS_CONTEXTHELP is only a placeholder.When the dialog box is created, the system checks for DS_CONTEXTHELP and,
+        /// if it is there, adds WS_EX_CONTEXTHELP to the extended style of the dialog box.
+        /// WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
+        /// </summary>
+        ContextHelp = 0x2000,
+
+        /// <summary>
+        /// Creates a dialog box that works well as a child window of another dialog box, much like a page in a property sheet.
+        /// This style allows the user to tab among the control windows of a child dialog box, use its accelerator keys, and so on.
+        /// </summary>
+        Control = 0x0400,
+
+        /// <summary>
+        /// Causes the dialog box to use the SYSTEM_FIXED_FONT instead of the default SYSTEM_FONT.
+        /// This is a monospace font compatible with the System font in 16-bit versions of Windows earlier than 3.0.
+        /// </summary>
+        FixedSys = 0x0008,
+
+        /// <summary>
+        /// Applies to 16-bit applications only.
+        /// This style directs edit controls in the dialog box to allocate memory from the application's data segment.
+        /// Otherwise, edit controls allocate storage from a global memory object.
+        /// </summary>
+        LocalEdit = 0x0020,
+
+        /// <summary>
+        /// Creates a dialog box with a modal dialog-box frame that can be combined with a title bar and window menu by specifying the WS_CAPTION and WS_SYSMENU styles.
+        /// </summary>
+        ModalFrame = 0x0080,
+
+        /// <summary>
+        /// Creates the dialog box even if errors occur for example, if a child window cannot be created or if the system cannot create a special data segment for an edit control.
+        /// </summary>
+        NoFailCreate = 0x0010,
+
+        /// <summary>
+        /// Suppresses WM_ENTERIDLE messages that the system would otherwise send to the owner of the dialog box while the dialog box is displayed.
+        /// </summary>
+        NoIdleMsg = 0x0100,
+
+        /// <summary>
+        /// Indicates that the header of the dialog box template (either standard or extended) contains additional data specifying the font to use for text in the client area and controls of the dialog box.
+        /// If possible, the system selects a font according to the specified font data.
+        /// The system passes a handle to the font to the dialog box and to each control by sending them the WM_SETFONT message.
+        /// For descriptions of the format of this font data, see DLGTEMPLATE and DLGTEMPLATEEX.
+        /// If neither DS_SETFONT nor DS_SHELLFONT is specified, the dialog box template does not include the font data.
+        /// </summary>
+        SetFont = 0x0040,
+
+        /// <summary>
+        /// Causes the system to use the SetForegroundWindow function to bring the dialog box to the foreground.
+        /// This style is useful for modal dialog boxes that require immediate attention from the user regardless of whether the owner window is the foreground window.
+        /// The system restricts which processes can set the foreground window. For more information, see Foreground and Background Windows.
+        /// </summary>
+        SetForeground = 0x0200,
+
+        /// <summary>
+        /// Indicates that the dialog box should use the system font.The typeface member of the extended dialog box template must be set to MS Shell Dlg.
+        /// Otherwise, this style has no effect.
+        /// It is also recommended that you use the DIALOGEX Resource, rather than the DIALOG Resource.
+        /// For more information, see Dialog Box Fonts.
+        /// The system selects a font using the font data specified in the pointsize, weight, and italic members.
+        /// The system passes a handle to the font to the dialog box and to each control by sending them the WM_SETFONT message.
+        /// For descriptions of the format of this font data, see DLGTEMPLATEEX.
+        /// If neither DS_SHELLFONT nor DS_SETFONT is specified, the extended dialog box template does not include the font data.
+        /// </summary>
+        ShellFont = SetFont | FixedSys,
+
+        /// <summary>
+        /// This style is obsolete and is included for compatibility with 16-bit versions of Windows.
+        /// If you specify this style, the system creates the dialog box with the WS_EX_TOPMOST style.
+        /// This style does not prevent the user from accessing other windows on the desktop.
+        /// Do not combine this style with the DS_CONTROL style.
+        /// </summary>
+        SysModal = 0x0002,
+
+        // ###### Window styles ######
+
+        /// <summary>The window has a thin-line border.</summary>
+        Border = 0x800000,
+
+        /// <summary>The window has a title bar (includes the WS_BORDER style).</summary>
+        Caption = 0xc00000,
+
+        /// <summary>The window is a child window. A window with this style cannot have a menu bar. This style cannot be used with the WS_POPUP style.</summary>
+        Child = 0x40000000,
+
+        /// <summary>Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.</summary>
+        ClipChildren = 0x2000000,
+
+        /// <summary>
+        /// Clips child windows relative to each other; that is, when a particular child window receives a WM_PAINT message, the WS_CLIPSIBLINGS style clips all other overlapping child windows out of the region of the child window to be updated.
+        /// If WS_CLIPSIBLINGS is not specified and child windows overlap, it is possible, when drawing within the client area of a child window, to draw within the client area of a neighboring child window.
+        /// </summary>
+        ClipSiblings = 0x4000000,
+
+        /// <summary>The window is initially disabled. A disabled window cannot receive input from the user. To change this after a window has been created, use the EnableWindow function.</summary>
+        Disabled = 0x8000000,
+
+        /// <summary>The window has a border of a style typically used with dialog boxes. A window with this style cannot have a title bar.</summary>
+        DLGFrame = 0x400000,
+
+        /// <summary>
+        /// The window is the first control of a group of controls. The group consists of this first control and all controls defined after it, up to the next control with the WS_GROUP style.
+        /// The first control in each group usually has the WS_TABSTOP style so that the user can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control in the group by using the direction keys.
+        /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
+        /// </summary>
+        Group = 0x20000,
+
+        /// <summary>The window has a horizontal scroll bar.</summary>
+        HScroll = 0x100000,
+
+        /// <summary>The window is initially maximized.</summary>
+        Maximize = 0x1000000,
+
+        /// <summary>The window has a maximize button. Cannot be combined with the WS_EX_CONTEXTHELP style. The WS_SYSMENU style must also be specified.</summary>
+        MaximizeBox = 0x10000,
+
+        /// <summary>The window is initially minimized.</summary>
+        Minimize = 0x20000000,
+
+        /// <summary>The window has a minimize button. Cannot be combined with the WS_EX_CONTEXTHELP style. The WS_SYSMENU style must also be specified.</summary>
+        MinimizeBox = 0x20000,
+
+        /// <summary>The window is an overlapped window. An overlapped window has a title bar and a border.</summary>
+        Overlapped = 0x0,
+
+        /// <summary>The window is an overlapped window.</summary>
+        OverlappedWindow = Overlapped | Caption | SysMenu | ThickFrame | MinimizeBox | MaximizeBox,
+
+        /// <summary>The window is a pop-up window. This style cannot be used with the WS_CHILD style.</summary>
+        Popup = 0x80000000u,
+
+        /// <summary>The window is a pop-up window. The WS_CAPTION and WS_POPUPWINDOW styles must be combined to make the window menu visible.</summary>
+        PopupWindow = Popup | Border | SysMenu,
+
+        /// <summary>The window has a sizing border.</summary>
+        ThickFrame = 0x40000,
+
+        /// <summary>The window has a window menu on its title bar. The WS_CAPTION style must also be specified.</summary>
+        SysMenu = 0x80000,
+
+        /// <summary>
+        /// The window is a control that can receive the keyboard focus when the user presses the TAB key.
+        /// Pressing the TAB key changes the keyboard focus to the next control with the <see cref="TabStop"/> style.
+        /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
+        /// For user-created windows and modeless dialogs to work with tab stops, alter the message loop to call the IsDialogMessage function.
+        /// </summary>
+        TabStop = 0x10000,
+
+        /// <summary>The window is initially visible. This style can be turned on and off by using the ShowWindow or SetWindowPos function.</summary>
+        Visible = 0x10000000,
+
+        /// <summary>The window has a vertical scroll bar.</summary>
+        VScroll = 0x200000
+    }
+
+    [Flags]
+    internal enum ButtonStyles : uint
+    {
+        /// <summary>
+        /// Creates a button that is the same as a check box, except that the box can be grayed as well as checked or cleared. Use the grayed state to show that the state of the check box is not determined.
+        /// </summary>
+        BS_3STATE = 5,
+
+        /// <summary>
+        /// Creates a button that is the same as a three-state check box, except that the box changes its state when the user selects it. The state cycles through checked, indeterminate, and cleared.
+        /// </summary>
+        BS_AUTO3STATE = 6,
+
+        /// <summary>
+        /// Creates a button that is the same as a check box, except that the check state automatically toggles between checked and cleared each time the user selects the check box.
+        /// </summary>
+        BS_AUTOCHECKBOX = 3,
+
+        /// <summary>
+        /// Creates a button that is the same as a radio button, except that when the user selects it, the system automatically sets the button's check state to checked and automatically sets the check state for all other buttons in the same group to cleared.
+        /// </summary>
+        BS_AUTORADIOBUTTON = 9,
+
+        /// <summary>
+        /// Specifies that the button displays a bitmap. See the Remarks section for its interaction with BS_ICON.
+        /// </summary>
+        BS_BITMAP = 128,
+
+        /// <summary>
+        /// Places text at the bottom of the button rectangle.
+        /// </summary>
+        BS_BOTTOM = 0x800,
+
+        /// <summary>
+        /// Centers text horizontally in the button rectangle.
+        /// </summary>
+        BS_CENTER = 0x300,
+
+        /// <summary>
+        /// Creates a small, empty check box with text. By default, the text is displayed to the right of the check box. To display the text to the left of the check box, combine this flag with the BS_LEFTTEXT style (or with the equivalent BS_RIGHTBUTTON style).
+        /// </summary>
+        BS_CHECKBOX = 2,
+
+        /// <summary>
+        /// Creates a command link button that behaves like a BS_PUSHBUTTON style button, but the command link button has a green arrow on the left pointing to the button text. A caption for the button text can be set by sending the BCM_SETNOTE message to the button.
+        /// </summary>
+        BS_COMMANDLINK = 0x0000000E,
+
+        /// <summary>
+        /// Creates a command link button that behaves like a BS_PUSHBUTTON style button. If the button is in a dialog box, the user can select the command link button by pressing the ENTER key, even when the command link button does not have the input focus. This style is useful for enabling the user to quickly select the most likely (default) option.
+        /// </summary>
+        BS_DEFCOMMANDLINK = 0x0000000F,
+
+        /// <summary>
+        /// Creates a push button that behaves like a BS_PUSHBUTTON style button, but has a distinct appearance. If the button is in a dialog box, the user can select the button by pressing the ENTER key, even when the button does not have the input focus. This style is useful for enabling the user to quickly select the most likely (default) option.
+        /// </summary>
+        BS_DEFPUSHBUTTON = 1,
+
+        /// <summary>
+        /// Creates a split button that behaves like a BS_PUSHBUTTON style button, but also has a distinctive appearance. If the split button is in a dialog box, the user can select the split button by pressing the ENTER key, even when the split button does not have the input focus. This style is useful for enabling the user to quickly select the most likely (default) option.
+        /// </summary>
+        BS_DEFSPLITBUTTON = 0x0000000D,
+
+        /// <summary>
+        /// Creates a rectangle in which other controls can be grouped. Any text associated with this style is displayed in the rectangle's upper left corner.
+        /// </summary>
+        BS_GROUPBOX = 7,
+
+        /// <summary>
+        /// Specifies that the button displays an icon. See the Remarks section for its interaction with BS_BITMAP.
+        /// </summary>
+        BS_ICON = 64,
+
+        /// <summary>
+        /// Specifies that the button is two-dimensional; it does not use the default shading to create a 3-D image.
+        /// </summary>
+        BS_FLAT = 0x8000,
+
+        /// <summary>
+        /// Left-justifies the text in the button rectangle. However, if the button is a check box or radio button that does not have the BS_RIGHTBUTTON style, the text is left justified on the right side of the check box or radio button.
+        /// </summary>
+        BS_LEFT = 256,
+
+        /// <summary>
+        /// Places text on the left side of the radio button or check box when combined with a radio button or check box style. Same as the BS_RIGHTBUTTON style.
+        /// </summary>
+        BS_LEFTTEXT = 32,
+
+        /// <summary>
+        /// Wraps the button text to multiple lines if the text string is too long to fit on a single line in the button rectangle.
+        /// </summary>
+        BS_MULTILINE = 0x2000,
+
+        /// <summary>
+        /// Enables a button to send BN_KILLFOCUS and BN_SETFOCUS notification codes to its parent window.
+        /// Note that buttons send the BN_CLICKED notification code regardless of whether it has this style. To get BN_DBLCLK notification codes, the button must have the BS_RADIOBUTTON or BS_OWNERDRAW style.
+        /// </summary>
+        BS_NOTIFY = 0x4000,
+
+        /// <summary>
+        /// Creates an owner-drawn button. The owner window receives a WM_DRAWITEM message when a visual aspect of the button has changed. Do not combine the BS_OWNERDRAW style with any other button styles.
+        /// </summary>
+        BS_OWNERDRAW = 0xb,
+
+        /// <summary>
+        /// Creates a push button that posts a WM_COMMAND message to the owner window when the user selects the button.
+        /// </summary>
+        BS_PUSHBUTTON = 0,
+
+        /// <summary>
+        /// Makes a button (such as a check box, three-state check box, or radio button) look and act like a push button. The button looks raised when it isn't pushed or checked, and sunken when it is pushed or checked.
+        /// </summary>
+        BS_PUSHLIKE = 4096,
+
+        /// <summary>
+        /// Creates a small circle with text. By default, the text is displayed to the right of the circle. To display the text to the left of the circle, combine this flag with the BS_LEFTTEXT style (or with the equivalent BS_RIGHTBUTTON style). Use radio buttons for groups of related, but mutually exclusive choices.
+        /// </summary>
+        BS_RADIOBUTTON = 4,
+
+        /// <summary>
+        /// Right-justifies text in the button rectangle. However, if the button is a check box or radio button that does not have the BS_RIGHTBUTTON style, the text is right justified on the right side of the check box or radio button.
+        /// </summary>
+        BS_RIGHT = 512,
+
+        /// <summary>
+        /// Positions a radio button's circle or a check box's square on the right side of the button rectangle. Same as the BS_LEFTTEXT style.
+        /// </summary>
+        BS_RIGHTBUTTON = 32,
+
+        /// <summary>
+        /// Creates a split button. A split button has a drop down arrow.
+        /// </summary>
+        BS_SPLITBUTTON = 0x0000000C,
+
+        /// <summary>
+        /// Specifies that the button displays text.
+        /// </summary>
+        BS_TEXT = 0,
+
+        /// <summary>
+        /// Places text at the top of the button rectangle.
+        /// </summary>
+        BS_TOP = 0x400,
+
+        /// <summary>
+        /// Do not use this style. A composite style bit that results from using the OR operator on BS_* style bits.It can be used to mask out valid BS_* bits from a given bitmask.Note that this is out of date and does not correctly include all valid styles. Thus, you should not use this style.
+        /// </summary>
+        BS_TYPEMASK = 0x0000000F,
+
+        /// <summary>
+        /// Obsolete, but provided for compatibility with 16-bit versions of Windows. Applications should use BS_OWNERDRAW instead.
+        /// </summary>
+        BS_USERBUTTON = 8,
+
+        /// <summary>
+        /// Places text in the middle (vertically) of the button rectangle.
+        /// </summary>
+        BS_VCENTER = 0xc00,
+
     }
 
     [Flags]
@@ -2017,6 +2359,191 @@ namespace OpenTK.Platform.Native.Windows
         /// The window has been resized, but neither the SIZE_MINIMIZED nor SIZE_MAXIMIZED value applies.
         /// </summary>
         Restored = 0,
+    }
+
+    internal enum OFN : uint
+    {
+        /// <summary>
+        /// The File Name list box allows multiple selections. If you also set the OFN_EXPLORER flag, the dialog box uses the Explorer-style user interface; otherwise, it uses the old-style user interface.
+        /// If the user selects more than one file, the lpstrFile buffer returns the path to the current directory followed by the file names of the selected files.
+        /// The nFileOffset member is the offset, in bytes or characters, to the first file name, and the nFileExtension member is not used.
+        /// For Explorer-style dialog boxes, the directory and file name strings are NULL separated, with an extra NULL character after the last file name.
+        /// This format enables the Explorer-style dialog boxes to return long file names that include spaces.
+        /// For old-style dialog boxes, the directory and file name strings are separated by spaces and the function uses short file names for file names with spaces.
+        /// You can use the FindFirstFile function to convert between long and short file names.
+        ///
+        /// If you specify a custom template for an old-style dialog box, the definition of the File Name list box must contain the LBS_EXTENDEDSEL value.
+        /// </summary>
+        AllowMultiSelect = 0x00000200,
+
+        /// <summary>
+        /// If the user specifies a file that does not exist, this flag causes the dialog box to prompt the user for permission to create the file.
+        /// If the user chooses to create the file, the dialog box closes and the function returns the specified name; otherwise, the dialog box remains open.
+        /// If you use this flag with the OFN_ALLOWMULTISELECT flag, the dialog box allows the user to specify only one nonexistent file.
+        /// </summary>
+        CreatePrompt = 0x00002000,
+
+        /// <summary>
+        /// Prevents the system from adding a link to the selected file in the file system directory that contains the user's most recently used documents.
+        /// To retrieve the location of this directory, call the SHGetSpecialFolderLocation function with the CSIDL_RECENT flag.
+        /// </summary>
+        DontAddToRecent = 0x02000000,
+
+        /// <summary>
+        /// Enables the hook function specified in the lpfnHook member.
+        /// </summary>
+        EnableHook = 0x00000020,
+
+        /// <summary>
+        /// Causes the dialog box to send CDN_INCLUDEITEM notification messages to your OFNHookProc hook procedure when the user opens a folder.
+        /// The dialog box sends a notification for each item in the newly opened folder.
+        /// These messages enable you to control which items the dialog box displays in the folder's item list.
+        /// </summary>
+        EnableIncludeNotify = 0x00400000,
+
+        /// <summary>
+        /// Enables the Explorer-style dialog box to be resized using either the mouse or the keyboard.
+        /// By default, the Explorer-style Open and Save As dialog boxes allow the dialog box to be resized regardless of whether this flag is set.
+        /// This flag is necessary only if you provide a hook procedure or custom template. The old-style dialog box does not permit resizing.
+        /// </summary>
+        EnableSizing = 0x00800000,
+
+        /// <summary>
+        /// The lpTemplateName member is a pointer to the name of a dialog template resource in the module identified by the hInstance member.
+        /// If the OFN_EXPLORER flag is set, the system uses the specified template to create a dialog box that is a child of the default Explorer-style dialog box.
+        /// If the OFN_EXPLORER flag is not set, the system uses the template to create an old-style dialog box that replaces the default dialog box.
+        /// </summary>
+        EnableTemplate = 0x00000040,
+
+        /// <summary>
+        /// The hInstance member identifies a data block that contains a preloaded dialog box template.
+        /// The system ignores lpTemplateName if this flag is specified.
+        /// If the OFN_EXPLORER flag is set, the system uses the specified template to create a dialog box that is a child of the default Explorer-style dialog box.
+        /// If the OFN_EXPLORER flag is not set, the system uses the template to create an old-style dialog box that replaces the default dialog box.
+        /// </summary>
+        EnableTemplateHandle = 0x00000080,
+
+        /// <summary>
+        /// Indicates that any customizations made to the Open or Save As dialog box use the Explorer-style customization methods.
+        /// For more information, see Explorer-Style Hook Procedures and Explorer-Style Custom Templates.
+        /// By default, the Open and Save As dialog boxes use the Explorer-style user interface regardless of whether this flag is set.
+        /// This flag is necessary only if you provide a hook procedure or custom template, or set the OFN_ALLOWMULTISELECT flag.
+        ///
+        /// If you want the old-style user interface, omit the OFN_EXPLORER flag and provide a replacement old-style template or hook procedure.
+        /// If you want the old style but do not need a custom template or hook procedure, simply provide a hook procedure that always returns FALSE.
+        /// </summary>
+        Explorer = 0x00080000,
+
+        /// <summary>
+        /// The user typed a file name extension that differs from the extension specified by lpstrDefExt.
+        /// The function does not use this flag if lpstrDefExt is NULL.
+        /// </summary>
+        ExtensionDifferent = 0x00000400,
+
+        /// <summary>
+        /// The user can type only names of existing files in the File Name entry field.
+        /// If this flag is specified and the user enters an invalid name, the dialog box procedure displays a warning in a message box.
+        /// If this flag is specified, the OFN_PATHMUSTEXIST flag is also used. This flag can be used in an Open dialog box.
+        /// It cannot be used with a Save As dialog box.
+        /// </summary>
+        FileMustExist = 0x00001000,
+
+        /// <summary>
+        /// Forces the showing of system and hidden files, thus overriding the user setting to show or not show hidden files.
+        /// However, a file that is marked both system and hidden is not shown.
+        /// </summary>
+        ForceShowHidden = 0x10000000,
+
+        /// <summary>
+        /// Hides the Read Only check box.
+        /// </summary>
+        HideReadOnly = 0x00000004,
+
+        /// <summary>
+        /// For old-style dialog boxes, this flag causes the dialog box to use long file names.
+        /// If this flag is not specified, or if the OFN_ALLOWMULTISELECT flag is also set, old-style dialog boxes use short file names (8.3 format) for file names with spaces.
+        /// Explorer-style dialog boxes ignore this flag and always display long file names.
+        /// </summary>
+        LongNames = 0x00200000,
+
+        /// <summary>
+        /// Restores the current directory to its original value if the user changed the directory while searching for files.
+        /// This flag is ineffective for GetOpenFileName.
+        /// </summary>
+        NoChangeDir = 0x00000008,
+
+        /// <summary>
+        /// Directs the dialog box to return the path and file name of the selected shortcut (.LNK) file.
+        /// If this value is not specified, the dialog box returns the path and file name of the file referenced by the shortcut.
+        /// </summary>
+        NoDereferenceLinks = 0x00100000,
+
+        /// <summary>
+        /// For old-style dialog boxes, this flag causes the dialog box to use short file names (8.3 format).
+        /// Explorer-style dialog boxes ignore this flag and always display long file names.
+        /// </summary>
+        NoLongNames = 0x00040000,
+
+        /// <summary>
+        /// Hides and disables the Network button.
+        /// </summary>
+        NoNetworkButton = 0x00020000,
+
+        /// <summary>
+        /// The returned file does not have the Read Only check box selected and is not in a write-protected directory.
+        /// </summary>
+        NoReadOnlyReturn = 0x00008000,
+
+        /// <summary>
+        /// The file is not created before the dialog box is closed. This flag should be specified if the application saves the file on a create-nonmodify network share.
+        /// When an application specifies this flag, the library does not check for write protection, a full disk, an open drive door, or network protection.
+        /// Applications using this flag must perform file operations carefully, because a file cannot be reopened once it is closed.
+        /// </summary>
+        NoTestFileCreate = 0x00010000,
+
+        /// <summary>
+        /// The common dialog boxes allow invalid characters in the returned file name.
+        /// Typically, the calling application uses a hook procedure that checks the file name by using the FILEOKSTRING message.
+        /// If the text box in the edit control is empty or contains nothing but spaces, the lists of files and directories are updated.
+        /// If the text box in the edit control contains anything else, nFileOffset and nFileExtension are set to values generated by parsing the text.
+        /// No default extension is added to the text, nor is text copied to the buffer specified by lpstrFileTitle.
+        /// If the value specified by nFileOffset is less than zero, the file name is invalid.
+        /// Otherwise, the file name is valid, and nFileExtension and nFileOffset can be used as if the OFN_NOVALIDATE flag had not been specified.
+        /// </summary>
+        NoValidate = 0x00000100,
+
+        /// <summary>
+        /// Causes the Save As dialog box to generate a message box if the selected file already exists.
+        /// The user must confirm whether to overwrite the file.
+        /// </summary>
+        OverwritePrompt = 0x00000002,
+
+        /// <summary>
+        /// The user can type only valid paths and file names.
+        /// If this flag is used and the user types an invalid path and file name in the File Name entry field, the dialog box function displays a warning in a message box.
+        /// </summary>
+        PathMustExist = 0x00000800,
+
+        /// <summary>
+        /// Causes the Read Only check box to be selected initially when the dialog box is created.
+        /// This flag indicates the state of the Read Only check box when the dialog box is closed.
+        /// </summary>
+        ReadOnly = 0x00000001,
+
+        /// <summary>
+        /// Specifies that if a call to the OpenFile function fails because of a network sharing violation, the error is ignored and the dialog box returns the selected file name.
+        /// If this flag is not set, the dialog box notifies your hook procedure when a network sharing violation occurs for the file name specified by the user.
+        /// If you set the OFN_EXPLORER flag, the dialog box sends the CDN_SHAREVIOLATION message to the hook procedure.
+        /// If you do not set OFN_EXPLORER, the dialog box sends the SHAREVISTRING registered message to the hook procedure.
+        /// </summary>
+        ShareAware = 0x00004000,
+
+        /// <summary>
+        /// Causes the dialog box to display the Help button.
+        /// The hwndOwner member must specify the window to receive the HELPMSGSTRING registered messages that the dialog box sends when the user clicks the Help button.
+        /// An Explorer-style dialog box sends a CDN_HELP notification message to your hook procedure when the user clicks the Help button.
+        /// </summary>
+        ShowHelp = 0x00000010,
     }
 
     internal enum PBT : uint

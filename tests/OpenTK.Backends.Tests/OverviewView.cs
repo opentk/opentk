@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Numerics;
 using ImGuiNET;
@@ -81,23 +82,63 @@ namespace OpenTK.Backends.Tests
             if (ImGui.TreeNodeEx("Log", TREE_NODE_FLAGS))
             {
                 ImGui.InputText("Path", ref logPath, 4096); // Arbitrary max length.
-                ImGui.SameLine();
-
-                if (ImGui.Button("Save"))
+                if (ImGui.BeginItemTooltip())
                 {
-                    try
-                    {
-                        using Stream str = File.OpenWrite(logPath);
-                        using StreamWriter writer = new StreamWriter(str);
+                    ImGui.TextUnformatted(logPath);
+                    ImGui.EndTooltip();
+                }
 
-                        foreach (string line in log)
+                if (Program.DialogComponent != null)
+                {
+                    ImGui.SameLine();
+                    if (ImGui.Button("Browse..."))
+                    {
+                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new []{ ("Text documents (*.txt)", "*.txt"), ("All files (*.*)", "*.*") }, 0);
+                        if (location != null)
                         {
-                            writer.WriteLine(line);
+                            Debug.Assert(location.Count <= 1);
+
+                            logPath = location[0];
                         }
                     }
-                    catch (Exception ex)
+
+                    ImGui.SameLine();
+                    if (ImGui.Button("Save"))
                     {
-                        Program.Logger.LogError($"Could not save log file: {ex}");
+                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new[] { ("Text documents (*.txt)", "*.txt"), ("All files (*.*)", "*.*") }, 0);
+                        if (location != null)
+                        {
+                            logPath = location;
+
+                            using Stream str = File.OpenWrite(logPath);
+                            using StreamWriter writer = new StreamWriter(str);
+
+                            foreach (string line in log)
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ImGui.SameLine();
+                    if (ImGui.Button("Save"))
+                    {
+                        try
+                        {
+                            using Stream str = File.OpenWrite(logPath);
+                            using StreamWriter writer = new StreamWriter(str);
+
+                            foreach (string line in log)
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Program.Logger.LogError($"Could not save log file: {ex}");
+                        }
                     }
                 }
 
