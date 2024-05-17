@@ -135,6 +135,8 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: Move this to the window component itself?
         // FIXME: DWMWA_BORDER_COLOR? DWMWA_WINDOW_CORNER_PREFERENCE?
+        // FIXME: It seems like the window titlebar doesn't get changed
+        // immediately, you need to minimize and restore the window for this to work...
         /// <summary>
         /// Sets the <c>DWMWA_USE_IMMERSIVE_DARK_MODE</c> flag on the window causing the titlebar be rendered in dark mode colors.
         /// </summary>

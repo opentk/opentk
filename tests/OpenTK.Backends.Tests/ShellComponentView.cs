@@ -1,5 +1,6 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace OpenTK.Backends.Tests
         public override bool IsVisible => Program.ShellComponent != null;
 
         static readonly AppTheme[] Themes = Enum.GetValues<AppTheme>();
+
+        System.Numerics.Vector3 textColor = new System.Numerics.Vector3(1, 1, 1);
+        System.Numerics.Vector3 captionColor = new System.Numerics.Vector3(1, 1, 1);
 
         public override void Initialize()
         {
@@ -114,21 +118,17 @@ namespace OpenTK.Backends.Tests
                     {
                         if (ImGui.Checkbox("Use Immeresive Dark Mode", ref useImmersiveDarkMode))
                         {
-                            // FIXME: It seems like the window titlebar doesn't get changed
-                            // immediately, you need to minimize and restore the window for this to work...
                             winShell.SetImmersiveDarkMode(Program.Window, useImmersiveDarkMode);
                         }
 
-                        System.Numerics.Vector3 textColor = new System.Numerics.Vector3(1, 1, 1);
                         if (ImGui.ColorEdit3("Caption Text Color", ref textColor))
                         {
-                            //winShell.SetCaptionTextColor(Program.Window, new Color3<Rgb>(textColor.X, textColor.Y, textColor.Z));
+                            winShell.SetCaptionTextColor(Program.Window, new Color3<Rgb>(textColor.X, textColor.Y, textColor.Z));
                         }
 
-                        System.Numerics.Vector3 captionColor = new System.Numerics.Vector3(1, 1, 1);
                         if (ImGui.ColorEdit3("Caption Color", ref captionColor))
                         {
-                            //winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
+                            winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
                         }
 
                         ImGui.EndTabItem();
