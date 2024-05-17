@@ -209,18 +209,6 @@ namespace OpenTK.Platform.Native.macOS
             throw new ArgumentException($"Cannot find display handle for NSScreen=0x{nsscreen}.");
         }
 
-        // FIXME: Remove this
-        internal Box2i ConvertCoordinates(CGRect rect)
-        {
-            Box2i area = new Box2i(
-                (int)rect.origin.x,
-                (int)FlipYCoordinate(rect.origin.y + rect.size.y),
-                (int)(rect.origin.x + rect.size.x),
-                (int)FlipYCoordinate(rect.origin.y));
-
-            return area;
-        }
-
         /// <inheritdoc/>
         public bool CanGetVirtualPosition => true;
 
@@ -417,9 +405,6 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect visible = objc_msgSend_CGRect(nsscreen.Screen, selVisibleFrame);
 
-            // FIXME: In a multi-monitor setup this is likely wrong?
-            CGRect bounds = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
-
             area = new Box2i(
                 (int)visible.origin.x,
                 (int)FlipYCoordinate(visible.origin.y + visible.size.y),
@@ -470,8 +455,11 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: Remove ConvertCoordinates and use CG.FlipYCoordinate directly instead.
-                area = ConvertCoordinates(auxArea);
+                area = new Box2i(
+                    (int)auxArea.origin.x,
+                    (int)FlipYCoordinate(auxArea.origin.y + auxArea.size.y),
+                    (int)(auxArea.origin.x + auxArea.size.x),
+                    (int)FlipYCoordinate(auxArea.origin.y));
                 return true;
             }
         }
@@ -498,8 +486,11 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: Remove ConvertCoordinates and use CG.FlipYCoordinate directly instead.
-                area = ConvertCoordinates(auxArea);
+                area = new Box2i(
+                    (int)auxArea.origin.x,
+                    (int)FlipYCoordinate(auxArea.origin.y + auxArea.size.y),
+                    (int)(auxArea.origin.x + auxArea.size.x),
+                    (int)FlipYCoordinate(auxArea.origin.y));
                 return true;
             }
         }

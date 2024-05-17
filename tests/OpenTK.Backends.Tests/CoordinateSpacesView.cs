@@ -17,6 +17,11 @@ namespace OpenTK.Backends.Tests
 
         public override bool IsVisible => Program.WindowComp != null;
 
+        readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
+        readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
+
+        int captureModeIndex = 0;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -52,6 +57,15 @@ namespace OpenTK.Backends.Tests
                         macOSWindowComp.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
 
                         ImGui.Text($"Framebuffer size: {fbw}x{fbh}");
+                    }
+
+                    // FIXME: Make some way to get out of the locked cursor mode.
+                    ImGui.AlignTextToFramePadding();
+                    ImGui.TextUnformatted("Cursor capture mode"); ImGui.SameLine();
+                    ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
+                    if (ImGui.Button("Apply##captureMode"))
+                    {
+                        Program.WindowComp.SetCursorCaptureMode(Program.Window, CaptureModes[captureModeIndex]);
                     }
                 }
                 catch { }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -81,6 +82,16 @@ namespace OpenTK.Platform.Native.macOS
         public static bool operator !=(CGPoint left, CGPoint right)
         {
             return !(left == right);
+        }
+
+        public static CGPoint operator +(CGPoint left, CGPoint right)
+        {
+            return new CGPoint(left.x + right.x, left.y + right.y);
+        }
+
+        public static explicit operator Vector2(CGPoint p)
+        {
+            return new Vector2((float)p.x, (float)p.y);
         }
     }
     

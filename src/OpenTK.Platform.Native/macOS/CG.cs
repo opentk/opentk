@@ -60,6 +60,12 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint /* CGDirectDisplayID */ CGMainDisplayID();
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGAssociateMouseAndMouseCursorPosition([MarshalAs(UnmanagedType.Bool)] bool connected);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGDisplayMoveCursorToPoint(uint /* CGDirectDisplayID */ display, CGPoint point);
+
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
@@ -68,7 +74,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static float FlipYCoordinate(float y)
         {
             float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
@@ -79,7 +85,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static NFloat FlipYCoordinate(NFloat y)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
@@ -90,7 +96,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static CGPoint FlipYCoordinate(CGPoint p)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return new CGPoint(p.x, (height - 1) - p.y);
+            return new CGPoint(p.x, height - p.y);
         }
 
         /// <summary>

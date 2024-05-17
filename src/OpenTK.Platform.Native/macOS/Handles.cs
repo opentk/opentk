@@ -1,5 +1,7 @@
 ﻿using System;
 using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
+
 namespace OpenTK.Platform.Native.macOS
 {
     internal class NSWindowHandle : WindowHandle
@@ -23,6 +25,18 @@ namespace OpenTK.Platform.Native.macOS
 
         public HitTest? HitTest { get; set; } = null;
         public bool BackgroundDragEnabled { get; set; } = false;
+
+        public NSScreenHandle? FullscreenScreen { get; set; } = null;
+        public bool InNonSpaceFullscreen { get; set; } = false;
+        public NSWindowLevel PreviousLevel { get; set; }
+        // FIXME: Should we store the intended style?
+        public NSWindowStyleMask PreviousStyleMask { get; set; }
+        public CGRect PreviousFrame { get; set; }
+
+        public CursorCaptureMode CursorCaptureMode { get; set; } = CursorCaptureMode.Normal;
+        // FIXME: Should this be floats and not integers?
+        public CGPoint LastMousePosition { get; set; }
+        public CGPoint VirtualCursorPosition { get; set; }
 
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {

@@ -26,6 +26,9 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly IntPtr /* NSString */ NSApplicationDidChangeScreenParametersNotification = GetStringConstant(AppKitLibrary, "NSApplicationDidChangeScreenParametersNotification"u8);
 
+        internal const byte YES = 1;
+        internal const byte NO = 0;
+
         // FIXME: Number type enum!
         internal const int kCFNumberIntType = 9;
 
@@ -134,6 +137,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -178,6 +184,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect rect);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, nuint value2, bool value3);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, bool value);
@@ -403,18 +412,31 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern bool class_addProtocol(ObjCClass cls, IntPtr /* Protocol */ protocol);
 
-        internal static bool class_addMethod(ObjCClass cls, SEL name, Delegate imp, ReadOnlySpan<byte> types)
+        internal static bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, ReadOnlySpan<byte> types)
         {
-            // FIXME: Maybe avoid marshalling the delegate?
-            IntPtr impPtr = Marshal.GetFunctionPointerForDelegate(imp);
-            fixed(byte* ptr = types)
+            fixed (byte* ptr = types)
             {
-                return class_addMethod(cls, name, impPtr, ptr);
+                return class_addMethod(cls, name, imp, ptr);
             }
 
             // FIXME: What framework?
             [DllImport(FoundationFramework)]
             static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
+        }
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr /* objc_property_t* */ class_copyPropertyList(ObjCClass cls, out uint outCount);
+
+        internal static string property_getName(IntPtr property) {
+
+            byte** name = property_getName(property);
+            return Marshal.PtrToStringUTF8((IntPtr)(*name))!;
+
+            // FIXME: For some reason we are getting a char** when the documentation says
+            // we should be getting a char*???
+            // - Noggin_bops 2024-04-13
+            [DllImport(FoundationFramework, CallingConvention = CallingConvention.Cdecl)]
+            static extern byte** /* char* */ property_getName(IntPtr /* objc_property_t */ property);
         }
 
         internal static IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, out IntPtr outValue)

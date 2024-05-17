@@ -48,7 +48,8 @@ namespace OpenTK.Backends.Tests
         /// Update the application logic.
         /// </summary>
         /// <param name="deltaTime">The time since the last call to Update.</param>
-        void Update(float deltaTime);
+        /// <returns>If the application should quit.</returns>
+        bool Update(float deltaTime);
 
         /// <summary>
         /// Render the application view.

@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.macOS;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -66,14 +67,18 @@ namespace OpenTK.Backends.Tests
         string titleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
+        int captureModeIndex = 0;
         Vector2i windowPosition;
         Vector2i clientPosition;
 
-        WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
-        string[] WindowModeNames = Enum.GetNames<WindowMode>();
+        readonly static WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
+        readonly static string[] WindowModeNames = Enum.GetNames<WindowMode>();
 
-        WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
-        string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+        readonly static WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
+        readonly static string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
+
+        readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
+        readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
 
         public override void Paint(double deltaTime)
         {
@@ -195,6 +200,30 @@ namespace OpenTK.Backends.Tests
                 {
                     WindowComponent!.SetMode(window, WindowModes[modeIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
+                }
+
+                // FIXME: change to toggle!
+                if (ImGui.Button("Set windowed fullscreen"))
+                {
+                    DisplayHandle display = WindowComponent.GetDisplay(window);
+                    WindowComponent.SetFullscreenDisplay(window, display);
+                }
+
+                if (WindowComponent is MacOSWindowComponent macosWindowComponent)
+                {
+                    if (ImGui.Button("Set windowed fullscreen without opening its own space"))
+                    {
+                        DisplayHandle display = macosWindowComponent.GetDisplay(window);
+                        macosWindowComponent.SetFullscreenDisplayNoSpace(window, display);
+                    }
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Cursor capture mode"); ImGui.SameLine();
+                ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##captureMode"))
+                {
+                    WindowComponent.SetCursorCaptureMode(window, CaptureModes[captureModeIndex]);
                 }
 
                 ImGui.AlignTextToFramePadding();

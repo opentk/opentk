@@ -36,6 +36,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         bool CanSetMousePosition { get; }
 
+        // FIXME: When using CaptureMode.Locked should these return the virtual position?
+        // If not, we need to have a clear distinction between which coordinates get
+        // virtualized and which ones do not.
+
         /// <summary>
         /// Get the mouse cursor position.
         /// </summary>

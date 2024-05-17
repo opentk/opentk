@@ -35,6 +35,8 @@ namespace OpenTK.Core.Platform
     {
         // FIXME: A reference to the window that got or lost focus?
 
+        // FIXME: The mouse position
+
         /// <summary>
         /// If the window got or lost focus.
         /// </summary>
@@ -390,6 +392,8 @@ namespace OpenTK.Core.Platform
     public class MouseMoveEventArgs : WindowEventArgs
     {
         // FIXME: In what coordinate space is the mouse coords?
+
+        // FIXME: Position delta
 
         /// <summary>
         /// The new position of the mouse cursor.

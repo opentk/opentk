@@ -348,6 +348,8 @@ namespace OpenTK.Backends.Tests
                 OpenGLComp.SetCurrentContext(WindowContext);
                 Render();
 
+                // FIXME: Avoid allocating this list every frame.
+                List<WindowHandle> shouldCloseWindows = new List<WindowHandle>();
                 foreach (var applicationWindow in ApplicationWindows)
                 {
                     if (applicationWindow.Context == null)
@@ -357,10 +359,21 @@ namespace OpenTK.Backends.Tests
 
                     OpenGLComp.SetCurrentContext(applicationWindow.Context);
 
+                    bool shouldClose = applicationWindow.Application.Update(dt);
+                    if (shouldClose)
+                    {
+                        shouldCloseWindows.Add(applicationWindow.Window);
+                    }
+
                     // FIXME: Send delta time?
                     applicationWindow.Application.Render();
 
                     OpenGLComp.SetCurrentContext(WindowContext);
+                }
+
+                foreach (var window in shouldCloseWindows)
+                {
+                    CloseApplicationWindow(window);
                 }
             }
         }
@@ -473,6 +486,31 @@ namespace OpenTK.Backends.Tests
             }
         }
 
+        private static void CloseApplicationWindow(WindowHandle window)
+        {
+            int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == window);
+            ApplicationWindow appWindow = ApplicationWindows[index];
+            if (appWindow != null)
+            {
+                if (appWindow.Context != null)
+                {
+                    if (appWindow.Application != null)
+                    {
+                        // FIXME: Make there only be one place where we actually deinit applications.
+                        OpenGLComp.SetCurrentContext(appWindow.Context);
+                        appWindow.Application?.Deinitialize();
+                        OpenGLComp.SetCurrentContext(WindowContext);
+                    }
+
+                    OpenGLComp.DestroyContext(appWindow.Context);
+                }
+
+                ApplicationWindows.RemoveAt(index);
+            }
+
+            WindowComp.Destroy(window);
+        }
+
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (args is WindowEventArgs windowEvent)
@@ -482,29 +520,7 @@ namespace OpenTK.Backends.Tests
                     if (args is CloseEventArgs close2)
                     {
                         Console.WriteLine($"Closing window: '{WindowComp.GetTitle(close2.Window)}'");
-
-                        // If this is one of our other windows we want to gracefully close it before we delete the window.
-                        int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
-                        ApplicationWindow appWindow = ApplicationWindows[index];
-                        if (appWindow != null)
-                        {
-                            if (appWindow.Context != null)
-                            {
-                                if (appWindow.Application != null)
-                                {
-                                    // FIXME: Make there only be one place where we actually deinit applications.
-                                    OpenGLComp.SetCurrentContext(appWindow.Context);
-                                    appWindow.Application?.Deinitialize();
-                                    OpenGLComp.SetCurrentContext(WindowContext);
-                                }
-
-                                OpenGLComp.DestroyContext(appWindow.Context);
-                            }
-
-                            ApplicationWindows.RemoveAt(index);
-                        }
-
-                        WindowComp.Destroy(close2.Window);
+                        CloseApplicationWindow(close2.Window);
                         return;
                     }
                     else

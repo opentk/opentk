@@ -27,9 +27,9 @@ namespace OpenTK.Backends.Tests
             // FIXME: Handle resize?
         }
 
-        public void Update(float deltaTime)
+        public bool Update(float deltaTime)
         {
-
+            return false;
         }
 
         public void Render()

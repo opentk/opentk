@@ -37,8 +37,6 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
-            // FIXME: Check the handle!
-
             // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
             if (success == false)
@@ -53,8 +51,6 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
-            // FIXME: Check the handle!
-
             bool success = Win32.SetCursorPos(x, y);
             if (success == false)
             {
