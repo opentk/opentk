@@ -165,6 +165,9 @@ namespace OpenTK.Platform.Native.macOS
             nuint height = (nuint)size.height;
 
             // FIXME: Read out the alpha channel too...
+            // Though it seems the alpha is working for images that are
+            // copied online with transparency, so maybe we don't need to do anything.
+            // - Noggin_bops 2024-05-20
             IntPtr sRGBColorSpace = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
             byte[] data = new byte[width * height * 4];
             fixed(byte* dataPtr = data)
