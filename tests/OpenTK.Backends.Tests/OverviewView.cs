@@ -94,8 +94,21 @@ namespace OpenTK.Backends.Tests
                     ImGui.SameLine();
                     if (ImGui.Button("Browse..."))
                     {
-                        //List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new DialogFileFilter[]{ new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") }, 0);
-                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt") }, 0);
+
+                        DialogFileFilter[] filter;
+                        if (OperatingSystem.IsWindows())
+                        {
+                            // On windows it's nice to be able to switch to a "All files" filter so you can see all files that are in a folder.
+                            // But on macOS adding this filter gives zero indication of the supported files so we would ideally avoid adding the * filter there.
+                            // - Noggin_bops 2024-05-19
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") };
+                        }
+                        else
+                        {
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
+                        }
+
+                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), filter, 0);
                         if (location != null)
                         {
                             Debug.Assert(location.Count <= 1);
@@ -107,8 +120,20 @@ namespace OpenTK.Backends.Tests
                     ImGui.SameLine();
                     if (ImGui.Button("Save"))
                     {
-                        //string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") }, 0);
-                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt") }, 0);
+                        DialogFileFilter[] filter;
+                        if (OperatingSystem.IsWindows())
+                        {
+                            // On windows it's nice to be able to switch to a "All files" filter so you can see all files that are in a folder.
+                            // But on macOS adding this filter gives zero indication of the supported files so we would ideally avoid adding the * filter there.
+                            // - Noggin_bops 2024-05-19
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") };
+                        }
+                        else
+                        {
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
+                        }
+
+                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), filter, 0);
                         if (location != null)
                         {
                             if (Path.HasExtension(location) == false)
