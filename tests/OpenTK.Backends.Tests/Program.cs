@@ -79,6 +79,7 @@ namespace OpenTK.Backends.Tests
             new ClipboardComponentView(),
             new ShellComponentView(),
             new CoordinateSpacesView(),
+            new DialogComponentView(),
         };
 
         static void Main(string[] args)

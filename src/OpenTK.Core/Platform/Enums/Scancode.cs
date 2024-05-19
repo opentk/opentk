@@ -21,7 +21,7 @@ namespace OpenTK.Core.Platform
         Return,
         Escape,
 
-        /// <summary> Delete </summary>
+        /// <summary> Delete. </summary>
         Backspace,
         Tab,
         Spacebar,

@@ -224,6 +224,20 @@ namespace OpenTK.Platform.Native.macOS
         Large = 3,
     }
 
+    internal enum NSModalResponse : int
+    {
+        OK = 1,
+        Cancel = 0,
+
+        Stop = (-1000), // Also used as the default response for sheets
+        Abort = (-1001),
+        Continue = (-1002),
+
+        AlertFirstButtonReturn = 1000,
+        AlertSecondButtonReturn = 1001,
+        AlertThirdButtonReturn = 1002,
+    }
+
     [Flags]
     internal enum ModifierFlags : ulong
     {

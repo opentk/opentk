@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Numerics;
+using System.Threading;
 using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -93,7 +94,8 @@ namespace OpenTK.Backends.Tests
                     ImGui.SameLine();
                     if (ImGui.Button("Browse..."))
                     {
-                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new []{ ("Text documents (*.txt)", "*.txt"), ("All files (*.*)", "*.*") }, 0);
+                        //List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new DialogFileFilter[]{ new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") }, 0);
+                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt") }, 0);
                         if (location != null)
                         {
                             Debug.Assert(location.Count <= 1);
@@ -105,9 +107,14 @@ namespace OpenTK.Backends.Tests
                     ImGui.SameLine();
                     if (ImGui.Button("Save"))
                     {
-                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new[] { ("Text documents (*.txt)", "*.txt"), ("All files (*.*)", "*.*") }, 0);
+                        //string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") }, 0);
+                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), new DialogFileFilter[] { new("Text documents (*.txt)", "txt") }, 0);
                         if (location != null)
                         {
+                            if (Path.HasExtension(location) == false)
+                            {
+                                location = location + ".txt";
+                            }
                             logPath = location;
 
                             using Stream str = File.OpenWrite(logPath);

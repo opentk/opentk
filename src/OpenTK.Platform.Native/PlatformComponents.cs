@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
                 //[PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
                 //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
-                //[PalComponents.Dialog] = () => new macOS.MacOSDialogComponent(),
+                [PalComponents.Dialog] = () => new macOS.MacOSDialogComponent(),
             };
 
         /// <summary>

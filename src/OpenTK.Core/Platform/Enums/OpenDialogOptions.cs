@@ -20,6 +20,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Select directories instead of files.
         /// </summary>
+        // FIXME: Make selecting folder it's own function...
         SelectDirectory = 1 << 1,
     }
 }

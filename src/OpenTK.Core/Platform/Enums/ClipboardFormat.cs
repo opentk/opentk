@@ -27,7 +27,7 @@ namespace OpenTK.Core.Platform
         Audio = 2,
 
         /// <summary>
-        /// A bitmap. See <see cref="OpenTK.Core.Platform.Bitmap"/>
+        /// A bitmap. See <see cref="OpenTK.Core.Platform.Bitmap"/>.
         /// </summary>
         Bitmap = 3,
 

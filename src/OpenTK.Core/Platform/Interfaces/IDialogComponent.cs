@@ -18,9 +18,9 @@ namespace OpenTK.Core.Platform
 
         // FIXME: Formalize the format for allowedExtensions so that we avoid being platform dependent.
 
-        public unsafe List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, (string Name, string Ext)[]? allowedExtensions, OpenDialogOptions options);
+        public unsafe List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, OpenDialogOptions options);
 
         // FIXME: Does a save dialog return multiple items?
-        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, (string Name, string Ext)[]? allowedExtensions, SaveDialogOptions options);
+        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options);
     }
 }

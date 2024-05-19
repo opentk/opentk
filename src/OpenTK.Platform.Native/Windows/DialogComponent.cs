@@ -259,13 +259,10 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Do something to avoid having this limit?
         const int MAX_FILE_LENGTH = 1024;
 
-        /// <inheritdoc/>
-        public unsafe List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, (string Name, string Ext)[]? allowedExtensions, OpenDialogOptions options)
+        private unsafe char* CreateFilterString(DialogFileFilter[]? filters)
         {
-            HWND hwnd = parent.As<HWND>(this);
-
             char* extensionListPtr;
-            if (allowedExtensions == null)
+            if (filters == null)
             {
                 string filter = "All Files\0*.*\0\0";
                 extensionListPtr = (char*)Marshal.AllocHGlobal(filter.Length * 2);
@@ -275,29 +272,42 @@ namespace OpenTK.Platform.Native.Windows
             else
             {
                 int chars = 1;
-                for (int i = 0; i < allowedExtensions.Length; i++)
+                for (int i = 0; i < filters.Length; i++)
                 {
-                    chars += allowedExtensions[i].Name.Length + 1;
-                    chars += allowedExtensions[i].Ext.Length + 1;
+                    chars += filters[i].Name.Length + 1;
+                    // +2 for '*.' and +1 for \0
+                    chars += filters[i].Filter.Length + 2 + 1;
                 }
 
                 extensionListPtr = (char*)Marshal.AllocHGlobal(chars * 2);
                 Span<char> extensionList = new Span<char>(extensionListPtr, chars);
 
                 int offset = 0;
-                for (int i = 0; i < allowedExtensions.Length; i++)
+                for (int i = 0; i < filters.Length; i++)
                 {
-                    allowedExtensions[i].Name.CopyTo(extensionList.Slice(offset));
-                    offset += allowedExtensions[i].Name.Length;
+                    filters[i].Name.CopyTo(extensionList.Slice(offset));
+                    offset += filters[i].Name.Length;
                     extensionList[offset++] = '\0';
 
-                    allowedExtensions[i].Ext.CopyTo(extensionList.Slice(offset));
-                    offset += allowedExtensions[i].Ext.Length;
+                    extensionList[offset++] = '*';
+                    extensionList[offset++] = '.';
+                    filters[i].Filter.CopyTo(extensionList.Slice(offset));
+                    offset += filters[i].Filter.Length;
                     extensionList[offset++] = '\0';
                 }
                 extensionList[offset++] = '\0';
             }
-            
+
+            return extensionListPtr;
+        }
+
+        /// <inheritdoc/>
+        public unsafe List<string>? ShowOpenDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, OpenDialogOptions options)
+        {
+            HWND hwnd = parent.As<HWND>(this);
+
+            char* extensionListPtr = CreateFilterString(allowedExtensions);
+
             char* titlePtr = (char*)Marshal.StringToHGlobalUni(title);
             char* directoryPtr = (char*)Marshal.StringToHGlobalUni(directory);
             // FIXME: Do something to support default extension..
@@ -385,44 +395,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, (string Name, string Ext)[]? allowedExtensions, SaveDialogOptions options)
+        public unsafe string? ShowSaveDialog(WindowHandle parent, string title, string directory, DialogFileFilter[]? allowedExtensions, SaveDialogOptions options)
         {
             HWND hwnd = parent.As<HWND>(this);
 
-            char* extensionListPtr;
-            if (allowedExtensions == null)
-            {
-                string filter = "All Files\0*.*\0\0";
-                extensionListPtr = (char*)Marshal.AllocHGlobal(filter.Length * 2);
-                Span<char> extensionList = new Span<char>(extensionListPtr, filter.Length);
-                filter.CopyTo(extensionList);
-            }
-            else
-            {
-                int chars = 1;
-                for (int i = 0; i < allowedExtensions.Length; i++)
-                {
-                    chars += allowedExtensions[i].Name.Length + 1;
-                    chars += allowedExtensions[i].Ext.Length + 1;
-                }
-
-                extensionListPtr = (char*)Marshal.AllocHGlobal(chars * 2);
-                Span<char> extensionList = new Span<char>(extensionListPtr, chars);
-
-                int offset = 0;
-                for (int i = 0; i < allowedExtensions.Length; i++)
-                {
-                    allowedExtensions[i].Name.CopyTo(extensionList.Slice(offset));
-                    offset += allowedExtensions[i].Name.Length;
-                    extensionList[offset++] = '\0';
-
-                    allowedExtensions[i].Ext.CopyTo(extensionList.Slice(offset));
-                    offset += allowedExtensions[i].Ext.Length;
-                    extensionList[offset++] = '\0';
-                }
-                extensionList[offset++] = '\0';
-            }
-
+            char* extensionListPtr = CreateFilterString(allowedExtensions);
+            
             char* titlePtr = (char*)Marshal.StringToHGlobalUni(title);
             char* directoryPtr = (char*)Marshal.StringToHGlobalUni(directory);
             //char* defaultExt = (char*)Marshal.StringToHGlobalUni($"\0{allowedExtensions[0]}");

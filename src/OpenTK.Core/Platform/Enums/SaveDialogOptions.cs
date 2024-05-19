@@ -12,9 +12,5 @@ namespace OpenTK.Core.Platform
     [Flags]
     public enum SaveDialogOptions
     {
-        /// <summary>
-        /// Select directories instead of files.
-        /// </summary>
-        SelectDirectory = 1 << 2,
     }
 }
