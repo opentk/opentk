@@ -10,8 +10,8 @@ namespace OpenTK.Platform.Native.macOS
 {
     public unsafe class MacOSOpenGLComponent : IOpenGLComponent
     {
-        internal static readonly ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext");
-        internal static readonly ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat");
+        internal static readonly ObjCClass NSOpenGLContextClass = objc_getClass("NSOpenGLContext"u8);
+        internal static readonly ObjCClass NSOpenGlPixelFormatClass = objc_getClass("NSOpenGLPixelFormat"u8);
 
         internal static readonly SEL selInitWithAttributes = sel_registerName("initWithAttributes:"u8);
         internal static readonly SEL selInitWithFormatShareContext = sel_registerName("initWithFormat:shareContext:"u8);

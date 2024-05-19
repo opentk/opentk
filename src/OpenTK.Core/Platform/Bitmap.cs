@@ -11,6 +11,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public class Bitmap
     {
+        // FIXME: Add stuff like colorspace info?
+
         /// <summary>
         /// The width of the bitmap in pixels.
         /// </summary>

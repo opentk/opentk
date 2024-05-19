@@ -41,5 +41,29 @@ namespace OpenTK.Platform.Native.macOS
         DisplayModeTelevisionFlag = 0x00100000,
         DisplayModeValidForMirroringFlag = 0x00200000,
     }
+
+    internal enum CGImageAlphaInfo
+    {
+        kCGImageAlphaNone = 0,
+        kCGImageAlphaPremultipliedLast = 1,
+        kCGImageAlphaPremultipliedFirst = 2,
+        kCGImageAlphaLast = 3,
+        kCGImageAlphaFirst = 4,
+        kCGImageAlphaNoneSkipLast = 5,
+        kCGImageAlphaNoneSkipFirst = 6,
+        kCGImageAlphaOnly = 7,
+    }
+
+    internal enum CGBitmapInfo
+    {
+        kCGBitmapAlphaInfoMask = 0x1F,
+        kCGBitmapFloatComponents = (1 << 8),
+        kCGBitmapByteOrderMask = 0x7000,
+        kCGBitmapByteOrderDefault = (0 << 12),
+        kCGBitmapByteOrder16Little = (1 << 12),
+        kCGBitmapByteOrder32Little = (2 << 12),
+        kCGBitmapByteOrder16Big = (3 << 12),
+        kCGBitmapByteOrder32Big = (4 << 12),
+    }
 }
 

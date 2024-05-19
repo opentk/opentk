@@ -149,12 +149,12 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
-        internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication");
+        internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication"u8);
         internal static readonly ObjCClass NSMenuClass = objc_getClass("NSMenu"u8);
         internal static readonly ObjCClass NSMenuItemClass = objc_getClass("NSMenuItem"u8);
         internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
-        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
-        internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray");
+        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen"u8);
+        internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray"u8);
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
@@ -262,7 +262,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_registerClassPair(NSOpenTKWindowClass);
 
             IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
-            NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"), "NSOpenTKView"u8, 0);
+            NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"u8), "NSOpenTKView"u8, 0);
 
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);

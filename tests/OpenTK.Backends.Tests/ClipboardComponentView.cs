@@ -131,14 +131,21 @@ namespace OpenTK.Backends.Tests
                         if (ClipboardGLTexture != 0)
                             GL.DeleteTexture(ClipboardGLTexture);
 
-                        ClipboardGLTexture = GL.CreateTexture(TextureTarget.Texture2d);
-                        GL.TextureStorage2D(ClipboardGLTexture, mipmapLevels, SizedInternalFormat.Rgba8, bitmap.Width, bitmap.Height);
+                        // Because we target 4.1 (for macOS) we can't use the newer texture functions
+                        // - Noggin_bops 2024-05-19
+                        ClipboardGLTexture = GL.GenTexture();
+                        GL.BindTexture(TextureTarget.Texture2d, ClipboardGLTexture);
+                        GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
+                        //GL.TextureStorage2D(ClipboardGLTexture, mipmapLevels, SizedInternalFormat.Rgba8, bitmap.Width, bitmap.Height);
+                        //GL.TextureSubImage2D(ClipboardGLTexture, 0, 0, 0, bitmap.Width, bitmap.Height, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
 
-                        GL.TextureSubImage2D(ClipboardGLTexture, 0, 0, 0, bitmap.Width, bitmap.Height, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
+                        var error = GL.GetError();
 
-                        GL.GenerateTextureMipmap(ClipboardGLTexture);
+                        GL.GenerateMipmap(TextureTarget.Texture2d);
+                        //GL.GenerateTextureMipmap(ClipboardGLTexture);
 
-                        GL.TextureParameteri(ClipboardGLTexture, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                        //GL.TextureParameteri(ClipboardGLTexture, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
                         // Maybe try to match the pixel size of the bitmap to the display.
 

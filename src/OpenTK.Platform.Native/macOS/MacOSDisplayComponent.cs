@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.macOS
 {
     public class MacOSDisplayComponent : IDisplayComponent
     {
-        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
+        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen"u8);
 
         internal static readonly SEL selScreens = sel_registerName("screens"u8);
         internal static readonly SEL selObjectAtIndex = sel_registerName("objectAtIndex:"u8);

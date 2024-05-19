@@ -66,6 +66,22 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern CGError CGDisplayMoveCursorToPoint(uint /* CGDirectDisplayID */ display, CGPoint point);
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGColorSpaceRef */ CGColorSpaceCreateWithName(IntPtr /* CFStringRef */ name);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGContextRef */ CGBitmapContextCreate(void* data, nuint width, nuint height, nuint bitsPerComponent, nuint bytesPerRow, IntPtr /* CGColorSpaceRef */ space, uint bitmapInfo);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextRelease(IntPtr /* CGContextRef */ c);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextTranslateCTM(IntPtr /* CGContextRef */ c, NFloat tx, NFloat ty);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextScaleCTM(IntPtr /* CGContextRef */ c, NFloat sx, NFloat sy);
+
+
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>

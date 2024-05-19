@@ -110,9 +110,6 @@ namespace OpenTK.Platform.Native.macOS
             static extern IntPtr dlsym(IntPtr handle, IntPtr symbol);
         }
 
-        [DllImport(AppKitFramework, CharSet = CharSet.Ansi)]
-        internal static extern ObjCClass objc_getClass(string name);
-
         internal static ObjCClass objc_getClass(ReadOnlySpan<byte> name)
         {
             fixed(byte* ptr = name)
@@ -238,6 +235,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, SEL value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector)
         {
