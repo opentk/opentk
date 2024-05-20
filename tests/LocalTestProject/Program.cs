@@ -856,8 +856,8 @@ void main()
         {
             var buffer = GL.GenBuffer();
 
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
-            GL.BufferData(BufferTargetARB.ArrayBuffer, vertices, BufferUsageARB.StaticDraw);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices, BufferUsage.StaticDraw);
 
             return buffer;
         }
@@ -869,7 +869,7 @@ void main()
             CheckError("buffer");
 
             GL.BindVertexArray(vao);
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
 
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, 0);
             GL.EnableVertexAttribArray(0);
@@ -915,7 +915,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            GL.GetProgrami(program, ProgramPropertyARB.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);
