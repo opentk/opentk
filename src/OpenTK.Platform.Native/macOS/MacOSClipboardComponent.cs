@@ -4,6 +4,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.CG;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -13,6 +14,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSImageClass = objc_getClass("NSImage"u8);
         internal static readonly ObjCClass NSGraphicsContextClass = objc_getClass("NSGraphicsContext"u8);
         internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray"u8);
+        internal static readonly ObjCClass NSStringClass = objc_getClass("NSString"u8);
+        internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
 
         internal static readonly SEL selGeneralPasteboard = sel_registerName("generalPasteboard"u8);
         internal static readonly SEL selTypes = sel_registerName("types"u8);
@@ -29,7 +32,14 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selsetString_forType = sel_registerName("setString:forType:"u8);
         internal static readonly SEL selDeclareTypes_owner = sel_registerName("declareTypes:owner:"u8);
         internal static readonly SEL selArrayWithObject = sel_registerName("arrayWithObject:"u8);
+        internal static readonly SEL selPasteboardItems = sel_registerName("pasteboardItems"u8);
+        internal static readonly SEL selDataForType = sel_registerName("dataForType:"u8);
+        internal static readonly SEL selBytes = sel_registerName("bytes"u8);
+        internal static readonly SEL selLength = sel_registerName("length"u8);
 
+        internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
+        internal static readonly SEL selURLWithString = sel_registerName("URLWithString:"u8);
+        internal static readonly SEL selFileSystemRepresentation = sel_registerName("fileSystemRepresentation"u8);
 
         internal static readonly IntPtr NSPasteboardTypeString = GetStringConstant(AppKitLibrary, "NSPasteboardTypeString"u8);
         internal static readonly IntPtr NSPasteboardTypeSound = GetStringConstant(AppKitLibrary, "NSPasteboardTypeSound"u8);
@@ -204,9 +214,31 @@ namespace OpenTK.Platform.Native.macOS
 
         public List<string>? GetClipboardFiles()
         {
+            IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
+            IntPtr items = objc_msgSend_IntPtr(pasteboard, selPasteboardItems);
 
+            // FIXME: Return null if the current format isn't ClipboardFormat.Files.
+            // This is what the documentation for this function says we should do.
+            // - Noggin_bops 2024-06-02
 
-            throw new NotImplementedException();
+            nuint count = (nuint)objc_msgSend_IntPtr(items, selCount);
+            List<string>? files = new List<string>(int.CreateSaturating(count));
+            for (nuint i = 0; i < count; i++)
+            {
+                IntPtr item = objc_msgSend_IntPtr(items, selObjectAtIndex, i);
+                IntPtr itemData = objc_msgSend_IntPtr(item, selDataForType, NSPasteboardTypeFileURL);
+                if (itemData != IntPtr.Zero)
+                {
+                    IntPtr dataStr = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSStringClass, Alloc), selInitWithData_encoding, itemData, (ulong)NSStringEncoding.UTF8);
+                    IntPtr url = objc_msgSend_IntPtr((IntPtr)NSURLClass, selURLWithString, dataStr);
+                    string path = Marshal.PtrToStringUTF8(objc_msgSend_IntPtr(url, selFileSystemRepresentation))!;
+                    files.Add(path);
+                    objc_msgSend(dataStr, Release);
+                    // FIXME: Are there any other objects we need to release?
+                }
+            }
+
+            return files;
         }
     }
 }
