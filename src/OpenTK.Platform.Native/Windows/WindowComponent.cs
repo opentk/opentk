@@ -187,6 +187,31 @@ namespace OpenTK.Platform.Native.Windows
 
                         return (IntPtr)1;
                     }
+                    case WM.DEVICECHANGE:
+                    {
+                        DBT dbt = (DBT)wParam;
+                        switch (dbt)
+                        {
+                            case DBT.DeviceArrival:
+                            case DBT.DeviceRemoveComplete:
+                                // FIXME: Implement joystick events!
+                                // JoystickComponent.UpdateJoysticks();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                    case WM.CLIPBOARDUPDATE:
+                    {
+                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+
+                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                     default:
                     {
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -810,23 +835,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         return IntPtr.Zero;
                     }
-                case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
-                        {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
-                        }
-
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                 case WM.DISPLAYCHANGE:
                     {
                         // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
@@ -906,14 +914,6 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETTINGCHANGE:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
-                case WM.CLIPBOARDUPDATE:
-                    {
-                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
-
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

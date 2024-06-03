@@ -687,6 +687,7 @@ namespace OpenTK.Backends.Tests
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
                 Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
+                ((ClipboardComponentView?)MainTabContainer[typeof(ClipboardComponentView)])?.UpdateClipboardFormat();
             }
             else if (args is FileDropEventArgs fileDrop)
             {
