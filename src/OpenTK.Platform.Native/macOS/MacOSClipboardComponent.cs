@@ -5,6 +5,7 @@ using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.CG;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -36,10 +37,13 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selDataForType = sel_registerName("dataForType:"u8);
         internal static readonly SEL selBytes = sel_registerName("bytes"u8);
         internal static readonly SEL selLength = sel_registerName("length"u8);
+        internal static readonly SEL selWriteObjects = sel_registerName("writeObjects:"u8);
 
         internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
         internal static readonly SEL selURLWithString = sel_registerName("URLWithString:"u8);
         internal static readonly SEL selFileSystemRepresentation = sel_registerName("fileSystemRepresentation"u8);
+
+        internal static readonly SEL selInitWithCGImage_size = sel_registerName("initWithCGImage:size:"u8);
 
         internal static readonly IntPtr NSPasteboardTypeString = GetStringConstant(AppKitLibrary, "NSPasteboardTypeString"u8);
         internal static readonly IntPtr NSPasteboardTypeSound = GetStringConstant(AppKitLibrary, "NSPasteboardTypeSound"u8);
@@ -164,6 +168,65 @@ namespace OpenTK.Platform.Native.macOS
             // - Noggin_bops 2024-06-03
             Logger?.LogError("We currently don't support clipboard audio on macOS. If this is an issue please open an issue at: https://github.com/opentk/opentk/issues/new. Please include what program was used to copy the sound.");
             return null;
+        }
+
+        /// <summary>
+        /// Writes a bitmap to the clipboard.
+        /// </summary>
+        /// <param name="bitmap">The bitmap to write to the clipboard.</param>
+        public unsafe void SetClipboardBitmap(Bitmap bitmap)
+        {
+            IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
+
+            nint changecount = objc_msgSend_IntPtr(pasteboard, selClearContents);
+
+            // FIXME: What is the proper colorspace...
+            IntPtr space = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+            void* data = NativeMemory.Alloc((nuint)bitmap.Data.Length);
+            fixed(byte* ptr = bitmap.Data)
+            {
+                NativeMemory.Copy(ptr, data, (nuint)bitmap.Data.Length);
+            }
+
+            // Inline UnmanagedCallerOnly function for freeing the data.
+            [UnmanagedCallersOnly(CallConvs = new [] { typeof(CallConvCdecl) })]
+            static void FreeImage(void* info, void* data, nuint size)
+            {
+                // FIXME: Do ever get here? I wasn't able to trigger this...
+                // - Noggin_bops 2024-06-03
+                NativeMemory.Free(data);
+            }
+
+            IntPtr provider = CGDataProviderCreateWithData(null, data, (nuint)bitmap.Data.Length, &FreeImage);
+
+            IntPtr cgimage = CGImageCreate(
+                (nuint)bitmap.Width,
+                (nuint)bitmap.Height,
+                8,
+                32,
+                4 * (nuint)bitmap.Width,
+                space,
+                (uint)CGImageAlphaInfo.kCGImageAlphaNoneSkipLast | (uint)CGBitmapInfo.kCGBitmapByteOrderDefault,
+                provider,
+                null,
+                false,
+                CGColorRenderingIntent.kCGRenderingIntentDefault);
+
+            IntPtr image = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSImageClass, Alloc), selInitWithCGImage_size, cgimage, NSSize.NSZeroSize);
+            IntPtr imageArray = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, image);
+
+            bool success = objc_msgSend_bool(pasteboard, selWriteObjects, imageArray);
+            if (success == false)
+            {
+                Logger?.LogWarning("Failed to write NSImage to pasteboard.");
+            }
+
+            objc_msgSend(imageArray, Release);
+            objc_msgSend(image, Release);
+            CGImageRelease(cgimage);
+            CGDataProviderRelease(provider);
+          
+            // FIXME: Do we need to free any other resources?
         }
 
         public unsafe Bitmap? GetClipboardBitmap()

@@ -541,9 +541,6 @@ namespace LocalTestProject
                         case ClipboardFormat.Text:
                             Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardText()}'");
                             break;
-                        case ClipboardFormat.HTML:
-                            Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardHTML()}',\nunformated: '{clipComp.GetClipboardText()}'");
-                            break;
                         case ClipboardFormat.Files:
                             Console.WriteLine($"Current clipboard: '{string.Join(", ", clipComp.GetClipboardFiles()!)}'");
                             break;

@@ -157,6 +157,8 @@ namespace OpenTK.Platform.Native.macOS
 
     internal struct NSSize
     {
+        public static NSSize NSZeroSize => new NSSize(0, 0);
+
         public NFloat width;
         public NFloat height;
 

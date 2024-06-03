@@ -65,5 +65,14 @@ namespace OpenTK.Platform.Native.macOS
         kCGBitmapByteOrder16Big = (3 << 12),
         kCGBitmapByteOrder32Big = (4 << 12),
     }
+
+    internal enum CGColorRenderingIntent : int
+    {
+        kCGRenderingIntentDefault,
+        kCGRenderingIntentAbsoluteColorimetric,
+        kCGRenderingIntentRelativeColorimetric,
+        kCGRenderingIntentPerceptual,
+        kCGRenderingIntentSaturation,
+    }
 }
 

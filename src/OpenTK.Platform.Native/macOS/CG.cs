@@ -81,6 +81,33 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void CGContextScaleCTM(IntPtr /* CGContextRef */ c, NFloat sx, NFloat sy);
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGImageRef */ CGImageCreate(
+            nuint /* size_t */ width,
+            nuint /* size_t */ height,
+            nuint /* size_t */ bitsPerComponent,
+            nuint /* size_t */ bitsPerPixel,
+            nuint /* size_t */ bytesPerRow,
+            IntPtr /* CGColorSpaceRef */ space,
+            uint /* CGBitmapInfo */ bitmapInfo,
+            IntPtr /* CGDataProviderRef */ provider,
+            NFloat* /* const CGFloat* */ decode,
+            bool shouldInterpolate,
+            CGColorRenderingIntent intent);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGDataProviderRef */ CGDataProviderCreateWithData(
+            void* info,
+            void* /* const void* */ data,
+            nuint /* size_t */ size,
+            // FIXME: Proper function pointer type...
+            delegate* unmanaged[Cdecl]<void*, void*, nuint /* size_t */, void> /* CGDataProviderReleaseDataCallback */ releaseData);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGImageRelease(IntPtr /* CGImageRef */ image);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGDataProviderRelease(IntPtr /* CGDataProviderRef */ provider);
 
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
