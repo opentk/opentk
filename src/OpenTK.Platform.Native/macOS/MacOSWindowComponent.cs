@@ -146,6 +146,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selHide = sel_registerName("hide"u8);
         internal static readonly SEL selUnhide = sel_registerName("unhide"u8);
 
+        internal static readonly SEL selRegisterForDraggedTypes = sel_registerName("registerForDraggedTypes:"u8);
+
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
@@ -261,7 +263,6 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_registerClassPair(NSOpenTKWindowClass);
 
-            IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
             NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"u8), "NSOpenTKView"u8, 0);
 
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
@@ -277,6 +278,7 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), (IntPtr)NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
 
             // NSTextInputClientProtocol functions
+            IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
             class_addProtocol(NSOpenTKViewClass, NSTextInputClientProtocol);
             // FIXME: The method type encoding strings only work for 64-bit, as NSRange is defined using NSUInteger so it changes size depending on arch.
             // So {_NSRange=QQ} and {_NSPoint=dd} would have to have something else other than QQ and dd, but I can't figure out what it's supposed to be atm..
@@ -292,9 +294,22 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKViewClass, sel_registerName("characterIndexForPoint:"u8), (IntPtr)NSOtkView_NSTextInputClient_CharacterIndexForPointInst, "Q@:{_NSPoint=dd}"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("firstRectForCharacterRange:actualRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst, "{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), (IntPtr)NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);;
+
+            IntPtr NSDraggingDestinationProtocol = objc_getProtocol("NSDraggingDestination"u8);
+            class_addProtocol(NSOpenTKViewClass, NSDraggingDestinationProtocol);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingEntered:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingEnteredInst, "L@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("wantsPeriodicDraggingUpdates"u8), (IntPtr)NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdatesInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingUpdated:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingUpdatedInst, "L@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingExited:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingExitedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingEnded:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingEndedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("prepareForDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_PrepareForDragOperationInst, "c@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("performDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_PerformDragOperationInst, "c@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("concludeDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_ConcludeDragOperationInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("updateDraggingItemsForDrag:"u8), (IntPtr)NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst, "v@:@"u8);
+
             objc_registerClassPair(NSOpenTKViewClass);
         }
-
+        
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> Menu_QuitInst = &Menu_Quit;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void Menu_Quit(IntPtr self, SEL cmd)
@@ -775,6 +790,76 @@ namespace OpenTK.Platform.Native.macOS
             Console.WriteLine("DoCommandBySelector");
         }
 
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nuint> NSOtkView_NSDraggingDestination_DraggingEnteredInst = &NSOtkView_NSDraggingDestination_DraggingEntered;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingEntered(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging Entered");
+            return (nuint)NSDragOperation.Copy;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, sbyte> NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdatesInst = &NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates(IntPtr view, SEL _selector)
+        {
+            Console.WriteLine("Wants periodic drag update");
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nuint> NSOtkView_NSDraggingDestination_DraggingUpdatedInst = &NSOtkView_NSDraggingDestination_DraggingUpdated;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingUpdated(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Drag update");
+            return (nuint)NSDragOperation.Copy;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingExitedInst = &NSOtkView_NSDraggingDestination_DraggingExited;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_DraggingExited(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging exited");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingEndedInst = &NSOtkView_NSDraggingDestination_DraggingEnded;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_DraggingEnded(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging ended");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PrepareForDragOperationInst = &NSOtkView_NSDraggingDestination_PrepareForDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PrepareForDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Prepare drag");
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PerformDragOperationInst = &NSOtkView_NSDraggingDestination_PerformDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PerformDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Perfrom drag");
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_ConcludeDragOperationInst = &NSOtkView_NSDraggingDestination_ConcludeDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_ConcludeDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Conclude drag");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst = &NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Update dragging items");
+        }
+
+
+
         private bool ProcessHitTest(IntPtr @event)
         {
             IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
@@ -1234,6 +1319,9 @@ namespace OpenTK.Platform.Native.macOS
                 viewPtr,
                 IntPtr.Zero,
                 false);
+
+            // Register that we are a drag destination for files.
+            objc_msgSend(viewPtr, selRegisterForDraggedTypes, objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, MacOSClipboardComponent.NSPasteboardTypeFileURL));
 
             return nswindow;
         }
