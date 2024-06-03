@@ -156,7 +156,13 @@ namespace OpenTK.Backends.Tests
 
             // FIXME: Maybe tabs for each type?
 
+            ImGui.AlignTextToFramePadding();
             ImGui.Text($"Current format: {currentFormat}");
+            ImGui.SameLine();
+            if (ImGui.Button("Refresh"))
+            {
+                UpdateClipboardFormat();
+            }
 
             switch (currentFormat)
             {

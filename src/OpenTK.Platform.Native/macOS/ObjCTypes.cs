@@ -167,6 +167,11 @@ namespace OpenTK.Platform.Native.macOS
             this.width = width;
             this.height = height;
         }
+
+        public override string ToString()
+        {
+            return $"({width}, {height})";
+        }
     }
 }
 

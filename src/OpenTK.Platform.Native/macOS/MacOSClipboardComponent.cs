@@ -38,6 +38,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selBytes = sel_registerName("bytes"u8);
         internal static readonly SEL selLength = sel_registerName("length"u8);
         internal static readonly SEL selWriteObjects = sel_registerName("writeObjects:"u8);
+        internal static readonly SEL selChangeCount = sel_registerName("changeCount"u8);
 
         internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
         internal static readonly SEL selURLWithString = sel_registerName("URLWithString:"u8);
@@ -65,12 +66,27 @@ namespace OpenTK.Platform.Native.macOS
 
         public ILogger? Logger { get; set; }
 
+        private static nint ChangeCount = 0;
+
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Clipboard)
             {
                 throw new Exception("MacOSClipboardComponent can only initialize the Clipboard component.");
             }
+
+            IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
+            ChangeCount = objc_msgSend_IntPtr(pasteboard, selChangeCount);
+        }
+
+        // FIXME: Make this not static...
+        public static bool CheckClipboardUpdate()
+        {
+            IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
+            nint changeCount = objc_msgSend_IntPtr(pasteboard, selChangeCount);
+            bool changed = changeCount != ChangeCount;
+            ChangeCount = changeCount;
+            return changed;
         }
 
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _SupportedFormats;
@@ -83,18 +99,19 @@ namespace OpenTK.Platform.Native.macOS
             //ClipboardFormat.Audio,
         };
 
-        public ClipboardFormat GetClipboardFormat()
+        internal static ClipboardFormat GetClipboardFormatInternal(ILogger? logger)
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
 
             IntPtr types = objc_msgSend_IntPtr(pasteboard, selTypes);
             nuint count = (nuint)objc_msgSend_IntPtr(types, selCount);
             ClipboardFormat format = ClipboardFormat.None;
+            logger?.LogDebug($"Clipboard formats: {count} ({ChangeCount})");
             for (nuint i = 0; i < count; i++)
             {
                 IntPtr type = objc_msgSend_IntPtr(types, selObjectAtIndex, i);
                 string typeStr = FromNSString(type);
-                Console.WriteLine($"Type {i}: {typeStr}");
+                logger?.LogDebug($"Type {i}: {typeStr}");
             }
             for (nuint i = 0; i < count; i++)
             {
@@ -122,9 +139,12 @@ namespace OpenTK.Platform.Native.macOS
                 }
             }
 
-            objc_msgSend(pasteboard, Release);
-
             return format;
+        }
+
+        public ClipboardFormat GetClipboardFormat()
+        {
+            return GetClipboardFormatInternal(Logger);
         }
 
         public void SetClipboardText(string text)
@@ -237,7 +257,6 @@ namespace OpenTK.Platform.Native.macOS
             image = objc_msgSend_IntPtr(image, selInitWithPasteboard, pasteboard);
 
             NSSize size = objc_msgSend_NSSize(image, selSize);
-            Console.WriteLine(size);
 
             nuint width = (nuint)size.width;
             nuint height = (nuint)size.height;

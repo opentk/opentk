@@ -834,10 +834,12 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
 
+        private long clipboardUpdateTime = 0;
 
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents = false)
         {
+            // FIXME: Implement waitForEvents=true.
             IntPtr @event;
             while((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
             {
@@ -1146,6 +1148,35 @@ namespace OpenTK.Platform.Native.macOS
                         //Console.WriteLine($"Event type: {type}");
                         objc_msgSend(nsApplication, selSendEvent, @event);
                         break;
+                }
+            }
+
+            {
+                // Clipboard updates on macos seem to take some time.
+                // If we try to read the clipboard formats the moment the
+                // clipboard change count changed we would get zero clipboard
+                // formats and no pasteboard content. So we unfortunately need
+                // to delay our poll of the pasteboard formats to a time
+                // where the pasteboard hopefully is populated with data.
+                // Ideally we would have some other way of checking
+                // that the pasteboard contents are not ready yet, but
+                // e.g. waiting for there to be non-zero number of
+                // formats would fail if the clipboard is simply cleared.
+                // This solution also has issues with waitForEvents=true,
+                // but that might be a lower priority...
+                // - Noggin_bops 2024-06-04
+                long currTime = Stopwatch.GetTimestamp();
+                if (MacOSClipboardComponent.CheckClipboardUpdate())
+                {
+                    clipboardUpdateTime = currTime + (long)(0.5f * Stopwatch.Frequency);
+                }
+
+                if (currTime >= clipboardUpdateTime)
+                {
+                    ClipboardFormat format = MacOSClipboardComponent.GetClipboardFormatInternal(Logger);
+                    EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
+
+                    clipboardUpdateTime = long.MaxValue;
                 }
             }
         }
