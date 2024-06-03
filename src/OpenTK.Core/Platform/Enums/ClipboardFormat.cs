@@ -32,13 +32,6 @@ namespace OpenTK.Core.Platform
         Bitmap = 3,
 
         /// <summary>
-        /// HTML data.
-        /// If the clipboard contains this format,
-        /// it is also possible to get the unformated string using <see cref="IClipboardComponent.GetClipboardText"/>.
-        /// </summary>
-        HTML = 4,
-
-        /// <summary>
         /// A list of files and directories.
         /// </summary>
         Files = 5,

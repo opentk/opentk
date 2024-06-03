@@ -275,13 +275,6 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        // FIXME: Remove this if favor of platform specific APIs for getting arbitrary formats.
-        public string? GetClipboardHTML()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public unsafe List<string>? GetClipboardFiles()
         {
             XConvertSelection(

@@ -312,11 +312,6 @@ namespace OpenTK.Core.Platform
             return _clipboardComponent!.GetClipboardBitmap();
         }
 
-        string? IClipboardComponent.GetClipboardHTML()
-        {
-            return _clipboardComponent!.GetClipboardHTML();
-        }
-
         List<string>? IClipboardComponent.GetClipboardFiles()
         {
             return _clipboardComponent!.GetClipboardFiles();

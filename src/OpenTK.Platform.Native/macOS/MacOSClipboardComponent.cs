@@ -74,8 +74,7 @@ namespace OpenTK.Platform.Native.macOS
         private static readonly ClipboardFormat[] _SupportedFormats = new[]
         {
             ClipboardFormat.Text,
-            //ClipboardFormat.HTML,
-            //ClipboardFormat.Files,
+            ClipboardFormat.Files,
             ClipboardFormat.Bitmap,
             //ClipboardFormat.Audio,
         };
@@ -156,9 +155,15 @@ namespace OpenTK.Platform.Native.macOS
             return str;
         }
 
-        public AudioData? GetClipboardAudio()
+        public unsafe AudioData? GetClipboardAudio()
         {
-            throw new NotImplementedException();
+            // NSSound can read from the clipboard but doesn't provide access to the
+            // underlying audio data.
+            // There is stuff like Audio Toolbox that allows more access but it doesn't have
+            // functions for reading sound data from the clipboard directly.
+            // - Noggin_bops 2024-06-03
+            Logger?.LogError("We currently don't support clipboard audio on macOS. If this is an issue please open an issue at: https://github.com/opentk/opentk/issues/new. Please include what program was used to copy the sound.");
+            return null;
         }
 
         public unsafe Bitmap? GetClipboardBitmap()
@@ -205,11 +210,6 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(pasteboard, Release);
 
             return bitmap;
-        }
-
-        public string? GetClipboardHTML()
-        {
-            throw new NotImplementedException();
         }
 
         public List<string>? GetClipboardFiles()

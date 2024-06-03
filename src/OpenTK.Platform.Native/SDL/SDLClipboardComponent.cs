@@ -88,12 +88,6 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public string? GetClipboardHTML()
-        {
-            throw new InvalidOperationException("SDL 2 doesn't support HTML clipboard data.");
-        }
-
-        /// <inheritdoc/>
         public List<string>? GetClipboardFiles()
         {
             throw new InvalidOperationException("SDL 2 doesn't support files clipboard data.");

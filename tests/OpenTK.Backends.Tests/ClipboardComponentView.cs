@@ -56,10 +56,6 @@ namespace OpenTK.Backends.Tests
                 case ClipboardFormat.Bitmap:
                     clipboardBitmap = Program.ClipboardComponent!.GetClipboardBitmap();
                     break;
-                case ClipboardFormat.HTML:
-                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
-                    clipboardHTML = Program.ClipboardComponent!.GetClipboardHTML();
-                    break;
                 case ClipboardFormat.Files:
                     clipboardFiles = Program.ClipboardComponent!.GetClipboardFiles();
                     break;
@@ -165,19 +161,6 @@ namespace OpenTK.Backends.Tests
 
                         ImGui.Image(ClipboardGLTexture, contentSize, new System.Numerics.Vector2(0, 1), new System.Numerics.Vector2(1, 0));
 
-                        break;
-                    }
-                case ClipboardFormat.HTML:
-                    {
-                        ImGui.Text($"Clipboard text (text): '{clipboardText}'");
-
-                        var contentRegion = ImGui.GetContentRegionAvail();
-                        contentRegion.X = ImGui.CalcItemWidth();
-
-                        string html = clipboardHTML ?? "";
-                        //ImGui.BeginDisabled();
-                        ImGui.InputTextMultiline("Clipboard text (HTML):", ref html, 16_384, contentRegion);
-                        //ImGui.EndDisabled();
                         break;
                     }
                 case ClipboardFormat.Files:

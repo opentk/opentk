@@ -54,14 +54,6 @@ namespace OpenTK.Core.Platform
         Bitmap? GetClipboardBitmap();
 
         /// <summary>
-        /// Gets the HTML string currently in the clipboard.
-        /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.HTML"/> format.
-        /// </summary>
-        /// <returns>The HTML string currently in the clipboard.</returns>
-        // FIXME: Make more formal what the expected result of this is
-        string? GetClipboardHTML();
-
-        /// <summary>
         /// Gets a list of files and directories currently in the clipboard.
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Files"/> format.
         /// </summary>
