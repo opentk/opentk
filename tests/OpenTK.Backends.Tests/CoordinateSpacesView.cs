@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Coordinates";
 
-        public override bool IsVisible => Program.WindowComp != null;
+        public override bool IsVisible => Toolkit.Window != null;
 
         readonly static CursorCaptureMode[] CaptureModes = Enum.GetValues<CursorCaptureMode>();
         readonly static string[] CaptureModeNames = Enum.GetNames<CursorCaptureMode>();
@@ -31,19 +32,19 @@ namespace OpenTK.Backends.Tests
         {
             base.Paint(deltaTime);
 
-            if (Program.WindowComp != null)
+            if (Toolkit.Window != null)
             {
                 try
                 {
                     ImGui.SeparatorText("Window comp");
 
-                    Program.WindowComp.GetPosition(Program.Window, out int px, out int py);
-                    Program.WindowComp.GetClientPosition(Program.Window, out int cpx, out int cpy);
-                    Program.WindowComp.GetSize(Program.Window, out int w, out int h);
-                    Program.WindowComp.GetClientSize(Program.Window, out int cw, out int ch);
-                    Program.WindowComp.GetBounds(Program.Window, out int bpx, out int bpy, out int bw, out int bh);
-                    Program.WindowComp.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
-                    Program.WindowComp.GetScaleFactor(Program.Window, out float scaleX, out float scaleY);
+                    Toolkit.Window.GetPosition(Program.Window, out int px, out int py);
+                    Toolkit.Window.GetClientPosition(Program.Window, out int cpx, out int cpy);
+                    Toolkit.Window.GetSize(Program.Window, out int w, out int h);
+                    Toolkit.Window.GetClientSize(Program.Window, out int cw, out int ch);
+                    Toolkit.Window.GetBounds(Program.Window, out int bpx, out int bpy, out int bw, out int bh);
+                    Toolkit.Window.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
+                    Toolkit.Window.GetScaleFactor(Program.Window, out float scaleX, out float scaleY);
 
                     ImGui.Text($"Position: ({px}, {py})");
                     ImGui.Text($"Client Position: ({cpx}, {cpy})");
@@ -54,7 +55,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Scale factor: (x:{scaleX}, y:{scaleY})");
                     // FIXME: Framebuffer size?
 
-                    if (Program.WindowComp is MacOSWindowComponent macOSWindowComp)
+                    if (Toolkit.Window is MacOSWindowComponent macOSWindowComp)
                     {
                         macOSWindowComp.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
 
@@ -67,20 +68,20 @@ namespace OpenTK.Backends.Tests
                     ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
                     if (ImGui.Button("Apply##captureMode"))
                     {
-                        Program.WindowComp.SetCursorCaptureMode(Program.Window, CaptureModes[captureModeIndex]);
+                        Toolkit.Window.SetCursorCaptureMode(Program.Window, CaptureModes[captureModeIndex]);
                     }
                 }
                 catch { }
             }
 
-            if (Program.MouseComponent != null)
+            if (Toolkit.Mouse != null)
             {
                 try
                 {
                     ImGui.SeparatorText("Mouse comp");
 
-                    Program.MouseComponent.GetPosition(out int x, out int y);
-                    Program.MouseComponent.GetMouseState(out MouseState state);
+                    Toolkit.Mouse.GetPosition(out int x, out int y);
+                    Toolkit.Mouse.GetMouseState(out MouseState state);
 
                     // FIXME: Display these in red text if they are not the same!
                     ImGui.Text($"Mouse position: ({x}, {y})");                                     ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
@@ -89,26 +90,26 @@ namespace OpenTK.Backends.Tests
                 catch { }
             }
 
-            if (Program.DisplayComponent != null)
+            if (Toolkit.Display != null)
             {
                 try
                 {
                     ImGui.SeparatorText("Display comp");
 
                     // FIXME: Make this some sort of imgui list?
-                    int count = Program.DisplayComponent.GetDisplayCount();
+                    int count = Toolkit.Display.GetDisplayCount();
                     for (int i = 0; i < count; i++)
                     {
-                        DisplayHandle handle = Program.DisplayComponent.Open(i);
+                        DisplayHandle handle = Toolkit.Display.Open(i);
 
-                        string name = Program.DisplayComponent.GetName(handle);
+                        string name = Toolkit.Display.GetName(handle);
                         ImGui.Text($"Display {i + 1} ({name})");
 
-                        Program.DisplayComponent.GetVirtualPosition(handle, out int x, out int y);
-                        Program.DisplayComponent.GetResolution(handle, out int width, out int height);
-                        Program.DisplayComponent.GetWorkArea(handle, out Box2i workArea);
-                        Program.DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
-                        Program.DisplayComponent.GetVideoMode(handle, out VideoMode mode);
+                        Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
+                        Toolkit.Display.GetResolution(handle, out int width, out int height);
+                        Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
+                        Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                        Toolkit.Display.GetVideoMode(handle, out VideoMode mode);
 
                         ImGui.Text($"Position: ({x}, {y})");
                         // FIXME: Mark red if these do not match.
@@ -119,7 +120,7 @@ namespace OpenTK.Backends.Tests
 
                         ImGui.Text("");
 
-                        Program.DisplayComponent.Close(handle);
+                        Toolkit.Display.Close(handle);
                     }
                 }
                 catch { }

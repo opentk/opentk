@@ -3,6 +3,7 @@ using System.Diagnostics;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 
 namespace OpenTK.Backends.Tests
@@ -154,8 +155,8 @@ void main() {
 
             env_program_mvp_location = GL.GetUniformLocation(env_program, "mvp");
 
-            Program.WindowComp.SetCursorCaptureMode(window, CursorCaptureMode.Locked);
-            Program.WindowComp.SetCursor(window, null);
+            Toolkit.Window.SetCursorCaptureMode(window, CursorCaptureMode.Locked);
+            Toolkit.Window.SetCursor(window, null);
         }
 
         public void Deinitialize()
@@ -177,8 +178,8 @@ void main() {
             GL.UseProgram(env_program);
 
             // FIXME: Framebuffer size...
-            Program.WindowComp.GetClientSize(window, out int width, out int height);
-            if (Program.WindowComp is MacOSWindowComponent macOSWindowComp)
+            Toolkit.Window.GetClientSize(window, out int width, out int height);
+            if (Toolkit.Window is MacOSWindowComponent macOSWindowComp)
             {
                 macOSWindowComp.GetFramebufferSize(window, out width, out height);
             }
@@ -195,7 +196,7 @@ void main() {
 
             GL.DrawElements(PrimitiveType.Triangles, env_idx.Length, DrawElementsType.UnsignedInt, 0);
 
-            Program.OpenGLComp.SwapBuffers(context);
+            Toolkit.OpenGL.SwapBuffers(context);
         }
 
         Vector2 delta;
@@ -204,7 +205,7 @@ void main() {
         {
             bool shouldClose = false;
 
-            if (Program.MouseComponent != null)
+            if (Toolkit.Mouse != null)
             {
                 // FIXME: Because we can't check input focus atm we accumulate a
                 // mouse delta from events instead of doing this.
@@ -222,10 +223,10 @@ void main() {
                 delta = (0, 0);
             }
 
-            if (Program.KeyboardComponent != null)
+            if (Toolkit.Keyboard != null)
             {
                 // FIXME: Check input focus...
-                Program.KeyboardComponent.GetKeyboardState(keyboardState);
+                Toolkit.Keyboard.GetKeyboardState(keyboardState);
                 if (keyboardState[(int)Scancode.A])
                 {
                     cameraPosition += (cameraRotation * -Vector3.UnitX) * cameraMovementSpeed * deltaTime;
@@ -272,9 +273,9 @@ void main() {
             {
                 if (focus.GotFocus)
                 {
-                    if (Program.MouseComponent != null)
+                    if (Toolkit.Mouse != null)
                     {
-                        Program.MouseComponent.GetPosition(out int x, out int y);
+                        Toolkit.Mouse.GetPosition(out int x, out int y);
                         prevPos = (x, y);
                     }
                 }

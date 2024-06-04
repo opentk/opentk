@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using OpenTK.Platform.Native.Windows;
 using System;
@@ -13,10 +14,8 @@ namespace OpenTK.Backends.Tests
 {
     internal class WindowComponentView : View
     {
-        public override string Title => "Window Component";
+        public override string Title => "Window";
 
-        private IWindowComponent WindowComponent;
-        
         const float IntDragSpeed = 0.2f;
 
         bool canSetCursor;
@@ -26,13 +25,11 @@ namespace OpenTK.Backends.Tests
 
         public override void Initialize()
         {
-            WindowComponent = Program.WindowComp;
-
             // FIXME: Catch any exceptions...
-            try { canSetCursor = WindowComponent.CanSetCursor; } catch { canSetCursor = false; }
-            try { canGetDisplay = WindowComponent.CanGetDisplay; } catch { canGetDisplay = false; }
-            try { canCaptureCursor = WindowComponent.CanCaptureCursor; } catch { canCaptureCursor = false; }
-            try { canSetIcon = WindowComponent.CanSetIcon; } catch { canSetIcon = false; }
+            try { canSetCursor = Toolkit.Window.CanSetCursor; } catch { canSetCursor = false; }
+            try { canGetDisplay = Toolkit.Window.CanGetDisplay; } catch { canGetDisplay = false; }
+            try { canCaptureCursor = Toolkit.Window.CanCaptureCursor; } catch { canCaptureCursor = false; }
+            try { canSetIcon = Toolkit.Window.CanSetIcon; } catch { canSetIcon = false; }
 
             if (Program.UsingGLES)
             {
@@ -114,7 +111,7 @@ namespace OpenTK.Backends.Tests
                     string displayName;
                     try
                     {
-                        name = WindowComponent!.GetTitle(window);
+                        name = Toolkit.Window.GetTitle(window);
                         displayName = name;
                     }
                     catch (Exception e)
@@ -174,10 +171,10 @@ namespace OpenTK.Backends.Tests
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
-                    WindowComponent.GetClientSize(window, out int cWidth, out int cHeight);
-                    WindowComponent.GetSize(window, out int wWidth, out int wHeight);
-                    WindowComponent.GetClientPosition(window, out int cx, out int cy);
-                    WindowComponent.GetPosition(window, out int wx, out int wy);
+                    Toolkit.Window.GetClientSize(window, out int cWidth, out int cHeight);
+                    Toolkit.Window.GetSize(window, out int wWidth, out int wHeight);
+                    Toolkit.Window.GetClientPosition(window, out int cx, out int cy);
+                    Toolkit.Window.GetPosition(window, out int wx, out int wy);
                     ImGui.Text($"Client Position: ({cx}, {cy})");
                     ImGui.Text($"Position: ({wx}, {wy})");
                     ImGui.Text($"Client Size: ({cWidth}, {cHeight})");
@@ -189,7 +186,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.InputText("##title", ref titleString, 1024); ImGui.SameLine();
                 if (ImGui.Button("Apply##tile"))
                 {
-                    WindowComponent.SetTitle(window, titleString);
+                    Toolkit.Window.SetTitle(window, titleString);
                     Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
                 }
 
@@ -198,18 +195,18 @@ namespace OpenTK.Backends.Tests
                 ImGui.Combo("##mode", ref modeIndex, WindowModeNames, WindowModeNames.Length); ImGui.SameLine();
                 if (ImGui.Button("Apply##mode"))
                 {
-                    WindowComponent!.SetMode(window, WindowModes[modeIndex]);
+                    Toolkit.Window.SetMode(window, WindowModes[modeIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
                 }
 
                 // FIXME: change to toggle!
                 if (ImGui.Button("Set windowed fullscreen"))
                 {
-                    DisplayHandle display = WindowComponent.GetDisplay(window);
-                    WindowComponent.SetFullscreenDisplay(window, display);
+                    DisplayHandle display = Toolkit.Window.GetDisplay(window);
+                    Toolkit.Window.SetFullscreenDisplay(window, display);
                 }
 
-                if (WindowComponent is MacOSWindowComponent macosWindowComponent)
+                if (Toolkit.Window is MacOSWindowComponent macosWindowComponent)
                 {
                     if (ImGui.Button("Set windowed fullscreen without opening its own space"))
                     {
@@ -223,7 +220,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.Combo("##captureMode", ref captureModeIndex, CaptureModeNames, CaptureModeNames.Length); ImGui.SameLine();
                 if (ImGui.Button("Apply##captureMode"))
                 {
-                    WindowComponent.SetCursorCaptureMode(window, CaptureModes[captureModeIndex]);
+                    Toolkit.Window.SetCursorCaptureMode(window, CaptureModes[captureModeIndex]);
                 }
 
                 ImGui.AlignTextToFramePadding();
@@ -231,10 +228,10 @@ namespace OpenTK.Backends.Tests
                 ImGui.Combo("##border_style", ref borderStyleIndex, WindowBorderStyleNames, WindowBorderStyleNames.Length); ImGui.SameLine();
                 if (ImGui.Button("Apply##border_style"))
                 {
-                    WindowComponent!.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
+                    Toolkit.Window.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetBorderStyle({WindowBorderStyleNames[borderStyleIndex]})");
 
-                    var style = WindowComponent!.GetBorderStyle(window);
+                    var style = Toolkit.Window.GetBorderStyle(window);
                     Program.Logger.LogInfo($"Border style: {style}");
                 }
 
@@ -242,37 +239,37 @@ namespace OpenTK.Backends.Tests
                 ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();
                 if (ImGui.Button("Yes"))
                 {
-                    Program.WindowComp.SetAlwaysOnTop(window, true);
+                    Toolkit.Window.SetAlwaysOnTop(window, true);
 
-                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    bool value = Toolkit.Window.IsAlwaysOnTop(window);
                     Program.Logger.LogInfo($"Always on top: {value}");
                 }
                 ImGui.SameLine();
                 if (ImGui.Button("No"))
                 {
-                    Program.WindowComp.SetAlwaysOnTop(window, false);
+                    Toolkit.Window.SetAlwaysOnTop(window, false);
 
-                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    bool value = Toolkit.Window.IsAlwaysOnTop(window);
                     Program.Logger.LogInfo($"Always on top: {value}");
                 }
 
                 ImGui.DragInt2("Position", ref windowPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##Position"))
                 {
-                    Program.WindowComp.SetPosition(Program.Window, windowPosition.X, windowPosition.Y);
+                    Toolkit.Window.SetPosition(Program.Window, windowPosition.X, windowPosition.Y);
                     Program.Logger.LogInfo($"WindowComponent.SetPosition({windowPosition})");
 
-                    Program.WindowComp.GetPosition(Program.Window, out int x, out int y);
+                    Toolkit.Window.GetPosition(Program.Window, out int x, out int y);
                     Program.Logger.LogInfo($"Window position: ({x}, {y})");
                 }
 
                 ImGui.DragInt2("Client position", ref clientPosition.X); ImGui.SameLine();
                 if (ImGui.Button("Set##ClientPosition"))
                 {
-                    Program.WindowComp.SetClientPosition(Program.Window, clientPosition.X, clientPosition.Y);
+                    Toolkit.Window.SetClientPosition(Program.Window, clientPosition.X, clientPosition.Y);
                     Program.Logger.LogInfo($"WindowComponent.SetClientPosition({clientPosition})");
 
-                    Program.WindowComp.GetClientPosition(Program.Window, out int x, out int y);
+                    Toolkit.Window.GetClientPosition(Program.Window, out int x, out int y);
                     Program.Logger.LogInfo($"Client position: ({x}, {y})");
                 }
             }
@@ -364,14 +361,14 @@ namespace OpenTK.Backends.Tests
                 {
                     try
                     {
-                        WindowHandle handle = WindowComponent!.Create(openglSettings.Copy());
+                        WindowHandle handle = Toolkit.Window.Create(openglSettings.Copy());
 
                         int index = Program.ApplicationWindows.Count + 1;
                         Program.ApplicationWindows.Add(new Program.ApplicationWindow(handle));
 
-                        WindowComponent.SetTitle(handle, $"Child Window #{index}");
-                        WindowComponent.SetSize(handle, WindowSize.X, WindowSize.Y);
-                        WindowComponent.SetMode(handle, WindowMode);
+                        Toolkit.Window.SetTitle(handle, $"Child Window #{index}");
+                        Toolkit.Window.SetSize(handle, WindowSize.X, WindowSize.Y);
+                        Toolkit.Window.SetMode(handle, WindowMode);
                     }
                     catch (Exception e)
                     {

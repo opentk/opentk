@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Shell";
 
-        public override bool IsVisible => Program.ShellComponent != null;
+        public override bool IsVisible => Toolkit.Shell != null;
 
         static readonly AppTheme[] Themes = Enum.GetValues<AppTheme>();
 
@@ -34,12 +35,12 @@ namespace OpenTK.Backends.Tests
             ImGui.SeparatorText("Screen saver");
 
             if (ImGui.Button("Disable"))
-                Program.ShellComponent!.AllowScreenSaver(false);
+                Toolkit.Shell.AllowScreenSaver(false);
             ImGui.SameLine();
             if (ImGui.Button("Enable"))
-                Program.ShellComponent!.AllowScreenSaver(true);
+                Toolkit.Shell.AllowScreenSaver(true);
 
-            BatteryStatus status = Program.ShellComponent!.GetBatteryInfo(out BatteryInfo batteryInfo);
+            BatteryStatus status = Toolkit.Shell.GetBatteryInfo(out BatteryInfo batteryInfo);
             string statusStr = status switch
             {
                 BatteryStatus.Unknown => "unknown",
@@ -81,7 +82,7 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Theme");
 
-            ThemeInfo themeInfo = Program.ShellComponent.GetPreferredTheme();
+            ThemeInfo themeInfo = Toolkit.Shell.GetPreferredTheme();
 
             ImGui.BeginDisabled();
 
@@ -103,7 +104,7 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("System Resources");
 
-            SystemMemoryInfo memInfo = Program.ShellComponent.GetSystemMemoryInformation();
+            SystemMemoryInfo memInfo = Toolkit.Shell.GetSystemMemoryInformation();
 
             // FIXME: Display in a better way
             ImGui.Text($"System memory: {GetHumanReadable(memInfo.TotalPhysicalMemory)}");
@@ -112,7 +113,7 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginTabBar("platforms"))
             {
-                if (Program.ShellComponent is Platform.Native.Windows.ShellComponent winShell)
+                if (Toolkit.Shell is Platform.Native.Windows.ShellComponent winShell)
                 {
                     if (ImGui.BeginTabItem("Win32"))
                     {

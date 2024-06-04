@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Mouse";
 
-        public override bool IsVisible => Program.MouseComponent != null;
+        public override bool IsVisible => Toolkit.Mouse != null;
 
         private bool canSetMousePosition;
 
@@ -23,7 +24,7 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { canSetMousePosition = Program.MouseComponent?.CanSetMousePosition ?? false; } catch { canSetMousePosition = false; }
+            try { canSetMousePosition = Toolkit.Mouse.CanSetMousePosition; } catch { canSetMousePosition = false; }
         }
 
         public override void Paint(double deltaTime)
@@ -36,12 +37,12 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Mouse state");
 
-            Program.MouseComponent!.GetPosition(out int x, out int y);
+            Toolkit.Mouse.GetPosition(out int x, out int y);
             ImGui.TextUnformatted($"Mouse position: ({x}, {y})");
 
             try
             {
-                Program.MouseComponent.GetMouseState(out MouseState state);
+                Toolkit.Mouse.GetMouseState(out MouseState state);
 
                 ImGui.TextUnformatted($"Mouse state:");
                 ImGui.TextUnformatted($"  Position: {state.Position}");
@@ -63,7 +64,7 @@ namespace OpenTK.Backends.Tests
             ImGui.DragFloat2("Position", ref setPosition.AsNumerics(), 10, 0, float.PositiveInfinity); ImGui.SameLine();
             if (ImGui.Button("Set position"))
             {
-                Program.MouseComponent.SetPosition((int)setPosition.X, (int)setPosition.Y);
+                Toolkit.Mouse.SetPosition((int)setPosition.X, (int)setPosition.Y);
             }
 
             ImGui.EndDisabled();

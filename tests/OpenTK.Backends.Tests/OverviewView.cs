@@ -89,7 +89,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.EndTooltip();
                 }
 
-                if (Program.DialogComponent != null)
+                if (Toolkit.Dialog != null)
                 {
                     ImGui.SameLine();
                     if (ImGui.Button("Browse..."))
@@ -108,7 +108,7 @@ namespace OpenTK.Backends.Tests
                             filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
                         }
 
-                        List<string>? location = Program.DialogComponent.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), filter, 0);
+                        List<string>? location = Toolkit.Dialog.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), filter, 0);
                         if (location != null)
                         {
                             Debug.Assert(location.Count <= 1);
@@ -133,7 +133,7 @@ namespace OpenTK.Backends.Tests
                             filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
                         }
 
-                        string? location = Program.DialogComponent.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), filter, 0);
+                        string? location = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), filter, 0);
                         if (location != null)
                         {
                             if (Path.HasExtension(location) == false)

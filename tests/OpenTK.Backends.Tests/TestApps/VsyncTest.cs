@@ -1,6 +1,7 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,15 +33,15 @@ namespace OpenTK.Backends.Tests
         {
             if (args is WindowResizeEventArgs resize)
             {
-                var prevContext = Program.OpenGLComp.GetCurrentContext();
-                Program.OpenGLComp.SetCurrentContext(Context);
+                var prevContext = Toolkit.OpenGL.GetCurrentContext();
+                Toolkit.OpenGL.SetCurrentContext(Context);
 
                 GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
 
                 // Re-render the window to make resize live.
                 Render();
 
-                Program.OpenGLComp.SetCurrentContext(prevContext);
+                Toolkit.OpenGL.SetCurrentContext(prevContext);
             }
             else if (args is KeyDownEventArgs keyDown)
             {
@@ -49,7 +50,7 @@ namespace OpenTK.Backends.Tests
                     if (keyDown.Key == Key.V)
                     {
                         UseDwmFlush = !UseDwmFlush;
-                        (Program.OpenGLComp as OpenTK.Platform.Native.Windows.OpenGLComponent)?.UseDwmFlushIfApplicable(Context, UseDwmFlush);
+                        (Toolkit.OpenGL as OpenTK.Platform.Native.Windows.OpenGLComponent)?.UseDwmFlushIfApplicable(Context, UseDwmFlush);
                         Console.WriteLine($"DwmFlush: {UseDwmFlush}");
                     }
                 }
@@ -81,7 +82,7 @@ namespace OpenTK.Backends.Tests
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-            Program.OpenGLComp.SwapBuffers(Context);
+            Toolkit.OpenGL.SwapBuffers(Context);
         }
 
         public void Deinitialize()

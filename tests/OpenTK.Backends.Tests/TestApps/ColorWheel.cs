@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -46,7 +47,7 @@ namespace OpenTK.Backends.Tests
             );
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            Program.OpenGLComp.SwapBuffers(Context);
+            Toolkit.OpenGL.SwapBuffers(Context);
         }
 
         public void Deinitialize()

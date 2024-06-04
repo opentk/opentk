@@ -2,6 +2,7 @@
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Clipboard";
 
-        public override bool IsVisible => Program.ClipboardComponent != null;
+        public override bool IsVisible => Toolkit.Clipboard != null;
 
         ClipboardFormat[] AllFormats = Enum.GetValues<ClipboardFormat>();
         ClipboardFormat[] SupportedFormats;
@@ -25,7 +26,7 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { SupportedFormats = Program.ClipboardComponent!.SupportedFormats.ToArray(); }
+            try { SupportedFormats = Toolkit.Clipboard.SupportedFormats.ToArray(); }
             catch { SupportedFormats = Array.Empty<ClipboardFormat>(); }
 
             UpdateClipboardFormat();
@@ -101,22 +102,22 @@ namespace OpenTK.Backends.Tests
 
         public void UpdateClipboardFormat()
         {
-            currentFormat = Program.ClipboardComponent!.GetClipboardFormat();
+            currentFormat = Toolkit.Clipboard.GetClipboardFormat();
             switch (currentFormat)
             {
                 case ClipboardFormat.None:
                     break;
                 case ClipboardFormat.Text:
-                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
+                    clipboardText = Toolkit.Clipboard.GetClipboardText();
                     break;
                 case ClipboardFormat.Audio:
-                    clipboardAudio = Program.ClipboardComponent!.GetClipboardAudio();
+                    clipboardAudio = Toolkit.Clipboard.GetClipboardAudio();
                     break;
                 case ClipboardFormat.Bitmap:
-                    clipboardBitmap = Program.ClipboardComponent!.GetClipboardBitmap();
+                    clipboardBitmap = Toolkit.Clipboard.GetClipboardBitmap();
                     break;
                 case ClipboardFormat.Files:
-                    clipboardFiles = Program.ClipboardComponent!.GetClipboardFiles();
+                    clipboardFiles = Toolkit.Clipboard.GetClipboardFiles();
                     break;
                 default:
                     break;
@@ -149,7 +150,7 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.Button("Set clipboard text") || enter)
             {
-                Program.ClipboardComponent!.SetClipboardText(clipboardInputText);
+                Toolkit.Clipboard.SetClipboardText(clipboardInputText);
             }
 
             ImGui.SeparatorText("Clipboard contents");
@@ -243,7 +244,7 @@ namespace OpenTK.Backends.Tests
             if (ImGui.BeginTabBar("platforms"))
             {
                 // FIXME: Show the other platforms as diable tabs?
-                if (Program.ClipboardComponent is Platform.Native.Windows.ClipboardComponent winClipboard)
+                if (Toolkit.Clipboard is Platform.Native.Windows.ClipboardComponent winClipboard)
                 {
                     if (ImGui.BeginTabItem("Win32"))
                     {
@@ -269,7 +270,7 @@ namespace OpenTK.Backends.Tests
                         ImGui.EndTabItem();
                     }
                 }
-                else if (Program.ClipboardComponent is Platform.Native.macOS.MacOSClipboardComponent macOSClipboard)
+                else if (Toolkit.Clipboard is Platform.Native.macOS.MacOSClipboardComponent macOSClipboard)
                 {
                     if (ImGui.BeginTabItem("macOS"))
                     {

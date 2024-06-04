@@ -2,6 +2,7 @@
 using System.IO;
 using ImGuiNET;
 using OpenTK.Core.Platform;
+using OpenTK.Platform.Native;
 
 namespace OpenTK.Backends.Tests
 {
@@ -9,7 +10,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Dialog";
 
-        public override bool IsVisible => Program.DialogComponent != null;
+        public override bool IsVisible => Toolkit.Dialog != null;
 
         bool canTargetDirectories;
 
@@ -17,7 +18,7 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { canTargetDirectories = Program.DialogComponent!.CanTargetFolders; } catch { canTargetDirectories = false; }
+            try { canTargetDirectories = Toolkit.Dialog.CanTargetFolders; } catch { canTargetDirectories = false; }
         }
 
         bool multiSelect = false;
@@ -39,13 +40,13 @@ namespace OpenTK.Backends.Tests
 
                 if (ImGui.Button("Open file"))
                 {
-                    Program.DialogComponent!.ShowOpenDialog(Program.Window, "Open file (custom title)", Directory.GetCurrentDirectory(), null, options);
+                    Toolkit.Dialog.ShowOpenDialog(Program.Window, "Open file (custom title)", Directory.GetCurrentDirectory(), null, options);
                 }
 
                 ImGui.BeginDisabled(canTargetDirectories == false);
                 if (ImGui.Button("Open directory"))
                 {
-                    Program.DialogComponent!.ShowOpenDialog(Program.Window, "Open directory (custom title)", Directory.GetCurrentDirectory(), null, options | OpenDialogOptions.SelectDirectory);
+                    Toolkit.Dialog.ShowOpenDialog(Program.Window, "Open directory (custom title)", Directory.GetCurrentDirectory(), null, options | OpenDialogOptions.SelectDirectory);
                 }
                 ImGui.EndDisabled();
             }
@@ -55,7 +56,7 @@ namespace OpenTK.Backends.Tests
             {
                 if (ImGui.Button("Save file"))
                 {
-                    Program.DialogComponent!.ShowSaveDialog(Program.Window, "Save file (custom title)", Directory.GetCurrentDirectory(), null, 0);
+                    Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save file (custom title)", Directory.GetCurrentDirectory(), null, 0);
                 }
             }
         }
