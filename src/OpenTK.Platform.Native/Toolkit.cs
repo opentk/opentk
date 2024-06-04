@@ -17,6 +17,10 @@ namespace OpenTK.Platform.Native
     }
 
     // FIXME: Maybe find another name for this?
+    /// <summary>
+    /// Provides static access to all OpenTK platform abstraction interfaces.
+    /// This is the main way to access the OpenTK PAL2 api.
+    /// </summary>
     public static class Toolkit
     {
         private static IClipboardComponent? _clipboardComponent;
@@ -32,30 +36,71 @@ namespace OpenTK.Platform.Native
         private static IJoystickComponent? _joystickComponent;
         private static IDialogComponent? _dialogComponent;
 
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting windows.
+        /// </summary>
         public static IWindowComponent Window => _windowComponent;
 
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting surfaces.
+        /// </summary>
         public static ISurfaceComponent Surface => _surfaceComponent;
 
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting OpenGL contexts.
+        /// </summary>
         public static IOpenGLComponent OpenGL => _openGLComponent;
 
+        /// <summary>
+        /// Interface for querying information about displays attached to the system.
+        /// </summary>
         public static IDisplayComponent Display => _displayComponent;
 
+        /// <summary>
+        /// Interface for shell functions such as battery information, preferred theme, etc.
+        /// </summary>
         public static IShellComponent Shell => _shellComponent;
 
+        /// <summary>
+        /// Interface for getting and setting the mouse position, and getting mouse button information.
+        /// </summary>
         public static IMouseComponent Mouse => _mouseComponent;
 
+        /// <summary>
+        /// Interface for dealing with keyboard layouts, conversions between <see cref="Key"/> and <see cref="Scancode"/>, and IME.
+        /// </summary>
         public static IKeyboardComponent Keyboard => _keyboardComponent;
 
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting mouse cursor images.
+        /// </summary>
         public static ICursorComponent Cursor => _cursorComponent;
 
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting window icon images.
+        /// </summary>
         public static IIconComponent Icon => _iconComponent;
 
+        /// <summary>
+        /// Interface for getting and setting clipboard data.
+        /// </summary>
         public static IClipboardComponent Clipboard => _clipboardComponent;
 
+        /// <summary>
+        /// Interface for getting joystick input.
+        /// </summary>
         public static IJoystickComponent Joystick => _joystickComponent;
 
+        /// <summary>
+        /// Interface for opening system dialogs such as file open dialogs.
+        /// </summary>
         public static IDialogComponent Dialog => _dialogComponent;
 
+        /// <summary>
+        /// Initialize OpenTK with the given settings.
+        /// This function must be called before trying to use the OpenTK api.
+        /// </summary>
+        /// <param name="options">The options to initialize with.</param>
         public static void Init(ToolkitOptions options)
         {
             // FIXME: Figure out options...
