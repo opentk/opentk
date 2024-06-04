@@ -8,6 +8,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
+using OpenTK.Platform.Native.Windows;
 
 namespace X11TestProject
 {
@@ -34,14 +35,8 @@ namespace X11TestProject
             Console.WriteLine($"Total RAM: {memInfo.TotalPhysicalMemory}");
             Console.WriteLine($"Available RAM: {memInfo.AvailablePhysicalMemory}");
 
-            ComponentSet layer = new ComponentSet();
-
-            layer[PalComponents.Window] = windowComp;
-            layer[PalComponents.OpenGL] = glComp;
-            layer[PalComponents.Display] = dispComp;
-
-            A = new WindowThread(layer, 0);
-            B = new WindowThread(layer, MathF.PI);
+            A = new WindowThread(windowComp, glComp, 0);
+            B = new WindowThread(windowComp, glComp, MathF.PI);
 
             A.Start();
             B.Start();
@@ -74,9 +69,8 @@ namespace X11TestProject
 
     public class WindowThread
     {
-        private readonly ComponentSet _layer;
-        private IWindowComponent WindowComponent => _layer;
-        private IOpenGLComponent OpenGLComponent => _layer;
+        private IWindowComponent WindowComponent;
+        private IOpenGLComponent OpenGLComponent;
 
         private readonly Stopwatch _watch = new Stopwatch();
         private readonly float _phase;
@@ -85,9 +79,10 @@ namespace X11TestProject
 
         public bool Done { get; private set; }
 
-        public WindowThread(ComponentSet layer, float phase)
+        public WindowThread(IWindowComponent windowComponent, IOpenGLComponent openGLComponent, float phase)
         {
-            _layer = layer;
+            WindowComponent = windowComponent;
+            OpenGLComponent = openGLComponent;
             _phase = phase;
         }
 
