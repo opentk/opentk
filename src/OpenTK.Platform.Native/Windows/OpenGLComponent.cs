@@ -721,18 +721,6 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
-            // FIXME: Maybe implement DWM hack?
-            // https://github.com/glfw/glfw/issues/1072
-            // https://github.com/libsdl-org/SDL/issues/5797
-
-            // Relevant glfw source:
-            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
-            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L315
-
-            // Source from love2d:
-            // https://github.com/love2d/love/blob/5175b0d1b599ea4c7b929f6b4282dd379fa116b8/src/modules/window/sdl/Window.cpp#L1024
-
-
             if (EXT_swap_control)
             {
                 Wgl.SwapIntervalEXT(interval);
@@ -765,6 +753,15 @@ namespace OpenTK.Platform.Native.Windows
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
+
+            // Context for DwmFlush() code:
+            // https://github.com/glfw/glfw/issues/1072
+            // https://github.com/libsdl-org/SDL/issues/5797
+            // Relevant glfw source:
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L315
+            // Source from love2d:
+            // https://github.com/love2d/love/blob/5175b0d1b599ea4c7b929f6b4282dd379fa116b8/src/modules/window/sdl/Window.cpp#L1024
 
             // FIXME: Don't do this for fullscreen windows?
             if (hglrc.UseDwmFlush == true)
