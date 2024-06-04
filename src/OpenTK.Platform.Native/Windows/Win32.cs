@@ -15,6 +15,8 @@ namespace OpenTK.Platform.Native.Windows
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {
+        internal const int USER_DEFAULT_SCREEN_DPI = 96;
+
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 

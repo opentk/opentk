@@ -850,13 +850,11 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DPICHANGED:
                     {
-                        const int USER_DEFAULT_SCREEN_DPI = 96;
-
                         int dpiX = (int)(wParam.ToUInt32() & Win32.LoWordMask);
                         int dpiY = (int)((wParam.ToUInt32() & Win32.HiWordMask) >> 16);
 
-                        float scaleX = dpiX / (float)USER_DEFAULT_SCREEN_DPI;
-                        float scaleY = dpiY / (float)USER_DEFAULT_SCREEN_DPI;
+                        float scaleX = dpiX / (float)Win32.USER_DEFAULT_SCREEN_DPI;
+                        float scaleY = dpiY / (float)Win32.USER_DEFAULT_SCREEN_DPI;
 
                         Logger?.LogDebug($"DPI Changed! dpiY: {dpiY}, dpiX: {dpiX}");
 
@@ -2039,7 +2037,11 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+            uint dpi = Win32.GetDpiForWindow(hwnd.HWnd);
+            float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
+            scaleX = scale;
+            scaleY = scale;
         }
 
         /// <summary>
