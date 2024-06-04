@@ -452,5 +452,14 @@ namespace OpenTK.Core.Platform
         /// <param name="y">The screen y coordinate.</param>
         /// FIXME: Change to use Vector2i instead of x and y variables.
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
+
+        /// <summary>
+        /// Returns the current scale factor of this window.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="scaleX">The x scale factor of the window.</param>
+        /// <param name="scaleY">The y scale factor of the window.</param>
+        /// <seealso cref="WindowScaleChangeEventArgs"/>
+        void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY);
     }
 }

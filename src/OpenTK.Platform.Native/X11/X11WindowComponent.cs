@@ -2668,6 +2668,14 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Extents?
         }
 
+        /// <inheritdoc />
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
+            scaleX = 1;
+            scaleY = 1;
+        }
+
         /// <summary>
         /// Returns the X11 <c>Display</c> used by OpenTK.
         /// </summary>

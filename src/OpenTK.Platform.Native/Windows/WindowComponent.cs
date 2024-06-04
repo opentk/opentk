@@ -863,7 +863,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
 
                         // FIXME: Should we send this message before or after resizing the application?
-                        EventQueue.Raise(h, PlatformEventType.WindowDpiChange, new WindowDpiChangeEventArgs(h, dpiX, dpiY, scaleX, scaleY));
+                        EventQueue.Raise(h, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(h, scaleX, scaleY));
 
                         // FIXME: glfw limits this to windows 10 only??
                         // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/win32_window.c#L1186
@@ -2034,6 +2034,12 @@ namespace OpenTK.Platform.Native.Windows
 
             x = point.X;
             y = point.Y;
+        }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

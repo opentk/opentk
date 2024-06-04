@@ -575,43 +575,35 @@ namespace OpenTK.Backends.Tests
                         int button = ((int)mouseUp.Button);
                         ImGui.GetIO().AddMouseButtonEvent(button, false);
                     }
-                    else if (args is WindowDpiChangeEventArgs dpiChange)
+                    else if (args is WindowScaleChangeEventArgs scaleChange)
                     {
-                        try
-                        {
-                            if (DisplayComponent != null)
-                            {
-                                // FIXME: Should we only scale on Y? or something else?
-                                float scale = MathF.Max(dpiChange.ScaleX, dpiChange.ScaleY);
-                                if (scale != 1)
-                                {
-                                    ImFontConfig config = new ImFontConfig();
-                                    config.FontDataOwnedByAtlas = 1;
-                                    config.OversampleH = 3;
-                                    config.OversampleV = 3;
-                                    config.PixelSnapH = 1;
-                                    config.GlyphMaxAdvanceX = float.PositiveInfinity;
-                                    config.RasterizerMultiply = 1;
-                                    config.EllipsisChar = 0xFFFF;
-                                    unsafe
-                                    {
-                                        ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                                        ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                        Logger.LogDebug($"Scale change: (x:{scaleChange.ScaleX}, y:{scaleChange.ScaleY})");
 
-                                        // FIXME: This is not perfect and does introduce some visual artifacts
-                                        // if the window dpi changes multiple times.
-                                        // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
-                                        // Thought that would mean we have to update both styles if we want to change some styling.
-                                        ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
-                                        ImGui.GetStyle().ScaleAllSizes(scale);
-                                        CurrentImGuiScale = scale;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception e)
+                        // FIXME: Should we only scale on Y? or something else?
+                        float scale = MathF.Max(scaleChange.ScaleX, scaleChange.ScaleY);
+                        if (scale != 1)
                         {
-                            Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
+                            ImFontConfig config = new ImFontConfig();
+                            config.FontDataOwnedByAtlas = 1;
+                            config.OversampleH = 3;
+                            config.OversampleV = 3;
+                            config.PixelSnapH = 1;
+                            config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                            config.RasterizerMultiply = 1;
+                            config.EllipsisChar = 0xFFFF;
+                            unsafe
+                            {
+                                ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                                ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+
+                                // FIXME: This is not perfect and does introduce some visual artifacts
+                                // if the window dpi changes multiple times.
+                                // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
+                                // Thought that would mean we have to update both styles if we want to change some styling.
+                                ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
+                                ImGui.GetStyle().ScaleAllSizes(scale);
+                                CurrentImGuiScale = scale;
+                            }
                         }
 
                         ImGuiController.RecreateFontDeviceTexture();

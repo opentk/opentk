@@ -1174,5 +1174,11 @@ namespace OpenTK.Platform.Native.SDL
 
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

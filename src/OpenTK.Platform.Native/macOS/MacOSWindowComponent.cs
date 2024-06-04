@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -275,6 +276,7 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidEnterFullScreen:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidEnterFullScreenInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidExitFullScreen:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidExitFullScreenInst, "v@:@"u8);
             class_addMethod(NSOpenTKWindowClass, sel_registerName("didChangeScreenParameters:"u8), (IntPtr)NSOtkWindowDelegate_DidChangeScreenParametersInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidChangeBackingProperties:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidChangeBackingPropertiesInst, "v@:@"u8);
 
             objc_registerClassPair(NSOpenTKWindowClass);
 
@@ -574,6 +576,34 @@ namespace OpenTK.Platform.Native.macOS
         {
             ILogger? logger = GetComponentFromWindow(@delegate).Logger;
             MacOSDisplayComponent.UpdateDisplays(logger, true);
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidChangeBackingPropertiesInst = &NSOtkWindowDelegate_WindowDidChangeBackingProperties;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkWindowDelegate_WindowDidChangeBackingProperties(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            // FIXME: Scale factors on mac seem to be a bit weird.
+            // Changing display resolution doesn't always change the scaling.
+            // At really high resoltions and very low resolutions
+            // the scale factor seems to be 1?
+            // But at "normal" resolutions it seems to be mostly 2.
+            // Not sure what is going on.
+            // - Noggin_bops 2024-06-04
+            IntPtr wnd = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(wnd, out NSWindowHandle? nswindow))
+            {
+                CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+                CGRect frameBacking = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+
+                float scaleX = (float)(frameBacking.size.x / frame.size.x);
+                float scaleY = (float)(frameBacking.size.y / frame.size.y);
+
+                EventQueue.Raise(nswindow, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(nswindow, scaleX, scaleY));
+            }
+            else
+            {
+                GetComponentFromWindow(@delegate).Logger?.LogDebug("Got windowDidChangeBackingProperties for unknown window.");
+            }
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ResetCursorRectsInst = &NSOtkView_ResetCursorRects;
@@ -2214,6 +2244,18 @@ namespace OpenTK.Platform.Native.macOS
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            CGRect frameBacking = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+
+            scaleX = (float)(frameBacking.size.x / frame.size.x);
+            scaleY = (float)(frameBacking.size.y / frame.size.y);
         }
 
         /// <summary>

@@ -600,6 +600,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IWindowComponent.GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            _windowComponent!.GetScaleFactor(handle, out scaleX, out scaleY);
+        }
+
+        /// <inheritdoc/>
         IconHandle IIconComponent.Create(SystemIconType systemIcon)
         {
             return _iconComponent!.Create(systemIcon);

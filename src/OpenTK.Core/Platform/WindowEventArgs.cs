@@ -129,18 +129,8 @@ namespace OpenTK.Core.Platform
     /// This can happen if the window is moved between monitors with
     /// different DPI scaling settings or if the user changes DPI settings.
     /// </summary>
-    public class WindowDpiChangeEventArgs : WindowEventArgs
+    public class WindowScaleChangeEventArgs : WindowEventArgs
     {
-        /// <summary>
-        /// The new DPI value in the x-axis.
-        /// </summary>
-        public int DpiX { get; private set; }
-
-        /// <summary>
-        /// The new DPI value in the y-axis.
-        /// </summary>
-        public int DpiY { get; private set; }
-
         /// <summary>
         /// The new scale value in the x-axis.
         /// </summary>
@@ -152,17 +142,13 @@ namespace OpenTK.Core.Platform
         public float ScaleY { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowDpiChangeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="WindowScaleChangeEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window whose dpi has changed.</param>
-        /// <param name="dpiX">The new x axis dpi.</param>
-        /// <param name="dpiY">The new y axis dpi.</param>
         /// <param name="scaleX">The new x axis scale factor.</param>
         /// <param name="scaleY">The new y axis scale factor.</param>
-        public WindowDpiChangeEventArgs(WindowHandle window, int dpiX, int dpiY, float scaleX, float scaleY) : base(window)
+        public WindowScaleChangeEventArgs(WindowHandle window, float scaleX, float scaleY) : base(window)
         {
-            DpiX = dpiX;
-            DpiY = dpiY;
             ScaleX = scaleX;
             ScaleY = scaleY;
         }
