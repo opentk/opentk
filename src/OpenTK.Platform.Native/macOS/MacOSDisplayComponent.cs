@@ -51,13 +51,8 @@ namespace OpenTK.Platform.Native.macOS
         private static readonly List<NSScreenHandle> _displays = new List<NSScreenHandle>();
 
         /// <inheritdoc/>
-        public unsafe void Initialize(PalComponents which)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Display)
-            {
-                throw new PalException(this, "MacOSDisplayComponent can only initialize the Display component.");
-            }
-
             UpdateDisplays(Logger, false);
         }
 

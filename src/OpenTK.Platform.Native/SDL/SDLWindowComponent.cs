@@ -27,13 +27,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Window)
-            {
-                throw new PalException(this, "SDLWindowComponent can only initialize the Window component.");
-            }
-
             // Load SDLLib
             int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS | SDL_INIT.SDL_INIT_JOYSTICK | SDL_INIT.SDL_INIT_GAMECONTROLLER);
 

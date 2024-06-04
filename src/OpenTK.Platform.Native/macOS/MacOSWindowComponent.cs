@@ -194,13 +194,8 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public unsafe void Initialize(PalComponents which)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Window)
-            {
-                throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
-            }
-            
             // This method is called from the Quit menu option.
             class_addMethod(NSApplicationClass, selQuit, (IntPtr)Menu_QuitInst, "v@:"u8);
 

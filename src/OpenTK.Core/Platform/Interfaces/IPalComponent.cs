@@ -50,9 +50,9 @@ namespace OpenTK.Core.Platform
         ILogger? Logger { get; set; }
 
         /// <summary>
-        /// Initialize the driver.
+        /// Initialize the component.
         /// </summary>
-        /// <param name="which">Bitfield of which components the driver need to be initialized.</param>
-        void Initialize(PalComponents which);
+        /// <param name="options">The options to initialize the component with.</param>
+        void Initialize(ToolkitOptions options);
     }
 }

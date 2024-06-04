@@ -36,13 +36,8 @@ namespace OpenTK.Platform.Native.Windows
         private static bool[] KeyboardState = new bool[256];
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.KeyboardInput)
-            {
-                throw new Exception("KeyboardComponent can only initialize the KeyboardInput component.");
-            }
-
             // FIXME: Signleton, we should change the design!
             Instance = this;
 

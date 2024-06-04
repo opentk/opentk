@@ -33,12 +33,8 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MiceInput)
-            {
-                throw new PalException(this, "MacOSMouseComponent can only initialize the MiceInput component.");
-            }
         }
 
         internal static void GetPosition(out double x, out double y)

@@ -68,13 +68,8 @@ namespace OpenTK.Platform.Native.macOS
 
         private static nint ChangeCount = 0;
 
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Clipboard)
-            {
-                throw new Exception("MacOSClipboardComponent can only initialize the Clipboard component.");
-            }
-
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
             ChangeCount = objc_msgSend_IntPtr(pasteboard, selChangeCount);
         }

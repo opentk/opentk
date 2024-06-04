@@ -23,12 +23,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MiceInput)
-            {
-                throw new PalException(this, "SDLMouseComponent can only initialize the Mouse component.");
-            }
         }
 
         /// <inheritdoc/>

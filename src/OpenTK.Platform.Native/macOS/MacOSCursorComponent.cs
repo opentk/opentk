@@ -82,12 +82,8 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MouseCursor)
-            {
-                throw new Exception("MacOSCursorComponent can only initialize the MouseCursor component.");
-            }
         }
 
         /// <inheritdoc/>

@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
             // FIXME: Do something?
         }

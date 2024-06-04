@@ -23,12 +23,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MiceInput)
-            {
-                throw new Exception("OpenGLComponent can only initialize the OpenGL component.");
-            }
         }
 
         /// <inheritdoc/>

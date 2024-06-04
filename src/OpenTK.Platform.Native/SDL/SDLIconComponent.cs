@@ -22,12 +22,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if(which != PalComponents.WindowIcon)
-            {
-                throw new PalException(this, "SDLIconComponent can only initialize the WindowIcon component.");
-            }
         }
 
         /// <inheritdoc/>

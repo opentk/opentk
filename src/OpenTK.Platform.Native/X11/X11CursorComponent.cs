@@ -29,13 +29,8 @@ namespace OpenTK.Platform.Native.X11
         private bool _hasXFixes = false;
 
         /// <inheritdoc />
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
             if (XFixesQueryExtension(X11.Display, out int event_base, out int error_base))
             {
                 _hasXFixes = true;

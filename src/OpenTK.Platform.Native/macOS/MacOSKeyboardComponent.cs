@@ -19,12 +19,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static bool[] KeyboardState = new bool[256];
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.KeyboardInput)
-            {
-                throw new PalException(this, $"MacOSKeyboardComponent can only initialize the KeyboardInput component.");
-            }
         }
 
         /// <inheritdoc/>

@@ -31,13 +31,8 @@ namespace OpenTK.Platform.Native.ANGLE
         internal static readonly Dictionary<IntPtr, ANGLEOpenGLContextHandle> ContextDict = new Dictionary<IntPtr, ANGLEOpenGLContextHandle>();
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.OpenGL)
-            {
-                throw new Exception("ANGLEOpenGLComponent can only initialize the OpenGL component.");
-            }
-
             const IntPtr EGL_NO_DISPLAY = 0;
             IntPtr extensionsPtr = Egl.QueryString(EGL_NO_DISPLAY, Egl.EXTENSIONS);
             string extensionsStr = Marshal.PtrToStringAnsi(extensionsPtr)!;

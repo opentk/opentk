@@ -22,13 +22,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.OpenGL)
-            {
-                throw new Exception("OpenGLComponent can only initialize the OpenGL component.");
-            }
-
             Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
             pfd = new Win32.PIXELFORMATDESCRIPTOR()
             {

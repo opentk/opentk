@@ -42,13 +42,8 @@ namespace OpenTK.Platform.Native.macOS
 
         private int ScreenSaverAssertion = 0;
 
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Shell)
-            {
-                throw new Exception("MacOSShellComponent can only initialize the Shell component.");
-            }
-
             // Set the initial theme so we can detect changes later
             LastTheme = GetCurrentTheme();
         }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
@@ -26,10 +27,11 @@ namespace X11TestProject
             IDisplayComponent dispComp = PlatformComponents.CreateDisplayComponent();
             IShellComponent shellComp = PlatformComponents.CreateShellComponent();
 
-            windowComp.Initialize(PalComponents.Window);
-            glComp.Initialize(PalComponents.OpenGL);
-            dispComp.Initialize(PalComponents.Display);
-            shellComp.Initialize(PalComponents.Shell);
+            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
+            windowComp.Initialize(options);
+            glComp.Initialize(options);
+            dispComp.Initialize(options);
+            shellComp.Initialize(options);
 
             var memInfo = shellComp.GetSystemMemoryInformation();
             Console.WriteLine($"Total RAM: {memInfo.TotalPhysicalMemory}");

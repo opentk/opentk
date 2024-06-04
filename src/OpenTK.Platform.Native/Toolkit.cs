@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
-    public sealed class ToolkitOptions
-    {
-        public string ApplicationName { get; set; } = "OpenTK Application";
-
-        public ILogger? Logger { get; set; } = null;
-    }
 
     // FIXME: Maybe find another name for this?
     /// <summary>
@@ -148,18 +141,18 @@ namespace OpenTK.Platform.Native
             // to have static classes in the different components
             // as they could get instances to each other through
             // this object...
-            _windowComponent?.Initialize(PalComponents.Window);
-            _surfaceComponent?.Initialize(PalComponents.Surface);
-            _openGLComponent?.Initialize(PalComponents.OpenGL);
-            _displayComponent?.Initialize(PalComponents.Display);
-            _shellComponent?.Initialize(PalComponents.Shell);
-            _mouseComponent?.Initialize(PalComponents.MiceInput);
-            _keyboardComponent?.Initialize(PalComponents.KeyboardInput);
-            _cursorComponent?.Initialize(PalComponents.MouseCursor);
-            _iconComponent?.Initialize(PalComponents.WindowIcon);
-            _clipboardComponent?.Initialize(PalComponents.Clipboard);
-            _joystickComponent?.Initialize(PalComponents.Joystick);
-            _dialogComponent?.Initialize(PalComponents.Dialog);
+            _windowComponent?.Initialize(options);
+            _surfaceComponent?.Initialize(options);
+            _openGLComponent?.Initialize(options);
+            _displayComponent?.Initialize(options);
+            _shellComponent?.Initialize(options);
+            _mouseComponent?.Initialize(options);
+            _keyboardComponent?.Initialize(options);
+            _cursorComponent?.Initialize(options);
+            _iconComponent?.Initialize(options);
+            _clipboardComponent?.Initialize(options);
+            _joystickComponent?.Initialize(options);
+            _dialogComponent?.Initialize(options);
         }
     }
 }

@@ -52,13 +52,8 @@ namespace OpenTK.Platform.Native.X11
         internal static XWindow HelperWindow { get; private set; }
 
         /// <inheritdoc />
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
             // Later on we can replace this with a hint.
             string? displayName = null;
             X11.Display = XOpenDisplay(displayName);

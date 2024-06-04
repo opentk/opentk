@@ -20,13 +20,8 @@ namespace OpenTK.Platform.Native.X11
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
             OpenTKSelection = XInternAtom(X11.Display, "OpenTK_Selection", false);
 
             image_png = XInternAtom(X11.Display, "image/png", false);

@@ -29,13 +29,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Shell)
-            {
-                throw new Exception("ShellComponent can only initialize the Shell component.");
-            }
-
             // Set the inital theme so we can detect changes later.
             LastTheme = GetCurrentTheme();
         }

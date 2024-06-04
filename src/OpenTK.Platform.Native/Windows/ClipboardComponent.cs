@@ -134,13 +134,8 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Clipboard)
-            {
-                throw new PalException(this, "ClipboardComponent can only initialize the Clipboard component.");
-            }
-
             // FIXME: Should we check for errors here?
             CF_CanIncludeInClipboardHistory = Win32.RegisterClipboardFormat("CanIncludeInClipboardHistory");
             CF_CanUploadToCloudClipboard = Win32.RegisterClipboardFormat("CanUploadToCloudClipboard");

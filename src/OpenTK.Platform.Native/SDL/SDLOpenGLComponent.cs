@@ -23,13 +23,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.OpenGL)
-            {
-                throw new PalException(this, "SDLOpenGLComponent can only initialize the OpenGL component.");
-            }
-
             int result = SDL_GL_LoadLibrary(null);
             if (result < 0)
             {
