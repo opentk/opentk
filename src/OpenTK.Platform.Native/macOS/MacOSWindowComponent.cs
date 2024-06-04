@@ -147,6 +147,17 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selUnhide = sel_registerName("unhide"u8);
 
         internal static readonly SEL selRegisterForDraggedTypes = sel_registerName("registerForDraggedTypes:"u8);
+        internal static readonly SEL selDraggingLocation = sel_registerName("draggingLocation"u8);
+        internal static readonly SEL selDraggingDestinationWindow = sel_registerName("draggingDestinationWindow"u8);
+        internal static readonly SEL selDraggingPasteboard = sel_registerName("draggingPasteboard"u8);
+        internal static readonly SEL selPasteboardItems = sel_registerName("pasteboardItems"u8);
+        internal static readonly SEL selDataForType = sel_registerName("dataForType:"u8);
+        internal static readonly SEL selURLWithString = sel_registerName("URLWithString:"u8);
+        internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
+        internal static readonly SEL selFileSystemRepresentation = sel_registerName("fileSystemRepresentation"u8);
+
+
+        internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
 
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
@@ -162,11 +173,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
         internal static readonly ObjCClass NSNotificationCenterClass = objc_getClass("NSNotificationCenter"u8);
         internal static readonly ObjCClass NSCursorClass = objc_getClass("NSCursor"u8);
+        internal static readonly ObjCClass NSStringClass = objc_getClass("NSString"u8);
+        internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
+
+        internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
 
         /// <inheritdoc/>
         public string Name => nameof(MacOSWindowComponent);
@@ -243,7 +258,7 @@ namespace OpenTK.Platform.Native.macOS
             NSOpenTKWindowClass = objc_allocateClassPair(NSWindowClass, "NSOpenTKWindow"u8, 0);
 
             // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
-            class_addIvar(NSOpenTKWindowClass, "otkPALWindowComponent"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
+            class_addIvar(NSOpenTKWindowClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
 
             // NSWindow methods.
             class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), (IntPtr)NSOtkWindow_WindowShouldCloseInst, "b@:@"u8);
@@ -264,6 +279,9 @@ namespace OpenTK.Platform.Native.macOS
             objc_registerClassPair(NSOpenTKWindowClass);
 
             NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"u8), "NSOpenTKView"u8, 0);
+
+            // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
+            class_addIvar(NSOpenTKViewClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
 
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
@@ -309,12 +327,24 @@ namespace OpenTK.Platform.Native.macOS
 
             objc_registerClassPair(NSOpenTKViewClass);
         }
-        
+
+        private static MacOSWindowComponent GetComponentFromWindow(IntPtr window)
+        {
+            object_getInstanceVariable(window, OtkCompoenntFieldName, out IntPtr windowCompPtr);
+            return (MacOSWindowComponent)((GCHandle)windowCompPtr).Target!;
+        }
+
+        private static MacOSWindowComponent GetComponentFromView(IntPtr view)
+        {
+            object_getInstanceVariable(view, OtkCompoenntFieldName, out IntPtr windowCompPtr);
+            return (MacOSWindowComponent)((GCHandle)windowCompPtr).Target!;
+        }
+
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> Menu_QuitInst = &Menu_Quit;
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void Menu_Quit(IntPtr self, SEL cmd)
         {
-            Console.WriteLine("On quit!");
+            GetComponentFromWindow(self).Logger?.LogInfo("On quit!");
 
             // FIXME: Send an event for this?
             //EventQueue.Raise(null, 0, new ApplicationExitEventArgs());
@@ -389,9 +419,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidBecomeKey for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
             }
         }
 
@@ -406,9 +434,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidResignKey for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidResignKey for unknown window: 0x{window}");
             }
         }
 
@@ -441,9 +467,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidResize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidResize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidResize for unknown window: 0x{window}");
             }
         }
 
@@ -479,9 +503,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidMove for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidMove for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidMove for unknown window: 0x{window}");
             }
         }
 
@@ -496,9 +518,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidMiniaturize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidMiniaturize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidMiniaturize for unknown window: 0x{window}");
             }
         }
 
@@ -513,9 +533,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
             }
         }
 
@@ -531,9 +549,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
             }
         }
 
@@ -548,9 +564,7 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
             }
         }
 
@@ -558,12 +572,7 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_DidChangeScreenParameters(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
-            object_getInstanceVariable(@delegate, "otkPALWindowComponent"u8, out IntPtr windowCompPtr);
-            ILogger? logger = null;
-            if (((GCHandle)windowCompPtr).Target is IWindowComponent windowComponent)
-            {
-                logger = windowComponent.Logger;
-            }
+            ILogger? logger = GetComponentFromWindow(@delegate).Logger;
             MacOSDisplayComponent.UpdateDisplays(logger, true);
         }
 
@@ -579,11 +588,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(view, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                // We could create an Ivar like we do with NSOtkWindowDelegate_DidChangeScreenParameters
-                // - Noggin_bops 2024-02-28
-                //Logger?.LogWarning($"Received ResetCurorRects event for unknown window: {window}");
-                Console.WriteLine($"Received ResetCurorRects event for unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received ResetCurorRects event for unknown window: {window}");
                 return;
             }
 
@@ -617,9 +622,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
-                Console.WriteLine($"Received MouseEntered event with unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received MouseEntered event with unknown window: {window}");
                 return;
             }
 
@@ -633,9 +636,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
-                Console.WriteLine($"Received MouseExited event with unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received MouseExited event with unknown window: {window}");
                 return;
             }
 
@@ -750,7 +751,7 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr windowPtr = objc_msgSend_IntPtr(view, selWindow);
             if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
             {
-                Console.WriteLine($"Could not find NSWindow for NSView 0x{view}");
+                GetComponentFromView(view).Logger?.LogDebug($"Could not find NSWindow for NSView 0x{view}");
                 return;
             }
 
@@ -787,7 +788,6 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSTextInputClient_DoCommandBySelector(IntPtr view, SEL _selector, SEL selector)
         {
-            Console.WriteLine("DoCommandBySelector");
         }
 
         private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nuint> NSOtkView_NSDraggingDestination_DraggingEnteredInst = &NSOtkView_NSDraggingDestination_DraggingEntered;
@@ -840,7 +840,38 @@ namespace OpenTK.Platform.Native.macOS
         [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PerformDragOperation(IntPtr view, SEL _selector, IntPtr sender)
         {
-            Console.WriteLine("Perfrom drag");
+            CGPoint location = objc_msgSend_CGPoint(sender, selDraggingLocation);
+            IntPtr wnd = objc_msgSend_IntPtr(sender, selDraggingDestinationWindow);
+            if (NSWindowDict.TryGetValue(wnd, out NSWindowHandle? nswindow))
+            {
+                IntPtr pasteboard = objc_msgSend_IntPtr(sender, selDraggingPasteboard);
+                IntPtr items = objc_msgSend_IntPtr(pasteboard, selPasteboardItems);
+
+                nuint count = (nuint)objc_msgSend_IntPtr(items, selCount);
+                List<string>? files = new List<string>(int.CreateSaturating(count));
+                for (nuint i = 0; i < count; i++)
+                {
+                    IntPtr item = objc_msgSend_IntPtr(items, selObjectAtIndex, i);
+                    IntPtr itemData = objc_msgSend_IntPtr(item, selDataForType, NSPasteboardTypeFileURL);
+                    if (itemData != IntPtr.Zero)
+                    {
+                        IntPtr dataStr = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSStringClass, Alloc), selInitWithData_encoding, itemData, (ulong)NSStringEncoding.UTF8);
+                        IntPtr url = objc_msgSend_IntPtr((IntPtr)NSURLClass, selURLWithString, dataStr);
+                        string path = Marshal.PtrToStringUTF8(objc_msgSend_IntPtr(url, selFileSystemRepresentation))!;
+                        files.Add(path);
+                        objc_msgSend(dataStr, Release);
+                        // FIXME: Are there any other objects we need to release?
+                    }
+                }
+
+                Vector2i position = (Vector2i)CG.FlipYCoordinate(location);
+                EventQueue.Raise(nswindow, PlatformEventType.FileDrop, new FileDropEventArgs(nswindow, files, position));
+            }
+            else
+            {
+                GetComponentFromView(view).Logger?.LogDebug("Received performDragOperation for unknown window.");
+            }
+
             return 1;
         }
 
@@ -1301,8 +1332,10 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, selCenter);
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
 
-            // FIXME: Store the Ivar somewhere so we can use it later?
-            object_setInstanceVariable(windowPtr, "otkPALWindowComponent"u8, (IntPtr)GCHandle.Alloc(this, GCHandleType.Normal));
+            // FIXME: Store the Ivars somewhere so we can use it later?
+            GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
+            object_setInstanceVariable(windowPtr, OtkCompoenntFieldName, (IntPtr)gchandle);
+            object_setInstanceVariable(viewPtr, OtkCompoenntFieldName, (IntPtr)gchandle);
 
             IntPtr notificationCenter = objc_msgSend_IntPtr((IntPtr)NSNotificationCenterClass, selDefaultCenter);
             objc_msgSend(notificationCenter, selAddObserver_selector_name_object,

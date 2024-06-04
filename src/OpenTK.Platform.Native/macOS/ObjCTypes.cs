@@ -93,6 +93,11 @@ namespace OpenTK.Platform.Native.macOS
         {
             return new Vector2((float)p.x, (float)p.y);
         }
+
+        public static explicit operator Vector2i(CGPoint p)
+        {
+            return new Vector2i((int)p.x, (int)p.y);
+        }
     }
     
     internal struct CGRect
