@@ -13,9 +13,10 @@ Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your
 
 OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
 
-#### Learn how to use OpenTK here: https://github.com/opentk/LearnOpenTK
+#### Learn how to use OpenTK here: https://opentk.net/learn/index.html
 
-Older OpenTK 3 tutorials here: https://opentk.net/learn/index.html
+A separate github repo with code is available here: https://github.com/opentk/LearnOpenTK
+The code is similar to the tutorial but not an exact replica.
 
 Project website: https://opentk.net
 
