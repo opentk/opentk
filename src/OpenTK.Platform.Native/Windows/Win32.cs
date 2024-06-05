@@ -227,6 +227,13 @@ namespace OpenTK.Platform.Native.Windows
             int nHeight,
             bool bRepaint);
 
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool RedrawWindow(
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* const RECT* */ lprcUpdate,
+            IntPtr /* HRGN */ hrgnUpdate,
+            RDW flags);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
@@ -307,6 +314,12 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsIconic(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsZoomed(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
@@ -1224,6 +1237,26 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool GetWindowPlacement(IntPtr /* HWND */ hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool LockWindowUpdate(IntPtr /* HWND */ hWndLock);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ BeginDeferWindowPos(int nNumWindows);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ DeferWindowPos(
+            IntPtr /* HDWP */ hWinPosInfo,
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* HWND */ hWndInsertAfter,
+            int x,
+            int y,
+            int cx,
+            int cy,
+            SetWindowPosFlags uFlags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool EndDeferWindowPos(IntPtr /* HDWP */ hWinPosInfo);
 
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern DispChange ChangeDisplaySettingsExW(

@@ -151,8 +151,63 @@ namespace OpenTK.Platform.Native.Windows
                 {
                     Logger?.LogWarning($"Could not set immersive dark mode. DwmSetWindowAttribute(DWMWA_USE_IMMERSIVE_DARK_MODE) failed with HRESULT: 0x{result:X}");
                 }
+
+                // Redraw the window frame to make the change appear.
+                // We assume this is only needed on windows 10.
+                // Triggering the redraw involves changing either the
+                // size of the window, if it is normal. Otherwise
+                // we need to restore the window and maximize it again.
+                // This sends unecessary events to the user which is
+                // not desirable, but is currently the only solution
+                // to the problem.
+                // - Noggin_bops 2024-06-05
+                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000) == false)
+                {
+                    TriggerRedrawFrame(hwnd);
+                }
+            }
+
+            static void TriggerRedrawFrame(HWND hwnd)
+            {
+                // Original code comes from: https://stackoverflow.com/a/78269906
+                // Had to modify the non-maximized case as it was shrinking
+                // the window size with every call to this function.
+                // - Noggin_bops 2024-06-05
+                if (Win32.IsWindowVisible(hwnd.HWnd) && Win32.IsIconic(hwnd.HWnd) == false)
+                {
+                    Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
+
+                    if (Win32.IsZoomed(hwnd.HWnd))
+                    {
+                        Win32.WINDOWPLACEMENT placement = default;
+                        unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
+                        Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
+
+                        Win32.RECT oldrect = placement.rcNormalPosition;
+
+                        placement.rcNormalPosition = rect;
+                        placement.rcNormalPosition.right -= 1;
+                        Win32.SetWindowPlacement(hwnd.HWnd, placement);
+
+                        // Restore and then re-maximize the window. Don't update in-between.
+                        Win32.LockWindowUpdate(hwnd.HWnd);
+                        Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.ShowNormal);
+                        Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.ShowMaximized);
+                        Win32.LockWindowUpdate(0);
+
+                        placement.rcNormalPosition = oldrect;
+                        Win32.SetWindowPlacement(hwnd.HWnd, placement);
+                    }
+                    else
+                    {
+                        Win32.SetWindowPos(hwnd.HWnd, 0, 0, 0, rect.Width - 1, rect.Height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoRedraw | SetWindowPosFlags.NoSendChangingEvent);
+                        Win32.SetWindowPos(hwnd.HWnd, 0, 0, 0, rect.Width, rect.Height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoSendChangingEvent);
+                    }
+                }
             }
         }
+
+        
 
         /// <summary>
         /// Sets the color of the windows caption bar text.
