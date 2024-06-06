@@ -1585,8 +1585,17 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
-            // FIXME:
-            //throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: Maybe create a more direct implementation?
+
+            GetPosition(nswindow, out int wx, out int wy);
+            GetClientPosition(nswindow, out int cx, out int cy);
+
+            int offsetX = wx - cx;
+            int offsetY = wy - cy;
+
+            SetPosition(nswindow, x + offsetX, y + offsetY);
         }
 
         /// <inheritdoc/>
