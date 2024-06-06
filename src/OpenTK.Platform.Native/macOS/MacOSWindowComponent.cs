@@ -598,6 +598,12 @@ namespace OpenTK.Platform.Native.macOS
                 float scaleY = (float)(frameBacking.size.y / frame.size.y);
 
                 EventQueue.Raise(nswindow, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(nswindow, scaleX, scaleY));
+
+                CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                CGRect boundsBacking = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
+
+                Vector2i framebufferSize = ((int)boundsBacking.size.x, (int)boundsBacking.size.y);
+                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, framebufferSize));
             }
             else
             {

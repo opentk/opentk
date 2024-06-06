@@ -8,7 +8,6 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.ANGLE;
 using OpenTK.Platform.Native.macOS;
-using OpenTK.Platform.Native.Windows;
 using StbImageSharp;
 using System;
 using System.Collections.Generic;
@@ -53,6 +52,7 @@ namespace OpenTK.Backends.Tests
         static bool IsProcessingEvents = false;
 
         static float CurrentImGuiScale = 1;
+        static ImFontPtr CurrentImGuiFont;
 
         static readonly MainTabContainer MainTabContainer = new MainTabContainer()
         {
@@ -218,10 +218,12 @@ namespace OpenTK.Backends.Tests
 
             UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
             ImGuiController = new ImGuiController(width, height, UsingGLES);
-
+            
             float fontSize = 13f;
             try
             {
+                CurrentImGuiFont = ImGui.GetFont();
+
                 // FIXME: For now we can't load this font on macos??
                 if (Toolkit.Display != null)
                 {
@@ -247,7 +249,7 @@ namespace OpenTK.Backends.Tests
                         unsafe
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
+                            CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
@@ -414,10 +416,14 @@ namespace OpenTK.Backends.Tests
                 }
             }
 
+            // Calls ImGui.NewFrame
             ImGuiController.Update(InputData, dt);
 
+            ImGui.PushFont(CurrentImGuiFont);
 
             MainTabContainer.Paint(dt);
+
+            ImGui.PopFont();
 
             //ImGui.ShowMetricsWindow();
             //ImGui.ShowDemoWindow();
@@ -555,7 +561,7 @@ namespace OpenTK.Backends.Tests
 
                         // FIXME: Should we only scale on Y? or something else?
                         float scale = MathF.Max(scaleChange.ScaleX, scaleChange.ScaleY);
-                        if (scale != 1)
+                        if (scale != CurrentImGuiScale)
                         {
                             ImFontConfig config = new ImFontConfig();
                             config.FontDataOwnedByAtlas = 1;
@@ -568,12 +574,12 @@ namespace OpenTK.Backends.Tests
                             unsafe
                             {
                                 ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                                ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                                CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
 
                                 // FIXME: This is not perfect and does introduce some visual artifacts
                                 // if the window dpi changes multiple times.
                                 // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
-                                // Thought that would mean we have to update both styles if we want to change some styling.
+                                // Though that would mean we have to update both styles if we want to change some styling.
                                 ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
                                 ImGui.GetStyle().ScaleAllSizes(scale);
                                 CurrentImGuiScale = scale;
