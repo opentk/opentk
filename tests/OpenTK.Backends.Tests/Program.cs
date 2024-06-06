@@ -655,6 +655,13 @@ namespace OpenTK.Backends.Tests
                 if (move.Window == Window)
                 {
                     //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
+
+                    if (ImGuiController != null && IsProcessingEvents)
+                    {
+                        Update(0f);
+                        Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                        Render();
+                    }
                 }
             }
             else if (args is WindowModeChangeEventArgs modeChange)
