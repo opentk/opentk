@@ -103,6 +103,7 @@ namespace OpenTK.Platform.Native.macOS
     internal struct CGRect
     {
         public CGPoint origin;
+        // FIXME: Change this to a CGSize struct?
         public CGPoint size;
 
         public bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;

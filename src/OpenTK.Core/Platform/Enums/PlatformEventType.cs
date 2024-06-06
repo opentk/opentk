@@ -17,6 +17,7 @@ namespace OpenTK.Core.Platform
         Focus,
         WindowMove,
         WindowResize,
+        WindowFramebufferResize,
 
         WindowModeChange,
 

@@ -45,6 +45,7 @@ namespace OpenTK.Backends.Tests
                     Toolkit.Window.GetBounds(Program.Window, out int bpx, out int bpy, out int bw, out int bh);
                     Toolkit.Window.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
                     Toolkit.Window.GetScaleFactor(Program.Window, out float scaleX, out float scaleY);
+                    Toolkit.Window.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
 
                     ImGui.Text($"Position: ({px}, {py})");
                     ImGui.Text($"Client Position: ({cpx}, {cpy})");
@@ -53,14 +54,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Bounds: (x:{bpx}, y:{bpy}, w:{bw}, h:{bh})");
                     ImGui.Text($"Client Bounds: (x:{bcpx}, y:{bcpy}, w:{bcw}, h:{bch})");
                     ImGui.Text($"Scale factor: (x:{scaleX}, y:{scaleY})");
-                    // FIXME: Framebuffer size?
-
-                    if (Toolkit.Window is MacOSWindowComponent macOSWindowComp)
-                    {
-                        macOSWindowComp.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
-
-                        ImGui.Text($"Framebuffer size: {fbw}x{fbh}");
-                    }
+                    ImGui.Text($"Framebuffer size: {fbw}x{fbh}");
 
                     // FIXME: Make some way to get out of the locked cursor mode.
                     ImGui.AlignTextToFramePadding();

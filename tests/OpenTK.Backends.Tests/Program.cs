@@ -213,9 +213,7 @@ namespace OpenTK.Backends.Tests
             catch
             { }
 
-            // FIXME: Here we want to get the pixel size of the backbuffer.
-            Toolkit.Window.GetClientSize(Window, out int width, out int height);
-            (Toolkit.Window as MacOSWindowComponent)?.GetFramebufferSize(Window, out width, out height);
+            Toolkit.Window.GetFramebufferSize(Window, out int width, out int height);
             GL.Viewport(0, 0, width, height);
 
             UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
@@ -622,15 +620,20 @@ namespace OpenTK.Backends.Tests
             {
                 if (resize.Window == Window)
                 {
-                    Vector2i newSize = resize.NewSize;
-                    var newSize2 = newSize;
-                    // FIXME: Framebuffer size on macos?
-                    (Toolkit.Window as MacOSWindowComponent)?.GetFramebufferSize(resize.Window, out newSize.X, out newSize.Y);
+                    Logger.LogDebug($"New size: {resize.NewSize}, new client size: {resize.NewClientSize}");
+                }
+            }
+            else if (args is WindowFramebufferResizeEventArgs framebufferResize)
+            {
+                if (framebufferResize.Window == Window)
+                {
+                    Logger.LogDebug($"New framebuffer size: {framebufferResize.NewFramebufferSize}");
 
-                    GL.Viewport(0, 0, newSize.X, newSize.Y);
-                    ImGuiController?.WindowResized(newSize.X, newSize.Y);
+                    Vector2i newFramebufferSize = framebufferResize.NewFramebufferSize;
+                    GL.Viewport(0, 0, newFramebufferSize.X, newFramebufferSize.Y);
+                    ImGuiController?.WindowResized(newFramebufferSize.X, newFramebufferSize.Y);
 
-                    // We can get here as a respose to interations made while
+                    // We can get here as a response to interations made while
                     // we are in the middle of updating and rendering ImGui.
                     // So we need to check so that we are in ordinary event processing.
                     if (ImGuiController != null && IsProcessingEvents)

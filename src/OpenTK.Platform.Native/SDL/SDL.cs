@@ -151,6 +151,9 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern void SDL_SetWindowSize(SDL_WindowPtr window, int w, int h);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_GetWindowSizeInPixels(SDL_WindowPtr window, out int w, out int h);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetWindowBordersSize(SDL_WindowPtr window, out int top, out int left, out int bottom, out int right);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]

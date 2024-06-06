@@ -145,10 +145,15 @@ namespace OpenTK.Platform.Native.SDL
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
                                     {
-                                        Vector2i newSize = new Vector2i(windowEvent.data1, windowEvent.data2);
+                                        SDL_GetWindowBordersSize(sdlWindow.Window, out int top, out int left, out int bottom, out int right);
 
-                                        // FIXME: Client area position!
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize));
+                                        Vector2i newClientSize = new Vector2i(windowEvent.data1, windowEvent.data2);
+                                        Vector2i newSize = new Vector2i(newClientSize.X + left + right, newClientSize.Y + top + bottom);
+
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize, newClientSize));
+
+                                        SDL_GetWindowSizeInPixels(sdlWindow.Window, out int framebufferWidth, out int framebufferHeight);
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(sdlWindow, (framebufferWidth, framebufferHeight)));
 
                                         break;
                                     }
@@ -714,6 +719,14 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowSizeInPixels(window.Window, out width, out height);
+        }
+
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -1173,7 +1186,13 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            throw new NotImplementedException();
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowSize(window.Window, out int width, out int height);
+            SDL_GetWindowSizeInPixels(window.Window, out int pixelWidth, out int pixelHeight);
+
+            scaleX = pixelWidth / (float)width;
+            scaleY = pixelHeight / (float)height;
         }
     }
 }

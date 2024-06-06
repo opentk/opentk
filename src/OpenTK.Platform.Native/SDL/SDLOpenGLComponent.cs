@@ -40,7 +40,7 @@ namespace OpenTK.Platform.Native.SDL
         public bool CanCreateFromWindow => true;
 
         /// <inheritdoc/>
-        public bool CanCreateFromSurface => throw new NotImplementedException();
+        public bool CanCreateFromSurface => false;
 
         /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()

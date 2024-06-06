@@ -92,14 +92,43 @@ namespace OpenTK.Core.Platform
         public Vector2i NewSize { get; private set; }
 
         /// <summary>
+        /// The new client size of the window.
+        /// </summary>
+        public Vector2i NewClientSize { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WindowResizeEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that got resized.</param>
         /// <param name="newSize">The new window size.</param>
+        /// <param name="newClientSize">The new client size of the window.</param>
         // FIXME: Window client size? framebuffer size?
-        public WindowResizeEventArgs(WindowHandle window, Vector2i newSize) : base(window)
+        public WindowResizeEventArgs(WindowHandle window, Vector2i newSize, Vector2i newClientSize) : base(window)
         {
             NewSize = newSize;
+            NewClientSize = newClientSize;
+        }
+    }
+
+    /// <summary>
+    /// This event is triggered when a window has its framebuffer change size.
+    /// This event can occur for different reasons, not only the window changing size.
+    /// </summary>
+    public class WindowFramebufferResizeEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// The new framebuffer size of the window.
+        /// </summary>
+        public Vector2i NewFramebufferSize { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowFramebufferResizeEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window whoes framebuffer changed size.</param>
+        /// <param name="newFramebufferSize">The new framebuffer size.</param>
+        public WindowFramebufferResizeEventArgs(WindowHandle window, Vector2i newFramebufferSize) : base(window)
+        {
+            NewFramebufferSize = newFramebufferSize;
         }
     }
 

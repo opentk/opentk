@@ -454,13 +454,17 @@ namespace OpenTK.Platform.Native.macOS
                     //CenterCursor(nswindow);
                 }
 
-                CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
-                CGRect backing = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
-                // FIXME: Framebuffer size event?
+                CGRect bounds = objc_msgSend_CGRect(nswindow.Window, selFrame);
+                CGRect clientBounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                CGRect backing = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, clientBounds);
 
                 // FIXME: Do not cast to int?
                 Vector2i newSize = new Vector2i((int)bounds.size.x, (int)bounds.size.y);
-                EventQueue.Raise(nswindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(nswindow, newSize));
+                Vector2i newClientSize = new Vector2i((int)clientBounds.size.x, (int)clientBounds.size.y);
+                EventQueue.Raise(nswindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(nswindow, newSize, newClientSize));
+
+                // FIXME: Do we need to send this event when the pixel scale changes?
+                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, ((int)backing.size.x, (int)backing.size.y)));
             }
             else
             {
@@ -1626,7 +1630,7 @@ namespace OpenTK.Platform.Native.macOS
             throw new NotImplementedException();
         }
 
-        // FIXME: Separate the window size from the framebuffer size?
+        /// <inheritdoc/>
         public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);

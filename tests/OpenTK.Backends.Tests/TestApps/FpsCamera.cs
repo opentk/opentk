@@ -177,12 +177,7 @@ void main() {
 
             GL.UseProgram(env_program);
 
-            // FIXME: Framebuffer size...
-            Toolkit.Window.GetClientSize(window, out int width, out int height);
-            if (Toolkit.Window is MacOSWindowComponent macOSWindowComp)
-            {
-                macOSWindowComp.GetFramebufferSize(window, out width, out height);
-            }
+            Toolkit.Window.GetFramebufferSize(window, out int width, out int height);
             float aspect = width / (float)height;
             
             Matrix4 model = Matrix4.Identity;

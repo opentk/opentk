@@ -748,7 +748,16 @@ namespace OpenTK.Platform.Native.Windows
                         int x = Win32.GET_X_LPARAM(lParam);
                         int y = Win32.GET_Y_LPARAM(lParam);
 
-                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(x, y)));
+                        // Get the window size as the WM_SIZE message only gives us the client size.
+                        bool success = Win32.GetWindowRect(h.HWnd, out Win32.RECT lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
+
+                        EventQueue.Raise(h, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -1432,6 +1441,15 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+        }
+
+        /// <inheritdoc/>
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // The client size on windows is already in pixels.
+            GetClientSize(hwnd, out width, out height);
         }
 
         /// <inheritdoc/>

@@ -1009,8 +1009,19 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 xwindow.Width = configure.width;
                                 xwindow.Height = configure.height;
-                                
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
+
+                                Vector2i clientSize = (xwindow.Width, xwindow.Height);
+                                Vector2i size = clientSize;
+                                if (IsWindowManagerFreedesktop)
+                                {
+                                    GetWindowExtents(xwindow, out int left, out int right, out int top, out int bottom);
+                                    size.X += left + right;
+                                    size.Y += top + bottom;
+                                }
+
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, size, clientSize));
+
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(xwindow, clientSize));
                             }
 
                             if (configure.x != xwindow.X ||
@@ -1546,8 +1557,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            XWindowHandle window = handle.As<XWindowHandle>(this);
-            int status = XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            int status = XGetWindowAttributes(xwindow.Display, xwindow.Window, out XWindowAttributes attributes);
 
             width = attributes.Width;
             height = attributes.Height;
@@ -1583,6 +1594,15 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XMoveResizeWindow(X11.Display, xwindow.Window, x, y, (uint)width, (uint)height);
+        }
+
+        /// <inheritdoc />
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // The client size on X11 is already in pixels.
+            GetClientSize(xwindow, out width, out height);
         }
 
         /// <inheritdoc />

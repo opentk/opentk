@@ -243,6 +243,15 @@ namespace OpenTK.Core.Platform
         void SetClientBounds(WindowHandle handle, int x, int y, int width, int height);
 
         /// <summary>
+        /// Get the size of the window framebuffer in pixels.
+        /// Use this value when calls to graphics APIs that want pixels, e.g. GL.Viewport().
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">Width in pixels of the window framebuffer.</param>
+        /// <param name="height">Height in pixels of the window framebuffer.</param>
+        void GetFramebufferSize(WindowHandle handle, out int width, out int height);
+
+        /// <summary>
         /// Gets the maximum size of the client area.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
