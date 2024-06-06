@@ -28,6 +28,11 @@ namespace OpenTK.Backends.Tests
 
         bool useImmersiveDarkMode = false;
 
+        int cornerPreferenceIndex = 0;
+
+        readonly static Platform.Native.Windows.ShellComponent.CornerPrefernce[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
+        readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
+        
         public override void Paint(double deltaTime)
         {
             base.Paint(deltaTime);
@@ -130,6 +135,15 @@ namespace OpenTK.Backends.Tests
                         if (ImGui.ColorEdit3("Caption Color", ref captionColor))
                         {
                             winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
+                        }
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.TextUnformatted("Window Corner Preference"); ImGui.SameLine();
+                        ImGui.Combo("##cornerPreference", ref cornerPreferenceIndex, CornerPreferenceNames, CornerPreferenceNames.Length); ImGui.SameLine();
+                        if (ImGui.Button("Apply##cornerPreference"))
+                        {
+                            winShell.SetWindowCornerPreference(Program.Window, CornerPreferences[cornerPreferenceIndex]);
+                            Program.Logger.LogInfo($"ShellComponent.SetWindowCornerPreference({CornerPreferenceNames[cornerPreferenceIndex]})");
                         }
 
                         ImGui.EndTabItem();

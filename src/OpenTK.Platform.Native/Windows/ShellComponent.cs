@@ -207,9 +207,10 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        
+
 
         /// <summary>
+        /// Works on Windows 11 only.
         /// Sets the color of the windows caption bar text.
         /// </summary>
         public void SetCaptionTextColor(WindowHandle handle, Color3<Rgb> color)
@@ -226,6 +227,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <summary>
+        /// Works on Windows 11 only.
         /// Sets the color of the windows caption bar.
         /// </summary>
         public void SetCaptionColor(WindowHandle handle, Color3<Rgb> color)
@@ -238,6 +240,49 @@ namespace OpenTK.Platform.Native.Windows
             if (result != 0)
             {
                 Logger?.LogWarning($"Failed to set caption color. DwmSetWindowAttribute(DWMWA_CAPTION_COLOR) failed with HRESULT: 0x{result:X}");
+            }
+        }
+
+        /// <summary>
+        /// Window corner preference options.
+        /// </summary>
+        public enum CornerPrefernce
+        {
+            /// <summary>
+            /// Let windows decide if the window corners are rounded.
+            /// </summary>
+            Default = DWMWindowCornerPreference.Default,
+
+            /// <summary>
+            /// Do not round the corners of the window.
+            /// </summary>
+            DoNotRound = DWMWindowCornerPreference.DoNotRound,
+
+            /// <summary>
+            /// Round the corners of the window.
+            /// </summary>
+            Round = DWMWindowCornerPreference.Round,
+
+            /// <summary>
+            /// Round the corners of the window, with a smaller radius.
+            /// </summary>
+            RoundSmall = DWMWindowCornerPreference.RoundSmall,
+        }
+
+        /// <summary>
+        /// Works on Windows 11 only.
+        /// Sets if the window should have rounded corners or not.
+        /// </summary>
+        public void SetWindowCornerPreference(WindowHandle handle, CornerPrefernce preference)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            uint preferenceUint = (uint)(DWMWindowCornerPreference)preference;
+
+            int result = Win32.DwmSetWindowAttribute(hwnd.HWnd, DWMWindowAttribute.WindowCornerPreference, ref preferenceUint, sizeof(int));
+            if (result != 0)
+            {
+                Logger?.LogWarning($"Failed to set caption color. DwmSetWindowAttribute(DWMWA_WINDOW_CORNER_PREFERENCE) failed with HRESULT: 0x{result:X}");
             }
         }
 

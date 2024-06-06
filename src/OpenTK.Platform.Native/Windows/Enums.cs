@@ -945,6 +945,29 @@ namespace OpenTK.Platform.Native.Windows
         Last,
     };
 
+    internal enum DWMWindowCornerPreference
+    {
+        /// <summary>
+        /// Let the system decide when to round window corners.
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Never round window corners.
+        /// </summary>
+        DoNotRound = 1,
+
+        /// <summary>
+        /// Round the corners, if appropriate.
+        /// </summary>
+        Round = 2,
+
+        /// <summary>
+        /// Round the corners if appropriate, with a small radius.
+        /// </summary>
+        RoundSmall = 3,
+    }
+
     internal enum GMEM : uint
     {
         /// <summary>
