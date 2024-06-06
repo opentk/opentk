@@ -281,6 +281,10 @@ namespace OpenTK.Platform.Native.macOS
 
         // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1);
+
+        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1, IntPtr ptr);
 
 

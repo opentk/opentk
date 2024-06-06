@@ -82,6 +82,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
         internal static readonly SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
+        internal static readonly SEL selConvertPointFromScreen = sel_registerName("convertPointFromScreen:"u8);
+        internal static readonly SEL selConvertPointToScreen = sel_registerName("convertPointToScreen:"u8);
 
         internal static readonly SEL selIsMiniaturized = sel_registerName("isMiniaturized"u8);
         internal static readonly SEL selMiniaturize = sel_registerName("miniaturize:"u8);
@@ -308,7 +310,7 @@ namespace OpenTK.Platform.Native.macOS
             class_addMethod(NSOpenTKViewClass, sel_registerName("insertText:replacementRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst, "v@:@{_NSRange=QQ}"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("characterIndexForPoint:"u8), (IntPtr)NSOtkView_NSTextInputClient_CharacterIndexForPointInst, "Q@:{_NSPoint=dd}"u8);
             class_addMethod(NSOpenTKViewClass, sel_registerName("firstRectForCharacterRange:actualRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst, "{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), (IntPtr)NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);;
+            class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), (IntPtr)NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);
 
             IntPtr NSDraggingDestinationProtocol = objc_getProtocol("NSDraggingDestination"u8);
             class_addProtocol(NSOpenTKViewClass, NSDraggingDestinationProtocol);
@@ -719,7 +721,7 @@ namespace OpenTK.Platform.Native.macOS
             ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
             if (length > 0)
             {
-                return new NSRange(0, (nuint)length-1);
+                return new NSRange(0, (nuint)length - 1);
             }
             else
             {
@@ -992,7 +994,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             // FIXME: Implement waitForEvents=true.
             IntPtr @event;
-            while((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
+            while ((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
             {
                 NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
 
@@ -1009,7 +1011,7 @@ namespace OpenTK.Platform.Native.macOS
                     {
                         Logger?.LogDebug($"Event for non opentk window: {type} (0x{windowPtr})");
                     }
-                    
+
                     objc_msgSend(nsApplication, selSendEvent, @event);
 
                     continue;
@@ -1477,7 +1479,7 @@ namespace OpenTK.Platform.Native.macOS
                 image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
 
             objc_msgSend(nsApplication, selSetApplicationIconImage, image);
-            
+
             // FIXME: Maybe make a function for setting the minimized icon...
             /*
             IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
@@ -1606,7 +1608,7 @@ namespace OpenTK.Platform.Native.macOS
             CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
 
             CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
-            
+
             width = (int)(screenFrame.size.x);
             height = (int)(screenFrame.size.y);
         }
@@ -2073,7 +2075,7 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case WindowBorderStyle.ToolBox:
                     {
-                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
 
                         objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
 
@@ -2174,7 +2176,7 @@ namespace OpenTK.Platform.Native.macOS
             {
                 CG.CGAssociateMouseAndMouseCursorPosition(true);
             }
-            
+
             switch (mode)
             {
                 case CursorCaptureMode.Normal:
@@ -2253,16 +2255,38 @@ namespace OpenTK.Platform.Native.macOS
             ulong requestID = objc_msgSend_ulong(nsApplication, selRequestUserAttention, (ulong)NSRequestUserAttentionType.CriticalRequest);
         }
 
+        private float FlipClientYCoordinate(NSWindowHandle nswindow, float y)
+        {
+            float clientHeight = (float)objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, objc_msgSend_CGRect(nswindow.View, selFrame)).size.y;
+            return clientHeight - y;
+        }
+
+        private NFloat FlipClientYCoordinate(NSWindowHandle nswindow, NFloat y)
+        {
+            NFloat clientHeight = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, objc_msgSend_CGRect(nswindow.View, selFrame)).size.y;
+            return clientHeight - y;
+        }
+
         /// <inheritdoc/>
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint clientPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointFromScreen, new CGPoint(x, CG.FlipYCoordinate(y)));
+
+            clientX = (int)clientPoint.x;
+            clientY = (int)FlipClientYCoordinate(nswindow, clientPoint.y);
         }
 
         /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint screenPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToScreen, new CGPoint(clientX, FlipClientYCoordinate(nswindow, clientY)));
+
+            x = (int)screenPoint.x;
+            y = (int)CG.FlipYCoordinate(screenPoint.y);
         }
 
         /// <inheritdoc/>

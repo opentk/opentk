@@ -46,9 +46,11 @@ namespace OpenTK.Backends.Tests
                     Toolkit.Window.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
                     Toolkit.Window.GetScaleFactor(Program.Window, out float scaleX, out float scaleY);
                     Toolkit.Window.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
+                    Toolkit.Window.ClientToScreen(Program.Window, 0, 0, out int origX, out int origY);
 
                     ImGui.Text($"Position: ({px}, {py})");
                     ImGui.Text($"Client Position: ({cpx}, {cpy})");
+                    ImGui.Text($"(0,0) client to screen: ({origX}, {origY})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This is calculated by plugging (0, 0) into ClientToScreen().");
                     ImGui.Text($"Size: ({w}, {h})");
                     ImGui.Text($"Client Size: ({cw}, {ch})");
                     ImGui.Text($"Bounds: (x:{bpx}, y:{bpy}, w:{bw}, h:{bh})");
@@ -80,6 +82,12 @@ namespace OpenTK.Backends.Tests
                     // FIXME: Display these in red text if they are not the same!
                     ImGui.Text($"Mouse position: ({x}, {y})");                                     ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
                     ImGui.Text($"Mouse state position: ({state.Position.X}, {state.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetMouseState(). Should be the same as mouse position.");
+
+                    if (Toolkit.Window != null)
+                    {
+                        Toolkit.Window.ScreenToClient(Program.Window, x, y, out int clientX, out int clientY);
+                        ImGui.Text($"Client position: ({clientX}, {clientY})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ScreenToClient().");
+                    }
                 }
                 catch { }
             }
