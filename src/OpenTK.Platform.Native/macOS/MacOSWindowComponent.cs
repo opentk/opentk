@@ -1642,7 +1642,12 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            throw new NotImplementedException();
+            // FIXME: Find a more direct way to set the contentSize while setting the position.
+
+            SetClientPosition(nswindow, x, y);
+
+            NSSize size = new NSSize(width, height);
+            objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
 
         /// <inheritdoc/>
