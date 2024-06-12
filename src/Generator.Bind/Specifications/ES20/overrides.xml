@@ -229,6 +229,7 @@
     </function>
 
     <function name="GetString" extension="Core" version="2.0">
+      <returns>String</returns>
       <param name="name"><type>StringName</type></param> 
     </function>
 

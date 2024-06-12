@@ -20,6 +20,7 @@ namespace Bind.ES
                 Settings.DefaultDocPath, "ES30");
 
             Settings.OverridesFiles.Add("GL2/overrides.xml");
+            Settings.OverridesFiles.Add("GL2/compatibility 4.8.2.xml");
 
             Profile = "gles2"; // The 3.0 spec reuses the gles2 apiname
             Version = "2.0|3.0";
