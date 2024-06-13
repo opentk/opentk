@@ -57,6 +57,14 @@ namespace OpenTK.Backends.Tests
             OnLog?.Invoke(str, level, filePath, lineNumber, member);
         }
 
+        void ILogger.Flush()
+        {
+            foreach (ILogger logger in _loggers)
+            {
+                logger.Flush();
+            }
+        }
+
         #region IList<ILogger>
         /// <inheritdoc/>
         public int Count => ((ICollection<ILogger>)_loggers).Count;

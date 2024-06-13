@@ -76,7 +76,7 @@ namespace OpenTK.Backends.Tests
         {
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
             {
-                foreach (Type t in asm.ExportedTypes)
+                foreach (Type t in asm.DefinedTypes)
                 {
                     TestAppAttribute? attrib = t.GetCustomAttribute<TestAppAttribute>();
 

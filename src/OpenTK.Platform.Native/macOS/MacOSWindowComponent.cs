@@ -77,6 +77,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selInputContext = sel_registerName("inputContext"u8);
 
         internal static readonly SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
+        internal static readonly SEL selIsKeyWindow = sel_registerName("isKeyWindow"u8);
 
         internal static readonly SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
 
@@ -2236,6 +2237,15 @@ namespace OpenTK.Platform.Native.macOS
             CG.CGDisplayMoveCursorToPoint(CG.CGMainDisplayID(), center);
             CG.CGWarpMouseCursorPosition(center);
             nswindow.LastMousePosition = center;
+        }
+
+        /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: BOOL
+            return objc_msgSend_bool(nswindow.Window, selIsKeyWindow);
         }
 
         /// <inheritdoc/>

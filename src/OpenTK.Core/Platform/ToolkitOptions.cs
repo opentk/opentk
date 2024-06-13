@@ -1,5 +1,7 @@
 ﻿using OpenTK.Core.Utility;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>

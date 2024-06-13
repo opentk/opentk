@@ -207,8 +207,6 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-
-
         /// <summary>
         /// Works on Windows 11 only.
         /// Sets the color of the windows caption bar text.

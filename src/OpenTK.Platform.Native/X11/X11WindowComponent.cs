@@ -2590,6 +2590,16 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
+        public bool IsFocused(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XGetInputFocus(X11.Display, out XWindow focus, out _);
+
+            return xwindow.Window == focus;
+        }
+
+        /// <inheritdoc />
         public void FocusWindow(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);

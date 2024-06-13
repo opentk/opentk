@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -265,7 +266,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool BringWindowToTop(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         internal static extern bool SetForegroundWindow(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetFocus();
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);

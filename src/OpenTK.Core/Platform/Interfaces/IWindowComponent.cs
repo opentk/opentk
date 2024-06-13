@@ -426,7 +426,12 @@ namespace OpenTK.Core.Platform
         /// <param name="mode">The cursor capture mode.</param>
         void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
 
-        // FIXME: Need a function to check if the window has input focus...
+        /// <summary>
+        /// Returns true if the given window has input focus.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <returns>If the window has input focus.</returns>
+        bool IsFocused(WindowHandle handle);
 
         /// <summary>
         /// Gives the window input focus.

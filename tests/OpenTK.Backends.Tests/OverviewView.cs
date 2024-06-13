@@ -182,7 +182,7 @@ namespace OpenTK.Backends.Tests
 
                 // FIXME: When the next imgui update comes we can follow the "Auto-resize with constraints" demo and make the log window have a min height.
                 // ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
-                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
                 {
                     if (log.Count == 0)
                     {

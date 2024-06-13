@@ -1968,6 +1968,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.HWnd == Win32.GetForegroundWindow();
+        }
+
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);

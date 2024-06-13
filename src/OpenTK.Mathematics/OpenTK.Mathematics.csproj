@@ -6,6 +6,7 @@
     <RootNamespace>OpenTK.Mathematics</RootNamespace>
     <Description>Mathematical structures and algorithms, provided and used by OpenTK.</Description>
     <PackageIcon>icon.png</PackageIcon>
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>

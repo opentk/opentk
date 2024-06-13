@@ -63,21 +63,23 @@ namespace LocalTestProject
             clipComp.Logger = logger;
             joystickComponent.Logger = logger;
 
-            windowComp.Initialize(PalComponents.Window);
-            glComp.Initialize(PalComponents.OpenGL);
+            ToolkitOptions options = new ToolkitOptions() { ApplicationName = "LocalTestProject", Logger = logger };
 
-            dispComp.Initialize(PalComponents.Display);
+            windowComp.Initialize(options);
+            glComp.Initialize(options);
 
-            keyboardComp.Initialize(PalComponents.KeyboardInput);
+            dispComp.Initialize(options);
 
-            iconComp.Initialize(PalComponents.WindowIcon);
-            cursorComp.Initialize(PalComponents.MouseCursor);
+            keyboardComp.Initialize(options);
 
-            clipComp.Initialize(PalComponents.Clipboard);
+            iconComp.Initialize(options);
+            cursorComp.Initialize(options);
 
-            shellComp.Initialize(PalComponents.Shell);
+            clipComp.Initialize(options);
 
-            joystickComponent.Initialize(PalComponents.Joystick);
+            shellComp.Initialize(options);
+
+            joystickComponent.Initialize(options);
 
             Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout(null)}");
 

@@ -234,7 +234,7 @@ namespace OpenTK.Backends.Tests
                 SaveOpenGLDetails(savePath);
             }
 
-            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
             {
                 const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow;
                 const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;

@@ -1,0 +1,5 @@
+﻿bejeweled_ico ICON "Assets/Icon/ruby_icon.ico"
+
+gold_orb_pointer CURSOR "Assets/Cursor/Gold Orb_pointer.ani"
+gold_orb_crosshair CURSOR "Assets/Cursor/Gold Orb_crosshair.ani"
+

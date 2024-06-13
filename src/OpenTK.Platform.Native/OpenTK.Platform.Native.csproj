@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Description>Platform support for OpenTK, contains backends for Windows, Linux, and macOS.</Description>
     <PackageIcon>icon.png</PackageIcon>
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>

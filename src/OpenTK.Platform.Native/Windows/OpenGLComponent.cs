@@ -4,12 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    // FIXME: This is to enable easily writing a full description of
+    // Win32.PIXELFORMATDESCRIPTOR while having trimming enabled.
+    // We want to remove this in favour of a proper ToString method
+    // on Win32.PIXELFORMATDESCRIPTOR.
+    [JsonSourceGenerationOptions(WriteIndented = true)]
+    [JsonSerializable(typeof(Win32.PIXELFORMATDESCRIPTOR))]
+    internal partial class PixelformatDescriptorSourceGenerationContext : JsonSerializerContext
+    {
+    }
+
     public class OpenGLComponent : IOpenGLComponent
     {
         /// <inheritdoc/>
@@ -81,19 +94,20 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
-            Console.WriteLine($"=== Chosen Format ===");
-            Console.WriteLine($"Version: {chosenFormat.nVersion}");
-            Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
-            Console.WriteLine($"Pixel Type: {chosenFormat.iPixelType}");
-            Console.WriteLine($"Color bits: {chosenFormat.cColorBits}");
-            Console.WriteLine($"Depth bits: {chosenFormat.cDepthBits}");
-            Console.WriteLine($"Stencil bits: {chosenFormat.cStencilBits}");
             JsonSerializerOptions opt2 = new JsonSerializerOptions()
             {
                 IncludeFields = true,
                 WriteIndented = true,
+                TypeInfoResolver = PixelformatDescriptorSourceGenerationContext.Default,
             };
-            Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
+            Logger?.LogDebug($"=== Chosen Format ===\n" +
+                $"Version: {chosenFormat.nVersion}\n" +
+                $"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})\n" +
+                $"Pixel Type: {chosenFormat.iPixelType}\n" +
+                $"Color bits: {chosenFormat.cColorBits}\n" +
+                $"Depth bits: {chosenFormat.cDepthBits}\n" +
+                $"Stencil bits: {chosenFormat.cStencilBits}\n" +
+                $"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), new PixelformatDescriptorSourceGenerationContext(opt2))}");
 
             bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
             if (success == false)
@@ -147,7 +161,7 @@ namespace OpenTK.Platform.Native.Windows
 
                     foreach (var ext in wglExts)
                     {
-                        Console.WriteLine($"wglExts: {ext}");
+                        Logger?.LogDebug($"wglExts: {ext}");
                     }
                 }
             }
@@ -321,6 +335,11 @@ namespace OpenTK.Platform.Native.Windows
                     attribs.Add((int)WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
                     attribs.Add(settings.sRGBFramebuffer ? 1 : 0);
                 }
+                else if (EXT_framebuffer_sRGB)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                    attribs.Add(settings.sRGBFramebuffer ? 1 : 0);
+                }
                 attribs.Add(0);
 
                 int[] formats = new int[1];
@@ -355,6 +374,10 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 if (ARB_framebuffer_sRGB)
+                {
+                    attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                }
+                else if (EXT_framebuffer_sRGB)
                 {
                     attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
                 }
@@ -426,12 +449,12 @@ namespace OpenTK.Platform.Native.Windows
 
                 choosenValues.SRGBFramebuffer = ARB_framebuffer_sRGB ? FindAttribute(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB) == 1 : false;
 
-                Console.WriteLine($"===== Chosen Format ARB =====");
+                StringBuilder sb = new StringBuilder();
                 for (int j = 0; j < attrib.Length; j++)
                 {
-                    Console.WriteLine($"{attrib[j]}: {values[j]}");
+                    sb.AppendLine($"{attrib[j]}: {values[j]}");
                 }
-                Console.WriteLine();
+                Logger?.LogDebug($"===== Chosen Format ARB =====\n{sb}");
 
                 Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
                 pfd = new Win32.PIXELFORMATDESCRIPTOR()
@@ -526,19 +549,20 @@ namespace OpenTK.Platform.Native.Windows
                 {
                     throw new Win32Exception();
                 }
-                Console.WriteLine($"=== Chosen Format ===");
-                Console.WriteLine($"Version: {chosenFormat.nVersion}");
-                Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
-                Console.WriteLine($"Pixel Type: {chosenFormat.iPixelType}");
-                Console.WriteLine($"Color bits: {chosenFormat.cColorBits}");
-                Console.WriteLine($"Depth bits: {chosenFormat.cDepthBits}");
-                Console.WriteLine($"Stencil bits: {chosenFormat.cStencilBits}");
                 JsonSerializerOptions opt2 = new JsonSerializerOptions()
                 {
                     IncludeFields = true,
                     WriteIndented = true,
+                    TypeInfoResolver = PixelformatDescriptorSourceGenerationContext.Default,
                 };
-                Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
+                Logger?.LogDebug($"=== Chosen Format ===\n" +
+                    $"Version: {chosenFormat.nVersion}\n" +
+                    $"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})\n" +
+                    $"Pixel Type: {chosenFormat.iPixelType}\n" +
+                    $"Color bits: {chosenFormat.cColorBits}\n" +
+                    $"Depth bits: {chosenFormat.cDepthBits}\n" +
+                    $"Stencil bits: {chosenFormat.cStencilBits}\n" +
+                    $"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), new PixelformatDescriptorSourceGenerationContext(opt2))}");
 
                 success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
                 if (success == false)

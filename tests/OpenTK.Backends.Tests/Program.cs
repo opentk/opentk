@@ -311,6 +311,32 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
+            {
+                WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
+                {
+                    Version = new Version(4, 1),
+                    Profile = OpenGLProfile.Core,
+                    ForwardCompatibleFlag = true,
+                    DebugFlag = true,
+                    Multisamples = 16,
+                    sRGBFramebuffer = true,
+                    
+                });
+                Toolkit.Window.SetTitle(handle, $"Bejeweled");
+                Toolkit.Window.SetClientSize(handle, 1200, 1200);
+                (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
+                Toolkit.Window.SetMode(handle, WindowMode.Normal);
+                Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
+                ApplicationWindow bejeweled = new ApplicationWindow(handle);
+                bejeweled.Context = Toolkit.OpenGL.CreateFromWindow(handle);
+                Toolkit.OpenGL.SetSwapInterval(1);
+                bejeweled.Application = new Bejeweled.Bejeweled();
+                Toolkit.OpenGL.SetCurrentContext(bejeweled.Context);
+                bejeweled.Application.Initialize(handle, bejeweled.Context, UsingGLES);
+                Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                Program.ApplicationWindows.Add(bejeweled);
+            }
+
             while (true)
             {
                 float dt = (float)watch.Elapsed.TotalSeconds;

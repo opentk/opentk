@@ -1148,6 +1148,14 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            return SDL_GetWindowFlags(window.Window).HasFlag(SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
+        }
+
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

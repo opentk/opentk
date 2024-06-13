@@ -6,6 +6,7 @@
     <Description>Core shared functionality for the OpenTK library.</Description>
     <OutputType>Library</OutputType>
     <PackageIcon>icon.png</PackageIcon>
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>
