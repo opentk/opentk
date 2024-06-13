@@ -89,8 +89,8 @@ namespace Bejeweled
 
             //ApplicationWindow bejeweled = new ApplicationWindow(handle);
             Context = Toolkit.OpenGL.CreateFromWindow(Window);
-            Toolkit.OpenGL.SetSwapInterval(1);
             Toolkit.OpenGL.SetCurrentContext(Context);
+            Toolkit.OpenGL.SetSwapInterval(1);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(Context));
             Bejeweled = new Bejeweled();
             Bejeweled.Initialize(Window, Context, false, Logger);
