@@ -47,7 +47,7 @@ namespace Bejeweled
                 Version = new Version(4, 1),
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
-                Multisamples = 16,
+                Multisamples = 4,
                 sRGBFramebuffer = true,
                 DebugFlag = true,
             };
