@@ -27,10 +27,12 @@ namespace Bejeweled
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 #if RELEASE
-            Logger = new DebugFileLogger("Bejeweled_debug.log");
 #else
             Logger = new DebugLogger();
 #endif
+            Logger = new DebugFileLogger("Bejeweled_debug.log");
+
+            Logger.LogInfo($"Current path: {Directory.GetCurrentDirectory()}");
 
             EventQueue.EventRaised += EventQueue_EventRaised;
 
@@ -47,8 +49,8 @@ namespace Bejeweled
                 Version = new Version(4, 1),
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
-                Multisamples = 16,
-                sRGBFramebuffer = true,
+                //Multisamples = 4,
+                //sRGBFramebuffer = true,
                 DebugFlag = true,
             };
 
@@ -89,8 +91,8 @@ namespace Bejeweled
 
             //ApplicationWindow bejeweled = new ApplicationWindow(handle);
             Context = Toolkit.OpenGL.CreateFromWindow(Window);
-            Toolkit.OpenGL.SetSwapInterval(1);
             Toolkit.OpenGL.SetCurrentContext(Context);
+            Toolkit.OpenGL.SetSwapInterval(1);
             GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(Context));
             Bejeweled = new Bejeweled();
             Bejeweled.Initialize(Window, Context, false, Logger);

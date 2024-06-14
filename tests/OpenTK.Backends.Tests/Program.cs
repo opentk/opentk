@@ -311,7 +311,7 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
-            {
+            if (false){
                 WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
                 {
                     Version = new Version(4, 1),

@@ -407,23 +407,25 @@ namespace Bejeweled
 
     internal class Cubemap
     {
-        private static ReadOnlySpan<DDSCubemapFaces> OpenGLCubemapFaceOrder => [
+        private static ReadOnlySpan<DDSCubemapFaces> OpenGLCubemapFaceOrder => new DDSCubemapFaces[]
+        {
             DDSCubemapFaces.PosX,
             DDSCubemapFaces.NegX,
             DDSCubemapFaces.PosY,
             DDSCubemapFaces.NegY,
             DDSCubemapFaces.PosZ,
             DDSCubemapFaces.NegZ,
-        ];
+        };
 
-        private static ReadOnlySpan<TextureTarget> OpenGLCubemapFaceOrderTextureTarget => [
+        private static ReadOnlySpan<TextureTarget> OpenGLCubemapFaceOrderTextureTarget => new TextureTarget[]
+        {
             TextureTarget.TextureCubeMapPositiveX,
             TextureTarget.TextureCubeMapNegativeX,
             TextureTarget.TextureCubeMapPositiveY,
             TextureTarget.TextureCubeMapNegativeY,
             TextureTarget.TextureCubeMapPositiveZ,
             TextureTarget.TextureCubeMapNegativeZ,
-        ];
+        };
 
         public int Handle;
 
@@ -818,9 +820,10 @@ namespace Bejeweled
 
         private bool KHRDebugAvailable;
 
-        internal static readonly Gem[] ChooseGems = [Gem.Diamond, Gem.Ruby, Gem.Emerald, Gem.Sapphire, Gem.Topaz, Gem.Amethyst, Gem.Zircon];
+        internal static readonly Gem[] ChooseGems = new Gem[] { Gem.Diamond, Gem.Ruby, Gem.Emerald, Gem.Sapphire, Gem.Topaz, Gem.Amethyst, Gem.Zircon };
 
-        internal static readonly Vector3[] GemColors = [
+        internal static readonly Vector3[] GemColors = new Vector3[]
+        {
             (Vector3)Color4.White.ToRgb() * 0.75f,
             (Vector3)Color4.Red.ToRgb() * 0.75f,
             (Vector3)Color4.Green.ToRgb() * 0.75f,
@@ -828,9 +831,10 @@ namespace Bejeweled
             (Vector3)Color4.Yellow.ToRgb() * 0.75f,
             (Vector3)Color4.Purple.ToRgb() * 0.75f,
             (Vector3)Color4.Cyan.ToRgb() * 0.75f,
-        ];
+        };
 
-        internal static readonly Vector3[] GemF0s = [
+        internal static readonly Vector3[] GemF0s = new Vector3[]
+        {
             new Vector3(0.171950f, 0.171950f, 0.171950f),
             new Vector3(0.078350f, 0.076697f, 0.076697f),
             new Vector3(0.076697f, 0.078350f, 0.076697f),
@@ -838,7 +842,7 @@ namespace Bejeweled
             new Vector3(0.078350f, 0.078350f, 0.076697f),
             new Vector3(0.078350f, 0.076697f, 0.078350f),
             new Vector3(0.076697f, 0.078350f, 0.078350f),
-        ];
+        };
 
         Framebuffer RefractionInfoFramebuffer;
 
@@ -997,8 +1001,11 @@ namespace Bejeweled
                 }
             }
 
-            IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
-            Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
+            if (ALC.EnumerateAll.IsExtensionPresent())
+            {
+                IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+                Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
+            }
 
             ALDevice = ALC.OpenDevice(deviceName);
             ALContext = ALC.CreateContext(ALDevice, (int[]?)null);
@@ -1261,7 +1268,7 @@ namespace Bejeweled
                             AnimationTime = 0.0f;
                             CurrentState = State.AnimatingPlayerMove;
 
-                            SwapSoundEffect.PlayOneShot(SwapSFXVolume, float.Lerp(0.95f, 1.05f, Random.Shared.NextSingle()));
+                            SwapSoundEffect.PlayOneShot(SwapSFXVolume, MathHelper.Lerp(0.95f, 1.05f, Random.Shared.NextSingle()));
                         }
 
                         BoardPositions[SelectedGem.X, SelectedGem.Y] = GetTileLocation(SelectedGem.X, SelectedGem.Y);
@@ -1431,7 +1438,7 @@ namespace Bejeweled
                     if (combo)
                     {
                         FallingComboCount++;
-                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, float.Lerp(1.0f, 1.2f, float.Clamp(FallingComboCount / (float)10, 0, 1)));
+                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, MathHelper.Lerp(1.0f, 1.2f, float.Clamp(FallingComboCount / (float)10, 0, 1)));
                     }
 
                     if (combo == false)
