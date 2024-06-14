@@ -490,7 +490,12 @@ fabric.properties
 .LSOverride
 
 # Icon must end with two \r
-Icon
+# Icon\r\r is a folder that macos creates, but keeping two \r\r characters in .gitignore
+# seems to be hard, so we instead wildcard on Icon? and then use a negative pattern to bring
+# back most other uses of Icon.
+# - Noggin_bops 2024-06-14
+Icon?
+![iI]con[_a-zA-Z0-9]
 
 # Thumbnails
 ._*
