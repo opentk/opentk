@@ -469,6 +469,8 @@ namespace Bejeweled
                     break;
                 case DDSImageFormat.BC6H_UF:
                     // This is core since 4.2, but we'll just assume support in 4.1.
+                    // FIXME: MacOS does not have support for this texture format...
+                    // Maybe we can decompress this format if there is no support.
                     internalFormat = (SizedInternalFormat)All.CompressedRgbBptcUnsignedFloat;
                     compressed = true;
                     bytesPerPixel = 1;

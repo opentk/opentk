@@ -180,8 +180,7 @@ namespace OpenTK.Backends.Tests
                 //                 how to make it unformatted since the C ... parameter is unimplemented.
                 //                      ImGui::TextWrappped("%s", line);
 
-                // FIXME: When the next imgui update comes we can follow the "Auto-resize with constraints" demo and make the log window have a min height.
-                // ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
+                ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
                 if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
                 {
                     if (log.Count == 0)
