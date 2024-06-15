@@ -260,6 +260,7 @@ namespace OpenTK.Platform.Native.Windows
             byte depthBits;
             switch (settings.DepthBits)
             {
+                case ContextDepthBits.None:    depthBits = 0;  break;
                 case ContextDepthBits.Depth24: depthBits = 24; break;
                 case ContextDepthBits.Depth32: depthBits = 32; break;
                 default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
@@ -268,6 +269,7 @@ namespace OpenTK.Platform.Native.Windows
             byte stencilBits;
             switch (settings.StencilBits)
             {
+                case ContextStencilBits.None:     stencilBits = 0; break;
                 case ContextStencilBits.Stencil1: stencilBits = 1; break;
                 case ContextStencilBits.Stencil8: stencilBits = 8; break;
                 default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());

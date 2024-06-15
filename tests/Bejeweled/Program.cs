@@ -58,7 +58,7 @@ namespace Bejeweled
                 DebugFlag = true,
                 // FIXME: Add Depth16 format?
                 DepthBits = ContextDepthBits.Depth24,
-                StencilBits = 0,
+                StencilBits = ContextStencilBits.None,
             };
 
             // For now we can use Hardware.Info to debug printout the hardware config
