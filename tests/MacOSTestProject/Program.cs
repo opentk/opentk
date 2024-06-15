@@ -69,8 +69,10 @@ void main()
             MacOSWindowComponent windowComponent = new MacOSWindowComponent();
             MacOSOpenGLComponent openglComponent = new MacOSOpenGLComponent();
 
-            windowComponent.Initialize(PalComponents.Window);
-            openglComponent.Initialize(PalComponents.OpenGL);
+            ToolkitOptions options = new ToolkitOptions();
+
+            windowComponent.Initialize(options);
+            openglComponent.Initialize(options);
 
             WindowHandle window = windowComponent.Create(new OpenGLGraphicsApiHints());
 

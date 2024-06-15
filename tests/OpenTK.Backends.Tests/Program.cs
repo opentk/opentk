@@ -246,6 +246,7 @@ namespace OpenTK.Backends.Tests
                         config.GlyphMaxAdvanceX = float.PositiveInfinity;
                         config.RasterizerMultiply = 1;
                         config.EllipsisChar = 0xFFFF;
+                        config.RasterizerDensity = 1;
                         unsafe
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
@@ -311,7 +312,7 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
-            {
+            if (false){
                 WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
                 {
                     Version = new Version(4, 1),
