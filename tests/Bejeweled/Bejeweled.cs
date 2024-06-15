@@ -187,6 +187,16 @@ namespace Bejeweled
 
             GL.AttachShader(program, vert);
             GL.AttachShader(program, frag);
+
+            // FIXME: These need to be set before linking the program.
+            // This makes this function not as general as it might be.
+            // But for this program maybe this is fine?
+            // - Noggin_bops 2024-06-16
+            GL.BindAttribLocation(program, 0, "aPosition");
+            GL.BindAttribLocation(program, 1, "aNormal");
+            GL.BindAttribLocation(program, 2, "aUV");
+            GL.BindAttribLocation(program, 3, "aThickness");
+
             GL.LinkProgram(program);
             GL.GetProgramInfoLog(program, out string programInfo);
             if (GL.GetProgrami(program, ProgramProperty.LinkStatus) == 0)
@@ -240,11 +250,6 @@ namespace Bejeweled
             GemShader shader;
             shader.Program = ShaderProgram.LoadShader(vertexPath, fragmentPath, logger);
 
-            GL.BindAttribLocation(shader.Program.Handle, 0, "aPosition");
-            GL.BindAttribLocation(shader.Program.Handle, 1, "aNormal");
-            GL.BindAttribLocation(shader.Program.Handle, 2, "aUV");
-            GL.BindAttribLocation(shader.Program.Handle, 3, "aThickness");
-
             shader.UniformLocationMVP = GL.GetUniformLocation(shader.Program.Handle, "uMVP");
             shader.UniformLocationModel = GL.GetUniformLocation(shader.Program.Handle, "uModel");
             shader.UniformLocationViewProjection = GL.GetUniformLocation(shader.Program.Handle, "uViewProjection");
@@ -279,11 +284,6 @@ namespace Bejeweled
         {
             GemNormalShader shader;
             shader.Program = ShaderProgram.LoadShader(vertexPath, fragmentPath, logger);
-
-            GL.BindAttribLocation(shader.Program.Handle, 0, "aPosition");
-            GL.BindAttribLocation(shader.Program.Handle, 1, "aNormal");
-            GL.BindAttribLocation(shader.Program.Handle, 2, "aUV");
-            GL.BindAttribLocation(shader.Program.Handle, 3, "aThickness");
 
             shader.UniformLocationMVP = GL.GetUniformLocation(shader.Program.Handle, "uMVP");
             shader.UniformLocationModel = GL.GetUniformLocation(shader.Program.Handle, "uModel");
@@ -732,19 +732,19 @@ namespace Bejeweled
 
         public int Samples;
 
-        public static Framebuffer CreateNormalDepthFramebuffer(int width, int height, bool compact)
+        public static Framebuffer CreateNormalDepthFramebuffer(int width, int height)
         {
             int framebuffer = GL.GenFramebuffer();
 
             int normalTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, normalTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, compact ? InternalFormat.R11fG11fB10f : InternalFormat.Rgba32f, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, width, height, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
             int depthTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, depthTexture);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, compact ? InternalFormat.DepthComponent16 : InternalFormat.DepthComponent32f, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
 
@@ -793,9 +793,9 @@ namespace Bejeweled
         public void ResizeNormalDepthFramebuffer(int newWidth, int newHeight)
         {
             GL.BindTexture(TextureTarget.Texture2d, ColorAttachement0);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba32f, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba16Snorm, newWidth, newHeight, 0, PixelFormat.Rgba, PixelType.Float, IntPtr.Zero);
             GL.BindTexture(TextureTarget.Texture2d, DepthAttachement);
-            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent32f, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.DepthComponent16, newWidth, newHeight, 0, PixelFormat.DepthComponent, PixelType.Float, IntPtr.Zero);
 
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, Handle);
             FramebufferStatus status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -978,7 +978,7 @@ namespace Bejeweled
             GemNormalShader = GemNormalShader.Init("./Assets/Shaders/Gem.vert", "./Assets/Shaders/Normal.frag", Logger);
 
             Toolkit.Window.GetFramebufferSize(Window, out int framebufferWidth, out int framebufferHeight);
-            RefractionInfoFramebuffer = Framebuffer.CreateNormalDepthFramebuffer(framebufferWidth, framebufferHeight, false);
+            RefractionInfoFramebuffer = Framebuffer.CreateNormalDepthFramebuffer(framebufferWidth, framebufferHeight);
 
             //DebugFramebuffer = Framebuffer.CreateDebugFramebufferMS(framebufferWidth, framebufferHeight, 16);
 
@@ -1504,6 +1504,12 @@ namespace Bejeweled
 
         public void Render()
         {
+            const float NearPlane = 0.1f;
+            const float FarPlane = 10.0f;
+            Matrix4 view = Matrix4.Identity;
+            Matrix4 projection = Matrix4.CreateOrthographic(8, 8, NearPlane, FarPlane);
+            Matrix4 viewProjection = view * projection;
+
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, RefractionInfoFramebuffer.Handle);
 
             GL.ClearDepth(0);
@@ -1513,10 +1519,6 @@ namespace Bejeweled
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.UseProgram(GemNormalShader.Program.Handle);
-
-            Matrix4 view = Matrix4.Identity;
-            Matrix4 projection = Matrix4.CreateOrthographic(8, 8, 0.1f, 100);
-            Matrix4 viewProjection = view * projection;
 
             for (int x = 0; x < Board.GetLength(0); x++)
             {
@@ -1569,6 +1571,7 @@ namespace Bejeweled
 
             GL.UseProgram(GemShader.Program.Handle);
 
+            
             GL.Uniform1i(GemShader.UniformLocationEnvironmentMap, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.TextureCubeMap, EnvironmentMap.Handle);
@@ -1580,11 +1583,11 @@ namespace Bejeweled
             GL.Uniform1i(GemShader.UniformLocationPrefilteredEnvironmentMap, 2);
             GL.ActiveTexture(TextureUnit.Texture2);
             GL.BindTexture(TextureTarget.TextureCubeMap, PrefilteredEnvironmentMap.Handle);
-
+            
             GL.Uniform1i(GemShader.UniformLocationBRDFLUT, 3);
             GL.ActiveTexture(TextureUnit.Texture3);
             GL.BindTexture(TextureTarget.Texture2d, BrdfLUT.Handle);
-
+            
             GL.Uniform1i(GemShader.UniformLocationBackfaceNormals, 4);
             GL.ActiveTexture(TextureUnit.Texture4);
             GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.ColorAttachement0);
@@ -1592,8 +1595,8 @@ namespace Bejeweled
             GL.Uniform1i(GemShader.UniformLocationBackfaceDepth, 5);
             GL.ActiveTexture(TextureUnit.Texture5);
             GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.DepthAttachement);
-
-            GL.Uniform1f(GemShader.UniformLocationDepthScale, 100 - 0.1f);
+            
+            GL.Uniform1f(GemShader.UniformLocationDepthScale, FarPlane - NearPlane);
 
             for (int x = 0; x < Board.GetLength(0); x++)
             {

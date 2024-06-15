@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO;
 using OpenTK.Mathematics;
+using System.Text;
+using Hardware.Info;
 
 namespace Bejeweled
 {
@@ -43,6 +45,8 @@ namespace Bejeweled
             };
             Toolkit.Init(options);
 
+            // FIXME: API for more specifically enumerating available
+            // OpenGL context settings.
             OpenGLGraphicsApiHints openglSettings = new OpenGLGraphicsApiHints()
             {
                 DoubleBuffer = true,
@@ -52,8 +56,61 @@ namespace Bejeweled
                 Multisamples = 4,
                 sRGBFramebuffer = true,
                 DebugFlag = true,
+                // FIXME: Add Depth16 format?
+                DepthBits = ContextDepthBits.Depth24,
+                StencilBits = 0,
             };
 
+            // For now we can use Hardware.Info to debug printout the hardware config
+            // which is both good for debug and allows us to do some tweaking for
+            // specific hardware.
+            HardwareInfo info = new HardwareInfo();
+            info.RefreshCPUList(false);
+            foreach (CPU cpu in info.CpuList)
+            {
+                StringBuilder cpuInfo = new StringBuilder();
+                cpuInfo.AppendLine($"Name: {cpu.Name}");
+                cpuInfo.AppendLine($"Manufacturer: {cpu.Manufacturer}");
+                cpuInfo.AppendLine($"Caption: {cpu.Caption}");
+                cpuInfo.AppendLine($"Description: {cpu.Description}");
+                cpuInfo.AppendLine($"Physical cores: {cpu.NumberOfCores}");
+                cpuInfo.AppendLine($"Logical cores: {cpu.NumberOfLogicalProcessors}");
+                cpuInfo.AppendLine($"Socket: {cpu.SocketDesignation}");
+                cpuInfo.AppendLine($"Max clock speed: {cpu.MaxClockSpeed}MHz");
+                cpuInfo.AppendLine($"L1d cache size: {cpu.L1DataCacheSize}");
+                cpuInfo.AppendLine($"L1i cache size: {cpu.L1InstructionCacheSize}");
+                cpuInfo.AppendLine($"L2 cache size: {cpu.L2CacheSize}");
+                cpuInfo.AppendLine($"L3 cache size: {cpu.L3CacheSize}");
+
+                Logger.LogInfo(cpuInfo.ToString());
+            }
+            info.RefreshVideoControllerList();
+            foreach (VideoController gpu in info.VideoControllerList)
+            {
+                StringBuilder gpuInfo = new StringBuilder();
+                gpuInfo.AppendLine($"Name: {gpu.Name}");
+                gpuInfo.AppendLine($"Manufacturer: {gpu.Manufacturer}");
+                gpuInfo.AppendLine($"Caption: {gpu.Caption}");
+                gpuInfo.AppendLine($"Description: {gpu.Description}");
+                gpuInfo.AppendLine($"Driver version: {gpu.DriverVersion}");
+                gpuInfo.AppendLine($"Video processor: {gpu.VideoProcessor}");
+                gpuInfo.AppendLine($"VRAM: {gpu.AdapterRAM}");
+
+                Logger.LogInfo(gpuInfo.ToString());
+
+                // Specific case for MacBook Air 2018 that struggles with MSAA on.
+                if (OperatingSystem.IsMacOS() && gpu.Name == "Intel UHD Graphics 617")
+                {
+                    openglSettings.Multisamples = 0;
+                }
+
+                // Crank the MSAA up for GPUs that can handle it.
+                if (gpu.Name.Contains("GTX 1070"))
+                {
+                    openglSettings.Multisamples = 16;
+                }
+            }
+            
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
             Toolkit.Display.GetWorkArea(mainDisplay, out Box2i area);
             int minWorkDimention = Math.Max(400, (int)(Math.Min(area.Height, area.Width) * 0.9f));
@@ -73,6 +130,9 @@ namespace Bejeweled
                 StbImageSharp.ImageResult result = StbImageSharp.ImageResult.FromStream(File.Open("./Assets/Icon/ruby_icon.png", FileMode.Open), StbImageSharp.ColorComponents.RedGreenBlueAlpha);
                 IconHandle icon = Toolkit.Icon.Create(result.Width, result.Height, result.Data);
                 Toolkit.Window.SetIcon(Window, icon);
+
+                // For macOS we set the dock icon as that is the closest thing to a window icon.
+                (Toolkit.Window as OpenTK.Platform.Native.macOS.MacOSWindowComponent)?.SetDockIcon(Window, icon);
             }
 
             CursorHandle cursor;
@@ -82,6 +142,7 @@ namespace Bejeweled
             }
             else
             {
+                // FIXME: On mac we can animate this cursor by loading all of the GIF frames and putting them in an animated cursor...
                 StbImageSharp.ImageResult result = StbImageSharp.ImageResult.FromStream(File.Open("./Assets/Cursor/Gold Orb_pointer.gif", FileMode.Open), StbImageSharp.ColorComponents.RedGreenBlueAlpha);
                 cursor = Toolkit.Cursor.Create(result.Width, result.Height, result.Data, 0, 0);
             }
