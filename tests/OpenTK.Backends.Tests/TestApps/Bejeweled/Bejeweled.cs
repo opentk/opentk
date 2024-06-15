@@ -1,20 +1,5 @@
-﻿using glTFLoader;
-using glTFLoader.Schema;
-using OpenTK.Core.Platform;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Audio.OpenAL;
-using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
+﻿using OpenTK.Core.Platform;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using StbVorbisSharp;
-using System.Text;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
-using System.Reflection.Metadata;
 
 namespace OpenTK.Backends.Tests.Bejeweled
 {

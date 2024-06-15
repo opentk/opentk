@@ -407,23 +407,25 @@ namespace Bejeweled
 
     internal class Cubemap
     {
-        private static ReadOnlySpan<DDSCubemapFaces> OpenGLCubemapFaceOrder => [
+        private static ReadOnlySpan<DDSCubemapFaces> OpenGLCubemapFaceOrder => new DDSCubemapFaces[]
+        {
             DDSCubemapFaces.PosX,
             DDSCubemapFaces.NegX,
             DDSCubemapFaces.PosY,
             DDSCubemapFaces.NegY,
             DDSCubemapFaces.PosZ,
             DDSCubemapFaces.NegZ,
-        ];
+        };
 
-        private static ReadOnlySpan<TextureTarget> OpenGLCubemapFaceOrderTextureTarget => [
+        private static ReadOnlySpan<TextureTarget> OpenGLCubemapFaceOrderTextureTarget => new TextureTarget[]
+        {
             TextureTarget.TextureCubeMapPositiveX,
             TextureTarget.TextureCubeMapNegativeX,
             TextureTarget.TextureCubeMapPositiveY,
             TextureTarget.TextureCubeMapNegativeY,
             TextureTarget.TextureCubeMapPositiveZ,
             TextureTarget.TextureCubeMapNegativeZ,
-        ];
+        };
 
         public int Handle;
 
@@ -435,6 +437,22 @@ namespace Bejeweled
 
             int depth = 6;
             TextureTarget target = TextureTarget.TextureCubeMap;
+
+            static bool IsExtensionSupported(string name)
+            {
+                int n = GL.GetInteger(GetPName.NumExtensions);
+                for (int i = 0; i < n; i++)
+                {
+                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    if (extension == name) return true;
+                }
+
+                return false;
+            }
+
+            int major = GL.GetInteger(GetPName.MajorVersion);
+            int minor = GL.GetInteger(GetPName.MinorVersion);
+            bool BC6HSupported = (major > 4 || (major == 4 && minor >= 2)) || IsExtensionSupported("ARB_texture_compression_bptc") || IsExtensionSupported("GL_ARB_texture_compression_bptc");
 
             int bytesPerPixel;
             int blockSize;
@@ -467,6 +485,8 @@ namespace Bejeweled
                     break;
                 case DDSImageFormat.BC6H_UF:
                     // This is core since 4.2, but we'll just assume support in 4.1.
+                    // FIXME: MacOS does not have support for this texture format...
+                    // Maybe we can decompress this format if there is no support.
                     internalFormat = (SizedInternalFormat)All.CompressedRgbBptcUnsignedFloat;
                     compressed = true;
                     bytesPerPixel = 1;
@@ -513,7 +533,24 @@ namespace Bejeweled
                 for (int i = 0; i < idealMipCount; i++)
                 {
                     int dataLength = Math.Max(mipWidth * mipHeight * bytesPerPixel, blockSize);
-                    if (compressed)
+                    if (image.Format == DDSImageFormat.BC6H_UF && BC6HSupported == false)
+                    {
+                        if (i < image.MipmapCount)
+                        {
+                            // We need to decompress the format to RGBA16F.
+                            Half[] decompressed = new Half[mipWidth * mipHeight * 4];
+
+                            Span<byte> data = new Span<byte>(image.AllData, dataOffset, dataLength);
+                            BC6H.DecompressBC6H(data, mipWidth, mipHeight, decompressed);
+
+                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
+                        }
+                        else
+                        {
+                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
+                        }
+                    }
+                    else if (compressed)
                     {
                         if (i < image.MipmapCount)
                         {
@@ -818,9 +855,10 @@ namespace Bejeweled
 
         private bool KHRDebugAvailable;
 
-        internal static readonly Gem[] ChooseGems = [Gem.Diamond, Gem.Ruby, Gem.Emerald, Gem.Sapphire, Gem.Topaz, Gem.Amethyst, Gem.Zircon];
+        internal static readonly Gem[] ChooseGems = new Gem[] { Gem.Diamond, Gem.Ruby, Gem.Emerald, Gem.Sapphire, Gem.Topaz, Gem.Amethyst, Gem.Zircon };
 
-        internal static readonly Vector3[] GemColors = [
+        internal static readonly Vector3[] GemColors = new Vector3[]
+        {
             (Vector3)Color4.White.ToRgb() * 0.75f,
             (Vector3)Color4.Red.ToRgb() * 0.75f,
             (Vector3)Color4.Green.ToRgb() * 0.75f,
@@ -828,9 +866,10 @@ namespace Bejeweled
             (Vector3)Color4.Yellow.ToRgb() * 0.75f,
             (Vector3)Color4.Purple.ToRgb() * 0.75f,
             (Vector3)Color4.Cyan.ToRgb() * 0.75f,
-        ];
+        };
 
-        internal static readonly Vector3[] GemF0s = [
+        internal static readonly Vector3[] GemF0s = new Vector3[]
+        {
             new Vector3(0.171950f, 0.171950f, 0.171950f),
             new Vector3(0.078350f, 0.076697f, 0.076697f),
             new Vector3(0.076697f, 0.078350f, 0.076697f),
@@ -838,7 +877,7 @@ namespace Bejeweled
             new Vector3(0.078350f, 0.078350f, 0.076697f),
             new Vector3(0.078350f, 0.076697f, 0.078350f),
             new Vector3(0.076697f, 0.078350f, 0.078350f),
-        ];
+        };
 
         Framebuffer RefractionInfoFramebuffer;
 
@@ -997,8 +1036,11 @@ namespace Bejeweled
                 }
             }
 
-            IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
-            Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
+            if (ALC.EnumerateAll.IsExtensionPresent())
+            {
+                IEnumerable<string> allDevices = ALC.EnumerateAll.GetStringList(GetEnumerateAllContextStringList.AllDevicesSpecifier);
+                Logger.LogDebug($"All Devices: {string.Join(", ", allDevices)}");
+            }
 
             ALDevice = ALC.OpenDevice(deviceName);
             ALContext = ALC.CreateContext(ALDevice, (int[]?)null);
@@ -1261,7 +1303,7 @@ namespace Bejeweled
                             AnimationTime = 0.0f;
                             CurrentState = State.AnimatingPlayerMove;
 
-                            SwapSoundEffect.PlayOneShot(SwapSFXVolume, float.Lerp(0.95f, 1.05f, Random.Shared.NextSingle()));
+                            SwapSoundEffect.PlayOneShot(SwapSFXVolume, MathHelper.Lerp(0.95f, 1.05f, Random.Shared.NextSingle()));
                         }
 
                         BoardPositions[SelectedGem.X, SelectedGem.Y] = GetTileLocation(SelectedGem.X, SelectedGem.Y);
@@ -1431,7 +1473,7 @@ namespace Bejeweled
                     if (combo)
                     {
                         FallingComboCount++;
-                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, float.Lerp(1.0f, 1.2f, float.Clamp(FallingComboCount / (float)10, 0, 1)));
+                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, MathHelper.Lerp(1.0f, 1.2f, float.Clamp(FallingComboCount / (float)10, 0, 1)));
                     }
 
                     if (combo == false)

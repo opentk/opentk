@@ -27,10 +27,12 @@ namespace Bejeweled
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 #if RELEASE
-            Logger = new DebugFileLogger("Bejeweled_debug.log");
 #else
             Logger = new DebugLogger();
 #endif
+            Logger = new DebugFileLogger("Bejeweled_debug.log");
+
+            Logger.LogInfo($"Current path: {Directory.GetCurrentDirectory()}");
 
             EventQueue.EventRaised += EventQueue_EventRaised;
 
