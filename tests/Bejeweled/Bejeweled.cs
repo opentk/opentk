@@ -436,6 +436,22 @@ namespace Bejeweled
             int depth = 6;
             TextureTarget target = TextureTarget.TextureCubeMap;
 
+            static bool IsExtensionSupported(string name)
+            {
+                int n = GL.GetInteger(GetPName.NumExtensions);
+                for (int i = 0; i < n; i++)
+                {
+                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    if (extension == name) return true;
+                }
+
+                return false;
+            }
+
+            int major = GL.GetInteger(GetPName.MajorVersion);
+            int minor = GL.GetInteger(GetPName.MinorVersion);
+            bool BC6HSupported = (major > 4 || (major == 4 && minor >= 2)) || IsExtensionSupported("ARB_texture_compression_bptc") || IsExtensionSupported("GL_ARB_texture_compression_bptc");
+
             int bytesPerPixel;
             int blockSize;
             SizedInternalFormat internalFormat;
@@ -513,7 +529,24 @@ namespace Bejeweled
                 for (int i = 0; i < idealMipCount; i++)
                 {
                     int dataLength = Math.Max(mipWidth * mipHeight * bytesPerPixel, blockSize);
-                    if (compressed)
+                    if (image.Format == DDSImageFormat.BC6H_UF && BC6HSupported == false)
+                    {
+                        if (i < image.MipmapCount)
+                        {
+                            // We need to decompress the format to RGBA16F.
+                            Half[] decompressed = new Half[mipWidth * mipHeight * 4];
+
+                            Span<byte> data = new Span<byte>(image.AllData, dataOffset, dataLength);
+                            BC6H.DecompressBC6H(data, mipWidth, mipHeight, decompressed);
+
+                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, decompressed);
+                        }
+                        else
+                        {
+                            GL.TexImage2D(faceTextureTarget, i, InternalFormat.Rgba16f, mipWidth, mipHeight, 0, PixelFormat.Rgba, PixelType.HalfFloat, IntPtr.Zero);
+                        }
+                    }
+                    else if (compressed)
                     {
                         if (i < image.MipmapCount)
                         {

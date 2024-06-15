@@ -306,22 +306,24 @@ namespace Bejeweled
                 return dataSize;
             }
 
-            static int CalculateSize(int width, int height, int mipmapCount, int bytesPerPixel)
+            
+        }
+
+        public static int CalculateSize(int width, int height, int mipmapCount, int bytesPerPixel)
+        {
+            int dataSize = 0;
+            int mipWidth = width;
+            int mipHeight = height;
+            for (int i = 0; i < mipmapCount; i++)
             {
-                int dataSize = 0;
-                int mipWidth = width;
-                int mipHeight = height;
-                for (int i = 0; i < mipmapCount; i++)
-                {
-                    // A block is at minium 16 bytes.
-                    dataSize += mipWidth * mipHeight * bytesPerPixel;
+                // A block is at minium 16 bytes.
+                dataSize += mipWidth * mipHeight * bytesPerPixel;
 
-                    mipWidth = Math.Max(1, mipWidth / 2);
-                    mipHeight = Math.Max(1, mipHeight / 2);
-                }
-
-                return dataSize;
+                mipWidth = Math.Max(1, mipWidth / 2);
+                mipHeight = Math.Max(1, mipHeight / 2);
             }
+
+            return dataSize;
         }
 
         public static unsafe DDSImage LoadImage(string path)
