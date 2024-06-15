@@ -1822,6 +1822,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WindowBorderStyle.FixedBorder:
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyle &= ~WindowStyles.ThickFrame;
+                    windowStyle &= ~WindowStyles.MaximizeBox;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;

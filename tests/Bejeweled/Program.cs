@@ -105,7 +105,7 @@ namespace Bejeweled
                 }
 
                 // Crank the MSAA up for GPUs that can handle it.
-                if (gpu.Name.Contains("GTX 1070"))
+                if (gpu.Name.Contains("GTX 1070") || gpu.Name.Contains("RTX"))
                 {
                     openglSettings.Multisamples = 16;
                 }
