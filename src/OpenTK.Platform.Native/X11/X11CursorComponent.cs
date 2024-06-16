@@ -159,8 +159,15 @@ namespace OpenTK.Platform.Native.X11
             ximage->xhot = (uint)hotspotX;
             ximage->yhot = (uint)hotspotY;
 
-            // FIXME: Figure out if this copy is correct.
-            Unsafe.CopyBlock(ref Unsafe.AsRef<byte>(ximage->pixels), ref MemoryMarshal.GetReference(image), (uint)image.Length);
+            Span<byte> imageBytes = MemoryMarshal.Cast<uint, byte>(new Span<uint>(ximage->pixels, width * height));
+            // Xcursor wants byte order BGRA
+            for (int i = 0; i < width * height; i++)
+            {
+                imageBytes[i * 4 + 0] = image[i * 4 + 2];
+                imageBytes[i * 4 + 1] = image[i * 4 + 1];
+                imageBytes[i * 4 + 2] = image[i * 4 + 0];
+                imageBytes[i * 4 + 3] = image[i * 4 + 3];
+            }
 
             xcursor.Cursor = XcursorImageLoadCursor(X11.Display, ximage);
             XcursorImageDestroy(ximage);

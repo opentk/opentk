@@ -959,15 +959,27 @@ namespace Bejeweled
                 return false;
             }
 
+            string version = GL.GetString(StringName.Version)!;
+            string glslVersion = GL.GetString(StringName.ShadingLanguageVersion)!;
+            string renderer = GL.GetString(StringName.Renderer)!;
+            string vendor = GL.GetString(StringName.Vendor)!;
+            Logger.LogInfo($"OpenGL version: {version}");
+            Logger.LogInfo($"GLSL version: {glslVersion}");
+            Logger.LogInfo($"Renderer: {renderer}");
+            Logger.LogInfo($"Vendor: {vendor}");
+
             int major = GL.GetInteger(GetPName.MajorVersion);
             int minor = GL.GetInteger(GetPName.MinorVersion);
             KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug") || IsExtensionSupported("GL_KHR_debug");
 
             if (KHRDebugAvailable)
             {
-                GL.DebugMessageCallback(Program.DebugProcCallback, IntPtr.Zero);
+                // Enabling debug output before setting the callback is apprently
+                // needed to make certain (Mesa 23.2.1-1ubuntu3.1~22.04.2) linux drivers not segfault.
+                // - Noggin_bops 2024-06-16
                 GL.Enable(EnableCap.DebugOutput);
                 GL.Enable(EnableCap.DebugOutputSynchronous);
+                GL.DebugMessageCallback(Program.DebugProcCallback, IntPtr.Zero);
             }
 
             GL.Enable(EnableCap.FramebufferSrgb);

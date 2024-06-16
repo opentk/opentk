@@ -1072,6 +1072,7 @@ namespace OpenTK.Platform.Native.X11
                 byte depthBits;
                 switch (glhints.DepthBits)
                 {
+                    case ContextDepthBits.None:    depthBits = 0;  break;
                     case ContextDepthBits.Depth24: depthBits = 24; break;
                     case ContextDepthBits.Depth32: depthBits = 32; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
@@ -1080,6 +1081,7 @@ namespace OpenTK.Platform.Native.X11
                 byte stencilBits;
                 switch (glhints.StencilBits)
                 {
+                    case ContextStencilBits.None:     stencilBits = 0; break;
                     case ContextStencilBits.Stencil1: stencilBits = 1; break;
                     case ContextStencilBits.Stencil8: stencilBits = 8; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());

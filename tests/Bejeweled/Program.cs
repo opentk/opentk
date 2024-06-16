@@ -65,10 +65,13 @@ namespace Bejeweled
             // which is both good for debug and allows us to do some tweaking for
             // specific hardware.
             HardwareInfo info = new HardwareInfo();
+            info.RefreshOperatingSystem();
+            Logger.LogInfo($"OS Name: {info.OperatingSystem.Name}, Version: {info.OperatingSystem.VersionString}");
             info.RefreshCPUList(false);
             foreach (CPU cpu in info.CpuList)
             {
                 StringBuilder cpuInfo = new StringBuilder();
+                cpuInfo.AppendLine("CPU Info:");
                 cpuInfo.AppendLine($"Name: {cpu.Name}");
                 cpuInfo.AppendLine($"Manufacturer: {cpu.Manufacturer}");
                 cpuInfo.AppendLine($"Caption: {cpu.Caption}");
@@ -88,6 +91,7 @@ namespace Bejeweled
             foreach (VideoController gpu in info.VideoControllerList)
             {
                 StringBuilder gpuInfo = new StringBuilder();
+                gpuInfo.AppendLine("GPU Info:");
                 gpuInfo.AppendLine($"Name: {gpu.Name}");
                 gpuInfo.AppendLine($"Manufacturer: {gpu.Manufacturer}");
                 gpuInfo.AppendLine($"Caption: {gpu.Caption}");
