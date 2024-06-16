@@ -114,7 +114,7 @@ namespace Bejeweled
                     openglSettings.Multisamples = 16;
                 }
             }
-            
+
             DisplayHandle mainDisplay = Toolkit.Display.OpenPrimary();
             Toolkit.Display.GetWorkArea(mainDisplay, out Box2i area);
             int minWorkDimention = Math.Max(400, (int)(Math.Min(area.Height, area.Width) * 0.9f));

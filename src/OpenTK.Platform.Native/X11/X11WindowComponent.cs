@@ -51,12 +51,16 @@ namespace OpenTK.Platform.Native.X11
 
         internal static XWindow HelperWindow { get; private set; }
 
+        internal static string ApplicationName;
+
         /// <inheritdoc />
         public void Initialize(ToolkitOptions options)
         {
             // Later on we can replace this with a hint.
             string? displayName = null;
             X11.Display = XOpenDisplay(displayName);
+
+            ApplicationName = options.ApplicationName;
 
             if (X11.Display.Value == IntPtr.Zero)
             {
@@ -169,7 +173,7 @@ namespace OpenTK.Platform.Native.X11
 
                 XFree(array);
             }
-        
+
             // Create a helper window to help with clipboard stuff.
             // FIXME: Will this only be used for clipboard stuff?
             unsafe 
@@ -1198,6 +1202,16 @@ namespace OpenTK.Platform.Native.X11
                 wmHints->input = 1;
 
                 XSetWMHints(X11.Display, window, wmHints);
+            }
+
+            unsafe {
+                XClassHint* classHints = XAllocClassHint();
+                // FIXME: Add a way to select two separate strings for these.
+                classHints->res_name = (byte*)Marshal.StringToCoTaskMemUTF8(ApplicationName);
+                classHints->res_class = classHints->res_name;
+                XSetClassHint(X11.Display, window, classHints);
+                Marshal.FreeCoTaskMem((nint)classHints->res_name);
+                XFree(classHints);
             }
 
             if (X11.XI2Available)

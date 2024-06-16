@@ -290,6 +290,11 @@ namespace OpenTK.Platform.Native.X11
         public int WindowGravity;
     }
 
+    internal unsafe struct XClassHint {
+        public byte *res_name;
+        public byte *res_class;
+    }
+
     /// <summary>
     /// X11 Time Structure.
     /// </summary>

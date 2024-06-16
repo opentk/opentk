@@ -112,6 +112,12 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern XSizeHints* XAllocSizeHints();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XClassHint *XAllocClassHint();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void XSetClassHint(XDisplayPtr display, XWindow w, XClassHint* class_hints);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
