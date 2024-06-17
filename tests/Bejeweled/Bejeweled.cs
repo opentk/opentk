@@ -1498,6 +1498,10 @@ namespace Bejeweled
                         Logger.LogDebug($"Legal moves: {moves}!");
 
                         Toolkit.Window.SetTitle(Window, $"Bejeweled ({moves} possible moves)");
+                        if (moves == 0)
+                        {
+                            Toolkit.Window.SetTitle(Window, $"Bejeweled ({moves} possible moves, press R to reset)");
+                        }
 
                         for (int x = 0; x < Board.GetLength(0); x++)
                         {
