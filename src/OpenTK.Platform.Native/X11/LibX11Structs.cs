@@ -290,9 +290,18 @@ namespace OpenTK.Platform.Native.X11
         public int WindowGravity;
     }
 
-    internal unsafe struct XClassHint {
+    internal unsafe struct XClassHint
+    {
         public byte *res_name;
         public byte *res_class;
+    }
+
+    internal unsafe struct XTextProperty
+    {
+        public byte* value;     /* property data */
+        public XAtom encoding;  /* type of property */
+        public int format;      /* 8, 16, or 32 */
+        public ulong nitems;    /* number of items in value */
     }
 
     /// <summary>

@@ -62,6 +62,7 @@ namespace OpenTK.Backends.Tests
         WindowMode WindowMode = WindowMode.Normal;
 
         string titleString = "";
+        string iconTitleString = "";
         int modeIndex = 0;
         int borderStyleIndex = 0;
         int captureModeIndex = 0;
@@ -188,6 +189,20 @@ namespace OpenTK.Backends.Tests
                 {
                     Toolkit.Window.SetTitle(window, titleString);
                     Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
+                }
+
+                if (Toolkit.Window is Platform.Native.X11.X11WindowComponent x11Win)
+                {
+                    ImGui.AlignTextToFramePadding();
+                    ImGui.TextUnformatted("Iconified title"); ImGui.SameLine();
+                    ImGui.InputText("##icon_title", ref iconTitleString, 1024); ImGui.SameLine();
+                    if (ImGui.Button("Apply##icon_tile"))
+                    {
+                        x11Win.SetIconifiedTitle(window, iconTitleString);
+                        Program.Logger.LogInfo($"WindowComponent.SetIconTitle(\"{iconTitleString}\")");
+                    }
+
+                    string iconTitle = x11Win.GetIconifiedTitle(window);
                 }
 
                 ImGui.AlignTextToFramePadding();

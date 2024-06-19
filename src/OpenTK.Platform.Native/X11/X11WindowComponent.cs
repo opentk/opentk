@@ -1170,7 +1170,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 window,
                 "OpenTK Window [Native:X11]",
-                "ICO_OPENTK",
+                "OTK Window",
                 XPixmap.None,
                 null,
                 0,
@@ -1304,6 +1304,8 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr name);
 
+            // FIXME: Make sure to free name before we reassign it?
+
             // If the property is empty or does not exist or an error,
             // fetch the classic name.
             if (returnedType.IsNone || status != 0)
@@ -1320,12 +1322,12 @@ namespace OpenTK.Platform.Native.X11
         public void SetTitle(WindowHandle handle, string title)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
-            byte[] titleBytes = System.Text.Encoding.UTF8.GetBytes(title);
+            byte[] titleBytes = Encoding.UTF8.GetBytes(title);
 
             XStoreName(window.Display, window.Window, title);   // Set classic name,
             unsafe
             {
-                fixed(byte *titlePtr = &titleBytes[0])
+                fixed(byte *titlePtr = titleBytes)
                 {
                     // Set freedesktop name.
                     XChangeProperty(
@@ -1343,6 +1345,68 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Seems like on some machines we need to call XFlush to get the changes to be made.
             XFlush(X11.Display);
+        }
+
+        /// <summary>
+        /// Gets the iconified title of the window using either <c>_NET_WM_ICON_NAME</c> or <c>WM_ICON_NAME</c>.
+        /// </summary>
+        /// <param name="handle">A handle to the window to get the iconified title of.</param>
+        /// <returns>The title of the window when it's iconified.</returns>
+        public unsafe string GetIconifiedTitle(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            int status = XGetWindowProperty(
+                xwindow.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
+                0, long.MaxValue,
+                false,
+                X11.Atoms[KnownAtoms.UTF8_STRING],
+                out XAtom returnedType,
+                out _,
+                out _,
+                out _,
+                out IntPtr iconName);
+
+            // FIXME: Make sure to free name before we reassign it?
+
+            if (returnedType.IsNone || status != 0)
+            {
+                XGetIconName(xwindow.Display, xwindow.Window, out iconName);
+            }
+
+            string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
+            XFree(iconName);
+            return str;
+        }
+
+        /// <summary>
+        /// Sets the iconified title of the window using both <c>_NET_WM_ICON_NAME</c> and <c>WM_ICON_NAME</c>.
+        /// </summary>
+        /// <param name="handle">A handle to the window to set the iconified title of.</param>
+        /// <param name="iconTitle">The new iconified title.</param>
+        public void SetIconifiedTitle(WindowHandle handle, string iconTitle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSetIconName(xwindow.Display, xwindow.Window, iconTitle);
+
+            unsafe {
+                byte[] titleBytes = Encoding.UTF8.GetBytes(iconTitle);
+                fixed (byte* titleBytesPtr = titleBytes)
+                {
+                    XChangeProperty(
+                        xwindow.Display,
+                        xwindow.Window,
+                        X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
+                        X11.Atoms[KnownAtoms.UTF8_STRING],
+                        8,
+                        XPropertyMode.Replace,
+                        (IntPtr)titleBytesPtr,
+                        titleBytes.Length);
+                }
+            }
         }
 
         /// <inheritdoc />

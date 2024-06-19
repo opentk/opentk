@@ -202,9 +202,6 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
-
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XGetWindowAttributes(
             XDisplayPtr display,
             XWindow window,
@@ -234,6 +231,15 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFetchName(XDisplayPtr display, XWindow window, out IntPtr name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XStatus XGetIconName(XDisplayPtr display, XWindow w, out IntPtr icon_name_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void XSetIconName(XDisplayPtr display, XWindow w, [MarshalAs(UnmanagedType.LPStr)]string name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XAtom XInternAtom(XDisplayPtr display, string atomName, bool onlyIfExists);
