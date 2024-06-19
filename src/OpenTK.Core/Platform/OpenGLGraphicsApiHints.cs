@@ -10,7 +10,7 @@ namespace OpenTK.Core.Platform
     public class OpenGLGraphicsApiHints : GraphicsApiHints
     {
         /// <inheritdoc/>
-        public override GraphicsApi Api { get; }
+        public override GraphicsApi Api => GraphicsApi.OpenGL;
 
         /// <summary>
         /// OpenGL version to create.
@@ -63,6 +63,21 @@ namespace OpenTK.Core.Platform
         public bool sRGBFramebuffer { get; set; } = false;
 
         /// <summary>
+        /// The pixel format of the context.
+        /// This differentiates between "normal" fixed point LDR formats
+        /// and floating point HDR formats.
+        /// Use <see cref="ContextPixelFormat.RGBAFloat"/> or <see cref="ContextPixelFormat.RGBAPackedFloat"/> for HDR support.
+        /// Is <see cref="ContextPixelFormat.RGBA"/> by default.
+        /// </summary>
+        public ContextPixelFormat PixelFormat { get; set; } = ContextPixelFormat.RGBA;
+
+        /// <summary>
+        /// The swap method to use for the context.
+        /// Is <see cref="ContextSwapMethod.Undefined"/> by default.
+        /// </summary>
+        public ContextSwapMethod SwapMethod { get; set; } = ContextSwapMethod.Undefined;
+
+        /// <summary>
         /// The OpenGL profile to request.
         /// </summary>
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
@@ -77,7 +92,42 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool DebugFlag { get; set; } = false;
 
-        // FIXME: Robust access and reset notification flags?
+        /// <summary>
+        /// If the robustness flag should be set or not.
+        /// </summary>
+        public bool RobustnessFlag { get; set; } = false;
+
+        /// <summary>
+        /// The reset notification strategy to use if <see cref="RobustnessFlag"/> is set to <c>true</c>.
+        /// See <see href="https://registry.khronos.org/OpenGL/extensions/ARB/ARB_robustness.txt">GL_ARB_robustness</see> for details.
+        /// Default value is <see cref="ContextResetNotificationStrategy.NoResetNotification"/>.
+        /// </summary>
+        public ContextResetNotificationStrategy ResetNotificationStrategy { get; set; } = ContextResetNotificationStrategy.NoResetNotification;
+
+        /// <summary>
+        /// See <see href="https://registry.khronos.org/OpenGL/extensions/ARB/ARB_robustness_application_isolation.txt">GL_ARB_robustness_isolation</see>.
+        /// <see cref="ResetNotificationStrategy"/> needs to be <see cref="ContextResetNotificationStrategy.LoseContextOnReset"/>.
+        /// </summary>
+        public bool ResetIsolation { get; set; } = false;
+
+        /// <summary>
+        /// If the "no error" flag should be set or not.
+        /// See <see href="https://registry.khronos.org/OpenGL/extensions/KHR/KHR_no_error.txt">KHR_no_error</see>.
+        /// Cannot be enabled while <see cref="DebugFlag"/> or <see cref="RobustnessFlag"/> is set.
+        /// </summary>
+        public bool NoError { get; set; } = false;
+
+        /// <summary>
+        /// Whether to use KHR_context_flush_control (if available) or not.
+        /// See <see cref="ReleaseBehaviour"/> for flush control options.
+        /// </summary>
+        public bool UseFlushControl { get; set; } = false;
+
+        /// <summary>
+        /// If <see cref="UseFlushControl"/> is true then this controls the context release behaviour when the context is changed.
+        /// Is <see cref="ContextReleaseBehaviour.Flush"/> by default.
+        /// </summary>
+        public ContextReleaseBehaviour ReleaseBehaviour { get; set; } = ContextReleaseBehaviour.Flush;
 
         /// <summary>
         /// A context to enable context sharing with.
@@ -85,17 +135,15 @@ namespace OpenTK.Core.Platform
         public OpenGLContextHandle? SharedContext { get; set; } = null;
 
         /// <summary>
+        /// A callback that can be used to select appropriate backbuffer values.
+        /// </summary>
+        public ContextValueSelector Selector { get; set; } = ContextValues.DefaultValuesSelector;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.
         /// </summary>
-        /// <param name="api">The OpenGL variant the hints are for.</param>
-        public OpenGLGraphicsApiHints(GraphicsApi api = GraphicsApi.OpenGL)
+        public OpenGLGraphicsApiHints()
         {
-            if (api != GraphicsApi.OpenGL && api != GraphicsApi.OpenGLES)
-            {
-                throw new Exception($"Cannot create OpenGL hints for graphics API {api}.");
-            }
-
-            Api = api;
         }
 
         /// <summary>

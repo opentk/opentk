@@ -6844,12 +6844,19 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         AUX_BUFFERS_ARB = 0x2024,
 
-        // ### WGL_ARB_multisample ###
+        /// <summary>WGL_ARB_multisample</summary>
         SAMPLE_BUFFERS_ARB = 0x2041,
+        /// <summary>WGL_ARB_multisample</summary>
         SAMPLES_ARB = 0x2042,
 
-        // ### WGL_ARB_framebuffer_sRGB ###
+        /// <summary>WGL_ARB_framebuffer_sRGB</summary>
         FRAMEBUFFER_SRGB_CAPABLE_ARB = 0x20A9,
+
+        /// <summary>WGL_EXT_colorspace</summary>
+        COLORSPACE_EXT = 0x309D,
+
+        /// <summary>WGL_EXT_depth_float</summary>
+        DEPTH_FLOAT_EXT = 0x2040,
     }
 
     /// <summary>
@@ -6899,6 +6906,21 @@ namespace OpenTK.Platform.Native.Windows
     {
         TYPE_RGBA_ARB = 0x202B,
         TYPE_COLORINDEX_ARB = 0x202C,
+
+        /// <summary>
+        /// From ARB_color_buffer_float 
+        /// </summary>
+        TYPE_RGBA_FLOAT_ARB = 0x21A0,
+
+        /// <summary>
+        /// From WGL_ATI_pixel_format_float
+        /// </summary>
+        TYPE_RGBA_FLOAT_ATI = 0x21A0,
+
+        /// <summary>
+        /// From EXT_packed_float
+        /// </summary>
+        TYPE_RGBA_UNSIGNED_FLOAT_EXT = 0x20A8,
     }
 
     internal enum WGLContextAttribs : int
@@ -6908,6 +6930,27 @@ namespace OpenTK.Platform.Native.Windows
         CONTEXT_LAYER_PLANE_ARB = 0x2093,
         CONTEXT_FLAGS_ARB = 0x2094,
         CONTEXT_PROFILE_MASK_ARB = 0x9126,
+
+        /// <summary>
+        /// From WGL_ARB_create_context_robustness
+        /// </summary>
+        CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB = 0x8256,
+
+        /// <summary>
+        /// From WGL_ARB_create_context_no_error
+        /// </summary>
+        CONTEXT_OPENGL_NO_ERROR_ARB = 0x31B3,
+
+        /// <summary>
+        /// From WGL_ARB_context_flush_control
+        /// </summary>
+        CONTEXT_RELEASE_BEHAVIOR_ARB = 0x2097,
+    }
+
+    internal enum WGLColorspaceEXT
+    {
+        WGL_COLORSPACE_SRGB_EXT = 0x3089,
+        WGL_COLORSPACE_LINEAR_EXT = 0x308A,
     }
 
     internal enum WPF : uint

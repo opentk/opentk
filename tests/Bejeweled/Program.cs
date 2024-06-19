@@ -53,12 +53,22 @@ namespace Bejeweled
                 Version = new Version(4, 1),
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
+                RedColorBits = 8,
+                GreenColorBits = 8,
+                BlueColorBits = 8,
                 Multisamples = 4,
                 sRGBFramebuffer = true,
                 DebugFlag = true,
-                // FIXME: Add Depth16 format?
-                DepthBits = ContextDepthBits.Depth24,
+                DepthBits = ContextDepthBits.Depth16,
                 StencilBits = ContextStencilBits.None,
+                Selector = static (options, requested, logger) => {
+                    for (int i = 0; i < options.Count; i++)
+                    {
+                        logger?.LogInfo(options[i].ToString());
+                    }
+
+                    return ContextValues.DefaultValuesSelector(options, requested, logger);
+                }
             };
 
             // For now we can use Hardware.Info to debug printout the hardware config

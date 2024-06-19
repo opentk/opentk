@@ -78,7 +78,8 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_ARB_create_context"))
             {
-                s_glXCreateContextAttribARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
+                // FIXME: Can we use a function pointer instead of a delegate?
+                s_glXCreateContextAttribsARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
             }
             else
             {
@@ -122,7 +123,7 @@ namespace OpenTK.Platform.Native.X11
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
         private glXGetProcAddressProc s_glXGetProcAddress = null!;
-        private glXCreateContextAttribARBProc s_glXCreateContextAttribARB = null!;
+        private glXCreateContextAttribARBProc s_glXCreateContextAttribsARB = null!;
 
         /// <inheritdoc />
         public OpenGLContextHandle CreateFromSurface()
@@ -169,7 +170,7 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: This might not be able to create OpenGL 1.0 contexts...
             // See: https://github.com/glfw/glfw/blob/3eaf1255b29fdf5c2895856c7be7d7185ef2b241/src/glx_context.c#L592-L595
             // - Noggin_bops 2023-08-26
-            GLXContext context = s_glXCreateContextAttribARB(
+            GLXContext context = s_glXCreateContextAttribsARB(
                 window.Display,
                 window.FBConfig!.Value,
                 sharedContext?.Context ?? new GLXContext(IntPtr.Zero),
