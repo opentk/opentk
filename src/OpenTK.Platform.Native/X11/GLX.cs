@@ -86,7 +86,7 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             XVisualInfo* visualInfo,
             int attribute,
-            [MarshalAs(UnmanagedType.LPArray)]int[] values);
+            out int value);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern GLXContext glXGetCurrentContext();
@@ -201,7 +201,6 @@ namespace OpenTK.Platform.Native.X11
         internal const int GLX_COLOR_INDEX_BIT = 0x2;
         internal const int GLX_PBUFFER_CLOBBER_MASK = 0x08000000;
 
-
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe GLXFBConfig *glXChooseFBConfig(
             XDisplayPtr display,
@@ -214,7 +213,7 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             GLXFBConfig config,
             int attribute,
-            ref int value);
+            out int value);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe GLXFBConfig* glXGetFBConfigs(XDisplayPtr display, int screen, out int elements);
@@ -300,5 +299,26 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int glXSwapIntervalSGI(int interval);
 
         #endregion
+    
+        /// <summary>From GLX_ARB_framebuffer_sRGB</summary>
+        internal const int GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB = 0x20B2;
+
+        /// <summary>From GLX_ARB_multisample</summary>
+        internal const int GLX_SAMPLE_BUFFERS_ARB = 100000;
+
+        /// <summary>From GLX_ARB_multisample</summary>
+        internal const int GLX_SAMPLES_ARB = 100001;
+
+        /// <summary>GLX_OML_swap_method</summary>
+        internal const int GLX_SWAP_METHOD_OML = 0x8060;
+
+        /// <summary>GLX_OML_swap_method</summary>
+        internal const int GLX_SWAP_EXCHANGE_OML = 0x8061;
+
+        /// <summary>GLX_OML_swap_method</summary>
+        internal const int GLX_SWAP_COPY_OML = 0x8062;
+
+        /// <summary>GLX_OML_swap_method</summary>
+        internal const int GLX_SWAP_UNDEFINED_OML = 0x8063;
     }
 }

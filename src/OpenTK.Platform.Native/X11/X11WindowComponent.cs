@@ -1077,6 +1077,7 @@ namespace OpenTK.Platform.Native.X11
                 switch (glhints.DepthBits)
                 {
                     case ContextDepthBits.None:    depthBits = 0;  break;
+                    case ContextDepthBits.Depth16: depthBits = 16; break;
                     case ContextDepthBits.Depth24: depthBits = 24; break;
                     case ContextDepthBits.Depth32: depthBits = 32; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
@@ -1091,31 +1092,117 @@ namespace OpenTK.Platform.Native.X11
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
                 }
 
-                Span<int> visualAttribs = stackalloc int[]
-                {
-                    GLX_X_RENDERABLE, 1,
-                    GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
-                    GLX_RENDER_TYPE, GLX_RGBA_BIT,
-                    GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
-                    GLX_RED_SIZE, glhints.RedColorBits,
-                    GLX_GREEN_SIZE, glhints.GreenColorBits,
-                    GLX_BLUE_SIZE, glhints.BlueColorBits,
-                    GLX_ALPHA_SIZE, glhints.AlphaColorBits,
-                    GLX_DEPTH_SIZE, depthBits,
-                    GLX_STENCIL_SIZE, stencilBits,
-                    GLX_DOUBLEBUFFER, glhints.DoubleBuffer ? 1 : 0,
-                    GLX_SAMPLE_BUFFERS, glhints.Multisamples == 0 ? 0 : 1,
-                    GLX_SAMPLES, glhints.Multisamples,
-                    /* fin */ 0
-                };
+                ContextValues requested = new ContextValues();
+                requested.RedBits = glhints.RedColorBits;
+                requested.GreenBits = glhints.GreenColorBits;
+                requested.BlueBits = glhints.BlueColorBits;
+                requested.AlphaBits = glhints.AlphaColorBits;
+                requested.DepthBits = depthBits;
+                requested.StencilBits = stencilBits;
+                requested.DoubleBuffered = glhints.DoubleBuffer;
+                requested.SRGBFramebuffer = glhints.sRGBFramebuffer;
+                requested.PixelFormat = glhints.PixelFormat;
+                requested.SwapMethod = glhints.SwapMethod;
+                requested.Samples = glhints.Multisamples;
 
-                int items = visualAttribs.Length;
                 unsafe
                 {
-                    GLXFBConfig *configs = glXChooseFBConfig(X11.Display, X11.DefaultScreen, ref visualAttribs[0], ref items);
-                    chosenConfig = *configs;
-                    XFree((IntPtr)configs);
+                    GLXFBConfig* configsPtr = glXGetFBConfigs(X11.Display, X11.DefaultScreen, out int noConfigs);
+                    Span<GLXFBConfig> configs = new Span<GLXFBConfig>(configsPtr, noConfigs);
+
+                    List<ContextValues> options = new List<ContextValues>();
+                    for (int i = 0; i < configs.Length; i++)
+                    {
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_X_RENDERABLE, out int xRenderable);
+                        if (xRenderable == 0)
+                        {
+                            continue;
+                        }
+                        XVisualInfo* visual = glXGetVisualFromFBConfig(X11.Display, configsPtr[i]);
+                        glXGetConfig(X11.Display, visual, GLX_USE_GL, out int useGL);
+                        if (useGL == 0)
+                        {
+                            continue;
+                        }
+
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DRAWABLE_TYPE, out int drawableType);
+                        if ((drawableType & GLX_WINDOW_BIT) == 0)
+                        {
+                            continue;
+                        }
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RENDER_TYPE, out int renderType);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DOUBLEBUFFER, out int doubleBuffer);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RED_SIZE, out int redSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_GREEN_SIZE, out int greenSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_BLUE_SIZE, out int blueSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_ALPHA_SIZE, out int alphaSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
+                        int srgbCapable = 0;
+                        if (true /* GLX_framebuffer_sRGB supported */)
+                        {
+                            glXGetFBConfigAttrib(X11.Display, configs[i], GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB, out srgbCapable);
+                        }
+
+                        
+                        int sampleBuffers = 0;
+                        int samples = 0;
+                        if (true /* GLX_ARB_multisample  or glx 1.4? */)
+                        {
+                            glXGetConfig(X11.Display, visual, GLX_SAMPLE_BUFFERS, out sampleBuffers);
+                            glXGetConfig(X11.Display, visual, GLX_SAMPLES, out samples);
+                        }
+
+                        ContextSwapMethod swapMethod = ContextSwapMethod.Undefined;
+                        if (true /* GLX_OML_swap_method */)
+                        {
+                            glXGetFBConfigAttrib(X11.Display, configs[i], GLX_SWAP_METHOD_OML, out int swapMethodOML);
+                            switch (swapMethodOML)
+                            {
+                                case GLX_SWAP_EXCHANGE_OML:
+                                    swapMethod = ContextSwapMethod.Exchange;
+                                    break;
+                                case GLX_SWAP_COPY_OML:
+                                    swapMethod = ContextSwapMethod.Copy;
+                                    break;
+                                case GLX_SWAP_UNDEFINED_OML:
+                                    swapMethod = ContextSwapMethod.Undefined;
+                                    break;
+                                default:
+                                    Logger?.LogWarning($"Unknown swap method: {swapMethodOML}. Using undefined.");
+                                    swapMethod = ContextSwapMethod.Undefined;
+                                    break;
+                            }
+                        }
+
+                        ContextValues option;
+                        option.ID = i;
+                        option.RedBits = redSize;
+                        option.GreenBits = greenSize;
+                        option.BlueBits = blueSize;
+                        option.AlphaBits = alphaSize;
+                        option.DepthBits = depthBits;
+                        option.StencilBits = stencilBits;
+                        option.DoubleBuffered = doubleBuffer == 1;
+                        option.SRGBFramebuffer = srgbCapable == 1;
+                        // FIXME:
+                        option.PixelFormat = ContextPixelFormat.RGBA;
+                        option.Samples = samples;
+                        option.SwapMethod = swapMethod;
+
+                        options.Add(option);
+                    }
+                
+                    int selectedIndex = glhints.Selector(options, requested, Logger);
+                    if (selectedIndex < 0 || selectedIndex >= configs.Length) 
+                    {
+                        throw new IndexOutOfRangeException($"The selected format ID ({selectedIndex}) is outside the range of valid IDs. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
+                    }
+
+                    chosenConfig = configs[selectedIndex];
+                    XFree(configsPtr);
                 }
+                
 
                 XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
                 unsafe
