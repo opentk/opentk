@@ -1072,6 +1072,8 @@ namespace Bejeweled
 
             Logger.LogDebug($"Vendor: {vend}, \nVersion: {vers}, \nRenderer: {rend}, \nExtensions: {exts}, \nALC Version: {alcMajorVersion}.{alcMinorVersion}, \nALC Extensions: {alcExts}");
 
+            AL.DistanceModel(ALDistanceModel.None);
+
             AL.Listener(ALListenerf.Gain, 1.0f);
 
             ALError error = AL.GetError();

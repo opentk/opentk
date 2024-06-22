@@ -477,12 +477,13 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 // Call user callback and allow them to select the appropriate format!
-                int selectedFormat = settings.Selector(possibleContextValues, requested, Logger);
-                if (selectedFormat < 0 || selectedFormat >= numberOfFormats)
+                int selectedFormatIndex = settings.Selector(possibleContextValues, requested, Logger);
+                if (selectedFormatIndex < 0 || selectedFormatIndex >= possibleContextValues.Count)
                 {
-                    throw new IndexOutOfRangeException($"The selected format ID ({selectedFormat}) is outside the range of valid IDs. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
+                    throw new IndexOutOfRangeException($"The selected format index ({selectedFormatIndex}) is outside the range of valid indices. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                 }
 
+                int selectedFormat = possibleContextValues[selectedFormatIndex].ID;
                 success = Wgl.GetPixelFormatAttribivARB(hDC, selectedFormat, 0, contextValueAttrib.Length, contextValueAttrib, contextValues);
                 if (success == false)
                 {

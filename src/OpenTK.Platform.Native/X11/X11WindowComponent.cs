@@ -1066,6 +1066,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindow window;
             GLXFBConfig? chosenConfig = null;
+            ContextPixelFormat chosenPixelFormat = ContextPixelFormat.RGBA;
             XColorMap? map = null;
 
             if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
@@ -1110,6 +1111,21 @@ namespace OpenTK.Platform.Native.X11
                     GLXFBConfig* configsPtr = glXGetFBConfigs(X11.Display, X11.DefaultScreen, out int noConfigs);
                     Span<GLXFBConfig> configs = new Span<GLXFBConfig>(configsPtr, noConfigs);
 
+                    // FIXME: Relying on Toolkit to get the OpenGL component seems like a bad idea.
+                    // We are coupling this component to the Toolkit class in an unexpected way?
+                    // But maybe it's fine?
+                    // - Noggin_bops 2024-06-22
+                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized.");
+                    // FIXME: Make these properties of the X11OpenGLComponent.
+                    bool ARB_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_ARB_framebuffer_sRGB");
+                    bool EXT_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_EXT_framebuffer_sRGB");
+                    bool ARB_multisample = x11OpenGL.GLXExtensions.Contains("GLX_ARB_multisample");
+                    bool ARB_fbconfig_float = x11OpenGL.GLXExtensions.Contains("GLX_ARB_fbconfig_float");
+                    bool EXT_fbconfig_packed_float = x11OpenGL.GLXExtensions.Contains("GLX_EXT_fbconfig_packed_float");
+                    bool OML_swap_method = x11OpenGL.GLXExtensions.Contains("GLX_OML_swap_method");
+
+                    Version glxVersion = x11OpenGL.GLXVersion;
+
                     List<ContextValues> options = new List<ContextValues>();
                     for (int i = 0; i < configs.Length; i++)
                     {
@@ -1131,6 +1147,13 @@ namespace OpenTK.Platform.Native.X11
                             continue;
                         }
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RENDER_TYPE, out int renderType);
+                        // Remove the color index bit.
+                        renderType = renderType & ~GLX_COLOR_INDEX_BIT;
+                        if (renderType == 0)
+                        {
+                            // If only get color index bit is set we skip this fbconfig.
+                            continue;
+                        }
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DOUBLEBUFFER, out int doubleBuffer);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RED_SIZE, out int redSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_GREEN_SIZE, out int greenSize);
@@ -1138,23 +1161,25 @@ namespace OpenTK.Platform.Native.X11
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_ALPHA_SIZE, out int alphaSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
                         glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
+
                         int srgbCapable = 0;
-                        if (true /* GLX_framebuffer_sRGB supported */)
+                        if ((ARB_framebuffer_sRGB || EXT_framebuffer_sRGB))
                         {
                             glXGetFBConfigAttrib(X11.Display, configs[i], GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB, out srgbCapable);
                         }
 
-                        
                         int sampleBuffers = 0;
                         int samples = 0;
-                        if (true /* GLX_ARB_multisample  or glx 1.4? */)
+                        
+                        // GLX 1.4 or GLX_ARB_multisample
+                        if ((glxVersion.Major > 1 || (glxVersion.Major == 1 && glxVersion.Minor >= 4)) || ARB_multisample)
                         {
                             glXGetConfig(X11.Display, visual, GLX_SAMPLE_BUFFERS, out sampleBuffers);
                             glXGetConfig(X11.Display, visual, GLX_SAMPLES, out samples);
                         }
 
                         ContextSwapMethod swapMethod = ContextSwapMethod.Undefined;
-                        if (true /* GLX_OML_swap_method */)
+                        if (OML_swap_method)
                         {
                             glXGetFBConfigAttrib(X11.Display, configs[i], GLX_SWAP_METHOD_OML, out int swapMethodOML);
                             switch (swapMethodOML)
@@ -1185,24 +1210,43 @@ namespace OpenTK.Platform.Native.X11
                         option.StencilBits = stencilBits;
                         option.DoubleBuffered = doubleBuffer == 1;
                         option.SRGBFramebuffer = srgbCapable == 1;
-                        // FIXME:
-                        option.PixelFormat = ContextPixelFormat.RGBA;
                         option.Samples = samples;
                         option.SwapMethod = swapMethod;
 
-                        options.Add(option);
+                        if ((renderType & GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBAPackedFloat;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & GLX_RGBA_FLOAT_BIT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBAFloat;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & GLX_RGBA_BIT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBA;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & ~(GLX_RGBA_BIT | GLX_RGBA_FLOAT_BIT | GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT)) != 0)
+                        {
+                            Logger?.LogWarning($"Unknown RenderType bits set for fbconfig {i}. RenderType: {renderType}.");
+                        }
                     }
                 
                     int selectedIndex = glhints.Selector(options, requested, Logger);
-                    if (selectedIndex < 0 || selectedIndex >= configs.Length) 
+                    if (selectedIndex < 0 || selectedIndex >= options.Count) 
                     {
-                        throw new IndexOutOfRangeException($"The selected format ID ({selectedIndex}) is outside the range of valid IDs. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
+                        throw new IndexOutOfRangeException($"The selected format index ({selectedIndex}) is outside the range of valid indeces. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                     }
 
-                    chosenConfig = configs[selectedIndex];
+                    chosenPixelFormat = options[selectedIndex].PixelFormat;
+                    chosenConfig = configs[options[selectedIndex].ID];
                     XFree(configsPtr);
                 }
-                
 
                 XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
                 unsafe
@@ -1333,7 +1377,7 @@ namespace OpenTK.Platform.Native.X11
                 dndVersion,
                 1);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, map);
 
             XWindowDict.Add(handle.Window, handle);
 

@@ -320,5 +320,44 @@ namespace OpenTK.Platform.Native.X11
 
         /// <summary>GLX_OML_swap_method</summary>
         internal const int GLX_SWAP_UNDEFINED_OML = 0x8063;
+
+        /// <summary>GLX_ARB_fbconfig_float</summary>
+        internal const int GLX_RGBA_FLOAT_TYPE = 0x20B9;
+
+        /// <summary>GLX_ARB_fbconfig_float</summary>
+        internal const int GLX_RGBA_FLOAT_BIT = 0x00000004;
+
+        /// <summary>GLX_EXT_fbconfig_packed_float</summary>
+        internal const int GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT = 0x20B1;
+
+        /// <summary>GLX_EXT_fbconfig_packed_float</summary>
+        internal const int GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT = 0x00000008;
+
+        /// <summary>GLX_ARB_create_context_robustness</summary>
+        internal const int GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB = 0x00000004;
+
+        /// <summary>GLX_ARB_create_context_robustness</summary>
+        internal const int GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB = 0x8256;
+
+        /// <summary>GLX_ARB_create_context_robustness</summary>
+        internal const int GLX_NO_RESET_NOTIFICATION_ARB = 0x8261;
+
+        /// <summary>GLX_ARB_create_context_robustness</summary>
+        internal const int GLX_LOSE_CONTEXT_ON_RESET_ARB = 0x8252;
+
+        /// <summary>GLX_ARB_robustness_isolation</summary>
+        internal const int GLX_CONTEXT_RESET_ISOLATION_BIT_ARB = 0x00000008;
+
+        /// <summary>GLX_ARB_create_context_no_error</summary>
+        internal const int GLX_CONTEXT_OPENGL_NO_ERROR_ARB = 0x31B3;
+
+        /// <summary>GLX_ARB_context_flush_control</summary>
+        internal const int GLX_CONTEXT_RELEASE_BEHAVIOR_ARB = 0x2097;
+
+        /// <summary>GLX_ARB_context_flush_control</summary>
+        internal const int GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB = 0x0000;
+
+        /// <summary>GLX_ARB_context_flush_control</summary>
+        internal const int GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB = 0x2098;
     }
 }

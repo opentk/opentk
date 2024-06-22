@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using OpenTK.Core.Utility;
 
 #nullable enable
@@ -11,7 +12,7 @@ namespace OpenTK.Core.Platform
     /// <param name="options">A list of possible context values.</param>
     /// <param name="requested">The user requested context values.</param>
     /// <param name="logger">A logger to use for logging.</param>
-    /// <returns>The <see cref="ContextValues.ID"/> of the context value to use.</returns>
+    /// <returns>The index of the context value to use.</returns>
     public delegate int ContextValueSelector(IReadOnlyList<ContextValues> options, ContextValues requested, ILogger? logger);
 
     // FIXME: Better name.
@@ -34,8 +35,32 @@ namespace OpenTK.Core.Platform
         // FIXME: Add stereo?
         // FIXME: Add transparency?
 
+        /// <summary>
+        /// Default context values selector. Prioritizes the requested values with a series of "relaxations" to find a close match.<br/>
+        /// The relaxations are done in the following order:
+        /// <list type="number">
+        /// <item><description>If no exact match is found try find a format with a larger number of color, depth, or stencil bits.</description></item>
+        /// <item><description>If <see cref="SRGBFramebuffer"/> == false is requested, <see cref="SRGBFramebuffer"/> == true formats will be accepted.</description></item>
+        /// <item><description>If <see cref="SwapMethod"/> == <see cref="ContextSwapMethod.Undefined"/>, any swap method will be accepted.</description></item>
+        /// <item><description>If <see cref="SRGBFramebuffer"/> == true, accept <see cref="SRGBFramebuffer"/> == false formats.</description></item>
+        /// <item><description>Accept any <see cref="PixelFormat"/>.</description></item>
+        /// <item><description>Decrement <see cref="Samples"/> by one at a time until 0 and see if any alternative sample counts are possible.</description></item>
+        /// <item><description>Accept any <see cref="SwapMethod"/>.</description></item>
+        /// <item><description>If all relaxations fail, select the first option in the list.</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="options">The possible context values.</param>
+        /// <param name="requested">The requested context values.</param>
+        /// <param name="logger">A logger to use for logging.</param>
+        /// <returns>The index of the selected "best match" context values.</returns>
         public static int DefaultValuesSelector(IReadOnlyList<ContextValues> options, ContextValues requested, ILogger? logger)
         {
+            if (options.Count == 0)
+            {
+                // FIXME: Maybe better exception?
+                throw new InvalidOperationException("There needs to be at least one ContextValues option.");
+            }
+
             logger?.LogDebug("Default context values matcher:");
 
             for (int i = 0; i < options.Count; i++)
@@ -66,6 +91,25 @@ namespace OpenTK.Core.Platform
                 }
             }
 
+            // Relax requested SRGBFramebuffer == false to match formats with sRGB support.
+            if (requested.SRGBFramebuffer == false)
+            {
+                logger?.LogDebug("No match found, relaxing SRGBFramebuffer == false to match with SRGBFramebuffer == true.");
+                for (int i = 0; i < options.Count; i++)
+                {
+                    if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                        HasGreaterOrEqualDepthBits(options[i], requested) &&
+                        HasGreaterOrEqualStencilBits(options[i], requested) &&
+                        HasEqualMSAA(options[i], requested) &&
+                        (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
+                        HasEqualPixelFormat(options[i], requested))
+                    {
+                        logger?.LogDebug("Found matching format with SRGBFramebuffer == true!");
+                        return options[i].ID;
+                    }
+                }
+            }
+
             // Relax requested ContextSwapMethod.Undefined to match with any swap method.
             if (requested.SwapMethod == ContextSwapMethod.Undefined)
             {
@@ -76,7 +120,7 @@ namespace OpenTK.Core.Platform
                         HasGreaterOrEqualDepthBits(options[i], requested) &&
                         HasGreaterOrEqualStencilBits(options[i], requested) &&
                         HasEqualMSAA(options[i], requested) &&
-                        HasEqualSRGB(options[i], requested) &&
+                        (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
                         HasEqualPixelFormat(options[i], requested))
                     {
                         logger?.LogDebug("Found matching format with any swap format!");
@@ -152,7 +196,7 @@ namespace OpenTK.Core.Platform
 
             // All else has failed, return the first format.
             logger?.LogDebug("No match found, all relaxations failed. Using the first format in the list...");
-            return options[0].ID;
+            return 0;
         }
 
         public static bool IsEqualExcludingID(ContextValues option, ContextValues requested)
