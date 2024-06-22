@@ -17,6 +17,11 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Version Version { get; set; } = new Version(4, 1);
 
+        // FIXME: Convert a bunch of the framebuffer settings
+        // into a single ContextValues property that we can use
+        // directly when we call the selector.
+        // - Noggin_bops 2024-06-22
+
         /// <summary>
         /// Number of bits for red color channel.
         /// </summary>
