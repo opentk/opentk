@@ -82,6 +82,10 @@ namespace OpenTK.Platform.Native.macOS
                 }
             }
 
+            // FIXME: Use the user-provided Selector to select appropriate context values!
+            // Here is the available CGL API headers:
+            // https://github.com/phracker/MacOSX-SDKs/blob/master/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/OpenGL.h
+
             List<NSOpenGLPixelFormatAttribute> attributes = new List<NSOpenGLPixelFormatAttribute>();
 
             NSOpenGLProfileVersion profileVersion = NSOpenGLProfileVersion.Legacy;
@@ -183,7 +187,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(pixelFormat, Release);
 
             objc_msgSend(context, selSetView, nswindow.View);
-            // FIXME: This is a BOOL property, so this might not work
+            // FIXME: BOOL
             objc_msgSend(nswindow.View, selSetWantsBestResolutionOpenGLSurface, true);
 
             objc_msgSend(nswindow.Window, selUpdate);
