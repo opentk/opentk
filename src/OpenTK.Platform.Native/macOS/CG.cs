@@ -109,6 +109,9 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void CGDataProviderRelease(IntPtr /* CGDataProviderRef */ provider);
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint /* CGOpenGLDisplayMask */ CGDisplayIDToOpenGLDisplayMask(uint /* CGDirectDisplayID */ display);
+
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>

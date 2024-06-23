@@ -145,6 +145,12 @@ namespace OpenTK.Core.Platform
         public ContextValueSelector Selector { get; set; } = ContextValues.DefaultValuesSelector;
 
         /// <summary>
+        /// Enumerating <see cref="ContextValues"/> on macOS is slow, so by default <see cref="Selector"/> is not used on macOS.
+        /// When this property is <c>false</c> the default platform selection of context values are used, which tries to find a closest match.
+        /// </summary>
+        public bool UseSelectorOnMacOS { get; set; } = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.
         /// </summary>
         public OpenGLGraphicsApiHints()

@@ -450,7 +450,7 @@ namespace OpenTK.Platform.Native.Windows
 
                     // FIXME: Add stereo to this?
                     ContextValues option = default;
-                    option.ID = i;
+                    option.ID = (ulong)i;
                     option.RedBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.RED_BITS_ARB);
                     option.GreenBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.GREEN_BITS_ARB);
                     option.BlueBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.BLUE_BITS_ARB);
@@ -483,7 +483,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new IndexOutOfRangeException($"The selected format index ({selectedFormatIndex}) is outside the range of valid indices. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
                 }
 
-                int selectedFormat = possibleContextValues[selectedFormatIndex].ID;
+                int selectedFormat = (int)possibleContextValues[selectedFormatIndex].ID;
                 success = Wgl.GetPixelFormatAttribivARB(hDC, selectedFormat, 0, contextValueAttrib.Length, contextValueAttrib, contextValues);
                 if (success == false)
                 {
@@ -556,7 +556,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 ContextValues chosenValues;
-                chosenValues.ID = selectedFormat;
+                chosenValues.ID = (ulong)selectedFormat;
                 chosenValues.RedBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.RED_BITS_ARB);
                 chosenValues.GreenBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.GREEN_BITS_ARB);
                 chosenValues.BlueBits = FindAttribute(contextValueAttrib, contextValues, WGLPixelFormatAttribute.BLUE_BITS_ARB);
@@ -654,7 +654,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
 
                     ContextValues option;
-                    option.ID = i;
+                    option.ID = (ulong)i;
                     option.RedBits = pfd.cRedBits;
                     option.GreenBits = pfd.cGreenBits;
                     option.BlueBits = pfd.cBlueBits;

@@ -1201,7 +1201,7 @@ namespace OpenTK.Platform.Native.X11
                         }
 
                         ContextValues option;
-                        option.ID = i;
+                        option.ID = (ulong)i;
                         option.RedBits = redSize;
                         option.GreenBits = greenSize;
                         option.BlueBits = blueSize;
@@ -1244,7 +1244,7 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     chosenPixelFormat = options[selectedIndex].PixelFormat;
-                    chosenConfig = configs[options[selectedIndex].ID];
+                    chosenConfig = configs[(int)options[selectedIndex].ID];
                     XFree(configsPtr);
                 }
 

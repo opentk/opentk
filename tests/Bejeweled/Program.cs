@@ -68,7 +68,8 @@ namespace Bejeweled
                     }
 
                     return ContextValues.DefaultValuesSelector(options, requested, logger);
-                }
+                },
+                UseSelectorOnMacOS = false,
             };
 
             // For now we can use Hardware.Info to debug printout the hardware config

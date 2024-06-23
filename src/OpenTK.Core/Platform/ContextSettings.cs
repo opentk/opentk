@@ -16,9 +16,9 @@ namespace OpenTK.Core.Platform
     public delegate int ContextValueSelector(IReadOnlyList<ContextValues> options, ContextValues requested, ILogger? logger);
 
     // FIXME: Better name.
-    public struct ContextValues
+    public struct ContextValues : IEquatable<ContextValues>
     {
-        public int ID;
+        public ulong ID;
 
         public int RedBits;
         public int GreenBits;
@@ -68,7 +68,7 @@ namespace OpenTK.Core.Platform
                 if (IsEqualExcludingID(options[i], requested))
                 {
                     logger?.LogDebug("Found exact match!");
-                    return options[i].ID;
+                    return i;
                 }
             }
 
@@ -82,12 +82,13 @@ namespace OpenTK.Core.Platform
                     HasGreaterOrEqualDepthBits(options[i], requested) &&
                     HasGreaterOrEqualStencilBits(options[i], requested) &&
                     HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
                     HasEqualSRGB(options[i], requested) &&
                     HasEqualPixelFormat(options[i], requested) &&
                     HasEqualSwapMethod(options[i], requested))
                 {
                     logger?.LogDebug("Found matching format with greater color depth!");
-                    return options[i].ID;
+                    return i;
                 }
             }
 
@@ -101,11 +102,12 @@ namespace OpenTK.Core.Platform
                         HasGreaterOrEqualDepthBits(options[i], requested) &&
                         HasGreaterOrEqualStencilBits(options[i], requested) &&
                         HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
                         (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
                         HasEqualPixelFormat(options[i], requested))
                     {
                         logger?.LogDebug("Found matching format with SRGBFramebuffer == true!");
-                        return options[i].ID;
+                        return i;
                     }
                 }
             }
@@ -120,11 +122,12 @@ namespace OpenTK.Core.Platform
                         HasGreaterOrEqualDepthBits(options[i], requested) &&
                         HasGreaterOrEqualStencilBits(options[i], requested) &&
                         HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
                         (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
                         HasEqualPixelFormat(options[i], requested))
                     {
                         logger?.LogDebug("Found matching format with any swap format!");
-                        return options[i].ID;
+                        return i;
                     }
                 }
             }
@@ -137,11 +140,12 @@ namespace OpenTK.Core.Platform
                     HasGreaterOrEqualDepthBits(options[i], requested) &&
                     HasGreaterOrEqualStencilBits(options[i], requested) &&
                     HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
                     HasEqualPixelFormat(options[i], requested) &&
                     (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
                 {
                     logger?.LogDebug("Found matching format without sRGB framebuffer!");
-                    return options[i].ID;
+                    return i;
                 }
             }
 
@@ -153,10 +157,11 @@ namespace OpenTK.Core.Platform
                     HasGreaterOrEqualDepthBits(options[i], requested) &&
                     HasGreaterOrEqualStencilBits(options[i], requested) &&
                     HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
                     (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
                 {
                     logger?.LogDebug("Found matching format after relaxing ContextPixelFormat!");
-                    return options[i].ID;
+                    return i;
                 }
             }
 
@@ -171,10 +176,11 @@ namespace OpenTK.Core.Platform
                         HasGreaterOrEqualDepthBits(options[i], requested) &&
                         HasGreaterOrEqualStencilBits(options[i], requested) &&
                         HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
                         (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
                     {
                         logger?.LogDebug($"Found match with {requested.Samples} MSAA samples.");
-                        return options[i].ID;
+                        return i;
                     }
                 }
             }
@@ -185,10 +191,89 @@ namespace OpenTK.Core.Platform
             {
                 if (HasGreaterOrEqualColorBits(options[i], requested) &&
                     HasGreaterOrEqualDepthBits(options[i], requested) &&
-                    HasGreaterOrEqualStencilBits(options[i], requested))
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
                 {
                     logger?.LogDebug("Found matching format after relaxing swap method.");
-                    return options[i].ID;
+                    return i;
+                }
+            }
+
+            // FIXME: When we get here we actually want to get the "closest" format
+            // and not just remove every bit depth test completely.
+
+            // Relax color bits to allow lower color bits.
+            logger?.LogDebug("No match found, relaxing one of color, depth, or stencil bits");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing stencil bits.");
+                    return i;
+                }
+
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color bits.");
+                    return i;
+                }
+            }
+
+            // Relax color bits to allow lower color bits.
+            logger?.LogDebug("No match found, relaxing two of color, depth, or stencil bits");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing stencil and depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color and depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color and stencil bits.");
+                    return i;
+                }
+            }
+
+            // Relax stencil bits to allow lower stencil bits.
+            logger?.LogDebug("No match found, relaxing all bits.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing all bits.");
+                    return i;
                 }
             }
 
@@ -230,6 +315,14 @@ namespace OpenTK.Core.Platform
                 option.AlphaBits >= requested.AlphaBits;
         }
 
+        public static bool HasLessOrEqualColorBits(ContextValues option, ContextValues requested)
+        {
+            return option.RedBits <= requested.RedBits &&
+                option.GreenBits <= requested.GreenBits &&
+                option.BlueBits <= requested.BlueBits &&
+                option.AlphaBits <= requested.AlphaBits;
+        }
+
         public static bool HasEqualDepthBits(ContextValues option, ContextValues requested)
         {
             return option.DepthBits == requested.DepthBits;
@@ -238,6 +331,11 @@ namespace OpenTK.Core.Platform
         public static bool HasGreaterOrEqualDepthBits(ContextValues option, ContextValues requested)
         {
             return option.DepthBits >= requested.DepthBits;
+        }
+
+        public static bool HasLessOrEqualDepthBits(ContextValues option, ContextValues requested)
+        {
+            return option.DepthBits <= requested.DepthBits;
         }
 
         public static bool HasEqualStencilBits(ContextValues option, ContextValues requested)
@@ -250,9 +348,19 @@ namespace OpenTK.Core.Platform
             return option.StencilBits >= requested.StencilBits;
         }
 
+        public static bool HasLessOrEqualStencilBits(ContextValues option, ContextValues requested)
+        {
+            return option.StencilBits <= requested.StencilBits;
+        }
+
         public static bool HasEqualMSAA(ContextValues option, ContextValues requested)
         {
             return option.Samples == requested.Samples;
+        }
+
+        public static bool HasEqualDoubleBuffer(ContextValues option, ContextValues requested)
+        {
+            return option.DoubleBuffered == requested.DoubleBuffered;
         }
 
         public static bool HasEqualSRGB(ContextValues option, ContextValues requested)
@@ -270,7 +378,7 @@ namespace OpenTK.Core.Platform
             return option.SwapMethod == requested.SwapMethod;
         }
 
-        public ContextValues(int id, int redBits, int greenBits, int blueBits, int alphaBits, int depthBits, int stencilBits, bool doubleBuffered, bool sRGBFramebuffer, ContextPixelFormat pixelFormat, ContextSwapMethod swapMethod, int samples)
+        public ContextValues(ulong id, int redBits, int greenBits, int blueBits, int alphaBits, int depthBits, int stencilBits, bool doubleBuffered, bool sRGBFramebuffer, ContextPixelFormat pixelFormat, ContextSwapMethod swapMethod, int samples)
         {
             ID = id;
             RedBits = redBits;
@@ -284,6 +392,55 @@ namespace OpenTK.Core.Platform
             PixelFormat = pixelFormat;
             SwapMethod = swapMethod;
             Samples = samples;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ContextValues values && Equals(values);
+        }
+
+        public bool Equals(ContextValues other)
+        {
+            return // ID == other.ID &&
+                   RedBits == other.RedBits &&
+                   GreenBits == other.GreenBits &&
+                   BlueBits == other.BlueBits &&
+                   AlphaBits == other.AlphaBits &&
+                   DepthBits == other.DepthBits &&
+                   StencilBits == other.StencilBits &&
+                   DoubleBuffered == other.DoubleBuffered &&
+                   SRGBFramebuffer == other.SRGBFramebuffer &&
+                   PixelFormat == other.PixelFormat &&
+                   SwapMethod == other.SwapMethod &&
+                   Samples == other.Samples;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            // hash.Add(ID);
+            hash.Add(RedBits);
+            hash.Add(GreenBits);
+            hash.Add(BlueBits);
+            hash.Add(AlphaBits);
+            hash.Add(DepthBits);
+            hash.Add(StencilBits);
+            hash.Add(DoubleBuffered);
+            hash.Add(SRGBFramebuffer);
+            hash.Add(PixelFormat);
+            hash.Add(SwapMethod);
+            hash.Add(Samples);
+            return hash.ToHashCode();
+        }
+
+        public static bool operator ==(ContextValues left, ContextValues right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ContextValues left, ContextValues right)
+        {
+            return !(left == right);
         }
 
         public override readonly string ToString()
