@@ -20,13 +20,8 @@ namespace OpenTK.Platform.Native.X11
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
             OpenTKSelection = XInternAtom(X11.Display, "OpenTK_Selection", false);
 
             image_png = XInternAtom(X11.Display, "image/png", false);
@@ -271,13 +266,6 @@ namespace OpenTK.Platform.Native.X11
         public Bitmap? GetClipboardBitmap()
         {
             // FIXME: We need to decode a png here, and there is no good way to do this really...
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        // FIXME: Remove this if favor of platform specific APIs for getting arbitrary formats.
-        public string? GetClipboardHTML()
-        {
             throw new NotImplementedException();
         }
 

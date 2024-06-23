@@ -17,6 +17,7 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
+        public ContextPixelFormat PixelFormat { get; }
 
         public int X { get; set; }
 
@@ -60,12 +61,14 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             XWindow window,
             GraphicsApiHints hints,
-            GLXFBConfig? fbConfig = null,
-            XColorMap? colorMap = null) : base(hints)
+            GLXFBConfig? fbConfig,
+            ContextPixelFormat pixelFormat,
+            XColorMap? colorMap) : base(hints)
         {
             Display = display;
             Window = window;
             FBConfig = fbConfig;
+            PixelFormat = pixelFormat;
             ColorMap = colorMap;
         }
     }
@@ -91,7 +94,7 @@ namespace OpenTK.Platform.Native.X11
             GLXContext context,
             GLXWindow glxWindow,
             XWindow window,
-            XOpenGLContextHandle? sharedContext = null)
+            XOpenGLContextHandle? sharedContext)
         {
             Display = display;
             Context = context;

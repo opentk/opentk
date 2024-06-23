@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace OpenTK.Backends.Tests
 
         public override string Title => "Displays";
 
-        public override bool IsVisible => Program.DisplayComponent != null;
+        public override bool IsVisible => Toolkit.Display != null;
 
         private bool canGetVirtualPosition;
 
@@ -52,19 +53,19 @@ namespace OpenTK.Backends.Tests
 
         public override void Initialize()
         {
-            try { canGetVirtualPosition = Program.DisplayComponent!.CanGetVirtualPosition; } catch { canGetVirtualPosition = false; }
+            try { canGetVirtualPosition = Toolkit.Display.CanGetVirtualPosition; } catch { canGetVirtualPosition = false; }
 
-            int displays = Program.DisplayComponent!.GetDisplayCount();
+            int displays = Toolkit.Display.GetDisplayCount();
             for (int i = 0; i < displays; i++)
             {
-                var handle = Program.DisplayComponent.Open(i);
+                var handle = Toolkit.Display.Open(i);
 
-                string name = Program.DisplayComponent.GetName(handle);
-                bool primary = Program.DisplayComponent.IsPrimary(handle);
-                Program.DisplayComponent.GetVirtualPosition(handle, out int x, out int y);
-                Program.DisplayComponent.GetResolution(handle, out int width, out int height);
-                Program.DisplayComponent.GetRefreshRate(handle, out float refreshRate);
-                Program.DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                string name = Toolkit.Display.GetName(handle);
+                bool primary = Toolkit.Display.IsPrimary(handle);
+                Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
+                Toolkit.Display.GetResolution(handle, out int width, out int height);
+                Toolkit.Display.GetRefreshRate(handle, out float refreshRate);
+                Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
 
                 Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), refreshRate, (scaleX, scaleY));
                 Displays.Add(disp);
@@ -72,7 +73,7 @@ namespace OpenTK.Backends.Tests
                 BoundingBox.Extend(disp.Bounds.Min);
                 BoundingBox.Extend(disp.Bounds.Max);
 
-                Program.DisplayComponent.Close(handle);
+                Toolkit.Display.Close(handle);
             }
         }
 
@@ -85,28 +86,28 @@ namespace OpenTK.Backends.Tests
                 // We probably want a few DisplayComponent function to still work in the disconnected
                 // event so we should formalize and document this.
                 // - Noggin_bops 2024-02-28
-                Program.Logger.LogDebug($"Display '{Program.DisplayComponent!.GetName(connectionChange.Display)}' was disconnected.");
+                Program.Logger.LogDebug($"Display '{Toolkit.Display.GetName(connectionChange.Display)}' was disconnected.");
             }
             else
             {
-                Program.Logger.LogDebug($"Display '{Program.DisplayComponent!.GetName(connectionChange.Display)}' was connected.");
+                Program.Logger.LogDebug($"Display '{Toolkit.Display.GetName(connectionChange.Display)}' was connected.");
             }
 
             // FIXME: For now we just recreate the entire list of displays.
             BoundingBox = Box2i.Empty;
             Displays.Clear();
             
-            int displays = Program.DisplayComponent!.GetDisplayCount();
+            int displays = Toolkit.Display.GetDisplayCount();
             for (int i = 0; i < displays; i++)
             {
-                var handle = Program.DisplayComponent.Open(i);
+                var handle = Toolkit.Display.Open(i);
 
-                string name = Program.DisplayComponent.GetName(handle);
-                bool primary = Program.DisplayComponent.IsPrimary(handle);
-                Program.DisplayComponent.GetVirtualPosition(handle, out int x, out int y);
-                Program.DisplayComponent.GetResolution(handle, out int width, out int height);
-                Program.DisplayComponent.GetRefreshRate(handle, out float refreshRate);
-                Program.DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                string name = Toolkit.Display.GetName(handle);
+                bool primary = Toolkit.Display.IsPrimary(handle);
+                Toolkit.Display.GetVirtualPosition(handle, out int x, out int y);
+                Toolkit.Display.GetResolution(handle, out int width, out int height);
+                Toolkit.Display.GetRefreshRate(handle, out float refreshRate);
+                Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
 
                 Display disp = new Display(i, name, primary, new Box2i(x, y, x + width, y + height), refreshRate, (scaleX, scaleY));
                 Displays.Add(disp);
@@ -114,7 +115,7 @@ namespace OpenTK.Backends.Tests
                 BoundingBox.Extend(disp.Bounds.Min);
                 BoundingBox.Extend(disp.Bounds.Max);
 
-                Program.DisplayComponent.Close(handle);
+                Toolkit.Display.Close(handle);
             }
         }
 
@@ -183,9 +184,9 @@ namespace OpenTK.Backends.Tests
 
                 try
                 {
-                    DisplayHandle handle = Program.DisplayComponent!.Open(disp.Index);
-                    Program.DisplayComponent.GetWorkArea(handle, out Box2i workArea);
-                    Program.DisplayComponent.Close(handle);
+                    DisplayHandle handle = Toolkit.Display.Open(disp.Index);
+                    Toolkit.Display.GetWorkArea(handle, out Box2i workArea);
+                    Toolkit.Display.Close(handle);
 
                     // Scale the workArea to be in the range [min, max].
                     Vector2 workMin;
@@ -240,11 +241,11 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Refresh rate: {disp.RefreshRate}Hz");
                 ImGui.Text($"Scale factor: {disp.Scale}");
 
-                DisplayHandle handle = Program.DisplayComponent!.Open(disp.Index);
-                Program.DisplayComponent.GetVideoMode(handle, out VideoMode currentVideoMode);
+                DisplayHandle handle = Toolkit.Display.Open(disp.Index);
+                Toolkit.Display.GetVideoMode(handle, out VideoMode currentVideoMode);
                 ImGui.Text($"Video mode: {currentVideoMode}");
 
-                VideoMode[] modes = Program.DisplayComponent.GetSupportedVideoModes(handle);
+                VideoMode[] modes = Toolkit.Display.GetSupportedVideoModes(handle);
                 ImGui.EndDisabled();
                 if (ImGui.BeginListBox("Supported video modes"))
                 {
@@ -259,7 +260,7 @@ namespace OpenTK.Backends.Tests
                 }
                 ImGui.BeginDisabled();
 
-                if (Program.DisplayComponent is MacOSDisplayComponent macOSDisplayComponent)
+                if (Toolkit.Display is MacOSDisplayComponent macOSDisplayComponent)
                 {
                     ImGui.SeparatorText("MacOS");
 
@@ -272,7 +273,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Top right aux area: {rightArea}");
                 }
 
-                Program.DisplayComponent.Close(handle);
+                Toolkit.Display.Close(handle);
 
                 ImGui.EndDisabled();
             }

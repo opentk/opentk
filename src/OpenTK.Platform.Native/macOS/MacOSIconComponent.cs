@@ -59,12 +59,8 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.WindowIcon)
-            {
-                throw new Exception("MacOSIconComponent can only initialize the WindowIcon component.");
-            }
         }
 
         /// <inheritdoc/>

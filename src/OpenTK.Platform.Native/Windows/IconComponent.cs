@@ -23,12 +23,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.WindowIcon)
-            {
-                throw new Exception("IconComponent can only initialize the WindowIcon component.");
-            }
         }
 
         /// <inheritdoc/>

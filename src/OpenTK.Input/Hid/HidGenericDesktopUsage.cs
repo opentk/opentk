@@ -242,17 +242,17 @@
         DPadUp = 0x90,
 
         /// <summary>
-        /// Indicates that bottom of a Direction Pad is pressed
+        /// Indicates that bottom of a Direction Pad is pressed.
         /// </summary>
         DPadDown = 0x91,
 
         /// <summary>
-        /// Indicates that right side of a Direction Pad is pressed
+        /// Indicates that right side of a Direction Pad is pressed.
         /// </summary>
         DPadRight = 0x92,
 
         /// <summary>
-        /// Indicates that left side of a Direction Pad is pressed
+        /// Indicates that left side of a Direction Pad is pressed.
         /// </summary>
         DPadLeft = 0x93,
 

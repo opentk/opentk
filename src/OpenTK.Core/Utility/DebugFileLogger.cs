@@ -40,5 +40,10 @@ namespace OpenTK.Core.Utility
             Writer.Write($"[{level}] {member} {Path.GetFileName(filePath)}:{lineNumber} ");
             Writer.WriteLine(str);
         }
+
+        void ILogger.Flush()
+        {
+            Writer.Flush();
+        }
     }
 }

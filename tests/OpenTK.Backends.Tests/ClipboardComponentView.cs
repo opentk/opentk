@@ -2,6 +2,7 @@
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Clipboard";
 
-        public override bool IsVisible => Program.ClipboardComponent != null;
+        public override bool IsVisible => Toolkit.Clipboard != null;
 
         ClipboardFormat[] AllFormats = Enum.GetValues<ClipboardFormat>();
         ClipboardFormat[] SupportedFormats;
@@ -25,7 +26,7 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { SupportedFormats = Program.ClipboardComponent!.SupportedFormats.ToArray(); }
+            try { SupportedFormats = Toolkit.Clipboard.SupportedFormats.ToArray(); }
             catch { SupportedFormats = Array.Empty<ClipboardFormat>(); }
 
             UpdateClipboardFormat();
@@ -40,28 +41,83 @@ namespace OpenTK.Backends.Tests
         string? clipboardHTML;
         List<string>? clipboardFiles;
 
+        public Bitmap CreateExampleBitmap()
+        {
+            const int W = 600;
+            const int H = 600;
+            byte[] b = new byte[W * H * 4];
+            for (int xi = 0; xi < W; xi++)
+            {
+                for (int yi = 0; yi < H; yi++)
+                {
+                    int index = (yi * W + xi) * 4;
+
+                    static byte ftob(float f) => (byte)(f * 255);
+
+                    float x0 = MathHelper.MapRange(xi, 0f, W, -2f, 0.47f);
+                    float y0 = MathHelper.MapRange(yi, 0f, H, -1.12f, 1.12f);
+
+                    float x = 0;
+                    float y = 0;
+                    const int maxIterations = 1000;
+                    int iteration = 0;
+                    while (x * x + y * y < 2 * 2 && iteration < maxIterations)
+                    {
+                        iteration++;
+
+                        float xTemp = x * x - y * y + x0;
+                        y = 2 * x * y + y0;
+                        x = xTemp;
+                    }
+
+                    // See https://stackoverflow.com/a/22681410/9316430
+                    static void SpectralColor(float l, out float r, out float g, out float b) // RGB <0,1> <- lambda l <400,700> [nm]
+                    {
+                        float t; r = 0.0f; g = 0.0f; b = 0.0f;
+                        if ((l >= 400.0) && (l < 410.0)) { t = (l - 400.0f) / (410.0f - 400.0f); r = +(0.33f * t) - (0.20f * t * t); }
+                        else if ((l >= 410.0) && (l < 475.0)) { t = (l - 410.0f) / (475.0f - 410.0f); r = 0.14f - (0.13f * t * t); }
+                        else if ((l >= 545.0) && (l < 595.0)) { t = (l - 545.0f) / (595.0f - 545.0f); r = +(1.98f * t) - (t * t); }
+                        else if ((l >= 595.0) && (l < 650.0)) { t = (l - 595.0f) / (650.0f - 595.0f); r = 0.98f + (0.06f * t) - (0.40f * t * t); }
+                        else if ((l >= 650.0) && (l < 700.0)) { t = (l - 650.0f) / (700.0f - 650.0f); r = 0.65f - (0.84f * t) + (0.20f * t * t); }
+                        if ((l >= 415.0) && (l < 475.0)) { t = (l - 415.0f) / (475.0f - 415.0f); g = +(0.80f * t * t); }
+                        else if ((l >= 475.0) && (l < 590.0)) { t = (l - 475.0f) / (590.0f - 475.0f); g = 0.8f + (0.76f * t) - (0.80f * t * t); }
+                        else if ((l >= 585.0) && (l < 639.0)) { t = (l - 585.0f) / (639.0f - 585.0f); g = 0.84f - (0.84f * t); }
+                        if ((l >= 400.0) && (l < 475.0)) { t = (l - 400.0f) / (475.0f - 400.0f); b = +(2.20f * t) - (1.50f * t * t); }
+                        else if ((l >= 475.0) && (l < 560.0)) { t = (l - 475.0f) / (560.0f - 475.0f); b = 0.7f - (t) + (0.30f * t * t); }
+                    }
+
+                    float l = MathHelper.MapRange(iteration, 0, maxIterations, 400.0f, 700.0f);
+                    SpectralColor(l, out float red, out float green, out float blue);
+
+                    b[index + 0] = ftob(red);
+                    b[index + 1] = ftob(green);
+                    b[index + 2] = ftob(blue);
+                    b[index + 3] = 255;
+                }
+            }
+
+            Bitmap bitmap = new Bitmap(W, H, b);
+            return bitmap;
+        }
+
         public void UpdateClipboardFormat()
         {
-            currentFormat = Program.ClipboardComponent!.GetClipboardFormat();
+            currentFormat = Toolkit.Clipboard.GetClipboardFormat();
             switch (currentFormat)
             {
                 case ClipboardFormat.None:
                     break;
                 case ClipboardFormat.Text:
-                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
+                    clipboardText = Toolkit.Clipboard.GetClipboardText();
                     break;
                 case ClipboardFormat.Audio:
-                    clipboardAudio = Program.ClipboardComponent!.GetClipboardAudio();
+                    clipboardAudio = Toolkit.Clipboard.GetClipboardAudio();
                     break;
                 case ClipboardFormat.Bitmap:
-                    clipboardBitmap = Program.ClipboardComponent!.GetClipboardBitmap();
-                    break;
-                case ClipboardFormat.HTML:
-                    clipboardText = Program.ClipboardComponent!.GetClipboardText();
-                    clipboardHTML = Program.ClipboardComponent!.GetClipboardHTML();
+                    clipboardBitmap = Toolkit.Clipboard.GetClipboardBitmap();
                     break;
                 case ClipboardFormat.Files:
-                    clipboardFiles = Program.ClipboardComponent!.GetClipboardFiles();
+                    clipboardFiles = Toolkit.Clipboard.GetClipboardFiles();
                     break;
                 default:
                     break;
@@ -94,14 +150,20 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.Button("Set clipboard text") || enter)
             {
-                Program.ClipboardComponent!.SetClipboardText(clipboardInputText);
+                Toolkit.Clipboard.SetClipboardText(clipboardInputText);
             }
 
             ImGui.SeparatorText("Clipboard contents");
 
             // FIXME: Maybe tabs for each type?
 
+            ImGui.AlignTextToFramePadding();
             ImGui.Text($"Current format: {currentFormat}");
+            ImGui.SameLine();
+            if (ImGui.Button("Refresh"))
+            {
+                UpdateClipboardFormat();
+            }
 
             switch (currentFormat)
             {
@@ -131,14 +193,21 @@ namespace OpenTK.Backends.Tests
                         if (ClipboardGLTexture != 0)
                             GL.DeleteTexture(ClipboardGLTexture);
 
-                        ClipboardGLTexture = GL.CreateTexture(TextureTarget.Texture2d);
-                        GL.TextureStorage2D(ClipboardGLTexture, mipmapLevels, SizedInternalFormat.Rgba8, bitmap.Width, bitmap.Height);
+                        // Because we target 4.1 (for macOS) we can't use the newer texture functions
+                        // - Noggin_bops 2024-05-19
+                        ClipboardGLTexture = GL.GenTexture();
+                        GL.BindTexture(TextureTarget.Texture2d, ClipboardGLTexture);
+                        GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
+                        //GL.TextureStorage2D(ClipboardGLTexture, mipmapLevels, SizedInternalFormat.Rgba8, bitmap.Width, bitmap.Height);
+                        //GL.TextureSubImage2D(ClipboardGLTexture, 0, 0, 0, bitmap.Width, bitmap.Height, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
 
-                        GL.TextureSubImage2D(ClipboardGLTexture, 0, 0, 0, bitmap.Width, bitmap.Height, PixelFormat.Rgba, PixelType.UnsignedByte, in bitmap.Data[0]);
+                        var error = GL.GetError();
 
-                        GL.GenerateTextureMipmap(ClipboardGLTexture);
+                        GL.GenerateMipmap(TextureTarget.Texture2d);
+                        //GL.GenerateTextureMipmap(ClipboardGLTexture);
 
-                        GL.TextureParameteri(ClipboardGLTexture, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                        //GL.TextureParameteri(ClipboardGLTexture, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
                         // Maybe try to match the pixel size of the bitmap to the display.
 
@@ -160,19 +229,6 @@ namespace OpenTK.Backends.Tests
 
                         break;
                     }
-                case ClipboardFormat.HTML:
-                    {
-                        ImGui.Text($"Clipboard text (text): '{clipboardText}'");
-
-                        var contentRegion = ImGui.GetContentRegionAvail();
-                        contentRegion.X = ImGui.CalcItemWidth();
-
-                        string html = clipboardHTML ?? "";
-                        //ImGui.BeginDisabled();
-                        ImGui.InputTextMultiline("Clipboard text (HTML):", ref html, 16_384, contentRegion);
-                        //ImGui.EndDisabled();
-                        break;
-                    }
                 case ClipboardFormat.Files:
                     {
                         string[] files = clipboardFiles?.ToArray() ?? Array.Empty<string>();
@@ -187,7 +243,8 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginTabBar("platforms"))
             {
-                if (Program.ClipboardComponent is Platform.Native.Windows.ClipboardComponent winClipboard)
+                // FIXME: Show the other platforms as diable tabs?
+                if (Toolkit.Clipboard is Platform.Native.Windows.ClipboardComponent winClipboard)
                 {
                     if (ImGui.BeginTabItem("Win32"))
                     {
@@ -204,6 +261,23 @@ namespace OpenTK.Backends.Tests
                         // FIXME: Add something for
                         // winClipboard.SetClipboardAudio and
                         // winClipboard.SetClipboardBitmap
+
+                        if (ImGui.Button("Paste image"))
+                        {
+                            winClipboard.SetClipboardBitmap(CreateExampleBitmap());
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+                }
+                else if (Toolkit.Clipboard is Platform.Native.macOS.MacOSClipboardComponent macOSClipboard)
+                {
+                    if (ImGui.BeginTabItem("macOS"))
+                    {
+                        if (ImGui.Button("Paste image"))
+                        {
+                            macOSClipboard.SetClipboardBitmap(CreateExampleBitmap());
+                        }
 
                         ImGui.EndTabItem();
                     }

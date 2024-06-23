@@ -26,13 +26,13 @@
     <!-- so we must later copy the nuget.exe out from this package into our own. -->
     <!-- This was not needed when we ran our build using an .fsx file using paket to download dependencies as -->
     <!-- paket downloaded these dependencies into a project local folder. -->
-    <PackageReference Include="NuGet.CommandLine" Version="6.9.1" GeneratePathProperty="true">
+    <PackageReference Include="NuGet.CommandLine" Version="6.10.0" GeneratePathProperty="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     
     <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
-    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.858" />
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.2.243" />
     <!-- See https://github.com/fsprojects/FAKE/issues/2722 -->
     <!-- 17.3.2 is the last .net6.0 version of the package -->
     <PackageReference Include="Microsoft.Build" Version="17.3.2" />

@@ -2,11 +2,7 @@
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenTK.Backends.Tests
 {
@@ -68,6 +64,25 @@ namespace OpenTK.Backends.Tests
                 ImGui.PopTextWrapPos();
                 ImGui.EndTooltip();
             }
+        }
+
+        public static void ReadonlyText(string label, string str)
+        {
+            ImGui.BeginDisabled(true);
+            ImGui.InputText(label, ref str, (uint)(str.Length + 1));
+            if (ImGui.IsItemHovered(ImGuiHoveredFlags.ForTooltip | ImGuiHoveredFlags.AllowWhenDisabled))
+            {
+                ImGui.EndDisabled();
+                if (ImGui.BeginTooltip())
+                {
+                    ImGui.PushTextWrapPos(ImGui.GetFontSize() * 35.0f);
+                    ImGui.TextUnformatted(str);
+                    ImGui.PopTextWrapPos();
+                    ImGui.EndTooltip();
+                    ImGui.BeginDisabled(true);
+                }
+            }
+            ImGui.EndDisabled();
         }
     }
 }

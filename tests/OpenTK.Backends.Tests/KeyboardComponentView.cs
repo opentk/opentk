@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Keyboard";
 
-        public override bool IsVisible => Program.KeyboardComponent != null;
+        public override bool IsVisible => Toolkit.Keyboard != null;
 
         private bool[] KeyboardState = new bool[256];
 
@@ -27,7 +28,7 @@ namespace OpenTK.Backends.Tests
 
             try
             { 
-                Layouts = Program.KeyboardComponent!.GetAvailableKeyboardLayouts();
+                Layouts = Toolkit.Keyboard.GetAvailableKeyboardLayouts();
             }
             catch
             {
@@ -42,7 +43,7 @@ namespace OpenTK.Backends.Tests
             ImGui.SeparatorText("Keyboard layout");
 
             // FIXME: Api for getting input language?
-            string layout = Program.KeyboardComponent!.GetActiveKeyboardLayout(Program.Window);
+            string layout = Toolkit.Keyboard.GetActiveKeyboardLayout(Program.Window);
             ImGui.TextUnformatted($"Current keyboard layout: {layout}");
 
             if (ImGui.BeginListBox("Keyboard layouts"))
@@ -58,7 +59,7 @@ namespace OpenTK.Backends.Tests
             
             ImGui.SeparatorText("Keyboard state");
 
-            Program.KeyboardComponent.GetKeyboardState(KeyboardState);
+            Toolkit.Keyboard.GetKeyboardState(KeyboardState);
 
             StringBuilder pressedScancodes = new StringBuilder();
             StringBuilder pressedKeys = new StringBuilder();
@@ -69,7 +70,7 @@ namespace OpenTK.Backends.Tests
                     pressedScancodes.Append((Scancode)i);
                     pressedScancodes.Append(", ");
 
-                    Key key = Program.KeyboardComponent.GetKeyFromScancode((Scancode)i);
+                    Key key = Toolkit.Keyboard.GetKeyFromScancode((Scancode)i);
                     pressedKeys.Append(key);
                     pressedKeys.Append(", ");
                 }
@@ -81,7 +82,7 @@ namespace OpenTK.Backends.Tests
             ImGui.TextUnformatted($"Scancodes: {pressedScancodes}");
             ImGui.TextUnformatted($"Keys: {pressedKeys}");
 
-            KeyModifier modifiers = Program.KeyboardComponent.GetKeyboardModifiers();
+            KeyModifier modifiers = Toolkit.Keyboard.GetKeyboardModifiers();
             StringBuilder pressedModifiers = new StringBuilder();
             foreach (var modifier in Enum.GetValues<KeyModifier>())
             {

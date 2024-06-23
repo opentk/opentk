@@ -13,7 +13,7 @@
         Default = 1,
 
         /// <summary>
-        /// A mouse cursor to tell the user something is loading (like an arrow with an hour glass)
+        /// A mouse cursor to tell the user something is loading (like an arrow with an hour glass.)
         /// </summary>
         Loading = 2,
 
@@ -43,7 +43,7 @@
         TextBeam = 7,
 
         /// <summary>
-        /// A cursor which tells the user they can't do something (like a crossed out red circle)
+        /// A cursor which tells the user they can't do something (like a crossed out red circle.)
         /// </summary>
         Forbidden = 8,
 

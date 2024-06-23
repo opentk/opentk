@@ -48,7 +48,8 @@ namespace OpenTK.Backends.Tests
         /// Update the application logic.
         /// </summary>
         /// <param name="deltaTime">The time since the last call to Update.</param>
-        void Update(float deltaTime);
+        /// <returns>If the application should quit.</returns>
+        bool Update(float deltaTime);
 
         /// <summary>
         /// Render the application view.
@@ -75,7 +76,7 @@ namespace OpenTK.Backends.Tests
         {
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
             {
-                foreach (Type t in asm.ExportedTypes)
+                foreach (Type t in asm.DefinedTypes)
                 {
                     TestAppAttribute? attrib = t.GetCustomAttribute<TestAppAttribute>();
 

@@ -45,13 +45,8 @@ namespace OpenTK.Platform.Native.Windows
         public float TriggerThreshold => 30 / 255.0f;
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Joystick)
-            {
-                throw new PalException(this, "JoystickComponent can only initialize the Joystick component.");
-            }
-
             // We don't need to call CoInitializeEx as the CLR already does that for all threads.
             Guid CLSID_DirectInput = DirectInput.CLSID_DirectInput;
             Guid IID_IDirectInputW = DirectInput.IID_IDirectInputW;

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -15,6 +16,8 @@ namespace OpenTK.Platform.Native.Windows
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {
+        internal const int USER_DEFAULT_SCREEN_DPI = 96;
+
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
@@ -225,6 +228,13 @@ namespace OpenTK.Platform.Native.Windows
             int nHeight,
             bool bRepaint);
 
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool RedrawWindow(
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* const RECT* */ lprcUpdate,
+            IntPtr /* HRGN */ hrgnUpdate,
+            RDW flags);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
@@ -256,7 +266,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool BringWindowToTop(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         internal static extern bool SetForegroundWindow(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetFocus();
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
@@ -305,6 +321,12 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsIconic(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsZoomed(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
@@ -546,6 +568,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HICON or HCURSOR */ CreateIconIndirect(in ICONINFO piconinfo);
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto)]
+        internal static extern IntPtr /* HDC */ CreateDC([MarshalAs(UnmanagedType.LPTStr)] string? pwszDriver, [MarshalAs(UnmanagedType.LPTStr)] string pwszDevice, [MarshalAs(UnmanagedType.LPTStr)] string? pszPort, IntPtr pdm);
 
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern IntPtr /* HDC */ CreateCompatibleDC(IntPtr /* HDC */ hdc);
@@ -1062,6 +1087,38 @@ namespace OpenTK.Platform.Native.Windows
             public POINT ptMaxTrackSize;
         }
 
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTWaitForVerticalBlankEvent(in D3DKMT_WAITFORVERTICALBLANKEVENT unnamedParam1);
+        internal struct D3DKMT_WAITFORVERTICALBLANKEVENT
+        {
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public uint /* D3DKMT_HANDLE */ hDevice;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTOpenAdapterFromHdc(D3DKMT_OPENADAPTERFROMHDC* unnamedParam1);
+
+        internal struct D3DKMT_OPENADAPTERFROMHDC
+        {
+            public IntPtr /* HDC */ hDc;
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public LUID AdapterLuid;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        internal struct LUID
+        {
+            uint LowPart;
+            int HighPart;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmFlush();
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmIsCompositionEnabled(out bool pfEnabled);
+
         [DllImport("dwmapi.dll")]
         internal static extern int /* HRESULT */ DwmGetWindowAttribute(
             IntPtr /* HWND */ hwnd,
@@ -1189,6 +1246,26 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool GetWindowPlacement(IntPtr /* HWND */ hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool LockWindowUpdate(IntPtr /* HWND */ hWndLock);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ BeginDeferWindowPos(int nNumWindows);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ DeferWindowPos(
+            IntPtr /* HDWP */ hWinPosInfo,
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* HWND */ hWndInsertAfter,
+            int x,
+            int y,
+            int cx,
+            int cy,
+            SetWindowPosFlags uFlags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool EndDeferWindowPos(IntPtr /* HDWP */ hWinPosInfo);
+
+        [DllImport("user32.dll", SetLastError = false)]
         internal static extern DispChange ChangeDisplaySettingsExW(
             [MarshalAs(UnmanagedType.LPWStr)] string? lpszDeviceName,
             ref DEVMODE lpDevMode,
@@ -1203,6 +1280,51 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr /* HWND */ hwnd,
             CDS dwflags,
             IntPtr lParam);
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        internal delegate IntPtr /*INT_PTR*/ DLGPROC(IntPtr /* HWND */ unnamedParam1, WM unnamedParam2, UIntPtr /* WPARAM */ unnamedParam3, IntPtr /* LPARAM */ unnamedParam4);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        internal static extern IntPtr /* INT_PTR */ DialogBoxIndirectParamW(IntPtr /* HINSTANCE */ hInstance, DLGTEMPLATEEX* hDialogTemplate, IntPtr /* HWND */ hWndParent, DLGPROC lpDialogFunc, IntPtr /* LPARAM */ dwInitParam);
+
+        [DllImport("comdlg32.dll")]
+        internal static extern uint CommDlgExtendedError();
+
+        [DllImport("comdlg32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetOpenFileNameW(ref OPENFILENAMEW unnamedParam1);
+
+        [DllImport("comdlg32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetSaveFileNameW(ref OPENFILENAMEW unnamedParam1);
+
+        internal struct OPENFILENAMEW
+        {
+            public uint lStructSize;
+            public IntPtr /* HWND */ hwndOwner;
+            public IntPtr /* HINSTANCE */ hInstance;
+            public char* lpstrFilter;
+            public char* lpstrCustomFilter;
+            public uint nMaxCustFilter;
+            public uint nFilterIndex;
+            public char* lpstrFile;
+            public uint nMaxFile;
+            public char* lpstrFileTitle;
+            public uint nMaxFileTitle;
+            public char* lpstrInitialDir;
+            public char* lpstrTitle;
+            public OFN Flags;
+            public ushort nFileOffset;
+            public ushort nFileExtension;
+            public char* lpstrDefExt;
+            public IntPtr /* LPARAM */ lCustData;
+            public IntPtr /* LPOFNHOOKPROC */ lpfnHook;
+            public char* lpTemplateName;
+            public void* pvReserved;
+            public uint dwReserved;
+            public uint FlagsEx;
+        }
+        
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

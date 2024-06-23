@@ -25,12 +25,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MouseCursor)
-            {
-                throw new Exception("CursorComponent can only initialize the MouseCursor component.");
-            }
         }
 
         /// <inheritdoc/>

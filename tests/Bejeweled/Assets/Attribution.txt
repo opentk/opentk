@@ -1,0 +1,15 @@
+All 3D models are created by Noggin_bops and are part of the OpenTK project.
+
+dancing_hall_4k evironment map is a CC0 asset downloaded from:
+https://polyhaven.com/a/dancing_hall
+
+Ambience.ogg is a modified version of "The Charm 68":
+https://opengameart.org/content/the-charm-68
+
+Rise01.ogg and Rise02.ogg are from "Level up, power up, Coin get (13 Sounds)":
+https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
+
+ruby_icon.ico and ruby_icon.png are rendered by Noggin_bops and are part of the OpenTK project.
+
+"Gold Orb_crosshair.ani" and "Gold Orb_pointer.ani" where created by dwaxe and downloaded from:
+http://www.rw-designer.com/cursor-set/gold-orb

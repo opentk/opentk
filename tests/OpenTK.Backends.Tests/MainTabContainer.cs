@@ -56,7 +56,7 @@ namespace OpenTK.Backends.Tests
             ImGui.SetNextWindowPos(Vector2.Zero);
             ImGui.SetNextWindowSize(size);
 
-            if (ImGui.Begin(string.Empty, WINDOW_FLAGS) == false)
+            if (ImGui.Begin("###main", WINDOW_FLAGS) == false)
                 return;
 
             if (_views.Count(x => x.IsVisible) == 0) /* evil linq to prevent a crash. */

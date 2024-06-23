@@ -17,10 +17,11 @@ namespace OpenTK.Core.Platform
         Focus,
         WindowMove,
         WindowResize,
+        WindowFramebufferResize,
 
         WindowModeChange,
 
-        WindowDpiChange,
+        WindowScaleChange,
 
         MouseEnter,
 

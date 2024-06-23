@@ -102,5 +102,12 @@ namespace OpenTK.Core.Utility
         /// <param name="line">The callsite line number.</param>
         /// <param name="member">The member name at the callsite.</param>
         void LogError(string str, [CallerFilePath] string filePath = null, [CallerLineNumber] int line = -1, [CallerMemberName] string member = null) => Log(str, LogLevel.Error, filePath, line, member);
+
+        /// <summary>
+        /// Flushes any pending IO operations.
+        /// This is useful when e.g. the application is terminating
+        /// and the final log messages containing the termination reason needs to be written.
+        /// </summary>
+        void Flush();
     }
 }

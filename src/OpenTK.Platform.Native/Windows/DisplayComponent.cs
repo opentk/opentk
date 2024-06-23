@@ -254,15 +254,9 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Display)
-            {
-                throw new Exception("DisplayComponent can only initialize the Display component.");
-            }
-
-            // FIXME: Make the DPI awareness a user-set property!
-
+            // FIXME: Should the user have any way to control the DPI awareness?
             if (OperatingSystem.IsWindowsVersionAtLeast(10, 0))
             {
                 bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.PerMonitorAwareV2));

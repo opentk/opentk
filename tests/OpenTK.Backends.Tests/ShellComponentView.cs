@@ -1,5 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,12 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Shell";
 
-        public override bool IsVisible => Program.ShellComponent != null;
+        public override bool IsVisible => Toolkit.Shell != null;
 
         static readonly AppTheme[] Themes = Enum.GetValues<AppTheme>();
+
+        System.Numerics.Vector3 textColor = new System.Numerics.Vector3(1, 1, 1);
+        System.Numerics.Vector3 captionColor = new System.Numerics.Vector3(1, 1, 1);
 
         public override void Initialize()
         {
@@ -23,6 +28,11 @@ namespace OpenTK.Backends.Tests
 
         bool useImmersiveDarkMode = false;
 
+        int cornerPreferenceIndex = 0;
+
+        readonly static Platform.Native.Windows.ShellComponent.CornerPrefernce[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
+        readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
+        
         public override void Paint(double deltaTime)
         {
             base.Paint(deltaTime);
@@ -30,12 +40,12 @@ namespace OpenTK.Backends.Tests
             ImGui.SeparatorText("Screen saver");
 
             if (ImGui.Button("Disable"))
-                Program.ShellComponent!.AllowScreenSaver(false);
+                Toolkit.Shell.AllowScreenSaver(false);
             ImGui.SameLine();
             if (ImGui.Button("Enable"))
-                Program.ShellComponent!.AllowScreenSaver(true);
+                Toolkit.Shell.AllowScreenSaver(true);
 
-            BatteryStatus status = Program.ShellComponent!.GetBatteryInfo(out BatteryInfo batteryInfo);
+            BatteryStatus status = Toolkit.Shell.GetBatteryInfo(out BatteryInfo batteryInfo);
             string statusStr = status switch
             {
                 BatteryStatus.Unknown => "unknown",
@@ -77,7 +87,7 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Theme");
 
-            ThemeInfo themeInfo = Program.ShellComponent.GetPreferredTheme();
+            ThemeInfo themeInfo = Toolkit.Shell.GetPreferredTheme();
 
             ImGui.BeginDisabled();
 
@@ -99,7 +109,7 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("System Resources");
 
-            SystemMemoryInfo memInfo = Program.ShellComponent.GetSystemMemoryInformation();
+            SystemMemoryInfo memInfo = Toolkit.Shell.GetSystemMemoryInformation();
 
             // FIXME: Display in a better way
             ImGui.Text($"System memory: {GetHumanReadable(memInfo.TotalPhysicalMemory)}");
@@ -108,27 +118,32 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginTabBar("platforms"))
             {
-                if (Program.ShellComponent is Platform.Native.Windows.ShellComponent winShell)
+                if (Toolkit.Shell is Platform.Native.Windows.ShellComponent winShell)
                 {
                     if (ImGui.BeginTabItem("Win32"))
                     {
                         if (ImGui.Checkbox("Use Immeresive Dark Mode", ref useImmersiveDarkMode))
                         {
-                            // FIXME: It seems like the window titlebar doesn't get changed
-                            // immediately, you need to minimize and restore the window for this to work...
                             winShell.SetImmersiveDarkMode(Program.Window, useImmersiveDarkMode);
                         }
 
-                        System.Numerics.Vector3 textColor = new System.Numerics.Vector3(1, 1, 1);
                         if (ImGui.ColorEdit3("Caption Text Color", ref textColor))
                         {
-                            //winShell.SetCaptionTextColor(Program.Window, new Color3<Rgb>(textColor.X, textColor.Y, textColor.Z));
+                            winShell.SetCaptionTextColor(Program.Window, new Color3<Rgb>(textColor.X, textColor.Y, textColor.Z));
                         }
 
-                        System.Numerics.Vector3 captionColor = new System.Numerics.Vector3(1, 1, 1);
                         if (ImGui.ColorEdit3("Caption Color", ref captionColor))
                         {
-                            //winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
+                            winShell.SetCaptionColor(Program.Window, new Color3<Rgb>(captionColor.X, captionColor.Y, captionColor.Z));
+                        }
+
+                        ImGui.AlignTextToFramePadding();
+                        ImGui.TextUnformatted("Window Corner Preference"); ImGui.SameLine();
+                        ImGui.Combo("##cornerPreference", ref cornerPreferenceIndex, CornerPreferenceNames, CornerPreferenceNames.Length); ImGui.SameLine();
+                        if (ImGui.Button("Apply##cornerPreference"))
+                        {
+                            winShell.SetWindowCornerPreference(Program.Window, CornerPreferences[cornerPreferenceIndex]);
+                            Program.Logger.LogInfo($"ShellComponent.SetWindowCornerPreference({CornerPreferenceNames[cornerPreferenceIndex]})");
                         }
 
                         ImGui.EndTabItem();

@@ -277,7 +277,7 @@ namespace OpenTK.Platform.Native.X11
         // - Noggin_bops 2024-02-26
 
         /// <inheritdoc />
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
             if (X11.Extensions.Contains("RANDR"))
             {

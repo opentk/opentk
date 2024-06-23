@@ -63,21 +63,23 @@ namespace LocalTestProject
             clipComp.Logger = logger;
             joystickComponent.Logger = logger;
 
-            windowComp.Initialize(PalComponents.Window);
-            glComp.Initialize(PalComponents.OpenGL);
+            ToolkitOptions options = new ToolkitOptions() { ApplicationName = "LocalTestProject", Logger = logger };
 
-            dispComp.Initialize(PalComponents.Display);
+            windowComp.Initialize(options);
+            glComp.Initialize(options);
 
-            keyboardComp.Initialize(PalComponents.KeyboardInput);
+            dispComp.Initialize(options);
 
-            iconComp.Initialize(PalComponents.WindowIcon);
-            cursorComp.Initialize(PalComponents.MouseCursor);
+            keyboardComp.Initialize(options);
 
-            clipComp.Initialize(PalComponents.Clipboard);
+            iconComp.Initialize(options);
+            cursorComp.Initialize(options);
 
-            shellComp.Initialize(PalComponents.Shell);
+            clipComp.Initialize(options);
 
-            joystickComponent.Initialize(PalComponents.Joystick);
+            shellComp.Initialize(options);
+
+            joystickComponent.Initialize(options);
 
             Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout(null)}");
 
@@ -541,9 +543,6 @@ namespace LocalTestProject
                         case ClipboardFormat.Text:
                             Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardText()}'");
                             break;
-                        case ClipboardFormat.HTML:
-                            Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardHTML()}',\nunformated: '{clipComp.GetClipboardText()}'");
-                            break;
                         case ClipboardFormat.Files:
                             Console.WriteLine($"Current clipboard: '{string.Join(", ", clipComp.GetClipboardFiles()!)}'");
                             break;
@@ -856,8 +855,8 @@ void main()
         {
             var buffer = GL.GenBuffer();
 
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
-            GL.BufferData(BufferTargetARB.ArrayBuffer, vertices, BufferUsageARB.StaticDraw);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices, BufferUsage.StaticDraw);
 
             return buffer;
         }
@@ -869,7 +868,7 @@ void main()
             CheckError("buffer");
 
             GL.BindVertexArray(vao);
-            GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
 
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, 0);
             GL.EnableVertexAttribArray(0);
@@ -915,7 +914,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            GL.GetProgrami(program, ProgramPropertyARB.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);

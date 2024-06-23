@@ -30,36 +30,29 @@ namespace OpenTK.Platform.Native.X11
         internal IntPtr PortalDesktop;
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
+            GError* error = null;
+            PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
+                                            GBusType.G_BUS_TYPE_SESSION,
+                                            GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
+                                            IntPtr.Zero,
+                                            AsPtr("org.freedesktop.portal.Desktop"u8),
+                                            AsPtr("/org/freedesktop/portal/desktop"u8),
+                                            AsPtr("org.freedesktop.portal.Settings"u8),
+                                            IntPtr.Zero,
+                                            &error);
+            if (error != null)
             {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
+                Logger?.LogWarning($"Could not open settings portal: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                LibGio.g_clear_error(&error);
             }
 
-            unsafe {
-                GError* error = null;
-                PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
-                                                GBusType.G_BUS_TYPE_SESSION,
-                                                GDBusProxyFlags.G_DBUS_PROXY_FLAGS_NONE,
-                                                IntPtr.Zero,
-                                                AsPtr("org.freedesktop.portal.Desktop"u8),
-                                                AsPtr("/org/freedesktop/portal/desktop"u8),
-                                                AsPtr("org.freedesktop.portal.Settings"u8),
-                                                IntPtr.Zero,
-                                                &error);
-                if (error != null)
-                {
-                    Logger?.LogWarning($"Could not open settings portal: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
-                    LibGio.g_clear_error(&error);
-                }
-
-                // FIXME: We can'r receive signals like this as we don't have a running
-                // main loop. This is an issue as we'd ideally like to avoid running a libgio
-                // main-loop as that is just a lot of effort for very little gain.
-                // - Noggin_bops 2024-02-25
-                ulong signal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
-            }
+            // FIXME: We can'r receive signals like this as we don't have a running
+            // main loop. This is an issue as we'd ideally like to avoid running a libgio
+            // main-loop as that is just a lot of effort for very little gain.
+            // - Noggin_bops 2024-02-25
+            ulong signal = LibGio.g_signal_connect(PortalDesktop, AsPtr("g-signal"u8), &settings_portal_changed_cb, IntPtr.Zero);
         }
 
         [UnmanagedCallersOnly]

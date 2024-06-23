@@ -25,13 +25,8 @@ namespace OpenTK.Platform.Native.X11
         private static bool[] KeyboardState = new bool[256];
 
         /// <inheritdoc/>
-        public unsafe void Initialize(PalComponents which)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
             int major = 1;
             int minor = 0;
             if (XkbQueryExtension(X11.Display, out int opcode, out int @event, out int error, ref major, ref minor) == false)

@@ -23,13 +23,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.KeyboardInput)
-            {
-                throw new PalException(this, "SDLKeyboardComponent can only initialize the KeyboardInput component.");
-            }
-
             // Show the default IME UI.
             // FIXME: Make this user togglable so they can make their own IME window.
             SDL_SetHint(SDL_HINT_IME_SHOW_UI, "1");

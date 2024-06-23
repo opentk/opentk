@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Cursor";
 
-        public override bool IsVisible => Program.CursorComp != null;
+        public override bool IsVisible => Toolkit.Cursor != null;
 
         private bool canLoadSystemCursors;
         private bool canInspectSystemCursors;
@@ -27,14 +28,14 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { canLoadSystemCursors = Program.CursorComp!.CanLoadSystemCursors; } catch { canLoadSystemCursors = false; }
-            try { canInspectSystemCursors = Program.CursorComp!.CanInspectSystemCursors; } catch { canInspectSystemCursors = false; }
+            try { canLoadSystemCursors = Toolkit.Cursor.CanLoadSystemCursors; } catch { canLoadSystemCursors = false; }
+            try { canInspectSystemCursors = Toolkit.Cursor.CanInspectSystemCursors; } catch { canInspectSystemCursors = false; }
 
             if (canLoadSystemCursors)
             {
                 foreach (SystemCursorType cursorType in Enum.GetValues<SystemCursorType>())
                 {
-                    CursorHandle handle = Program.CursorComp!.Create(cursorType);
+                    CursorHandle handle = Toolkit.Cursor.Create(cursorType);
                     SystemCursors.Add(cursorType, handle);
                 }
             }
@@ -73,7 +74,7 @@ namespace OpenTK.Backends.Tests
                     }
                 }
                 // FIXME: Don't allocate the cursor every frame...
-                customColorCursor = Program.CursorComp!.Create(16, 16, icon, 0, 0);
+                customColorCursor = Toolkit.Cursor.Create(16, 16, icon, 0, 0);
 
                 byte[] image = new byte[16 * 16 * 3];
                 byte[] mask = new byte[16 * 16 * 1];
@@ -90,7 +91,7 @@ namespace OpenTK.Backends.Tests
                         mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                     }
                 }
-                customMaskCursor = Program.CursorComp.Create(16, 16, image, mask, 8, 8);
+                customMaskCursor = Toolkit.Cursor.Create(16, 16, image, mask, 8, 8);
             }
             catch
             { }
@@ -138,7 +139,7 @@ namespace OpenTK.Backends.Tests
                     frames[frame].HotspotY = HEIGHT / 2;
                 }
 
-                macOSCustomAnimatedCursor = (Program.CursorComp as MacOSCursorComponent)?.Create(frames, 1f / frames.Length);
+                macOSCustomAnimatedCursor = (Toolkit.Cursor as MacOSCursorComponent)?.Create(frames, 1f / frames.Length);
             }
         }
 
@@ -209,11 +210,11 @@ namespace OpenTK.Backends.Tests
                     if (ImGui.IsItemHovered())
                     {
                         // FIXME: Should we even show the cursors if they can't be set?
-                        if (Program.WindowComp.CanSetIcon)
+                        if (Toolkit.Window.CanSetIcon)
                         {
-                            (Program.CursorComp as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
+                            (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
                             // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
-                            Program.WindowComp.SetCursor(Program.Window, handle);
+                            Toolkit.Window.SetCursor(Program.Window, handle);
                             setCursor = true;
 
                             hoveredIndex = i - 1;
@@ -234,10 +235,10 @@ namespace OpenTK.Backends.Tests
                         var (type, handle) = SystemCursors.ElementAt(hoveredIndex);
                         name = type.ToString();
 
-                        Program.CursorComp!.GetSize(handle, out int width, out int height);
+                        Toolkit.Cursor.GetSize(handle, out int width, out int height);
                         size = (width, height);
 
-                        Program.CursorComp!.GetHotspot(handle, out int hx, out int hy);
+                        Toolkit.Cursor.GetHotspot(handle, out int hx, out int hy);
                         hotspot = (hx, hy);
                     }
 
@@ -276,10 +277,10 @@ namespace OpenTK.Backends.Tests
                 Vector2i hotspot = (0, 0);
                 if (hoveredHandle != null)
                 {
-                    Program.CursorComp!.GetSize(hoveredHandle, out int width, out int height);
+                    Toolkit.Cursor.GetSize(hoveredHandle, out int width, out int height);
                     size = (width, height);
 
-                    Program.CursorComp!.GetHotspot(hoveredHandle, out int x, out int y);
+                    Toolkit.Cursor.GetHotspot(hoveredHandle, out int x, out int y);
                     hotspot = (x, y);
                 }
                 ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
@@ -301,13 +302,13 @@ namespace OpenTK.Backends.Tests
                     {
                         if (loadedCursor != null)
                         {
-                            Program.CursorComp!.Destroy(loadedCursor);
+                            Toolkit.Cursor.Destroy(loadedCursor);
                         }
 
                         // FIXME: catch exceptions.
                         try
                         {
-                            loadedCursor = (Program.CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurFile(cursorFilePath);
+                            loadedCursor = (Toolkit.Cursor as Platform.Native.Windows.CursorComponent)!.CreateFromCurFile(cursorFilePath);
                             cursorName = Path.GetFileNameWithoutExtension(cursorFilePath);
                             loadingError = null;
                         }
@@ -327,7 +328,7 @@ namespace OpenTK.Backends.Tests
                         ImGui.Button(cursorName);
                         if (ImGui.IsItemHovered())
                         {
-                            Program.WindowComp.SetCursor(Program.Window, loadedCursor);
+                            Toolkit.Window.SetCursor(Program.Window, loadedCursor);
                             setCursor = true;
                         }
                     }
@@ -365,10 +366,10 @@ namespace OpenTK.Backends.Tests
                     Vector2i hotspot = (0, 0);
                     if (hoveredHandle != null)
                     {
-                        Program.CursorComp!.GetSize(hoveredHandle, out int width, out int height);
+                        Toolkit.Cursor.GetSize(hoveredHandle, out int width, out int height);
                         size = (width, height);
 
-                        Program.CursorComp!.GetHotspot(hoveredHandle, out int x, out int y);
+                        Toolkit.Cursor.GetHotspot(hoveredHandle, out int x, out int y);
                         hotspot = (x, y);
                     }
                     ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
@@ -380,7 +381,7 @@ namespace OpenTK.Backends.Tests
             // Will ImGui set the mouse cursor change flag correctly?
             if (setCursor == false && hasSetCursor == true)
             {
-                Program.WindowComp.SetCursor(Program.Window, SystemCursors[SystemCursorType.Default]);
+                Toolkit.Window.SetCursor(Program.Window, SystemCursors[SystemCursorType.Default]);
             }
             hasSetCursor = setCursor;
 
@@ -398,11 +399,11 @@ namespace OpenTK.Backends.Tests
                 bool hovered = ImGui.IsItemHovered();
                 if (hovered)
                 {
-                    if (Program.WindowComp.CanSetCursor && handle != null)
+                    if (Toolkit.Window.CanSetCursor && handle != null)
                     {
-                        (Program.CursorComp as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
+                        (Toolkit.Cursor as MacOSCursorComponent)?.UpdateAnimation(handle, deltaTime);
 
-                        Program.WindowComp.SetCursor(Program.Window, handle);
+                        Toolkit.Window.SetCursor(Program.Window, handle);
                         setCursor = true;
                     }
                 }

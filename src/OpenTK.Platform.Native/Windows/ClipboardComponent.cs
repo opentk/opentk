@@ -134,27 +134,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Clipboard)
-            {
-                throw new PalException(this, "ClipboardComponent can only initialize the Clipboard component.");
-            }
-
-            // Get the HTML format
-            CF_HTML = Win32.RegisterClipboardFormat("HTML Format");
-            if (CF_HTML == 0)
-            {
-                throw new Win32Exception();
-            }
-
             // FIXME: Should we check for errors here?
             CF_CanIncludeInClipboardHistory = Win32.RegisterClipboardFormat("CanIncludeInClipboardHistory");
             CF_CanUploadToCloudClipboard = Win32.RegisterClipboardFormat("CanUploadToCloudClipboard");
         }
-
-        // (0xC095): Rich Text Format
-        private static CF CF_HTML;
 
         private static CF CF_CanIncludeInClipboardHistory;
         private static CF CF_CanUploadToCloudClipboard;
@@ -165,7 +150,6 @@ namespace OpenTK.Platform.Native.Windows
         private static readonly ClipboardFormat[] _SupportedFormats = new[]
         {
             ClipboardFormat.Text,
-            ClipboardFormat.HTML,
             ClipboardFormat.Files,
             ClipboardFormat.Bitmap,
             ClipboardFormat.Audio,
@@ -207,11 +191,6 @@ namespace OpenTK.Platform.Native.Windows
                         format = ClipboardFormat.Audio;
                         break;
                     default:
-                        if (cf == CF_HTML)
-                        {
-                            format = ClipboardFormat.HTML;
-                            break;
-                        }
                         break;
                 }
 
@@ -825,72 +804,6 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return new Bitmap(width, height, image);
-        }
-
-        /// <inheritdoc/>
-        public unsafe string? GetClipboardHTML()
-        {
-            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
-
-            IntPtr obj = Win32.GetClipboardData(CF_HTML);
-            if (obj == IntPtr.Zero)
-            {
-                int lastError = Marshal.GetLastWin32Error();
-
-                success = Win32.CloseClipboard();
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-
-                if (lastError == 0)
-                {
-                    Logger?.LogDebug($"Could not get CF_HTML data from clipboard.");
-                    return null;
-                }
-                else
-                {
-                    throw new Win32Exception(lastError);
-                }
-            }
-
-            int strSize = (int)Win32.GlobalSize(obj);
-            if (strSize == 0)
-            {
-                throw new Win32Exception();
-            }
-
-            byte* strData = (byte*)Win32.GlobalLock(obj);
-            if (strData == null)
-            {
-                throw new Win32Exception();
-            }
-
-            // FIXME: Can this fail? Or is this a security issue?
-            string str = Encoding.UTF8.GetString(strData, strSize);
-
-            bool stillLocked = Win32.GlobalUnlock(obj);
-            if (stillLocked)
-            {
-                // If the function returns NO_ERROR then there is no error.
-                int errorCode = Marshal.GetLastWin32Error();
-                if (errorCode != 0)
-                {
-                    throw new Win32Exception(errorCode);
-                }
-            }
-
-            bool succeess = Win32.CloseClipboard();
-            if (succeess == false)
-            {
-                throw new Win32Exception();
-            }
-
-            return str;
         }
 
         /// <inheritdoc/>

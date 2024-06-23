@@ -30,3 +30,10 @@
 *.zip binary
 *.pdf binary
 *.ttf binary
+*.glb binary
+*.blend binary
+*.blend1 binary
+*.ani binary
+*.gif binary
+*.res binary
+*.dds binary

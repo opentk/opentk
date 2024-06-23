@@ -243,6 +243,15 @@ namespace OpenTK.Core.Platform
         void SetClientBounds(WindowHandle handle, int x, int y, int width, int height);
 
         /// <summary>
+        /// Get the size of the window framebuffer in pixels.
+        /// Use this value when calls to graphics APIs that want pixels, e.g. GL.Viewport().
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">Width in pixels of the window framebuffer.</param>
+        /// <param name="height">Height in pixels of the window framebuffer.</param>
+        void GetFramebufferSize(WindowHandle handle, out int width, out int height);
+
+        /// <summary>
         /// Gets the maximum size of the client area.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -418,6 +427,13 @@ namespace OpenTK.Core.Platform
         void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
 
         /// <summary>
+        /// Returns true if the given window has input focus.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <returns>If the window has input focus.</returns>
+        bool IsFocused(WindowHandle handle);
+
+        /// <summary>
         /// Gives the window input focus.
         /// </summary>
         /// <param name="handle">Handle to the window to focus.</param>
@@ -450,5 +466,14 @@ namespace OpenTK.Core.Platform
         /// <param name="y">The screen y coordinate.</param>
         /// FIXME: Change to use Vector2i instead of x and y variables.
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
+
+        /// <summary>
+        /// Returns the current scale factor of this window.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="scaleX">The x scale factor of the window.</param>
+        /// <param name="scaleY">The y scale factor of the window.</param>
+        /// <seealso cref="WindowScaleChangeEventArgs"/>
+        void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY);
     }
 }

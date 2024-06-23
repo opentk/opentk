@@ -1,6 +1,7 @@
 ﻿using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
 using StbImageSharp;
 using System;
@@ -16,7 +17,7 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Icon";
 
-        public override bool IsVisible => Program.IconComponent != null;
+        public override bool IsVisible => Toolkit.Icon != null;
 
         private bool canLoadSystemIcons;
 
@@ -28,30 +29,30 @@ namespace OpenTK.Backends.Tests
         {
             base.Initialize();
 
-            try { canLoadSystemIcons = Program.IconComponent!.CanLoadSystemIcons; } catch { canLoadSystemIcons = false; }
+            try { canLoadSystemIcons = Toolkit.Icon.CanLoadSystemIcons; } catch { canLoadSystemIcons = false; }
 
             if (canLoadSystemIcons)
             {
                 foreach (SystemIconType iconType in Enum.GetValues<SystemIconType>())
                 {
-                    IconHandle handle = Program.IconComponent!.Create(iconType);
+                    IconHandle handle = Toolkit.Icon.Create(iconType);
                     SystemIcons.Add(iconType, handle);
                 }
             }
 
             ImageResult logoData = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
-            IconHandle logo = Program.IconComponent!.Create(logoData.Width, logoData.Height, logoData.Data);
+            IconHandle logo = Toolkit.Icon.Create(logoData.Width, logoData.Height, logoData.Data);
             CustomIcons.Add(("OpenTK Logo", logo));
 
             if (OperatingSystem.IsMacOS())
             {
-                IconHandle? icon = (Program.IconComponent as MacOSIconComponent)!.CreateSFSymbol("fireworks", "An icon containing fireworks.");
+                IconHandle? icon = (Toolkit.Icon as MacOSIconComponent)!.CreateSFSymbol("fireworks", "An icon containing fireworks.");
                 if (icon != null)
                 {
                     CustomIcons.Add(("Fireworks", icon));
                 }
 
-                icon = (Program.IconComponent as MacOSIconComponent)!.CreateSFSymbol("paintbrush.fill", "An icon depicting a paintbrush.");
+                icon = (Toolkit.Icon as MacOSIconComponent)!.CreateSFSymbol("paintbrush.fill", "An icon depicting a paintbrush.");
                 if (icon != null)
                 {
                     CustomIcons.Add(("Paintbrush", icon));
@@ -111,10 +112,10 @@ namespace OpenTK.Backends.Tests
 
                     if (ImGui.Button(type.ToString(), new System.Numerics.Vector2(targetSize, targetSize)))
                     {
-                        Program.WindowComp.SetIcon(Program.Window, handle);
+                        Toolkit.Window.SetIcon(Program.Window, handle);
 
                         // If we are on mac there is no window icon, so set the dock icon instead.
-                        (Program.WindowComp as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
+                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
                     }
 
                     if (ImGui.IsItemHovered())
@@ -133,7 +134,7 @@ namespace OpenTK.Backends.Tests
                 Vector2i size = (0, 0);
                 if (hoverIndex != (SystemIconType)(-1))
                 {
-                    Program.IconComponent!.GetSize(SystemIcons[hoverIndex], out int width, out int height);
+                    Toolkit.Icon.GetSize(SystemIcons[hoverIndex], out int width, out int height);
                     size = (width, height);
 
                 }
@@ -181,10 +182,10 @@ namespace OpenTK.Backends.Tests
 
                     if (ImGui.Button(name, new System.Numerics.Vector2(targetSize, targetSize)))
                     {
-                        Program.WindowComp.SetIcon(Program.Window, handle);
+                        Toolkit.Window.SetIcon(Program.Window, handle);
 
                         // If we are on mac there is no window icon, so set the dock icon instead.
-                        (Program.WindowComp as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
+                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Program.Window, handle);
                     }
 
                     if (ImGui.IsItemHovered())
@@ -205,7 +206,7 @@ namespace OpenTK.Backends.Tests
                 Vector2i size = (0, 0);
                 if (hoverIndex != -1)
                 {
-                    Program.IconComponent!.GetSize(CustomIcons[hoverIndex].Icon, out int width, out int height);
+                    Toolkit.Icon.GetSize(CustomIcons[hoverIndex].Icon, out int width, out int height);
                     size = (width, height);
                     
                 }
