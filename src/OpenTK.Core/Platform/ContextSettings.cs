@@ -46,6 +46,9 @@ namespace OpenTK.Core.Platform
         /// <item><description>Accept any <see cref="PixelFormat"/>.</description></item>
         /// <item><description>Decrement <see cref="Samples"/> by one at a time until 0 and see if any alternative sample counts are possible.</description></item>
         /// <item><description>Accept any <see cref="SwapMethod"/>.</description></item>
+        /// <item><description>Allow one of color bits (<see cref="RedBits"/>, <see cref="GreenBits"/>, <see cref="BlueBits"/>, and <see cref="AlphaBits"/>), <see cref="DepthBits"/>, or <see cref="StencilBits"/> to be lower than requested.</description></item>
+        /// <item><description>Allow two of color bits (<see cref="RedBits"/>, <see cref="GreenBits"/>, <see cref="BlueBits"/>, and <see cref="AlphaBits"/>), <see cref="DepthBits"/>, or <see cref="StencilBits"/> to be lower than requested.</description></item>
+        /// <item><description>Relax all bit requirements.</description></item>
         /// <item><description>If all relaxations fail, select the first option in the list.</description></item>
         /// </list>
         /// </summary>
@@ -202,7 +205,7 @@ namespace OpenTK.Core.Platform
             // FIXME: When we get here we actually want to get the "closest" format
             // and not just remove every bit depth test completely.
 
-            // Relax color bits to allow lower color bits.
+            // Relax color bits to allow one of color, depth or stencil bits to be lower.
             logger?.LogDebug("No match found, relaxing one of color, depth, or stencil bits");
             for (int i = 0; i < options.Count; i++)
             {
@@ -234,7 +237,7 @@ namespace OpenTK.Core.Platform
                 }
             }
 
-            // Relax color bits to allow lower color bits.
+            // Relax color bits to allow two of color, depth or stencil bits to be lower.
             logger?.LogDebug("No match found, relaxing two of color, depth, or stencil bits");
             for (int i = 0; i < options.Count; i++)
             {
@@ -266,7 +269,7 @@ namespace OpenTK.Core.Platform
                 }
             }
 
-            // Relax stencil bits to allow lower stencil bits.
+            // Relax all bits to allow lower bits.
             logger?.LogDebug("No match found, relaxing all bits.");
             for (int i = 0; i < options.Count; i++)
             {
