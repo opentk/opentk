@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "tests\OpenALT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Generator\Generator.csproj", "{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkGenerator", "src\VkGenerator\VkGenerator.csproj", "{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.GraphicsLibraryFramework", "src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
@@ -222,6 +224,10 @@ Global
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
