@@ -10,6 +10,7 @@ using VkGenerator.Parsing;
 using VkGenerator.Process;
 using VkGenerator.Utility;
 using VkGenerator.Utility.Extensions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VkGenerator
 {
@@ -20,7 +21,6 @@ namespace VkGenerator
         private const string VulkanNamespace = GraphicsNamespace + ".Vulkan";
 
         private const string LoaderClass = "VKLoader";
-        private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
         public static void Write(SpecificationData data)
         {
@@ -35,6 +35,9 @@ namespace VkGenerator
             WriteEnums(directoryPath, data.Enums);
 
             WriteStructs(directoryPath, data.Structs);
+
+            WriteFunctionPointers(directoryPath, data.Commands);
+            WriteCommands(directoryPath, data.Commands);
         }
 
         private static void WriteEnums(string directoryPath, List<EnumType> enums)
@@ -76,6 +79,15 @@ namespace VkGenerator
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Structs.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine();
@@ -99,7 +111,6 @@ namespace VkGenerator
                             }
                             else if (member.StrongType is CSFixedSizeArray csFixedSizeArray)
                             {
-
                                 if (csFixedSizeArray.BaseType is not CSPrimitive csPrimitive || csPrimitive.TypeName == "IntPtr")
                                 {
                                     string helperTypeName = $"{member.Name}InlineArray";
@@ -114,12 +125,144 @@ namespace VkGenerator
                                 }
                                 else
                                 {
-                                    writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {member.Name}[{csFixedSizeArray.Size}];");
+                                    writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}[{csFixedSizeArray.Size}];");
                                 }
                             }
                             else
                             {
-                                writer.WriteLine($"public {member.StrongType!.ToCSString()} {member.Name};");
+                                writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
+                            }
+                        }
+                    }
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        private static void WriteCommands(string directoryPath, List<Command> commands)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                writer.WriteLine("public static unsafe partial class Vk");
+                using (writer.CsScope())
+                {
+                    foreach (Command command in commands)
+                    {
+                        string entryPoint = command.Name;
+                        string functionName = NameMangler.MangleFunctionName(command.Name);
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        writer.WriteLine($"public static {command.StrongReturnType!.ToCSString()} {functionName}({signature})");
+                        using (writer.CsScope())
+                        {
+                            if (command.StrongReturnType is not CSVoid)
+                            {
+                                writer.WriteLine($"return VkPointers._{entryPoint}_fnptr({paramNames});");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"VkPointers._{entryPoint}_fnptr({paramNames});");
+                            }
+                        }
+                    }
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        private static void WriteFunctionPointers(string directoryPath, List<Command> commands)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.Pointers.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Decode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Encode;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1;");
+            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                writer.WriteLine("public static unsafe partial class VkPointers");
+                using (writer.CsScope())
+                {
+                    foreach (Command command in commands)
+                    {
+                        string entryPoint = command.Name;
+
+                        StringBuilder signature = new StringBuilder();
+                        StringBuilder delegateTypes = new StringBuilder();
+                        StringBuilder paramNames = new StringBuilder();
+                        foreach (CommandParameter parameter in command.Parameters)
+                        {
+                            string name = NameMangler.MangleParameterName(parameter.Name);
+                            string type = parameter.StrongType!.ToCSString();
+                            signature.Append($"{type} {name}, ");
+                            delegateTypes.Append($"{type}, ");
+                            paramNames.Append($"{name}, ");
+                        }
+                        signature.Length -= 2;
+                        paramNames.Length -= 2;
+
+                        delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
+
+                        writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+
+                        writer.WriteLine($"[UnmanagedCallersOnly]");
+                        writer.WriteLine($"private static {command.StrongReturnType!.ToCSString()} {entryPoint}_Lazy({signature})");
+                        using (writer.CsScope())
+                        {
+                            // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
+                            writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderClass}.GetInstanceProcAddress(\"{entryPoint}\");");
+
+                            if (command.StrongReturnType is not CSVoid)
+                            {
+                                writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
                             }
                         }
                     }

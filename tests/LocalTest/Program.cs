@@ -21,13 +21,13 @@ namespace LocalTest
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
             {
-                API = ContextAPI.OpenGL,
-                APIVersion = new Version(3, 3),
+                API = ContextAPI.NoAPI,
+                //APIVersion = new Version(3, 3),
                 AutoLoadBindings = true,
-                Flags = ContextFlags.Debug | ContextFlags.ForwardCompatible,
+                Flags = 0,
                 IsEventDriven = false,
-                Profile = ContextProfile.Core,
-                ClientSize = (800, 600),
+                Profile = 0,
+                Size = (800, 600),
                 StartFocused = true,
                 StartVisible = true,
                 Title = "Local OpenTK Test",
@@ -52,7 +52,11 @@ namespace LocalTest
 
         protected override void OnUnload()
         {
+<<<<<<< HEAD
             base.OnUnload();
+=======
+            base.OnRenderFrame(args);
+>>>>>>> 849925e8f (First iteration of the vulkan bindings.)
         }
 
         protected override void OnUpdateFrame(FrameEventArgs args)

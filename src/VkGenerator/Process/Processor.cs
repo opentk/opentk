@@ -35,9 +35,15 @@ namespace VkGenerator.Process
                     {
                         typeMap.Add(enumName.Name, enumType);
                     }
+                    else
+                    {
+                        Debug.Assert(false);
+                    }
                 }
                 else
                 {
+                    // FIXME: There are a bunch more empty enums like VkPipelineVertexInputStateCreateFlags etc
+
                     // VkQueryPoolCreateFlags, VkQueryPoolCreateFlagBits, VkDeviceCreateFlags, and VkDeviceCreateFlagBits have no members
                     if (enumName.Name != "VkQueryPoolCreateFlags" &&
                         enumName.Name != "VkQueryPoolCreateFlagBits" &&
@@ -59,7 +65,12 @@ namespace VkGenerator.Process
                 }
                 else
                 {
+                    // FIXME: Some of this is going to be fixed when we add in extensions...
                     typeMap.Add(bitmask.Name, new CSEnum(bitmask.Name, CSPrimitive.Int(true), true));
+                    Console.WriteLine(bitmask.Name);
+
+                    // FIXME: This isn't the place to do this!!!!
+                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true));
                 }
             }
 
@@ -71,14 +82,32 @@ namespace VkGenerator.Process
             return typeMap;
         }
 
-        public static void ResolveStructMemberTypes(SpecificationData data)
+        public static void ResolveStructMemberTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
         {
-            Dictionary<string, BaseCSType> typeMap = BuildTypeMap(data);
             foreach (StructType @struct in data.Structs)
             {
                 foreach (StructMember member in @struct.Members)
                 {
                     member.StrongType = ParseType(member.Type, typeMap, data.Constants);
+                    member.StrongType = ReplaceOpaqueStructPointers(member.StrongType);
+                }
+            }
+        }
+
+        public static void ResolveCommandTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
+        {
+            foreach (Command command in data.Commands)
+            {
+                command.StrongReturnType = ParseType(command.ReturnType, typeMap, data.Constants);
+                command.StrongReturnType = ReplaceOpaqueStructPointers(command.StrongReturnType);
+                command.StrongReturnType = ReplaceFixedSizeArraysWithPointers(command.StrongReturnType);
+
+
+                foreach (CommandParameter param in command.Parameters)
+                {
+                    param.StrongType = ParseType(param.Type, typeMap, data.Constants);
+                    param.StrongType = ReplaceOpaqueStructPointers(param.StrongType);
+                    param.StrongType = ReplaceFixedSizeArraysWithPointers(param.StrongType);
                 }
             }
         }
@@ -171,10 +200,12 @@ namespace VkGenerator.Process
                 // - Noggin_bops 2024-07-09
                 if (type.EndsWith(":24"))
                 {
+                    Console.WriteLine(type);
                     type = type[..^":24".Length];
                 }
                 else if (type.EndsWith(":8"))
                 {
+                    Console.WriteLine(type);
                     type = type[..^":8".Length];
                 }
 
@@ -237,9 +268,15 @@ namespace VkGenerator.Process
                         "VkFlags64" => CSPrimitive.Ulong(@const),
                         "VkDeviceSize" => CSPrimitive.Ulong(@const),
                         "VkDeviceAddress" => CSPrimitive.Ulong(@const),
+
+                        "VkRemoteAddressNV" => new CSPointer(new CSVoid(@const), @const),
+
                         "Display" => new CSStruct("Display", @const), // FIXME: This is just a struct?
-                        "VisualID" => new CSStructPrimitive("VisualID", @const, CSPrimitive.Uint(@const)),
-                        "Window" => new CSStructPrimitive("Window", @const, CSPrimitive.Nuint(@const)),
+                        "VisualID" => CSPrimitive.Nuint(@const),
+                        // FIXME: Strong type?
+                        //"Window" => new CSStructPrimitive("Window", @const, CSPrimitive.Nuint(@const)),
+                        "Window" => CSPrimitive.Nuint(@const),
+                        "RROutput" => CSPrimitive.Nuint(@const),
 
                         "wl_display" => new CSStruct("wl_display", @const), // FIXME: This is just a struct?
                         "wl_surface" => new CSStruct("wl_surface", @const),
@@ -253,13 +290,13 @@ namespace VkGenerator.Process
                         "LPCWSTR" => new CSPointer(new CSChar16(true), @const),
 
                         "xcb_connection_t" => new CSStruct("xcb_connection_t", @const),
-                        "xcb_visualid_t" => new CSStruct("xcb_visualid_t", @const),
-                        "xcb_window_t" => new CSStruct("xcb_window_t", @const),
+                        "xcb_visualid_t" => CSPrimitive.Uint(@const),
+                        "xcb_window_t" => CSPrimitive.Uint(@const),
 
                         "IDirectFB" => new CSStruct("IDirectFB", @const),
                         "IDirectFBSurface" => new CSStruct("IDirectFBSurface", @const),
 
-                        "zx_handle_t" => new CSStructPrimitive("zx_handle_t", @const, CSPrimitive.Int(@const)),
+                        "zx_handle_t" => CSPrimitive.Int(@const),
 
                         // Google Games Platform aka. Stadia which is dead
                         // and we can't get any headers or anything from it.
@@ -270,11 +307,12 @@ namespace VkGenerator.Process
                         "_screen_window" => CSPrimitive.IntPtr(@const),
                         "_screen_buffer" => CSPrimitive.IntPtr(@const),
 
-                        "NvSciSyncAttrList" => new CSPointer(new CSStruct("NvSciSyncAttrListRec", false), @const),
-                        "NvSciSyncObj" => new CSPointer(new CSStruct("NvSciSyncObjRec", false), @const),
+                        "NvSciSyncAttrList" => CSPrimitive.IntPtr(@const),
+                        "NvSciSyncObj" => CSPrimitive.IntPtr(@const),
+                        // uint64_t payload[6]; 
                         "NvSciSyncFence" => new CSStruct("NvSciSyncFence", @const),
-                        "NvSciBufAttrList" => new CSPointer(new CSStruct("NvSciBufAttrListRec", false), @const),
-                        "NvSciBufObj" => new CSPointer(new CSStruct("NvSciBufObjRefRec", false), @const),
+                        "NvSciBufAttrList" => CSPrimitive.IntPtr(@const),
+                        "NvSciBufObj" => CSPrimitive.IntPtr(@const),
 
                         "ANativeWindow" => new CSStruct("ANativeWindow", @const),
                         "AHardwareBuffer" => new CSStruct("AHardwareBuffer", @const),
@@ -374,5 +412,52 @@ namespace VkGenerator.Process
             }
         }
 
+        private static BaseCSType ReplaceOpaqueStructPointers(BaseCSType type)
+        {
+            if (type is CSPointer csPointer && csPointer.BaseType is CSStruct csStruct)
+            {
+                switch (csStruct.TypeName)
+                {
+                    case "wl_display":
+                    case "wl_surface":
+                    case "Display":
+                    case "xcb_connection_t":
+                    case "IDirectFB":
+                    case "IDirectFBSurface":
+                    case "ANativeWindow":
+                    case "AHardwareBuffer":
+                    case "NvSciSyncFence":
+                        return CSPrimitive.IntPtr(csPointer.Constant);
+                    default:
+                        return type;
+                }
+            }
+            // If it wasn't a pointer to a struct, we try and dereference the pointer/array/whatever and do the same thing here.
+            else if (type is IBaseTypeCSType nestingType)
+            {
+                return nestingType.CreateWithNewType(ReplaceOpaqueStructPointers(nestingType.BaseType));
+            }
+            else
+            {
+                return type;
+            }
+        }
+
+        private static BaseCSType ReplaceFixedSizeArraysWithPointers(BaseCSType type)
+        {
+            if (type is CSFixedSizeArray csFixedSizeArray)
+            {
+                return new CSPointer(csFixedSizeArray.BaseType, false);
+            }
+            // If it wasn't a pointer to a struct, we try and dereference the pointer/array/whatever and do the same thing here.
+            else if (type is IBaseTypeCSType nestingType)
+            {
+                return nestingType.CreateWithNewType(ReplaceFixedSizeArraysWithPointers(nestingType.BaseType));
+            }
+            else
+            {
+                return type;
+            }
+        }
     }
 }

@@ -15,10 +15,12 @@ namespace VkGenerator.Parsing
             List<EnumType> Enums,
             // FIXME: These are all the enums that are typedef't.
             List<EnumName> EnumNames,
+            List<BitmaskName> BitmaskNames,
             List<StructType> Structs,
             Dictionary<string, Constant> Constants,
             List<BitmaskName> Bitmasks,
-            List<HandleType> Handles);
+            List<HandleType> Handles,
+            List<Command> Commands);
 
     public record TypeData (
         List<StructType> Structs,
@@ -48,6 +50,14 @@ namespace VkGenerator.Parsing
     public record EnumType(string Name, List<EnumMember> Members, bool Bitmask);
     public record EnumMember(string Name, int Value, string? Comment, string? Alias);
 
+    public record Command(string Name, string ReturnType, List<CommandParameter> Parameters)
+    {
+        public BaseCSType? StrongReturnType;
+    }
+    public record CommandParameter(string Name, string Type, bool Optional, bool ExternSync, string? Length)
+    {
+        public BaseCSType? StrongType;
+    }
 
     public enum ConstantType
     {
@@ -79,7 +89,17 @@ namespace VkGenerator.Parsing
 
             List<EnumType> enums = ParseEnums(xdocument.Root, out Dictionary<string, Constant> constantsMap);
 
-            return new SpecificationData(enums, typeData.EnumNames, typeData.Structs, constantsMap, typeData.BitmaskNames, typeData.HandleTypes);
+            List<Command> commands = ParseCommands(xdocument.Root);
+
+            return new SpecificationData(
+                enums,
+                typeData.EnumNames,
+                typeData.BitmaskNames,
+                typeData.Structs,
+                constantsMap,
+                typeData.BitmaskNames,
+                typeData.HandleTypes,
+                commands);
         }
 
         public static TypeData ParseTypes(XElement root)
@@ -355,6 +375,59 @@ namespace VkGenerator.Parsing
             }
 
             return enumTypes;
+        }
+
+        public static List<Command> ParseCommands(XElement root)
+        {
+            XElement? xelement = root.Element("commands")!;
+
+            List<Command> commands = new List<Command>();
+            foreach (XElement command in xelement.Elements("command"))
+            {
+                // FIXME: We don't do vulkansc for now..
+                if (command.Attribute("api")?.Value == "vulkansc")
+                    continue;
+
+                string? alias = command.Attribute("alias")?.Value;
+                if (alias != null)
+                {
+                    string entryPoint = command.Attribute("name")?.Value ?? throw new Exception();
+                    // FIXME: Do alias things.
+                }
+                else
+                {
+                    string? successCodes = command.Attribute("successcodes")?.Value;
+                    string? errorCodes = command.Attribute("errorcodes")?.Value;
+
+                    XElement proto = command.Element("proto") ?? throw new Exception();
+
+                    string entryPoint = proto.Element("name")?.Value ?? throw new Exception();
+
+                    string returnTypeStr = proto.GetXmlText(element => element.Name != "name" && element.Name != "comment" ? element.Value : string.Empty);
+
+                    // FIXME: Read <implicitexternsyncparams> tags?
+
+                    List<CommandParameter> parameters = new List<CommandParameter>();
+                    foreach (XElement param in command.Elements("param"))
+                    {
+                        // FIXME: We don't do vulkansc for now...
+                        if (param.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        string paramName = param.Element("name")?.Value ?? throw new Exception();
+                        string paramTypeStr = param.GetXmlText(element => element.Name != "name" && element.Name != "comment" ? element.Value : string.Empty);
+                        bool optional = param.Attribute("optional")?.Value == "true";
+                        bool externsync = param.Attribute("externsync")?.Value == "true";
+                        string? len = param.Attribute("len")?.Value;
+
+                        parameters.Add(new CommandParameter(paramName, paramTypeStr, optional, externsync, len));
+                    }
+
+                    commands.Add(new Command(entryPoint, returnTypeStr, parameters));
+                }
+            }
+
+            return commands;
         }
     }
 }

@@ -2488,5 +2488,349 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkMemoryUnmapFlagBitsKHR : int
     {
     }
+    [Flags]
+    public enum VkQueryPoolCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineDynamicStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineMultisampleStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineRasterizationStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineViewportStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineTessellationStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineInputAssemblyStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineVertexInputStateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkBufferViewCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkDeviceCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkSemaphoreCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkShaderModuleCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkDescriptorPoolResetFlags : int
+    {
+    }
+    [Flags]
+    public enum VkGeometryFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkGeometryInstanceFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkBuildAccelerationStructureFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkPrivateDataSlotCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkPrivateDataSlotCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkDescriptorUpdateTemplateCreateFlags : int
+    {
+    }
+    [Flags]
+    public enum VkDescriptorUpdateTemplateCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineCreationFeedbackFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkSemaphoreWaitFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkAccessFlags2 : int
+    {
+    }
+    [Flags]
+    public enum VkAccessFlags2KHR : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineStageFlags2 : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineStageFlags2KHR : int
+    {
+    }
+    [Flags]
+    public enum VkAccelerationStructureMotionInfoFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkAccelerationStructureMotionInstanceFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkFormatFeatureFlags2 : int
+    {
+    }
+    [Flags]
+    public enum VkFormatFeatureFlags2KHR : int
+    {
+    }
+    [Flags]
+    public enum VkMemoryDecompressionMethodFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkRenderingFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkDirectDriverLoadingFlagsLUNARG : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineCreateFlags2KHR : int
+    {
+    }
+    [Flags]
+    public enum VkBufferUsageFlags2KHR : int
+    {
+    }
+    [Flags]
+    public enum VkDisplayModeCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkDisplaySurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkAndroidSurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkViSurfaceCreateFlagsNN : int
+    {
+    }
+    [Flags]
+    public enum VkWaylandSurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkWin32SurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkXlibSurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkXcbSurfaceCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkDirectFBSurfaceCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkIOSSurfaceCreateFlagsMVK : int
+    {
+    }
+    [Flags]
+    public enum VkMacOSSurfaceCreateFlagsMVK : int
+    {
+    }
+    [Flags]
+    public enum VkMetalSurfaceCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkImagePipeSurfaceCreateFlagsFUCHSIA : int
+    {
+    }
+    [Flags]
+    public enum VkStreamDescriptorSurfaceCreateFlagsGGP : int
+    {
+    }
+    [Flags]
+    public enum VkHeadlessSurfaceCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkScreenSurfaceCreateFlagsQNX : int
+    {
+    }
+    [Flags]
+    public enum VkPeerMemoryFeatureFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkMemoryAllocateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkCommandPoolTrimFlags : int
+    {
+    }
+    [Flags]
+    public enum VkCommandPoolTrimFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalMemoryHandleTypeFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalMemoryFeatureFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalSemaphoreHandleTypeFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalSemaphoreFeatureFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkSemaphoreImportFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalFenceHandleTypeFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkExternalFenceFeatureFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkFenceImportFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineViewportSwizzleStateCreateFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineDiscardRectangleStateCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineCoverageToColorStateCreateFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineCoverageModulationStateCreateFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineCoverageReductionStateCreateFlagsNV : int
+    {
+    }
+    [Flags]
+    public enum VkValidationCacheCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkDebugUtilsMessengerCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkDebugUtilsMessengerCallbackDataFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkDeviceMemoryReportFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineRasterizationConservativeStateCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkDescriptorBindingFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkResolveModeFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineRasterizationStateStreamCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkPipelineRasterizationDepthClipStateCreateFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkToolPurposeFlagsEXT : int
+    {
+    }
+    [Flags]
+    public enum VkSubmitFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkImageFormatConstraintsFlagsFUCHSIA : int
+    {
+    }
+    [Flags]
+    public enum VkPhysicalDeviceSchedulingControlsFlagsARM : int
+    {
+    }
+    [Flags]
+    public enum VkVideoSessionParametersCreateFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkVideoBeginCodingFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkVideoEndCodingFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkVideoDecodeFlagsKHR : int
+    {
+    }
+    [Flags]
+    public enum VkVideoEncodeRateControlFlagsKHR : int
+    {
+    }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

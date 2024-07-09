@@ -14,8 +14,8 @@ namespace VkGenerator.Utility
 
         public NameManglerSettings()
         {
-            ExtensionPrefix = "GL_";
-            FunctionPrefix = "gl";
+            ExtensionPrefix = "VK_";
+            FunctionPrefix = "vk";
             EnumPrefixes = new List<string> { "VK_" };
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
@@ -94,8 +94,20 @@ namespace VkGenerator.Utility
         {
             // Remove the "GL_" prefix.
             var mangledName = RemoveEnumPrefix(name);
-            return MangleMemberName(mangledName);
+            return MangleCapsUnderscoreName(mangledName);
         }
+
+        public static string MangleMemberName(string name) => name switch
+        {
+            "base" => "@base",
+            "event" => "@event",
+            "in" => "input",
+            "object" => "obj",
+            "params" => "parameters",
+            "ref" => "reference",
+            "string" => "str",
+            _ => name
+        };
 
         public static string MangleParameterName(string name) => name switch
         {
@@ -111,15 +123,15 @@ namespace VkGenerator.Utility
 
         public static string MangleClassName(string name)
         {
-            return MangleMemberName(name);
+            return MangleCapsUnderscoreName(name);
         }
 
         public static string MangleExtensionName(string name)
         {
-            return MangleMemberName(name);
+            return MangleCapsUnderscoreName(name);
         }
 
-        private static string MangleMemberName(string name)
+        private static string MangleCapsUnderscoreName(string name)
         {
             var stringBuilder = new StringBuilder(name.Length);
             var nextUpper = true;

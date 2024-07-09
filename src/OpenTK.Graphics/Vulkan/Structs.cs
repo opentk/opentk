@@ -1,4 +1,13 @@
 // This file is auto generated, do not edit.
+using OpenTK.Mathematics;
+using OpenTK.Graphics.Vulkan.VideoCodecH264;
+using OpenTK.Graphics.Vulkan.VideoCodecH264.Decode;
+using OpenTK.Graphics.Vulkan.VideoCodecH264.Encode;
+using OpenTK.Graphics.Vulkan.VideoCodecH265;
+using OpenTK.Graphics.Vulkan.VideoCodecH265.Decode;
+using OpenTK.Graphics.Vulkan.VideoCodecH265.Encode;
+using OpenTK.Graphics.Vulkan.VideoCodecAV1;
+using OpenTK.Graphics.Vulkan.VideoCodecAV1.Decode;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -1291,7 +1300,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkAndroidSurfaceCreateFlagsKHR flags;
-        public ANativeWindow* window;
+        public IntPtr window;
     }
     public unsafe struct VkViSurfaceCreateInfoNN
     {
@@ -1305,8 +1314,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkWaylandSurfaceCreateFlagsKHR flags;
-        public wl_display* display;
-        public wl_surface* surface;
+        public IntPtr display;
+        public IntPtr surface;
     }
     public unsafe struct VkWin32SurfaceCreateInfoKHR
     {
@@ -1321,31 +1330,31 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkXlibSurfaceCreateFlagsKHR flags;
-        public Display* dpy;
-        public Window window;
+        public IntPtr dpy;
+        public nuint window;
     }
     public unsafe struct VkXcbSurfaceCreateInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
         public VkXcbSurfaceCreateFlagsKHR flags;
-        public xcb_connection_t* connection;
-        public xcb_window_t window;
+        public IntPtr connection;
+        public uint window;
     }
     public unsafe struct VkDirectFBSurfaceCreateInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
         public VkDirectFBSurfaceCreateFlagsEXT flags;
-        public IDirectFB* dfb;
-        public IDirectFBSurface* surface;
+        public IntPtr dfb;
+        public IntPtr surface;
     }
     public unsafe struct VkImagePipeSurfaceCreateInfoFUCHSIA
     {
         public VkStructureType sType;
         public void* pNext;
         public VkImagePipeSurfaceCreateFlagsFUCHSIA flags;
-        public zx_handle_t imagePipeHandle;
+        public int imagePipeHandle;
     }
     public unsafe struct VkStreamDescriptorSurfaceCreateInfoGGP
     {
@@ -1457,7 +1466,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkDebugReportObjectTypeEXT objectType;
-        public ulong object;
+        public ulong obj;
         public byte* pObjectName;
     }
     public unsafe struct VkDebugMarkerObjectTagInfoEXT
@@ -1465,7 +1474,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkDebugReportObjectTypeEXT objectType;
-        public ulong object;
+        public ulong obj;
         public ulong tagName;
         public nuint tagSize;
         public void* pTag;
@@ -1533,14 +1542,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public NvSciBufAttrListRec* pAttributes;
+        public IntPtr pAttributes;
     }
     public unsafe struct VkImportMemorySciBufInfoNV
     {
         public VkStructureType sType;
         public void* pNext;
         public VkExternalMemoryHandleTypeFlagBits handleType;
-        public NvSciBufObjRefRec* handle;
+        public IntPtr handle;
     }
     public unsafe struct VkMemoryGetSciBufInfoNV
     {
@@ -2017,7 +2026,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkExternalMemoryHandleTypeFlagBits handleType;
-        public zx_handle_t handle;
+        public int handle;
     }
     public unsafe struct VkMemoryZirconHandlePropertiesFUCHSIA
     {
@@ -2163,7 +2172,7 @@ namespace OpenTK.Graphics.Vulkan
         public IntPtr semaphore;
         public VkSemaphoreImportFlagBits flags;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
-        public zx_handle_t zirconHandle;
+        public int zirconHandle;
     }
     public unsafe struct VkSemaphoreGetZirconHandleInfoFUCHSIA
     {
@@ -2246,7 +2255,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public NvSciSyncAttrListRec* pAttributes;
+        public IntPtr pAttributes;
     }
     public unsafe struct VkImportFenceSciSyncInfoNV
     {
@@ -2267,7 +2276,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public NvSciSyncAttrListRec* pAttributes;
+        public IntPtr pAttributes;
     }
     public unsafe struct VkImportSemaphoreSciSyncInfoNV
     {
@@ -2313,14 +2322,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public NvSciSyncObjRec* handle;
+        public IntPtr handle;
     }
     public unsafe struct VkSemaphoreSciSyncCreateInfoNV
     {
         public VkStructureType sType;
         public void* pNext;
         public IntPtr semaphorePool;
-        public NvSciSyncFence* pFence;
+        public IntPtr pFence;
     }
     public unsafe struct VkDeviceSemaphoreSciSyncPoolReservationCreateInfoNV
     {
@@ -3956,7 +3965,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public AHardwareBuffer* buffer;
+        public IntPtr buffer;
     }
     public unsafe struct VkAndroidHardwareBufferUsageANDROID
     {
@@ -7999,7 +8008,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public zx_handle_t collectionToken;
+        public int collectionToken;
     }
     public unsafe struct VkBufferCollectionPropertiesFUCHSIA
     {
@@ -8663,7 +8672,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public IntPtr semaphore;
-        public IntPtr event;
+        public IntPtr @event;
         public IntPtr mtlSharedEvent;
     }
     public unsafe struct VkImportMetalSharedEventInfoEXT

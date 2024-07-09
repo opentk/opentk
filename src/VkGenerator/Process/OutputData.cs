@@ -132,11 +132,18 @@ namespace VkGenerator.Process
         }
     }
 
-    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType
+    public record CSPointer(BaseCSType BaseType, bool Constant) : BaseCSType, IConstantCSType, IBaseTypeCSType
     {
+        public bool TakeAddressInFixedStatement => false;
+
         public override string ToCSString()
         {
             return $"{BaseType.ToCSString()}*";
+        }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSPointer(type, false);
         }
     }
 
