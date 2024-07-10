@@ -10,7 +10,6 @@ using VkGenerator.Parsing;
 using VkGenerator.Process;
 using VkGenerator.Utility;
 using VkGenerator.Utility.Extensions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VkGenerator
 {
@@ -35,6 +34,7 @@ namespace VkGenerator
             WriteEnums(directoryPath, data.Enums);
 
             WriteStructs(directoryPath, data.Structs);
+            WriteHandles(directoryPath, data.Handles);
 
             WriteFunctionPointers(directoryPath, data.Commands);
             WriteCommands(directoryPath, data.Commands);
@@ -65,6 +65,10 @@ namespace VkGenerator
                     {
                         foreach (EnumMember member in @enum.Members)
                         {
+                            if (member.Extension != null)
+                            {
+                                writer.WriteLine($"/// <summary>[requires: {member.Extension}]</summary>");
+                            }
                             writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
                         }
                     }
@@ -133,6 +137,45 @@ namespace VkGenerator
                                 writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
                             }
                         }
+                    }
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
+
+        private static void WriteHandles(string directoryPath, List<HandleType> handles)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Handles.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Diagnostics;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                foreach (HandleType handle in handles)
+                {
+                    // FIXME: Figure out the right underlying type!s
+                    writer.WriteLine($"[DebuggerDisplay(\"{handle.Name}\\\\{{{{Handle}}\\\\}}\")]");
+                    writer.WriteLine($"public unsafe struct {handle.Name} : IEquatable<{handle.Name}>");
+                    using (writer.CsScope())
+                    {
+                        writer.WriteLine($"public static {handle.Name} Zero => new {handle.Name}(0);");
+                        writer.WriteLine($"public IntPtr Handle;");
+                        writer.WriteLine($"public {handle.Name}(IntPtr handle) => Handle = handle;");
+                        writer.WriteLine($"public override bool Equals(object? obj) => obj is {handle.Name} instance && Equals(instance);");
+                        writer.WriteLine($"public bool Equals({handle.Name} other) => Handle.Equals(other.Handle);");
+                        writer.WriteLine($"public override int GetHashCode() => HashCode.Combine(Handle);");
+                        writer.WriteLine($"public override string? ToString() => Handle.ToString();");
+                        writer.WriteLine($"public static bool operator ==({handle.Name} left, {handle.Name} right) => left.Equals(right);");
+                        writer.WriteLine($"public static bool operator !=({handle.Name} left, {handle.Name} right) => !(left == right);");
+                        writer.WriteLine($"public static explicit operator IntPtr({handle.Name} handle) => handle.Handle;");
+                        writer.WriteLine($"public static explicit operator {handle.Name}(IntPtr handle) => new {handle.Name}(handle);");
                     }
                 }
 

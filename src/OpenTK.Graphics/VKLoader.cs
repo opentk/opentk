@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Graphics.Vulkan;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -7,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Graphics
 {
-    interface IVKBindingsContext
-    {
-
-    }
-
-    internal static unsafe class VKLoader
+    public static unsafe class VKLoader
     {
         public static IntPtr VulkanHandle;
 
-        public static IntPtr Instance;
+        public static VkInstance Instance;
 
         public static void Init()
         {
@@ -46,10 +42,10 @@ namespace OpenTK.Graphics
                 throw new EntryPointNotFoundException("Could not load vkGetInstanceProcAddr.");
             }
 
-            Vulkan.VkPointers._vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<IntPtr, byte*, IntPtr>)vkGetInstanceProcAddrFnptr;
+            VkPointers._vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, IntPtr>)vkGetInstanceProcAddrFnptr;
         }
 
-        public static void SetInstance(IntPtr instance)
+        public static void SetInstance(VkInstance instance)
         {
             Instance = instance;
         }

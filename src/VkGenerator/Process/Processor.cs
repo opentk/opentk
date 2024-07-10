@@ -13,6 +13,124 @@ namespace VkGenerator.Process
 
     internal class Processor
     {
+        static EnumMember? FindEnumMember(List<EnumType> enums, string memberName)
+        {
+            foreach (EnumType @enum in enums)
+            {
+                foreach (EnumMember member in @enum.Members)
+                {
+                    if (member.Name == memberName)
+                    {
+                        return member;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public static void ApplyFeatureEnums(SpecificationData data)
+        {
+            // First we add all non-aliased enum values, so we can look them up later when we add the aliased enums.
+            foreach (Feature feature in data.Features)
+            {
+                foreach (RequireTag require in feature.RequireTags)
+                {
+                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    {
+                        if (requiredEnum.Alias == null)
+                        {
+                            EnumType? extends = data.Enums.Find(e => e.Name == requiredEnum.Extends);
+                            Debug.Assert(extends != null);
+                            if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
+                            {
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, requiredEnum.Value!.Value, requiredEnum.Comment, null, feature.Name));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Then add all aliased enums
+            foreach (Feature feature in data.Features)
+            {
+                foreach (RequireTag require in feature.RequireTags)
+                {
+                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    {
+                        // VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT and VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT both mangle to the same name in C#.
+                        // Atm this is the only symbol to have this problem, so we do a quick hack instead of doing something fancy to detect this situation.
+                        // - Noggin_bops 2024-07-09
+                        if (requiredEnum.Name == "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT")
+                            continue;
+
+                        if (requiredEnum.Alias != null)
+                        {
+                            EnumType? extends = data.Enums.Find(e => e.Name == requiredEnum.Extends);
+                            Debug.Assert(extends != null);
+                            if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
+                            {
+                                // FIXME: Maybe we need to search through all possible enum not just the ones in this namespace....
+                                EnumMember aliasedMember = FindEnumMember(data.Enums, requiredEnum.Alias) ?? throw new Exception();
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, aliasedMember.Value, requiredEnum.Comment, requiredEnum.Alias, feature.Name));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void ApplyExtensionEnums(SpecificationData data)
+        {
+            // First we add all non-aliased enum values, so we can look them up later when we add the aliased enums.
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (RequireTag require in extension.RequireTags)
+                {
+                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    {
+                        if (requiredEnum.Alias == null)
+                        {
+                            EnumType? extends = data.Enums.Find(e => e.Name == requiredEnum.Extends);
+                            Debug.Assert(extends != null);
+                            if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
+                            {
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, requiredEnum.Value!.Value, requiredEnum.Comment, null, extension.Name));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Then add all aliased enums
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (RequireTag require in extension.RequireTags)
+                {
+                    foreach (RequireEnum requiredEnum in require.RequiredEnums)
+                    {
+                        // VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT and VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT both mangle to the same name in C#.
+                        // Atm this is the only symbol to have this problem, so we do a quick hack instead of doing something fancy to detect this situation.
+                        // - Noggin_bops 2024-07-09
+                        if (requiredEnum.Name == "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT")
+                            continue;
+
+                        if (requiredEnum.Alias != null)
+                        {
+                            EnumType? extends = data.Enums.Find(e => e.Name == requiredEnum.Extends);
+                            Debug.Assert(extends != null);
+                            if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
+                            {
+                                // FIXME: Maybe we need to search through all possible enum not just the ones in this namespace....
+                                EnumMember aliasedMember = FindEnumMember(data.Enums, requiredEnum.Alias) ?? throw new Exception();
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, aliasedMember.Value, requiredEnum.Comment, requiredEnum.Alias, extension.Name));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static Dictionary<string, BaseCSType> BuildTypeMap(SpecificationData data)
         {
             Dictionary<string, BaseCSType> typeMap = new Dictionary<string, BaseCSType>();
@@ -70,13 +188,13 @@ namespace VkGenerator.Process
                     Console.WriteLine(bitmask.Name);
 
                     // FIXME: This isn't the place to do this!!!!
-                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true));
+                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true, null));
                 }
             }
 
             foreach (HandleType handle in data.Handles)
             {
-                typeMap.Add(handle.Name, CSPrimitive.IntPtr(true));
+                typeMap.Add(handle.Name, new CSStruct(handle.Name, true));
             }
 
             return typeMap;

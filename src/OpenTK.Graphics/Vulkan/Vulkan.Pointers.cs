@@ -17,95 +17,95 @@ namespace OpenTK.Graphics.Vulkan
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static unsafe partial class VkPointers
     {
-        internal static delegate* unmanaged<VkInstanceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateInstance_fnptr = &vkCreateInstance_Lazy;
+        internal static delegate* unmanaged<VkInstanceCreateInfo*, VkAllocationCallbacks*, VkInstance*, VkResult> _vkCreateInstance_fnptr = &vkCreateInstance_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateInstance_Lazy(VkInstanceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pInstance)
+        private static VkResult vkCreateInstance_Lazy(VkInstanceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkInstance* pInstance)
         {
-            _vkCreateInstance_fnptr = (delegate* unmanaged<VkInstanceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateInstance");
+            _vkCreateInstance_fnptr = (delegate* unmanaged<VkInstanceCreateInfo*, VkAllocationCallbacks*, VkInstance*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateInstance");
             return _vkCreateInstance_fnptr(pCreateInfo, pAllocator, pInstance);
         }
-        internal static delegate* unmanaged<IntPtr, VkAllocationCallbacks*, void> _vkDestroyInstance_fnptr = &vkDestroyInstance_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkAllocationCallbacks*, void> _vkDestroyInstance_fnptr = &vkDestroyInstance_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyInstance_Lazy(IntPtr instance, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyInstance_Lazy(VkInstance instance, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyInstance_fnptr = (delegate* unmanaged<IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyInstance");
+            _vkDestroyInstance_fnptr = (delegate* unmanaged<VkInstance, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyInstance");
             _vkDestroyInstance_fnptr(instance, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, IntPtr*, VkResult> _vkEnumeratePhysicalDevices_fnptr = &vkEnumeratePhysicalDevices_Lazy;
+        internal static delegate* unmanaged<VkInstance, uint*, VkPhysicalDevice*, VkResult> _vkEnumeratePhysicalDevices_fnptr = &vkEnumeratePhysicalDevices_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEnumeratePhysicalDevices_Lazy(IntPtr instance, uint* pPhysicalDeviceCount, IntPtr* pPhysicalDevices)
+        private static VkResult vkEnumeratePhysicalDevices_Lazy(VkInstance instance, uint* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices)
         {
-            _vkEnumeratePhysicalDevices_fnptr = (delegate* unmanaged<IntPtr, uint*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDevices");
+            _vkEnumeratePhysicalDevices_fnptr = (delegate* unmanaged<VkInstance, uint*, VkPhysicalDevice*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDevices");
             return _vkEnumeratePhysicalDevices_fnptr(instance, pPhysicalDeviceCount, pPhysicalDevices);
         }
-        internal static delegate* unmanaged<IntPtr, byte*, IntPtr> _vkGetDeviceProcAddr_fnptr = &vkGetDeviceProcAddr_Lazy;
+        internal static delegate* unmanaged<VkDevice, byte*, IntPtr> _vkGetDeviceProcAddr_fnptr = &vkGetDeviceProcAddr_Lazy;
         [UnmanagedCallersOnly]
-        private static IntPtr vkGetDeviceProcAddr_Lazy(IntPtr device, byte* pName)
+        private static IntPtr vkGetDeviceProcAddr_Lazy(VkDevice device, byte* pName)
         {
-            _vkGetDeviceProcAddr_fnptr = (delegate* unmanaged<IntPtr, byte*, IntPtr>)VKLoader.GetInstanceProcAddress("vkGetDeviceProcAddr");
+            _vkGetDeviceProcAddr_fnptr = (delegate* unmanaged<VkDevice, byte*, IntPtr>)VKLoader.GetInstanceProcAddress("vkGetDeviceProcAddr");
             return _vkGetDeviceProcAddr_fnptr(device, pName);
         }
-        internal static delegate* unmanaged<IntPtr, byte*, IntPtr> _vkGetInstanceProcAddr_fnptr = &vkGetInstanceProcAddr_Lazy;
+        internal static delegate* unmanaged<VkInstance, byte*, IntPtr> _vkGetInstanceProcAddr_fnptr = &vkGetInstanceProcAddr_Lazy;
         [UnmanagedCallersOnly]
-        private static IntPtr vkGetInstanceProcAddr_Lazy(IntPtr instance, byte* pName)
+        private static IntPtr vkGetInstanceProcAddr_Lazy(VkInstance instance, byte* pName)
         {
-            _vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<IntPtr, byte*, IntPtr>)VKLoader.GetInstanceProcAddress("vkGetInstanceProcAddr");
+            _vkGetInstanceProcAddr_fnptr = (delegate* unmanaged<VkInstance, byte*, IntPtr>)VKLoader.GetInstanceProcAddress("vkGetInstanceProcAddr");
             return _vkGetInstanceProcAddr_fnptr(instance, pName);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceProperties*, void> _vkGetPhysicalDeviceProperties_fnptr = &vkGetPhysicalDeviceProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceProperties*, void> _vkGetPhysicalDeviceProperties_fnptr = &vkGetPhysicalDeviceProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceProperties_Lazy(IntPtr physicalDevice, VkPhysicalDeviceProperties* pProperties)
+        private static void vkGetPhysicalDeviceProperties_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties* pProperties)
         {
-            _vkGetPhysicalDeviceProperties_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceProperties");
+            _vkGetPhysicalDeviceProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceProperties");
             _vkGetPhysicalDeviceProperties_fnptr(physicalDevice, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkQueueFamilyProperties*, void> _vkGetPhysicalDeviceQueueFamilyProperties_fnptr = &vkGetPhysicalDeviceQueueFamilyProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkQueueFamilyProperties*, void> _vkGetPhysicalDeviceQueueFamilyProperties_fnptr = &vkGetPhysicalDeviceQueueFamilyProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceQueueFamilyProperties_Lazy(IntPtr physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties)
+        private static void vkGetPhysicalDeviceQueueFamilyProperties_Lazy(VkPhysicalDevice physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties)
         {
-            _vkGetPhysicalDeviceQueueFamilyProperties_fnptr = (delegate* unmanaged<IntPtr, uint*, VkQueueFamilyProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyProperties");
+            _vkGetPhysicalDeviceQueueFamilyProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkQueueFamilyProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyProperties");
             _vkGetPhysicalDeviceQueueFamilyProperties_fnptr(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceMemoryProperties*, void> _vkGetPhysicalDeviceMemoryProperties_fnptr = &vkGetPhysicalDeviceMemoryProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceMemoryProperties*, void> _vkGetPhysicalDeviceMemoryProperties_fnptr = &vkGetPhysicalDeviceMemoryProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceMemoryProperties_Lazy(IntPtr physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties)
+        private static void vkGetPhysicalDeviceMemoryProperties_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties)
         {
-            _vkGetPhysicalDeviceMemoryProperties_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceMemoryProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMemoryProperties");
+            _vkGetPhysicalDeviceMemoryProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceMemoryProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMemoryProperties");
             _vkGetPhysicalDeviceMemoryProperties_fnptr(physicalDevice, pMemoryProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceFeatures*, void> _vkGetPhysicalDeviceFeatures_fnptr = &vkGetPhysicalDeviceFeatures_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceFeatures*, void> _vkGetPhysicalDeviceFeatures_fnptr = &vkGetPhysicalDeviceFeatures_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceFeatures_Lazy(IntPtr physicalDevice, VkPhysicalDeviceFeatures* pFeatures)
+        private static void vkGetPhysicalDeviceFeatures_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures)
         {
-            _vkGetPhysicalDeviceFeatures_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceFeatures*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFeatures");
+            _vkGetPhysicalDeviceFeatures_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceFeatures*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFeatures");
             _vkGetPhysicalDeviceFeatures_fnptr(physicalDevice, pFeatures);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkFormatProperties*, void> _vkGetPhysicalDeviceFormatProperties_fnptr = &vkGetPhysicalDeviceFormatProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkFormat, VkFormatProperties*, void> _vkGetPhysicalDeviceFormatProperties_fnptr = &vkGetPhysicalDeviceFormatProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceFormatProperties_Lazy(IntPtr physicalDevice, VkFormat format, VkFormatProperties* pFormatProperties)
+        private static void vkGetPhysicalDeviceFormatProperties_Lazy(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties* pFormatProperties)
         {
-            _vkGetPhysicalDeviceFormatProperties_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkFormatProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFormatProperties");
+            _vkGetPhysicalDeviceFormatProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkFormat, VkFormatProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFormatProperties");
             _vkGetPhysicalDeviceFormatProperties_fnptr(physicalDevice, format, pFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkImageFormatProperties*, VkResult> _vkGetPhysicalDeviceImageFormatProperties_fnptr = &vkGetPhysicalDeviceImageFormatProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkImageFormatProperties*, VkResult> _vkGetPhysicalDeviceImageFormatProperties_fnptr = &vkGetPhysicalDeviceImageFormatProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceImageFormatProperties_Lazy(IntPtr physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkImageFormatProperties* pImageFormatProperties)
+        private static VkResult vkGetPhysicalDeviceImageFormatProperties_Lazy(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkImageFormatProperties* pImageFormatProperties)
         {
-            _vkGetPhysicalDeviceImageFormatProperties_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkImageFormatProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceImageFormatProperties");
+            _vkGetPhysicalDeviceImageFormatProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkImageFormatProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceImageFormatProperties");
             return _vkGetPhysicalDeviceImageFormatProperties_fnptr(physicalDevice, format, type, tiling, usage, flags, pImageFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDevice_fnptr = &vkCreateDevice_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDeviceCreateInfo*, VkAllocationCallbacks*, VkDevice*, VkResult> _vkCreateDevice_fnptr = &vkCreateDevice_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDevice_Lazy(IntPtr physicalDevice, VkDeviceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pDevice)
+        private static VkResult vkCreateDevice_Lazy(VkPhysicalDevice physicalDevice, VkDeviceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDevice* pDevice)
         {
-            _vkCreateDevice_fnptr = (delegate* unmanaged<IntPtr, VkDeviceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDevice");
+            _vkCreateDevice_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDeviceCreateInfo*, VkAllocationCallbacks*, VkDevice*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDevice");
             return _vkCreateDevice_fnptr(physicalDevice, pCreateInfo, pAllocator, pDevice);
         }
-        internal static delegate* unmanaged<IntPtr, VkAllocationCallbacks*, void> _vkDestroyDevice_fnptr = &vkDestroyDevice_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAllocationCallbacks*, void> _vkDestroyDevice_fnptr = &vkDestroyDevice_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDevice_Lazy(IntPtr device, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDevice_Lazy(VkDevice device, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDevice_fnptr = (delegate* unmanaged<IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDevice");
+            _vkDestroyDevice_fnptr = (delegate* unmanaged<VkDevice, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDevice");
             _vkDestroyDevice_fnptr(device, pAllocator);
         }
         internal static delegate* unmanaged<uint*, VkResult> _vkEnumerateInstanceVersion_fnptr = &vkEnumerateInstanceVersion_Lazy;
@@ -129,4204 +129,4204 @@ namespace OpenTK.Graphics.Vulkan
             _vkEnumerateInstanceExtensionProperties_fnptr = (delegate* unmanaged<byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumerateInstanceExtensionProperties");
             return _vkEnumerateInstanceExtensionProperties_fnptr(pLayerName, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkLayerProperties*, VkResult> _vkEnumerateDeviceLayerProperties_fnptr = &vkEnumerateDeviceLayerProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkLayerProperties*, VkResult> _vkEnumerateDeviceLayerProperties_fnptr = &vkEnumerateDeviceLayerProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEnumerateDeviceLayerProperties_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkLayerProperties* pProperties)
+        private static VkResult vkEnumerateDeviceLayerProperties_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkLayerProperties* pProperties)
         {
-            _vkEnumerateDeviceLayerProperties_fnptr = (delegate* unmanaged<IntPtr, uint*, VkLayerProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumerateDeviceLayerProperties");
+            _vkEnumerateDeviceLayerProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkLayerProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumerateDeviceLayerProperties");
             return _vkEnumerateDeviceLayerProperties_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, byte*, uint*, VkExtensionProperties*, VkResult> _vkEnumerateDeviceExtensionProperties_fnptr = &vkEnumerateDeviceExtensionProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, byte*, uint*, VkExtensionProperties*, VkResult> _vkEnumerateDeviceExtensionProperties_fnptr = &vkEnumerateDeviceExtensionProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEnumerateDeviceExtensionProperties_Lazy(IntPtr physicalDevice, byte* pLayerName, uint* pPropertyCount, VkExtensionProperties* pProperties)
+        private static VkResult vkEnumerateDeviceExtensionProperties_Lazy(VkPhysicalDevice physicalDevice, byte* pLayerName, uint* pPropertyCount, VkExtensionProperties* pProperties)
         {
-            _vkEnumerateDeviceExtensionProperties_fnptr = (delegate* unmanaged<IntPtr, byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumerateDeviceExtensionProperties");
+            _vkEnumerateDeviceExtensionProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumerateDeviceExtensionProperties");
             return _vkEnumerateDeviceExtensionProperties_fnptr(physicalDevice, pLayerName, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, void> _vkGetDeviceQueue_fnptr = &vkGetDeviceQueue_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, uint, VkQueue*, void> _vkGetDeviceQueue_fnptr = &vkGetDeviceQueue_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceQueue_Lazy(IntPtr device, uint queueFamilyIndex, uint queueIndex, IntPtr* pQueue)
+        private static void vkGetDeviceQueue_Lazy(VkDevice device, uint queueFamilyIndex, uint queueIndex, VkQueue* pQueue)
         {
-            _vkGetDeviceQueue_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceQueue");
+            _vkGetDeviceQueue_fnptr = (delegate* unmanaged<VkDevice, uint, uint, VkQueue*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceQueue");
             _vkGetDeviceQueue_fnptr(device, queueFamilyIndex, queueIndex, pQueue);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkSubmitInfo*, IntPtr, VkResult> _vkQueueSubmit_fnptr = &vkQueueSubmit_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint, VkSubmitInfo*, VkFence, VkResult> _vkQueueSubmit_fnptr = &vkQueueSubmit_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueSubmit_Lazy(IntPtr queue, uint submitCount, VkSubmitInfo* pSubmits, IntPtr fence)
+        private static VkResult vkQueueSubmit_Lazy(VkQueue queue, uint submitCount, VkSubmitInfo* pSubmits, VkFence fence)
         {
-            _vkQueueSubmit_fnptr = (delegate* unmanaged<IntPtr, uint, VkSubmitInfo*, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSubmit");
+            _vkQueueSubmit_fnptr = (delegate* unmanaged<VkQueue, uint, VkSubmitInfo*, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSubmit");
             return _vkQueueSubmit_fnptr(queue, submitCount, pSubmits, fence);
         }
-        internal static delegate* unmanaged<IntPtr, VkResult> _vkQueueWaitIdle_fnptr = &vkQueueWaitIdle_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkResult> _vkQueueWaitIdle_fnptr = &vkQueueWaitIdle_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueWaitIdle_Lazy(IntPtr queue)
+        private static VkResult vkQueueWaitIdle_Lazy(VkQueue queue)
         {
-            _vkQueueWaitIdle_fnptr = (delegate* unmanaged<IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueWaitIdle");
+            _vkQueueWaitIdle_fnptr = (delegate* unmanaged<VkQueue, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueWaitIdle");
             return _vkQueueWaitIdle_fnptr(queue);
         }
-        internal static delegate* unmanaged<IntPtr, VkResult> _vkDeviceWaitIdle_fnptr = &vkDeviceWaitIdle_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkResult> _vkDeviceWaitIdle_fnptr = &vkDeviceWaitIdle_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkDeviceWaitIdle_Lazy(IntPtr device)
+        private static VkResult vkDeviceWaitIdle_Lazy(VkDevice device)
         {
-            _vkDeviceWaitIdle_fnptr = (delegate* unmanaged<IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkDeviceWaitIdle");
+            _vkDeviceWaitIdle_fnptr = (delegate* unmanaged<VkDevice, VkResult>)VKLoader.GetInstanceProcAddress("vkDeviceWaitIdle");
             return _vkDeviceWaitIdle_fnptr(device);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryAllocateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkAllocateMemory_fnptr = &vkAllocateMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryAllocateInfo*, VkAllocationCallbacks*, VkDeviceMemory*, VkResult> _vkAllocateMemory_fnptr = &vkAllocateMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAllocateMemory_Lazy(IntPtr device, VkMemoryAllocateInfo* pAllocateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pMemory)
+        private static VkResult vkAllocateMemory_Lazy(VkDevice device, VkMemoryAllocateInfo* pAllocateInfo, VkAllocationCallbacks* pAllocator, VkDeviceMemory* pMemory)
         {
-            _vkAllocateMemory_fnptr = (delegate* unmanaged<IntPtr, VkMemoryAllocateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateMemory");
+            _vkAllocateMemory_fnptr = (delegate* unmanaged<VkDevice, VkMemoryAllocateInfo*, VkAllocationCallbacks*, VkDeviceMemory*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateMemory");
             return _vkAllocateMemory_fnptr(device, pAllocateInfo, pAllocator, pMemory);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkFreeMemory_fnptr = &vkFreeMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, VkAllocationCallbacks*, void> _vkFreeMemory_fnptr = &vkFreeMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkFreeMemory_Lazy(IntPtr device, IntPtr memory, VkAllocationCallbacks* pAllocator)
+        private static void vkFreeMemory_Lazy(VkDevice device, VkDeviceMemory memory, VkAllocationCallbacks* pAllocator)
         {
-            _vkFreeMemory_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkFreeMemory");
+            _vkFreeMemory_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkFreeMemory");
             _vkFreeMemory_fnptr(device, memory, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkMemoryMapFlagBits, void**, VkResult> _vkMapMemory_fnptr = &vkMapMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, ulong, ulong, VkMemoryMapFlagBits, void**, VkResult> _vkMapMemory_fnptr = &vkMapMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkMapMemory_Lazy(IntPtr device, IntPtr memory, ulong offset, ulong size, VkMemoryMapFlagBits flags, void** ppData)
+        private static VkResult vkMapMemory_Lazy(VkDevice device, VkDeviceMemory memory, ulong offset, ulong size, VkMemoryMapFlagBits flags, void** ppData)
         {
-            _vkMapMemory_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkMemoryMapFlagBits, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkMapMemory");
+            _vkMapMemory_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, ulong, ulong, VkMemoryMapFlagBits, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkMapMemory");
             return _vkMapMemory_fnptr(device, memory, offset, size, flags, ppData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, void> _vkUnmapMemory_fnptr = &vkUnmapMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, void> _vkUnmapMemory_fnptr = &vkUnmapMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkUnmapMemory_Lazy(IntPtr device, IntPtr memory)
+        private static void vkUnmapMemory_Lazy(VkDevice device, VkDeviceMemory memory)
         {
-            _vkUnmapMemory_fnptr = (delegate* unmanaged<IntPtr, IntPtr, void>)VKLoader.GetInstanceProcAddress("vkUnmapMemory");
+            _vkUnmapMemory_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, void>)VKLoader.GetInstanceProcAddress("vkUnmapMemory");
             _vkUnmapMemory_fnptr(device, memory);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkMappedMemoryRange*, VkResult> _vkFlushMappedMemoryRanges_fnptr = &vkFlushMappedMemoryRanges_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkMappedMemoryRange*, VkResult> _vkFlushMappedMemoryRanges_fnptr = &vkFlushMappedMemoryRanges_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkFlushMappedMemoryRanges_Lazy(IntPtr device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
+        private static VkResult vkFlushMappedMemoryRanges_Lazy(VkDevice device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
         {
-            _vkFlushMappedMemoryRanges_fnptr = (delegate* unmanaged<IntPtr, uint, VkMappedMemoryRange*, VkResult>)VKLoader.GetInstanceProcAddress("vkFlushMappedMemoryRanges");
+            _vkFlushMappedMemoryRanges_fnptr = (delegate* unmanaged<VkDevice, uint, VkMappedMemoryRange*, VkResult>)VKLoader.GetInstanceProcAddress("vkFlushMappedMemoryRanges");
             return _vkFlushMappedMemoryRanges_fnptr(device, memoryRangeCount, pMemoryRanges);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkMappedMemoryRange*, VkResult> _vkInvalidateMappedMemoryRanges_fnptr = &vkInvalidateMappedMemoryRanges_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkMappedMemoryRange*, VkResult> _vkInvalidateMappedMemoryRanges_fnptr = &vkInvalidateMappedMemoryRanges_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkInvalidateMappedMemoryRanges_Lazy(IntPtr device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
+        private static VkResult vkInvalidateMappedMemoryRanges_Lazy(VkDevice device, uint memoryRangeCount, VkMappedMemoryRange* pMemoryRanges)
         {
-            _vkInvalidateMappedMemoryRanges_fnptr = (delegate* unmanaged<IntPtr, uint, VkMappedMemoryRange*, VkResult>)VKLoader.GetInstanceProcAddress("vkInvalidateMappedMemoryRanges");
+            _vkInvalidateMappedMemoryRanges_fnptr = (delegate* unmanaged<VkDevice, uint, VkMappedMemoryRange*, VkResult>)VKLoader.GetInstanceProcAddress("vkInvalidateMappedMemoryRanges");
             return _vkInvalidateMappedMemoryRanges_fnptr(device, memoryRangeCount, pMemoryRanges);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong*, void> _vkGetDeviceMemoryCommitment_fnptr = &vkGetDeviceMemoryCommitment_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, ulong*, void> _vkGetDeviceMemoryCommitment_fnptr = &vkGetDeviceMemoryCommitment_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceMemoryCommitment_Lazy(IntPtr device, IntPtr memory, ulong* pCommittedMemoryInBytes)
+        private static void vkGetDeviceMemoryCommitment_Lazy(VkDevice device, VkDeviceMemory memory, ulong* pCommittedMemoryInBytes)
         {
-            _vkGetDeviceMemoryCommitment_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceMemoryCommitment");
+            _vkGetDeviceMemoryCommitment_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceMemoryCommitment");
             _vkGetDeviceMemoryCommitment_fnptr(device, memory, pCommittedMemoryInBytes);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkMemoryRequirements*, void> _vkGetBufferMemoryRequirements_fnptr = &vkGetBufferMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBuffer, VkMemoryRequirements*, void> _vkGetBufferMemoryRequirements_fnptr = &vkGetBufferMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetBufferMemoryRequirements_Lazy(IntPtr device, IntPtr buffer, VkMemoryRequirements* pMemoryRequirements)
+        private static void vkGetBufferMemoryRequirements_Lazy(VkDevice device, VkBuffer buffer, VkMemoryRequirements* pMemoryRequirements)
         {
-            _vkGetBufferMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetBufferMemoryRequirements");
+            _vkGetBufferMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkBuffer, VkMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetBufferMemoryRequirements");
             _vkGetBufferMemoryRequirements_fnptr(device, buffer, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, ulong, VkResult> _vkBindBufferMemory_fnptr = &vkBindBufferMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBuffer, VkDeviceMemory, ulong, VkResult> _vkBindBufferMemory_fnptr = &vkBindBufferMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindBufferMemory_Lazy(IntPtr device, IntPtr buffer, IntPtr memory, ulong memoryOffset)
+        private static VkResult vkBindBufferMemory_Lazy(VkDevice device, VkBuffer buffer, VkDeviceMemory memory, ulong memoryOffset)
         {
-            _vkBindBufferMemory_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkBindBufferMemory");
+            _vkBindBufferMemory_fnptr = (delegate* unmanaged<VkDevice, VkBuffer, VkDeviceMemory, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkBindBufferMemory");
             return _vkBindBufferMemory_fnptr(device, buffer, memory, memoryOffset);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkMemoryRequirements*, void> _vkGetImageMemoryRequirements_fnptr = &vkGetImageMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkMemoryRequirements*, void> _vkGetImageMemoryRequirements_fnptr = &vkGetImageMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageMemoryRequirements_Lazy(IntPtr device, IntPtr image, VkMemoryRequirements* pMemoryRequirements)
+        private static void vkGetImageMemoryRequirements_Lazy(VkDevice device, VkImage image, VkMemoryRequirements* pMemoryRequirements)
         {
-            _vkGetImageMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetImageMemoryRequirements");
+            _vkGetImageMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetImageMemoryRequirements");
             _vkGetImageMemoryRequirements_fnptr(device, image, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, ulong, VkResult> _vkBindImageMemory_fnptr = &vkBindImageMemory_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkDeviceMemory, ulong, VkResult> _vkBindImageMemory_fnptr = &vkBindImageMemory_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindImageMemory_Lazy(IntPtr device, IntPtr image, IntPtr memory, ulong memoryOffset)
+        private static VkResult vkBindImageMemory_Lazy(VkDevice device, VkImage image, VkDeviceMemory memory, ulong memoryOffset)
         {
-            _vkBindImageMemory_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkBindImageMemory");
+            _vkBindImageMemory_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkDeviceMemory, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkBindImageMemory");
             return _vkBindImageMemory_fnptr(device, image, memory, memoryOffset);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkSparseImageMemoryRequirements*, void> _vkGetImageSparseMemoryRequirements_fnptr = &vkGetImageSparseMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, uint*, VkSparseImageMemoryRequirements*, void> _vkGetImageSparseMemoryRequirements_fnptr = &vkGetImageSparseMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageSparseMemoryRequirements_Lazy(IntPtr device, IntPtr image, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements* pSparseMemoryRequirements)
+        private static void vkGetImageSparseMemoryRequirements_Lazy(VkDevice device, VkImage image, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements* pSparseMemoryRequirements)
         {
-            _vkGetImageSparseMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkSparseImageMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSparseMemoryRequirements");
+            _vkGetImageSparseMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkImage, uint*, VkSparseImageMemoryRequirements*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSparseMemoryRequirements");
             _vkGetImageSparseMemoryRequirements_fnptr(device, image, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlagBits, VkImageTiling, uint*, VkSparseImageFormatProperties*, void> _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr = &vkGetPhysicalDeviceSparseImageFormatProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlagBits, VkImageTiling, uint*, VkSparseImageFormatProperties*, void> _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr = &vkGetPhysicalDeviceSparseImageFormatProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceSparseImageFormatProperties_Lazy(IntPtr physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlagBits usage, VkImageTiling tiling, uint* pPropertyCount, VkSparseImageFormatProperties* pProperties)
+        private static void vkGetPhysicalDeviceSparseImageFormatProperties_Lazy(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlagBits samples, VkImageUsageFlagBits usage, VkImageTiling tiling, uint* pPropertyCount, VkSparseImageFormatProperties* pProperties)
         {
-            _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlagBits, VkImageTiling, uint*, VkSparseImageFormatProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSparseImageFormatProperties");
+            _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkSampleCountFlagBits, VkImageUsageFlagBits, VkImageTiling, uint*, VkSparseImageFormatProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSparseImageFormatProperties");
             _vkGetPhysicalDeviceSparseImageFormatProperties_fnptr(physicalDevice, format, type, samples, usage, tiling, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkBindSparseInfo*, IntPtr, VkResult> _vkQueueBindSparse_fnptr = &vkQueueBindSparse_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint, VkBindSparseInfo*, VkFence, VkResult> _vkQueueBindSparse_fnptr = &vkQueueBindSparse_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueBindSparse_Lazy(IntPtr queue, uint bindInfoCount, VkBindSparseInfo* pBindInfo, IntPtr fence)
+        private static VkResult vkQueueBindSparse_Lazy(VkQueue queue, uint bindInfoCount, VkBindSparseInfo* pBindInfo, VkFence fence)
         {
-            _vkQueueBindSparse_fnptr = (delegate* unmanaged<IntPtr, uint, VkBindSparseInfo*, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueBindSparse");
+            _vkQueueBindSparse_fnptr = (delegate* unmanaged<VkQueue, uint, VkBindSparseInfo*, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueBindSparse");
             return _vkQueueBindSparse_fnptr(queue, bindInfoCount, pBindInfo, fence);
         }
-        internal static delegate* unmanaged<IntPtr, VkFenceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateFence_fnptr = &vkCreateFence_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFenceCreateInfo*, VkAllocationCallbacks*, VkFence*, VkResult> _vkCreateFence_fnptr = &vkCreateFence_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateFence_Lazy(IntPtr device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFence)
+        private static VkResult vkCreateFence_Lazy(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
-            _vkCreateFence_fnptr = (delegate* unmanaged<IntPtr, VkFenceCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateFence");
+            _vkCreateFence_fnptr = (delegate* unmanaged<VkDevice, VkFenceCreateInfo*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateFence");
             return _vkCreateFence_fnptr(device, pCreateInfo, pAllocator, pFence);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyFence_fnptr = &vkDestroyFence_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFence, VkAllocationCallbacks*, void> _vkDestroyFence_fnptr = &vkDestroyFence_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyFence_Lazy(IntPtr device, IntPtr fence, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyFence_Lazy(VkDevice device, VkFence fence, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyFence_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyFence");
+            _vkDestroyFence_fnptr = (delegate* unmanaged<VkDevice, VkFence, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyFence");
             _vkDestroyFence_fnptr(device, fence, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkResult> _vkResetFences_fnptr = &vkResetFences_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkFence*, VkResult> _vkResetFences_fnptr = &vkResetFences_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkResetFences_Lazy(IntPtr device, uint fenceCount, IntPtr* pFences)
+        private static VkResult vkResetFences_Lazy(VkDevice device, uint fenceCount, VkFence* pFences)
         {
-            _vkResetFences_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkResetFences");
+            _vkResetFences_fnptr = (delegate* unmanaged<VkDevice, uint, VkFence*, VkResult>)VKLoader.GetInstanceProcAddress("vkResetFences");
             return _vkResetFences_fnptr(device, fenceCount, pFences);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkGetFenceStatus_fnptr = &vkGetFenceStatus_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFence, VkResult> _vkGetFenceStatus_fnptr = &vkGetFenceStatus_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFenceStatus_Lazy(IntPtr device, IntPtr fence)
+        private static VkResult vkGetFenceStatus_Lazy(VkDevice device, VkFence fence)
         {
-            _vkGetFenceStatus_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceStatus");
+            _vkGetFenceStatus_fnptr = (delegate* unmanaged<VkDevice, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceStatus");
             return _vkGetFenceStatus_fnptr(device, fence);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, int, ulong, VkResult> _vkWaitForFences_fnptr = &vkWaitForFences_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkFence*, int, ulong, VkResult> _vkWaitForFences_fnptr = &vkWaitForFences_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkWaitForFences_Lazy(IntPtr device, uint fenceCount, IntPtr* pFences, int waitAll, ulong timeout)
+        private static VkResult vkWaitForFences_Lazy(VkDevice device, uint fenceCount, VkFence* pFences, int waitAll, ulong timeout)
         {
-            _vkWaitForFences_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, int, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForFences");
+            _vkWaitForFences_fnptr = (delegate* unmanaged<VkDevice, uint, VkFence*, int, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForFences");
             return _vkWaitForFences_fnptr(device, fenceCount, pFences, waitAll, timeout);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSemaphore_fnptr = &vkCreateSemaphore_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreCreateInfo*, VkAllocationCallbacks*, VkSemaphore*, VkResult> _vkCreateSemaphore_fnptr = &vkCreateSemaphore_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSemaphore_Lazy(IntPtr device, VkSemaphoreCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSemaphore)
+        private static VkResult vkCreateSemaphore_Lazy(VkDevice device, VkSemaphoreCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSemaphore* pSemaphore)
         {
-            _vkCreateSemaphore_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSemaphore");
+            _vkCreateSemaphore_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreCreateInfo*, VkAllocationCallbacks*, VkSemaphore*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSemaphore");
             return _vkCreateSemaphore_fnptr(device, pCreateInfo, pAllocator, pSemaphore);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySemaphore_fnptr = &vkDestroySemaphore_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphore, VkAllocationCallbacks*, void> _vkDestroySemaphore_fnptr = &vkDestroySemaphore_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySemaphore_Lazy(IntPtr device, IntPtr semaphore, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySemaphore_Lazy(VkDevice device, VkSemaphore semaphore, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySemaphore_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySemaphore");
+            _vkDestroySemaphore_fnptr = (delegate* unmanaged<VkDevice, VkSemaphore, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySemaphore");
             _vkDestroySemaphore_fnptr(device, semaphore, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkEventCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateEvent_fnptr = &vkCreateEvent_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkEventCreateInfo*, VkAllocationCallbacks*, VkEvent*, VkResult> _vkCreateEvent_fnptr = &vkCreateEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateEvent_Lazy(IntPtr device, VkEventCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pEvent)
+        private static VkResult vkCreateEvent_Lazy(VkDevice device, VkEventCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkEvent* pEvent)
         {
-            _vkCreateEvent_fnptr = (delegate* unmanaged<IntPtr, VkEventCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateEvent");
+            _vkCreateEvent_fnptr = (delegate* unmanaged<VkDevice, VkEventCreateInfo*, VkAllocationCallbacks*, VkEvent*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateEvent");
             return _vkCreateEvent_fnptr(device, pCreateInfo, pAllocator, pEvent);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyEvent_fnptr = &vkDestroyEvent_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkEvent, VkAllocationCallbacks*, void> _vkDestroyEvent_fnptr = &vkDestroyEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyEvent_Lazy(IntPtr device, IntPtr @event, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyEvent_Lazy(VkDevice device, VkEvent @event, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyEvent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyEvent");
+            _vkDestroyEvent_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyEvent");
             _vkDestroyEvent_fnptr(device, @event, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkGetEventStatus_fnptr = &vkGetEventStatus_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkEvent, VkResult> _vkGetEventStatus_fnptr = &vkGetEventStatus_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetEventStatus_Lazy(IntPtr device, IntPtr @event)
+        private static VkResult vkGetEventStatus_Lazy(VkDevice device, VkEvent @event)
         {
-            _vkGetEventStatus_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetEventStatus");
+            _vkGetEventStatus_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkResult>)VKLoader.GetInstanceProcAddress("vkGetEventStatus");
             return _vkGetEventStatus_fnptr(device, @event);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkSetEvent_fnptr = &vkSetEvent_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkEvent, VkResult> _vkSetEvent_fnptr = &vkSetEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetEvent_Lazy(IntPtr device, IntPtr @event)
+        private static VkResult vkSetEvent_Lazy(VkDevice device, VkEvent @event)
         {
-            _vkSetEvent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkSetEvent");
+            _vkSetEvent_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkResult>)VKLoader.GetInstanceProcAddress("vkSetEvent");
             return _vkSetEvent_fnptr(device, @event);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkResetEvent_fnptr = &vkResetEvent_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkEvent, VkResult> _vkResetEvent_fnptr = &vkResetEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkResetEvent_Lazy(IntPtr device, IntPtr @event)
+        private static VkResult vkResetEvent_Lazy(VkDevice device, VkEvent @event)
         {
-            _vkResetEvent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkResetEvent");
+            _vkResetEvent_fnptr = (delegate* unmanaged<VkDevice, VkEvent, VkResult>)VKLoader.GetInstanceProcAddress("vkResetEvent");
             return _vkResetEvent_fnptr(device, @event);
         }
-        internal static delegate* unmanaged<IntPtr, VkQueryPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateQueryPool_fnptr = &vkCreateQueryPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkQueryPoolCreateInfo*, VkAllocationCallbacks*, VkQueryPool*, VkResult> _vkCreateQueryPool_fnptr = &vkCreateQueryPool_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateQueryPool_Lazy(IntPtr device, VkQueryPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pQueryPool)
+        private static VkResult vkCreateQueryPool_Lazy(VkDevice device, VkQueryPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkQueryPool* pQueryPool)
         {
-            _vkCreateQueryPool_fnptr = (delegate* unmanaged<IntPtr, VkQueryPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateQueryPool");
+            _vkCreateQueryPool_fnptr = (delegate* unmanaged<VkDevice, VkQueryPoolCreateInfo*, VkAllocationCallbacks*, VkQueryPool*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateQueryPool");
             return _vkCreateQueryPool_fnptr(device, pCreateInfo, pAllocator, pQueryPool);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyQueryPool_fnptr = &vkDestroyQueryPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkQueryPool, VkAllocationCallbacks*, void> _vkDestroyQueryPool_fnptr = &vkDestroyQueryPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyQueryPool_Lazy(IntPtr device, IntPtr queryPool, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyQueryPool_Lazy(VkDevice device, VkQueryPool queryPool, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyQueryPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyQueryPool");
+            _vkDestroyQueryPool_fnptr = (delegate* unmanaged<VkDevice, VkQueryPool, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyQueryPool");
             _vkDestroyQueryPool_fnptr(device, queryPool, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult> _vkGetQueryPoolResults_fnptr = &vkGetQueryPoolResults_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult> _vkGetQueryPoolResults_fnptr = &vkGetQueryPoolResults_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetQueryPoolResults_Lazy(IntPtr device, IntPtr queryPool, uint firstQuery, uint queryCount, nuint dataSize, void* pData, ulong stride, VkQueryResultFlagBits flags)
+        private static VkResult vkGetQueryPoolResults_Lazy(VkDevice device, VkQueryPool queryPool, uint firstQuery, uint queryCount, nuint dataSize, void* pData, ulong stride, VkQueryResultFlagBits flags)
         {
-            _vkGetQueryPoolResults_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkGetQueryPoolResults");
+            _vkGetQueryPoolResults_fnptr = (delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, nuint, void*, ulong, VkQueryResultFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkGetQueryPoolResults");
             return _vkGetQueryPoolResults_fnptr(device, queryPool, firstQuery, queryCount, dataSize, pData, stride, flags);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, void> _vkResetQueryPool_fnptr = &vkResetQueryPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, void> _vkResetQueryPool_fnptr = &vkResetQueryPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkResetQueryPool_Lazy(IntPtr device, IntPtr queryPool, uint firstQuery, uint queryCount)
+        private static void vkResetQueryPool_Lazy(VkDevice device, VkQueryPool queryPool, uint firstQuery, uint queryCount)
         {
-            _vkResetQueryPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkResetQueryPool");
+            _vkResetQueryPool_fnptr = (delegate* unmanaged<VkDevice, VkQueryPool, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkResetQueryPool");
             _vkResetQueryPool_fnptr(device, queryPool, firstQuery, queryCount);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateBuffer_fnptr = &vkCreateBuffer_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCreateInfo*, VkAllocationCallbacks*, VkBuffer*, VkResult> _vkCreateBuffer_fnptr = &vkCreateBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateBuffer_Lazy(IntPtr device, VkBufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pBuffer)
+        private static VkResult vkCreateBuffer_Lazy(VkDevice device, VkBufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBuffer* pBuffer)
         {
-            _vkCreateBuffer_fnptr = (delegate* unmanaged<IntPtr, VkBufferCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBuffer");
+            _vkCreateBuffer_fnptr = (delegate* unmanaged<VkDevice, VkBufferCreateInfo*, VkAllocationCallbacks*, VkBuffer*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBuffer");
             return _vkCreateBuffer_fnptr(device, pCreateInfo, pAllocator, pBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyBuffer_fnptr = &vkDestroyBuffer_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBuffer, VkAllocationCallbacks*, void> _vkDestroyBuffer_fnptr = &vkDestroyBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyBuffer_Lazy(IntPtr device, IntPtr buffer, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyBuffer_Lazy(VkDevice device, VkBuffer buffer, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBuffer");
+            _vkDestroyBuffer_fnptr = (delegate* unmanaged<VkDevice, VkBuffer, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBuffer");
             _vkDestroyBuffer_fnptr(device, buffer, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferViewCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateBufferView_fnptr = &vkCreateBufferView_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferViewCreateInfo*, VkAllocationCallbacks*, VkBufferView*, VkResult> _vkCreateBufferView_fnptr = &vkCreateBufferView_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateBufferView_Lazy(IntPtr device, VkBufferViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pView)
+        private static VkResult vkCreateBufferView_Lazy(VkDevice device, VkBufferViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBufferView* pView)
         {
-            _vkCreateBufferView_fnptr = (delegate* unmanaged<IntPtr, VkBufferViewCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBufferView");
+            _vkCreateBufferView_fnptr = (delegate* unmanaged<VkDevice, VkBufferViewCreateInfo*, VkAllocationCallbacks*, VkBufferView*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBufferView");
             return _vkCreateBufferView_fnptr(device, pCreateInfo, pAllocator, pView);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyBufferView_fnptr = &vkDestroyBufferView_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferView, VkAllocationCallbacks*, void> _vkDestroyBufferView_fnptr = &vkDestroyBufferView_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyBufferView_Lazy(IntPtr device, IntPtr bufferView, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyBufferView_Lazy(VkDevice device, VkBufferView bufferView, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyBufferView_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBufferView");
+            _vkDestroyBufferView_fnptr = (delegate* unmanaged<VkDevice, VkBufferView, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBufferView");
             _vkDestroyBufferView_fnptr(device, bufferView, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateImage_fnptr = &vkCreateImage_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageCreateInfo*, VkAllocationCallbacks*, VkImage*, VkResult> _vkCreateImage_fnptr = &vkCreateImage_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateImage_Lazy(IntPtr device, VkImageCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pImage)
+        private static VkResult vkCreateImage_Lazy(VkDevice device, VkImageCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImage* pImage)
         {
-            _vkCreateImage_fnptr = (delegate* unmanaged<IntPtr, VkImageCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImage");
+            _vkCreateImage_fnptr = (delegate* unmanaged<VkDevice, VkImageCreateInfo*, VkAllocationCallbacks*, VkImage*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImage");
             return _vkCreateImage_fnptr(device, pCreateInfo, pAllocator, pImage);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyImage_fnptr = &vkDestroyImage_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkAllocationCallbacks*, void> _vkDestroyImage_fnptr = &vkDestroyImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyImage_Lazy(IntPtr device, IntPtr image, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyImage_Lazy(VkDevice device, VkImage image, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyImage");
+            _vkDestroyImage_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyImage");
             _vkDestroyImage_fnptr(device, image, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageSubresource*, VkSubresourceLayout*, void> _vkGetImageSubresourceLayout_fnptr = &vkGetImageSubresourceLayout_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkImageSubresource*, VkSubresourceLayout*, void> _vkGetImageSubresourceLayout_fnptr = &vkGetImageSubresourceLayout_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageSubresourceLayout_Lazy(IntPtr device, IntPtr image, VkImageSubresource* pSubresource, VkSubresourceLayout* pLayout)
+        private static void vkGetImageSubresourceLayout_Lazy(VkDevice device, VkImage image, VkImageSubresource* pSubresource, VkSubresourceLayout* pLayout)
         {
-            _vkGetImageSubresourceLayout_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageSubresource*, VkSubresourceLayout*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSubresourceLayout");
+            _vkGetImageSubresourceLayout_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkImageSubresource*, VkSubresourceLayout*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSubresourceLayout");
             _vkGetImageSubresourceLayout_fnptr(device, image, pSubresource, pLayout);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageViewCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateImageView_fnptr = &vkCreateImageView_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageViewCreateInfo*, VkAllocationCallbacks*, VkImageView*, VkResult> _vkCreateImageView_fnptr = &vkCreateImageView_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateImageView_Lazy(IntPtr device, VkImageViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pView)
+        private static VkResult vkCreateImageView_Lazy(VkDevice device, VkImageViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImageView* pView)
         {
-            _vkCreateImageView_fnptr = (delegate* unmanaged<IntPtr, VkImageViewCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImageView");
+            _vkCreateImageView_fnptr = (delegate* unmanaged<VkDevice, VkImageViewCreateInfo*, VkAllocationCallbacks*, VkImageView*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImageView");
             return _vkCreateImageView_fnptr(device, pCreateInfo, pAllocator, pView);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyImageView_fnptr = &vkDestroyImageView_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageView, VkAllocationCallbacks*, void> _vkDestroyImageView_fnptr = &vkDestroyImageView_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyImageView_Lazy(IntPtr device, IntPtr imageView, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyImageView_Lazy(VkDevice device, VkImageView imageView, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyImageView_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyImageView");
+            _vkDestroyImageView_fnptr = (delegate* unmanaged<VkDevice, VkImageView, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyImageView");
             _vkDestroyImageView_fnptr(device, imageView, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkShaderModuleCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateShaderModule_fnptr = &vkCreateShaderModule_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderModuleCreateInfo*, VkAllocationCallbacks*, VkShaderModule*, VkResult> _vkCreateShaderModule_fnptr = &vkCreateShaderModule_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateShaderModule_Lazy(IntPtr device, VkShaderModuleCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pShaderModule)
+        private static VkResult vkCreateShaderModule_Lazy(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkShaderModule* pShaderModule)
         {
-            _vkCreateShaderModule_fnptr = (delegate* unmanaged<IntPtr, VkShaderModuleCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateShaderModule");
+            _vkCreateShaderModule_fnptr = (delegate* unmanaged<VkDevice, VkShaderModuleCreateInfo*, VkAllocationCallbacks*, VkShaderModule*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateShaderModule");
             return _vkCreateShaderModule_fnptr(device, pCreateInfo, pAllocator, pShaderModule);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyShaderModule_fnptr = &vkDestroyShaderModule_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderModule, VkAllocationCallbacks*, void> _vkDestroyShaderModule_fnptr = &vkDestroyShaderModule_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyShaderModule_Lazy(IntPtr device, IntPtr shaderModule, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyShaderModule_Lazy(VkDevice device, VkShaderModule shaderModule, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyShaderModule_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyShaderModule");
+            _vkDestroyShaderModule_fnptr = (delegate* unmanaged<VkDevice, VkShaderModule, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyShaderModule");
             _vkDestroyShaderModule_fnptr(device, shaderModule, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineCacheCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreatePipelineCache_fnptr = &vkCreatePipelineCache_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCacheCreateInfo*, VkAllocationCallbacks*, VkPipelineCache*, VkResult> _vkCreatePipelineCache_fnptr = &vkCreatePipelineCache_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreatePipelineCache_Lazy(IntPtr device, VkPipelineCacheCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pPipelineCache)
+        private static VkResult vkCreatePipelineCache_Lazy(VkDevice device, VkPipelineCacheCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineCache* pPipelineCache)
         {
-            _vkCreatePipelineCache_fnptr = (delegate* unmanaged<IntPtr, VkPipelineCacheCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePipelineCache");
+            _vkCreatePipelineCache_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCacheCreateInfo*, VkAllocationCallbacks*, VkPipelineCache*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePipelineCache");
             return _vkCreatePipelineCache_fnptr(device, pCreateInfo, pAllocator, pPipelineCache);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyPipelineCache_fnptr = &vkDestroyPipelineCache_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, VkAllocationCallbacks*, void> _vkDestroyPipelineCache_fnptr = &vkDestroyPipelineCache_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyPipelineCache_Lazy(IntPtr device, IntPtr pipelineCache, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyPipelineCache_Lazy(VkDevice device, VkPipelineCache pipelineCache, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyPipelineCache_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipelineCache");
+            _vkDestroyPipelineCache_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipelineCache");
             _vkDestroyPipelineCache_fnptr(device, pipelineCache, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult> _vkGetPipelineCacheData_fnptr = &vkGetPipelineCacheData_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, nuint*, void*, VkResult> _vkGetPipelineCacheData_fnptr = &vkGetPipelineCacheData_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPipelineCacheData_Lazy(IntPtr device, IntPtr pipelineCache, nuint* pDataSize, void* pData)
+        private static VkResult vkGetPipelineCacheData_Lazy(VkDevice device, VkPipelineCache pipelineCache, nuint* pDataSize, void* pData)
         {
-            _vkGetPipelineCacheData_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineCacheData");
+            _vkGetPipelineCacheData_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineCacheData");
             return _vkGetPipelineCacheData_fnptr(device, pipelineCache, pDataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult> _vkMergePipelineCaches_fnptr = &vkMergePipelineCaches_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkPipelineCache*, VkResult> _vkMergePipelineCaches_fnptr = &vkMergePipelineCaches_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkMergePipelineCaches_Lazy(IntPtr device, IntPtr dstCache, uint srcCacheCount, IntPtr* pSrcCaches)
+        private static VkResult vkMergePipelineCaches_Lazy(VkDevice device, VkPipelineCache dstCache, uint srcCacheCount, VkPipelineCache* pSrcCaches)
         {
-            _vkMergePipelineCaches_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkMergePipelineCaches");
+            _vkMergePipelineCaches_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkPipelineCache*, VkResult>)VKLoader.GetInstanceProcAddress("vkMergePipelineCaches");
             return _vkMergePipelineCaches_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateGraphicsPipelines_fnptr = &vkCreateGraphicsPipelines_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateGraphicsPipelines_fnptr = &vkCreateGraphicsPipelines_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateGraphicsPipelines_Lazy(IntPtr device, IntPtr pipelineCache, uint createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pPipelines)
+        private static VkResult vkCreateGraphicsPipelines_Lazy(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
-            _vkCreateGraphicsPipelines_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateGraphicsPipelines");
+            _vkCreateGraphicsPipelines_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateGraphicsPipelines");
             return _vkCreateGraphicsPipelines_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkComputePipelineCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateComputePipelines_fnptr = &vkCreateComputePipelines_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkComputePipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateComputePipelines_fnptr = &vkCreateComputePipelines_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateComputePipelines_Lazy(IntPtr device, IntPtr pipelineCache, uint createInfoCount, VkComputePipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pPipelines)
+        private static VkResult vkCreateComputePipelines_Lazy(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkComputePipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
-            _vkCreateComputePipelines_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkComputePipelineCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateComputePipelines");
+            _vkCreateComputePipelines_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkComputePipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateComputePipelines");
             return _vkCreateComputePipelines_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkExtent2D*, VkResult> _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = &vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, VkResult> _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = &vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_Lazy(IntPtr device, IntPtr renderpass, VkExtent2D* pMaxWorkgroupSize)
+        private static VkResult vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_Lazy(VkDevice device, VkRenderPass renderpass, VkExtent2D* pMaxWorkgroupSize)
         {
-            _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkExtent2D*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
+            _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr = (delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI");
             return _vkGetDeviceSubpassShadingMaxWorkgroupSizeHUAWEI_fnptr(device, renderpass, pMaxWorkgroupSize);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyPipeline_fnptr = &vkDestroyPipeline_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, VkAllocationCallbacks*, void> _vkDestroyPipeline_fnptr = &vkDestroyPipeline_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyPipeline_Lazy(IntPtr device, IntPtr pipeline, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyPipeline_Lazy(VkDevice device, VkPipeline pipeline, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyPipeline_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipeline");
+            _vkDestroyPipeline_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipeline");
             _vkDestroyPipeline_fnptr(device, pipeline, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineLayoutCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreatePipelineLayout_fnptr = &vkCreatePipelineLayout_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineLayoutCreateInfo*, VkAllocationCallbacks*, VkPipelineLayout*, VkResult> _vkCreatePipelineLayout_fnptr = &vkCreatePipelineLayout_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreatePipelineLayout_Lazy(IntPtr device, VkPipelineLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pPipelineLayout)
+        private static VkResult vkCreatePipelineLayout_Lazy(VkDevice device, VkPipelineLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineLayout* pPipelineLayout)
         {
-            _vkCreatePipelineLayout_fnptr = (delegate* unmanaged<IntPtr, VkPipelineLayoutCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePipelineLayout");
+            _vkCreatePipelineLayout_fnptr = (delegate* unmanaged<VkDevice, VkPipelineLayoutCreateInfo*, VkAllocationCallbacks*, VkPipelineLayout*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePipelineLayout");
             return _vkCreatePipelineLayout_fnptr(device, pCreateInfo, pAllocator, pPipelineLayout);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyPipelineLayout_fnptr = &vkDestroyPipelineLayout_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineLayout, VkAllocationCallbacks*, void> _vkDestroyPipelineLayout_fnptr = &vkDestroyPipelineLayout_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyPipelineLayout_Lazy(IntPtr device, IntPtr pipelineLayout, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyPipelineLayout_Lazy(VkDevice device, VkPipelineLayout pipelineLayout, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyPipelineLayout_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipelineLayout");
+            _vkDestroyPipelineLayout_fnptr = (delegate* unmanaged<VkDevice, VkPipelineLayout, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipelineLayout");
             _vkDestroyPipelineLayout_fnptr(device, pipelineLayout, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkSamplerCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSampler_fnptr = &vkCreateSampler_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSamplerCreateInfo*, VkAllocationCallbacks*, VkSampler*, VkResult> _vkCreateSampler_fnptr = &vkCreateSampler_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSampler_Lazy(IntPtr device, VkSamplerCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSampler)
+        private static VkResult vkCreateSampler_Lazy(VkDevice device, VkSamplerCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSampler* pSampler)
         {
-            _vkCreateSampler_fnptr = (delegate* unmanaged<IntPtr, VkSamplerCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSampler");
+            _vkCreateSampler_fnptr = (delegate* unmanaged<VkDevice, VkSamplerCreateInfo*, VkAllocationCallbacks*, VkSampler*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSampler");
             return _vkCreateSampler_fnptr(device, pCreateInfo, pAllocator, pSampler);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySampler_fnptr = &vkDestroySampler_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSampler, VkAllocationCallbacks*, void> _vkDestroySampler_fnptr = &vkDestroySampler_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySampler_Lazy(IntPtr device, IntPtr sampler, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySampler_Lazy(VkDevice device, VkSampler sampler, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySampler_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySampler");
+            _vkDestroySampler_fnptr = (delegate* unmanaged<VkDevice, VkSampler, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySampler");
             _vkDestroySampler_fnptr(device, sampler, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorSetLayoutCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDescriptorSetLayout_fnptr = &vkCreateDescriptorSetLayout_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetLayoutCreateInfo*, VkAllocationCallbacks*, VkDescriptorSetLayout*, VkResult> _vkCreateDescriptorSetLayout_fnptr = &vkCreateDescriptorSetLayout_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDescriptorSetLayout_Lazy(IntPtr device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSetLayout)
+        private static VkResult vkCreateDescriptorSetLayout_Lazy(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorSetLayout* pSetLayout)
         {
-            _vkCreateDescriptorSetLayout_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorSetLayoutCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorSetLayout");
+            _vkCreateDescriptorSetLayout_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetLayoutCreateInfo*, VkAllocationCallbacks*, VkDescriptorSetLayout*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorSetLayout");
             return _vkCreateDescriptorSetLayout_fnptr(device, pCreateInfo, pAllocator, pSetLayout);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDescriptorSetLayout_fnptr = &vkDestroyDescriptorSetLayout_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetLayout, VkAllocationCallbacks*, void> _vkDestroyDescriptorSetLayout_fnptr = &vkDestroyDescriptorSetLayout_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDescriptorSetLayout_Lazy(IntPtr device, IntPtr descriptorSetLayout, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDescriptorSetLayout_Lazy(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDescriptorSetLayout_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorSetLayout");
+            _vkDestroyDescriptorSetLayout_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetLayout, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorSetLayout");
             _vkDestroyDescriptorSetLayout_fnptr(device, descriptorSetLayout, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDescriptorPool_fnptr = &vkCreateDescriptorPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorPoolCreateInfo*, VkAllocationCallbacks*, VkDescriptorPool*, VkResult> _vkCreateDescriptorPool_fnptr = &vkCreateDescriptorPool_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDescriptorPool_Lazy(IntPtr device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pDescriptorPool)
+        private static VkResult vkCreateDescriptorPool_Lazy(VkDevice device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool)
         {
-            _vkCreateDescriptorPool_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorPool");
+            _vkCreateDescriptorPool_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorPoolCreateInfo*, VkAllocationCallbacks*, VkDescriptorPool*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorPool");
             return _vkCreateDescriptorPool_fnptr(device, pCreateInfo, pAllocator, pDescriptorPool);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDescriptorPool_fnptr = &vkDestroyDescriptorPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorPool, VkAllocationCallbacks*, void> _vkDestroyDescriptorPool_fnptr = &vkDestroyDescriptorPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDescriptorPool_Lazy(IntPtr device, IntPtr descriptorPool, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDescriptorPool_Lazy(VkDevice device, VkDescriptorPool descriptorPool, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDescriptorPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorPool");
+            _vkDestroyDescriptorPool_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorPool, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorPool");
             _vkDestroyDescriptorPool_fnptr(device, descriptorPool, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDescriptorPoolResetFlags, VkResult> _vkResetDescriptorPool_fnptr = &vkResetDescriptorPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags, VkResult> _vkResetDescriptorPool_fnptr = &vkResetDescriptorPool_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkResetDescriptorPool_Lazy(IntPtr device, IntPtr descriptorPool, VkDescriptorPoolResetFlags flags)
+        private static VkResult vkResetDescriptorPool_Lazy(VkDevice device, VkDescriptorPool descriptorPool, VkDescriptorPoolResetFlags flags)
         {
-            _vkResetDescriptorPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDescriptorPoolResetFlags, VkResult>)VKLoader.GetInstanceProcAddress("vkResetDescriptorPool");
+            _vkResetDescriptorPool_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorPool, VkDescriptorPoolResetFlags, VkResult>)VKLoader.GetInstanceProcAddress("vkResetDescriptorPool");
             return _vkResetDescriptorPool_fnptr(device, descriptorPool, flags);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorSetAllocateInfo*, IntPtr*, VkResult> _vkAllocateDescriptorSets_fnptr = &vkAllocateDescriptorSets_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetAllocateInfo*, VkDescriptorSet*, VkResult> _vkAllocateDescriptorSets_fnptr = &vkAllocateDescriptorSets_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAllocateDescriptorSets_Lazy(IntPtr device, VkDescriptorSetAllocateInfo* pAllocateInfo, IntPtr* pDescriptorSets)
+        private static VkResult vkAllocateDescriptorSets_Lazy(VkDevice device, VkDescriptorSetAllocateInfo* pAllocateInfo, VkDescriptorSet* pDescriptorSets)
         {
-            _vkAllocateDescriptorSets_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorSetAllocateInfo*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateDescriptorSets");
+            _vkAllocateDescriptorSets_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetAllocateInfo*, VkDescriptorSet*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateDescriptorSets");
             return _vkAllocateDescriptorSets_fnptr(device, pAllocateInfo, pDescriptorSets);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult> _vkFreeDescriptorSets_fnptr = &vkFreeDescriptorSets_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorPool, uint, VkDescriptorSet*, VkResult> _vkFreeDescriptorSets_fnptr = &vkFreeDescriptorSets_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkFreeDescriptorSets_Lazy(IntPtr device, IntPtr descriptorPool, uint descriptorSetCount, IntPtr* pDescriptorSets)
+        private static VkResult vkFreeDescriptorSets_Lazy(VkDevice device, VkDescriptorPool descriptorPool, uint descriptorSetCount, VkDescriptorSet* pDescriptorSets)
         {
-            _vkFreeDescriptorSets_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkFreeDescriptorSets");
+            _vkFreeDescriptorSets_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorPool, uint, VkDescriptorSet*, VkResult>)VKLoader.GetInstanceProcAddress("vkFreeDescriptorSets");
             return _vkFreeDescriptorSets_fnptr(device, descriptorPool, descriptorSetCount, pDescriptorSets);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void> _vkUpdateDescriptorSets_fnptr = &vkUpdateDescriptorSets_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void> _vkUpdateDescriptorSets_fnptr = &vkUpdateDescriptorSets_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkUpdateDescriptorSets_Lazy(IntPtr device, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies)
+        private static void vkUpdateDescriptorSets_Lazy(VkDevice device, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies)
         {
-            _vkUpdateDescriptorSets_fnptr = (delegate* unmanaged<IntPtr, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void>)VKLoader.GetInstanceProcAddress("vkUpdateDescriptorSets");
+            _vkUpdateDescriptorSets_fnptr = (delegate* unmanaged<VkDevice, uint, VkWriteDescriptorSet*, uint, VkCopyDescriptorSet*, void>)VKLoader.GetInstanceProcAddress("vkUpdateDescriptorSets");
             _vkUpdateDescriptorSets_fnptr(device, descriptorWriteCount, pDescriptorWrites, descriptorCopyCount, pDescriptorCopies);
         }
-        internal static delegate* unmanaged<IntPtr, VkFramebufferCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateFramebuffer_fnptr = &vkCreateFramebuffer_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFramebufferCreateInfo*, VkAllocationCallbacks*, VkFramebuffer*, VkResult> _vkCreateFramebuffer_fnptr = &vkCreateFramebuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateFramebuffer_Lazy(IntPtr device, VkFramebufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFramebuffer)
+        private static VkResult vkCreateFramebuffer_Lazy(VkDevice device, VkFramebufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFramebuffer* pFramebuffer)
         {
-            _vkCreateFramebuffer_fnptr = (delegate* unmanaged<IntPtr, VkFramebufferCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateFramebuffer");
+            _vkCreateFramebuffer_fnptr = (delegate* unmanaged<VkDevice, VkFramebufferCreateInfo*, VkAllocationCallbacks*, VkFramebuffer*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateFramebuffer");
             return _vkCreateFramebuffer_fnptr(device, pCreateInfo, pAllocator, pFramebuffer);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyFramebuffer_fnptr = &vkDestroyFramebuffer_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFramebuffer, VkAllocationCallbacks*, void> _vkDestroyFramebuffer_fnptr = &vkDestroyFramebuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyFramebuffer_Lazy(IntPtr device, IntPtr framebuffer, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyFramebuffer_Lazy(VkDevice device, VkFramebuffer framebuffer, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyFramebuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyFramebuffer");
+            _vkDestroyFramebuffer_fnptr = (delegate* unmanaged<VkDevice, VkFramebuffer, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyFramebuffer");
             _vkDestroyFramebuffer_fnptr(device, framebuffer, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderPassCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateRenderPass_fnptr = &vkCreateRenderPass_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderPassCreateInfo*, VkAllocationCallbacks*, VkRenderPass*, VkResult> _vkCreateRenderPass_fnptr = &vkCreateRenderPass_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateRenderPass_Lazy(IntPtr device, VkRenderPassCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pRenderPass)
+        private static VkResult vkCreateRenderPass_Lazy(VkDevice device, VkRenderPassCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass)
         {
-            _vkCreateRenderPass_fnptr = (delegate* unmanaged<IntPtr, VkRenderPassCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRenderPass");
+            _vkCreateRenderPass_fnptr = (delegate* unmanaged<VkDevice, VkRenderPassCreateInfo*, VkAllocationCallbacks*, VkRenderPass*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRenderPass");
             return _vkCreateRenderPass_fnptr(device, pCreateInfo, pAllocator, pRenderPass);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyRenderPass_fnptr = &vkDestroyRenderPass_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderPass, VkAllocationCallbacks*, void> _vkDestroyRenderPass_fnptr = &vkDestroyRenderPass_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyRenderPass_Lazy(IntPtr device, IntPtr renderPass, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyRenderPass_Lazy(VkDevice device, VkRenderPass renderPass, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyRenderPass_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyRenderPass");
+            _vkDestroyRenderPass_fnptr = (delegate* unmanaged<VkDevice, VkRenderPass, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyRenderPass");
             _vkDestroyRenderPass_fnptr(device, renderPass, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkExtent2D*, void> _vkGetRenderAreaGranularity_fnptr = &vkGetRenderAreaGranularity_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, void> _vkGetRenderAreaGranularity_fnptr = &vkGetRenderAreaGranularity_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetRenderAreaGranularity_Lazy(IntPtr device, IntPtr renderPass, VkExtent2D* pGranularity)
+        private static void vkGetRenderAreaGranularity_Lazy(VkDevice device, VkRenderPass renderPass, VkExtent2D* pGranularity)
         {
-            _vkGetRenderAreaGranularity_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkExtent2D*, void>)VKLoader.GetInstanceProcAddress("vkGetRenderAreaGranularity");
+            _vkGetRenderAreaGranularity_fnptr = (delegate* unmanaged<VkDevice, VkRenderPass, VkExtent2D*, void>)VKLoader.GetInstanceProcAddress("vkGetRenderAreaGranularity");
             _vkGetRenderAreaGranularity_fnptr(device, renderPass, pGranularity);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderingAreaInfoKHR*, VkExtent2D*, void> _vkGetRenderingAreaGranularityKHR_fnptr = &vkGetRenderingAreaGranularityKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderingAreaInfoKHR*, VkExtent2D*, void> _vkGetRenderingAreaGranularityKHR_fnptr = &vkGetRenderingAreaGranularityKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetRenderingAreaGranularityKHR_Lazy(IntPtr device, VkRenderingAreaInfoKHR* pRenderingAreaInfo, VkExtent2D* pGranularity)
+        private static void vkGetRenderingAreaGranularityKHR_Lazy(VkDevice device, VkRenderingAreaInfoKHR* pRenderingAreaInfo, VkExtent2D* pGranularity)
         {
-            _vkGetRenderingAreaGranularityKHR_fnptr = (delegate* unmanaged<IntPtr, VkRenderingAreaInfoKHR*, VkExtent2D*, void>)VKLoader.GetInstanceProcAddress("vkGetRenderingAreaGranularityKHR");
+            _vkGetRenderingAreaGranularityKHR_fnptr = (delegate* unmanaged<VkDevice, VkRenderingAreaInfoKHR*, VkExtent2D*, void>)VKLoader.GetInstanceProcAddress("vkGetRenderingAreaGranularityKHR");
             _vkGetRenderingAreaGranularityKHR_fnptr(device, pRenderingAreaInfo, pGranularity);
         }
-        internal static delegate* unmanaged<IntPtr, VkCommandPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateCommandPool_fnptr = &vkCreateCommandPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPoolCreateInfo*, VkAllocationCallbacks*, VkCommandPool*, VkResult> _vkCreateCommandPool_fnptr = &vkCreateCommandPool_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateCommandPool_Lazy(IntPtr device, VkCommandPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pCommandPool)
+        private static VkResult vkCreateCommandPool_Lazy(VkDevice device, VkCommandPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCommandPool* pCommandPool)
         {
-            _vkCreateCommandPool_fnptr = (delegate* unmanaged<IntPtr, VkCommandPoolCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCommandPool");
+            _vkCreateCommandPool_fnptr = (delegate* unmanaged<VkDevice, VkCommandPoolCreateInfo*, VkAllocationCallbacks*, VkCommandPool*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCommandPool");
             return _vkCreateCommandPool_fnptr(device, pCreateInfo, pAllocator, pCommandPool);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyCommandPool_fnptr = &vkDestroyCommandPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPool, VkAllocationCallbacks*, void> _vkDestroyCommandPool_fnptr = &vkDestroyCommandPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyCommandPool_Lazy(IntPtr device, IntPtr commandPool, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyCommandPool_Lazy(VkDevice device, VkCommandPool commandPool, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyCommandPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCommandPool");
+            _vkDestroyCommandPool_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCommandPool");
             _vkDestroyCommandPool_fnptr(device, commandPool, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCommandPoolResetFlagBits, VkResult> _vkResetCommandPool_fnptr = &vkResetCommandPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPool, VkCommandPoolResetFlagBits, VkResult> _vkResetCommandPool_fnptr = &vkResetCommandPool_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkResetCommandPool_Lazy(IntPtr device, IntPtr commandPool, VkCommandPoolResetFlagBits flags)
+        private static VkResult vkResetCommandPool_Lazy(VkDevice device, VkCommandPool commandPool, VkCommandPoolResetFlagBits flags)
         {
-            _vkResetCommandPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCommandPoolResetFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkResetCommandPool");
+            _vkResetCommandPool_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, VkCommandPoolResetFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkResetCommandPool");
             return _vkResetCommandPool_fnptr(device, commandPool, flags);
         }
-        internal static delegate* unmanaged<IntPtr, VkCommandBufferAllocateInfo*, IntPtr*, VkResult> _vkAllocateCommandBuffers_fnptr = &vkAllocateCommandBuffers_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandBufferAllocateInfo*, VkCommandBuffer*, VkResult> _vkAllocateCommandBuffers_fnptr = &vkAllocateCommandBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAllocateCommandBuffers_Lazy(IntPtr device, VkCommandBufferAllocateInfo* pAllocateInfo, IntPtr* pCommandBuffers)
+        private static VkResult vkAllocateCommandBuffers_Lazy(VkDevice device, VkCommandBufferAllocateInfo* pAllocateInfo, VkCommandBuffer* pCommandBuffers)
         {
-            _vkAllocateCommandBuffers_fnptr = (delegate* unmanaged<IntPtr, VkCommandBufferAllocateInfo*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateCommandBuffers");
+            _vkAllocateCommandBuffers_fnptr = (delegate* unmanaged<VkDevice, VkCommandBufferAllocateInfo*, VkCommandBuffer*, VkResult>)VKLoader.GetInstanceProcAddress("vkAllocateCommandBuffers");
             return _vkAllocateCommandBuffers_fnptr(device, pAllocateInfo, pCommandBuffers);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, void> _vkFreeCommandBuffers_fnptr = &vkFreeCommandBuffers_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPool, uint, VkCommandBuffer*, void> _vkFreeCommandBuffers_fnptr = &vkFreeCommandBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkFreeCommandBuffers_Lazy(IntPtr device, IntPtr commandPool, uint commandBufferCount, IntPtr* pCommandBuffers)
+        private static void vkFreeCommandBuffers_Lazy(VkDevice device, VkCommandPool commandPool, uint commandBufferCount, VkCommandBuffer* pCommandBuffers)
         {
-            _vkFreeCommandBuffers_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, void>)VKLoader.GetInstanceProcAddress("vkFreeCommandBuffers");
+            _vkFreeCommandBuffers_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, uint, VkCommandBuffer*, void>)VKLoader.GetInstanceProcAddress("vkFreeCommandBuffers");
             _vkFreeCommandBuffers_fnptr(device, commandPool, commandBufferCount, pCommandBuffers);
         }
-        internal static delegate* unmanaged<IntPtr, VkCommandBufferBeginInfo*, VkResult> _vkBeginCommandBuffer_fnptr = &vkBeginCommandBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCommandBufferBeginInfo*, VkResult> _vkBeginCommandBuffer_fnptr = &vkBeginCommandBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBeginCommandBuffer_Lazy(IntPtr commandBuffer, VkCommandBufferBeginInfo* pBeginInfo)
+        private static VkResult vkBeginCommandBuffer_Lazy(VkCommandBuffer commandBuffer, VkCommandBufferBeginInfo* pBeginInfo)
         {
-            _vkBeginCommandBuffer_fnptr = (delegate* unmanaged<IntPtr, VkCommandBufferBeginInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBeginCommandBuffer");
+            _vkBeginCommandBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCommandBufferBeginInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBeginCommandBuffer");
             return _vkBeginCommandBuffer_fnptr(commandBuffer, pBeginInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkResult> _vkEndCommandBuffer_fnptr = &vkEndCommandBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkResult> _vkEndCommandBuffer_fnptr = &vkEndCommandBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEndCommandBuffer_Lazy(IntPtr commandBuffer)
+        private static VkResult vkEndCommandBuffer_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkEndCommandBuffer_fnptr = (delegate* unmanaged<IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkEndCommandBuffer");
+            _vkEndCommandBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkResult>)VKLoader.GetInstanceProcAddress("vkEndCommandBuffer");
             return _vkEndCommandBuffer_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, VkCommandBufferResetFlagBits, VkResult> _vkResetCommandBuffer_fnptr = &vkResetCommandBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCommandBufferResetFlagBits, VkResult> _vkResetCommandBuffer_fnptr = &vkResetCommandBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkResetCommandBuffer_Lazy(IntPtr commandBuffer, VkCommandBufferResetFlagBits flags)
+        private static VkResult vkResetCommandBuffer_Lazy(VkCommandBuffer commandBuffer, VkCommandBufferResetFlagBits flags)
         {
-            _vkResetCommandBuffer_fnptr = (delegate* unmanaged<IntPtr, VkCommandBufferResetFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkResetCommandBuffer");
+            _vkResetCommandBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCommandBufferResetFlagBits, VkResult>)VKLoader.GetInstanceProcAddress("vkResetCommandBuffer");
             return _vkResetCommandBuffer_fnptr(commandBuffer, flags);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, void> _vkCmdBindPipeline_fnptr = &vkCmdBindPipeline_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void> _vkCmdBindPipeline_fnptr = &vkCmdBindPipeline_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindPipeline_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr pipeline)
+        private static void vkCmdBindPipeline_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline)
         {
-            _vkCmdBindPipeline_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdBindPipeline");
+            _vkCmdBindPipeline_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void>)VKLoader.GetInstanceProcAddress("vkCmdBindPipeline");
             _vkCmdBindPipeline_fnptr(commandBuffer, pipelineBindPoint, pipeline);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageAspectFlagBits, void> _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr = &vkCmdSetAttachmentFeedbackLoopEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImageAspectFlagBits, void> _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr = &vkCmdSetAttachmentFeedbackLoopEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetAttachmentFeedbackLoopEnableEXT_Lazy(IntPtr commandBuffer, VkImageAspectFlagBits aspectMask)
+        private static void vkCmdSetAttachmentFeedbackLoopEnableEXT_Lazy(VkCommandBuffer commandBuffer, VkImageAspectFlagBits aspectMask)
         {
-            _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr = (delegate* unmanaged<IntPtr, VkImageAspectFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAttachmentFeedbackLoopEnableEXT");
+            _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageAspectFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAttachmentFeedbackLoopEnableEXT");
             _vkCmdSetAttachmentFeedbackLoopEnableEXT_fnptr(commandBuffer, aspectMask);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkViewport*, void> _vkCmdSetViewport_fnptr = &vkCmdSetViewport_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewport*, void> _vkCmdSetViewport_fnptr = &vkCmdSetViewport_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewport_Lazy(IntPtr commandBuffer, uint firstViewport, uint viewportCount, VkViewport* pViewports)
+        private static void vkCmdSetViewport_Lazy(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewport* pViewports)
         {
-            _vkCmdSetViewport_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkViewport*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewport");
+            _vkCmdSetViewport_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewport*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewport");
             _vkCmdSetViewport_fnptr(commandBuffer, firstViewport, viewportCount, pViewports);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void> _vkCmdSetScissor_fnptr = &vkCmdSetScissor_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void> _vkCmdSetScissor_fnptr = &vkCmdSetScissor_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetScissor_Lazy(IntPtr commandBuffer, uint firstScissor, uint scissorCount, VkRect2D* pScissors)
+        private static void vkCmdSetScissor_Lazy(VkCommandBuffer commandBuffer, uint firstScissor, uint scissorCount, VkRect2D* pScissors)
         {
-            _vkCmdSetScissor_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetScissor");
+            _vkCmdSetScissor_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetScissor");
             _vkCmdSetScissor_fnptr(commandBuffer, firstScissor, scissorCount, pScissors);
         }
-        internal static delegate* unmanaged<IntPtr, float, void> _vkCmdSetLineWidth_fnptr = &vkCmdSetLineWidth_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, float, void> _vkCmdSetLineWidth_fnptr = &vkCmdSetLineWidth_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLineWidth_Lazy(IntPtr commandBuffer, float lineWidth)
+        private static void vkCmdSetLineWidth_Lazy(VkCommandBuffer commandBuffer, float lineWidth)
         {
-            _vkCmdSetLineWidth_fnptr = (delegate* unmanaged<IntPtr, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineWidth");
+            _vkCmdSetLineWidth_fnptr = (delegate* unmanaged<VkCommandBuffer, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineWidth");
             _vkCmdSetLineWidth_fnptr(commandBuffer, lineWidth);
         }
-        internal static delegate* unmanaged<IntPtr, float, float, float, void> _vkCmdSetDepthBias_fnptr = &vkCmdSetDepthBias_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, float, float, float, void> _vkCmdSetDepthBias_fnptr = &vkCmdSetDepthBias_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthBias_Lazy(IntPtr commandBuffer, float depthBiasConstantFactor, float depthBiasClamp, float depthBiasSlopeFactor)
+        private static void vkCmdSetDepthBias_Lazy(VkCommandBuffer commandBuffer, float depthBiasConstantFactor, float depthBiasClamp, float depthBiasSlopeFactor)
         {
-            _vkCmdSetDepthBias_fnptr = (delegate* unmanaged<IntPtr, float, float, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBias");
+            _vkCmdSetDepthBias_fnptr = (delegate* unmanaged<VkCommandBuffer, float, float, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBias");
             _vkCmdSetDepthBias_fnptr(commandBuffer, depthBiasConstantFactor, depthBiasClamp, depthBiasSlopeFactor);
         }
-        internal static delegate* unmanaged<IntPtr, float*, void> _vkCmdSetBlendConstants_fnptr = &vkCmdSetBlendConstants_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, float*, void> _vkCmdSetBlendConstants_fnptr = &vkCmdSetBlendConstants_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetBlendConstants_Lazy(IntPtr commandBuffer, float* blendConstants)
+        private static void vkCmdSetBlendConstants_Lazy(VkCommandBuffer commandBuffer, float* blendConstants)
         {
-            _vkCmdSetBlendConstants_fnptr = (delegate* unmanaged<IntPtr, float*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetBlendConstants");
+            _vkCmdSetBlendConstants_fnptr = (delegate* unmanaged<VkCommandBuffer, float*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetBlendConstants");
             _vkCmdSetBlendConstants_fnptr(commandBuffer, blendConstants);
         }
-        internal static delegate* unmanaged<IntPtr, float, float, void> _vkCmdSetDepthBounds_fnptr = &vkCmdSetDepthBounds_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, float, float, void> _vkCmdSetDepthBounds_fnptr = &vkCmdSetDepthBounds_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthBounds_Lazy(IntPtr commandBuffer, float minDepthBounds, float maxDepthBounds)
+        private static void vkCmdSetDepthBounds_Lazy(VkCommandBuffer commandBuffer, float minDepthBounds, float maxDepthBounds)
         {
-            _vkCmdSetDepthBounds_fnptr = (delegate* unmanaged<IntPtr, float, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBounds");
+            _vkCmdSetDepthBounds_fnptr = (delegate* unmanaged<VkCommandBuffer, float, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBounds");
             _vkCmdSetDepthBounds_fnptr(commandBuffer, minDepthBounds, maxDepthBounds);
         }
-        internal static delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilCompareMask_fnptr = &vkCmdSetStencilCompareMask_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilCompareMask_fnptr = &vkCmdSetStencilCompareMask_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetStencilCompareMask_Lazy(IntPtr commandBuffer, VkStencilFaceFlagBits faceMask, uint compareMask)
+        private static void vkCmdSetStencilCompareMask_Lazy(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint compareMask)
         {
-            _vkCmdSetStencilCompareMask_fnptr = (delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilCompareMask");
+            _vkCmdSetStencilCompareMask_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilCompareMask");
             _vkCmdSetStencilCompareMask_fnptr(commandBuffer, faceMask, compareMask);
         }
-        internal static delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilWriteMask_fnptr = &vkCmdSetStencilWriteMask_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilWriteMask_fnptr = &vkCmdSetStencilWriteMask_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetStencilWriteMask_Lazy(IntPtr commandBuffer, VkStencilFaceFlagBits faceMask, uint writeMask)
+        private static void vkCmdSetStencilWriteMask_Lazy(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint writeMask)
         {
-            _vkCmdSetStencilWriteMask_fnptr = (delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilWriteMask");
+            _vkCmdSetStencilWriteMask_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilWriteMask");
             _vkCmdSetStencilWriteMask_fnptr(commandBuffer, faceMask, writeMask);
         }
-        internal static delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilReference_fnptr = &vkCmdSetStencilReference_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void> _vkCmdSetStencilReference_fnptr = &vkCmdSetStencilReference_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetStencilReference_Lazy(IntPtr commandBuffer, VkStencilFaceFlagBits faceMask, uint reference)
+        private static void vkCmdSetStencilReference_Lazy(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, uint reference)
         {
-            _vkCmdSetStencilReference_fnptr = (delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilReference");
+            _vkCmdSetStencilReference_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilReference");
             _vkCmdSetStencilReference_fnptr(commandBuffer, faceMask, reference);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, IntPtr*, uint, uint*, void> _vkCmdBindDescriptorSets_fnptr = &vkCmdBindDescriptorSets_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkDescriptorSet*, uint, uint*, void> _vkCmdBindDescriptorSets_fnptr = &vkCmdBindDescriptorSets_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindDescriptorSets_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr layout, uint firstSet, uint descriptorSetCount, IntPtr* pDescriptorSets, uint dynamicOffsetCount, uint* pDynamicOffsets)
+        private static void vkCmdBindDescriptorSets_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint firstSet, uint descriptorSetCount, VkDescriptorSet* pDescriptorSets, uint dynamicOffsetCount, uint* pDynamicOffsets)
         {
-            _vkCmdBindDescriptorSets_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, IntPtr*, uint, uint*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorSets");
+            _vkCmdBindDescriptorSets_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkDescriptorSet*, uint, uint*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorSets");
             _vkCmdBindDescriptorSets_fnptr(commandBuffer, pipelineBindPoint, layout, firstSet, descriptorSetCount, pDescriptorSets, dynamicOffsetCount, pDynamicOffsets);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, VkIndexType, void> _vkCmdBindIndexBuffer_fnptr = &vkCmdBindIndexBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkIndexType, void> _vkCmdBindIndexBuffer_fnptr = &vkCmdBindIndexBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindIndexBuffer_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, VkIndexType indexType)
+        private static void vkCmdBindIndexBuffer_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkIndexType indexType)
         {
-            _vkCmdBindIndexBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, VkIndexType, void>)VKLoader.GetInstanceProcAddress("vkCmdBindIndexBuffer");
+            _vkCmdBindIndexBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkIndexType, void>)VKLoader.GetInstanceProcAddress("vkCmdBindIndexBuffer");
             _vkCmdBindIndexBuffer_fnptr(commandBuffer, buffer, offset, indexType);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void> _vkCmdBindVertexBuffers_fnptr = &vkCmdBindVertexBuffers_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void> _vkCmdBindVertexBuffers_fnptr = &vkCmdBindVertexBuffers_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindVertexBuffers_Lazy(IntPtr commandBuffer, uint firstBinding, uint bindingCount, IntPtr* pBuffers, ulong* pOffsets)
+        private static void vkCmdBindVertexBuffers_Lazy(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets)
         {
-            _vkCmdBindVertexBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindVertexBuffers");
+            _vkCmdBindVertexBuffers_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindVertexBuffers");
             _vkCmdBindVertexBuffers_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, uint, void> _vkCmdDraw_fnptr = &vkCmdDraw_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void> _vkCmdDraw_fnptr = &vkCmdDraw_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDraw_Lazy(IntPtr commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
+        private static void vkCmdDraw_Lazy(VkCommandBuffer commandBuffer, uint vertexCount, uint instanceCount, uint firstVertex, uint firstInstance)
         {
-            _vkCmdDraw_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDraw");
+            _vkCmdDraw_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDraw");
             _vkCmdDraw_fnptr(commandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, int, uint, void> _vkCmdDrawIndexed_fnptr = &vkCmdDrawIndexed_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, int, uint, void> _vkCmdDrawIndexed_fnptr = &vkCmdDrawIndexed_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndexed_Lazy(IntPtr commandBuffer, uint indexCount, uint instanceCount, uint firstIndex, int vertexOffset, uint firstInstance)
+        private static void vkCmdDrawIndexed_Lazy(VkCommandBuffer commandBuffer, uint indexCount, uint instanceCount, uint firstIndex, int vertexOffset, uint firstInstance)
         {
-            _vkCmdDrawIndexed_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, int, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexed");
+            _vkCmdDrawIndexed_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, int, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexed");
             _vkCmdDrawIndexed_fnptr(commandBuffer, indexCount, instanceCount, firstIndex, vertexOffset, firstInstance);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkMultiDrawInfoEXT*, uint, uint, uint, void> _vkCmdDrawMultiEXT_fnptr = &vkCmdDrawMultiEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkMultiDrawInfoEXT*, uint, uint, uint, void> _vkCmdDrawMultiEXT_fnptr = &vkCmdDrawMultiEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMultiEXT_Lazy(IntPtr commandBuffer, uint drawCount, VkMultiDrawInfoEXT* pVertexInfo, uint instanceCount, uint firstInstance, uint stride)
+        private static void vkCmdDrawMultiEXT_Lazy(VkCommandBuffer commandBuffer, uint drawCount, VkMultiDrawInfoEXT* pVertexInfo, uint instanceCount, uint firstInstance, uint stride)
         {
-            _vkCmdDrawMultiEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkMultiDrawInfoEXT*, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMultiEXT");
+            _vkCmdDrawMultiEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkMultiDrawInfoEXT*, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMultiEXT");
             _vkCmdDrawMultiEXT_fnptr(commandBuffer, drawCount, pVertexInfo, instanceCount, firstInstance, stride);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkMultiDrawIndexedInfoEXT*, uint, uint, uint, int*, void> _vkCmdDrawMultiIndexedEXT_fnptr = &vkCmdDrawMultiIndexedEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkMultiDrawIndexedInfoEXT*, uint, uint, uint, int*, void> _vkCmdDrawMultiIndexedEXT_fnptr = &vkCmdDrawMultiIndexedEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMultiIndexedEXT_Lazy(IntPtr commandBuffer, uint drawCount, VkMultiDrawIndexedInfoEXT* pIndexInfo, uint instanceCount, uint firstInstance, uint stride, int* pVertexOffset)
+        private static void vkCmdDrawMultiIndexedEXT_Lazy(VkCommandBuffer commandBuffer, uint drawCount, VkMultiDrawIndexedInfoEXT* pIndexInfo, uint instanceCount, uint firstInstance, uint stride, int* pVertexOffset)
         {
-            _vkCmdDrawMultiIndexedEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkMultiDrawIndexedInfoEXT*, uint, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMultiIndexedEXT");
+            _vkCmdDrawMultiIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkMultiDrawIndexedInfoEXT*, uint, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMultiIndexedEXT");
             _vkCmdDrawMultiIndexedEXT_fnptr(commandBuffer, drawCount, pIndexInfo, instanceCount, firstInstance, stride, pVertexOffset);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void> _vkCmdDrawIndirect_fnptr = &vkCmdDrawIndirect_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void> _vkCmdDrawIndirect_fnptr = &vkCmdDrawIndirect_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndirect_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, uint drawCount, uint stride)
+        private static void vkCmdDrawIndirect_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
-            _vkCmdDrawIndirect_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirect");
+            _vkCmdDrawIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirect");
             _vkCmdDrawIndirect_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void> _vkCmdDrawIndexedIndirect_fnptr = &vkCmdDrawIndexedIndirect_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void> _vkCmdDrawIndexedIndirect_fnptr = &vkCmdDrawIndexedIndirect_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndexedIndirect_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, uint drawCount, uint stride)
+        private static void vkCmdDrawIndexedIndirect_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
-            _vkCmdDrawIndexedIndirect_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexedIndirect");
+            _vkCmdDrawIndexedIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexedIndirect");
             _vkCmdDrawIndexedIndirect_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, void> _vkCmdDispatch_fnptr = &vkCmdDispatch_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void> _vkCmdDispatch_fnptr = &vkCmdDispatch_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatch_Lazy(IntPtr commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
+        private static void vkCmdDispatch_Lazy(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
-            _vkCmdDispatch_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatch");
+            _vkCmdDispatch_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatch");
             _vkCmdDispatch_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, void> _vkCmdDispatchIndirect_fnptr = &vkCmdDispatchIndirect_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void> _vkCmdDispatchIndirect_fnptr = &vkCmdDispatchIndirect_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchIndirect_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset)
+        private static void vkCmdDispatchIndirect_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset)
         {
-            _vkCmdDispatchIndirect_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchIndirect");
+            _vkCmdDispatchIndirect_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchIndirect");
             _vkCmdDispatchIndirect_fnptr(commandBuffer, buffer, offset);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdSubpassShadingHUAWEI_fnptr = &vkCmdSubpassShadingHUAWEI_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdSubpassShadingHUAWEI_fnptr = &vkCmdSubpassShadingHUAWEI_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSubpassShadingHUAWEI_Lazy(IntPtr commandBuffer)
+        private static void vkCmdSubpassShadingHUAWEI_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdSubpassShadingHUAWEI_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdSubpassShadingHUAWEI");
+            _vkCmdSubpassShadingHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdSubpassShadingHUAWEI");
             _vkCmdSubpassShadingHUAWEI_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, void> _vkCmdDrawClusterHUAWEI_fnptr = &vkCmdDrawClusterHUAWEI_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void> _vkCmdDrawClusterHUAWEI_fnptr = &vkCmdDrawClusterHUAWEI_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawClusterHUAWEI_Lazy(IntPtr commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
+        private static void vkCmdDrawClusterHUAWEI_Lazy(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
-            _vkCmdDrawClusterHUAWEI_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawClusterHUAWEI");
+            _vkCmdDrawClusterHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawClusterHUAWEI");
             _vkCmdDrawClusterHUAWEI_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, void> _vkCmdDrawClusterIndirectHUAWEI_fnptr = &vkCmdDrawClusterIndirectHUAWEI_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void> _vkCmdDrawClusterIndirectHUAWEI_fnptr = &vkCmdDrawClusterIndirectHUAWEI_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawClusterIndirectHUAWEI_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset)
+        private static void vkCmdDrawClusterIndirectHUAWEI_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset)
         {
-            _vkCmdDrawClusterIndirectHUAWEI_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawClusterIndirectHUAWEI");
+            _vkCmdDrawClusterIndirectHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawClusterIndirectHUAWEI");
             _vkCmdDrawClusterIndirectHUAWEI_fnptr(commandBuffer, buffer, offset);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, void> _vkCmdUpdatePipelineIndirectBufferNV_fnptr = &vkCmdUpdatePipelineIndirectBufferNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void> _vkCmdUpdatePipelineIndirectBufferNV_fnptr = &vkCmdUpdatePipelineIndirectBufferNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdUpdatePipelineIndirectBufferNV_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr pipeline)
+        private static void vkCmdUpdatePipelineIndirectBufferNV_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline)
         {
-            _vkCmdUpdatePipelineIndirectBufferNV_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdUpdatePipelineIndirectBufferNV");
+            _vkCmdUpdatePipelineIndirectBufferNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, void>)VKLoader.GetInstanceProcAddress("vkCmdUpdatePipelineIndirectBufferNV");
             _vkCmdUpdatePipelineIndirectBufferNV_fnptr(commandBuffer, pipelineBindPoint, pipeline);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, VkBufferCopy*, void> _vkCmdCopyBuffer_fnptr = &vkCmdCopyBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, VkBuffer, uint, VkBufferCopy*, void> _vkCmdCopyBuffer_fnptr = &vkCmdCopyBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyBuffer_Lazy(IntPtr commandBuffer, IntPtr srcBuffer, IntPtr dstBuffer, uint regionCount, VkBufferCopy* pRegions)
+        private static void vkCmdCopyBuffer_Lazy(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, uint regionCount, VkBufferCopy* pRegions)
         {
-            _vkCmdCopyBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, VkBufferCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBuffer");
+            _vkCmdCopyBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, VkBuffer, uint, VkBufferCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBuffer");
             _vkCmdCopyBuffer_fnptr(commandBuffer, srcBuffer, dstBuffer, regionCount, pRegions);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageCopy*, void> _vkCmdCopyImage_fnptr = &vkCmdCopyImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageCopy*, void> _vkCmdCopyImage_fnptr = &vkCmdCopyImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyImage_Lazy(IntPtr commandBuffer, IntPtr srcImage, VkImageLayout srcImageLayout, IntPtr dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageCopy* pRegions)
+        private static void vkCmdCopyImage_Lazy(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageCopy* pRegions)
         {
-            _vkCmdCopyImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImage");
+            _vkCmdCopyImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImage");
             _vkCmdCopyImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageBlit*, VkFilter, void> _vkCmdBlitImage_fnptr = &vkCmdBlitImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageBlit*, VkFilter, void> _vkCmdBlitImage_fnptr = &vkCmdBlitImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBlitImage_Lazy(IntPtr commandBuffer, IntPtr srcImage, VkImageLayout srcImageLayout, IntPtr dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageBlit* pRegions, VkFilter filter)
+        private static void vkCmdBlitImage_Lazy(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageBlit* pRegions, VkFilter filter)
         {
-            _vkCmdBlitImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageBlit*, VkFilter, void>)VKLoader.GetInstanceProcAddress("vkCmdBlitImage");
+            _vkCmdBlitImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageBlit*, VkFilter, void>)VKLoader.GetInstanceProcAddress("vkCmdBlitImage");
             _vkCmdBlitImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions, filter);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkImageLayout, uint, VkBufferImageCopy*, void> _vkCmdCopyBufferToImage_fnptr = &vkCmdCopyBufferToImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, uint, VkBufferImageCopy*, void> _vkCmdCopyBufferToImage_fnptr = &vkCmdCopyBufferToImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyBufferToImage_Lazy(IntPtr commandBuffer, IntPtr srcBuffer, IntPtr dstImage, VkImageLayout dstImageLayout, uint regionCount, VkBufferImageCopy* pRegions)
+        private static void vkCmdCopyBufferToImage_Lazy(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkBufferImageCopy* pRegions)
         {
-            _vkCmdCopyBufferToImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkImageLayout, uint, VkBufferImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBufferToImage");
+            _vkCmdCopyBufferToImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, VkImage, VkImageLayout, uint, VkBufferImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBufferToImage");
             _vkCmdCopyBufferToImage_fnptr(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, pRegions);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, uint, VkBufferImageCopy*, void> _vkCmdCopyImageToBuffer_fnptr = &vkCmdCopyImageToBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, uint, VkBufferImageCopy*, void> _vkCmdCopyImageToBuffer_fnptr = &vkCmdCopyImageToBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyImageToBuffer_Lazy(IntPtr commandBuffer, IntPtr srcImage, VkImageLayout srcImageLayout, IntPtr dstBuffer, uint regionCount, VkBufferImageCopy* pRegions)
+        private static void vkCmdCopyImageToBuffer_Lazy(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkBuffer dstBuffer, uint regionCount, VkBufferImageCopy* pRegions)
         {
-            _vkCmdCopyImageToBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, uint, VkBufferImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImageToBuffer");
+            _vkCmdCopyImageToBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkBuffer, uint, VkBufferImageCopy*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImageToBuffer");
             _vkCmdCopyImageToBuffer_fnptr(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, pRegions);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, uint, uint, void> _vkCmdCopyMemoryIndirectNV_fnptr = &vkCmdCopyMemoryIndirectNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, uint, uint, void> _vkCmdCopyMemoryIndirectNV_fnptr = &vkCmdCopyMemoryIndirectNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMemoryIndirectNV_Lazy(IntPtr commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride)
+        private static void vkCmdCopyMemoryIndirectNV_Lazy(VkCommandBuffer commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride)
         {
-            _vkCmdCopyMemoryIndirectNV_fnptr = (delegate* unmanaged<IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryIndirectNV");
+            _vkCmdCopyMemoryIndirectNV_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryIndirectNV");
             _vkCmdCopyMemoryIndirectNV_fnptr(commandBuffer, copyBufferAddress, copyCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, uint, uint, IntPtr, VkImageLayout, VkImageSubresourceLayers*, void> _vkCmdCopyMemoryToImageIndirectNV_fnptr = &vkCmdCopyMemoryToImageIndirectNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, uint, uint, VkImage, VkImageLayout, VkImageSubresourceLayers*, void> _vkCmdCopyMemoryToImageIndirectNV_fnptr = &vkCmdCopyMemoryToImageIndirectNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMemoryToImageIndirectNV_Lazy(IntPtr commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride, IntPtr dstImage, VkImageLayout dstImageLayout, VkImageSubresourceLayers* pImageSubresources)
+        private static void vkCmdCopyMemoryToImageIndirectNV_Lazy(VkCommandBuffer commandBuffer, ulong copyBufferAddress, uint copyCount, uint stride, VkImage dstImage, VkImageLayout dstImageLayout, VkImageSubresourceLayers* pImageSubresources)
         {
-            _vkCmdCopyMemoryToImageIndirectNV_fnptr = (delegate* unmanaged<IntPtr, ulong, uint, uint, IntPtr, VkImageLayout, VkImageSubresourceLayers*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToImageIndirectNV");
+            _vkCmdCopyMemoryToImageIndirectNV_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, uint, uint, VkImage, VkImageLayout, VkImageSubresourceLayers*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToImageIndirectNV");
             _vkCmdCopyMemoryToImageIndirectNV_fnptr(commandBuffer, copyBufferAddress, copyCount, stride, dstImage, dstImageLayout, pImageSubresources);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, void*, void> _vkCmdUpdateBuffer_fnptr = &vkCmdUpdateBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, void*, void> _vkCmdUpdateBuffer_fnptr = &vkCmdUpdateBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdUpdateBuffer_Lazy(IntPtr commandBuffer, IntPtr dstBuffer, ulong dstOffset, ulong dataSize, void* pData)
+        private static void vkCmdUpdateBuffer_Lazy(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, ulong dstOffset, ulong dataSize, void* pData)
         {
-            _vkCmdUpdateBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdUpdateBuffer");
+            _vkCmdUpdateBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdUpdateBuffer");
             _vkCmdUpdateBuffer_fnptr(commandBuffer, dstBuffer, dstOffset, dataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, uint, void> _vkCmdFillBuffer_fnptr = &vkCmdFillBuffer_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, uint, void> _vkCmdFillBuffer_fnptr = &vkCmdFillBuffer_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdFillBuffer_Lazy(IntPtr commandBuffer, IntPtr dstBuffer, ulong dstOffset, ulong size, uint data)
+        private static void vkCmdFillBuffer_Lazy(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, ulong dstOffset, ulong size, uint data)
         {
-            _vkCmdFillBuffer_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdFillBuffer");
+            _vkCmdFillBuffer_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdFillBuffer");
             _vkCmdFillBuffer_fnptr(commandBuffer, dstBuffer, dstOffset, size, data);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearColorImage_fnptr = &vkCmdClearColorImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearColorImage_fnptr = &vkCmdClearColorImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdClearColorImage_Lazy(IntPtr commandBuffer, IntPtr image, VkImageLayout imageLayout, VkClearColorValue* pColor, uint rangeCount, VkImageSubresourceRange* pRanges)
+        private static void vkCmdClearColorImage_Lazy(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearColorValue* pColor, uint rangeCount, VkImageSubresourceRange* pRanges)
         {
-            _vkCmdClearColorImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearColorImage");
+            _vkCmdClearColorImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearColorValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearColorImage");
             _vkCmdClearColorImage_fnptr(commandBuffer, image, imageLayout, pColor, rangeCount, pRanges);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearDepthStencilImage_fnptr = &vkCmdClearDepthStencilImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void> _vkCmdClearDepthStencilImage_fnptr = &vkCmdClearDepthStencilImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdClearDepthStencilImage_Lazy(IntPtr commandBuffer, IntPtr image, VkImageLayout imageLayout, VkClearDepthStencilValue* pDepthStencil, uint rangeCount, VkImageSubresourceRange* pRanges)
+        private static void vkCmdClearDepthStencilImage_Lazy(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearDepthStencilValue* pDepthStencil, uint rangeCount, VkImageSubresourceRange* pRanges)
         {
-            _vkCmdClearDepthStencilImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearDepthStencilImage");
+            _vkCmdClearDepthStencilImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkClearDepthStencilValue*, uint, VkImageSubresourceRange*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearDepthStencilImage");
             _vkCmdClearDepthStencilImage_fnptr(commandBuffer, image, imageLayout, pDepthStencil, rangeCount, pRanges);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkClearAttachment*, uint, VkClearRect*, void> _vkCmdClearAttachments_fnptr = &vkCmdClearAttachments_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkClearAttachment*, uint, VkClearRect*, void> _vkCmdClearAttachments_fnptr = &vkCmdClearAttachments_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdClearAttachments_Lazy(IntPtr commandBuffer, uint attachmentCount, VkClearAttachment* pAttachments, uint rectCount, VkClearRect* pRects)
+        private static void vkCmdClearAttachments_Lazy(VkCommandBuffer commandBuffer, uint attachmentCount, VkClearAttachment* pAttachments, uint rectCount, VkClearRect* pRects)
         {
-            _vkCmdClearAttachments_fnptr = (delegate* unmanaged<IntPtr, uint, VkClearAttachment*, uint, VkClearRect*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearAttachments");
+            _vkCmdClearAttachments_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkClearAttachment*, uint, VkClearRect*, void>)VKLoader.GetInstanceProcAddress("vkCmdClearAttachments");
             _vkCmdClearAttachments_fnptr(commandBuffer, attachmentCount, pAttachments, rectCount, pRects);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageResolve*, void> _vkCmdResolveImage_fnptr = &vkCmdResolveImage_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageResolve*, void> _vkCmdResolveImage_fnptr = &vkCmdResolveImage_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResolveImage_Lazy(IntPtr commandBuffer, IntPtr srcImage, VkImageLayout srcImageLayout, IntPtr dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageResolve* pRegions)
+        private static void vkCmdResolveImage_Lazy(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint regionCount, VkImageResolve* pRegions)
         {
-            _vkCmdResolveImage_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, IntPtr, VkImageLayout, uint, VkImageResolve*, void>)VKLoader.GetInstanceProcAddress("vkCmdResolveImage");
+            _vkCmdResolveImage_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImage, VkImageLayout, VkImage, VkImageLayout, uint, VkImageResolve*, void>)VKLoader.GetInstanceProcAddress("vkCmdResolveImage");
             _vkCmdResolveImage_fnptr(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, pRegions);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlagBits, void> _vkCmdSetEvent_fnptr = &vkCmdSetEvent_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits, void> _vkCmdSetEvent_fnptr = &vkCmdSetEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetEvent_Lazy(IntPtr commandBuffer, IntPtr @event, VkPipelineStageFlagBits stageMask)
+        private static void vkCmdSetEvent_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits stageMask)
         {
-            _vkCmdSetEvent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetEvent");
+            _vkCmdSetEvent_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetEvent");
             _vkCmdSetEvent_fnptr(commandBuffer, @event, stageMask);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlagBits, void> _vkCmdResetEvent_fnptr = &vkCmdResetEvent_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits, void> _vkCmdResetEvent_fnptr = &vkCmdResetEvent_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResetEvent_Lazy(IntPtr commandBuffer, IntPtr @event, VkPipelineStageFlagBits stageMask)
+        private static void vkCmdResetEvent_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits stageMask)
         {
-            _vkCmdResetEvent_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent");
+            _vkCmdResetEvent_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent");
             _vkCmdResetEvent_fnptr(commandBuffer, @event, stageMask);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkPipelineStageFlagBits, VkPipelineStageFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void> _vkCmdWaitEvents_fnptr = &vkCmdWaitEvents_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkEvent*, VkPipelineStageFlagBits, VkPipelineStageFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void> _vkCmdWaitEvents_fnptr = &vkCmdWaitEvents_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWaitEvents_Lazy(IntPtr commandBuffer, uint eventCount, IntPtr* pEvents, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
+        private static void vkCmdWaitEvents_Lazy(VkCommandBuffer commandBuffer, uint eventCount, VkEvent* pEvents, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
         {
-            _vkCmdWaitEvents_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkPipelineStageFlagBits, VkPipelineStageFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void>)VKLoader.GetInstanceProcAddress("vkCmdWaitEvents");
+            _vkCmdWaitEvents_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkEvent*, VkPipelineStageFlagBits, VkPipelineStageFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void>)VKLoader.GetInstanceProcAddress("vkCmdWaitEvents");
             _vkCmdWaitEvents_fnptr(commandBuffer, eventCount, pEvents, srcStageMask, dstStageMask, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, VkPipelineStageFlagBits, VkDependencyFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void> _vkCmdPipelineBarrier_fnptr = &vkCmdPipelineBarrier_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkPipelineStageFlagBits, VkDependencyFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void> _vkCmdPipelineBarrier_fnptr = &vkCmdPipelineBarrier_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPipelineBarrier_Lazy(IntPtr commandBuffer, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, VkDependencyFlagBits dependencyFlags, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
+        private static void vkCmdPipelineBarrier_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits srcStageMask, VkPipelineStageFlagBits dstStageMask, VkDependencyFlagBits dependencyFlags, uint memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers)
         {
-            _vkCmdPipelineBarrier_fnptr = (delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, VkPipelineStageFlagBits, VkDependencyFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void>)VKLoader.GetInstanceProcAddress("vkCmdPipelineBarrier");
+            _vkCmdPipelineBarrier_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkPipelineStageFlagBits, VkDependencyFlagBits, uint, VkMemoryBarrier*, uint, VkBufferMemoryBarrier*, uint, VkImageMemoryBarrier*, void>)VKLoader.GetInstanceProcAddress("vkCmdPipelineBarrier");
             _vkCmdPipelineBarrier_fnptr(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, pMemoryBarriers, bufferMemoryBarrierCount, pBufferMemoryBarriers, imageMemoryBarrierCount, pImageMemoryBarriers);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkQueryControlFlagBits, void> _vkCmdBeginQuery_fnptr = &vkCmdBeginQuery_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, void> _vkCmdBeginQuery_fnptr = &vkCmdBeginQuery_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginQuery_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint query, VkQueryControlFlagBits flags)
+        private static void vkCmdBeginQuery_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags)
         {
-            _vkCmdBeginQuery_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkQueryControlFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginQuery");
+            _vkCmdBeginQuery_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginQuery");
             _vkCmdBeginQuery_fnptr(commandBuffer, queryPool, query, flags);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, void> _vkCmdEndQuery_fnptr = &vkCmdEndQuery_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void> _vkCmdEndQuery_fnptr = &vkCmdEndQuery_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndQuery_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint query)
+        private static void vkCmdEndQuery_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query)
         {
-            _vkCmdEndQuery_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdEndQuery");
+            _vkCmdEndQuery_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdEndQuery");
             _vkCmdEndQuery_fnptr(commandBuffer, queryPool, query);
         }
-        internal static delegate* unmanaged<IntPtr, VkConditionalRenderingBeginInfoEXT*, void> _vkCmdBeginConditionalRenderingEXT_fnptr = &vkCmdBeginConditionalRenderingEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkConditionalRenderingBeginInfoEXT*, void> _vkCmdBeginConditionalRenderingEXT_fnptr = &vkCmdBeginConditionalRenderingEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginConditionalRenderingEXT_Lazy(IntPtr commandBuffer, VkConditionalRenderingBeginInfoEXT* pConditionalRenderingBegin)
+        private static void vkCmdBeginConditionalRenderingEXT_Lazy(VkCommandBuffer commandBuffer, VkConditionalRenderingBeginInfoEXT* pConditionalRenderingBegin)
         {
-            _vkCmdBeginConditionalRenderingEXT_fnptr = (delegate* unmanaged<IntPtr, VkConditionalRenderingBeginInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginConditionalRenderingEXT");
+            _vkCmdBeginConditionalRenderingEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkConditionalRenderingBeginInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginConditionalRenderingEXT");
             _vkCmdBeginConditionalRenderingEXT_fnptr(commandBuffer, pConditionalRenderingBegin);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdEndConditionalRenderingEXT_fnptr = &vkCmdEndConditionalRenderingEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndConditionalRenderingEXT_fnptr = &vkCmdEndConditionalRenderingEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndConditionalRenderingEXT_Lazy(IntPtr commandBuffer)
+        private static void vkCmdEndConditionalRenderingEXT_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdEndConditionalRenderingEXT_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdEndConditionalRenderingEXT");
+            _vkCmdEndConditionalRenderingEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdEndConditionalRenderingEXT");
             _vkCmdEndConditionalRenderingEXT_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, void> _vkCmdResetQueryPool_fnptr = &vkCmdResetQueryPool_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void> _vkCmdResetQueryPool_fnptr = &vkCmdResetQueryPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResetQueryPool_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint firstQuery, uint queryCount)
+        private static void vkCmdResetQueryPool_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint firstQuery, uint queryCount)
         {
-            _vkCmdResetQueryPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdResetQueryPool");
+            _vkCmdResetQueryPool_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdResetQueryPool");
             _vkCmdResetQueryPool_fnptr(commandBuffer, queryPool, firstQuery, queryCount);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, IntPtr, uint, void> _vkCmdWriteTimestamp_fnptr = &vkCmdWriteTimestamp_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, uint, void> _vkCmdWriteTimestamp_fnptr = &vkCmdWriteTimestamp_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteTimestamp_Lazy(IntPtr commandBuffer, VkPipelineStageFlagBits pipelineStage, IntPtr queryPool, uint query)
+        private static void vkCmdWriteTimestamp_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkQueryPool queryPool, uint query)
         {
-            _vkCmdWriteTimestamp_fnptr = (delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp");
+            _vkCmdWriteTimestamp_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp");
             _vkCmdWriteTimestamp_fnptr(commandBuffer, pipelineStage, queryPool, query);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, IntPtr, ulong, ulong, VkQueryResultFlagBits, void> _vkCmdCopyQueryPoolResults_fnptr = &vkCmdCopyQueryPoolResults_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, VkBuffer, ulong, ulong, VkQueryResultFlagBits, void> _vkCmdCopyQueryPoolResults_fnptr = &vkCmdCopyQueryPoolResults_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyQueryPoolResults_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint firstQuery, uint queryCount, IntPtr dstBuffer, ulong dstOffset, ulong stride, VkQueryResultFlagBits flags)
+        private static void vkCmdCopyQueryPoolResults_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint firstQuery, uint queryCount, VkBuffer dstBuffer, ulong dstOffset, ulong stride, VkQueryResultFlagBits flags)
         {
-            _vkCmdCopyQueryPoolResults_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, IntPtr, ulong, ulong, VkQueryResultFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyQueryPoolResults");
+            _vkCmdCopyQueryPoolResults_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, VkBuffer, ulong, ulong, VkQueryResultFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyQueryPoolResults");
             _vkCmdCopyQueryPoolResults_fnptr(commandBuffer, queryPool, firstQuery, queryCount, dstBuffer, dstOffset, stride, flags);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkShaderStageFlagBits, uint, uint, void*, void> _vkCmdPushConstants_fnptr = &vkCmdPushConstants_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineLayout, VkShaderStageFlagBits, uint, uint, void*, void> _vkCmdPushConstants_fnptr = &vkCmdPushConstants_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushConstants_Lazy(IntPtr commandBuffer, IntPtr layout, VkShaderStageFlagBits stageFlags, uint offset, uint size, void* pValues)
+        private static void vkCmdPushConstants_Lazy(VkCommandBuffer commandBuffer, VkPipelineLayout layout, VkShaderStageFlagBits stageFlags, uint offset, uint size, void* pValues)
         {
-            _vkCmdPushConstants_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkShaderStageFlagBits, uint, uint, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushConstants");
+            _vkCmdPushConstants_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineLayout, VkShaderStageFlagBits, uint, uint, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushConstants");
             _vkCmdPushConstants_fnptr(commandBuffer, layout, stageFlags, offset, size, pValues);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderPassBeginInfo*, VkSubpassContents, void> _vkCmdBeginRenderPass_fnptr = &vkCmdBeginRenderPass_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRenderPassBeginInfo*, VkSubpassContents, void> _vkCmdBeginRenderPass_fnptr = &vkCmdBeginRenderPass_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginRenderPass_Lazy(IntPtr commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassContents contents)
+        private static void vkCmdBeginRenderPass_Lazy(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassContents contents)
         {
-            _vkCmdBeginRenderPass_fnptr = (delegate* unmanaged<IntPtr, VkRenderPassBeginInfo*, VkSubpassContents, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRenderPass");
+            _vkCmdBeginRenderPass_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderPassBeginInfo*, VkSubpassContents, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRenderPass");
             _vkCmdBeginRenderPass_fnptr(commandBuffer, pRenderPassBegin, contents);
         }
-        internal static delegate* unmanaged<IntPtr, VkSubpassContents, void> _vkCmdNextSubpass_fnptr = &vkCmdNextSubpass_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSubpassContents, void> _vkCmdNextSubpass_fnptr = &vkCmdNextSubpass_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdNextSubpass_Lazy(IntPtr commandBuffer, VkSubpassContents contents)
+        private static void vkCmdNextSubpass_Lazy(VkCommandBuffer commandBuffer, VkSubpassContents contents)
         {
-            _vkCmdNextSubpass_fnptr = (delegate* unmanaged<IntPtr, VkSubpassContents, void>)VKLoader.GetInstanceProcAddress("vkCmdNextSubpass");
+            _vkCmdNextSubpass_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSubpassContents, void>)VKLoader.GetInstanceProcAddress("vkCmdNextSubpass");
             _vkCmdNextSubpass_fnptr(commandBuffer, contents);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdEndRenderPass_fnptr = &vkCmdEndRenderPass_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRenderPass_fnptr = &vkCmdEndRenderPass_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndRenderPass_Lazy(IntPtr commandBuffer)
+        private static void vkCmdEndRenderPass_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdEndRenderPass_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRenderPass");
+            _vkCmdEndRenderPass_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRenderPass");
             _vkCmdEndRenderPass_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, void> _vkCmdExecuteCommands_fnptr = &vkCmdExecuteCommands_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkCommandBuffer*, void> _vkCmdExecuteCommands_fnptr = &vkCmdExecuteCommands_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdExecuteCommands_Lazy(IntPtr commandBuffer, uint commandBufferCount, IntPtr* pCommandBuffers)
+        private static void vkCmdExecuteCommands_Lazy(VkCommandBuffer commandBuffer, uint commandBufferCount, VkCommandBuffer* pCommandBuffers)
         {
-            _vkCmdExecuteCommands_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, void>)VKLoader.GetInstanceProcAddress("vkCmdExecuteCommands");
+            _vkCmdExecuteCommands_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkCommandBuffer*, void>)VKLoader.GetInstanceProcAddress("vkCmdExecuteCommands");
             _vkCmdExecuteCommands_fnptr(commandBuffer, commandBufferCount, pCommandBuffers);
         }
-        internal static delegate* unmanaged<IntPtr, VkAndroidSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateAndroidSurfaceKHR_fnptr = &vkCreateAndroidSurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkAndroidSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateAndroidSurfaceKHR_fnptr = &vkCreateAndroidSurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateAndroidSurfaceKHR_Lazy(IntPtr instance, VkAndroidSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateAndroidSurfaceKHR_Lazy(VkInstance instance, VkAndroidSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateAndroidSurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkAndroidSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAndroidSurfaceKHR");
+            _vkCreateAndroidSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkAndroidSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAndroidSurfaceKHR");
             return _vkCreateAndroidSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkDisplayPropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr = &vkGetPhysicalDeviceDisplayPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr = &vkGetPhysicalDeviceDisplayPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceDisplayPropertiesKHR_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkDisplayPropertiesKHR* pProperties)
+        private static VkResult vkGetPhysicalDeviceDisplayPropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPropertiesKHR* pProperties)
         {
-            _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkDisplayPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPropertiesKHR");
+            _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPropertiesKHR");
             return _vkGetPhysicalDeviceDisplayPropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkDisplayPlanePropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = &vkGetPhysicalDeviceDisplayPlanePropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult> _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = &vkGetPhysicalDeviceDisplayPlanePropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkDisplayPlanePropertiesKHR* pProperties)
+        private static VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPlanePropertiesKHR* pProperties)
         {
-            _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkDisplayPlanePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
+            _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlanePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
             return _vkGetPhysicalDeviceDisplayPlanePropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint*, IntPtr*, VkResult> _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr = &vkGetDisplayPlaneSupportedDisplaysKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkDisplayKHR*, VkResult> _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr = &vkGetDisplayPlaneSupportedDisplaysKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDisplayPlaneSupportedDisplaysKHR_Lazy(IntPtr physicalDevice, uint planeIndex, uint* pDisplayCount, IntPtr* pDisplays)
+        private static VkResult vkGetDisplayPlaneSupportedDisplaysKHR_Lazy(VkPhysicalDevice physicalDevice, uint planeIndex, uint* pDisplayCount, VkDisplayKHR* pDisplays)
         {
-            _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr = (delegate* unmanaged<IntPtr, uint, uint*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneSupportedDisplaysKHR");
+            _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneSupportedDisplaysKHR");
             return _vkGetDisplayPlaneSupportedDisplaysKHR_fnptr(physicalDevice, planeIndex, pDisplayCount, pDisplays);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkDisplayModePropertiesKHR*, VkResult> _vkGetDisplayModePropertiesKHR_fnptr = &vkGetDisplayModePropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, uint*, VkDisplayModePropertiesKHR*, VkResult> _vkGetDisplayModePropertiesKHR_fnptr = &vkGetDisplayModePropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDisplayModePropertiesKHR_Lazy(IntPtr physicalDevice, IntPtr display, uint* pPropertyCount, VkDisplayModePropertiesKHR* pProperties)
+        private static VkResult vkGetDisplayModePropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint* pPropertyCount, VkDisplayModePropertiesKHR* pProperties)
         {
-            _vkGetDisplayModePropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkDisplayModePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayModePropertiesKHR");
+            _vkGetDisplayModePropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, uint*, VkDisplayModePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayModePropertiesKHR");
             return _vkGetDisplayModePropertiesKHR_fnptr(physicalDevice, display, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDisplayModeCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDisplayModeKHR_fnptr = &vkCreateDisplayModeKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkDisplayModeCreateInfoKHR*, VkAllocationCallbacks*, VkDisplayModeKHR*, VkResult> _vkCreateDisplayModeKHR_fnptr = &vkCreateDisplayModeKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDisplayModeKHR_Lazy(IntPtr physicalDevice, IntPtr display, VkDisplayModeCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pMode)
+        private static VkResult vkCreateDisplayModeKHR_Lazy(VkPhysicalDevice physicalDevice, VkDisplayKHR display, VkDisplayModeCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDisplayModeKHR* pMode)
         {
-            _vkCreateDisplayModeKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDisplayModeCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDisplayModeKHR");
+            _vkCreateDisplayModeKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkDisplayModeCreateInfoKHR*, VkAllocationCallbacks*, VkDisplayModeKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDisplayModeKHR");
             return _vkCreateDisplayModeKHR_fnptr(physicalDevice, display, pCreateInfo, pAllocator, pMode);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult> _vkGetDisplayPlaneCapabilitiesKHR_fnptr = &vkGetDisplayPlaneCapabilitiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayModeKHR, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult> _vkGetDisplayPlaneCapabilitiesKHR_fnptr = &vkGetDisplayPlaneCapabilitiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDisplayPlaneCapabilitiesKHR_Lazy(IntPtr physicalDevice, IntPtr mode, uint planeIndex, VkDisplayPlaneCapabilitiesKHR* pCapabilities)
+        private static VkResult vkGetDisplayPlaneCapabilitiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkDisplayModeKHR mode, uint planeIndex, VkDisplayPlaneCapabilitiesKHR* pCapabilities)
         {
-            _vkGetDisplayPlaneCapabilitiesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneCapabilitiesKHR");
+            _vkGetDisplayPlaneCapabilitiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayModeKHR, uint, VkDisplayPlaneCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneCapabilitiesKHR");
             return _vkGetDisplayPlaneCapabilitiesKHR_fnptr(physicalDevice, mode, planeIndex, pCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, VkDisplaySurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDisplayPlaneSurfaceKHR_fnptr = &vkCreateDisplayPlaneSurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDisplaySurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateDisplayPlaneSurfaceKHR_fnptr = &vkCreateDisplayPlaneSurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDisplayPlaneSurfaceKHR_Lazy(IntPtr instance, VkDisplaySurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateDisplayPlaneSurfaceKHR_Lazy(VkInstance instance, VkDisplaySurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateDisplayPlaneSurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkDisplaySurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDisplayPlaneSurfaceKHR");
+            _vkCreateDisplayPlaneSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkDisplaySurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDisplayPlaneSurfaceKHR");
             return _vkCreateDisplayPlaneSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSharedSwapchainsKHR_fnptr = &vkCreateSharedSwapchainsKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult> _vkCreateSharedSwapchainsKHR_fnptr = &vkCreateSharedSwapchainsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSharedSwapchainsKHR_Lazy(IntPtr device, uint swapchainCount, VkSwapchainCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pSwapchains)
+        private static VkResult vkCreateSharedSwapchainsKHR_Lazy(VkDevice device, uint swapchainCount, VkSwapchainCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchains)
         {
-            _vkCreateSharedSwapchainsKHR_fnptr = (delegate* unmanaged<IntPtr, uint, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSharedSwapchainsKHR");
+            _vkCreateSharedSwapchainsKHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSharedSwapchainsKHR");
             return _vkCreateSharedSwapchainsKHR_fnptr(device, swapchainCount, pCreateInfos, pAllocator, pSwapchains);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySurfaceKHR_fnptr = &vkDestroySurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkSurfaceKHR, VkAllocationCallbacks*, void> _vkDestroySurfaceKHR_fnptr = &vkDestroySurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySurfaceKHR_Lazy(IntPtr instance, IntPtr surface, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySurfaceKHR_Lazy(VkInstance instance, VkSurfaceKHR surface, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySurfaceKHR");
+            _vkDestroySurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkSurfaceKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySurfaceKHR");
             _vkDestroySurfaceKHR_fnptr(instance, surface, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, int*, VkResult> _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr = &vkGetPhysicalDeviceSurfaceSupportKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, VkSurfaceKHR, int*, VkResult> _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr = &vkGetPhysicalDeviceSurfaceSupportKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceSupportKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr surface, int* pSupported)
+        private static VkResult vkGetPhysicalDeviceSurfaceSupportKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, VkSurfaceKHR surface, int* pSupported)
         {
-            _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceSupportKHR");
+            _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, VkSurfaceKHR, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceSupportKHR");
             return _vkGetPhysicalDeviceSurfaceSupportKHR_fnptr(physicalDevice, queueFamilyIndex, surface, pSupported);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCapabilitiesKHR*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr = &vkGetPhysicalDeviceSurfaceCapabilitiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, VkSurfaceCapabilitiesKHR*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr = &vkGetPhysicalDeviceSurfaceCapabilitiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR_Lazy(IntPtr physicalDevice, IntPtr surface, VkSurfaceCapabilitiesKHR* pSurfaceCapabilities)
+        private static VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilitiesKHR* pSurfaceCapabilities)
         {
-            _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
+            _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, VkSurfaceCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilitiesKHR");
             return _vkGetPhysicalDeviceSurfaceCapabilitiesKHR_fnptr(physicalDevice, surface, pSurfaceCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkSurfaceFormatKHR*, VkResult> _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr = &vkGetPhysicalDeviceSurfaceFormatsKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkSurfaceFormatKHR*, VkResult> _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr = &vkGetPhysicalDeviceSurfaceFormatsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceFormatsKHR_Lazy(IntPtr physicalDevice, IntPtr surface, uint* pSurfaceFormatCount, VkSurfaceFormatKHR* pSurfaceFormats)
+        private static VkResult vkGetPhysicalDeviceSurfaceFormatsKHR_Lazy(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pSurfaceFormatCount, VkSurfaceFormatKHR* pSurfaceFormats)
         {
-            _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkSurfaceFormatKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceFormatsKHR");
+            _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkSurfaceFormatKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceFormatsKHR");
             return _vkGetPhysicalDeviceSurfaceFormatsKHR_fnptr(physicalDevice, surface, pSurfaceFormatCount, pSurfaceFormats);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkPresentModeKHR*, VkResult> _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr = &vkGetPhysicalDeviceSurfacePresentModesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkPresentModeKHR*, VkResult> _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr = &vkGetPhysicalDeviceSurfacePresentModesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfacePresentModesKHR_Lazy(IntPtr physicalDevice, IntPtr surface, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
+        private static VkResult vkGetPhysicalDeviceSurfacePresentModesKHR_Lazy(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
         {
-            _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkPresentModeKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfacePresentModesKHR");
+            _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkPresentModeKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfacePresentModesKHR");
             return _vkGetPhysicalDeviceSurfacePresentModesKHR_fnptr(physicalDevice, surface, pPresentModeCount, pPresentModes);
         }
-        internal static delegate* unmanaged<IntPtr, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSwapchainKHR_fnptr = &vkCreateSwapchainKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult> _vkCreateSwapchainKHR_fnptr = &vkCreateSwapchainKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSwapchainKHR_Lazy(IntPtr device, VkSwapchainCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSwapchain)
+        private static VkResult vkCreateSwapchainKHR_Lazy(VkDevice device, VkSwapchainCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchain)
         {
-            _vkCreateSwapchainKHR_fnptr = (delegate* unmanaged<IntPtr, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSwapchainKHR");
+            _vkCreateSwapchainKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainCreateInfoKHR*, VkAllocationCallbacks*, VkSwapchainKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSwapchainKHR");
             return _vkCreateSwapchainKHR_fnptr(device, pCreateInfo, pAllocator, pSwapchain);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySwapchainKHR_fnptr = &vkDestroySwapchainKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkAllocationCallbacks*, void> _vkDestroySwapchainKHR_fnptr = &vkDestroySwapchainKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySwapchainKHR_Lazy(IntPtr device, IntPtr swapchain, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySwapchainKHR_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySwapchainKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySwapchainKHR");
+            _vkDestroySwapchainKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySwapchainKHR");
             _vkDestroySwapchainKHR_fnptr(device, swapchain, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, IntPtr*, VkResult> _vkGetSwapchainImagesKHR_fnptr = &vkGetSwapchainImagesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkImage*, VkResult> _vkGetSwapchainImagesKHR_fnptr = &vkGetSwapchainImagesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSwapchainImagesKHR_Lazy(IntPtr device, IntPtr swapchain, uint* pSwapchainImageCount, IntPtr* pSwapchainImages)
+        private static VkResult vkGetSwapchainImagesKHR_Lazy(VkDevice device, VkSwapchainKHR swapchain, uint* pSwapchainImageCount, VkImage* pSwapchainImages)
         {
-            _vkGetSwapchainImagesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainImagesKHR");
+            _vkGetSwapchainImagesKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkImage*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainImagesKHR");
             return _vkGetSwapchainImagesKHR_fnptr(device, swapchain, pSwapchainImageCount, pSwapchainImages);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, IntPtr, uint*, VkResult> _vkAcquireNextImageKHR_fnptr = &vkAcquireNextImageKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, ulong, VkSemaphore, VkFence, uint*, VkResult> _vkAcquireNextImageKHR_fnptr = &vkAcquireNextImageKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireNextImageKHR_Lazy(IntPtr device, IntPtr swapchain, ulong timeout, IntPtr semaphore, IntPtr fence, uint* pImageIndex)
+        private static VkResult vkAcquireNextImageKHR_Lazy(VkDevice device, VkSwapchainKHR swapchain, ulong timeout, VkSemaphore semaphore, VkFence fence, uint* pImageIndex)
         {
-            _vkAcquireNextImageKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, IntPtr, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireNextImageKHR");
+            _vkAcquireNextImageKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, ulong, VkSemaphore, VkFence, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireNextImageKHR");
             return _vkAcquireNextImageKHR_fnptr(device, swapchain, timeout, semaphore, fence, pImageIndex);
         }
-        internal static delegate* unmanaged<IntPtr, VkPresentInfoKHR*, VkResult> _vkQueuePresentKHR_fnptr = &vkQueuePresentKHR_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkPresentInfoKHR*, VkResult> _vkQueuePresentKHR_fnptr = &vkQueuePresentKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueuePresentKHR_Lazy(IntPtr queue, VkPresentInfoKHR* pPresentInfo)
+        private static VkResult vkQueuePresentKHR_Lazy(VkQueue queue, VkPresentInfoKHR* pPresentInfo)
         {
-            _vkQueuePresentKHR_fnptr = (delegate* unmanaged<IntPtr, VkPresentInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkQueuePresentKHR");
+            _vkQueuePresentKHR_fnptr = (delegate* unmanaged<VkQueue, VkPresentInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkQueuePresentKHR");
             return _vkQueuePresentKHR_fnptr(queue, pPresentInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateViSurfaceNN_fnptr = &vkCreateViSurfaceNN_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateViSurfaceNN_fnptr = &vkCreateViSurfaceNN_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateViSurfaceNN_Lazy(IntPtr instance, VkViSurfaceCreateInfoNN* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateViSurfaceNN_Lazy(VkInstance instance, VkViSurfaceCreateInfoNN* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateViSurfaceNN_fnptr = (delegate* unmanaged<IntPtr, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateViSurfaceNN");
+            _vkCreateViSurfaceNN_fnptr = (delegate* unmanaged<VkInstance, VkViSurfaceCreateInfoNN*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateViSurfaceNN");
             return _vkCreateViSurfaceNN_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateWaylandSurfaceKHR_fnptr = &vkCreateWaylandSurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateWaylandSurfaceKHR_fnptr = &vkCreateWaylandSurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateWaylandSurfaceKHR_Lazy(IntPtr instance, VkWaylandSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateWaylandSurfaceKHR_Lazy(VkInstance instance, VkWaylandSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateWaylandSurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateWaylandSurfaceKHR");
+            _vkCreateWaylandSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkWaylandSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateWaylandSurfaceKHR");
             return _vkCreateWaylandSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, int> _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceWaylandPresentationSupportKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int> _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceWaylandPresentationSupportKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceWaylandPresentationSupportKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr display)
+        private static int vkGetPhysicalDeviceWaylandPresentationSupportKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr display)
         {
-            _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceWaylandPresentationSupportKHR");
+            _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceWaylandPresentationSupportKHR");
             return _vkGetPhysicalDeviceWaylandPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, display);
         }
-        internal static delegate* unmanaged<IntPtr, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateWin32SurfaceKHR_fnptr = &vkCreateWin32SurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateWin32SurfaceKHR_fnptr = &vkCreateWin32SurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateWin32SurfaceKHR_Lazy(IntPtr instance, VkWin32SurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateWin32SurfaceKHR_Lazy(VkInstance instance, VkWin32SurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateWin32SurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateWin32SurfaceKHR");
+            _vkCreateWin32SurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkWin32SurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateWin32SurfaceKHR");
             return _vkCreateWin32SurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, int> _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr = &vkGetPhysicalDeviceWin32PresentationSupportKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, int> _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr = &vkGetPhysicalDeviceWin32PresentationSupportKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceWin32PresentationSupportKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex)
+        private static int vkGetPhysicalDeviceWin32PresentationSupportKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex)
         {
-            _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr = (delegate* unmanaged<IntPtr, uint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceWin32PresentationSupportKHR");
+            _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceWin32PresentationSupportKHR");
             return _vkGetPhysicalDeviceWin32PresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex);
         }
-        internal static delegate* unmanaged<IntPtr, VkXlibSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateXlibSurfaceKHR_fnptr = &vkCreateXlibSurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkXlibSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateXlibSurfaceKHR_fnptr = &vkCreateXlibSurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateXlibSurfaceKHR_Lazy(IntPtr instance, VkXlibSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateXlibSurfaceKHR_Lazy(VkInstance instance, VkXlibSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateXlibSurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkXlibSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateXlibSurfaceKHR");
+            _vkCreateXlibSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkXlibSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateXlibSurfaceKHR");
             return _vkCreateXlibSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, nuint, int> _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceXlibPresentationSupportKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, nuint, int> _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceXlibPresentationSupportKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceXlibPresentationSupportKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr dpy, nuint visualID)
+        private static int vkGetPhysicalDeviceXlibPresentationSupportKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr dpy, nuint visualID)
         {
-            _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, nuint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceXlibPresentationSupportKHR");
+            _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, nuint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceXlibPresentationSupportKHR");
             return _vkGetPhysicalDeviceXlibPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, dpy, visualID);
         }
-        internal static delegate* unmanaged<IntPtr, VkXcbSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateXcbSurfaceKHR_fnptr = &vkCreateXcbSurfaceKHR_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkXcbSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateXcbSurfaceKHR_fnptr = &vkCreateXcbSurfaceKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateXcbSurfaceKHR_Lazy(IntPtr instance, VkXcbSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateXcbSurfaceKHR_Lazy(VkInstance instance, VkXcbSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateXcbSurfaceKHR_fnptr = (delegate* unmanaged<IntPtr, VkXcbSurfaceCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateXcbSurfaceKHR");
+            _vkCreateXcbSurfaceKHR_fnptr = (delegate* unmanaged<VkInstance, VkXcbSurfaceCreateInfoKHR*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateXcbSurfaceKHR");
             return _vkCreateXcbSurfaceKHR_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, uint, int> _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceXcbPresentationSupportKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, uint, int> _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr = &vkGetPhysicalDeviceXcbPresentationSupportKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceXcbPresentationSupportKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr connection, uint visual_id)
+        private static int vkGetPhysicalDeviceXcbPresentationSupportKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr connection, uint visual_id)
         {
-            _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, uint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceXcbPresentationSupportKHR");
+            _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, uint, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceXcbPresentationSupportKHR");
             return _vkGetPhysicalDeviceXcbPresentationSupportKHR_fnptr(physicalDevice, queueFamilyIndex, connection, visual_id);
         }
-        internal static delegate* unmanaged<IntPtr, VkDirectFBSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDirectFBSurfaceEXT_fnptr = &vkCreateDirectFBSurfaceEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDirectFBSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateDirectFBSurfaceEXT_fnptr = &vkCreateDirectFBSurfaceEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDirectFBSurfaceEXT_Lazy(IntPtr instance, VkDirectFBSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateDirectFBSurfaceEXT_Lazy(VkInstance instance, VkDirectFBSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateDirectFBSurfaceEXT_fnptr = (delegate* unmanaged<IntPtr, VkDirectFBSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDirectFBSurfaceEXT");
+            _vkCreateDirectFBSurfaceEXT_fnptr = (delegate* unmanaged<VkInstance, VkDirectFBSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDirectFBSurfaceEXT");
             return _vkCreateDirectFBSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, int> _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = &vkGetPhysicalDeviceDirectFBPresentationSupportEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int> _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = &vkGetPhysicalDeviceDirectFBPresentationSupportEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceDirectFBPresentationSupportEXT_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr dfb)
+        private static int vkGetPhysicalDeviceDirectFBPresentationSupportEXT_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr dfb)
         {
-            _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
+            _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDirectFBPresentationSupportEXT");
             return _vkGetPhysicalDeviceDirectFBPresentationSupportEXT_fnptr(physicalDevice, queueFamilyIndex, dfb);
         }
-        internal static delegate* unmanaged<IntPtr, VkImagePipeSurfaceCreateInfoFUCHSIA*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateImagePipeSurfaceFUCHSIA_fnptr = &vkCreateImagePipeSurfaceFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkImagePipeSurfaceCreateInfoFUCHSIA*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateImagePipeSurfaceFUCHSIA_fnptr = &vkCreateImagePipeSurfaceFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateImagePipeSurfaceFUCHSIA_Lazy(IntPtr instance, VkImagePipeSurfaceCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateImagePipeSurfaceFUCHSIA_Lazy(VkInstance instance, VkImagePipeSurfaceCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateImagePipeSurfaceFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkImagePipeSurfaceCreateInfoFUCHSIA*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImagePipeSurfaceFUCHSIA");
+            _vkCreateImagePipeSurfaceFUCHSIA_fnptr = (delegate* unmanaged<VkInstance, VkImagePipeSurfaceCreateInfoFUCHSIA*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateImagePipeSurfaceFUCHSIA");
             return _vkCreateImagePipeSurfaceFUCHSIA_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateStreamDescriptorSurfaceGGP_fnptr = &vkCreateStreamDescriptorSurfaceGGP_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateStreamDescriptorSurfaceGGP_fnptr = &vkCreateStreamDescriptorSurfaceGGP_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateStreamDescriptorSurfaceGGP_Lazy(IntPtr instance, VkStreamDescriptorSurfaceCreateInfoGGP* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateStreamDescriptorSurfaceGGP_Lazy(VkInstance instance, VkStreamDescriptorSurfaceCreateInfoGGP* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateStreamDescriptorSurfaceGGP_fnptr = (delegate* unmanaged<IntPtr, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateStreamDescriptorSurfaceGGP");
+            _vkCreateStreamDescriptorSurfaceGGP_fnptr = (delegate* unmanaged<VkInstance, VkStreamDescriptorSurfaceCreateInfoGGP*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateStreamDescriptorSurfaceGGP");
             return _vkCreateStreamDescriptorSurfaceGGP_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateScreenSurfaceQNX_fnptr = &vkCreateScreenSurfaceQNX_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateScreenSurfaceQNX_fnptr = &vkCreateScreenSurfaceQNX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateScreenSurfaceQNX_Lazy(IntPtr instance, VkScreenSurfaceCreateInfoQNX* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateScreenSurfaceQNX_Lazy(VkInstance instance, VkScreenSurfaceCreateInfoQNX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateScreenSurfaceQNX_fnptr = (delegate* unmanaged<IntPtr, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateScreenSurfaceQNX");
+            _vkCreateScreenSurfaceQNX_fnptr = (delegate* unmanaged<VkInstance, VkScreenSurfaceCreateInfoQNX*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateScreenSurfaceQNX");
             return _vkCreateScreenSurfaceQNX_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, int> _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr = &vkGetPhysicalDeviceScreenPresentationSupportQNX_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, IntPtr*, int> _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr = &vkGetPhysicalDeviceScreenPresentationSupportQNX_Lazy;
         [UnmanagedCallersOnly]
-        private static int vkGetPhysicalDeviceScreenPresentationSupportQNX_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, IntPtr* window)
+        private static int vkGetPhysicalDeviceScreenPresentationSupportQNX_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, IntPtr* window)
         {
-            _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceScreenPresentationSupportQNX");
+            _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, IntPtr*, int>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceScreenPresentationSupportQNX");
             return _vkGetPhysicalDeviceScreenPresentationSupportQNX_fnptr(physicalDevice, queueFamilyIndex, window);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugReportCallbackCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDebugReportCallbackEXT_fnptr = &vkCreateDebugReportCallbackEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugReportCallbackCreateInfoEXT*, VkAllocationCallbacks*, VkDebugReportCallbackEXT*, VkResult> _vkCreateDebugReportCallbackEXT_fnptr = &vkCreateDebugReportCallbackEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDebugReportCallbackEXT_Lazy(IntPtr instance, VkDebugReportCallbackCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pCallback)
+        private static VkResult vkCreateDebugReportCallbackEXT_Lazy(VkInstance instance, VkDebugReportCallbackCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugReportCallbackEXT* pCallback)
         {
-            _vkCreateDebugReportCallbackEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugReportCallbackCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDebugReportCallbackEXT");
+            _vkCreateDebugReportCallbackEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugReportCallbackCreateInfoEXT*, VkAllocationCallbacks*, VkDebugReportCallbackEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDebugReportCallbackEXT");
             return _vkCreateDebugReportCallbackEXT_fnptr(instance, pCreateInfo, pAllocator, pCallback);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDebugReportCallbackEXT_fnptr = &vkDestroyDebugReportCallbackEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugReportCallbackEXT, VkAllocationCallbacks*, void> _vkDestroyDebugReportCallbackEXT_fnptr = &vkDestroyDebugReportCallbackEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDebugReportCallbackEXT_Lazy(IntPtr instance, IntPtr callback, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDebugReportCallbackEXT_Lazy(VkInstance instance, VkDebugReportCallbackEXT callback, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDebugReportCallbackEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDebugReportCallbackEXT");
+            _vkDestroyDebugReportCallbackEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugReportCallbackEXT, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDebugReportCallbackEXT");
             _vkDestroyDebugReportCallbackEXT_fnptr(instance, callback, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void> _vkDebugReportMessageEXT_fnptr = &vkDebugReportMessageEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void> _vkDebugReportMessageEXT_fnptr = &vkDebugReportMessageEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDebugReportMessageEXT_Lazy(IntPtr instance, VkDebugReportFlagBitsEXT flags, VkDebugReportObjectTypeEXT objectType, ulong obj, nuint location, int messageCode, byte* pLayerPrefix, byte* pMessage)
+        private static void vkDebugReportMessageEXT_Lazy(VkInstance instance, VkDebugReportFlagBitsEXT flags, VkDebugReportObjectTypeEXT objectType, ulong obj, nuint location, int messageCode, byte* pLayerPrefix, byte* pMessage)
         {
-            _vkDebugReportMessageEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void>)VKLoader.GetInstanceProcAddress("vkDebugReportMessageEXT");
+            _vkDebugReportMessageEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void>)VKLoader.GetInstanceProcAddress("vkDebugReportMessageEXT");
             _vkDebugReportMessageEXT_fnptr(instance, flags, objectType, obj, location, messageCode, pLayerPrefix, pMessage);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugMarkerObjectNameInfoEXT*, VkResult> _vkDebugMarkerSetObjectNameEXT_fnptr = &vkDebugMarkerSetObjectNameEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDebugMarkerObjectNameInfoEXT*, VkResult> _vkDebugMarkerSetObjectNameEXT_fnptr = &vkDebugMarkerSetObjectNameEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkDebugMarkerSetObjectNameEXT_Lazy(IntPtr device, VkDebugMarkerObjectNameInfoEXT* pNameInfo)
+        private static VkResult vkDebugMarkerSetObjectNameEXT_Lazy(VkDevice device, VkDebugMarkerObjectNameInfoEXT* pNameInfo)
         {
-            _vkDebugMarkerSetObjectNameEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugMarkerObjectNameInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDebugMarkerSetObjectNameEXT");
+            _vkDebugMarkerSetObjectNameEXT_fnptr = (delegate* unmanaged<VkDevice, VkDebugMarkerObjectNameInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDebugMarkerSetObjectNameEXT");
             return _vkDebugMarkerSetObjectNameEXT_fnptr(device, pNameInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugMarkerObjectTagInfoEXT*, VkResult> _vkDebugMarkerSetObjectTagEXT_fnptr = &vkDebugMarkerSetObjectTagEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDebugMarkerObjectTagInfoEXT*, VkResult> _vkDebugMarkerSetObjectTagEXT_fnptr = &vkDebugMarkerSetObjectTagEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkDebugMarkerSetObjectTagEXT_Lazy(IntPtr device, VkDebugMarkerObjectTagInfoEXT* pTagInfo)
+        private static VkResult vkDebugMarkerSetObjectTagEXT_Lazy(VkDevice device, VkDebugMarkerObjectTagInfoEXT* pTagInfo)
         {
-            _vkDebugMarkerSetObjectTagEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugMarkerObjectTagInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDebugMarkerSetObjectTagEXT");
+            _vkDebugMarkerSetObjectTagEXT_fnptr = (delegate* unmanaged<VkDevice, VkDebugMarkerObjectTagInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDebugMarkerSetObjectTagEXT");
             return _vkDebugMarkerSetObjectTagEXT_fnptr(device, pTagInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugMarkerMarkerInfoEXT*, void> _vkCmdDebugMarkerBeginEXT_fnptr = &vkCmdDebugMarkerBeginEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDebugMarkerMarkerInfoEXT*, void> _vkCmdDebugMarkerBeginEXT_fnptr = &vkCmdDebugMarkerBeginEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDebugMarkerBeginEXT_Lazy(IntPtr commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
+        private static void vkCmdDebugMarkerBeginEXT_Lazy(VkCommandBuffer commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
         {
-            _vkCmdDebugMarkerBeginEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugMarkerMarkerInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerBeginEXT");
+            _vkCmdDebugMarkerBeginEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugMarkerMarkerInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerBeginEXT");
             _vkCmdDebugMarkerBeginEXT_fnptr(commandBuffer, pMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdDebugMarkerEndEXT_fnptr = &vkCmdDebugMarkerEndEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdDebugMarkerEndEXT_fnptr = &vkCmdDebugMarkerEndEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDebugMarkerEndEXT_Lazy(IntPtr commandBuffer)
+        private static void vkCmdDebugMarkerEndEXT_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdDebugMarkerEndEXT_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerEndEXT");
+            _vkCmdDebugMarkerEndEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerEndEXT");
             _vkCmdDebugMarkerEndEXT_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugMarkerMarkerInfoEXT*, void> _vkCmdDebugMarkerInsertEXT_fnptr = &vkCmdDebugMarkerInsertEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDebugMarkerMarkerInfoEXT*, void> _vkCmdDebugMarkerInsertEXT_fnptr = &vkCmdDebugMarkerInsertEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDebugMarkerInsertEXT_Lazy(IntPtr commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
+        private static void vkCmdDebugMarkerInsertEXT_Lazy(VkCommandBuffer commandBuffer, VkDebugMarkerMarkerInfoEXT* pMarkerInfo)
         {
-            _vkCmdDebugMarkerInsertEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugMarkerMarkerInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerInsertEXT");
+            _vkCmdDebugMarkerInsertEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugMarkerMarkerInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdDebugMarkerInsertEXT");
             _vkCmdDebugMarkerInsertEXT_fnptr(commandBuffer, pMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkExternalMemoryHandleTypeFlagBitsNV, VkExternalImageFormatPropertiesNV*, VkResult> _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr = &vkGetPhysicalDeviceExternalImageFormatPropertiesNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkExternalMemoryHandleTypeFlagBitsNV, VkExternalImageFormatPropertiesNV*, VkResult> _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr = &vkGetPhysicalDeviceExternalImageFormatPropertiesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV_Lazy(IntPtr physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkExternalMemoryHandleTypeFlagBitsNV externalHandleType, VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties)
+        private static VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV_Lazy(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlagBits usage, VkImageCreateFlagBits flags, VkExternalMemoryHandleTypeFlagBitsNV externalHandleType, VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties)
         {
-            _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkExternalMemoryHandleTypeFlagBitsNV, VkExternalImageFormatPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
+            _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkFormat, VkImageType, VkImageTiling, VkImageUsageFlagBits, VkImageCreateFlagBits, VkExternalMemoryHandleTypeFlagBitsNV, VkExternalImageFormatPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalImageFormatPropertiesNV");
             return _vkGetPhysicalDeviceExternalImageFormatPropertiesNV_fnptr(physicalDevice, format, type, tiling, usage, flags, externalHandleType, pExternalImageFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkExternalMemoryHandleTypeFlagBitsNV, IntPtr*, VkResult> _vkGetMemoryWin32HandleNV_fnptr = &vkGetMemoryWin32HandleNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagBitsNV, IntPtr*, VkResult> _vkGetMemoryWin32HandleNV_fnptr = &vkGetMemoryWin32HandleNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryWin32HandleNV_Lazy(IntPtr device, IntPtr memory, VkExternalMemoryHandleTypeFlagBitsNV handleType, IntPtr* pHandle)
+        private static VkResult vkGetMemoryWin32HandleNV_Lazy(VkDevice device, VkDeviceMemory memory, VkExternalMemoryHandleTypeFlagBitsNV handleType, IntPtr* pHandle)
         {
-            _vkGetMemoryWin32HandleNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkExternalMemoryHandleTypeFlagBitsNV, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandleNV");
+            _vkGetMemoryWin32HandleNV_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagBitsNV, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandleNV");
             return _vkGetMemoryWin32HandleNV_fnptr(device, memory, handleType, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, int, VkGeneratedCommandsInfoNV*, void> _vkCmdExecuteGeneratedCommandsNV_fnptr = &vkCmdExecuteGeneratedCommandsNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, VkGeneratedCommandsInfoNV*, void> _vkCmdExecuteGeneratedCommandsNV_fnptr = &vkCmdExecuteGeneratedCommandsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdExecuteGeneratedCommandsNV_Lazy(IntPtr commandBuffer, int isPreprocessed, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
+        private static void vkCmdExecuteGeneratedCommandsNV_Lazy(VkCommandBuffer commandBuffer, int isPreprocessed, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
         {
-            _vkCmdExecuteGeneratedCommandsNV_fnptr = (delegate* unmanaged<IntPtr, int, VkGeneratedCommandsInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdExecuteGeneratedCommandsNV");
+            _vkCmdExecuteGeneratedCommandsNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, VkGeneratedCommandsInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdExecuteGeneratedCommandsNV");
             _vkCmdExecuteGeneratedCommandsNV_fnptr(commandBuffer, isPreprocessed, pGeneratedCommandsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkGeneratedCommandsInfoNV*, void> _vkCmdPreprocessGeneratedCommandsNV_fnptr = &vkCmdPreprocessGeneratedCommandsNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkGeneratedCommandsInfoNV*, void> _vkCmdPreprocessGeneratedCommandsNV_fnptr = &vkCmdPreprocessGeneratedCommandsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPreprocessGeneratedCommandsNV_Lazy(IntPtr commandBuffer, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
+        private static void vkCmdPreprocessGeneratedCommandsNV_Lazy(VkCommandBuffer commandBuffer, VkGeneratedCommandsInfoNV* pGeneratedCommandsInfo)
         {
-            _vkCmdPreprocessGeneratedCommandsNV_fnptr = (delegate* unmanaged<IntPtr, VkGeneratedCommandsInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdPreprocessGeneratedCommandsNV");
+            _vkCmdPreprocessGeneratedCommandsNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkGeneratedCommandsInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdPreprocessGeneratedCommandsNV");
             _vkCmdPreprocessGeneratedCommandsNV_fnptr(commandBuffer, pGeneratedCommandsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, void> _vkCmdBindPipelineShaderGroupNV_fnptr = &vkCmdBindPipelineShaderGroupNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, uint, void> _vkCmdBindPipelineShaderGroupNV_fnptr = &vkCmdBindPipelineShaderGroupNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindPipelineShaderGroupNV_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr pipeline, uint groupIndex)
+        private static void vkCmdBindPipelineShaderGroupNV_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipeline pipeline, uint groupIndex)
         {
-            _vkCmdBindPipelineShaderGroupNV_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBindPipelineShaderGroupNV");
+            _vkCmdBindPipelineShaderGroupNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipeline, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBindPipelineShaderGroupNV");
             _vkCmdBindPipelineShaderGroupNV_fnptr(commandBuffer, pipelineBindPoint, pipeline, groupIndex);
         }
-        internal static delegate* unmanaged<IntPtr, VkGeneratedCommandsMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void> _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr = &vkGetGeneratedCommandsMemoryRequirementsNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkGeneratedCommandsMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void> _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr = &vkGetGeneratedCommandsMemoryRequirementsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetGeneratedCommandsMemoryRequirementsNV_Lazy(IntPtr device, VkGeneratedCommandsMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetGeneratedCommandsMemoryRequirementsNV_Lazy(VkDevice device, VkGeneratedCommandsMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr = (delegate* unmanaged<IntPtr, VkGeneratedCommandsMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetGeneratedCommandsMemoryRequirementsNV");
+            _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkGeneratedCommandsMemoryRequirementsInfoNV*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetGeneratedCommandsMemoryRequirementsNV");
             _vkGetGeneratedCommandsMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkIndirectCommandsLayoutCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateIndirectCommandsLayoutNV_fnptr = &vkCreateIndirectCommandsLayoutNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkIndirectCommandsLayoutCreateInfoNV*, VkAllocationCallbacks*, VkIndirectCommandsLayoutNV*, VkResult> _vkCreateIndirectCommandsLayoutNV_fnptr = &vkCreateIndirectCommandsLayoutNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateIndirectCommandsLayoutNV_Lazy(IntPtr device, VkIndirectCommandsLayoutCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pIndirectCommandsLayout)
+        private static VkResult vkCreateIndirectCommandsLayoutNV_Lazy(VkDevice device, VkIndirectCommandsLayoutCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutNV* pIndirectCommandsLayout)
         {
-            _vkCreateIndirectCommandsLayoutNV_fnptr = (delegate* unmanaged<IntPtr, VkIndirectCommandsLayoutCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateIndirectCommandsLayoutNV");
+            _vkCreateIndirectCommandsLayoutNV_fnptr = (delegate* unmanaged<VkDevice, VkIndirectCommandsLayoutCreateInfoNV*, VkAllocationCallbacks*, VkIndirectCommandsLayoutNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateIndirectCommandsLayoutNV");
             return _vkCreateIndirectCommandsLayoutNV_fnptr(device, pCreateInfo, pAllocator, pIndirectCommandsLayout);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyIndirectCommandsLayoutNV_fnptr = &vkDestroyIndirectCommandsLayoutNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkIndirectCommandsLayoutNV, VkAllocationCallbacks*, void> _vkDestroyIndirectCommandsLayoutNV_fnptr = &vkDestroyIndirectCommandsLayoutNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyIndirectCommandsLayoutNV_Lazy(IntPtr device, IntPtr indirectCommandsLayout, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyIndirectCommandsLayoutNV_Lazy(VkDevice device, VkIndirectCommandsLayoutNV indirectCommandsLayout, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyIndirectCommandsLayoutNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyIndirectCommandsLayoutNV");
+            _vkDestroyIndirectCommandsLayoutNV_fnptr = (delegate* unmanaged<VkDevice, VkIndirectCommandsLayoutNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyIndirectCommandsLayoutNV");
             _vkDestroyIndirectCommandsLayoutNV_fnptr(device, indirectCommandsLayout, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceFeatures2*, void> _vkGetPhysicalDeviceFeatures2_fnptr = &vkGetPhysicalDeviceFeatures2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceFeatures2*, void> _vkGetPhysicalDeviceFeatures2_fnptr = &vkGetPhysicalDeviceFeatures2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceFeatures2_Lazy(IntPtr physicalDevice, VkPhysicalDeviceFeatures2* pFeatures)
+        private static void vkGetPhysicalDeviceFeatures2_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures2* pFeatures)
         {
-            _vkGetPhysicalDeviceFeatures2_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceFeatures2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFeatures2");
+            _vkGetPhysicalDeviceFeatures2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceFeatures2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFeatures2");
             _vkGetPhysicalDeviceFeatures2_fnptr(physicalDevice, pFeatures);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceProperties2*, void> _vkGetPhysicalDeviceProperties2_fnptr = &vkGetPhysicalDeviceProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceProperties2*, void> _vkGetPhysicalDeviceProperties2_fnptr = &vkGetPhysicalDeviceProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceProperties2_Lazy(IntPtr physicalDevice, VkPhysicalDeviceProperties2* pProperties)
+        private static void vkGetPhysicalDeviceProperties2_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties2* pProperties)
         {
-            _vkGetPhysicalDeviceProperties2_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceProperties2");
+            _vkGetPhysicalDeviceProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceProperties2");
             _vkGetPhysicalDeviceProperties2_fnptr(physicalDevice, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkFormatProperties2*, void> _vkGetPhysicalDeviceFormatProperties2_fnptr = &vkGetPhysicalDeviceFormatProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkFormat, VkFormatProperties2*, void> _vkGetPhysicalDeviceFormatProperties2_fnptr = &vkGetPhysicalDeviceFormatProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceFormatProperties2_Lazy(IntPtr physicalDevice, VkFormat format, VkFormatProperties2* pFormatProperties)
+        private static void vkGetPhysicalDeviceFormatProperties2_Lazy(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties2* pFormatProperties)
         {
-            _vkGetPhysicalDeviceFormatProperties2_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkFormatProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFormatProperties2");
+            _vkGetPhysicalDeviceFormatProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkFormat, VkFormatProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFormatProperties2");
             _vkGetPhysicalDeviceFormatProperties2_fnptr(physicalDevice, format, pFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceImageFormatInfo2*, VkImageFormatProperties2*, VkResult> _vkGetPhysicalDeviceImageFormatProperties2_fnptr = &vkGetPhysicalDeviceImageFormatProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceImageFormatInfo2*, VkImageFormatProperties2*, VkResult> _vkGetPhysicalDeviceImageFormatProperties2_fnptr = &vkGetPhysicalDeviceImageFormatProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceImageFormatProperties2_Lazy(IntPtr physicalDevice, VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo, VkImageFormatProperties2* pImageFormatProperties)
+        private static VkResult vkGetPhysicalDeviceImageFormatProperties2_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo, VkImageFormatProperties2* pImageFormatProperties)
         {
-            _vkGetPhysicalDeviceImageFormatProperties2_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceImageFormatInfo2*, VkImageFormatProperties2*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceImageFormatProperties2");
+            _vkGetPhysicalDeviceImageFormatProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceImageFormatInfo2*, VkImageFormatProperties2*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceImageFormatProperties2");
             return _vkGetPhysicalDeviceImageFormatProperties2_fnptr(physicalDevice, pImageFormatInfo, pImageFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkQueueFamilyProperties2*, void> _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr = &vkGetPhysicalDeviceQueueFamilyProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkQueueFamilyProperties2*, void> _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr = &vkGetPhysicalDeviceQueueFamilyProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceQueueFamilyProperties2_Lazy(IntPtr physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties2* pQueueFamilyProperties)
+        private static void vkGetPhysicalDeviceQueueFamilyProperties2_Lazy(VkPhysicalDevice physicalDevice, uint* pQueueFamilyPropertyCount, VkQueueFamilyProperties2* pQueueFamilyProperties)
         {
-            _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr = (delegate* unmanaged<IntPtr, uint*, VkQueueFamilyProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyProperties2");
+            _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkQueueFamilyProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyProperties2");
             _vkGetPhysicalDeviceQueueFamilyProperties2_fnptr(physicalDevice, pQueueFamilyPropertyCount, pQueueFamilyProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceMemoryProperties2*, void> _vkGetPhysicalDeviceMemoryProperties2_fnptr = &vkGetPhysicalDeviceMemoryProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceMemoryProperties2*, void> _vkGetPhysicalDeviceMemoryProperties2_fnptr = &vkGetPhysicalDeviceMemoryProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceMemoryProperties2_Lazy(IntPtr physicalDevice, VkPhysicalDeviceMemoryProperties2* pMemoryProperties)
+        private static void vkGetPhysicalDeviceMemoryProperties2_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties2* pMemoryProperties)
         {
-            _vkGetPhysicalDeviceMemoryProperties2_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceMemoryProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMemoryProperties2");
+            _vkGetPhysicalDeviceMemoryProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceMemoryProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMemoryProperties2");
             _vkGetPhysicalDeviceMemoryProperties2_fnptr(physicalDevice, pMemoryProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceSparseImageFormatInfo2*, uint*, VkSparseImageFormatProperties2*, void> _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr = &vkGetPhysicalDeviceSparseImageFormatProperties2_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSparseImageFormatInfo2*, uint*, VkSparseImageFormatProperties2*, void> _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr = &vkGetPhysicalDeviceSparseImageFormatProperties2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceSparseImageFormatProperties2_Lazy(IntPtr physicalDevice, VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo, uint* pPropertyCount, VkSparseImageFormatProperties2* pProperties)
+        private static void vkGetPhysicalDeviceSparseImageFormatProperties2_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo, uint* pPropertyCount, VkSparseImageFormatProperties2* pProperties)
         {
-            _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceSparseImageFormatInfo2*, uint*, VkSparseImageFormatProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSparseImageFormatProperties2");
+            _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSparseImageFormatInfo2*, uint*, VkSparseImageFormatProperties2*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSparseImageFormatProperties2");
             _vkGetPhysicalDeviceSparseImageFormatProperties2_fnptr(physicalDevice, pFormatInfo, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, VkWriteDescriptorSet*, void> _vkCmdPushDescriptorSetKHR_fnptr = &vkCmdPushDescriptorSetKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkWriteDescriptorSet*, void> _vkCmdPushDescriptorSetKHR_fnptr = &vkCmdPushDescriptorSetKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushDescriptorSetKHR_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
+        private static void vkCmdPushDescriptorSetKHR_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set, uint descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites)
         {
-            _vkCmdPushDescriptorSetKHR_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, VkWriteDescriptorSet*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetKHR");
+            _vkCmdPushDescriptorSetKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, VkWriteDescriptorSet*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetKHR");
             _vkCmdPushDescriptorSetKHR_fnptr(commandBuffer, pipelineBindPoint, layout, set, descriptorWriteCount, pDescriptorWrites);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCommandPoolTrimFlags, void> _vkTrimCommandPool_fnptr = &vkTrimCommandPool_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPool, VkCommandPoolTrimFlags, void> _vkTrimCommandPool_fnptr = &vkTrimCommandPool_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkTrimCommandPool_Lazy(IntPtr device, IntPtr commandPool, VkCommandPoolTrimFlags flags)
+        private static void vkTrimCommandPool_Lazy(VkDevice device, VkCommandPool commandPool, VkCommandPoolTrimFlags flags)
         {
-            _vkTrimCommandPool_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCommandPoolTrimFlags, void>)VKLoader.GetInstanceProcAddress("vkTrimCommandPool");
+            _vkTrimCommandPool_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, VkCommandPoolTrimFlags, void>)VKLoader.GetInstanceProcAddress("vkTrimCommandPool");
             _vkTrimCommandPool_fnptr(device, commandPool, flags);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalBufferInfo*, VkExternalBufferProperties*, void> _vkGetPhysicalDeviceExternalBufferProperties_fnptr = &vkGetPhysicalDeviceExternalBufferProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalBufferInfo*, VkExternalBufferProperties*, void> _vkGetPhysicalDeviceExternalBufferProperties_fnptr = &vkGetPhysicalDeviceExternalBufferProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceExternalBufferProperties_Lazy(IntPtr physicalDevice, VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo, VkExternalBufferProperties* pExternalBufferProperties)
+        private static void vkGetPhysicalDeviceExternalBufferProperties_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo, VkExternalBufferProperties* pExternalBufferProperties)
         {
-            _vkGetPhysicalDeviceExternalBufferProperties_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalBufferInfo*, VkExternalBufferProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalBufferProperties");
+            _vkGetPhysicalDeviceExternalBufferProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalBufferInfo*, VkExternalBufferProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalBufferProperties");
             _vkGetPhysicalDeviceExternalBufferProperties_fnptr(physicalDevice, pExternalBufferInfo, pExternalBufferProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetMemoryWin32HandleKHR_fnptr = &vkGetMemoryWin32HandleKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetMemoryWin32HandleKHR_fnptr = &vkGetMemoryWin32HandleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryWin32HandleKHR_Lazy(IntPtr device, VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
+        private static VkResult vkGetMemoryWin32HandleKHR_Lazy(VkDevice device, VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
-            _vkGetMemoryWin32HandleKHR_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandleKHR");
+            _vkGetMemoryWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandleKHR");
             return _vkGetMemoryWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemoryWin32HandlePropertiesKHR*, VkResult> _vkGetMemoryWin32HandlePropertiesKHR_fnptr = &vkGetMemoryWin32HandlePropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemoryWin32HandlePropertiesKHR*, VkResult> _vkGetMemoryWin32HandlePropertiesKHR_fnptr = &vkGetMemoryWin32HandlePropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryWin32HandlePropertiesKHR_Lazy(IntPtr device, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties)
+        private static VkResult vkGetMemoryWin32HandlePropertiesKHR_Lazy(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties)
         {
-            _vkGetMemoryWin32HandlePropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemoryWin32HandlePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandlePropertiesKHR");
+            _vkGetMemoryWin32HandlePropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemoryWin32HandlePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryWin32HandlePropertiesKHR");
             return _vkGetMemoryWin32HandlePropertiesKHR_fnptr(device, handleType, handle, pMemoryWin32HandleProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetFdInfoKHR*, int*, VkResult> _vkGetMemoryFdKHR_fnptr = &vkGetMemoryFdKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetFdInfoKHR*, int*, VkResult> _vkGetMemoryFdKHR_fnptr = &vkGetMemoryFdKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryFdKHR_Lazy(IntPtr device, VkMemoryGetFdInfoKHR* pGetFdInfo, int* pFd)
+        private static VkResult vkGetMemoryFdKHR_Lazy(VkDevice device, VkMemoryGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
-            _vkGetMemoryFdKHR_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryFdKHR");
+            _vkGetMemoryFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryFdKHR");
             return _vkGetMemoryFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
-        internal static delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult> _vkGetMemoryFdPropertiesKHR_fnptr = &vkGetMemoryFdPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult> _vkGetMemoryFdPropertiesKHR_fnptr = &vkGetMemoryFdPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryFdPropertiesKHR_Lazy(IntPtr device, VkExternalMemoryHandleTypeFlagBits handleType, int fd, VkMemoryFdPropertiesKHR* pMemoryFdProperties)
+        private static VkResult vkGetMemoryFdPropertiesKHR_Lazy(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, int fd, VkMemoryFdPropertiesKHR* pMemoryFdProperties)
         {
-            _vkGetMemoryFdPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryFdPropertiesKHR");
+            _vkGetMemoryFdPropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryFdPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryFdPropertiesKHR");
             return _vkGetMemoryFdPropertiesKHR_fnptr(device, handleType, fd, pMemoryFdProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult> _vkGetMemoryZirconHandleFUCHSIA_fnptr = &vkGetMemoryZirconHandleFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult> _vkGetMemoryZirconHandleFUCHSIA_fnptr = &vkGetMemoryZirconHandleFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryZirconHandleFUCHSIA_Lazy(IntPtr device, VkMemoryGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
+        private static VkResult vkGetMemoryZirconHandleFUCHSIA_Lazy(VkDevice device, VkMemoryGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
         {
-            _vkGetMemoryZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryZirconHandleFUCHSIA");
+            _vkGetMemoryZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetZirconHandleInfoFUCHSIA*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryZirconHandleFUCHSIA");
             return _vkGetMemoryZirconHandleFUCHSIA_fnptr(device, pGetZirconHandleInfo, pZirconHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult> _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr = &vkGetMemoryZirconHandlePropertiesFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult> _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr = &vkGetMemoryZirconHandlePropertiesFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryZirconHandlePropertiesFUCHSIA_Lazy(IntPtr device, VkExternalMemoryHandleTypeFlagBits handleType, int zirconHandle, VkMemoryZirconHandlePropertiesFUCHSIA* pMemoryZirconHandleProperties)
+        private static VkResult vkGetMemoryZirconHandlePropertiesFUCHSIA_Lazy(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, int zirconHandle, VkMemoryZirconHandlePropertiesFUCHSIA* pMemoryZirconHandleProperties)
         {
-            _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryZirconHandlePropertiesFUCHSIA");
+            _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, int, VkMemoryZirconHandlePropertiesFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryZirconHandlePropertiesFUCHSIA");
             return _vkGetMemoryZirconHandlePropertiesFUCHSIA_fnptr(device, handleType, zirconHandle, pMemoryZirconHandleProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult> _vkGetMemoryRemoteAddressNV_fnptr = &vkGetMemoryRemoteAddressNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult> _vkGetMemoryRemoteAddressNV_fnptr = &vkGetMemoryRemoteAddressNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryRemoteAddressNV_Lazy(IntPtr device, VkMemoryGetRemoteAddressInfoNV* pMemoryGetRemoteAddressInfo, void** pAddress)
+        private static VkResult vkGetMemoryRemoteAddressNV_Lazy(VkDevice device, VkMemoryGetRemoteAddressInfoNV* pMemoryGetRemoteAddressInfo, void** pAddress)
         {
-            _vkGetMemoryRemoteAddressNV_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryRemoteAddressNV");
+            _vkGetMemoryRemoteAddressNV_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetRemoteAddressInfoNV*, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryRemoteAddressNV");
             return _vkGetMemoryRemoteAddressNV_fnptr(device, pMemoryGetRemoteAddressInfo, pAddress);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult> _vkGetMemorySciBufNV_fnptr = &vkGetMemorySciBufNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult> _vkGetMemorySciBufNV_fnptr = &vkGetMemorySciBufNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemorySciBufNV_Lazy(IntPtr device, VkMemoryGetSciBufInfoNV* pGetSciBufInfo, IntPtr* pHandle)
+        private static VkResult vkGetMemorySciBufNV_Lazy(VkDevice device, VkMemoryGetSciBufInfoNV* pGetSciBufInfo, IntPtr* pHandle)
         {
-            _vkGetMemorySciBufNV_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemorySciBufNV");
+            _vkGetMemorySciBufNV_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetSciBufInfoNV*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemorySciBufNV");
             return _vkGetMemorySciBufNV_fnptr(device, pGetSciBufInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemorySciBufPropertiesNV*, VkResult> _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr = &vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemorySciBufPropertiesNV*, VkResult> _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr = &vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_Lazy(IntPtr physicalDevice, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemorySciBufPropertiesNV* pMemorySciBufProperties)
+        private static VkResult vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_Lazy(VkPhysicalDevice physicalDevice, VkExternalMemoryHandleTypeFlagBits handleType, IntPtr handle, VkMemorySciBufPropertiesNV* pMemorySciBufProperties)
         {
-            _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr = (delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemorySciBufPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV");
+            _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkExternalMemoryHandleTypeFlagBits, IntPtr, VkMemorySciBufPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV");
             return _vkGetPhysicalDeviceExternalMemorySciBufPropertiesNV_fnptr(physicalDevice, handleType, handle, pMemorySciBufProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkGetPhysicalDeviceSciBufAttributesNV_fnptr = &vkGetPhysicalDeviceSciBufAttributesNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, IntPtr, VkResult> _vkGetPhysicalDeviceSciBufAttributesNV_fnptr = &vkGetPhysicalDeviceSciBufAttributesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSciBufAttributesNV_Lazy(IntPtr physicalDevice, IntPtr pAttributes)
+        private static VkResult vkGetPhysicalDeviceSciBufAttributesNV_Lazy(VkPhysicalDevice physicalDevice, IntPtr pAttributes)
         {
-            _vkGetPhysicalDeviceSciBufAttributesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSciBufAttributesNV");
+            _vkGetPhysicalDeviceSciBufAttributesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSciBufAttributesNV");
             return _vkGetPhysicalDeviceSciBufAttributesNV_fnptr(physicalDevice, pAttributes);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalSemaphoreInfo*, VkExternalSemaphoreProperties*, void> _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr = &vkGetPhysicalDeviceExternalSemaphoreProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalSemaphoreInfo*, VkExternalSemaphoreProperties*, void> _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr = &vkGetPhysicalDeviceExternalSemaphoreProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceExternalSemaphoreProperties_Lazy(IntPtr physicalDevice, VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo, VkExternalSemaphoreProperties* pExternalSemaphoreProperties)
+        private static void vkGetPhysicalDeviceExternalSemaphoreProperties_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo, VkExternalSemaphoreProperties* pExternalSemaphoreProperties)
         {
-            _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalSemaphoreInfo*, VkExternalSemaphoreProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalSemaphoreProperties");
+            _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalSemaphoreInfo*, VkExternalSemaphoreProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalSemaphoreProperties");
             _vkGetPhysicalDeviceExternalSemaphoreProperties_fnptr(physicalDevice, pExternalSemaphoreInfo, pExternalSemaphoreProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetSemaphoreWin32HandleKHR_fnptr = &vkGetSemaphoreWin32HandleKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetSemaphoreWin32HandleKHR_fnptr = &vkGetSemaphoreWin32HandleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSemaphoreWin32HandleKHR_Lazy(IntPtr device, VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
+        private static VkResult vkGetSemaphoreWin32HandleKHR_Lazy(VkDevice device, VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
-            _vkGetSemaphoreWin32HandleKHR_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreWin32HandleKHR");
+            _vkGetSemaphoreWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreWin32HandleKHR");
             return _vkGetSemaphoreWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportSemaphoreWin32HandleInfoKHR*, VkResult> _vkImportSemaphoreWin32HandleKHR_fnptr = &vkImportSemaphoreWin32HandleKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportSemaphoreWin32HandleInfoKHR*, VkResult> _vkImportSemaphoreWin32HandleKHR_fnptr = &vkImportSemaphoreWin32HandleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportSemaphoreWin32HandleKHR_Lazy(IntPtr device, VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo)
+        private static VkResult vkImportSemaphoreWin32HandleKHR_Lazy(VkDevice device, VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo)
         {
-            _vkImportSemaphoreWin32HandleKHR_fnptr = (delegate* unmanaged<IntPtr, VkImportSemaphoreWin32HandleInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreWin32HandleKHR");
+            _vkImportSemaphoreWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkImportSemaphoreWin32HandleInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreWin32HandleKHR");
             return _vkImportSemaphoreWin32HandleKHR_fnptr(device, pImportSemaphoreWin32HandleInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreGetFdInfoKHR*, int*, VkResult> _vkGetSemaphoreFdKHR_fnptr = &vkGetSemaphoreFdKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreGetFdInfoKHR*, int*, VkResult> _vkGetSemaphoreFdKHR_fnptr = &vkGetSemaphoreFdKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSemaphoreFdKHR_Lazy(IntPtr device, VkSemaphoreGetFdInfoKHR* pGetFdInfo, int* pFd)
+        private static VkResult vkGetSemaphoreFdKHR_Lazy(VkDevice device, VkSemaphoreGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
-            _vkGetSemaphoreFdKHR_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreFdKHR");
+            _vkGetSemaphoreFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreFdKHR");
             return _vkGetSemaphoreFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportSemaphoreFdInfoKHR*, VkResult> _vkImportSemaphoreFdKHR_fnptr = &vkImportSemaphoreFdKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportSemaphoreFdInfoKHR*, VkResult> _vkImportSemaphoreFdKHR_fnptr = &vkImportSemaphoreFdKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportSemaphoreFdKHR_Lazy(IntPtr device, VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo)
+        private static VkResult vkImportSemaphoreFdKHR_Lazy(VkDevice device, VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo)
         {
-            _vkImportSemaphoreFdKHR_fnptr = (delegate* unmanaged<IntPtr, VkImportSemaphoreFdInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreFdKHR");
+            _vkImportSemaphoreFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkImportSemaphoreFdInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreFdKHR");
             return _vkImportSemaphoreFdKHR_fnptr(device, pImportSemaphoreFdInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreGetZirconHandleInfoFUCHSIA*, int*, VkResult> _vkGetSemaphoreZirconHandleFUCHSIA_fnptr = &vkGetSemaphoreZirconHandleFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreGetZirconHandleInfoFUCHSIA*, int*, VkResult> _vkGetSemaphoreZirconHandleFUCHSIA_fnptr = &vkGetSemaphoreZirconHandleFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSemaphoreZirconHandleFUCHSIA_Lazy(IntPtr device, VkSemaphoreGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
+        private static VkResult vkGetSemaphoreZirconHandleFUCHSIA_Lazy(VkDevice device, VkSemaphoreGetZirconHandleInfoFUCHSIA* pGetZirconHandleInfo, int* pZirconHandle)
         {
-            _vkGetSemaphoreZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreGetZirconHandleInfoFUCHSIA*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreZirconHandleFUCHSIA");
+            _vkGetSemaphoreZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreGetZirconHandleInfoFUCHSIA*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreZirconHandleFUCHSIA");
             return _vkGetSemaphoreZirconHandleFUCHSIA_fnptr(device, pGetZirconHandleInfo, pZirconHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportSemaphoreZirconHandleInfoFUCHSIA*, VkResult> _vkImportSemaphoreZirconHandleFUCHSIA_fnptr = &vkImportSemaphoreZirconHandleFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportSemaphoreZirconHandleInfoFUCHSIA*, VkResult> _vkImportSemaphoreZirconHandleFUCHSIA_fnptr = &vkImportSemaphoreZirconHandleFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportSemaphoreZirconHandleFUCHSIA_Lazy(IntPtr device, VkImportSemaphoreZirconHandleInfoFUCHSIA* pImportSemaphoreZirconHandleInfo)
+        private static VkResult vkImportSemaphoreZirconHandleFUCHSIA_Lazy(VkDevice device, VkImportSemaphoreZirconHandleInfoFUCHSIA* pImportSemaphoreZirconHandleInfo)
         {
-            _vkImportSemaphoreZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkImportSemaphoreZirconHandleInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreZirconHandleFUCHSIA");
+            _vkImportSemaphoreZirconHandleFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkImportSemaphoreZirconHandleInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreZirconHandleFUCHSIA");
             return _vkImportSemaphoreZirconHandleFUCHSIA_fnptr(device, pImportSemaphoreZirconHandleInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalFenceInfo*, VkExternalFenceProperties*, void> _vkGetPhysicalDeviceExternalFenceProperties_fnptr = &vkGetPhysicalDeviceExternalFenceProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalFenceInfo*, VkExternalFenceProperties*, void> _vkGetPhysicalDeviceExternalFenceProperties_fnptr = &vkGetPhysicalDeviceExternalFenceProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceExternalFenceProperties_Lazy(IntPtr physicalDevice, VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo, VkExternalFenceProperties* pExternalFenceProperties)
+        private static void vkGetPhysicalDeviceExternalFenceProperties_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo, VkExternalFenceProperties* pExternalFenceProperties)
         {
-            _vkGetPhysicalDeviceExternalFenceProperties_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceExternalFenceInfo*, VkExternalFenceProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalFenceProperties");
+            _vkGetPhysicalDeviceExternalFenceProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceExternalFenceInfo*, VkExternalFenceProperties*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceExternalFenceProperties");
             _vkGetPhysicalDeviceExternalFenceProperties_fnptr(physicalDevice, pExternalFenceInfo, pExternalFenceProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkFenceGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetFenceWin32HandleKHR_fnptr = &vkGetFenceWin32HandleKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFenceGetWin32HandleInfoKHR*, IntPtr*, VkResult> _vkGetFenceWin32HandleKHR_fnptr = &vkGetFenceWin32HandleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFenceWin32HandleKHR_Lazy(IntPtr device, VkFenceGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
+        private static VkResult vkGetFenceWin32HandleKHR_Lazy(VkDevice device, VkFenceGetWin32HandleInfoKHR* pGetWin32HandleInfo, IntPtr* pHandle)
         {
-            _vkGetFenceWin32HandleKHR_fnptr = (delegate* unmanaged<IntPtr, VkFenceGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceWin32HandleKHR");
+            _vkGetFenceWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetWin32HandleInfoKHR*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceWin32HandleKHR");
             return _vkGetFenceWin32HandleKHR_fnptr(device, pGetWin32HandleInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportFenceWin32HandleInfoKHR*, VkResult> _vkImportFenceWin32HandleKHR_fnptr = &vkImportFenceWin32HandleKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportFenceWin32HandleInfoKHR*, VkResult> _vkImportFenceWin32HandleKHR_fnptr = &vkImportFenceWin32HandleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportFenceWin32HandleKHR_Lazy(IntPtr device, VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo)
+        private static VkResult vkImportFenceWin32HandleKHR_Lazy(VkDevice device, VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo)
         {
-            _vkImportFenceWin32HandleKHR_fnptr = (delegate* unmanaged<IntPtr, VkImportFenceWin32HandleInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceWin32HandleKHR");
+            _vkImportFenceWin32HandleKHR_fnptr = (delegate* unmanaged<VkDevice, VkImportFenceWin32HandleInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceWin32HandleKHR");
             return _vkImportFenceWin32HandleKHR_fnptr(device, pImportFenceWin32HandleInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkFenceGetFdInfoKHR*, int*, VkResult> _vkGetFenceFdKHR_fnptr = &vkGetFenceFdKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFenceGetFdInfoKHR*, int*, VkResult> _vkGetFenceFdKHR_fnptr = &vkGetFenceFdKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFenceFdKHR_Lazy(IntPtr device, VkFenceGetFdInfoKHR* pGetFdInfo, int* pFd)
+        private static VkResult vkGetFenceFdKHR_Lazy(VkDevice device, VkFenceGetFdInfoKHR* pGetFdInfo, int* pFd)
         {
-            _vkGetFenceFdKHR_fnptr = (delegate* unmanaged<IntPtr, VkFenceGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceFdKHR");
+            _vkGetFenceFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetFdInfoKHR*, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceFdKHR");
             return _vkGetFenceFdKHR_fnptr(device, pGetFdInfo, pFd);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportFenceFdInfoKHR*, VkResult> _vkImportFenceFdKHR_fnptr = &vkImportFenceFdKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportFenceFdInfoKHR*, VkResult> _vkImportFenceFdKHR_fnptr = &vkImportFenceFdKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportFenceFdKHR_Lazy(IntPtr device, VkImportFenceFdInfoKHR* pImportFenceFdInfo)
+        private static VkResult vkImportFenceFdKHR_Lazy(VkDevice device, VkImportFenceFdInfoKHR* pImportFenceFdInfo)
         {
-            _vkImportFenceFdKHR_fnptr = (delegate* unmanaged<IntPtr, VkImportFenceFdInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceFdKHR");
+            _vkImportFenceFdKHR_fnptr = (delegate* unmanaged<VkDevice, VkImportFenceFdInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceFdKHR");
             return _vkImportFenceFdKHR_fnptr(device, pImportFenceFdInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkFenceGetSciSyncInfoNV*, void*, VkResult> _vkGetFenceSciSyncFenceNV_fnptr = &vkGetFenceSciSyncFenceNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult> _vkGetFenceSciSyncFenceNV_fnptr = &vkGetFenceSciSyncFenceNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFenceSciSyncFenceNV_Lazy(IntPtr device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
+        private static VkResult vkGetFenceSciSyncFenceNV_Lazy(VkDevice device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
         {
-            _vkGetFenceSciSyncFenceNV_fnptr = (delegate* unmanaged<IntPtr, VkFenceGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceSciSyncFenceNV");
+            _vkGetFenceSciSyncFenceNV_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceSciSyncFenceNV");
             return _vkGetFenceSciSyncFenceNV_fnptr(device, pGetSciSyncHandleInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkFenceGetSciSyncInfoNV*, void*, VkResult> _vkGetFenceSciSyncObjNV_fnptr = &vkGetFenceSciSyncObjNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult> _vkGetFenceSciSyncObjNV_fnptr = &vkGetFenceSciSyncObjNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFenceSciSyncObjNV_Lazy(IntPtr device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
+        private static VkResult vkGetFenceSciSyncObjNV_Lazy(VkDevice device, VkFenceGetSciSyncInfoNV* pGetSciSyncHandleInfo, void* pHandle)
         {
-            _vkGetFenceSciSyncObjNV_fnptr = (delegate* unmanaged<IntPtr, VkFenceGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceSciSyncObjNV");
+            _vkGetFenceSciSyncObjNV_fnptr = (delegate* unmanaged<VkDevice, VkFenceGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFenceSciSyncObjNV");
             return _vkGetFenceSciSyncObjNV_fnptr(device, pGetSciSyncHandleInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportFenceSciSyncInfoNV*, VkResult> _vkImportFenceSciSyncFenceNV_fnptr = &vkImportFenceSciSyncFenceNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportFenceSciSyncInfoNV*, VkResult> _vkImportFenceSciSyncFenceNV_fnptr = &vkImportFenceSciSyncFenceNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportFenceSciSyncFenceNV_Lazy(IntPtr device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
+        private static VkResult vkImportFenceSciSyncFenceNV_Lazy(VkDevice device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
         {
-            _vkImportFenceSciSyncFenceNV_fnptr = (delegate* unmanaged<IntPtr, VkImportFenceSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceSciSyncFenceNV");
+            _vkImportFenceSciSyncFenceNV_fnptr = (delegate* unmanaged<VkDevice, VkImportFenceSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceSciSyncFenceNV");
             return _vkImportFenceSciSyncFenceNV_fnptr(device, pImportFenceSciSyncInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportFenceSciSyncInfoNV*, VkResult> _vkImportFenceSciSyncObjNV_fnptr = &vkImportFenceSciSyncObjNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportFenceSciSyncInfoNV*, VkResult> _vkImportFenceSciSyncObjNV_fnptr = &vkImportFenceSciSyncObjNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportFenceSciSyncObjNV_Lazy(IntPtr device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
+        private static VkResult vkImportFenceSciSyncObjNV_Lazy(VkDevice device, VkImportFenceSciSyncInfoNV* pImportFenceSciSyncInfo)
         {
-            _vkImportFenceSciSyncObjNV_fnptr = (delegate* unmanaged<IntPtr, VkImportFenceSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceSciSyncObjNV");
+            _vkImportFenceSciSyncObjNV_fnptr = (delegate* unmanaged<VkDevice, VkImportFenceSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportFenceSciSyncObjNV");
             return _vkImportFenceSciSyncObjNV_fnptr(device, pImportFenceSciSyncInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreGetSciSyncInfoNV*, void*, VkResult> _vkGetSemaphoreSciSyncObjNV_fnptr = &vkGetSemaphoreSciSyncObjNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreGetSciSyncInfoNV*, void*, VkResult> _vkGetSemaphoreSciSyncObjNV_fnptr = &vkGetSemaphoreSciSyncObjNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSemaphoreSciSyncObjNV_Lazy(IntPtr device, VkSemaphoreGetSciSyncInfoNV* pGetSciSyncInfo, void* pHandle)
+        private static VkResult vkGetSemaphoreSciSyncObjNV_Lazy(VkDevice device, VkSemaphoreGetSciSyncInfoNV* pGetSciSyncInfo, void* pHandle)
         {
-            _vkGetSemaphoreSciSyncObjNV_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreSciSyncObjNV");
+            _vkGetSemaphoreSciSyncObjNV_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreGetSciSyncInfoNV*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreSciSyncObjNV");
             return _vkGetSemaphoreSciSyncObjNV_fnptr(device, pGetSciSyncInfo, pHandle);
         }
-        internal static delegate* unmanaged<IntPtr, VkImportSemaphoreSciSyncInfoNV*, VkResult> _vkImportSemaphoreSciSyncObjNV_fnptr = &vkImportSemaphoreSciSyncObjNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImportSemaphoreSciSyncInfoNV*, VkResult> _vkImportSemaphoreSciSyncObjNV_fnptr = &vkImportSemaphoreSciSyncObjNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkImportSemaphoreSciSyncObjNV_Lazy(IntPtr device, VkImportSemaphoreSciSyncInfoNV* pImportSemaphoreSciSyncInfo)
+        private static VkResult vkImportSemaphoreSciSyncObjNV_Lazy(VkDevice device, VkImportSemaphoreSciSyncInfoNV* pImportSemaphoreSciSyncInfo)
         {
-            _vkImportSemaphoreSciSyncObjNV_fnptr = (delegate* unmanaged<IntPtr, VkImportSemaphoreSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreSciSyncObjNV");
+            _vkImportSemaphoreSciSyncObjNV_fnptr = (delegate* unmanaged<VkDevice, VkImportSemaphoreSciSyncInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkImportSemaphoreSciSyncObjNV");
             return _vkImportSemaphoreSciSyncObjNV_fnptr(device, pImportSemaphoreSciSyncInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSciSyncAttributesInfoNV*, IntPtr, VkResult> _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr = &vkGetPhysicalDeviceSciSyncAttributesNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSciSyncAttributesInfoNV*, IntPtr, VkResult> _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr = &vkGetPhysicalDeviceSciSyncAttributesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSciSyncAttributesNV_Lazy(IntPtr physicalDevice, VkSciSyncAttributesInfoNV* pSciSyncAttributesInfo, IntPtr pAttributes)
+        private static VkResult vkGetPhysicalDeviceSciSyncAttributesNV_Lazy(VkPhysicalDevice physicalDevice, VkSciSyncAttributesInfoNV* pSciSyncAttributesInfo, IntPtr pAttributes)
         {
-            _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr = (delegate* unmanaged<IntPtr, VkSciSyncAttributesInfoNV*, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSciSyncAttributesNV");
+            _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSciSyncAttributesInfoNV*, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSciSyncAttributesNV");
             return _vkGetPhysicalDeviceSciSyncAttributesNV_fnptr(physicalDevice, pSciSyncAttributesInfo, pAttributes);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreSciSyncPoolCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSemaphoreSciSyncPoolNV_fnptr = &vkCreateSemaphoreSciSyncPoolNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreSciSyncPoolCreateInfoNV*, VkAllocationCallbacks*, VkSemaphoreSciSyncPoolNV*, VkResult> _vkCreateSemaphoreSciSyncPoolNV_fnptr = &vkCreateSemaphoreSciSyncPoolNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSemaphoreSciSyncPoolNV_Lazy(IntPtr device, VkSemaphoreSciSyncPoolCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSemaphorePool)
+        private static VkResult vkCreateSemaphoreSciSyncPoolNV_Lazy(VkDevice device, VkSemaphoreSciSyncPoolCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSemaphoreSciSyncPoolNV* pSemaphorePool)
         {
-            _vkCreateSemaphoreSciSyncPoolNV_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreSciSyncPoolCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSemaphoreSciSyncPoolNV");
+            _vkCreateSemaphoreSciSyncPoolNV_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreSciSyncPoolCreateInfoNV*, VkAllocationCallbacks*, VkSemaphoreSciSyncPoolNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSemaphoreSciSyncPoolNV");
             return _vkCreateSemaphoreSciSyncPoolNV_fnptr(device, pCreateInfo, pAllocator, pSemaphorePool);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySemaphoreSciSyncPoolNV_fnptr = &vkDestroySemaphoreSciSyncPoolNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreSciSyncPoolNV, VkAllocationCallbacks*, void> _vkDestroySemaphoreSciSyncPoolNV_fnptr = &vkDestroySemaphoreSciSyncPoolNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySemaphoreSciSyncPoolNV_Lazy(IntPtr device, IntPtr semaphorePool, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySemaphoreSciSyncPoolNV_Lazy(VkDevice device, VkSemaphoreSciSyncPoolNV semaphorePool, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySemaphoreSciSyncPoolNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySemaphoreSciSyncPoolNV");
+            _vkDestroySemaphoreSciSyncPoolNV_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreSciSyncPoolNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySemaphoreSciSyncPoolNV");
             _vkDestroySemaphoreSciSyncPoolNV_fnptr(device, semaphorePool, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkReleaseDisplayEXT_fnptr = &vkReleaseDisplayEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult> _vkReleaseDisplayEXT_fnptr = &vkReleaseDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkReleaseDisplayEXT_Lazy(IntPtr physicalDevice, IntPtr display)
+        private static VkResult vkReleaseDisplayEXT_Lazy(VkPhysicalDevice physicalDevice, VkDisplayKHR display)
         {
-            _vkReleaseDisplayEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseDisplayEXT");
+            _vkReleaseDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseDisplayEXT");
             return _vkReleaseDisplayEXT_fnptr(physicalDevice, display);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkResult> _vkAcquireXlibDisplayEXT_fnptr = &vkAcquireXlibDisplayEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, IntPtr, VkDisplayKHR, VkResult> _vkAcquireXlibDisplayEXT_fnptr = &vkAcquireXlibDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireXlibDisplayEXT_Lazy(IntPtr physicalDevice, IntPtr dpy, IntPtr display)
+        private static VkResult vkAcquireXlibDisplayEXT_Lazy(VkPhysicalDevice physicalDevice, IntPtr dpy, VkDisplayKHR display)
         {
-            _vkAcquireXlibDisplayEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireXlibDisplayEXT");
+            _vkAcquireXlibDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, IntPtr, VkDisplayKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireXlibDisplayEXT");
             return _vkAcquireXlibDisplayEXT_fnptr(physicalDevice, dpy, display);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint, IntPtr*, VkResult> _vkGetRandROutputDisplayEXT_fnptr = &vkGetRandROutputDisplayEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, IntPtr, nuint, VkDisplayKHR*, VkResult> _vkGetRandROutputDisplayEXT_fnptr = &vkGetRandROutputDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetRandROutputDisplayEXT_Lazy(IntPtr physicalDevice, IntPtr dpy, nuint rrOutput, IntPtr* pDisplay)
+        private static VkResult vkGetRandROutputDisplayEXT_Lazy(VkPhysicalDevice physicalDevice, IntPtr dpy, nuint rrOutput, VkDisplayKHR* pDisplay)
         {
-            _vkGetRandROutputDisplayEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRandROutputDisplayEXT");
+            _vkGetRandROutputDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, IntPtr, nuint, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRandROutputDisplayEXT");
             return _vkGetRandROutputDisplayEXT_fnptr(physicalDevice, dpy, rrOutput, pDisplay);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkAcquireWinrtDisplayNV_fnptr = &vkAcquireWinrtDisplayNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult> _vkAcquireWinrtDisplayNV_fnptr = &vkAcquireWinrtDisplayNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireWinrtDisplayNV_Lazy(IntPtr physicalDevice, IntPtr display)
+        private static VkResult vkAcquireWinrtDisplayNV_Lazy(VkPhysicalDevice physicalDevice, VkDisplayKHR display)
         {
-            _vkAcquireWinrtDisplayNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireWinrtDisplayNV");
+            _vkAcquireWinrtDisplayNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireWinrtDisplayNV");
             return _vkAcquireWinrtDisplayNV_fnptr(physicalDevice, display);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkResult> _vkGetWinrtDisplayNV_fnptr = &vkGetWinrtDisplayNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, VkDisplayKHR*, VkResult> _vkGetWinrtDisplayNV_fnptr = &vkGetWinrtDisplayNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetWinrtDisplayNV_Lazy(IntPtr physicalDevice, uint deviceRelativeId, IntPtr* pDisplay)
+        private static VkResult vkGetWinrtDisplayNV_Lazy(VkPhysicalDevice physicalDevice, uint deviceRelativeId, VkDisplayKHR* pDisplay)
         {
-            _vkGetWinrtDisplayNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetWinrtDisplayNV");
+            _vkGetWinrtDisplayNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetWinrtDisplayNV");
             return _vkGetWinrtDisplayNV_fnptr(physicalDevice, deviceRelativeId, pDisplay);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDisplayPowerInfoEXT*, VkResult> _vkDisplayPowerControlEXT_fnptr = &vkDisplayPowerControlEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayPowerInfoEXT*, VkResult> _vkDisplayPowerControlEXT_fnptr = &vkDisplayPowerControlEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkDisplayPowerControlEXT_Lazy(IntPtr device, IntPtr display, VkDisplayPowerInfoEXT* pDisplayPowerInfo)
+        private static VkResult vkDisplayPowerControlEXT_Lazy(VkDevice device, VkDisplayKHR display, VkDisplayPowerInfoEXT* pDisplayPowerInfo)
         {
-            _vkDisplayPowerControlEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDisplayPowerInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDisplayPowerControlEXT");
+            _vkDisplayPowerControlEXT_fnptr = (delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayPowerInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkDisplayPowerControlEXT");
             return _vkDisplayPowerControlEXT_fnptr(device, display, pDisplayPowerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkRegisterDeviceEventEXT_fnptr = &vkRegisterDeviceEventEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult> _vkRegisterDeviceEventEXT_fnptr = &vkRegisterDeviceEventEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkRegisterDeviceEventEXT_Lazy(IntPtr device, VkDeviceEventInfoEXT* pDeviceEventInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFence)
+        private static VkResult vkRegisterDeviceEventEXT_Lazy(VkDevice device, VkDeviceEventInfoEXT* pDeviceEventInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
-            _vkRegisterDeviceEventEXT_fnptr = (delegate* unmanaged<IntPtr, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkRegisterDeviceEventEXT");
+            _vkRegisterDeviceEventEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeviceEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetInstanceProcAddress("vkRegisterDeviceEventEXT");
             return _vkRegisterDeviceEventEXT_fnptr(device, pDeviceEventInfo, pAllocator, pFence);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkRegisterDisplayEventEXT_fnptr = &vkRegisterDisplayEventEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult> _vkRegisterDisplayEventEXT_fnptr = &vkRegisterDisplayEventEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkRegisterDisplayEventEXT_Lazy(IntPtr device, IntPtr display, VkDisplayEventInfoEXT* pDisplayEventInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFence)
+        private static VkResult vkRegisterDisplayEventEXT_Lazy(VkDevice device, VkDisplayKHR display, VkDisplayEventInfoEXT* pDisplayEventInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence)
         {
-            _vkRegisterDisplayEventEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkRegisterDisplayEventEXT");
+            _vkRegisterDisplayEventEXT_fnptr = (delegate* unmanaged<VkDevice, VkDisplayKHR, VkDisplayEventInfoEXT*, VkAllocationCallbacks*, VkFence*, VkResult>)VKLoader.GetInstanceProcAddress("vkRegisterDisplayEventEXT");
             return _vkRegisterDisplayEventEXT_fnptr(device, display, pDisplayEventInfo, pAllocator, pFence);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCounterFlagBitsEXT, ulong*, VkResult> _vkGetSwapchainCounterEXT_fnptr = &vkGetSwapchainCounterEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, ulong*, VkResult> _vkGetSwapchainCounterEXT_fnptr = &vkGetSwapchainCounterEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSwapchainCounterEXT_Lazy(IntPtr device, IntPtr swapchain, VkSurfaceCounterFlagBitsEXT counter, ulong* pCounterValue)
+        private static VkResult vkGetSwapchainCounterEXT_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkSurfaceCounterFlagBitsEXT counter, ulong* pCounterValue)
         {
-            _vkGetSwapchainCounterEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCounterFlagBitsEXT, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainCounterEXT");
+            _vkGetSwapchainCounterEXT_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSurfaceCounterFlagBitsEXT, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainCounterEXT");
             return _vkGetSwapchainCounterEXT_fnptr(device, swapchain, counter, pCounterValue);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCapabilities2EXT*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr = &vkGetPhysicalDeviceSurfaceCapabilities2EXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, VkSurfaceCapabilities2EXT*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr = &vkGetPhysicalDeviceSurfaceCapabilities2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceCapabilities2EXT_Lazy(IntPtr physicalDevice, IntPtr surface, VkSurfaceCapabilities2EXT* pSurfaceCapabilities)
+        private static VkResult vkGetPhysicalDeviceSurfaceCapabilities2EXT_Lazy(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, VkSurfaceCapabilities2EXT* pSurfaceCapabilities)
         {
-            _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkSurfaceCapabilities2EXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilities2EXT");
+            _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, VkSurfaceCapabilities2EXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilities2EXT");
             return _vkGetPhysicalDeviceSurfaceCapabilities2EXT_fnptr(physicalDevice, surface, pSurfaceCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceGroupProperties*, VkResult> _vkEnumeratePhysicalDeviceGroups_fnptr = &vkEnumeratePhysicalDeviceGroups_Lazy;
+        internal static delegate* unmanaged<VkInstance, uint*, VkPhysicalDeviceGroupProperties*, VkResult> _vkEnumeratePhysicalDeviceGroups_fnptr = &vkEnumeratePhysicalDeviceGroups_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEnumeratePhysicalDeviceGroups_Lazy(IntPtr instance, uint* pPhysicalDeviceGroupCount, VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties)
+        private static VkResult vkEnumeratePhysicalDeviceGroups_Lazy(VkInstance instance, uint* pPhysicalDeviceGroupCount, VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties)
         {
-            _vkEnumeratePhysicalDeviceGroups_fnptr = (delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceGroupProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDeviceGroups");
+            _vkEnumeratePhysicalDeviceGroups_fnptr = (delegate* unmanaged<VkInstance, uint*, VkPhysicalDeviceGroupProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDeviceGroups");
             return _vkEnumeratePhysicalDeviceGroups_fnptr(instance, pPhysicalDeviceGroupCount, pPhysicalDeviceGroupProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void> _vkGetDeviceGroupPeerMemoryFeatures_fnptr = &vkGetDeviceGroupPeerMemoryFeatures_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void> _vkGetDeviceGroupPeerMemoryFeatures_fnptr = &vkGetDeviceGroupPeerMemoryFeatures_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceGroupPeerMemoryFeatures_Lazy(IntPtr device, uint heapIndex, uint localDeviceIndex, uint remoteDeviceIndex, VkPeerMemoryFeatureFlagBits* pPeerMemoryFeatures)
+        private static void vkGetDeviceGroupPeerMemoryFeatures_Lazy(VkDevice device, uint heapIndex, uint localDeviceIndex, uint remoteDeviceIndex, VkPeerMemoryFeatureFlagBits* pPeerMemoryFeatures)
         {
-            _vkGetDeviceGroupPeerMemoryFeatures_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupPeerMemoryFeatures");
+            _vkGetDeviceGroupPeerMemoryFeatures_fnptr = (delegate* unmanaged<VkDevice, uint, uint, uint, VkPeerMemoryFeatureFlagBits*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupPeerMemoryFeatures");
             _vkGetDeviceGroupPeerMemoryFeatures_fnptr(device, heapIndex, localDeviceIndex, remoteDeviceIndex, pPeerMemoryFeatures);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkBindBufferMemoryInfo*, VkResult> _vkBindBufferMemory2_fnptr = &vkBindBufferMemory2_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkBindBufferMemoryInfo*, VkResult> _vkBindBufferMemory2_fnptr = &vkBindBufferMemory2_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindBufferMemory2_Lazy(IntPtr device, uint bindInfoCount, VkBindBufferMemoryInfo* pBindInfos)
+        private static VkResult vkBindBufferMemory2_Lazy(VkDevice device, uint bindInfoCount, VkBindBufferMemoryInfo* pBindInfos)
         {
-            _vkBindBufferMemory2_fnptr = (delegate* unmanaged<IntPtr, uint, VkBindBufferMemoryInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindBufferMemory2");
+            _vkBindBufferMemory2_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindBufferMemoryInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindBufferMemory2");
             return _vkBindBufferMemory2_fnptr(device, bindInfoCount, pBindInfos);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkBindImageMemoryInfo*, VkResult> _vkBindImageMemory2_fnptr = &vkBindImageMemory2_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkBindImageMemoryInfo*, VkResult> _vkBindImageMemory2_fnptr = &vkBindImageMemory2_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindImageMemory2_Lazy(IntPtr device, uint bindInfoCount, VkBindImageMemoryInfo* pBindInfos)
+        private static VkResult vkBindImageMemory2_Lazy(VkDevice device, uint bindInfoCount, VkBindImageMemoryInfo* pBindInfos)
         {
-            _vkBindImageMemory2_fnptr = (delegate* unmanaged<IntPtr, uint, VkBindImageMemoryInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindImageMemory2");
+            _vkBindImageMemory2_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindImageMemoryInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindImageMemory2");
             return _vkBindImageMemory2_fnptr(device, bindInfoCount, pBindInfos);
         }
-        internal static delegate* unmanaged<IntPtr, uint, void> _vkCmdSetDeviceMask_fnptr = &vkCmdSetDeviceMask_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, void> _vkCmdSetDeviceMask_fnptr = &vkCmdSetDeviceMask_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDeviceMask_Lazy(IntPtr commandBuffer, uint deviceMask)
+        private static void vkCmdSetDeviceMask_Lazy(VkCommandBuffer commandBuffer, uint deviceMask)
         {
-            _vkCmdSetDeviceMask_fnptr = (delegate* unmanaged<IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDeviceMask");
+            _vkCmdSetDeviceMask_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDeviceMask");
             _vkCmdSetDeviceMask_fnptr(commandBuffer, deviceMask);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceGroupPresentCapabilitiesKHR*, VkResult> _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr = &vkGetDeviceGroupPresentCapabilitiesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceGroupPresentCapabilitiesKHR*, VkResult> _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr = &vkGetDeviceGroupPresentCapabilitiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeviceGroupPresentCapabilitiesKHR_Lazy(IntPtr device, VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities)
+        private static VkResult vkGetDeviceGroupPresentCapabilitiesKHR_Lazy(VkDevice device, VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities)
         {
-            _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkDeviceGroupPresentCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupPresentCapabilitiesKHR");
+            _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeviceGroupPresentCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupPresentCapabilitiesKHR");
             return _vkGetDeviceGroupPresentCapabilitiesKHR_fnptr(device, pDeviceGroupPresentCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult> _vkGetDeviceGroupSurfacePresentModesKHR_fnptr = &vkGetDeviceGroupSurfacePresentModesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSurfaceKHR, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult> _vkGetDeviceGroupSurfacePresentModesKHR_fnptr = &vkGetDeviceGroupSurfacePresentModesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeviceGroupSurfacePresentModesKHR_Lazy(IntPtr device, IntPtr surface, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
+        private static VkResult vkGetDeviceGroupSurfacePresentModesKHR_Lazy(VkDevice device, VkSurfaceKHR surface, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
         {
-            _vkGetDeviceGroupSurfacePresentModesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupSurfacePresentModesKHR");
+            _vkGetDeviceGroupSurfacePresentModesKHR_fnptr = (delegate* unmanaged<VkDevice, VkSurfaceKHR, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupSurfacePresentModesKHR");
             return _vkGetDeviceGroupSurfacePresentModesKHR_fnptr(device, surface, pModes);
         }
-        internal static delegate* unmanaged<IntPtr, VkAcquireNextImageInfoKHR*, uint*, VkResult> _vkAcquireNextImage2KHR_fnptr = &vkAcquireNextImage2KHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAcquireNextImageInfoKHR*, uint*, VkResult> _vkAcquireNextImage2KHR_fnptr = &vkAcquireNextImage2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireNextImage2KHR_Lazy(IntPtr device, VkAcquireNextImageInfoKHR* pAcquireInfo, uint* pImageIndex)
+        private static VkResult vkAcquireNextImage2KHR_Lazy(VkDevice device, VkAcquireNextImageInfoKHR* pAcquireInfo, uint* pImageIndex)
         {
-            _vkAcquireNextImage2KHR_fnptr = (delegate* unmanaged<IntPtr, VkAcquireNextImageInfoKHR*, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireNextImage2KHR");
+            _vkAcquireNextImage2KHR_fnptr = (delegate* unmanaged<VkDevice, VkAcquireNextImageInfoKHR*, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireNextImage2KHR");
             return _vkAcquireNextImage2KHR_fnptr(device, pAcquireInfo, pImageIndex);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, uint, uint, uint, void> _vkCmdDispatchBase_fnptr = &vkCmdDispatchBase_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, uint, uint, void> _vkCmdDispatchBase_fnptr = &vkCmdDispatchBase_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchBase_Lazy(IntPtr commandBuffer, uint baseGroupX, uint baseGroupY, uint baseGroupZ, uint groupCountX, uint groupCountY, uint groupCountZ)
+        private static void vkCmdDispatchBase_Lazy(VkCommandBuffer commandBuffer, uint baseGroupX, uint baseGroupY, uint baseGroupZ, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
-            _vkCmdDispatchBase_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchBase");
+            _vkCmdDispatchBase_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchBase");
             _vkCmdDispatchBase_fnptr(commandBuffer, baseGroupX, baseGroupY, baseGroupZ, groupCountX, groupCountY, groupCountZ);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkRect2D*, VkResult> _vkGetPhysicalDevicePresentRectanglesKHR_fnptr = &vkGetPhysicalDevicePresentRectanglesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkRect2D*, VkResult> _vkGetPhysicalDevicePresentRectanglesKHR_fnptr = &vkGetPhysicalDevicePresentRectanglesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDevicePresentRectanglesKHR_Lazy(IntPtr physicalDevice, IntPtr surface, uint* pRectCount, VkRect2D* pRects)
+        private static VkResult vkGetPhysicalDevicePresentRectanglesKHR_Lazy(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint* pRectCount, VkRect2D* pRects)
         {
-            _vkGetPhysicalDevicePresentRectanglesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkRect2D*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDevicePresentRectanglesKHR");
+            _vkGetPhysicalDevicePresentRectanglesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSurfaceKHR, uint*, VkRect2D*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDevicePresentRectanglesKHR");
             return _vkGetPhysicalDevicePresentRectanglesKHR_fnptr(physicalDevice, surface, pRectCount, pRects);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDescriptorUpdateTemplate_fnptr = &vkCreateDescriptorUpdateTemplate_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, VkDescriptorUpdateTemplate*, VkResult> _vkCreateDescriptorUpdateTemplate_fnptr = &vkCreateDescriptorUpdateTemplate_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDescriptorUpdateTemplate_Lazy(IntPtr device, VkDescriptorUpdateTemplateCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pDescriptorUpdateTemplate)
+        private static VkResult vkCreateDescriptorUpdateTemplate_Lazy(VkDevice device, VkDescriptorUpdateTemplateCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate)
         {
-            _vkCreateDescriptorUpdateTemplate_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorUpdateTemplate");
+            _vkCreateDescriptorUpdateTemplate_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplateCreateInfo*, VkAllocationCallbacks*, VkDescriptorUpdateTemplate*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDescriptorUpdateTemplate");
             return _vkCreateDescriptorUpdateTemplate_fnptr(device, pCreateInfo, pAllocator, pDescriptorUpdateTemplate);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDescriptorUpdateTemplate_fnptr = &vkDestroyDescriptorUpdateTemplate_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplate, VkAllocationCallbacks*, void> _vkDestroyDescriptorUpdateTemplate_fnptr = &vkDestroyDescriptorUpdateTemplate_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDescriptorUpdateTemplate_Lazy(IntPtr device, IntPtr descriptorUpdateTemplate, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDescriptorUpdateTemplate_Lazy(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDescriptorUpdateTemplate_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorUpdateTemplate");
+            _vkDestroyDescriptorUpdateTemplate_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorUpdateTemplate, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDescriptorUpdateTemplate");
             _vkDestroyDescriptorUpdateTemplate_fnptr(device, descriptorUpdateTemplate, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, void*, void> _vkUpdateDescriptorSetWithTemplate_fnptr = &vkUpdateDescriptorSetWithTemplate_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void> _vkUpdateDescriptorSetWithTemplate_fnptr = &vkUpdateDescriptorSetWithTemplate_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkUpdateDescriptorSetWithTemplate_Lazy(IntPtr device, IntPtr descriptorSet, IntPtr descriptorUpdateTemplate, void* pData)
+        private static void vkUpdateDescriptorSetWithTemplate_Lazy(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, void* pData)
         {
-            _vkUpdateDescriptorSetWithTemplate_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, void*, void>)VKLoader.GetInstanceProcAddress("vkUpdateDescriptorSetWithTemplate");
+            _vkUpdateDescriptorSetWithTemplate_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSet, VkDescriptorUpdateTemplate, void*, void>)VKLoader.GetInstanceProcAddress("vkUpdateDescriptorSetWithTemplate");
             _vkUpdateDescriptorSetWithTemplate_fnptr(device, descriptorSet, descriptorUpdateTemplate, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, void*, void> _vkCmdPushDescriptorSetWithTemplateKHR_fnptr = &vkCmdPushDescriptorSetWithTemplateKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, uint, void*, void> _vkCmdPushDescriptorSetWithTemplateKHR_fnptr = &vkCmdPushDescriptorSetWithTemplateKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushDescriptorSetWithTemplateKHR_Lazy(IntPtr commandBuffer, IntPtr descriptorUpdateTemplate, IntPtr layout, uint set, void* pData)
+        private static void vkCmdPushDescriptorSetWithTemplateKHR_Lazy(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint set, void* pData)
         {
-            _vkCmdPushDescriptorSetWithTemplateKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetWithTemplateKHR");
+            _vkCmdPushDescriptorSetWithTemplateKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDescriptorUpdateTemplate, VkPipelineLayout, uint, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetWithTemplateKHR");
             _vkCmdPushDescriptorSetWithTemplateKHR_fnptr(commandBuffer, descriptorUpdateTemplate, layout, set, pData);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkHdrMetadataEXT*, void> _vkSetHdrMetadataEXT_fnptr = &vkSetHdrMetadataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkSwapchainKHR*, VkHdrMetadataEXT*, void> _vkSetHdrMetadataEXT_fnptr = &vkSetHdrMetadataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkSetHdrMetadataEXT_Lazy(IntPtr device, uint swapchainCount, IntPtr* pSwapchains, VkHdrMetadataEXT* pMetadata)
+        private static void vkSetHdrMetadataEXT_Lazy(VkDevice device, uint swapchainCount, VkSwapchainKHR* pSwapchains, VkHdrMetadataEXT* pMetadata)
         {
-            _vkSetHdrMetadataEXT_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkHdrMetadataEXT*, void>)VKLoader.GetInstanceProcAddress("vkSetHdrMetadataEXT");
+            _vkSetHdrMetadataEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkSwapchainKHR*, VkHdrMetadataEXT*, void>)VKLoader.GetInstanceProcAddress("vkSetHdrMetadataEXT");
             _vkSetHdrMetadataEXT_fnptr(device, swapchainCount, pSwapchains, pMetadata);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkGetSwapchainStatusKHR_fnptr = &vkGetSwapchainStatusKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult> _vkGetSwapchainStatusKHR_fnptr = &vkGetSwapchainStatusKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSwapchainStatusKHR_Lazy(IntPtr device, IntPtr swapchain)
+        private static VkResult vkGetSwapchainStatusKHR_Lazy(VkDevice device, VkSwapchainKHR swapchain)
         {
-            _vkGetSwapchainStatusKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainStatusKHR");
+            _vkGetSwapchainStatusKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainStatusKHR");
             return _vkGetSwapchainStatusKHR_fnptr(device, swapchain);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkRefreshCycleDurationGOOGLE*, VkResult> _vkGetRefreshCycleDurationGOOGLE_fnptr = &vkGetRefreshCycleDurationGOOGLE_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkRefreshCycleDurationGOOGLE*, VkResult> _vkGetRefreshCycleDurationGOOGLE_fnptr = &vkGetRefreshCycleDurationGOOGLE_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetRefreshCycleDurationGOOGLE_Lazy(IntPtr device, IntPtr swapchain, VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties)
+        private static VkResult vkGetRefreshCycleDurationGOOGLE_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties)
         {
-            _vkGetRefreshCycleDurationGOOGLE_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkRefreshCycleDurationGOOGLE*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRefreshCycleDurationGOOGLE");
+            _vkGetRefreshCycleDurationGOOGLE_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkRefreshCycleDurationGOOGLE*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRefreshCycleDurationGOOGLE");
             return _vkGetRefreshCycleDurationGOOGLE_fnptr(device, swapchain, pDisplayTimingProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkPastPresentationTimingGOOGLE*, VkResult> _vkGetPastPresentationTimingGOOGLE_fnptr = &vkGetPastPresentationTimingGOOGLE_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkPastPresentationTimingGOOGLE*, VkResult> _vkGetPastPresentationTimingGOOGLE_fnptr = &vkGetPastPresentationTimingGOOGLE_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPastPresentationTimingGOOGLE_Lazy(IntPtr device, IntPtr swapchain, uint* pPresentationTimingCount, VkPastPresentationTimingGOOGLE* pPresentationTimings)
+        private static VkResult vkGetPastPresentationTimingGOOGLE_Lazy(VkDevice device, VkSwapchainKHR swapchain, uint* pPresentationTimingCount, VkPastPresentationTimingGOOGLE* pPresentationTimings)
         {
-            _vkGetPastPresentationTimingGOOGLE_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkPastPresentationTimingGOOGLE*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPastPresentationTimingGOOGLE");
+            _vkGetPastPresentationTimingGOOGLE_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, uint*, VkPastPresentationTimingGOOGLE*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPastPresentationTimingGOOGLE");
             return _vkGetPastPresentationTimingGOOGLE_fnptr(device, swapchain, pPresentationTimingCount, pPresentationTimings);
         }
-        internal static delegate* unmanaged<IntPtr, VkIOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateIOSSurfaceMVK_fnptr = &vkCreateIOSSurfaceMVK_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkIOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateIOSSurfaceMVK_fnptr = &vkCreateIOSSurfaceMVK_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateIOSSurfaceMVK_Lazy(IntPtr instance, VkIOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateIOSSurfaceMVK_Lazy(VkInstance instance, VkIOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateIOSSurfaceMVK_fnptr = (delegate* unmanaged<IntPtr, VkIOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateIOSSurfaceMVK");
+            _vkCreateIOSSurfaceMVK_fnptr = (delegate* unmanaged<VkInstance, VkIOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateIOSSurfaceMVK");
             return _vkCreateIOSSurfaceMVK_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, VkMacOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateMacOSSurfaceMVK_fnptr = &vkCreateMacOSSurfaceMVK_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkMacOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateMacOSSurfaceMVK_fnptr = &vkCreateMacOSSurfaceMVK_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateMacOSSurfaceMVK_Lazy(IntPtr instance, VkMacOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateMacOSSurfaceMVK_Lazy(VkInstance instance, VkMacOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateMacOSSurfaceMVK_fnptr = (delegate* unmanaged<IntPtr, VkMacOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMacOSSurfaceMVK");
+            _vkCreateMacOSSurfaceMVK_fnptr = (delegate* unmanaged<VkInstance, VkMacOSSurfaceCreateInfoMVK*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMacOSSurfaceMVK");
             return _vkCreateMacOSSurfaceMVK_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, VkMetalSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateMetalSurfaceEXT_fnptr = &vkCreateMetalSurfaceEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkMetalSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateMetalSurfaceEXT_fnptr = &vkCreateMetalSurfaceEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateMetalSurfaceEXT_Lazy(IntPtr instance, VkMetalSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateMetalSurfaceEXT_Lazy(VkInstance instance, VkMetalSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateMetalSurfaceEXT_fnptr = (delegate* unmanaged<IntPtr, VkMetalSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMetalSurfaceEXT");
+            _vkCreateMetalSurfaceEXT_fnptr = (delegate* unmanaged<VkInstance, VkMetalSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMetalSurfaceEXT");
             return _vkCreateMetalSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkViewportWScalingNV*, void> _vkCmdSetViewportWScalingNV_fnptr = &vkCmdSetViewportWScalingNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewportWScalingNV*, void> _vkCmdSetViewportWScalingNV_fnptr = &vkCmdSetViewportWScalingNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewportWScalingNV_Lazy(IntPtr commandBuffer, uint firstViewport, uint viewportCount, VkViewportWScalingNV* pViewportWScalings)
+        private static void vkCmdSetViewportWScalingNV_Lazy(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewportWScalingNV* pViewportWScalings)
         {
-            _vkCmdSetViewportWScalingNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkViewportWScalingNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWScalingNV");
+            _vkCmdSetViewportWScalingNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewportWScalingNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWScalingNV");
             _vkCmdSetViewportWScalingNV_fnptr(commandBuffer, firstViewport, viewportCount, pViewportWScalings);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void> _vkCmdSetDiscardRectangleEXT_fnptr = &vkCmdSetDiscardRectangleEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void> _vkCmdSetDiscardRectangleEXT_fnptr = &vkCmdSetDiscardRectangleEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDiscardRectangleEXT_Lazy(IntPtr commandBuffer, uint firstDiscardRectangle, uint discardRectangleCount, VkRect2D* pDiscardRectangles)
+        private static void vkCmdSetDiscardRectangleEXT_Lazy(VkCommandBuffer commandBuffer, uint firstDiscardRectangle, uint discardRectangleCount, VkRect2D* pDiscardRectangles)
         {
-            _vkCmdSetDiscardRectangleEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleEXT");
+            _vkCmdSetDiscardRectangleEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleEXT");
             _vkCmdSetDiscardRectangleEXT_fnptr(commandBuffer, firstDiscardRectangle, discardRectangleCount, pDiscardRectangles);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDiscardRectangleEnableEXT_fnptr = &vkCmdSetDiscardRectangleEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDiscardRectangleEnableEXT_fnptr = &vkCmdSetDiscardRectangleEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDiscardRectangleEnableEXT_Lazy(IntPtr commandBuffer, int discardRectangleEnable)
+        private static void vkCmdSetDiscardRectangleEnableEXT_Lazy(VkCommandBuffer commandBuffer, int discardRectangleEnable)
         {
-            _vkCmdSetDiscardRectangleEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleEnableEXT");
+            _vkCmdSetDiscardRectangleEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleEnableEXT");
             _vkCmdSetDiscardRectangleEnableEXT_fnptr(commandBuffer, discardRectangleEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkDiscardRectangleModeEXT, void> _vkCmdSetDiscardRectangleModeEXT_fnptr = &vkCmdSetDiscardRectangleModeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDiscardRectangleModeEXT, void> _vkCmdSetDiscardRectangleModeEXT_fnptr = &vkCmdSetDiscardRectangleModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDiscardRectangleModeEXT_Lazy(IntPtr commandBuffer, VkDiscardRectangleModeEXT discardRectangleMode)
+        private static void vkCmdSetDiscardRectangleModeEXT_Lazy(VkCommandBuffer commandBuffer, VkDiscardRectangleModeEXT discardRectangleMode)
         {
-            _vkCmdSetDiscardRectangleModeEXT_fnptr = (delegate* unmanaged<IntPtr, VkDiscardRectangleModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleModeEXT");
+            _vkCmdSetDiscardRectangleModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDiscardRectangleModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDiscardRectangleModeEXT");
             _vkCmdSetDiscardRectangleModeEXT_fnptr(commandBuffer, discardRectangleMode);
         }
-        internal static delegate* unmanaged<IntPtr, VkSampleLocationsInfoEXT*, void> _vkCmdSetSampleLocationsEXT_fnptr = &vkCmdSetSampleLocationsEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSampleLocationsInfoEXT*, void> _vkCmdSetSampleLocationsEXT_fnptr = &vkCmdSetSampleLocationsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetSampleLocationsEXT_Lazy(IntPtr commandBuffer, VkSampleLocationsInfoEXT* pSampleLocationsInfo)
+        private static void vkCmdSetSampleLocationsEXT_Lazy(VkCommandBuffer commandBuffer, VkSampleLocationsInfoEXT* pSampleLocationsInfo)
         {
-            _vkCmdSetSampleLocationsEXT_fnptr = (delegate* unmanaged<IntPtr, VkSampleLocationsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleLocationsEXT");
+            _vkCmdSetSampleLocationsEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSampleLocationsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleLocationsEXT");
             _vkCmdSetSampleLocationsEXT_fnptr(commandBuffer, pSampleLocationsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSampleCountFlagBits, VkMultisamplePropertiesEXT*, void> _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr = &vkGetPhysicalDeviceMultisamplePropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkSampleCountFlagBits, VkMultisamplePropertiesEXT*, void> _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr = &vkGetPhysicalDeviceMultisamplePropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceMultisamplePropertiesEXT_Lazy(IntPtr physicalDevice, VkSampleCountFlagBits samples, VkMultisamplePropertiesEXT* pMultisampleProperties)
+        private static void vkGetPhysicalDeviceMultisamplePropertiesEXT_Lazy(VkPhysicalDevice physicalDevice, VkSampleCountFlagBits samples, VkMultisamplePropertiesEXT* pMultisampleProperties)
         {
-            _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, VkSampleCountFlagBits, VkMultisamplePropertiesEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMultisamplePropertiesEXT");
+            _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkSampleCountFlagBits, VkMultisamplePropertiesEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceMultisamplePropertiesEXT");
             _vkGetPhysicalDeviceMultisamplePropertiesEXT_fnptr(physicalDevice, samples, pMultisampleProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, VkSurfaceCapabilities2KHR*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr = &vkGetPhysicalDeviceSurfaceCapabilities2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, VkSurfaceCapabilities2KHR*, VkResult> _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr = &vkGetPhysicalDeviceSurfaceCapabilities2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR_Lazy(IntPtr physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkSurfaceCapabilities2KHR* pSurfaceCapabilities)
+        private static VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkSurfaceCapabilities2KHR* pSurfaceCapabilities)
         {
-            _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, VkSurfaceCapabilities2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilities2KHR");
+            _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, VkSurfaceCapabilities2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceCapabilities2KHR");
             return _vkGetPhysicalDeviceSurfaceCapabilities2KHR_fnptr(physicalDevice, pSurfaceInfo, pSurfaceCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkSurfaceFormat2KHR*, VkResult> _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr = &vkGetPhysicalDeviceSurfaceFormats2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkSurfaceFormat2KHR*, VkResult> _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr = &vkGetPhysicalDeviceSurfaceFormats2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfaceFormats2KHR_Lazy(IntPtr physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pSurfaceFormatCount, VkSurfaceFormat2KHR* pSurfaceFormats)
+        private static VkResult vkGetPhysicalDeviceSurfaceFormats2KHR_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pSurfaceFormatCount, VkSurfaceFormat2KHR* pSurfaceFormats)
         {
-            _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkSurfaceFormat2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceFormats2KHR");
+            _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkSurfaceFormat2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfaceFormats2KHR");
             return _vkGetPhysicalDeviceSurfaceFormats2KHR_fnptr(physicalDevice, pSurfaceInfo, pSurfaceFormatCount, pSurfaceFormats);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkDisplayProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr = &vkGetPhysicalDeviceDisplayProperties2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr = &vkGetPhysicalDeviceDisplayProperties2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceDisplayProperties2KHR_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkDisplayProperties2KHR* pProperties)
+        private static VkResult vkGetPhysicalDeviceDisplayProperties2KHR_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayProperties2KHR* pProperties)
         {
-            _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkDisplayProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayProperties2KHR");
+            _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayProperties2KHR");
             return _vkGetPhysicalDeviceDisplayProperties2KHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkDisplayPlaneProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = &vkGetPhysicalDeviceDisplayPlaneProperties2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult> _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = &vkGetPhysicalDeviceDisplayPlaneProperties2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceDisplayPlaneProperties2KHR_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkDisplayPlaneProperties2KHR* pProperties)
+        private static VkResult vkGetPhysicalDeviceDisplayPlaneProperties2KHR_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkDisplayPlaneProperties2KHR* pProperties)
         {
-            _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkDisplayPlaneProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
+            _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkDisplayPlaneProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceDisplayPlaneProperties2KHR");
             return _vkGetPhysicalDeviceDisplayPlaneProperties2KHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkDisplayModeProperties2KHR*, VkResult> _vkGetDisplayModeProperties2KHR_fnptr = &vkGetDisplayModeProperties2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, uint*, VkDisplayModeProperties2KHR*, VkResult> _vkGetDisplayModeProperties2KHR_fnptr = &vkGetDisplayModeProperties2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDisplayModeProperties2KHR_Lazy(IntPtr physicalDevice, IntPtr display, uint* pPropertyCount, VkDisplayModeProperties2KHR* pProperties)
+        private static VkResult vkGetDisplayModeProperties2KHR_Lazy(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint* pPropertyCount, VkDisplayModeProperties2KHR* pProperties)
         {
-            _vkGetDisplayModeProperties2KHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkDisplayModeProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayModeProperties2KHR");
+            _vkGetDisplayModeProperties2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayKHR, uint*, VkDisplayModeProperties2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayModeProperties2KHR");
             return _vkGetDisplayModeProperties2KHR_fnptr(physicalDevice, display, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkDisplayPlaneInfo2KHR*, VkDisplayPlaneCapabilities2KHR*, VkResult> _vkGetDisplayPlaneCapabilities2KHR_fnptr = &vkGetDisplayPlaneCapabilities2KHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkDisplayPlaneInfo2KHR*, VkDisplayPlaneCapabilities2KHR*, VkResult> _vkGetDisplayPlaneCapabilities2KHR_fnptr = &vkGetDisplayPlaneCapabilities2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDisplayPlaneCapabilities2KHR_Lazy(IntPtr physicalDevice, VkDisplayPlaneInfo2KHR* pDisplayPlaneInfo, VkDisplayPlaneCapabilities2KHR* pCapabilities)
+        private static VkResult vkGetDisplayPlaneCapabilities2KHR_Lazy(VkPhysicalDevice physicalDevice, VkDisplayPlaneInfo2KHR* pDisplayPlaneInfo, VkDisplayPlaneCapabilities2KHR* pCapabilities)
         {
-            _vkGetDisplayPlaneCapabilities2KHR_fnptr = (delegate* unmanaged<IntPtr, VkDisplayPlaneInfo2KHR*, VkDisplayPlaneCapabilities2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneCapabilities2KHR");
+            _vkGetDisplayPlaneCapabilities2KHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkDisplayPlaneInfo2KHR*, VkDisplayPlaneCapabilities2KHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDisplayPlaneCapabilities2KHR");
             return _vkGetDisplayPlaneCapabilities2KHR_fnptr(physicalDevice, pDisplayPlaneInfo, pCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetBufferMemoryRequirements2_fnptr = &vkGetBufferMemoryRequirements2_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetBufferMemoryRequirements2_fnptr = &vkGetBufferMemoryRequirements2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetBufferMemoryRequirements2_Lazy(IntPtr device, VkBufferMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetBufferMemoryRequirements2_Lazy(VkDevice device, VkBufferMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetBufferMemoryRequirements2_fnptr = (delegate* unmanaged<IntPtr, VkBufferMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetBufferMemoryRequirements2");
+            _vkGetBufferMemoryRequirements2_fnptr = (delegate* unmanaged<VkDevice, VkBufferMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetBufferMemoryRequirements2");
             _vkGetBufferMemoryRequirements2_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetImageMemoryRequirements2_fnptr = &vkGetImageMemoryRequirements2_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void> _vkGetImageMemoryRequirements2_fnptr = &vkGetImageMemoryRequirements2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageMemoryRequirements2_Lazy(IntPtr device, VkImageMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetImageMemoryRequirements2_Lazy(VkDevice device, VkImageMemoryRequirementsInfo2* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetImageMemoryRequirements2_fnptr = (delegate* unmanaged<IntPtr, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetImageMemoryRequirements2");
+            _vkGetImageMemoryRequirements2_fnptr = (delegate* unmanaged<VkDevice, VkImageMemoryRequirementsInfo2*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetImageMemoryRequirements2");
             _vkGetImageMemoryRequirements2_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void> _vkGetImageSparseMemoryRequirements2_fnptr = &vkGetImageSparseMemoryRequirements2_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void> _vkGetImageSparseMemoryRequirements2_fnptr = &vkGetImageSparseMemoryRequirements2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageSparseMemoryRequirements2_Lazy(IntPtr device, VkImageSparseMemoryRequirementsInfo2* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
+        private static void vkGetImageSparseMemoryRequirements2_Lazy(VkDevice device, VkImageSparseMemoryRequirementsInfo2* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
-            _vkGetImageSparseMemoryRequirements2_fnptr = (delegate* unmanaged<IntPtr, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSparseMemoryRequirements2");
+            _vkGetImageSparseMemoryRequirements2_fnptr = (delegate* unmanaged<VkDevice, VkImageSparseMemoryRequirementsInfo2*, uint*, VkSparseImageMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSparseMemoryRequirements2");
             _vkGetImageSparseMemoryRequirements2_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceBufferMemoryRequirements_fnptr = &vkGetDeviceBufferMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceBufferMemoryRequirements_fnptr = &vkGetDeviceBufferMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceBufferMemoryRequirements_Lazy(IntPtr device, VkDeviceBufferMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetDeviceBufferMemoryRequirements_Lazy(VkDevice device, VkDeviceBufferMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetDeviceBufferMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceBufferMemoryRequirements");
+            _vkGetDeviceBufferMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkDeviceBufferMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceBufferMemoryRequirements");
             _vkGetDeviceBufferMemoryRequirements_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceImageMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceImageMemoryRequirements_fnptr = &vkGetDeviceImageMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceImageMemoryRequirements*, VkMemoryRequirements2*, void> _vkGetDeviceImageMemoryRequirements_fnptr = &vkGetDeviceImageMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceImageMemoryRequirements_Lazy(IntPtr device, VkDeviceImageMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetDeviceImageMemoryRequirements_Lazy(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetDeviceImageMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, VkDeviceImageMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageMemoryRequirements");
+            _vkGetDeviceImageMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkDeviceImageMemoryRequirements*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageMemoryRequirements");
             _vkGetDeviceImageMemoryRequirements_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceImageMemoryRequirements*, uint*, VkSparseImageMemoryRequirements2*, void> _vkGetDeviceImageSparseMemoryRequirements_fnptr = &vkGetDeviceImageSparseMemoryRequirements_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceImageMemoryRequirements*, uint*, VkSparseImageMemoryRequirements2*, void> _vkGetDeviceImageSparseMemoryRequirements_fnptr = &vkGetDeviceImageSparseMemoryRequirements_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceImageSparseMemoryRequirements_Lazy(IntPtr device, VkDeviceImageMemoryRequirements* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
+        private static void vkGetDeviceImageSparseMemoryRequirements_Lazy(VkDevice device, VkDeviceImageMemoryRequirements* pInfo, uint* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements2* pSparseMemoryRequirements)
         {
-            _vkGetDeviceImageSparseMemoryRequirements_fnptr = (delegate* unmanaged<IntPtr, VkDeviceImageMemoryRequirements*, uint*, VkSparseImageMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageSparseMemoryRequirements");
+            _vkGetDeviceImageSparseMemoryRequirements_fnptr = (delegate* unmanaged<VkDevice, VkDeviceImageMemoryRequirements*, uint*, VkSparseImageMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageSparseMemoryRequirements");
             _vkGetDeviceImageSparseMemoryRequirements_fnptr(device, pInfo, pSparseMemoryRequirementCount, pSparseMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkSamplerYcbcrConversionCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateSamplerYcbcrConversion_fnptr = &vkCreateSamplerYcbcrConversion_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSamplerYcbcrConversionCreateInfo*, VkAllocationCallbacks*, VkSamplerYcbcrConversion*, VkResult> _vkCreateSamplerYcbcrConversion_fnptr = &vkCreateSamplerYcbcrConversion_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateSamplerYcbcrConversion_Lazy(IntPtr device, VkSamplerYcbcrConversionCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pYcbcrConversion)
+        private static VkResult vkCreateSamplerYcbcrConversion_Lazy(VkDevice device, VkSamplerYcbcrConversionCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSamplerYcbcrConversion* pYcbcrConversion)
         {
-            _vkCreateSamplerYcbcrConversion_fnptr = (delegate* unmanaged<IntPtr, VkSamplerYcbcrConversionCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSamplerYcbcrConversion");
+            _vkCreateSamplerYcbcrConversion_fnptr = (delegate* unmanaged<VkDevice, VkSamplerYcbcrConversionCreateInfo*, VkAllocationCallbacks*, VkSamplerYcbcrConversion*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateSamplerYcbcrConversion");
             return _vkCreateSamplerYcbcrConversion_fnptr(device, pCreateInfo, pAllocator, pYcbcrConversion);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroySamplerYcbcrConversion_fnptr = &vkDestroySamplerYcbcrConversion_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSamplerYcbcrConversion, VkAllocationCallbacks*, void> _vkDestroySamplerYcbcrConversion_fnptr = &vkDestroySamplerYcbcrConversion_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroySamplerYcbcrConversion_Lazy(IntPtr device, IntPtr ycbcrConversion, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroySamplerYcbcrConversion_Lazy(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroySamplerYcbcrConversion_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySamplerYcbcrConversion");
+            _vkDestroySamplerYcbcrConversion_fnptr = (delegate* unmanaged<VkDevice, VkSamplerYcbcrConversion, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroySamplerYcbcrConversion");
             _vkDestroySamplerYcbcrConversion_fnptr(device, ycbcrConversion, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceQueueInfo2*, IntPtr*, void> _vkGetDeviceQueue2_fnptr = &vkGetDeviceQueue2_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceQueueInfo2*, VkQueue*, void> _vkGetDeviceQueue2_fnptr = &vkGetDeviceQueue2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceQueue2_Lazy(IntPtr device, VkDeviceQueueInfo2* pQueueInfo, IntPtr* pQueue)
+        private static void vkGetDeviceQueue2_Lazy(VkDevice device, VkDeviceQueueInfo2* pQueueInfo, VkQueue* pQueue)
         {
-            _vkGetDeviceQueue2_fnptr = (delegate* unmanaged<IntPtr, VkDeviceQueueInfo2*, IntPtr*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceQueue2");
+            _vkGetDeviceQueue2_fnptr = (delegate* unmanaged<VkDevice, VkDeviceQueueInfo2*, VkQueue*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceQueue2");
             _vkGetDeviceQueue2_fnptr(device, pQueueInfo, pQueue);
         }
-        internal static delegate* unmanaged<IntPtr, VkValidationCacheCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateValidationCacheEXT_fnptr = &vkCreateValidationCacheEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkValidationCacheCreateInfoEXT*, VkAllocationCallbacks*, VkValidationCacheEXT*, VkResult> _vkCreateValidationCacheEXT_fnptr = &vkCreateValidationCacheEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateValidationCacheEXT_Lazy(IntPtr device, VkValidationCacheCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pValidationCache)
+        private static VkResult vkCreateValidationCacheEXT_Lazy(VkDevice device, VkValidationCacheCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkValidationCacheEXT* pValidationCache)
         {
-            _vkCreateValidationCacheEXT_fnptr = (delegate* unmanaged<IntPtr, VkValidationCacheCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateValidationCacheEXT");
+            _vkCreateValidationCacheEXT_fnptr = (delegate* unmanaged<VkDevice, VkValidationCacheCreateInfoEXT*, VkAllocationCallbacks*, VkValidationCacheEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateValidationCacheEXT");
             return _vkCreateValidationCacheEXT_fnptr(device, pCreateInfo, pAllocator, pValidationCache);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyValidationCacheEXT_fnptr = &vkDestroyValidationCacheEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkValidationCacheEXT, VkAllocationCallbacks*, void> _vkDestroyValidationCacheEXT_fnptr = &vkDestroyValidationCacheEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyValidationCacheEXT_Lazy(IntPtr device, IntPtr validationCache, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyValidationCacheEXT_Lazy(VkDevice device, VkValidationCacheEXT validationCache, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyValidationCacheEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyValidationCacheEXT");
+            _vkDestroyValidationCacheEXT_fnptr = (delegate* unmanaged<VkDevice, VkValidationCacheEXT, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyValidationCacheEXT");
             _vkDestroyValidationCacheEXT_fnptr(device, validationCache, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult> _vkGetValidationCacheDataEXT_fnptr = &vkGetValidationCacheDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkValidationCacheEXT, nuint*, void*, VkResult> _vkGetValidationCacheDataEXT_fnptr = &vkGetValidationCacheDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetValidationCacheDataEXT_Lazy(IntPtr device, IntPtr validationCache, nuint* pDataSize, void* pData)
+        private static VkResult vkGetValidationCacheDataEXT_Lazy(VkDevice device, VkValidationCacheEXT validationCache, nuint* pDataSize, void* pData)
         {
-            _vkGetValidationCacheDataEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetValidationCacheDataEXT");
+            _vkGetValidationCacheDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkValidationCacheEXT, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetValidationCacheDataEXT");
             return _vkGetValidationCacheDataEXT_fnptr(device, validationCache, pDataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult> _vkMergeValidationCachesEXT_fnptr = &vkMergeValidationCachesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkValidationCacheEXT, uint, VkValidationCacheEXT*, VkResult> _vkMergeValidationCachesEXT_fnptr = &vkMergeValidationCachesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkMergeValidationCachesEXT_Lazy(IntPtr device, IntPtr dstCache, uint srcCacheCount, IntPtr* pSrcCaches)
+        private static VkResult vkMergeValidationCachesEXT_Lazy(VkDevice device, VkValidationCacheEXT dstCache, uint srcCacheCount, VkValidationCacheEXT* pSrcCaches)
         {
-            _vkMergeValidationCachesEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkMergeValidationCachesEXT");
+            _vkMergeValidationCachesEXT_fnptr = (delegate* unmanaged<VkDevice, VkValidationCacheEXT, uint, VkValidationCacheEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkMergeValidationCachesEXT");
             return _vkMergeValidationCachesEXT_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorSetLayoutCreateInfo*, VkDescriptorSetLayoutSupport*, void> _vkGetDescriptorSetLayoutSupport_fnptr = &vkGetDescriptorSetLayoutSupport_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetLayoutCreateInfo*, VkDescriptorSetLayoutSupport*, void> _vkGetDescriptorSetLayoutSupport_fnptr = &vkGetDescriptorSetLayoutSupport_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorSetLayoutSupport_Lazy(IntPtr device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkDescriptorSetLayoutSupport* pSupport)
+        private static void vkGetDescriptorSetLayoutSupport_Lazy(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkDescriptorSetLayoutSupport* pSupport)
         {
-            _vkGetDescriptorSetLayoutSupport_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorSetLayoutCreateInfo*, VkDescriptorSetLayoutSupport*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutSupport");
+            _vkGetDescriptorSetLayoutSupport_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetLayoutCreateInfo*, VkDescriptorSetLayoutSupport*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutSupport");
             _vkGetDescriptorSetLayoutSupport_fnptr(device, pCreateInfo, pSupport);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkImageUsageFlagBits, int*, VkResult> _vkGetSwapchainGrallocUsageANDROID_fnptr = &vkGetSwapchainGrallocUsageANDROID_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFormat, VkImageUsageFlagBits, int*, VkResult> _vkGetSwapchainGrallocUsageANDROID_fnptr = &vkGetSwapchainGrallocUsageANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSwapchainGrallocUsageANDROID_Lazy(IntPtr device, VkFormat format, VkImageUsageFlagBits imageUsage, int* grallocUsage)
+        private static VkResult vkGetSwapchainGrallocUsageANDROID_Lazy(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, int* grallocUsage)
         {
-            _vkGetSwapchainGrallocUsageANDROID_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkImageUsageFlagBits, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainGrallocUsageANDROID");
+            _vkGetSwapchainGrallocUsageANDROID_fnptr = (delegate* unmanaged<VkDevice, VkFormat, VkImageUsageFlagBits, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainGrallocUsageANDROID");
             return _vkGetSwapchainGrallocUsageANDROID_fnptr(device, format, imageUsage, grallocUsage);
         }
-        internal static delegate* unmanaged<IntPtr, VkFormat, VkImageUsageFlagBits, VkSwapchainImageUsageFlagBitsANDROID, ulong*, ulong*, VkResult> _vkGetSwapchainGrallocUsage2ANDROID_fnptr = &vkGetSwapchainGrallocUsage2ANDROID_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFormat, VkImageUsageFlagBits, VkSwapchainImageUsageFlagBitsANDROID, ulong*, ulong*, VkResult> _vkGetSwapchainGrallocUsage2ANDROID_fnptr = &vkGetSwapchainGrallocUsage2ANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSwapchainGrallocUsage2ANDROID_Lazy(IntPtr device, VkFormat format, VkImageUsageFlagBits imageUsage, VkSwapchainImageUsageFlagBitsANDROID swapchainImageUsage, ulong* grallocConsumerUsage, ulong* grallocProducerUsage)
+        private static VkResult vkGetSwapchainGrallocUsage2ANDROID_Lazy(VkDevice device, VkFormat format, VkImageUsageFlagBits imageUsage, VkSwapchainImageUsageFlagBitsANDROID swapchainImageUsage, ulong* grallocConsumerUsage, ulong* grallocProducerUsage)
         {
-            _vkGetSwapchainGrallocUsage2ANDROID_fnptr = (delegate* unmanaged<IntPtr, VkFormat, VkImageUsageFlagBits, VkSwapchainImageUsageFlagBitsANDROID, ulong*, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainGrallocUsage2ANDROID");
+            _vkGetSwapchainGrallocUsage2ANDROID_fnptr = (delegate* unmanaged<VkDevice, VkFormat, VkImageUsageFlagBits, VkSwapchainImageUsageFlagBitsANDROID, ulong*, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSwapchainGrallocUsage2ANDROID");
             return _vkGetSwapchainGrallocUsage2ANDROID_fnptr(device, format, imageUsage, swapchainImageUsage, grallocConsumerUsage, grallocProducerUsage);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, int, IntPtr, IntPtr, VkResult> _vkAcquireImageANDROID_fnptr = &vkAcquireImageANDROID_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, int, VkSemaphore, VkFence, VkResult> _vkAcquireImageANDROID_fnptr = &vkAcquireImageANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireImageANDROID_Lazy(IntPtr device, IntPtr image, int nativeFenceFd, IntPtr semaphore, IntPtr fence)
+        private static VkResult vkAcquireImageANDROID_Lazy(VkDevice device, VkImage image, int nativeFenceFd, VkSemaphore semaphore, VkFence fence)
         {
-            _vkAcquireImageANDROID_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireImageANDROID");
+            _vkAcquireImageANDROID_fnptr = (delegate* unmanaged<VkDevice, VkImage, int, VkSemaphore, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireImageANDROID");
             return _vkAcquireImageANDROID_fnptr(device, image, nativeFenceFd, semaphore, fence);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, IntPtr, int*, VkResult> _vkQueueSignalReleaseImageANDROID_fnptr = &vkQueueSignalReleaseImageANDROID_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint, VkSemaphore*, VkImage, int*, VkResult> _vkQueueSignalReleaseImageANDROID_fnptr = &vkQueueSignalReleaseImageANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueSignalReleaseImageANDROID_Lazy(IntPtr queue, uint waitSemaphoreCount, IntPtr* pWaitSemaphores, IntPtr image, int* pNativeFenceFd)
+        private static VkResult vkQueueSignalReleaseImageANDROID_Lazy(VkQueue queue, uint waitSemaphoreCount, VkSemaphore* pWaitSemaphores, VkImage image, int* pNativeFenceFd)
         {
-            _vkQueueSignalReleaseImageANDROID_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, IntPtr, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSignalReleaseImageANDROID");
+            _vkQueueSignalReleaseImageANDROID_fnptr = (delegate* unmanaged<VkQueue, uint, VkSemaphore*, VkImage, int*, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSignalReleaseImageANDROID");
             return _vkQueueSignalReleaseImageANDROID_fnptr(queue, waitSemaphoreCount, pWaitSemaphores, image, pNativeFenceFd);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkShaderStageFlagBits, VkShaderInfoTypeAMD, nuint*, void*, VkResult> _vkGetShaderInfoAMD_fnptr = &vkGetShaderInfoAMD_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, nuint*, void*, VkResult> _vkGetShaderInfoAMD_fnptr = &vkGetShaderInfoAMD_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetShaderInfoAMD_Lazy(IntPtr device, IntPtr pipeline, VkShaderStageFlagBits shaderStage, VkShaderInfoTypeAMD infoType, nuint* pInfoSize, void* pInfo)
+        private static VkResult vkGetShaderInfoAMD_Lazy(VkDevice device, VkPipeline pipeline, VkShaderStageFlagBits shaderStage, VkShaderInfoTypeAMD infoType, nuint* pInfoSize, void* pInfo)
         {
-            _vkGetShaderInfoAMD_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkShaderStageFlagBits, VkShaderInfoTypeAMD, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetShaderInfoAMD");
+            _vkGetShaderInfoAMD_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkShaderStageFlagBits, VkShaderInfoTypeAMD, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetShaderInfoAMD");
             return _vkGetShaderInfoAMD_fnptr(device, pipeline, shaderStage, infoType, pInfoSize, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, int, void> _vkSetLocalDimmingAMD_fnptr = &vkSetLocalDimmingAMD_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, int, void> _vkSetLocalDimmingAMD_fnptr = &vkSetLocalDimmingAMD_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkSetLocalDimmingAMD_Lazy(IntPtr device, IntPtr swapChain, int localDimmingEnable)
+        private static void vkSetLocalDimmingAMD_Lazy(VkDevice device, VkSwapchainKHR swapChain, int localDimmingEnable)
         {
-            _vkSetLocalDimmingAMD_fnptr = (delegate* unmanaged<IntPtr, IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkSetLocalDimmingAMD");
+            _vkSetLocalDimmingAMD_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, int, void>)VKLoader.GetInstanceProcAddress("vkSetLocalDimmingAMD");
             _vkSetLocalDimmingAMD_fnptr(device, swapChain, localDimmingEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkTimeDomainKHR*, VkResult> _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr = &vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult> _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr = &vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_Lazy(IntPtr physicalDevice, uint* pTimeDomainCount, VkTimeDomainKHR* pTimeDomains)
+        private static VkResult vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pTimeDomainCount, VkTimeDomainKHR* pTimeDomains)
         {
-            _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkTimeDomainKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCalibrateableTimeDomainsKHR");
+            _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkTimeDomainKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCalibrateableTimeDomainsKHR");
             return _vkGetPhysicalDeviceCalibrateableTimeDomainsKHR_fnptr(physicalDevice, pTimeDomainCount, pTimeDomains);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult> _vkGetCalibratedTimestampsKHR_fnptr = &vkGetCalibratedTimestampsKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult> _vkGetCalibratedTimestampsKHR_fnptr = &vkGetCalibratedTimestampsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetCalibratedTimestampsKHR_Lazy(IntPtr device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
+        private static VkResult vkGetCalibratedTimestampsKHR_Lazy(VkDevice device, uint timestampCount, VkCalibratedTimestampInfoKHR* pTimestampInfos, ulong* pTimestamps, ulong* pMaxDeviation)
         {
-            _vkGetCalibratedTimestampsKHR_fnptr = (delegate* unmanaged<IntPtr, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetCalibratedTimestampsKHR");
+            _vkGetCalibratedTimestampsKHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkCalibratedTimestampInfoKHR*, ulong*, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetCalibratedTimestampsKHR");
             return _vkGetCalibratedTimestampsKHR_fnptr(device, timestampCount, pTimestampInfos, pTimestamps, pMaxDeviation);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsObjectNameInfoEXT*, VkResult> _vkSetDebugUtilsObjectNameEXT_fnptr = &vkSetDebugUtilsObjectNameEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDebugUtilsObjectNameInfoEXT*, VkResult> _vkSetDebugUtilsObjectNameEXT_fnptr = &vkSetDebugUtilsObjectNameEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetDebugUtilsObjectNameEXT_Lazy(IntPtr device, VkDebugUtilsObjectNameInfoEXT* pNameInfo)
+        private static VkResult vkSetDebugUtilsObjectNameEXT_Lazy(VkDevice device, VkDebugUtilsObjectNameInfoEXT* pNameInfo)
         {
-            _vkSetDebugUtilsObjectNameEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsObjectNameInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetDebugUtilsObjectNameEXT");
+            _vkSetDebugUtilsObjectNameEXT_fnptr = (delegate* unmanaged<VkDevice, VkDebugUtilsObjectNameInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetDebugUtilsObjectNameEXT");
             return _vkSetDebugUtilsObjectNameEXT_fnptr(device, pNameInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsObjectTagInfoEXT*, VkResult> _vkSetDebugUtilsObjectTagEXT_fnptr = &vkSetDebugUtilsObjectTagEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDebugUtilsObjectTagInfoEXT*, VkResult> _vkSetDebugUtilsObjectTagEXT_fnptr = &vkSetDebugUtilsObjectTagEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetDebugUtilsObjectTagEXT_Lazy(IntPtr device, VkDebugUtilsObjectTagInfoEXT* pTagInfo)
+        private static VkResult vkSetDebugUtilsObjectTagEXT_Lazy(VkDevice device, VkDebugUtilsObjectTagInfoEXT* pTagInfo)
         {
-            _vkSetDebugUtilsObjectTagEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsObjectTagInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetDebugUtilsObjectTagEXT");
+            _vkSetDebugUtilsObjectTagEXT_fnptr = (delegate* unmanaged<VkDevice, VkDebugUtilsObjectTagInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetDebugUtilsObjectTagEXT");
             return _vkSetDebugUtilsObjectTagEXT_fnptr(device, pTagInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void> _vkQueueBeginDebugUtilsLabelEXT_fnptr = &vkQueueBeginDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkDebugUtilsLabelEXT*, void> _vkQueueBeginDebugUtilsLabelEXT_fnptr = &vkQueueBeginDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkQueueBeginDebugUtilsLabelEXT_Lazy(IntPtr queue, VkDebugUtilsLabelEXT* pLabelInfo)
+        private static void vkQueueBeginDebugUtilsLabelEXT_Lazy(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo)
         {
-            _vkQueueBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkQueueBeginDebugUtilsLabelEXT");
+            _vkQueueBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkQueue, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkQueueBeginDebugUtilsLabelEXT");
             _vkQueueBeginDebugUtilsLabelEXT_fnptr(queue, pLabelInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkQueueEndDebugUtilsLabelEXT_fnptr = &vkQueueEndDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkQueue, void> _vkQueueEndDebugUtilsLabelEXT_fnptr = &vkQueueEndDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkQueueEndDebugUtilsLabelEXT_Lazy(IntPtr queue)
+        private static void vkQueueEndDebugUtilsLabelEXT_Lazy(VkQueue queue)
         {
-            _vkQueueEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkQueueEndDebugUtilsLabelEXT");
+            _vkQueueEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkQueue, void>)VKLoader.GetInstanceProcAddress("vkQueueEndDebugUtilsLabelEXT");
             _vkQueueEndDebugUtilsLabelEXT_fnptr(queue);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void> _vkQueueInsertDebugUtilsLabelEXT_fnptr = &vkQueueInsertDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkDebugUtilsLabelEXT*, void> _vkQueueInsertDebugUtilsLabelEXT_fnptr = &vkQueueInsertDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkQueueInsertDebugUtilsLabelEXT_Lazy(IntPtr queue, VkDebugUtilsLabelEXT* pLabelInfo)
+        private static void vkQueueInsertDebugUtilsLabelEXT_Lazy(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo)
         {
-            _vkQueueInsertDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkQueueInsertDebugUtilsLabelEXT");
+            _vkQueueInsertDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkQueue, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkQueueInsertDebugUtilsLabelEXT");
             _vkQueueInsertDebugUtilsLabelEXT_fnptr(queue, pLabelInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void> _vkCmdBeginDebugUtilsLabelEXT_fnptr = &vkCmdBeginDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void> _vkCmdBeginDebugUtilsLabelEXT_fnptr = &vkCmdBeginDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginDebugUtilsLabelEXT_Lazy(IntPtr commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
+        private static void vkCmdBeginDebugUtilsLabelEXT_Lazy(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
         {
-            _vkCmdBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginDebugUtilsLabelEXT");
+            _vkCmdBeginDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginDebugUtilsLabelEXT");
             _vkCmdBeginDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdEndDebugUtilsLabelEXT_fnptr = &vkCmdEndDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndDebugUtilsLabelEXT_fnptr = &vkCmdEndDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndDebugUtilsLabelEXT_Lazy(IntPtr commandBuffer)
+        private static void vkCmdEndDebugUtilsLabelEXT_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdEndDebugUtilsLabelEXT");
+            _vkCmdEndDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdEndDebugUtilsLabelEXT");
             _vkCmdEndDebugUtilsLabelEXT_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void> _vkCmdInsertDebugUtilsLabelEXT_fnptr = &vkCmdInsertDebugUtilsLabelEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void> _vkCmdInsertDebugUtilsLabelEXT_fnptr = &vkCmdInsertDebugUtilsLabelEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdInsertDebugUtilsLabelEXT_Lazy(IntPtr commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
+        private static void vkCmdInsertDebugUtilsLabelEXT_Lazy(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo)
         {
-            _vkCmdInsertDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdInsertDebugUtilsLabelEXT");
+            _vkCmdInsertDebugUtilsLabelEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDebugUtilsLabelEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdInsertDebugUtilsLabelEXT");
             _vkCmdInsertDebugUtilsLabelEXT_fnptr(commandBuffer, pLabelInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsMessengerCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDebugUtilsMessengerEXT_fnptr = &vkCreateDebugUtilsMessengerEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugUtilsMessengerCreateInfoEXT*, VkAllocationCallbacks*, VkDebugUtilsMessengerEXT*, VkResult> _vkCreateDebugUtilsMessengerEXT_fnptr = &vkCreateDebugUtilsMessengerEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDebugUtilsMessengerEXT_Lazy(IntPtr instance, VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pMessenger)
+        private static VkResult vkCreateDebugUtilsMessengerEXT_Lazy(VkInstance instance, VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger)
         {
-            _vkCreateDebugUtilsMessengerEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsMessengerCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDebugUtilsMessengerEXT");
+            _vkCreateDebugUtilsMessengerEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugUtilsMessengerCreateInfoEXT*, VkAllocationCallbacks*, VkDebugUtilsMessengerEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDebugUtilsMessengerEXT");
             return _vkCreateDebugUtilsMessengerEXT_fnptr(instance, pCreateInfo, pAllocator, pMessenger);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDebugUtilsMessengerEXT_fnptr = &vkDestroyDebugUtilsMessengerEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugUtilsMessengerEXT, VkAllocationCallbacks*, void> _vkDestroyDebugUtilsMessengerEXT_fnptr = &vkDestroyDebugUtilsMessengerEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDebugUtilsMessengerEXT_Lazy(IntPtr instance, IntPtr messenger, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDebugUtilsMessengerEXT_Lazy(VkInstance instance, VkDebugUtilsMessengerEXT messenger, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDebugUtilsMessengerEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDebugUtilsMessengerEXT");
+            _vkDestroyDebugUtilsMessengerEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugUtilsMessengerEXT, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDebugUtilsMessengerEXT");
             _vkDestroyDebugUtilsMessengerEXT_fnptr(instance, messenger, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void> _vkSubmitDebugUtilsMessageEXT_fnptr = &vkSubmitDebugUtilsMessageEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void> _vkSubmitDebugUtilsMessageEXT_fnptr = &vkSubmitDebugUtilsMessageEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkSubmitDebugUtilsMessageEXT_Lazy(IntPtr instance, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagBitsEXT messageTypes, VkDebugUtilsMessengerCallbackDataEXT* pCallbackData)
+        private static void vkSubmitDebugUtilsMessageEXT_Lazy(VkInstance instance, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagBitsEXT messageTypes, VkDebugUtilsMessengerCallbackDataEXT* pCallbackData)
         {
-            _vkSubmitDebugUtilsMessageEXT_fnptr = (delegate* unmanaged<IntPtr, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void>)VKLoader.GetInstanceProcAddress("vkSubmitDebugUtilsMessageEXT");
+            _vkSubmitDebugUtilsMessageEXT_fnptr = (delegate* unmanaged<VkInstance, VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void>)VKLoader.GetInstanceProcAddress("vkSubmitDebugUtilsMessageEXT");
             _vkSubmitDebugUtilsMessageEXT_fnptr(instance, messageSeverity, messageTypes, pCallbackData);
         }
-        internal static delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult> _vkGetMemoryHostPointerPropertiesEXT_fnptr = &vkGetMemoryHostPointerPropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult> _vkGetMemoryHostPointerPropertiesEXT_fnptr = &vkGetMemoryHostPointerPropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryHostPointerPropertiesEXT_Lazy(IntPtr device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHostPointer, VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties)
+        private static VkResult vkGetMemoryHostPointerPropertiesEXT_Lazy(VkDevice device, VkExternalMemoryHandleTypeFlagBits handleType, void* pHostPointer, VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties)
         {
-            _vkGetMemoryHostPointerPropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryHostPointerPropertiesEXT");
+            _vkGetMemoryHostPointerPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkExternalMemoryHandleTypeFlagBits, void*, VkMemoryHostPointerPropertiesEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryHostPointerPropertiesEXT");
             return _vkGetMemoryHostPointerPropertiesEXT_fnptr(device, handleType, pHostPointer, pMemoryHostPointerProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, IntPtr, ulong, uint, void> _vkCmdWriteBufferMarkerAMD_fnptr = &vkCmdWriteBufferMarkerAMD_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, ulong, uint, void> _vkCmdWriteBufferMarkerAMD_fnptr = &vkCmdWriteBufferMarkerAMD_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteBufferMarkerAMD_Lazy(IntPtr commandBuffer, VkPipelineStageFlagBits pipelineStage, IntPtr dstBuffer, ulong dstOffset, uint marker)
+        private static void vkCmdWriteBufferMarkerAMD_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits pipelineStage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
-            _vkCmdWriteBufferMarkerAMD_fnptr = (delegate* unmanaged<IntPtr, VkPipelineStageFlagBits, IntPtr, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarkerAMD");
+            _vkCmdWriteBufferMarkerAMD_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits, VkBuffer, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarkerAMD");
             _vkCmdWriteBufferMarkerAMD_fnptr(commandBuffer, pipelineStage, dstBuffer, dstOffset, marker);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderPassCreateInfo2*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateRenderPass2_fnptr = &vkCreateRenderPass2_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderPassCreateInfo2*, VkAllocationCallbacks*, VkRenderPass*, VkResult> _vkCreateRenderPass2_fnptr = &vkCreateRenderPass2_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateRenderPass2_Lazy(IntPtr device, VkRenderPassCreateInfo2* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pRenderPass)
+        private static VkResult vkCreateRenderPass2_Lazy(VkDevice device, VkRenderPassCreateInfo2* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass)
         {
-            _vkCreateRenderPass2_fnptr = (delegate* unmanaged<IntPtr, VkRenderPassCreateInfo2*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRenderPass2");
+            _vkCreateRenderPass2_fnptr = (delegate* unmanaged<VkDevice, VkRenderPassCreateInfo2*, VkAllocationCallbacks*, VkRenderPass*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRenderPass2");
             return _vkCreateRenderPass2_fnptr(device, pCreateInfo, pAllocator, pRenderPass);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderPassBeginInfo*, VkSubpassBeginInfo*, void> _vkCmdBeginRenderPass2_fnptr = &vkCmdBeginRenderPass2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRenderPassBeginInfo*, VkSubpassBeginInfo*, void> _vkCmdBeginRenderPass2_fnptr = &vkCmdBeginRenderPass2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginRenderPass2_Lazy(IntPtr commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassBeginInfo* pSubpassBeginInfo)
+        private static void vkCmdBeginRenderPass2_Lazy(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassBeginInfo* pSubpassBeginInfo)
         {
-            _vkCmdBeginRenderPass2_fnptr = (delegate* unmanaged<IntPtr, VkRenderPassBeginInfo*, VkSubpassBeginInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRenderPass2");
+            _vkCmdBeginRenderPass2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderPassBeginInfo*, VkSubpassBeginInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRenderPass2");
             _vkCmdBeginRenderPass2_fnptr(commandBuffer, pRenderPassBegin, pSubpassBeginInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSubpassBeginInfo*, VkSubpassEndInfo*, void> _vkCmdNextSubpass2_fnptr = &vkCmdNextSubpass2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSubpassBeginInfo*, VkSubpassEndInfo*, void> _vkCmdNextSubpass2_fnptr = &vkCmdNextSubpass2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdNextSubpass2_Lazy(IntPtr commandBuffer, VkSubpassBeginInfo* pSubpassBeginInfo, VkSubpassEndInfo* pSubpassEndInfo)
+        private static void vkCmdNextSubpass2_Lazy(VkCommandBuffer commandBuffer, VkSubpassBeginInfo* pSubpassBeginInfo, VkSubpassEndInfo* pSubpassEndInfo)
         {
-            _vkCmdNextSubpass2_fnptr = (delegate* unmanaged<IntPtr, VkSubpassBeginInfo*, VkSubpassEndInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdNextSubpass2");
+            _vkCmdNextSubpass2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSubpassBeginInfo*, VkSubpassEndInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdNextSubpass2");
             _vkCmdNextSubpass2_fnptr(commandBuffer, pSubpassBeginInfo, pSubpassEndInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSubpassEndInfo*, void> _vkCmdEndRenderPass2_fnptr = &vkCmdEndRenderPass2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSubpassEndInfo*, void> _vkCmdEndRenderPass2_fnptr = &vkCmdEndRenderPass2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndRenderPass2_Lazy(IntPtr commandBuffer, VkSubpassEndInfo* pSubpassEndInfo)
+        private static void vkCmdEndRenderPass2_Lazy(VkCommandBuffer commandBuffer, VkSubpassEndInfo* pSubpassEndInfo)
         {
-            _vkCmdEndRenderPass2_fnptr = (delegate* unmanaged<IntPtr, VkSubpassEndInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRenderPass2");
+            _vkCmdEndRenderPass2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSubpassEndInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRenderPass2");
             _vkCmdEndRenderPass2_fnptr(commandBuffer, pSubpassEndInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong*, VkResult> _vkGetSemaphoreCounterValue_fnptr = &vkGetSemaphoreCounterValue_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphore, ulong*, VkResult> _vkGetSemaphoreCounterValue_fnptr = &vkGetSemaphoreCounterValue_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSemaphoreCounterValue_Lazy(IntPtr device, IntPtr semaphore, ulong* pValue)
+        private static VkResult vkGetSemaphoreCounterValue_Lazy(VkDevice device, VkSemaphore semaphore, ulong* pValue)
         {
-            _vkGetSemaphoreCounterValue_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreCounterValue");
+            _vkGetSemaphoreCounterValue_fnptr = (delegate* unmanaged<VkDevice, VkSemaphore, ulong*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSemaphoreCounterValue");
             return _vkGetSemaphoreCounterValue_fnptr(device, semaphore, pValue);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreWaitInfo*, ulong, VkResult> _vkWaitSemaphores_fnptr = &vkWaitSemaphores_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreWaitInfo*, ulong, VkResult> _vkWaitSemaphores_fnptr = &vkWaitSemaphores_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkWaitSemaphores_Lazy(IntPtr device, VkSemaphoreWaitInfo* pWaitInfo, ulong timeout)
+        private static VkResult vkWaitSemaphores_Lazy(VkDevice device, VkSemaphoreWaitInfo* pWaitInfo, ulong timeout)
         {
-            _vkWaitSemaphores_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreWaitInfo*, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitSemaphores");
+            _vkWaitSemaphores_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreWaitInfo*, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitSemaphores");
             return _vkWaitSemaphores_fnptr(device, pWaitInfo, timeout);
         }
-        internal static delegate* unmanaged<IntPtr, VkSemaphoreSignalInfo*, VkResult> _vkSignalSemaphore_fnptr = &vkSignalSemaphore_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSemaphoreSignalInfo*, VkResult> _vkSignalSemaphore_fnptr = &vkSignalSemaphore_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSignalSemaphore_Lazy(IntPtr device, VkSemaphoreSignalInfo* pSignalInfo)
+        private static VkResult vkSignalSemaphore_Lazy(VkDevice device, VkSemaphoreSignalInfo* pSignalInfo)
         {
-            _vkSignalSemaphore_fnptr = (delegate* unmanaged<IntPtr, VkSemaphoreSignalInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkSignalSemaphore");
+            _vkSignalSemaphore_fnptr = (delegate* unmanaged<VkDevice, VkSemaphoreSignalInfo*, VkResult>)VKLoader.GetInstanceProcAddress("vkSignalSemaphore");
             return _vkSignalSemaphore_fnptr(device, pSignalInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult> _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr = &vkGetAndroidHardwareBufferPropertiesANDROID_Lazy;
+        internal static delegate* unmanaged<VkDevice, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult> _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr = &vkGetAndroidHardwareBufferPropertiesANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetAndroidHardwareBufferPropertiesANDROID_Lazy(IntPtr device, IntPtr buffer, VkAndroidHardwareBufferPropertiesANDROID* pProperties)
+        private static VkResult vkGetAndroidHardwareBufferPropertiesANDROID_Lazy(VkDevice device, IntPtr buffer, VkAndroidHardwareBufferPropertiesANDROID* pProperties)
         {
-            _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAndroidHardwareBufferPropertiesANDROID");
+            _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr = (delegate* unmanaged<VkDevice, IntPtr, VkAndroidHardwareBufferPropertiesANDROID*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAndroidHardwareBufferPropertiesANDROID");
             return _vkGetAndroidHardwareBufferPropertiesANDROID_fnptr(device, buffer, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryGetAndroidHardwareBufferInfoANDROID*, IntPtr*, VkResult> _vkGetMemoryAndroidHardwareBufferANDROID_fnptr = &vkGetMemoryAndroidHardwareBufferANDROID_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryGetAndroidHardwareBufferInfoANDROID*, IntPtr*, VkResult> _vkGetMemoryAndroidHardwareBufferANDROID_fnptr = &vkGetMemoryAndroidHardwareBufferANDROID_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetMemoryAndroidHardwareBufferANDROID_Lazy(IntPtr device, VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, IntPtr* pBuffer)
+        private static VkResult vkGetMemoryAndroidHardwareBufferANDROID_Lazy(VkDevice device, VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, IntPtr* pBuffer)
         {
-            _vkGetMemoryAndroidHardwareBufferANDROID_fnptr = (delegate* unmanaged<IntPtr, VkMemoryGetAndroidHardwareBufferInfoANDROID*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryAndroidHardwareBufferANDROID");
+            _vkGetMemoryAndroidHardwareBufferANDROID_fnptr = (delegate* unmanaged<VkDevice, VkMemoryGetAndroidHardwareBufferInfoANDROID*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetMemoryAndroidHardwareBufferANDROID");
             return _vkGetMemoryAndroidHardwareBufferANDROID_fnptr(device, pInfo, pBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void> _vkCmdDrawIndirectCount_fnptr = &vkCmdDrawIndirectCount_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void> _vkCmdDrawIndirectCount_fnptr = &vkCmdDrawIndirectCount_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndirectCount_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, IntPtr countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
+        private static void vkCmdDrawIndirectCount_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
-            _vkCmdDrawIndirectCount_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirectCount");
+            _vkCmdDrawIndirectCount_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirectCount");
             _vkCmdDrawIndirectCount_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void> _vkCmdDrawIndexedIndirectCount_fnptr = &vkCmdDrawIndexedIndirectCount_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void> _vkCmdDrawIndexedIndirectCount_fnptr = &vkCmdDrawIndexedIndirectCount_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndexedIndirectCount_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, IntPtr countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
+        private static void vkCmdDrawIndexedIndirectCount_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
-            _vkCmdDrawIndexedIndirectCount_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexedIndirectCount");
+            _vkCmdDrawIndexedIndirectCount_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndexedIndirectCount");
             _vkCmdDrawIndexedIndirectCount_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, void*, void> _vkCmdSetCheckpointNV_fnptr = &vkCmdSetCheckpointNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void*, void> _vkCmdSetCheckpointNV_fnptr = &vkCmdSetCheckpointNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCheckpointNV_Lazy(IntPtr commandBuffer, void* pCheckpointMarker)
+        private static void vkCmdSetCheckpointNV_Lazy(VkCommandBuffer commandBuffer, void* pCheckpointMarker)
         {
-            _vkCmdSetCheckpointNV_fnptr = (delegate* unmanaged<IntPtr, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCheckpointNV");
+            _vkCmdSetCheckpointNV_fnptr = (delegate* unmanaged<VkCommandBuffer, void*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCheckpointNV");
             _vkCmdSetCheckpointNV_fnptr(commandBuffer, pCheckpointMarker);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkCheckpointDataNV*, void> _vkGetQueueCheckpointDataNV_fnptr = &vkGetQueueCheckpointDataNV_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint*, VkCheckpointDataNV*, void> _vkGetQueueCheckpointDataNV_fnptr = &vkGetQueueCheckpointDataNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetQueueCheckpointDataNV_Lazy(IntPtr queue, uint* pCheckpointDataCount, VkCheckpointDataNV* pCheckpointData)
+        private static void vkGetQueueCheckpointDataNV_Lazy(VkQueue queue, uint* pCheckpointDataCount, VkCheckpointDataNV* pCheckpointData)
         {
-            _vkGetQueueCheckpointDataNV_fnptr = (delegate* unmanaged<IntPtr, uint*, VkCheckpointDataNV*, void>)VKLoader.GetInstanceProcAddress("vkGetQueueCheckpointDataNV");
+            _vkGetQueueCheckpointDataNV_fnptr = (delegate* unmanaged<VkQueue, uint*, VkCheckpointDataNV*, void>)VKLoader.GetInstanceProcAddress("vkGetQueueCheckpointDataNV");
             _vkGetQueueCheckpointDataNV_fnptr(queue, pCheckpointDataCount, pCheckpointData);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, ulong*, void> _vkCmdBindTransformFeedbackBuffersEXT_fnptr = &vkCmdBindTransformFeedbackBuffersEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, ulong*, void> _vkCmdBindTransformFeedbackBuffersEXT_fnptr = &vkCmdBindTransformFeedbackBuffersEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindTransformFeedbackBuffersEXT_Lazy(IntPtr commandBuffer, uint firstBinding, uint bindingCount, IntPtr* pBuffers, ulong* pOffsets, ulong* pSizes)
+        private static void vkCmdBindTransformFeedbackBuffersEXT_Lazy(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets, ulong* pSizes)
         {
-            _vkCmdBindTransformFeedbackBuffersEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindTransformFeedbackBuffersEXT");
+            _vkCmdBindTransformFeedbackBuffersEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindTransformFeedbackBuffersEXT");
             _vkCmdBindTransformFeedbackBuffersEXT_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void> _vkCmdBeginTransformFeedbackEXT_fnptr = &vkCmdBeginTransformFeedbackEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void> _vkCmdBeginTransformFeedbackEXT_fnptr = &vkCmdBeginTransformFeedbackEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginTransformFeedbackEXT_Lazy(IntPtr commandBuffer, uint firstCounterBuffer, uint counterBufferCount, IntPtr* pCounterBuffers, ulong* pCounterBufferOffsets)
+        private static void vkCmdBeginTransformFeedbackEXT_Lazy(VkCommandBuffer commandBuffer, uint firstCounterBuffer, uint counterBufferCount, VkBuffer* pCounterBuffers, ulong* pCounterBufferOffsets)
         {
-            _vkCmdBeginTransformFeedbackEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginTransformFeedbackEXT");
+            _vkCmdBeginTransformFeedbackEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginTransformFeedbackEXT");
             _vkCmdBeginTransformFeedbackEXT_fnptr(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void> _vkCmdEndTransformFeedbackEXT_fnptr = &vkCmdEndTransformFeedbackEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void> _vkCmdEndTransformFeedbackEXT_fnptr = &vkCmdEndTransformFeedbackEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndTransformFeedbackEXT_Lazy(IntPtr commandBuffer, uint firstCounterBuffer, uint counterBufferCount, IntPtr* pCounterBuffers, ulong* pCounterBufferOffsets)
+        private static void vkCmdEndTransformFeedbackEXT_Lazy(VkCommandBuffer commandBuffer, uint firstCounterBuffer, uint counterBufferCount, VkBuffer* pCounterBuffers, ulong* pCounterBufferOffsets)
         {
-            _vkCmdEndTransformFeedbackEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndTransformFeedbackEXT");
+            _vkCmdEndTransformFeedbackEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndTransformFeedbackEXT");
             _vkCmdEndTransformFeedbackEXT_fnptr(commandBuffer, firstCounterBuffer, counterBufferCount, pCounterBuffers, pCounterBufferOffsets);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkQueryControlFlagBits, uint, void> _vkCmdBeginQueryIndexedEXT_fnptr = &vkCmdBeginQueryIndexedEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, uint, void> _vkCmdBeginQueryIndexedEXT_fnptr = &vkCmdBeginQueryIndexedEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginQueryIndexedEXT_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint query, VkQueryControlFlagBits flags, uint index)
+        private static void vkCmdBeginQueryIndexedEXT_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, VkQueryControlFlagBits flags, uint index)
         {
-            _vkCmdBeginQueryIndexedEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkQueryControlFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginQueryIndexedEXT");
+            _vkCmdBeginQueryIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, VkQueryControlFlagBits, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginQueryIndexedEXT");
             _vkCmdBeginQueryIndexedEXT_fnptr(commandBuffer, queryPool, query, flags, index);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, void> _vkCmdEndQueryIndexedEXT_fnptr = &vkCmdEndQueryIndexedEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void> _vkCmdEndQueryIndexedEXT_fnptr = &vkCmdEndQueryIndexedEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndQueryIndexedEXT_Lazy(IntPtr commandBuffer, IntPtr queryPool, uint query, uint index)
+        private static void vkCmdEndQueryIndexedEXT_Lazy(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint query, uint index)
         {
-            _vkCmdEndQueryIndexedEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdEndQueryIndexedEXT");
+            _vkCmdEndQueryIndexedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkQueryPool, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdEndQueryIndexedEXT");
             _vkCmdEndQueryIndexedEXT_fnptr(commandBuffer, queryPool, query, index);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr, ulong, uint, uint, void> _vkCmdDrawIndirectByteCountEXT_fnptr = &vkCmdDrawIndirectByteCountEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer, ulong, uint, uint, void> _vkCmdDrawIndirectByteCountEXT_fnptr = &vkCmdDrawIndirectByteCountEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawIndirectByteCountEXT_Lazy(IntPtr commandBuffer, uint instanceCount, uint firstInstance, IntPtr counterBuffer, ulong counterBufferOffset, uint counterOffset, uint vertexStride)
+        private static void vkCmdDrawIndirectByteCountEXT_Lazy(VkCommandBuffer commandBuffer, uint instanceCount, uint firstInstance, VkBuffer counterBuffer, ulong counterBufferOffset, uint counterOffset, uint vertexStride)
         {
-            _vkCmdDrawIndirectByteCountEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirectByteCountEXT");
+            _vkCmdDrawIndirectByteCountEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawIndirectByteCountEXT");
             _vkCmdDrawIndirectByteCountEXT_fnptr(commandBuffer, instanceCount, firstInstance, counterBuffer, counterBufferOffset, counterOffset, vertexStride);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void> _vkCmdSetExclusiveScissorNV_fnptr = &vkCmdSetExclusiveScissorNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void> _vkCmdSetExclusiveScissorNV_fnptr = &vkCmdSetExclusiveScissorNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetExclusiveScissorNV_Lazy(IntPtr commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, VkRect2D* pExclusiveScissors)
+        private static void vkCmdSetExclusiveScissorNV_Lazy(VkCommandBuffer commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, VkRect2D* pExclusiveScissors)
         {
-            _vkCmdSetExclusiveScissorNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExclusiveScissorNV");
+            _vkCmdSetExclusiveScissorNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExclusiveScissorNV");
             _vkCmdSetExclusiveScissorNV_fnptr(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissors);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, int*, void> _vkCmdSetExclusiveScissorEnableNV_fnptr = &vkCmdSetExclusiveScissorEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, int*, void> _vkCmdSetExclusiveScissorEnableNV_fnptr = &vkCmdSetExclusiveScissorEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetExclusiveScissorEnableNV_Lazy(IntPtr commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, int* pExclusiveScissorEnables)
+        private static void vkCmdSetExclusiveScissorEnableNV_Lazy(VkCommandBuffer commandBuffer, uint firstExclusiveScissor, uint exclusiveScissorCount, int* pExclusiveScissorEnables)
         {
-            _vkCmdSetExclusiveScissorEnableNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExclusiveScissorEnableNV");
+            _vkCmdSetExclusiveScissorEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExclusiveScissorEnableNV");
             _vkCmdSetExclusiveScissorEnableNV_fnptr(commandBuffer, firstExclusiveScissor, exclusiveScissorCount, pExclusiveScissorEnables);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, void> _vkCmdBindShadingRateImageNV_fnptr = &vkCmdBindShadingRateImageNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void> _vkCmdBindShadingRateImageNV_fnptr = &vkCmdBindShadingRateImageNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindShadingRateImageNV_Lazy(IntPtr commandBuffer, IntPtr imageView, VkImageLayout imageLayout)
+        private static void vkCmdBindShadingRateImageNV_Lazy(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout)
         {
-            _vkCmdBindShadingRateImageNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, void>)VKLoader.GetInstanceProcAddress("vkCmdBindShadingRateImageNV");
+            _vkCmdBindShadingRateImageNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void>)VKLoader.GetInstanceProcAddress("vkCmdBindShadingRateImageNV");
             _vkCmdBindShadingRateImageNV_fnptr(commandBuffer, imageView, imageLayout);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkShadingRatePaletteNV*, void> _vkCmdSetViewportShadingRatePaletteNV_fnptr = &vkCmdSetViewportShadingRatePaletteNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkShadingRatePaletteNV*, void> _vkCmdSetViewportShadingRatePaletteNV_fnptr = &vkCmdSetViewportShadingRatePaletteNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewportShadingRatePaletteNV_Lazy(IntPtr commandBuffer, uint firstViewport, uint viewportCount, VkShadingRatePaletteNV* pShadingRatePalettes)
+        private static void vkCmdSetViewportShadingRatePaletteNV_Lazy(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkShadingRatePaletteNV* pShadingRatePalettes)
         {
-            _vkCmdSetViewportShadingRatePaletteNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkShadingRatePaletteNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportShadingRatePaletteNV");
+            _vkCmdSetViewportShadingRatePaletteNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkShadingRatePaletteNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportShadingRatePaletteNV");
             _vkCmdSetViewportShadingRatePaletteNV_fnptr(commandBuffer, firstViewport, viewportCount, pShadingRatePalettes);
         }
-        internal static delegate* unmanaged<IntPtr, VkCoarseSampleOrderTypeNV, uint, VkCoarseSampleOrderCustomNV*, void> _vkCmdSetCoarseSampleOrderNV_fnptr = &vkCmdSetCoarseSampleOrderNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCoarseSampleOrderTypeNV, uint, VkCoarseSampleOrderCustomNV*, void> _vkCmdSetCoarseSampleOrderNV_fnptr = &vkCmdSetCoarseSampleOrderNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoarseSampleOrderNV_Lazy(IntPtr commandBuffer, VkCoarseSampleOrderTypeNV sampleOrderType, uint customSampleOrderCount, VkCoarseSampleOrderCustomNV* pCustomSampleOrders)
+        private static void vkCmdSetCoarseSampleOrderNV_Lazy(VkCommandBuffer commandBuffer, VkCoarseSampleOrderTypeNV sampleOrderType, uint customSampleOrderCount, VkCoarseSampleOrderCustomNV* pCustomSampleOrders)
         {
-            _vkCmdSetCoarseSampleOrderNV_fnptr = (delegate* unmanaged<IntPtr, VkCoarseSampleOrderTypeNV, uint, VkCoarseSampleOrderCustomNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoarseSampleOrderNV");
+            _vkCmdSetCoarseSampleOrderNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCoarseSampleOrderTypeNV, uint, VkCoarseSampleOrderCustomNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoarseSampleOrderNV");
             _vkCmdSetCoarseSampleOrderNV_fnptr(commandBuffer, sampleOrderType, customSampleOrderCount, pCustomSampleOrders);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, void> _vkCmdDrawMeshTasksNV_fnptr = &vkCmdDrawMeshTasksNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, void> _vkCmdDrawMeshTasksNV_fnptr = &vkCmdDrawMeshTasksNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksNV_Lazy(IntPtr commandBuffer, uint taskCount, uint firstTask)
+        private static void vkCmdDrawMeshTasksNV_Lazy(VkCommandBuffer commandBuffer, uint taskCount, uint firstTask)
         {
-            _vkCmdDrawMeshTasksNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksNV");
+            _vkCmdDrawMeshTasksNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksNV");
             _vkCmdDrawMeshTasksNV_fnptr(commandBuffer, taskCount, firstTask);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectNV_fnptr = &vkCmdDrawMeshTasksIndirectNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectNV_fnptr = &vkCmdDrawMeshTasksIndirectNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksIndirectNV_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, uint drawCount, uint stride)
+        private static void vkCmdDrawMeshTasksIndirectNV_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
-            _vkCmdDrawMeshTasksIndirectNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectNV");
+            _vkCmdDrawMeshTasksIndirectNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectNV");
             _vkCmdDrawMeshTasksIndirectNV_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectCountNV_fnptr = &vkCmdDrawMeshTasksIndirectCountNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectCountNV_fnptr = &vkCmdDrawMeshTasksIndirectCountNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksIndirectCountNV_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, IntPtr countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
+        private static void vkCmdDrawMeshTasksIndirectCountNV_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
-            _vkCmdDrawMeshTasksIndirectCountNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectCountNV");
+            _vkCmdDrawMeshTasksIndirectCountNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectCountNV");
             _vkCmdDrawMeshTasksIndirectCountNV_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, uint, void> _vkCmdDrawMeshTasksEXT_fnptr = &vkCmdDrawMeshTasksEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void> _vkCmdDrawMeshTasksEXT_fnptr = &vkCmdDrawMeshTasksEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksEXT_Lazy(IntPtr commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
+        private static void vkCmdDrawMeshTasksEXT_Lazy(VkCommandBuffer commandBuffer, uint groupCountX, uint groupCountY, uint groupCountZ)
         {
-            _vkCmdDrawMeshTasksEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksEXT");
+            _vkCmdDrawMeshTasksEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksEXT");
             _vkCmdDrawMeshTasksEXT_fnptr(commandBuffer, groupCountX, groupCountY, groupCountZ);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectEXT_fnptr = &vkCmdDrawMeshTasksIndirectEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectEXT_fnptr = &vkCmdDrawMeshTasksIndirectEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksIndirectEXT_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, uint drawCount, uint stride)
+        private static void vkCmdDrawMeshTasksIndirectEXT_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, uint drawCount, uint stride)
         {
-            _vkCmdDrawMeshTasksIndirectEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectEXT");
+            _vkCmdDrawMeshTasksIndirectEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectEXT");
             _vkCmdDrawMeshTasksIndirectEXT_fnptr(commandBuffer, buffer, offset, drawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectCountEXT_fnptr = &vkCmdDrawMeshTasksIndirectCountEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void> _vkCmdDrawMeshTasksIndirectCountEXT_fnptr = &vkCmdDrawMeshTasksIndirectCountEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDrawMeshTasksIndirectCountEXT_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, IntPtr countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
+        private static void vkCmdDrawMeshTasksIndirectCountEXT_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, VkBuffer countBuffer, ulong countBufferOffset, uint maxDrawCount, uint stride)
         {
-            _vkCmdDrawMeshTasksIndirectCountEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectCountEXT");
+            _vkCmdDrawMeshTasksIndirectCountEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDrawMeshTasksIndirectCountEXT");
             _vkCmdDrawMeshTasksIndirectCountEXT_fnptr(commandBuffer, buffer, offset, countBuffer, countBufferOffset, maxDrawCount, stride);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkResult> _vkCompileDeferredNV_fnptr = &vkCompileDeferredNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, uint, VkResult> _vkCompileDeferredNV_fnptr = &vkCompileDeferredNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCompileDeferredNV_Lazy(IntPtr device, IntPtr pipeline, uint shader)
+        private static VkResult vkCompileDeferredNV_Lazy(VkDevice device, VkPipeline pipeline, uint shader)
         {
-            _vkCompileDeferredNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkResult>)VKLoader.GetInstanceProcAddress("vkCompileDeferredNV");
+            _vkCompileDeferredNV_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, uint, VkResult>)VKLoader.GetInstanceProcAddress("vkCompileDeferredNV");
             return _vkCompileDeferredNV_fnptr(device, pipeline, shader);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateAccelerationStructureNV_fnptr = &vkCreateAccelerationStructureNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureCreateInfoNV*, VkAllocationCallbacks*, VkAccelerationStructureNV*, VkResult> _vkCreateAccelerationStructureNV_fnptr = &vkCreateAccelerationStructureNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateAccelerationStructureNV_Lazy(IntPtr device, VkAccelerationStructureCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pAccelerationStructure)
+        private static VkResult vkCreateAccelerationStructureNV_Lazy(VkDevice device, VkAccelerationStructureCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkAccelerationStructureNV* pAccelerationStructure)
         {
-            _vkCreateAccelerationStructureNV_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAccelerationStructureNV");
+            _vkCreateAccelerationStructureNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureCreateInfoNV*, VkAllocationCallbacks*, VkAccelerationStructureNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAccelerationStructureNV");
             return _vkCreateAccelerationStructureNV_fnptr(device, pCreateInfo, pAllocator, pAccelerationStructure);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, void> _vkCmdBindInvocationMaskHUAWEI_fnptr = &vkCmdBindInvocationMaskHUAWEI_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void> _vkCmdBindInvocationMaskHUAWEI_fnptr = &vkCmdBindInvocationMaskHUAWEI_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindInvocationMaskHUAWEI_Lazy(IntPtr commandBuffer, IntPtr imageView, VkImageLayout imageLayout)
+        private static void vkCmdBindInvocationMaskHUAWEI_Lazy(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout)
         {
-            _vkCmdBindInvocationMaskHUAWEI_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageLayout, void>)VKLoader.GetInstanceProcAddress("vkCmdBindInvocationMaskHUAWEI");
+            _vkCmdBindInvocationMaskHUAWEI_fnptr = (delegate* unmanaged<VkCommandBuffer, VkImageView, VkImageLayout, void>)VKLoader.GetInstanceProcAddress("vkCmdBindInvocationMaskHUAWEI");
             _vkCmdBindInvocationMaskHUAWEI_fnptr(commandBuffer, imageView, imageLayout);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyAccelerationStructureKHR_fnptr = &vkDestroyAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureKHR, VkAllocationCallbacks*, void> _vkDestroyAccelerationStructureKHR_fnptr = &vkDestroyAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyAccelerationStructureKHR_Lazy(IntPtr device, IntPtr accelerationStructure, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyAccelerationStructureKHR_Lazy(VkDevice device, VkAccelerationStructureKHR accelerationStructure, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyAccelerationStructureKHR");
+            _vkDestroyAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyAccelerationStructureKHR");
             _vkDestroyAccelerationStructureKHR_fnptr(device, accelerationStructure, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyAccelerationStructureNV_fnptr = &vkDestroyAccelerationStructureNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureNV, VkAllocationCallbacks*, void> _vkDestroyAccelerationStructureNV_fnptr = &vkDestroyAccelerationStructureNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyAccelerationStructureNV_Lazy(IntPtr device, IntPtr accelerationStructure, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyAccelerationStructureNV_Lazy(VkDevice device, VkAccelerationStructureNV accelerationStructure, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyAccelerationStructureNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyAccelerationStructureNV");
+            _vkDestroyAccelerationStructureNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyAccelerationStructureNV");
             _vkDestroyAccelerationStructureNV_fnptr(device, accelerationStructure, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void> _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = &vkGetAccelerationStructureMemoryRequirementsNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void> _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = &vkGetAccelerationStructureMemoryRequirementsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetAccelerationStructureMemoryRequirementsNV_Lazy(IntPtr device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2KHR* pMemoryRequirements)
+        private static void vkGetAccelerationStructureMemoryRequirementsNV_Lazy(VkDevice device, VkAccelerationStructureMemoryRequirementsInfoNV* pInfo, VkMemoryRequirements2KHR* pMemoryRequirements)
         {
-            _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureMemoryRequirementsNV");
+            _vkGetAccelerationStructureMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureMemoryRequirementsInfoNV*, VkMemoryRequirements2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureMemoryRequirementsNV");
             _vkGetAccelerationStructureMemoryRequirementsNV_fnptr(device, pInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkBindAccelerationStructureMemoryInfoNV*, VkResult> _vkBindAccelerationStructureMemoryNV_fnptr = &vkBindAccelerationStructureMemoryNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkBindAccelerationStructureMemoryInfoNV*, VkResult> _vkBindAccelerationStructureMemoryNV_fnptr = &vkBindAccelerationStructureMemoryNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindAccelerationStructureMemoryNV_Lazy(IntPtr device, uint bindInfoCount, VkBindAccelerationStructureMemoryInfoNV* pBindInfos)
+        private static VkResult vkBindAccelerationStructureMemoryNV_Lazy(VkDevice device, uint bindInfoCount, VkBindAccelerationStructureMemoryInfoNV* pBindInfos)
         {
-            _vkBindAccelerationStructureMemoryNV_fnptr = (delegate* unmanaged<IntPtr, uint, VkBindAccelerationStructureMemoryInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindAccelerationStructureMemoryNV");
+            _vkBindAccelerationStructureMemoryNV_fnptr = (delegate* unmanaged<VkDevice, uint, VkBindAccelerationStructureMemoryInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindAccelerationStructureMemoryNV");
             return _vkBindAccelerationStructureMemoryNV_fnptr(device, bindInfoCount, pBindInfos);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkCopyAccelerationStructureModeKHR, void> _vkCmdCopyAccelerationStructureNV_fnptr = &vkCmdCopyAccelerationStructureNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR, void> _vkCmdCopyAccelerationStructureNV_fnptr = &vkCmdCopyAccelerationStructureNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyAccelerationStructureNV_Lazy(IntPtr commandBuffer, IntPtr dst, IntPtr src, VkCopyAccelerationStructureModeKHR mode)
+        private static void vkCmdCopyAccelerationStructureNV_Lazy(VkCommandBuffer commandBuffer, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkCopyAccelerationStructureModeKHR mode)
         {
-            _vkCmdCopyAccelerationStructureNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkCopyAccelerationStructureModeKHR, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureNV");
+            _vkCmdCopyAccelerationStructureNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureNV, VkAccelerationStructureNV, VkCopyAccelerationStructureModeKHR, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureNV");
             _vkCmdCopyAccelerationStructureNV_fnptr(commandBuffer, dst, src, mode);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyAccelerationStructureInfoKHR*, void> _vkCmdCopyAccelerationStructureKHR_fnptr = &vkCmdCopyAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureInfoKHR*, void> _vkCmdCopyAccelerationStructureKHR_fnptr = &vkCmdCopyAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyAccelerationStructureKHR_Lazy(IntPtr commandBuffer, VkCopyAccelerationStructureInfoKHR* pInfo)
+        private static void vkCmdCopyAccelerationStructureKHR_Lazy(VkCommandBuffer commandBuffer, VkCopyAccelerationStructureInfoKHR* pInfo)
         {
-            _vkCmdCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, VkCopyAccelerationStructureInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureKHR");
+            _vkCmdCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureKHR");
             _vkCmdCopyAccelerationStructureKHR_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyAccelerationStructureInfoKHR*, VkResult> _vkCopyAccelerationStructureKHR_fnptr = &vkCopyAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureInfoKHR*, VkResult> _vkCopyAccelerationStructureKHR_fnptr = &vkCopyAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyAccelerationStructureKHR_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyAccelerationStructureInfoKHR* pInfo)
+        private static VkResult vkCopyAccelerationStructureKHR_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureInfoKHR* pInfo)
         {
-            _vkCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyAccelerationStructureInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyAccelerationStructureKHR");
+            _vkCopyAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyAccelerationStructureKHR");
             return _vkCopyAccelerationStructureKHR_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyAccelerationStructureToMemoryInfoKHR*, void> _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr = &vkCmdCopyAccelerationStructureToMemoryKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR*, void> _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr = &vkCmdCopyAccelerationStructureToMemoryKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyAccelerationStructureToMemoryKHR_Lazy(IntPtr commandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
+        private static void vkCmdCopyAccelerationStructureToMemoryKHR_Lazy(VkCommandBuffer commandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
         {
-            _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<IntPtr, VkCopyAccelerationStructureToMemoryInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureToMemoryKHR");
+            _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyAccelerationStructureToMemoryInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyAccelerationStructureToMemoryKHR");
             _vkCmdCopyAccelerationStructureToMemoryKHR_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult> _vkCopyAccelerationStructureToMemoryKHR_fnptr = &vkCopyAccelerationStructureToMemoryKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult> _vkCopyAccelerationStructureToMemoryKHR_fnptr = &vkCopyAccelerationStructureToMemoryKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyAccelerationStructureToMemoryKHR_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
+        private static VkResult vkCopyAccelerationStructureToMemoryKHR_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyAccelerationStructureToMemoryInfoKHR* pInfo)
         {
-            _vkCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyAccelerationStructureToMemoryKHR");
+            _vkCopyAccelerationStructureToMemoryKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyAccelerationStructureToMemoryInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyAccelerationStructureToMemoryKHR");
             return _vkCopyAccelerationStructureToMemoryKHR_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyMemoryToAccelerationStructureInfoKHR*, void> _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr = &vkCmdCopyMemoryToAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyMemoryToAccelerationStructureInfoKHR*, void> _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr = &vkCmdCopyMemoryToAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMemoryToAccelerationStructureKHR_Lazy(IntPtr commandBuffer, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
+        private static void vkCmdCopyMemoryToAccelerationStructureKHR_Lazy(VkCommandBuffer commandBuffer, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
         {
-            _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, VkCopyMemoryToAccelerationStructureInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToAccelerationStructureKHR");
+            _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyMemoryToAccelerationStructureInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToAccelerationStructureKHR");
             _vkCmdCopyMemoryToAccelerationStructureKHR_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyMemoryToAccelerationStructureInfoKHR*, VkResult> _vkCopyMemoryToAccelerationStructureKHR_fnptr = &vkCopyMemoryToAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMemoryToAccelerationStructureInfoKHR*, VkResult> _vkCopyMemoryToAccelerationStructureKHR_fnptr = &vkCopyMemoryToAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyMemoryToAccelerationStructureKHR_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
+        private static VkResult vkCopyMemoryToAccelerationStructureKHR_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMemoryToAccelerationStructureInfoKHR* pInfo)
         {
-            _vkCopyMemoryToAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyMemoryToAccelerationStructureInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToAccelerationStructureKHR");
+            _vkCopyMemoryToAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMemoryToAccelerationStructureInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToAccelerationStructureKHR");
             return _vkCopyMemoryToAccelerationStructureKHR_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void> _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr = &vkCmdWriteAccelerationStructuresPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureKHR*, VkQueryType, VkQueryPool, uint, void> _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr = &vkCmdWriteAccelerationStructuresPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteAccelerationStructuresPropertiesKHR_Lazy(IntPtr commandBuffer, uint accelerationStructureCount, IntPtr* pAccelerationStructures, VkQueryType queryType, IntPtr queryPool, uint firstQuery)
+        private static void vkCmdWriteAccelerationStructuresPropertiesKHR_Lazy(VkCommandBuffer commandBuffer, uint accelerationStructureCount, VkAccelerationStructureKHR* pAccelerationStructures, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
-            _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteAccelerationStructuresPropertiesKHR");
+            _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureKHR*, VkQueryType, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteAccelerationStructuresPropertiesKHR");
             _vkCmdWriteAccelerationStructuresPropertiesKHR_fnptr(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void> _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr = &vkCmdWriteAccelerationStructuresPropertiesNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureNV*, VkQueryType, VkQueryPool, uint, void> _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr = &vkCmdWriteAccelerationStructuresPropertiesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteAccelerationStructuresPropertiesNV_Lazy(IntPtr commandBuffer, uint accelerationStructureCount, IntPtr* pAccelerationStructures, VkQueryType queryType, IntPtr queryPool, uint firstQuery)
+        private static void vkCmdWriteAccelerationStructuresPropertiesNV_Lazy(VkCommandBuffer commandBuffer, uint accelerationStructureCount, VkAccelerationStructureNV* pAccelerationStructures, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
-            _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteAccelerationStructuresPropertiesNV");
+            _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureNV*, VkQueryType, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteAccelerationStructuresPropertiesNV");
             _vkCmdWriteAccelerationStructuresPropertiesNV_fnptr(commandBuffer, accelerationStructureCount, pAccelerationStructures, queryType, queryPool, firstQuery);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureInfoNV*, IntPtr, ulong, int, IntPtr, IntPtr, IntPtr, ulong, void> _vkCmdBuildAccelerationStructureNV_fnptr = &vkCmdBuildAccelerationStructureNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureInfoNV*, VkBuffer, ulong, int, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, ulong, void> _vkCmdBuildAccelerationStructureNV_fnptr = &vkCmdBuildAccelerationStructureNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBuildAccelerationStructureNV_Lazy(IntPtr commandBuffer, VkAccelerationStructureInfoNV* pInfo, IntPtr instanceData, ulong instanceOffset, int update, IntPtr dst, IntPtr src, IntPtr scratch, ulong scratchOffset)
+        private static void vkCmdBuildAccelerationStructureNV_Lazy(VkCommandBuffer commandBuffer, VkAccelerationStructureInfoNV* pInfo, VkBuffer instanceData, ulong instanceOffset, int update, VkAccelerationStructureNV dst, VkAccelerationStructureNV src, VkBuffer scratch, ulong scratchOffset)
         {
-            _vkCmdBuildAccelerationStructureNV_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureInfoNV*, IntPtr, ulong, int, IntPtr, IntPtr, IntPtr, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructureNV");
+            _vkCmdBuildAccelerationStructureNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkAccelerationStructureInfoNV*, VkBuffer, ulong, int, VkAccelerationStructureNV, VkAccelerationStructureNV, VkBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructureNV");
             _vkCmdBuildAccelerationStructureNV_fnptr(commandBuffer, pInfo, instanceData, instanceOffset, update, dst, src, scratch, scratchOffset);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteAccelerationStructuresPropertiesKHR_fnptr = &vkWriteAccelerationStructuresPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkAccelerationStructureKHR*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteAccelerationStructuresPropertiesKHR_fnptr = &vkWriteAccelerationStructuresPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkWriteAccelerationStructuresPropertiesKHR_Lazy(IntPtr device, uint accelerationStructureCount, IntPtr* pAccelerationStructures, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
+        private static VkResult vkWriteAccelerationStructuresPropertiesKHR_Lazy(VkDevice device, uint accelerationStructureCount, VkAccelerationStructureKHR* pAccelerationStructures, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
         {
-            _vkWriteAccelerationStructuresPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetInstanceProcAddress("vkWriteAccelerationStructuresPropertiesKHR");
+            _vkWriteAccelerationStructuresPropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, uint, VkAccelerationStructureKHR*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetInstanceProcAddress("vkWriteAccelerationStructuresPropertiesKHR");
             return _vkWriteAccelerationStructuresPropertiesKHR_fnptr(device, accelerationStructureCount, pAccelerationStructures, queryType, dataSize, pData, stride);
         }
-        internal static delegate* unmanaged<IntPtr, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, uint, uint, uint, void> _vkCmdTraceRaysKHR_fnptr = &vkCmdTraceRaysKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, uint, uint, uint, void> _vkCmdTraceRaysKHR_fnptr = &vkCmdTraceRaysKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdTraceRaysKHR_Lazy(IntPtr commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, uint width, uint height, uint depth)
+        private static void vkCmdTraceRaysKHR_Lazy(VkCommandBuffer commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, uint width, uint height, uint depth)
         {
-            _vkCmdTraceRaysKHR_fnptr = (delegate* unmanaged<IntPtr, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysKHR");
+            _vkCmdTraceRaysKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysKHR");
             _vkCmdTraceRaysKHR_fnptr(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, width, height, depth);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, ulong, IntPtr, ulong, ulong, IntPtr, ulong, ulong, uint, uint, uint, void> _vkCmdTraceRaysNV_fnptr = &vkCmdTraceRaysNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, ulong, VkBuffer, ulong, ulong, VkBuffer, ulong, ulong, uint, uint, uint, void> _vkCmdTraceRaysNV_fnptr = &vkCmdTraceRaysNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdTraceRaysNV_Lazy(IntPtr commandBuffer, IntPtr raygenShaderBindingTableBuffer, ulong raygenShaderBindingOffset, IntPtr missShaderBindingTableBuffer, ulong missShaderBindingOffset, ulong missShaderBindingStride, IntPtr hitShaderBindingTableBuffer, ulong hitShaderBindingOffset, ulong hitShaderBindingStride, IntPtr callableShaderBindingTableBuffer, ulong callableShaderBindingOffset, ulong callableShaderBindingStride, uint width, uint height, uint depth)
+        private static void vkCmdTraceRaysNV_Lazy(VkCommandBuffer commandBuffer, VkBuffer raygenShaderBindingTableBuffer, ulong raygenShaderBindingOffset, VkBuffer missShaderBindingTableBuffer, ulong missShaderBindingOffset, ulong missShaderBindingStride, VkBuffer hitShaderBindingTableBuffer, ulong hitShaderBindingOffset, ulong hitShaderBindingStride, VkBuffer callableShaderBindingTableBuffer, ulong callableShaderBindingOffset, ulong callableShaderBindingStride, uint width, uint height, uint depth)
         {
-            _vkCmdTraceRaysNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, IntPtr, ulong, ulong, IntPtr, ulong, ulong, IntPtr, ulong, ulong, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysNV");
+            _vkCmdTraceRaysNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, VkBuffer, ulong, ulong, VkBuffer, ulong, ulong, VkBuffer, ulong, ulong, uint, uint, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysNV");
             _vkCmdTraceRaysNV_fnptr(commandBuffer, raygenShaderBindingTableBuffer, raygenShaderBindingOffset, missShaderBindingTableBuffer, missShaderBindingOffset, missShaderBindingStride, hitShaderBindingTableBuffer, hitShaderBindingOffset, hitShaderBindingStride, callableShaderBindingTableBuffer, callableShaderBindingOffset, callableShaderBindingStride, width, height, depth);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, VkResult> _vkGetRayTracingShaderGroupHandlesKHR_fnptr = &vkGetRayTracingShaderGroupHandlesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, uint, uint, nuint, void*, VkResult> _vkGetRayTracingShaderGroupHandlesKHR_fnptr = &vkGetRayTracingShaderGroupHandlesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetRayTracingShaderGroupHandlesKHR_Lazy(IntPtr device, IntPtr pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
+        private static VkResult vkGetRayTracingShaderGroupHandlesKHR_Lazy(VkDevice device, VkPipeline pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
         {
-            _vkGetRayTracingShaderGroupHandlesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRayTracingShaderGroupHandlesKHR");
+            _vkGetRayTracingShaderGroupHandlesKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, uint, uint, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRayTracingShaderGroupHandlesKHR");
             return _vkGetRayTracingShaderGroupHandlesKHR_fnptr(device, pipeline, firstGroup, groupCount, dataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, VkResult> _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr = &vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, uint, uint, nuint, void*, VkResult> _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr = &vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_Lazy(IntPtr device, IntPtr pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
+        private static VkResult vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_Lazy(VkDevice device, VkPipeline pipeline, uint firstGroup, uint groupCount, nuint dataSize, void* pData)
         {
-            _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, uint, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRayTracingCaptureReplayShaderGroupHandlesKHR");
+            _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, uint, uint, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetRayTracingCaptureReplayShaderGroupHandlesKHR");
             return _vkGetRayTracingCaptureReplayShaderGroupHandlesKHR_fnptr(device, pipeline, firstGroup, groupCount, dataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint, void*, VkResult> _vkGetAccelerationStructureHandleNV_fnptr = &vkGetAccelerationStructureHandleNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureNV, nuint, void*, VkResult> _vkGetAccelerationStructureHandleNV_fnptr = &vkGetAccelerationStructureHandleNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetAccelerationStructureHandleNV_Lazy(IntPtr device, IntPtr accelerationStructure, nuint dataSize, void* pData)
+        private static VkResult vkGetAccelerationStructureHandleNV_Lazy(VkDevice device, VkAccelerationStructureNV accelerationStructure, nuint dataSize, void* pData)
         {
-            _vkGetAccelerationStructureHandleNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureHandleNV");
+            _vkGetAccelerationStructureHandleNV_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureNV, nuint, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureHandleNV");
             return _vkGetAccelerationStructureHandleNV_fnptr(device, accelerationStructure, dataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkRayTracingPipelineCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateRayTracingPipelinesNV_fnptr = &vkCreateRayTracingPipelinesNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkRayTracingPipelineCreateInfoNV*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateRayTracingPipelinesNV_fnptr = &vkCreateRayTracingPipelinesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateRayTracingPipelinesNV_Lazy(IntPtr device, IntPtr pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoNV* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pPipelines)
+        private static VkResult vkCreateRayTracingPipelinesNV_Lazy(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoNV* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
-            _vkCreateRayTracingPipelinesNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkRayTracingPipelineCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRayTracingPipelinesNV");
+            _vkCreateRayTracingPipelinesNV_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkRayTracingPipelineCreateInfoNV*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRayTracingPipelinesNV");
             return _vkCreateRayTracingPipelinesNV_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, VkRayTracingPipelineCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateRayTracingPipelinesKHR_fnptr = &vkCreateRayTracingPipelinesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkPipelineCache, uint, VkRayTracingPipelineCreateInfoKHR*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateRayTracingPipelinesKHR_fnptr = &vkCreateRayTracingPipelinesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateRayTracingPipelinesKHR_Lazy(IntPtr device, IntPtr deferredOperation, IntPtr pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pPipelines)
+        private static VkResult vkCreateRayTracingPipelinesKHR_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkPipelineCache pipelineCache, uint createInfoCount, VkRayTracingPipelineCreateInfoKHR* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
-            _vkCreateRayTracingPipelinesKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, uint, VkRayTracingPipelineCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRayTracingPipelinesKHR");
+            _vkCreateRayTracingPipelinesKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkPipelineCache, uint, VkRayTracingPipelineCreateInfoKHR*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateRayTracingPipelinesKHR");
             return _vkCreateRayTracingPipelinesKHR_fnptr(device, deferredOperation, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkCooperativeMatrixPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = &vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = &vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties)
+        private static VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties)
         {
-            _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = (delegate* unmanaged<IntPtr, uint*, VkCooperativeMatrixPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
+            _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCooperativeMatrixPropertiesNV");
             return _vkGetPhysicalDeviceCooperativeMatrixPropertiesNV_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, ulong, void> _vkCmdTraceRaysIndirectKHR_fnptr = &vkCmdTraceRaysIndirectKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, ulong, void> _vkCmdTraceRaysIndirectKHR_fnptr = &vkCmdTraceRaysIndirectKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdTraceRaysIndirectKHR_Lazy(IntPtr commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, ulong indirectDeviceAddress)
+        private static void vkCmdTraceRaysIndirectKHR_Lazy(VkCommandBuffer commandBuffer, VkStridedDeviceAddressRegionKHR* pRaygenShaderBindingTable, VkStridedDeviceAddressRegionKHR* pMissShaderBindingTable, VkStridedDeviceAddressRegionKHR* pHitShaderBindingTable, VkStridedDeviceAddressRegionKHR* pCallableShaderBindingTable, ulong indirectDeviceAddress)
         {
-            _vkCmdTraceRaysIndirectKHR_fnptr = (delegate* unmanaged<IntPtr, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysIndirectKHR");
+            _vkCmdTraceRaysIndirectKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, VkStridedDeviceAddressRegionKHR*, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysIndirectKHR");
             _vkCmdTraceRaysIndirectKHR_fnptr(commandBuffer, pRaygenShaderBindingTable, pMissShaderBindingTable, pHitShaderBindingTable, pCallableShaderBindingTable, indirectDeviceAddress);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, void> _vkCmdTraceRaysIndirect2KHR_fnptr = &vkCmdTraceRaysIndirect2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, void> _vkCmdTraceRaysIndirect2KHR_fnptr = &vkCmdTraceRaysIndirect2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdTraceRaysIndirect2KHR_Lazy(IntPtr commandBuffer, ulong indirectDeviceAddress)
+        private static void vkCmdTraceRaysIndirect2KHR_Lazy(VkCommandBuffer commandBuffer, ulong indirectDeviceAddress)
         {
-            _vkCmdTraceRaysIndirect2KHR_fnptr = (delegate* unmanaged<IntPtr, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysIndirect2KHR");
+            _vkCmdTraceRaysIndirect2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdTraceRaysIndirect2KHR");
             _vkCmdTraceRaysIndirect2KHR_fnptr(commandBuffer, indirectDeviceAddress);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr = &vkGetDeviceAccelerationStructureCompatibilityKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr = &vkGetDeviceAccelerationStructureCompatibilityKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceAccelerationStructureCompatibilityKHR_Lazy(IntPtr device, VkAccelerationStructureVersionInfoKHR* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
+        private static void vkGetDeviceAccelerationStructureCompatibilityKHR_Lazy(VkDevice device, VkAccelerationStructureVersionInfoKHR* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
         {
-            _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceAccelerationStructureCompatibilityKHR");
+            _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureVersionInfoKHR*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceAccelerationStructureCompatibilityKHR");
             _vkGetDeviceAccelerationStructureCompatibilityKHR_fnptr(device, pVersionInfo, pCompatibility);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkShaderGroupShaderKHR, ulong> _vkGetRayTracingShaderGroupStackSizeKHR_fnptr = &vkGetRayTracingShaderGroupStackSizeKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, uint, VkShaderGroupShaderKHR, ulong> _vkGetRayTracingShaderGroupStackSizeKHR_fnptr = &vkGetRayTracingShaderGroupStackSizeKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetRayTracingShaderGroupStackSizeKHR_Lazy(IntPtr device, IntPtr pipeline, uint group, VkShaderGroupShaderKHR groupShader)
+        private static ulong vkGetRayTracingShaderGroupStackSizeKHR_Lazy(VkDevice device, VkPipeline pipeline, uint group, VkShaderGroupShaderKHR groupShader)
         {
-            _vkGetRayTracingShaderGroupStackSizeKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkShaderGroupShaderKHR, ulong>)VKLoader.GetInstanceProcAddress("vkGetRayTracingShaderGroupStackSizeKHR");
+            _vkGetRayTracingShaderGroupStackSizeKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, uint, VkShaderGroupShaderKHR, ulong>)VKLoader.GetInstanceProcAddress("vkGetRayTracingShaderGroupStackSizeKHR");
             return _vkGetRayTracingShaderGroupStackSizeKHR_fnptr(device, pipeline, group, groupShader);
         }
-        internal static delegate* unmanaged<IntPtr, uint, void> _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr = &vkCmdSetRayTracingPipelineStackSizeKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, void> _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr = &vkCmdSetRayTracingPipelineStackSizeKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRayTracingPipelineStackSizeKHR_Lazy(IntPtr commandBuffer, uint pipelineStackSize)
+        private static void vkCmdSetRayTracingPipelineStackSizeKHR_Lazy(VkCommandBuffer commandBuffer, uint pipelineStackSize)
         {
-            _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr = (delegate* unmanaged<IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRayTracingPipelineStackSizeKHR");
+            _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRayTracingPipelineStackSizeKHR");
             _vkCmdSetRayTracingPipelineStackSizeKHR_fnptr(commandBuffer, pipelineStackSize);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageViewHandleInfoNVX*, uint> _vkGetImageViewHandleNVX_fnptr = &vkGetImageViewHandleNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageViewHandleInfoNVX*, uint> _vkGetImageViewHandleNVX_fnptr = &vkGetImageViewHandleNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static uint vkGetImageViewHandleNVX_Lazy(IntPtr device, VkImageViewHandleInfoNVX* pInfo)
+        private static uint vkGetImageViewHandleNVX_Lazy(VkDevice device, VkImageViewHandleInfoNVX* pInfo)
         {
-            _vkGetImageViewHandleNVX_fnptr = (delegate* unmanaged<IntPtr, VkImageViewHandleInfoNVX*, uint>)VKLoader.GetInstanceProcAddress("vkGetImageViewHandleNVX");
+            _vkGetImageViewHandleNVX_fnptr = (delegate* unmanaged<VkDevice, VkImageViewHandleInfoNVX*, uint>)VKLoader.GetInstanceProcAddress("vkGetImageViewHandleNVX");
             return _vkGetImageViewHandleNVX_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageViewAddressPropertiesNVX*, VkResult> _vkGetImageViewAddressNVX_fnptr = &vkGetImageViewAddressNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageView, VkImageViewAddressPropertiesNVX*, VkResult> _vkGetImageViewAddressNVX_fnptr = &vkGetImageViewAddressNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetImageViewAddressNVX_Lazy(IntPtr device, IntPtr imageView, VkImageViewAddressPropertiesNVX* pProperties)
+        private static VkResult vkGetImageViewAddressNVX_Lazy(VkDevice device, VkImageView imageView, VkImageViewAddressPropertiesNVX* pProperties)
         {
-            _vkGetImageViewAddressNVX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageViewAddressPropertiesNVX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageViewAddressNVX");
+            _vkGetImageViewAddressNVX_fnptr = (delegate* unmanaged<VkDevice, VkImageView, VkImageViewAddressPropertiesNVX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageViewAddressNVX");
             return _vkGetImageViewAddressNVX_fnptr(device, imageView, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkPresentModeKHR*, VkResult> _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr = &vkGetPhysicalDeviceSurfacePresentModes2EXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkPresentModeKHR*, VkResult> _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr = &vkGetPhysicalDeviceSurfacePresentModes2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSurfacePresentModes2EXT_Lazy(IntPtr physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
+        private static VkResult vkGetPhysicalDeviceSurfacePresentModes2EXT_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint* pPresentModeCount, VkPresentModeKHR* pPresentModes)
         {
-            _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkPresentModeKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfacePresentModes2EXT");
+            _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceSurfaceInfo2KHR*, uint*, VkPresentModeKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSurfacePresentModes2EXT");
             return _vkGetPhysicalDeviceSurfacePresentModes2EXT_fnptr(physicalDevice, pSurfaceInfo, pPresentModeCount, pPresentModes);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult> _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr = &vkGetDeviceGroupSurfacePresentModes2EXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPhysicalDeviceSurfaceInfo2KHR*, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult> _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr = &vkGetDeviceGroupSurfacePresentModes2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeviceGroupSurfacePresentModes2EXT_Lazy(IntPtr device, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
+        private static VkResult vkGetDeviceGroupSurfacePresentModes2EXT_Lazy(VkDevice device, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkDeviceGroupPresentModeFlagBitsKHR* pModes)
         {
-            _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceSurfaceInfo2KHR*, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupSurfacePresentModes2EXT");
+            _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr = (delegate* unmanaged<VkDevice, VkPhysicalDeviceSurfaceInfo2KHR*, VkDeviceGroupPresentModeFlagBitsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceGroupSurfacePresentModes2EXT");
             return _vkGetDeviceGroupSurfacePresentModes2EXT_fnptr(device, pSurfaceInfo, pModes);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkAcquireFullScreenExclusiveModeEXT_fnptr = &vkAcquireFullScreenExclusiveModeEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult> _vkAcquireFullScreenExclusiveModeEXT_fnptr = &vkAcquireFullScreenExclusiveModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireFullScreenExclusiveModeEXT_Lazy(IntPtr device, IntPtr swapchain)
+        private static VkResult vkAcquireFullScreenExclusiveModeEXT_Lazy(VkDevice device, VkSwapchainKHR swapchain)
         {
-            _vkAcquireFullScreenExclusiveModeEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireFullScreenExclusiveModeEXT");
+            _vkAcquireFullScreenExclusiveModeEXT_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireFullScreenExclusiveModeEXT");
             return _vkAcquireFullScreenExclusiveModeEXT_fnptr(device, swapchain);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkReleaseFullScreenExclusiveModeEXT_fnptr = &vkReleaseFullScreenExclusiveModeEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult> _vkReleaseFullScreenExclusiveModeEXT_fnptr = &vkReleaseFullScreenExclusiveModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkReleaseFullScreenExclusiveModeEXT_Lazy(IntPtr device, IntPtr swapchain)
+        private static VkResult vkReleaseFullScreenExclusiveModeEXT_Lazy(VkDevice device, VkSwapchainKHR swapchain)
         {
-            _vkReleaseFullScreenExclusiveModeEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseFullScreenExclusiveModeEXT");
+            _vkReleaseFullScreenExclusiveModeEXT_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseFullScreenExclusiveModeEXT");
             return _vkReleaseFullScreenExclusiveModeEXT_fnptr(device, swapchain);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint*, VkPerformanceCounterKHR*, VkPerformanceCounterDescriptionKHR*, VkResult> _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr = &vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkPerformanceCounterKHR*, VkPerformanceCounterDescriptionKHR*, VkResult> _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr = &vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_Lazy(IntPtr physicalDevice, uint queueFamilyIndex, uint* pCounterCount, VkPerformanceCounterKHR* pCounters, VkPerformanceCounterDescriptionKHR* pCounterDescriptions)
+        private static VkResult vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_Lazy(VkPhysicalDevice physicalDevice, uint queueFamilyIndex, uint* pCounterCount, VkPerformanceCounterKHR* pCounters, VkPerformanceCounterDescriptionKHR* pCounterDescriptions)
         {
-            _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr = (delegate* unmanaged<IntPtr, uint, uint*, VkPerformanceCounterKHR*, VkPerformanceCounterDescriptionKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
+            _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint, uint*, VkPerformanceCounterKHR*, VkPerformanceCounterDescriptionKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR");
             return _vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR_fnptr(physicalDevice, queueFamilyIndex, pCounterCount, pCounters, pCounterDescriptions);
         }
-        internal static delegate* unmanaged<IntPtr, VkQueryPoolPerformanceCreateInfoKHR*, uint*, void> _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr = &vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkQueryPoolPerformanceCreateInfoKHR*, uint*, void> _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr = &vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_Lazy(IntPtr physicalDevice, VkQueryPoolPerformanceCreateInfoKHR* pPerformanceQueryCreateInfo, uint* pNumPasses)
+        private static void vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_Lazy(VkPhysicalDevice physicalDevice, VkQueryPoolPerformanceCreateInfoKHR* pPerformanceQueryCreateInfo, uint* pNumPasses)
         {
-            _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr = (delegate* unmanaged<IntPtr, VkQueryPoolPerformanceCreateInfoKHR*, uint*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
+            _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkQueryPoolPerformanceCreateInfoKHR*, uint*, void>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR");
             _vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR_fnptr(physicalDevice, pPerformanceQueryCreateInfo, pNumPasses);
         }
-        internal static delegate* unmanaged<IntPtr, VkAcquireProfilingLockInfoKHR*, VkResult> _vkAcquireProfilingLockKHR_fnptr = &vkAcquireProfilingLockKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAcquireProfilingLockInfoKHR*, VkResult> _vkAcquireProfilingLockKHR_fnptr = &vkAcquireProfilingLockKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireProfilingLockKHR_Lazy(IntPtr device, VkAcquireProfilingLockInfoKHR* pInfo)
+        private static VkResult vkAcquireProfilingLockKHR_Lazy(VkDevice device, VkAcquireProfilingLockInfoKHR* pInfo)
         {
-            _vkAcquireProfilingLockKHR_fnptr = (delegate* unmanaged<IntPtr, VkAcquireProfilingLockInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireProfilingLockKHR");
+            _vkAcquireProfilingLockKHR_fnptr = (delegate* unmanaged<VkDevice, VkAcquireProfilingLockInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireProfilingLockKHR");
             return _vkAcquireProfilingLockKHR_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkReleaseProfilingLockKHR_fnptr = &vkReleaseProfilingLockKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, void> _vkReleaseProfilingLockKHR_fnptr = &vkReleaseProfilingLockKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkReleaseProfilingLockKHR_Lazy(IntPtr device)
+        private static void vkReleaseProfilingLockKHR_Lazy(VkDevice device)
         {
-            _vkReleaseProfilingLockKHR_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkReleaseProfilingLockKHR");
+            _vkReleaseProfilingLockKHR_fnptr = (delegate* unmanaged<VkDevice, void>)VKLoader.GetInstanceProcAddress("vkReleaseProfilingLockKHR");
             _vkReleaseProfilingLockKHR_fnptr(device);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageDrmFormatModifierPropertiesEXT*, VkResult> _vkGetImageDrmFormatModifierPropertiesEXT_fnptr = &vkGetImageDrmFormatModifierPropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkImageDrmFormatModifierPropertiesEXT*, VkResult> _vkGetImageDrmFormatModifierPropertiesEXT_fnptr = &vkGetImageDrmFormatModifierPropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetImageDrmFormatModifierPropertiesEXT_Lazy(IntPtr device, IntPtr image, VkImageDrmFormatModifierPropertiesEXT* pProperties)
+        private static VkResult vkGetImageDrmFormatModifierPropertiesEXT_Lazy(VkDevice device, VkImage image, VkImageDrmFormatModifierPropertiesEXT* pProperties)
         {
-            _vkGetImageDrmFormatModifierPropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageDrmFormatModifierPropertiesEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageDrmFormatModifierPropertiesEXT");
+            _vkGetImageDrmFormatModifierPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkImageDrmFormatModifierPropertiesEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageDrmFormatModifierPropertiesEXT");
             return _vkGetImageDrmFormatModifierPropertiesEXT_fnptr(device, image, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferDeviceAddressInfo*, ulong> _vkGetBufferOpaqueCaptureAddress_fnptr = &vkGetBufferOpaqueCaptureAddress_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferDeviceAddressInfo*, ulong> _vkGetBufferOpaqueCaptureAddress_fnptr = &vkGetBufferOpaqueCaptureAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetBufferOpaqueCaptureAddress_Lazy(IntPtr device, VkBufferDeviceAddressInfo* pInfo)
+        private static ulong vkGetBufferOpaqueCaptureAddress_Lazy(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
-            _vkGetBufferOpaqueCaptureAddress_fnptr = (delegate* unmanaged<IntPtr, VkBufferDeviceAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetBufferOpaqueCaptureAddress");
+            _vkGetBufferOpaqueCaptureAddress_fnptr = (delegate* unmanaged<VkDevice, VkBufferDeviceAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetBufferOpaqueCaptureAddress");
             return _vkGetBufferOpaqueCaptureAddress_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferDeviceAddressInfo*, ulong> _vkGetBufferDeviceAddress_fnptr = &vkGetBufferDeviceAddress_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferDeviceAddressInfo*, ulong> _vkGetBufferDeviceAddress_fnptr = &vkGetBufferDeviceAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetBufferDeviceAddress_Lazy(IntPtr device, VkBufferDeviceAddressInfo* pInfo)
+        private static ulong vkGetBufferDeviceAddress_Lazy(VkDevice device, VkBufferDeviceAddressInfo* pInfo)
         {
-            _vkGetBufferDeviceAddress_fnptr = (delegate* unmanaged<IntPtr, VkBufferDeviceAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetBufferDeviceAddress");
+            _vkGetBufferDeviceAddress_fnptr = (delegate* unmanaged<VkDevice, VkBufferDeviceAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetBufferDeviceAddress");
             return _vkGetBufferDeviceAddress_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkHeadlessSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateHeadlessSurfaceEXT_fnptr = &vkCreateHeadlessSurfaceEXT_Lazy;
+        internal static delegate* unmanaged<VkInstance, VkHeadlessSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult> _vkCreateHeadlessSurfaceEXT_fnptr = &vkCreateHeadlessSurfaceEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateHeadlessSurfaceEXT_Lazy(IntPtr instance, VkHeadlessSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSurface)
+        private static VkResult vkCreateHeadlessSurfaceEXT_Lazy(VkInstance instance, VkHeadlessSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface)
         {
-            _vkCreateHeadlessSurfaceEXT_fnptr = (delegate* unmanaged<IntPtr, VkHeadlessSurfaceCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateHeadlessSurfaceEXT");
+            _vkCreateHeadlessSurfaceEXT_fnptr = (delegate* unmanaged<VkInstance, VkHeadlessSurfaceCreateInfoEXT*, VkAllocationCallbacks*, VkSurfaceKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateHeadlessSurfaceEXT");
             return _vkCreateHeadlessSurfaceEXT_fnptr(instance, pCreateInfo, pAllocator, pSurface);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkFramebufferMixedSamplesCombinationNV*, VkResult> _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr = &vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkFramebufferMixedSamplesCombinationNV*, VkResult> _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr = &vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_Lazy(IntPtr physicalDevice, uint* pCombinationCount, VkFramebufferMixedSamplesCombinationNV* pCombinations)
+        private static VkResult vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_Lazy(VkPhysicalDevice physicalDevice, uint* pCombinationCount, VkFramebufferMixedSamplesCombinationNV* pCombinations)
         {
-            _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr = (delegate* unmanaged<IntPtr, uint*, VkFramebufferMixedSamplesCombinationNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV");
+            _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkFramebufferMixedSamplesCombinationNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV");
             return _vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV_fnptr(physicalDevice, pCombinationCount, pCombinations);
         }
-        internal static delegate* unmanaged<IntPtr, VkInitializePerformanceApiInfoINTEL*, VkResult> _vkInitializePerformanceApiINTEL_fnptr = &vkInitializePerformanceApiINTEL_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkInitializePerformanceApiInfoINTEL*, VkResult> _vkInitializePerformanceApiINTEL_fnptr = &vkInitializePerformanceApiINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkInitializePerformanceApiINTEL_Lazy(IntPtr device, VkInitializePerformanceApiInfoINTEL* pInitializeInfo)
+        private static VkResult vkInitializePerformanceApiINTEL_Lazy(VkDevice device, VkInitializePerformanceApiInfoINTEL* pInitializeInfo)
         {
-            _vkInitializePerformanceApiINTEL_fnptr = (delegate* unmanaged<IntPtr, VkInitializePerformanceApiInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkInitializePerformanceApiINTEL");
+            _vkInitializePerformanceApiINTEL_fnptr = (delegate* unmanaged<VkDevice, VkInitializePerformanceApiInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkInitializePerformanceApiINTEL");
             return _vkInitializePerformanceApiINTEL_fnptr(device, pInitializeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkUninitializePerformanceApiINTEL_fnptr = &vkUninitializePerformanceApiINTEL_Lazy;
+        internal static delegate* unmanaged<VkDevice, void> _vkUninitializePerformanceApiINTEL_fnptr = &vkUninitializePerformanceApiINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkUninitializePerformanceApiINTEL_Lazy(IntPtr device)
+        private static void vkUninitializePerformanceApiINTEL_Lazy(VkDevice device)
         {
-            _vkUninitializePerformanceApiINTEL_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkUninitializePerformanceApiINTEL");
+            _vkUninitializePerformanceApiINTEL_fnptr = (delegate* unmanaged<VkDevice, void>)VKLoader.GetInstanceProcAddress("vkUninitializePerformanceApiINTEL");
             _vkUninitializePerformanceApiINTEL_fnptr(device);
         }
-        internal static delegate* unmanaged<IntPtr, VkPerformanceMarkerInfoINTEL*, VkResult> _vkCmdSetPerformanceMarkerINTEL_fnptr = &vkCmdSetPerformanceMarkerINTEL_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPerformanceMarkerInfoINTEL*, VkResult> _vkCmdSetPerformanceMarkerINTEL_fnptr = &vkCmdSetPerformanceMarkerINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCmdSetPerformanceMarkerINTEL_Lazy(IntPtr commandBuffer, VkPerformanceMarkerInfoINTEL* pMarkerInfo)
+        private static VkResult vkCmdSetPerformanceMarkerINTEL_Lazy(VkCommandBuffer commandBuffer, VkPerformanceMarkerInfoINTEL* pMarkerInfo)
         {
-            _vkCmdSetPerformanceMarkerINTEL_fnptr = (delegate* unmanaged<IntPtr, VkPerformanceMarkerInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceMarkerINTEL");
+            _vkCmdSetPerformanceMarkerINTEL_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerformanceMarkerInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceMarkerINTEL");
             return _vkCmdSetPerformanceMarkerINTEL_fnptr(commandBuffer, pMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPerformanceStreamMarkerInfoINTEL*, VkResult> _vkCmdSetPerformanceStreamMarkerINTEL_fnptr = &vkCmdSetPerformanceStreamMarkerINTEL_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPerformanceStreamMarkerInfoINTEL*, VkResult> _vkCmdSetPerformanceStreamMarkerINTEL_fnptr = &vkCmdSetPerformanceStreamMarkerINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCmdSetPerformanceStreamMarkerINTEL_Lazy(IntPtr commandBuffer, VkPerformanceStreamMarkerInfoINTEL* pMarkerInfo)
+        private static VkResult vkCmdSetPerformanceStreamMarkerINTEL_Lazy(VkCommandBuffer commandBuffer, VkPerformanceStreamMarkerInfoINTEL* pMarkerInfo)
         {
-            _vkCmdSetPerformanceStreamMarkerINTEL_fnptr = (delegate* unmanaged<IntPtr, VkPerformanceStreamMarkerInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceStreamMarkerINTEL");
+            _vkCmdSetPerformanceStreamMarkerINTEL_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerformanceStreamMarkerInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceStreamMarkerINTEL");
             return _vkCmdSetPerformanceStreamMarkerINTEL_fnptr(commandBuffer, pMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPerformanceOverrideInfoINTEL*, VkResult> _vkCmdSetPerformanceOverrideINTEL_fnptr = &vkCmdSetPerformanceOverrideINTEL_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPerformanceOverrideInfoINTEL*, VkResult> _vkCmdSetPerformanceOverrideINTEL_fnptr = &vkCmdSetPerformanceOverrideINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCmdSetPerformanceOverrideINTEL_Lazy(IntPtr commandBuffer, VkPerformanceOverrideInfoINTEL* pOverrideInfo)
+        private static VkResult vkCmdSetPerformanceOverrideINTEL_Lazy(VkCommandBuffer commandBuffer, VkPerformanceOverrideInfoINTEL* pOverrideInfo)
         {
-            _vkCmdSetPerformanceOverrideINTEL_fnptr = (delegate* unmanaged<IntPtr, VkPerformanceOverrideInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceOverrideINTEL");
+            _vkCmdSetPerformanceOverrideINTEL_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPerformanceOverrideInfoINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkCmdSetPerformanceOverrideINTEL");
             return _vkCmdSetPerformanceOverrideINTEL_fnptr(commandBuffer, pOverrideInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPerformanceConfigurationAcquireInfoINTEL*, IntPtr*, VkResult> _vkAcquirePerformanceConfigurationINTEL_fnptr = &vkAcquirePerformanceConfigurationINTEL_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPerformanceConfigurationAcquireInfoINTEL*, VkPerformanceConfigurationINTEL*, VkResult> _vkAcquirePerformanceConfigurationINTEL_fnptr = &vkAcquirePerformanceConfigurationINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquirePerformanceConfigurationINTEL_Lazy(IntPtr device, VkPerformanceConfigurationAcquireInfoINTEL* pAcquireInfo, IntPtr* pConfiguration)
+        private static VkResult vkAcquirePerformanceConfigurationINTEL_Lazy(VkDevice device, VkPerformanceConfigurationAcquireInfoINTEL* pAcquireInfo, VkPerformanceConfigurationINTEL* pConfiguration)
         {
-            _vkAcquirePerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<IntPtr, VkPerformanceConfigurationAcquireInfoINTEL*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquirePerformanceConfigurationINTEL");
+            _vkAcquirePerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<VkDevice, VkPerformanceConfigurationAcquireInfoINTEL*, VkPerformanceConfigurationINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquirePerformanceConfigurationINTEL");
             return _vkAcquirePerformanceConfigurationINTEL_fnptr(device, pAcquireInfo, pConfiguration);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkReleasePerformanceConfigurationINTEL_fnptr = &vkReleasePerformanceConfigurationINTEL_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPerformanceConfigurationINTEL, VkResult> _vkReleasePerformanceConfigurationINTEL_fnptr = &vkReleasePerformanceConfigurationINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkReleasePerformanceConfigurationINTEL_Lazy(IntPtr device, IntPtr configuration)
+        private static VkResult vkReleasePerformanceConfigurationINTEL_Lazy(VkDevice device, VkPerformanceConfigurationINTEL configuration)
         {
-            _vkReleasePerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkReleasePerformanceConfigurationINTEL");
+            _vkReleasePerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<VkDevice, VkPerformanceConfigurationINTEL, VkResult>)VKLoader.GetInstanceProcAddress("vkReleasePerformanceConfigurationINTEL");
             return _vkReleasePerformanceConfigurationINTEL_fnptr(device, configuration);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkQueueSetPerformanceConfigurationINTEL_fnptr = &vkQueueSetPerformanceConfigurationINTEL_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkPerformanceConfigurationINTEL, VkResult> _vkQueueSetPerformanceConfigurationINTEL_fnptr = &vkQueueSetPerformanceConfigurationINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueSetPerformanceConfigurationINTEL_Lazy(IntPtr queue, IntPtr configuration)
+        private static VkResult vkQueueSetPerformanceConfigurationINTEL_Lazy(VkQueue queue, VkPerformanceConfigurationINTEL configuration)
         {
-            _vkQueueSetPerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSetPerformanceConfigurationINTEL");
+            _vkQueueSetPerformanceConfigurationINTEL_fnptr = (delegate* unmanaged<VkQueue, VkPerformanceConfigurationINTEL, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSetPerformanceConfigurationINTEL");
             return _vkQueueSetPerformanceConfigurationINTEL_fnptr(queue, configuration);
         }
-        internal static delegate* unmanaged<IntPtr, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult> _vkGetPerformanceParameterINTEL_fnptr = &vkGetPerformanceParameterINTEL_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult> _vkGetPerformanceParameterINTEL_fnptr = &vkGetPerformanceParameterINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPerformanceParameterINTEL_Lazy(IntPtr device, VkPerformanceParameterTypeINTEL parameter, VkPerformanceValueINTEL* pValue)
+        private static VkResult vkGetPerformanceParameterINTEL_Lazy(VkDevice device, VkPerformanceParameterTypeINTEL parameter, VkPerformanceValueINTEL* pValue)
         {
-            _vkGetPerformanceParameterINTEL_fnptr = (delegate* unmanaged<IntPtr, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPerformanceParameterINTEL");
+            _vkGetPerformanceParameterINTEL_fnptr = (delegate* unmanaged<VkDevice, VkPerformanceParameterTypeINTEL, VkPerformanceValueINTEL*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPerformanceParameterINTEL");
             return _vkGetPerformanceParameterINTEL_fnptr(device, parameter, pValue);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong> _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr = &vkGetDeviceMemoryOpaqueCaptureAddress_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong> _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr = &vkGetDeviceMemoryOpaqueCaptureAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetDeviceMemoryOpaqueCaptureAddress_Lazy(IntPtr device, VkDeviceMemoryOpaqueCaptureAddressInfo* pInfo)
+        private static ulong vkGetDeviceMemoryOpaqueCaptureAddress_Lazy(VkDevice device, VkDeviceMemoryOpaqueCaptureAddressInfo* pInfo)
         {
-            _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr = (delegate* unmanaged<IntPtr, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetDeviceMemoryOpaqueCaptureAddress");
+            _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemoryOpaqueCaptureAddressInfo*, ulong>)VKLoader.GetInstanceProcAddress("vkGetDeviceMemoryOpaqueCaptureAddress");
             return _vkGetDeviceMemoryOpaqueCaptureAddress_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineInfoKHR*, uint*, VkPipelineExecutablePropertiesKHR*, VkResult> _vkGetPipelineExecutablePropertiesKHR_fnptr = &vkGetPipelineExecutablePropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineInfoKHR*, uint*, VkPipelineExecutablePropertiesKHR*, VkResult> _vkGetPipelineExecutablePropertiesKHR_fnptr = &vkGetPipelineExecutablePropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPipelineExecutablePropertiesKHR_Lazy(IntPtr device, VkPipelineInfoKHR* pPipelineInfo, uint* pExecutableCount, VkPipelineExecutablePropertiesKHR* pProperties)
+        private static VkResult vkGetPipelineExecutablePropertiesKHR_Lazy(VkDevice device, VkPipelineInfoKHR* pPipelineInfo, uint* pExecutableCount, VkPipelineExecutablePropertiesKHR* pProperties)
         {
-            _vkGetPipelineExecutablePropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkPipelineInfoKHR*, uint*, VkPipelineExecutablePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutablePropertiesKHR");
+            _vkGetPipelineExecutablePropertiesKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineInfoKHR*, uint*, VkPipelineExecutablePropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutablePropertiesKHR");
             return _vkGetPipelineExecutablePropertiesKHR_fnptr(device, pPipelineInfo, pExecutableCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableStatisticKHR*, VkResult> _vkGetPipelineExecutableStatisticsKHR_fnptr = &vkGetPipelineExecutableStatisticsKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableStatisticKHR*, VkResult> _vkGetPipelineExecutableStatisticsKHR_fnptr = &vkGetPipelineExecutableStatisticsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPipelineExecutableStatisticsKHR_Lazy(IntPtr device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pStatisticCount, VkPipelineExecutableStatisticKHR* pStatistics)
+        private static VkResult vkGetPipelineExecutableStatisticsKHR_Lazy(VkDevice device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pStatisticCount, VkPipelineExecutableStatisticKHR* pStatistics)
         {
-            _vkGetPipelineExecutableStatisticsKHR_fnptr = (delegate* unmanaged<IntPtr, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableStatisticKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutableStatisticsKHR");
+            _vkGetPipelineExecutableStatisticsKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableStatisticKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutableStatisticsKHR");
             return _vkGetPipelineExecutableStatisticsKHR_fnptr(device, pExecutableInfo, pStatisticCount, pStatistics);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableInternalRepresentationKHR*, VkResult> _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr = &vkGetPipelineExecutableInternalRepresentationsKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableInternalRepresentationKHR*, VkResult> _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr = &vkGetPipelineExecutableInternalRepresentationsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPipelineExecutableInternalRepresentationsKHR_Lazy(IntPtr device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pInternalRepresentationCount, VkPipelineExecutableInternalRepresentationKHR* pInternalRepresentations)
+        private static VkResult vkGetPipelineExecutableInternalRepresentationsKHR_Lazy(VkDevice device, VkPipelineExecutableInfoKHR* pExecutableInfo, uint* pInternalRepresentationCount, VkPipelineExecutableInternalRepresentationKHR* pInternalRepresentations)
         {
-            _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr = (delegate* unmanaged<IntPtr, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableInternalRepresentationKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutableInternalRepresentationsKHR");
+            _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineExecutableInfoKHR*, uint*, VkPipelineExecutableInternalRepresentationKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineExecutableInternalRepresentationsKHR");
             return _vkGetPipelineExecutableInternalRepresentationsKHR_fnptr(device, pExecutableInfo, pInternalRepresentationCount, pInternalRepresentations);
         }
-        internal static delegate* unmanaged<IntPtr, uint, ushort, void> _vkCmdSetLineStippleKHR_fnptr = &vkCmdSetLineStippleKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, ushort, void> _vkCmdSetLineStippleKHR_fnptr = &vkCmdSetLineStippleKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLineStippleKHR_Lazy(IntPtr commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
+        private static void vkCmdSetLineStippleKHR_Lazy(VkCommandBuffer commandBuffer, uint lineStippleFactor, ushort lineStipplePattern)
         {
-            _vkCmdSetLineStippleKHR_fnptr = (delegate* unmanaged<IntPtr, uint, ushort, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineStippleKHR");
+            _vkCmdSetLineStippleKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, ushort, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineStippleKHR");
             _vkCmdSetLineStippleKHR_fnptr(commandBuffer, lineStippleFactor, lineStipplePattern);
         }
-        internal static delegate* unmanaged<IntPtr, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult> _vkGetFaultData_fnptr = &vkGetFaultData_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult> _vkGetFaultData_fnptr = &vkGetFaultData_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFaultData_Lazy(IntPtr device, VkFaultQueryBehavior faultQueryBehavior, int* pUnrecordedFaults, uint* pFaultCount, VkFaultData* pFaults)
+        private static VkResult vkGetFaultData_Lazy(VkDevice device, VkFaultQueryBehavior faultQueryBehavior, int* pUnrecordedFaults, uint* pFaultCount, VkFaultData* pFaults)
         {
-            _vkGetFaultData_fnptr = (delegate* unmanaged<IntPtr, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFaultData");
+            _vkGetFaultData_fnptr = (delegate* unmanaged<VkDevice, VkFaultQueryBehavior, int*, uint*, VkFaultData*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFaultData");
             return _vkGetFaultData_fnptr(device, faultQueryBehavior, pUnrecordedFaults, pFaultCount, pFaults);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceToolProperties*, VkResult> _vkGetPhysicalDeviceToolProperties_fnptr = &vkGetPhysicalDeviceToolProperties_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult> _vkGetPhysicalDeviceToolProperties_fnptr = &vkGetPhysicalDeviceToolProperties_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceToolProperties_Lazy(IntPtr physicalDevice, uint* pToolCount, VkPhysicalDeviceToolProperties* pToolProperties)
+        private static VkResult vkGetPhysicalDeviceToolProperties_Lazy(VkPhysicalDevice physicalDevice, uint* pToolCount, VkPhysicalDeviceToolProperties* pToolProperties)
         {
-            _vkGetPhysicalDeviceToolProperties_fnptr = (delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceToolProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceToolProperties");
+            _vkGetPhysicalDeviceToolProperties_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceToolProperties*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceToolProperties");
             return _vkGetPhysicalDeviceToolProperties_fnptr(physicalDevice, pToolCount, pToolProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateAccelerationStructureKHR_fnptr = &vkCreateAccelerationStructureKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureCreateInfoKHR*, VkAllocationCallbacks*, VkAccelerationStructureKHR*, VkResult> _vkCreateAccelerationStructureKHR_fnptr = &vkCreateAccelerationStructureKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateAccelerationStructureKHR_Lazy(IntPtr device, VkAccelerationStructureCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pAccelerationStructure)
+        private static VkResult vkCreateAccelerationStructureKHR_Lazy(VkDevice device, VkAccelerationStructureCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkAccelerationStructureKHR* pAccelerationStructure)
         {
-            _vkCreateAccelerationStructureKHR_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAccelerationStructureKHR");
+            _vkCreateAccelerationStructureKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureCreateInfoKHR*, VkAllocationCallbacks*, VkAccelerationStructureKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateAccelerationStructureKHR");
             return _vkCreateAccelerationStructureKHR_fnptr(device, pCreateInfo, pAllocator, pAccelerationStructure);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void> _vkCmdBuildAccelerationStructuresKHR_fnptr = &vkCmdBuildAccelerationStructuresKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void> _vkCmdBuildAccelerationStructuresKHR_fnptr = &vkCmdBuildAccelerationStructuresKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBuildAccelerationStructuresKHR_Lazy(IntPtr commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
+        private static void vkCmdBuildAccelerationStructuresKHR_Lazy(VkCommandBuffer commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
         {
-            _vkCmdBuildAccelerationStructuresKHR_fnptr = (delegate* unmanaged<IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructuresKHR");
+            _vkCmdBuildAccelerationStructuresKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructuresKHR");
             _vkCmdBuildAccelerationStructuresKHR_fnptr(commandBuffer, infoCount, pInfos, ppBuildRangeInfos);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void> _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr = &vkCmdBuildAccelerationStructuresIndirectKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void> _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr = &vkCmdBuildAccelerationStructuresIndirectKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBuildAccelerationStructuresIndirectKHR_Lazy(IntPtr commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, ulong* pIndirectDeviceAddresses, uint* pIndirectStrides, uint** ppMaxPrimitiveCounts)
+        private static void vkCmdBuildAccelerationStructuresIndirectKHR_Lazy(VkCommandBuffer commandBuffer, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, ulong* pIndirectDeviceAddresses, uint* pIndirectStrides, uint** ppMaxPrimitiveCounts)
         {
-            _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr = (delegate* unmanaged<IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructuresIndirectKHR");
+            _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkAccelerationStructureBuildGeometryInfoKHR*, ulong*, uint*, uint**, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildAccelerationStructuresIndirectKHR");
             _vkCmdBuildAccelerationStructuresIndirectKHR_fnptr(commandBuffer, infoCount, pInfos, pIndirectDeviceAddresses, pIndirectStrides, ppMaxPrimitiveCounts);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, VkResult> _vkBuildAccelerationStructuresKHR_fnptr = &vkBuildAccelerationStructuresKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, VkResult> _vkBuildAccelerationStructuresKHR_fnptr = &vkBuildAccelerationStructuresKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBuildAccelerationStructuresKHR_Lazy(IntPtr device, IntPtr deferredOperation, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
+        private static VkResult vkBuildAccelerationStructuresKHR_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, uint infoCount, VkAccelerationStructureBuildGeometryInfoKHR* pInfos, VkAccelerationStructureBuildRangeInfoKHR** ppBuildRangeInfos)
         {
-            _vkBuildAccelerationStructuresKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, VkResult>)VKLoader.GetInstanceProcAddress("vkBuildAccelerationStructuresKHR");
+            _vkBuildAccelerationStructuresKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkAccelerationStructureBuildGeometryInfoKHR*, VkAccelerationStructureBuildRangeInfoKHR**, VkResult>)VKLoader.GetInstanceProcAddress("vkBuildAccelerationStructuresKHR");
             return _vkBuildAccelerationStructuresKHR_fnptr(device, deferredOperation, infoCount, pInfos, ppBuildRangeInfos);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureDeviceAddressInfoKHR*, ulong> _vkGetAccelerationStructureDeviceAddressKHR_fnptr = &vkGetAccelerationStructureDeviceAddressKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureDeviceAddressInfoKHR*, ulong> _vkGetAccelerationStructureDeviceAddressKHR_fnptr = &vkGetAccelerationStructureDeviceAddressKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetAccelerationStructureDeviceAddressKHR_Lazy(IntPtr device, VkAccelerationStructureDeviceAddressInfoKHR* pInfo)
+        private static ulong vkGetAccelerationStructureDeviceAddressKHR_Lazy(VkDevice device, VkAccelerationStructureDeviceAddressInfoKHR* pInfo)
         {
-            _vkGetAccelerationStructureDeviceAddressKHR_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureDeviceAddressInfoKHR*, ulong>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureDeviceAddressKHR");
+            _vkGetAccelerationStructureDeviceAddressKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureDeviceAddressInfoKHR*, ulong>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureDeviceAddressKHR");
             return _vkGetAccelerationStructureDeviceAddressKHR_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateDeferredOperationKHR_fnptr = &vkCreateDeferredOperationKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAllocationCallbacks*, VkDeferredOperationKHR*, VkResult> _vkCreateDeferredOperationKHR_fnptr = &vkCreateDeferredOperationKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateDeferredOperationKHR_Lazy(IntPtr device, VkAllocationCallbacks* pAllocator, IntPtr* pDeferredOperation)
+        private static VkResult vkCreateDeferredOperationKHR_Lazy(VkDevice device, VkAllocationCallbacks* pAllocator, VkDeferredOperationKHR* pDeferredOperation)
         {
-            _vkCreateDeferredOperationKHR_fnptr = (delegate* unmanaged<IntPtr, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDeferredOperationKHR");
+            _vkCreateDeferredOperationKHR_fnptr = (delegate* unmanaged<VkDevice, VkAllocationCallbacks*, VkDeferredOperationKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateDeferredOperationKHR");
             return _vkCreateDeferredOperationKHR_fnptr(device, pAllocator, pDeferredOperation);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyDeferredOperationKHR_fnptr = &vkDestroyDeferredOperationKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkAllocationCallbacks*, void> _vkDestroyDeferredOperationKHR_fnptr = &vkDestroyDeferredOperationKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyDeferredOperationKHR_Lazy(IntPtr device, IntPtr operation, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyDeferredOperationKHR_Lazy(VkDevice device, VkDeferredOperationKHR operation, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyDeferredOperationKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDeferredOperationKHR");
+            _vkDestroyDeferredOperationKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyDeferredOperationKHR");
             _vkDestroyDeferredOperationKHR_fnptr(device, operation, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint> _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = &vkGetDeferredOperationMaxConcurrencyKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint> _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = &vkGetDeferredOperationMaxConcurrencyKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static uint vkGetDeferredOperationMaxConcurrencyKHR_Lazy(IntPtr device, IntPtr operation)
+        private static uint vkGetDeferredOperationMaxConcurrencyKHR_Lazy(VkDevice device, VkDeferredOperationKHR operation)
         {
-            _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint>)VKLoader.GetInstanceProcAddress("vkGetDeferredOperationMaxConcurrencyKHR");
+            _vkGetDeferredOperationMaxConcurrencyKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint>)VKLoader.GetInstanceProcAddress("vkGetDeferredOperationMaxConcurrencyKHR");
             return _vkGetDeferredOperationMaxConcurrencyKHR_fnptr(device, operation);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkGetDeferredOperationResultKHR_fnptr = &vkGetDeferredOperationResultKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkResult> _vkGetDeferredOperationResultKHR_fnptr = &vkGetDeferredOperationResultKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeferredOperationResultKHR_Lazy(IntPtr device, IntPtr operation)
+        private static VkResult vkGetDeferredOperationResultKHR_Lazy(VkDevice device, VkDeferredOperationKHR operation)
         {
-            _vkGetDeferredOperationResultKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeferredOperationResultKHR");
+            _vkGetDeferredOperationResultKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeferredOperationResultKHR");
             return _vkGetDeferredOperationResultKHR_fnptr(device, operation);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkResult> _vkDeferredOperationJoinKHR_fnptr = &vkDeferredOperationJoinKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkResult> _vkDeferredOperationJoinKHR_fnptr = &vkDeferredOperationJoinKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkDeferredOperationJoinKHR_Lazy(IntPtr device, IntPtr operation)
+        private static VkResult vkDeferredOperationJoinKHR_Lazy(VkDevice device, VkDeferredOperationKHR operation)
         {
-            _vkDeferredOperationJoinKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkDeferredOperationJoinKHR");
+            _vkDeferredOperationJoinKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkDeferredOperationJoinKHR");
             return _vkDeferredOperationJoinKHR_fnptr(device, operation);
         }
-        internal static delegate* unmanaged<IntPtr, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void> _vkGetPipelineIndirectMemoryRequirementsNV_fnptr = &vkGetPipelineIndirectMemoryRequirementsNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void> _vkGetPipelineIndirectMemoryRequirementsNV_fnptr = &vkGetPipelineIndirectMemoryRequirementsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPipelineIndirectMemoryRequirementsNV_Lazy(IntPtr device, VkComputePipelineCreateInfo* pCreateInfo, VkMemoryRequirements2* pMemoryRequirements)
+        private static void vkGetPipelineIndirectMemoryRequirementsNV_Lazy(VkDevice device, VkComputePipelineCreateInfo* pCreateInfo, VkMemoryRequirements2* pMemoryRequirements)
         {
-            _vkGetPipelineIndirectMemoryRequirementsNV_fnptr = (delegate* unmanaged<IntPtr, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetPipelineIndirectMemoryRequirementsNV");
+            _vkGetPipelineIndirectMemoryRequirementsNV_fnptr = (delegate* unmanaged<VkDevice, VkComputePipelineCreateInfo*, VkMemoryRequirements2*, void>)VKLoader.GetInstanceProcAddress("vkGetPipelineIndirectMemoryRequirementsNV");
             _vkGetPipelineIndirectMemoryRequirementsNV_fnptr(device, pCreateInfo, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineIndirectDeviceAddressInfoNV*, ulong> _vkGetPipelineIndirectDeviceAddressNV_fnptr = &vkGetPipelineIndirectDeviceAddressNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineIndirectDeviceAddressInfoNV*, ulong> _vkGetPipelineIndirectDeviceAddressNV_fnptr = &vkGetPipelineIndirectDeviceAddressNV_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong vkGetPipelineIndirectDeviceAddressNV_Lazy(IntPtr device, VkPipelineIndirectDeviceAddressInfoNV* pInfo)
+        private static ulong vkGetPipelineIndirectDeviceAddressNV_Lazy(VkDevice device, VkPipelineIndirectDeviceAddressInfoNV* pInfo)
         {
-            _vkGetPipelineIndirectDeviceAddressNV_fnptr = (delegate* unmanaged<IntPtr, VkPipelineIndirectDeviceAddressInfoNV*, ulong>)VKLoader.GetInstanceProcAddress("vkGetPipelineIndirectDeviceAddressNV");
+            _vkGetPipelineIndirectDeviceAddressNV_fnptr = (delegate* unmanaged<VkDevice, VkPipelineIndirectDeviceAddressInfoNV*, ulong>)VKLoader.GetInstanceProcAddress("vkGetPipelineIndirectDeviceAddressNV");
             return _vkGetPipelineIndirectDeviceAddressNV_fnptr(device, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCullModeFlagBits, void> _vkCmdSetCullMode_fnptr = &vkCmdSetCullMode_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCullModeFlagBits, void> _vkCmdSetCullMode_fnptr = &vkCmdSetCullMode_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCullMode_Lazy(IntPtr commandBuffer, VkCullModeFlagBits cullMode)
+        private static void vkCmdSetCullMode_Lazy(VkCommandBuffer commandBuffer, VkCullModeFlagBits cullMode)
         {
-            _vkCmdSetCullMode_fnptr = (delegate* unmanaged<IntPtr, VkCullModeFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCullMode");
+            _vkCmdSetCullMode_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCullModeFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCullMode");
             _vkCmdSetCullMode_fnptr(commandBuffer, cullMode);
         }
-        internal static delegate* unmanaged<IntPtr, VkFrontFace, void> _vkCmdSetFrontFace_fnptr = &vkCmdSetFrontFace_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkFrontFace, void> _vkCmdSetFrontFace_fnptr = &vkCmdSetFrontFace_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetFrontFace_Lazy(IntPtr commandBuffer, VkFrontFace frontFace)
+        private static void vkCmdSetFrontFace_Lazy(VkCommandBuffer commandBuffer, VkFrontFace frontFace)
         {
-            _vkCmdSetFrontFace_fnptr = (delegate* unmanaged<IntPtr, VkFrontFace, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFrontFace");
+            _vkCmdSetFrontFace_fnptr = (delegate* unmanaged<VkCommandBuffer, VkFrontFace, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFrontFace");
             _vkCmdSetFrontFace_fnptr(commandBuffer, frontFace);
         }
-        internal static delegate* unmanaged<IntPtr, VkPrimitiveTopology, void> _vkCmdSetPrimitiveTopology_fnptr = &vkCmdSetPrimitiveTopology_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPrimitiveTopology, void> _vkCmdSetPrimitiveTopology_fnptr = &vkCmdSetPrimitiveTopology_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetPrimitiveTopology_Lazy(IntPtr commandBuffer, VkPrimitiveTopology primitiveTopology)
+        private static void vkCmdSetPrimitiveTopology_Lazy(VkCommandBuffer commandBuffer, VkPrimitiveTopology primitiveTopology)
         {
-            _vkCmdSetPrimitiveTopology_fnptr = (delegate* unmanaged<IntPtr, VkPrimitiveTopology, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPrimitiveTopology");
+            _vkCmdSetPrimitiveTopology_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPrimitiveTopology, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPrimitiveTopology");
             _vkCmdSetPrimitiveTopology_fnptr(commandBuffer, primitiveTopology);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkViewport*, void> _vkCmdSetViewportWithCount_fnptr = &vkCmdSetViewportWithCount_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkViewport*, void> _vkCmdSetViewportWithCount_fnptr = &vkCmdSetViewportWithCount_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewportWithCount_Lazy(IntPtr commandBuffer, uint viewportCount, VkViewport* pViewports)
+        private static void vkCmdSetViewportWithCount_Lazy(VkCommandBuffer commandBuffer, uint viewportCount, VkViewport* pViewports)
         {
-            _vkCmdSetViewportWithCount_fnptr = (delegate* unmanaged<IntPtr, uint, VkViewport*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWithCount");
+            _vkCmdSetViewportWithCount_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkViewport*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWithCount");
             _vkCmdSetViewportWithCount_fnptr(commandBuffer, viewportCount, pViewports);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkRect2D*, void> _vkCmdSetScissorWithCount_fnptr = &vkCmdSetScissorWithCount_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkRect2D*, void> _vkCmdSetScissorWithCount_fnptr = &vkCmdSetScissorWithCount_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetScissorWithCount_Lazy(IntPtr commandBuffer, uint scissorCount, VkRect2D* pScissors)
+        private static void vkCmdSetScissorWithCount_Lazy(VkCommandBuffer commandBuffer, uint scissorCount, VkRect2D* pScissors)
         {
-            _vkCmdSetScissorWithCount_fnptr = (delegate* unmanaged<IntPtr, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetScissorWithCount");
+            _vkCmdSetScissorWithCount_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkRect2D*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetScissorWithCount");
             _vkCmdSetScissorWithCount_fnptr(commandBuffer, scissorCount, pScissors);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkIndexType, void> _vkCmdBindIndexBuffer2KHR_fnptr = &vkCmdBindIndexBuffer2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, VkIndexType, void> _vkCmdBindIndexBuffer2KHR_fnptr = &vkCmdBindIndexBuffer2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindIndexBuffer2KHR_Lazy(IntPtr commandBuffer, IntPtr buffer, ulong offset, ulong size, VkIndexType indexType)
+        private static void vkCmdBindIndexBuffer2KHR_Lazy(VkCommandBuffer commandBuffer, VkBuffer buffer, ulong offset, ulong size, VkIndexType indexType)
         {
-            _vkCmdBindIndexBuffer2KHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkIndexType, void>)VKLoader.GetInstanceProcAddress("vkCmdBindIndexBuffer2KHR");
+            _vkCmdBindIndexBuffer2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBuffer, ulong, ulong, VkIndexType, void>)VKLoader.GetInstanceProcAddress("vkCmdBindIndexBuffer2KHR");
             _vkCmdBindIndexBuffer2KHR_fnptr(commandBuffer, buffer, offset, size, indexType);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, ulong*, ulong*, void> _vkCmdBindVertexBuffers2_fnptr = &vkCmdBindVertexBuffers2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, ulong*, ulong*, void> _vkCmdBindVertexBuffers2_fnptr = &vkCmdBindVertexBuffers2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindVertexBuffers2_Lazy(IntPtr commandBuffer, uint firstBinding, uint bindingCount, IntPtr* pBuffers, ulong* pOffsets, ulong* pSizes, ulong* pStrides)
+        private static void vkCmdBindVertexBuffers2_Lazy(VkCommandBuffer commandBuffer, uint firstBinding, uint bindingCount, VkBuffer* pBuffers, ulong* pOffsets, ulong* pSizes, ulong* pStrides)
         {
-            _vkCmdBindVertexBuffers2_fnptr = (delegate* unmanaged<IntPtr, uint, uint, IntPtr*, ulong*, ulong*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindVertexBuffers2");
+            _vkCmdBindVertexBuffers2_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkBuffer*, ulong*, ulong*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindVertexBuffers2");
             _vkCmdBindVertexBuffers2_fnptr(commandBuffer, firstBinding, bindingCount, pBuffers, pOffsets, pSizes, pStrides);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthTestEnable_fnptr = &vkCmdSetDepthTestEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthTestEnable_fnptr = &vkCmdSetDepthTestEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthTestEnable_Lazy(IntPtr commandBuffer, int depthTestEnable)
+        private static void vkCmdSetDepthTestEnable_Lazy(VkCommandBuffer commandBuffer, int depthTestEnable)
         {
-            _vkCmdSetDepthTestEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthTestEnable");
+            _vkCmdSetDepthTestEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthTestEnable");
             _vkCmdSetDepthTestEnable_fnptr(commandBuffer, depthTestEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthWriteEnable_fnptr = &vkCmdSetDepthWriteEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthWriteEnable_fnptr = &vkCmdSetDepthWriteEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthWriteEnable_Lazy(IntPtr commandBuffer, int depthWriteEnable)
+        private static void vkCmdSetDepthWriteEnable_Lazy(VkCommandBuffer commandBuffer, int depthWriteEnable)
         {
-            _vkCmdSetDepthWriteEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthWriteEnable");
+            _vkCmdSetDepthWriteEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthWriteEnable");
             _vkCmdSetDepthWriteEnable_fnptr(commandBuffer, depthWriteEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkCompareOp, void> _vkCmdSetDepthCompareOp_fnptr = &vkCmdSetDepthCompareOp_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCompareOp, void> _vkCmdSetDepthCompareOp_fnptr = &vkCmdSetDepthCompareOp_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthCompareOp_Lazy(IntPtr commandBuffer, VkCompareOp depthCompareOp)
+        private static void vkCmdSetDepthCompareOp_Lazy(VkCommandBuffer commandBuffer, VkCompareOp depthCompareOp)
         {
-            _vkCmdSetDepthCompareOp_fnptr = (delegate* unmanaged<IntPtr, VkCompareOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthCompareOp");
+            _vkCmdSetDepthCompareOp_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCompareOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthCompareOp");
             _vkCmdSetDepthCompareOp_fnptr(commandBuffer, depthCompareOp);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthBoundsTestEnable_fnptr = &vkCmdSetDepthBoundsTestEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthBoundsTestEnable_fnptr = &vkCmdSetDepthBoundsTestEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthBoundsTestEnable_Lazy(IntPtr commandBuffer, int depthBoundsTestEnable)
+        private static void vkCmdSetDepthBoundsTestEnable_Lazy(VkCommandBuffer commandBuffer, int depthBoundsTestEnable)
         {
-            _vkCmdSetDepthBoundsTestEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBoundsTestEnable");
+            _vkCmdSetDepthBoundsTestEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBoundsTestEnable");
             _vkCmdSetDepthBoundsTestEnable_fnptr(commandBuffer, depthBoundsTestEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetStencilTestEnable_fnptr = &vkCmdSetStencilTestEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetStencilTestEnable_fnptr = &vkCmdSetStencilTestEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetStencilTestEnable_Lazy(IntPtr commandBuffer, int stencilTestEnable)
+        private static void vkCmdSetStencilTestEnable_Lazy(VkCommandBuffer commandBuffer, int stencilTestEnable)
         {
-            _vkCmdSetStencilTestEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilTestEnable");
+            _vkCmdSetStencilTestEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilTestEnable");
             _vkCmdSetStencilTestEnable_fnptr(commandBuffer, stencilTestEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp, void> _vkCmdSetStencilOp_fnptr = &vkCmdSetStencilOp_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp, void> _vkCmdSetStencilOp_fnptr = &vkCmdSetStencilOp_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetStencilOp_Lazy(IntPtr commandBuffer, VkStencilFaceFlagBits faceMask, VkStencilOp failOp, VkStencilOp passOp, VkStencilOp depthFailOp, VkCompareOp compareOp)
+        private static void vkCmdSetStencilOp_Lazy(VkCommandBuffer commandBuffer, VkStencilFaceFlagBits faceMask, VkStencilOp failOp, VkStencilOp passOp, VkStencilOp depthFailOp, VkCompareOp compareOp)
         {
-            _vkCmdSetStencilOp_fnptr = (delegate* unmanaged<IntPtr, VkStencilFaceFlagBits, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilOp");
+            _vkCmdSetStencilOp_fnptr = (delegate* unmanaged<VkCommandBuffer, VkStencilFaceFlagBits, VkStencilOp, VkStencilOp, VkStencilOp, VkCompareOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetStencilOp");
             _vkCmdSetStencilOp_fnptr(commandBuffer, faceMask, failOp, passOp, depthFailOp, compareOp);
         }
-        internal static delegate* unmanaged<IntPtr, uint, void> _vkCmdSetPatchControlPointsEXT_fnptr = &vkCmdSetPatchControlPointsEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, void> _vkCmdSetPatchControlPointsEXT_fnptr = &vkCmdSetPatchControlPointsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetPatchControlPointsEXT_Lazy(IntPtr commandBuffer, uint patchControlPoints)
+        private static void vkCmdSetPatchControlPointsEXT_Lazy(VkCommandBuffer commandBuffer, uint patchControlPoints)
         {
-            _vkCmdSetPatchControlPointsEXT_fnptr = (delegate* unmanaged<IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPatchControlPointsEXT");
+            _vkCmdSetPatchControlPointsEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPatchControlPointsEXT");
             _vkCmdSetPatchControlPointsEXT_fnptr(commandBuffer, patchControlPoints);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetRasterizerDiscardEnable_fnptr = &vkCmdSetRasterizerDiscardEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetRasterizerDiscardEnable_fnptr = &vkCmdSetRasterizerDiscardEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRasterizerDiscardEnable_Lazy(IntPtr commandBuffer, int rasterizerDiscardEnable)
+        private static void vkCmdSetRasterizerDiscardEnable_Lazy(VkCommandBuffer commandBuffer, int rasterizerDiscardEnable)
         {
-            _vkCmdSetRasterizerDiscardEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizerDiscardEnable");
+            _vkCmdSetRasterizerDiscardEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizerDiscardEnable");
             _vkCmdSetRasterizerDiscardEnable_fnptr(commandBuffer, rasterizerDiscardEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthBiasEnable_fnptr = &vkCmdSetDepthBiasEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthBiasEnable_fnptr = &vkCmdSetDepthBiasEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthBiasEnable_Lazy(IntPtr commandBuffer, int depthBiasEnable)
+        private static void vkCmdSetDepthBiasEnable_Lazy(VkCommandBuffer commandBuffer, int depthBiasEnable)
         {
-            _vkCmdSetDepthBiasEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBiasEnable");
+            _vkCmdSetDepthBiasEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBiasEnable");
             _vkCmdSetDepthBiasEnable_fnptr(commandBuffer, depthBiasEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkLogicOp, void> _vkCmdSetLogicOpEXT_fnptr = &vkCmdSetLogicOpEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkLogicOp, void> _vkCmdSetLogicOpEXT_fnptr = &vkCmdSetLogicOpEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLogicOpEXT_Lazy(IntPtr commandBuffer, VkLogicOp logicOp)
+        private static void vkCmdSetLogicOpEXT_Lazy(VkCommandBuffer commandBuffer, VkLogicOp logicOp)
         {
-            _vkCmdSetLogicOpEXT_fnptr = (delegate* unmanaged<IntPtr, VkLogicOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLogicOpEXT");
+            _vkCmdSetLogicOpEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkLogicOp, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLogicOpEXT");
             _vkCmdSetLogicOpEXT_fnptr(commandBuffer, logicOp);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetPrimitiveRestartEnable_fnptr = &vkCmdSetPrimitiveRestartEnable_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetPrimitiveRestartEnable_fnptr = &vkCmdSetPrimitiveRestartEnable_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetPrimitiveRestartEnable_Lazy(IntPtr commandBuffer, int primitiveRestartEnable)
+        private static void vkCmdSetPrimitiveRestartEnable_Lazy(VkCommandBuffer commandBuffer, int primitiveRestartEnable)
         {
-            _vkCmdSetPrimitiveRestartEnable_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPrimitiveRestartEnable");
+            _vkCmdSetPrimitiveRestartEnable_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPrimitiveRestartEnable");
             _vkCmdSetPrimitiveRestartEnable_fnptr(commandBuffer, primitiveRestartEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkTessellationDomainOrigin, void> _vkCmdSetTessellationDomainOriginEXT_fnptr = &vkCmdSetTessellationDomainOriginEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkTessellationDomainOrigin, void> _vkCmdSetTessellationDomainOriginEXT_fnptr = &vkCmdSetTessellationDomainOriginEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetTessellationDomainOriginEXT_Lazy(IntPtr commandBuffer, VkTessellationDomainOrigin domainOrigin)
+        private static void vkCmdSetTessellationDomainOriginEXT_Lazy(VkCommandBuffer commandBuffer, VkTessellationDomainOrigin domainOrigin)
         {
-            _vkCmdSetTessellationDomainOriginEXT_fnptr = (delegate* unmanaged<IntPtr, VkTessellationDomainOrigin, void>)VKLoader.GetInstanceProcAddress("vkCmdSetTessellationDomainOriginEXT");
+            _vkCmdSetTessellationDomainOriginEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkTessellationDomainOrigin, void>)VKLoader.GetInstanceProcAddress("vkCmdSetTessellationDomainOriginEXT");
             _vkCmdSetTessellationDomainOriginEXT_fnptr(commandBuffer, domainOrigin);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthClampEnableEXT_fnptr = &vkCmdSetDepthClampEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthClampEnableEXT_fnptr = &vkCmdSetDepthClampEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthClampEnableEXT_Lazy(IntPtr commandBuffer, int depthClampEnable)
+        private static void vkCmdSetDepthClampEnableEXT_Lazy(VkCommandBuffer commandBuffer, int depthClampEnable)
         {
-            _vkCmdSetDepthClampEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClampEnableEXT");
+            _vkCmdSetDepthClampEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClampEnableEXT");
             _vkCmdSetDepthClampEnableEXT_fnptr(commandBuffer, depthClampEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkPolygonMode, void> _vkCmdSetPolygonModeEXT_fnptr = &vkCmdSetPolygonModeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPolygonMode, void> _vkCmdSetPolygonModeEXT_fnptr = &vkCmdSetPolygonModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetPolygonModeEXT_Lazy(IntPtr commandBuffer, VkPolygonMode polygonMode)
+        private static void vkCmdSetPolygonModeEXT_Lazy(VkCommandBuffer commandBuffer, VkPolygonMode polygonMode)
         {
-            _vkCmdSetPolygonModeEXT_fnptr = (delegate* unmanaged<IntPtr, VkPolygonMode, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPolygonModeEXT");
+            _vkCmdSetPolygonModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPolygonMode, void>)VKLoader.GetInstanceProcAddress("vkCmdSetPolygonModeEXT");
             _vkCmdSetPolygonModeEXT_fnptr(commandBuffer, polygonMode);
         }
-        internal static delegate* unmanaged<IntPtr, VkSampleCountFlagBits, void> _vkCmdSetRasterizationSamplesEXT_fnptr = &vkCmdSetRasterizationSamplesEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSampleCountFlagBits, void> _vkCmdSetRasterizationSamplesEXT_fnptr = &vkCmdSetRasterizationSamplesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRasterizationSamplesEXT_Lazy(IntPtr commandBuffer, VkSampleCountFlagBits rasterizationSamples)
+        private static void vkCmdSetRasterizationSamplesEXT_Lazy(VkCommandBuffer commandBuffer, VkSampleCountFlagBits rasterizationSamples)
         {
-            _vkCmdSetRasterizationSamplesEXT_fnptr = (delegate* unmanaged<IntPtr, VkSampleCountFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizationSamplesEXT");
+            _vkCmdSetRasterizationSamplesEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSampleCountFlagBits, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizationSamplesEXT");
             _vkCmdSetRasterizationSamplesEXT_fnptr(commandBuffer, rasterizationSamples);
         }
-        internal static delegate* unmanaged<IntPtr, VkSampleCountFlagBits, uint*, void> _vkCmdSetSampleMaskEXT_fnptr = &vkCmdSetSampleMaskEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSampleCountFlagBits, uint*, void> _vkCmdSetSampleMaskEXT_fnptr = &vkCmdSetSampleMaskEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetSampleMaskEXT_Lazy(IntPtr commandBuffer, VkSampleCountFlagBits samples, uint* pSampleMask)
+        private static void vkCmdSetSampleMaskEXT_Lazy(VkCommandBuffer commandBuffer, VkSampleCountFlagBits samples, uint* pSampleMask)
         {
-            _vkCmdSetSampleMaskEXT_fnptr = (delegate* unmanaged<IntPtr, VkSampleCountFlagBits, uint*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleMaskEXT");
+            _vkCmdSetSampleMaskEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSampleCountFlagBits, uint*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleMaskEXT");
             _vkCmdSetSampleMaskEXT_fnptr(commandBuffer, samples, pSampleMask);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetAlphaToCoverageEnableEXT_fnptr = &vkCmdSetAlphaToCoverageEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetAlphaToCoverageEnableEXT_fnptr = &vkCmdSetAlphaToCoverageEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetAlphaToCoverageEnableEXT_Lazy(IntPtr commandBuffer, int alphaToCoverageEnable)
+        private static void vkCmdSetAlphaToCoverageEnableEXT_Lazy(VkCommandBuffer commandBuffer, int alphaToCoverageEnable)
         {
-            _vkCmdSetAlphaToCoverageEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAlphaToCoverageEnableEXT");
+            _vkCmdSetAlphaToCoverageEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAlphaToCoverageEnableEXT");
             _vkCmdSetAlphaToCoverageEnableEXT_fnptr(commandBuffer, alphaToCoverageEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetAlphaToOneEnableEXT_fnptr = &vkCmdSetAlphaToOneEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetAlphaToOneEnableEXT_fnptr = &vkCmdSetAlphaToOneEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetAlphaToOneEnableEXT_Lazy(IntPtr commandBuffer, int alphaToOneEnable)
+        private static void vkCmdSetAlphaToOneEnableEXT_Lazy(VkCommandBuffer commandBuffer, int alphaToOneEnable)
         {
-            _vkCmdSetAlphaToOneEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAlphaToOneEnableEXT");
+            _vkCmdSetAlphaToOneEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetAlphaToOneEnableEXT");
             _vkCmdSetAlphaToOneEnableEXT_fnptr(commandBuffer, alphaToOneEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetLogicOpEnableEXT_fnptr = &vkCmdSetLogicOpEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetLogicOpEnableEXT_fnptr = &vkCmdSetLogicOpEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLogicOpEnableEXT_Lazy(IntPtr commandBuffer, int logicOpEnable)
+        private static void vkCmdSetLogicOpEnableEXT_Lazy(VkCommandBuffer commandBuffer, int logicOpEnable)
         {
-            _vkCmdSetLogicOpEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLogicOpEnableEXT");
+            _vkCmdSetLogicOpEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLogicOpEnableEXT");
             _vkCmdSetLogicOpEnableEXT_fnptr(commandBuffer, logicOpEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, int*, void> _vkCmdSetColorBlendEnableEXT_fnptr = &vkCmdSetColorBlendEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, int*, void> _vkCmdSetColorBlendEnableEXT_fnptr = &vkCmdSetColorBlendEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetColorBlendEnableEXT_Lazy(IntPtr commandBuffer, uint firstAttachment, uint attachmentCount, int* pColorBlendEnables)
+        private static void vkCmdSetColorBlendEnableEXT_Lazy(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, int* pColorBlendEnables)
         {
-            _vkCmdSetColorBlendEnableEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendEnableEXT");
+            _vkCmdSetColorBlendEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendEnableEXT");
             _vkCmdSetColorBlendEnableEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendEnables);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkColorBlendEquationEXT*, void> _vkCmdSetColorBlendEquationEXT_fnptr = &vkCmdSetColorBlendEquationEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendEquationEXT*, void> _vkCmdSetColorBlendEquationEXT_fnptr = &vkCmdSetColorBlendEquationEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetColorBlendEquationEXT_Lazy(IntPtr commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendEquationEXT* pColorBlendEquations)
+        private static void vkCmdSetColorBlendEquationEXT_Lazy(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendEquationEXT* pColorBlendEquations)
         {
-            _vkCmdSetColorBlendEquationEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkColorBlendEquationEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendEquationEXT");
+            _vkCmdSetColorBlendEquationEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendEquationEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendEquationEXT");
             _vkCmdSetColorBlendEquationEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendEquations);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkColorComponentFlagBits*, void> _vkCmdSetColorWriteMaskEXT_fnptr = &vkCmdSetColorWriteMaskEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorComponentFlagBits*, void> _vkCmdSetColorWriteMaskEXT_fnptr = &vkCmdSetColorWriteMaskEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetColorWriteMaskEXT_Lazy(IntPtr commandBuffer, uint firstAttachment, uint attachmentCount, VkColorComponentFlagBits* pColorWriteMasks)
+        private static void vkCmdSetColorWriteMaskEXT_Lazy(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorComponentFlagBits* pColorWriteMasks)
         {
-            _vkCmdSetColorWriteMaskEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkColorComponentFlagBits*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorWriteMaskEXT");
+            _vkCmdSetColorWriteMaskEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorComponentFlagBits*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorWriteMaskEXT");
             _vkCmdSetColorWriteMaskEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorWriteMasks);
         }
-        internal static delegate* unmanaged<IntPtr, uint, void> _vkCmdSetRasterizationStreamEXT_fnptr = &vkCmdSetRasterizationStreamEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, void> _vkCmdSetRasterizationStreamEXT_fnptr = &vkCmdSetRasterizationStreamEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRasterizationStreamEXT_Lazy(IntPtr commandBuffer, uint rasterizationStream)
+        private static void vkCmdSetRasterizationStreamEXT_Lazy(VkCommandBuffer commandBuffer, uint rasterizationStream)
         {
-            _vkCmdSetRasterizationStreamEXT_fnptr = (delegate* unmanaged<IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizationStreamEXT");
+            _vkCmdSetRasterizationStreamEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRasterizationStreamEXT");
             _vkCmdSetRasterizationStreamEXT_fnptr(commandBuffer, rasterizationStream);
         }
-        internal static delegate* unmanaged<IntPtr, VkConservativeRasterizationModeEXT, void> _vkCmdSetConservativeRasterizationModeEXT_fnptr = &vkCmdSetConservativeRasterizationModeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkConservativeRasterizationModeEXT, void> _vkCmdSetConservativeRasterizationModeEXT_fnptr = &vkCmdSetConservativeRasterizationModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetConservativeRasterizationModeEXT_Lazy(IntPtr commandBuffer, VkConservativeRasterizationModeEXT conservativeRasterizationMode)
+        private static void vkCmdSetConservativeRasterizationModeEXT_Lazy(VkCommandBuffer commandBuffer, VkConservativeRasterizationModeEXT conservativeRasterizationMode)
         {
-            _vkCmdSetConservativeRasterizationModeEXT_fnptr = (delegate* unmanaged<IntPtr, VkConservativeRasterizationModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetConservativeRasterizationModeEXT");
+            _vkCmdSetConservativeRasterizationModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkConservativeRasterizationModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetConservativeRasterizationModeEXT");
             _vkCmdSetConservativeRasterizationModeEXT_fnptr(commandBuffer, conservativeRasterizationMode);
         }
-        internal static delegate* unmanaged<IntPtr, float, void> _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr = &vkCmdSetExtraPrimitiveOverestimationSizeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, float, void> _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr = &vkCmdSetExtraPrimitiveOverestimationSizeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetExtraPrimitiveOverestimationSizeEXT_Lazy(IntPtr commandBuffer, float extraPrimitiveOverestimationSize)
+        private static void vkCmdSetExtraPrimitiveOverestimationSizeEXT_Lazy(VkCommandBuffer commandBuffer, float extraPrimitiveOverestimationSize)
         {
-            _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr = (delegate* unmanaged<IntPtr, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExtraPrimitiveOverestimationSizeEXT");
+            _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, float, void>)VKLoader.GetInstanceProcAddress("vkCmdSetExtraPrimitiveOverestimationSizeEXT");
             _vkCmdSetExtraPrimitiveOverestimationSizeEXT_fnptr(commandBuffer, extraPrimitiveOverestimationSize);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthClipEnableEXT_fnptr = &vkCmdSetDepthClipEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthClipEnableEXT_fnptr = &vkCmdSetDepthClipEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthClipEnableEXT_Lazy(IntPtr commandBuffer, int depthClipEnable)
+        private static void vkCmdSetDepthClipEnableEXT_Lazy(VkCommandBuffer commandBuffer, int depthClipEnable)
         {
-            _vkCmdSetDepthClipEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClipEnableEXT");
+            _vkCmdSetDepthClipEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClipEnableEXT");
             _vkCmdSetDepthClipEnableEXT_fnptr(commandBuffer, depthClipEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetSampleLocationsEnableEXT_fnptr = &vkCmdSetSampleLocationsEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetSampleLocationsEnableEXT_fnptr = &vkCmdSetSampleLocationsEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetSampleLocationsEnableEXT_Lazy(IntPtr commandBuffer, int sampleLocationsEnable)
+        private static void vkCmdSetSampleLocationsEnableEXT_Lazy(VkCommandBuffer commandBuffer, int sampleLocationsEnable)
         {
-            _vkCmdSetSampleLocationsEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleLocationsEnableEXT");
+            _vkCmdSetSampleLocationsEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetSampleLocationsEnableEXT");
             _vkCmdSetSampleLocationsEnableEXT_fnptr(commandBuffer, sampleLocationsEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkColorBlendAdvancedEXT*, void> _vkCmdSetColorBlendAdvancedEXT_fnptr = &vkCmdSetColorBlendAdvancedEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendAdvancedEXT*, void> _vkCmdSetColorBlendAdvancedEXT_fnptr = &vkCmdSetColorBlendAdvancedEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetColorBlendAdvancedEXT_Lazy(IntPtr commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendAdvancedEXT* pColorBlendAdvanced)
+        private static void vkCmdSetColorBlendAdvancedEXT_Lazy(VkCommandBuffer commandBuffer, uint firstAttachment, uint attachmentCount, VkColorBlendAdvancedEXT* pColorBlendAdvanced)
         {
-            _vkCmdSetColorBlendAdvancedEXT_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkColorBlendAdvancedEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendAdvancedEXT");
+            _vkCmdSetColorBlendAdvancedEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkColorBlendAdvancedEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorBlendAdvancedEXT");
             _vkCmdSetColorBlendAdvancedEXT_fnptr(commandBuffer, firstAttachment, attachmentCount, pColorBlendAdvanced);
         }
-        internal static delegate* unmanaged<IntPtr, VkProvokingVertexModeEXT, void> _vkCmdSetProvokingVertexModeEXT_fnptr = &vkCmdSetProvokingVertexModeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkProvokingVertexModeEXT, void> _vkCmdSetProvokingVertexModeEXT_fnptr = &vkCmdSetProvokingVertexModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetProvokingVertexModeEXT_Lazy(IntPtr commandBuffer, VkProvokingVertexModeEXT provokingVertexMode)
+        private static void vkCmdSetProvokingVertexModeEXT_Lazy(VkCommandBuffer commandBuffer, VkProvokingVertexModeEXT provokingVertexMode)
         {
-            _vkCmdSetProvokingVertexModeEXT_fnptr = (delegate* unmanaged<IntPtr, VkProvokingVertexModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetProvokingVertexModeEXT");
+            _vkCmdSetProvokingVertexModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkProvokingVertexModeEXT, void>)VKLoader.GetInstanceProcAddress("vkCmdSetProvokingVertexModeEXT");
             _vkCmdSetProvokingVertexModeEXT_fnptr(commandBuffer, provokingVertexMode);
         }
-        internal static delegate* unmanaged<IntPtr, VkLineRasterizationModeKHR, void> _vkCmdSetLineRasterizationModeEXT_fnptr = &vkCmdSetLineRasterizationModeEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkLineRasterizationModeKHR, void> _vkCmdSetLineRasterizationModeEXT_fnptr = &vkCmdSetLineRasterizationModeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLineRasterizationModeEXT_Lazy(IntPtr commandBuffer, VkLineRasterizationModeKHR lineRasterizationMode)
+        private static void vkCmdSetLineRasterizationModeEXT_Lazy(VkCommandBuffer commandBuffer, VkLineRasterizationModeKHR lineRasterizationMode)
         {
-            _vkCmdSetLineRasterizationModeEXT_fnptr = (delegate* unmanaged<IntPtr, VkLineRasterizationModeKHR, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineRasterizationModeEXT");
+            _vkCmdSetLineRasterizationModeEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkLineRasterizationModeKHR, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineRasterizationModeEXT");
             _vkCmdSetLineRasterizationModeEXT_fnptr(commandBuffer, lineRasterizationMode);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetLineStippleEnableEXT_fnptr = &vkCmdSetLineStippleEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetLineStippleEnableEXT_fnptr = &vkCmdSetLineStippleEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetLineStippleEnableEXT_Lazy(IntPtr commandBuffer, int stippledLineEnable)
+        private static void vkCmdSetLineStippleEnableEXT_Lazy(VkCommandBuffer commandBuffer, int stippledLineEnable)
         {
-            _vkCmdSetLineStippleEnableEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineStippleEnableEXT");
+            _vkCmdSetLineStippleEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetLineStippleEnableEXT");
             _vkCmdSetLineStippleEnableEXT_fnptr(commandBuffer, stippledLineEnable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr = &vkCmdSetDepthClipNegativeOneToOneEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr = &vkCmdSetDepthClipNegativeOneToOneEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthClipNegativeOneToOneEXT_Lazy(IntPtr commandBuffer, int negativeOneToOne)
+        private static void vkCmdSetDepthClipNegativeOneToOneEXT_Lazy(VkCommandBuffer commandBuffer, int negativeOneToOne)
         {
-            _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClipNegativeOneToOneEXT");
+            _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthClipNegativeOneToOneEXT");
             _vkCmdSetDepthClipNegativeOneToOneEXT_fnptr(commandBuffer, negativeOneToOne);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetViewportWScalingEnableNV_fnptr = &vkCmdSetViewportWScalingEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetViewportWScalingEnableNV_fnptr = &vkCmdSetViewportWScalingEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewportWScalingEnableNV_Lazy(IntPtr commandBuffer, int viewportWScalingEnable)
+        private static void vkCmdSetViewportWScalingEnableNV_Lazy(VkCommandBuffer commandBuffer, int viewportWScalingEnable)
         {
-            _vkCmdSetViewportWScalingEnableNV_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWScalingEnableNV");
+            _vkCmdSetViewportWScalingEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportWScalingEnableNV");
             _vkCmdSetViewportWScalingEnableNV_fnptr(commandBuffer, viewportWScalingEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint, uint, VkViewportSwizzleNV*, void> _vkCmdSetViewportSwizzleNV_fnptr = &vkCmdSetViewportSwizzleNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewportSwizzleNV*, void> _vkCmdSetViewportSwizzleNV_fnptr = &vkCmdSetViewportSwizzleNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetViewportSwizzleNV_Lazy(IntPtr commandBuffer, uint firstViewport, uint viewportCount, VkViewportSwizzleNV* pViewportSwizzles)
+        private static void vkCmdSetViewportSwizzleNV_Lazy(VkCommandBuffer commandBuffer, uint firstViewport, uint viewportCount, VkViewportSwizzleNV* pViewportSwizzles)
         {
-            _vkCmdSetViewportSwizzleNV_fnptr = (delegate* unmanaged<IntPtr, uint, uint, VkViewportSwizzleNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportSwizzleNV");
+            _vkCmdSetViewportSwizzleNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, uint, VkViewportSwizzleNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetViewportSwizzleNV");
             _vkCmdSetViewportSwizzleNV_fnptr(commandBuffer, firstViewport, viewportCount, pViewportSwizzles);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetCoverageToColorEnableNV_fnptr = &vkCmdSetCoverageToColorEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetCoverageToColorEnableNV_fnptr = &vkCmdSetCoverageToColorEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageToColorEnableNV_Lazy(IntPtr commandBuffer, int coverageToColorEnable)
+        private static void vkCmdSetCoverageToColorEnableNV_Lazy(VkCommandBuffer commandBuffer, int coverageToColorEnable)
         {
-            _vkCmdSetCoverageToColorEnableNV_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageToColorEnableNV");
+            _vkCmdSetCoverageToColorEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageToColorEnableNV");
             _vkCmdSetCoverageToColorEnableNV_fnptr(commandBuffer, coverageToColorEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint, void> _vkCmdSetCoverageToColorLocationNV_fnptr = &vkCmdSetCoverageToColorLocationNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, void> _vkCmdSetCoverageToColorLocationNV_fnptr = &vkCmdSetCoverageToColorLocationNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageToColorLocationNV_Lazy(IntPtr commandBuffer, uint coverageToColorLocation)
+        private static void vkCmdSetCoverageToColorLocationNV_Lazy(VkCommandBuffer commandBuffer, uint coverageToColorLocation)
         {
-            _vkCmdSetCoverageToColorLocationNV_fnptr = (delegate* unmanaged<IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageToColorLocationNV");
+            _vkCmdSetCoverageToColorLocationNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageToColorLocationNV");
             _vkCmdSetCoverageToColorLocationNV_fnptr(commandBuffer, coverageToColorLocation);
         }
-        internal static delegate* unmanaged<IntPtr, VkCoverageModulationModeNV, void> _vkCmdSetCoverageModulationModeNV_fnptr = &vkCmdSetCoverageModulationModeNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCoverageModulationModeNV, void> _vkCmdSetCoverageModulationModeNV_fnptr = &vkCmdSetCoverageModulationModeNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageModulationModeNV_Lazy(IntPtr commandBuffer, VkCoverageModulationModeNV coverageModulationMode)
+        private static void vkCmdSetCoverageModulationModeNV_Lazy(VkCommandBuffer commandBuffer, VkCoverageModulationModeNV coverageModulationMode)
         {
-            _vkCmdSetCoverageModulationModeNV_fnptr = (delegate* unmanaged<IntPtr, VkCoverageModulationModeNV, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationModeNV");
+            _vkCmdSetCoverageModulationModeNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCoverageModulationModeNV, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationModeNV");
             _vkCmdSetCoverageModulationModeNV_fnptr(commandBuffer, coverageModulationMode);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetCoverageModulationTableEnableNV_fnptr = &vkCmdSetCoverageModulationTableEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetCoverageModulationTableEnableNV_fnptr = &vkCmdSetCoverageModulationTableEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageModulationTableEnableNV_Lazy(IntPtr commandBuffer, int coverageModulationTableEnable)
+        private static void vkCmdSetCoverageModulationTableEnableNV_Lazy(VkCommandBuffer commandBuffer, int coverageModulationTableEnable)
         {
-            _vkCmdSetCoverageModulationTableEnableNV_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationTableEnableNV");
+            _vkCmdSetCoverageModulationTableEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationTableEnableNV");
             _vkCmdSetCoverageModulationTableEnableNV_fnptr(commandBuffer, coverageModulationTableEnable);
         }
-        internal static delegate* unmanaged<IntPtr, uint, float*, void> _vkCmdSetCoverageModulationTableNV_fnptr = &vkCmdSetCoverageModulationTableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, float*, void> _vkCmdSetCoverageModulationTableNV_fnptr = &vkCmdSetCoverageModulationTableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageModulationTableNV_Lazy(IntPtr commandBuffer, uint coverageModulationTableCount, float* pCoverageModulationTable)
+        private static void vkCmdSetCoverageModulationTableNV_Lazy(VkCommandBuffer commandBuffer, uint coverageModulationTableCount, float* pCoverageModulationTable)
         {
-            _vkCmdSetCoverageModulationTableNV_fnptr = (delegate* unmanaged<IntPtr, uint, float*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationTableNV");
+            _vkCmdSetCoverageModulationTableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, float*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageModulationTableNV");
             _vkCmdSetCoverageModulationTableNV_fnptr(commandBuffer, coverageModulationTableCount, pCoverageModulationTable);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetShadingRateImageEnableNV_fnptr = &vkCmdSetShadingRateImageEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetShadingRateImageEnableNV_fnptr = &vkCmdSetShadingRateImageEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetShadingRateImageEnableNV_Lazy(IntPtr commandBuffer, int shadingRateImageEnable)
+        private static void vkCmdSetShadingRateImageEnableNV_Lazy(VkCommandBuffer commandBuffer, int shadingRateImageEnable)
         {
-            _vkCmdSetShadingRateImageEnableNV_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetShadingRateImageEnableNV");
+            _vkCmdSetShadingRateImageEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetShadingRateImageEnableNV");
             _vkCmdSetShadingRateImageEnableNV_fnptr(commandBuffer, shadingRateImageEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkCoverageReductionModeNV, void> _vkCmdSetCoverageReductionModeNV_fnptr = &vkCmdSetCoverageReductionModeNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCoverageReductionModeNV, void> _vkCmdSetCoverageReductionModeNV_fnptr = &vkCmdSetCoverageReductionModeNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetCoverageReductionModeNV_Lazy(IntPtr commandBuffer, VkCoverageReductionModeNV coverageReductionMode)
+        private static void vkCmdSetCoverageReductionModeNV_Lazy(VkCommandBuffer commandBuffer, VkCoverageReductionModeNV coverageReductionMode)
         {
-            _vkCmdSetCoverageReductionModeNV_fnptr = (delegate* unmanaged<IntPtr, VkCoverageReductionModeNV, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageReductionModeNV");
+            _vkCmdSetCoverageReductionModeNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCoverageReductionModeNV, void>)VKLoader.GetInstanceProcAddress("vkCmdSetCoverageReductionModeNV");
             _vkCmdSetCoverageReductionModeNV_fnptr(commandBuffer, coverageReductionMode);
         }
-        internal static delegate* unmanaged<IntPtr, int, void> _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr = &vkCmdSetRepresentativeFragmentTestEnableNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, int, void> _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr = &vkCmdSetRepresentativeFragmentTestEnableNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRepresentativeFragmentTestEnableNV_Lazy(IntPtr commandBuffer, int representativeFragmentTestEnable)
+        private static void vkCmdSetRepresentativeFragmentTestEnableNV_Lazy(VkCommandBuffer commandBuffer, int representativeFragmentTestEnable)
         {
-            _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr = (delegate* unmanaged<IntPtr, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRepresentativeFragmentTestEnableNV");
+            _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr = (delegate* unmanaged<VkCommandBuffer, int, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRepresentativeFragmentTestEnableNV");
             _vkCmdSetRepresentativeFragmentTestEnableNV_fnptr(commandBuffer, representativeFragmentTestEnable);
         }
-        internal static delegate* unmanaged<IntPtr, VkPrivateDataSlotCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreatePrivateDataSlot_fnptr = &vkCreatePrivateDataSlot_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPrivateDataSlotCreateInfo*, VkAllocationCallbacks*, VkPrivateDataSlot*, VkResult> _vkCreatePrivateDataSlot_fnptr = &vkCreatePrivateDataSlot_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreatePrivateDataSlot_Lazy(IntPtr device, VkPrivateDataSlotCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pPrivateDataSlot)
+        private static VkResult vkCreatePrivateDataSlot_Lazy(VkDevice device, VkPrivateDataSlotCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPrivateDataSlot* pPrivateDataSlot)
         {
-            _vkCreatePrivateDataSlot_fnptr = (delegate* unmanaged<IntPtr, VkPrivateDataSlotCreateInfo*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePrivateDataSlot");
+            _vkCreatePrivateDataSlot_fnptr = (delegate* unmanaged<VkDevice, VkPrivateDataSlotCreateInfo*, VkAllocationCallbacks*, VkPrivateDataSlot*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePrivateDataSlot");
             return _vkCreatePrivateDataSlot_fnptr(device, pCreateInfo, pAllocator, pPrivateDataSlot);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyPrivateDataSlot_fnptr = &vkDestroyPrivateDataSlot_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPrivateDataSlot, VkAllocationCallbacks*, void> _vkDestroyPrivateDataSlot_fnptr = &vkDestroyPrivateDataSlot_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyPrivateDataSlot_Lazy(IntPtr device, IntPtr privateDataSlot, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyPrivateDataSlot_Lazy(VkDevice device, VkPrivateDataSlot privateDataSlot, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyPrivateDataSlot_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPrivateDataSlot");
+            _vkDestroyPrivateDataSlot_fnptr = (delegate* unmanaged<VkDevice, VkPrivateDataSlot, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPrivateDataSlot");
             _vkDestroyPrivateDataSlot_fnptr(device, privateDataSlot, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkObjectType, ulong, IntPtr, ulong, VkResult> _vkSetPrivateData_fnptr = &vkSetPrivateData_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong, VkResult> _vkSetPrivateData_fnptr = &vkSetPrivateData_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetPrivateData_Lazy(IntPtr device, VkObjectType objectType, ulong objectHandle, IntPtr privateDataSlot, ulong data)
+        private static VkResult vkSetPrivateData_Lazy(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong data)
         {
-            _vkSetPrivateData_fnptr = (delegate* unmanaged<IntPtr, VkObjectType, ulong, IntPtr, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkSetPrivateData");
+            _vkSetPrivateData_fnptr = (delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkSetPrivateData");
             return _vkSetPrivateData_fnptr(device, objectType, objectHandle, privateDataSlot, data);
         }
-        internal static delegate* unmanaged<IntPtr, VkObjectType, ulong, IntPtr, ulong*, void> _vkGetPrivateData_fnptr = &vkGetPrivateData_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void> _vkGetPrivateData_fnptr = &vkGetPrivateData_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetPrivateData_Lazy(IntPtr device, VkObjectType objectType, ulong objectHandle, IntPtr privateDataSlot, ulong* pData)
+        private static void vkGetPrivateData_Lazy(VkDevice device, VkObjectType objectType, ulong objectHandle, VkPrivateDataSlot privateDataSlot, ulong* pData)
         {
-            _vkGetPrivateData_fnptr = (delegate* unmanaged<IntPtr, VkObjectType, ulong, IntPtr, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetPrivateData");
+            _vkGetPrivateData_fnptr = (delegate* unmanaged<VkDevice, VkObjectType, ulong, VkPrivateDataSlot, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetPrivateData");
             _vkGetPrivateData_fnptr(device, objectType, objectHandle, privateDataSlot, pData);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyBufferInfo2*, void> _vkCmdCopyBuffer2_fnptr = &vkCmdCopyBuffer2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyBufferInfo2*, void> _vkCmdCopyBuffer2_fnptr = &vkCmdCopyBuffer2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyBuffer2_Lazy(IntPtr commandBuffer, VkCopyBufferInfo2* pCopyBufferInfo)
+        private static void vkCmdCopyBuffer2_Lazy(VkCommandBuffer commandBuffer, VkCopyBufferInfo2* pCopyBufferInfo)
         {
-            _vkCmdCopyBuffer2_fnptr = (delegate* unmanaged<IntPtr, VkCopyBufferInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBuffer2");
+            _vkCmdCopyBuffer2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyBufferInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBuffer2");
             _vkCmdCopyBuffer2_fnptr(commandBuffer, pCopyBufferInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyImageInfo2*, void> _vkCmdCopyImage2_fnptr = &vkCmdCopyImage2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyImageInfo2*, void> _vkCmdCopyImage2_fnptr = &vkCmdCopyImage2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyImage2_Lazy(IntPtr commandBuffer, VkCopyImageInfo2* pCopyImageInfo)
+        private static void vkCmdCopyImage2_Lazy(VkCommandBuffer commandBuffer, VkCopyImageInfo2* pCopyImageInfo)
         {
-            _vkCmdCopyImage2_fnptr = (delegate* unmanaged<IntPtr, VkCopyImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImage2");
+            _vkCmdCopyImage2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImage2");
             _vkCmdCopyImage2_fnptr(commandBuffer, pCopyImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkBlitImageInfo2*, void> _vkCmdBlitImage2_fnptr = &vkCmdBlitImage2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBlitImageInfo2*, void> _vkCmdBlitImage2_fnptr = &vkCmdBlitImage2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBlitImage2_Lazy(IntPtr commandBuffer, VkBlitImageInfo2* pBlitImageInfo)
+        private static void vkCmdBlitImage2_Lazy(VkCommandBuffer commandBuffer, VkBlitImageInfo2* pBlitImageInfo)
         {
-            _vkCmdBlitImage2_fnptr = (delegate* unmanaged<IntPtr, VkBlitImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdBlitImage2");
+            _vkCmdBlitImage2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBlitImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdBlitImage2");
             _vkCmdBlitImage2_fnptr(commandBuffer, pBlitImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyBufferToImageInfo2*, void> _vkCmdCopyBufferToImage2_fnptr = &vkCmdCopyBufferToImage2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyBufferToImageInfo2*, void> _vkCmdCopyBufferToImage2_fnptr = &vkCmdCopyBufferToImage2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyBufferToImage2_Lazy(IntPtr commandBuffer, VkCopyBufferToImageInfo2* pCopyBufferToImageInfo)
+        private static void vkCmdCopyBufferToImage2_Lazy(VkCommandBuffer commandBuffer, VkCopyBufferToImageInfo2* pCopyBufferToImageInfo)
         {
-            _vkCmdCopyBufferToImage2_fnptr = (delegate* unmanaged<IntPtr, VkCopyBufferToImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBufferToImage2");
+            _vkCmdCopyBufferToImage2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyBufferToImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyBufferToImage2");
             _vkCmdCopyBufferToImage2_fnptr(commandBuffer, pCopyBufferToImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyImageToBufferInfo2*, void> _vkCmdCopyImageToBuffer2_fnptr = &vkCmdCopyImageToBuffer2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyImageToBufferInfo2*, void> _vkCmdCopyImageToBuffer2_fnptr = &vkCmdCopyImageToBuffer2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyImageToBuffer2_Lazy(IntPtr commandBuffer, VkCopyImageToBufferInfo2* pCopyImageToBufferInfo)
+        private static void vkCmdCopyImageToBuffer2_Lazy(VkCommandBuffer commandBuffer, VkCopyImageToBufferInfo2* pCopyImageToBufferInfo)
         {
-            _vkCmdCopyImageToBuffer2_fnptr = (delegate* unmanaged<IntPtr, VkCopyImageToBufferInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImageToBuffer2");
+            _vkCmdCopyImageToBuffer2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyImageToBufferInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyImageToBuffer2");
             _vkCmdCopyImageToBuffer2_fnptr(commandBuffer, pCopyImageToBufferInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkResolveImageInfo2*, void> _vkCmdResolveImage2_fnptr = &vkCmdResolveImage2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkResolveImageInfo2*, void> _vkCmdResolveImage2_fnptr = &vkCmdResolveImage2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResolveImage2_Lazy(IntPtr commandBuffer, VkResolveImageInfo2* pResolveImageInfo)
+        private static void vkCmdResolveImage2_Lazy(VkCommandBuffer commandBuffer, VkResolveImageInfo2* pResolveImageInfo)
         {
-            _vkCmdResolveImage2_fnptr = (delegate* unmanaged<IntPtr, VkResolveImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdResolveImage2");
+            _vkCmdResolveImage2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkResolveImageInfo2*, void>)VKLoader.GetInstanceProcAddress("vkCmdResolveImage2");
             _vkCmdResolveImage2_fnptr(commandBuffer, pResolveImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkRefreshObjectListKHR*, void> _vkCmdRefreshObjectsKHR_fnptr = &vkCmdRefreshObjectsKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRefreshObjectListKHR*, void> _vkCmdRefreshObjectsKHR_fnptr = &vkCmdRefreshObjectsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdRefreshObjectsKHR_Lazy(IntPtr commandBuffer, VkRefreshObjectListKHR* pRefreshObjects)
+        private static void vkCmdRefreshObjectsKHR_Lazy(VkCommandBuffer commandBuffer, VkRefreshObjectListKHR* pRefreshObjects)
         {
-            _vkCmdRefreshObjectsKHR_fnptr = (delegate* unmanaged<IntPtr, VkRefreshObjectListKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdRefreshObjectsKHR");
+            _vkCmdRefreshObjectsKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRefreshObjectListKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdRefreshObjectsKHR");
             _vkCmdRefreshObjectsKHR_fnptr(commandBuffer, pRefreshObjects);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkObjectType*, VkResult> _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr = &vkGetPhysicalDeviceRefreshableObjectTypesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkObjectType*, VkResult> _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr = &vkGetPhysicalDeviceRefreshableObjectTypesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceRefreshableObjectTypesKHR_Lazy(IntPtr physicalDevice, uint* pRefreshableObjectTypeCount, VkObjectType* pRefreshableObjectTypes)
+        private static VkResult vkGetPhysicalDeviceRefreshableObjectTypesKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pRefreshableObjectTypeCount, VkObjectType* pRefreshableObjectTypes)
         {
-            _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkObjectType*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceRefreshableObjectTypesKHR");
+            _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkObjectType*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceRefreshableObjectTypesKHR");
             return _vkGetPhysicalDeviceRefreshableObjectTypesKHR_fnptr(physicalDevice, pRefreshableObjectTypeCount, pRefreshableObjectTypes);
         }
-        internal static delegate* unmanaged<IntPtr, VkExtent2D*, VkFragmentShadingRateCombinerOpKHR*, void> _vkCmdSetFragmentShadingRateKHR_fnptr = &vkCmdSetFragmentShadingRateKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkExtent2D*, VkFragmentShadingRateCombinerOpKHR*, void> _vkCmdSetFragmentShadingRateKHR_fnptr = &vkCmdSetFragmentShadingRateKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetFragmentShadingRateKHR_Lazy(IntPtr commandBuffer, VkExtent2D* pFragmentSize, VkFragmentShadingRateCombinerOpKHR* combinerOps)
+        private static void vkCmdSetFragmentShadingRateKHR_Lazy(VkCommandBuffer commandBuffer, VkExtent2D* pFragmentSize, VkFragmentShadingRateCombinerOpKHR* combinerOps)
         {
-            _vkCmdSetFragmentShadingRateKHR_fnptr = (delegate* unmanaged<IntPtr, VkExtent2D*, VkFragmentShadingRateCombinerOpKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFragmentShadingRateKHR");
+            _vkCmdSetFragmentShadingRateKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkExtent2D*, VkFragmentShadingRateCombinerOpKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFragmentShadingRateKHR");
             _vkCmdSetFragmentShadingRateKHR_fnptr(commandBuffer, pFragmentSize, combinerOps);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceFragmentShadingRateKHR*, VkResult> _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr = &vkGetPhysicalDeviceFragmentShadingRatesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceFragmentShadingRateKHR*, VkResult> _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr = &vkGetPhysicalDeviceFragmentShadingRatesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceFragmentShadingRatesKHR_Lazy(IntPtr physicalDevice, uint* pFragmentShadingRateCount, VkPhysicalDeviceFragmentShadingRateKHR* pFragmentShadingRates)
+        private static VkResult vkGetPhysicalDeviceFragmentShadingRatesKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pFragmentShadingRateCount, VkPhysicalDeviceFragmentShadingRateKHR* pFragmentShadingRates)
         {
-            _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkPhysicalDeviceFragmentShadingRateKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFragmentShadingRatesKHR");
+            _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkPhysicalDeviceFragmentShadingRateKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceFragmentShadingRatesKHR");
             return _vkGetPhysicalDeviceFragmentShadingRatesKHR_fnptr(physicalDevice, pFragmentShadingRateCount, pFragmentShadingRates);
         }
-        internal static delegate* unmanaged<IntPtr, VkFragmentShadingRateNV, VkFragmentShadingRateCombinerOpKHR*, void> _vkCmdSetFragmentShadingRateEnumNV_fnptr = &vkCmdSetFragmentShadingRateEnumNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkFragmentShadingRateNV, VkFragmentShadingRateCombinerOpKHR*, void> _vkCmdSetFragmentShadingRateEnumNV_fnptr = &vkCmdSetFragmentShadingRateEnumNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetFragmentShadingRateEnumNV_Lazy(IntPtr commandBuffer, VkFragmentShadingRateNV shadingRate, VkFragmentShadingRateCombinerOpKHR* combinerOps)
+        private static void vkCmdSetFragmentShadingRateEnumNV_Lazy(VkCommandBuffer commandBuffer, VkFragmentShadingRateNV shadingRate, VkFragmentShadingRateCombinerOpKHR* combinerOps)
         {
-            _vkCmdSetFragmentShadingRateEnumNV_fnptr = (delegate* unmanaged<IntPtr, VkFragmentShadingRateNV, VkFragmentShadingRateCombinerOpKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFragmentShadingRateEnumNV");
+            _vkCmdSetFragmentShadingRateEnumNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkFragmentShadingRateNV, VkFragmentShadingRateCombinerOpKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetFragmentShadingRateEnumNV");
             _vkCmdSetFragmentShadingRateEnumNV_fnptr(commandBuffer, shadingRate, combinerOps);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void> _vkGetAccelerationStructureBuildSizesKHR_fnptr = &vkGetAccelerationStructureBuildSizesKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void> _vkGetAccelerationStructureBuildSizesKHR_fnptr = &vkGetAccelerationStructureBuildSizesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetAccelerationStructureBuildSizesKHR_Lazy(IntPtr device, VkAccelerationStructureBuildTypeKHR buildType, VkAccelerationStructureBuildGeometryInfoKHR* pBuildInfo, uint* pMaxPrimitiveCounts, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
+        private static void vkGetAccelerationStructureBuildSizesKHR_Lazy(VkDevice device, VkAccelerationStructureBuildTypeKHR buildType, VkAccelerationStructureBuildGeometryInfoKHR* pBuildInfo, uint* pMaxPrimitiveCounts, VkAccelerationStructureBuildSizesInfoKHR* pSizeInfo)
         {
-            _vkGetAccelerationStructureBuildSizesKHR_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureBuildSizesKHR");
+            _vkGetAccelerationStructureBuildSizesKHR_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkAccelerationStructureBuildGeometryInfoKHR*, uint*, VkAccelerationStructureBuildSizesInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureBuildSizesKHR");
             _vkGetAccelerationStructureBuildSizesKHR_fnptr(device, buildType, pBuildInfo, pMaxPrimitiveCounts, pSizeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkVertexInputBindingDescription2EXT*, uint, VkVertexInputAttributeDescription2EXT*, void> _vkCmdSetVertexInputEXT_fnptr = &vkCmdSetVertexInputEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkVertexInputBindingDescription2EXT*, uint, VkVertexInputAttributeDescription2EXT*, void> _vkCmdSetVertexInputEXT_fnptr = &vkCmdSetVertexInputEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetVertexInputEXT_Lazy(IntPtr commandBuffer, uint vertexBindingDescriptionCount, VkVertexInputBindingDescription2EXT* pVertexBindingDescriptions, uint vertexAttributeDescriptionCount, VkVertexInputAttributeDescription2EXT* pVertexAttributeDescriptions)
+        private static void vkCmdSetVertexInputEXT_Lazy(VkCommandBuffer commandBuffer, uint vertexBindingDescriptionCount, VkVertexInputBindingDescription2EXT* pVertexBindingDescriptions, uint vertexAttributeDescriptionCount, VkVertexInputAttributeDescription2EXT* pVertexAttributeDescriptions)
         {
-            _vkCmdSetVertexInputEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkVertexInputBindingDescription2EXT*, uint, VkVertexInputAttributeDescription2EXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetVertexInputEXT");
+            _vkCmdSetVertexInputEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkVertexInputBindingDescription2EXT*, uint, VkVertexInputAttributeDescription2EXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetVertexInputEXT");
             _vkCmdSetVertexInputEXT_fnptr(commandBuffer, vertexBindingDescriptionCount, pVertexBindingDescriptions, vertexAttributeDescriptionCount, pVertexAttributeDescriptions);
         }
-        internal static delegate* unmanaged<IntPtr, uint, int*, void> _vkCmdSetColorWriteEnableEXT_fnptr = &vkCmdSetColorWriteEnableEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, int*, void> _vkCmdSetColorWriteEnableEXT_fnptr = &vkCmdSetColorWriteEnableEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetColorWriteEnableEXT_Lazy(IntPtr commandBuffer, uint attachmentCount, int* pColorWriteEnables)
+        private static void vkCmdSetColorWriteEnableEXT_Lazy(VkCommandBuffer commandBuffer, uint attachmentCount, int* pColorWriteEnables)
         {
-            _vkCmdSetColorWriteEnableEXT_fnptr = (delegate* unmanaged<IntPtr, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorWriteEnableEXT");
+            _vkCmdSetColorWriteEnableEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, int*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetColorWriteEnableEXT");
             _vkCmdSetColorWriteEnableEXT_fnptr(commandBuffer, attachmentCount, pColorWriteEnables);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkDependencyInfo*, void> _vkCmdSetEvent2_fnptr = &vkCmdSetEvent2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkDependencyInfo*, void> _vkCmdSetEvent2_fnptr = &vkCmdSetEvent2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetEvent2_Lazy(IntPtr commandBuffer, IntPtr @event, VkDependencyInfo* pDependencyInfo)
+        private static void vkCmdSetEvent2_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkDependencyInfo* pDependencyInfo)
         {
-            _vkCmdSetEvent2_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetEvent2");
+            _vkCmdSetEvent2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetEvent2");
             _vkCmdSetEvent2_fnptr(commandBuffer, @event, pDependencyInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlags2, void> _vkCmdResetEvent2_fnptr = &vkCmdResetEvent2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlags2, void> _vkCmdResetEvent2_fnptr = &vkCmdResetEvent2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResetEvent2_Lazy(IntPtr commandBuffer, IntPtr @event, VkPipelineStageFlags2 stageMask)
+        private static void vkCmdResetEvent2_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlags2 stageMask)
         {
-            _vkCmdResetEvent2_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkPipelineStageFlags2, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent2");
+            _vkCmdResetEvent2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlags2, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent2");
             _vkCmdResetEvent2_fnptr(commandBuffer, @event, stageMask);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkDependencyInfo*, void> _vkCmdWaitEvents2_fnptr = &vkCmdWaitEvents2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkEvent*, VkDependencyInfo*, void> _vkCmdWaitEvents2_fnptr = &vkCmdWaitEvents2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWaitEvents2_Lazy(IntPtr commandBuffer, uint eventCount, IntPtr* pEvents, VkDependencyInfo* pDependencyInfos)
+        private static void vkCmdWaitEvents2_Lazy(VkCommandBuffer commandBuffer, uint eventCount, VkEvent* pEvents, VkDependencyInfo* pDependencyInfos)
         {
-            _vkCmdWaitEvents2_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdWaitEvents2");
+            _vkCmdWaitEvents2_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkEvent*, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdWaitEvents2");
             _vkCmdWaitEvents2_fnptr(commandBuffer, eventCount, pEvents, pDependencyInfos);
         }
-        internal static delegate* unmanaged<IntPtr, VkDependencyInfo*, void> _vkCmdPipelineBarrier2_fnptr = &vkCmdPipelineBarrier2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDependencyInfo*, void> _vkCmdPipelineBarrier2_fnptr = &vkCmdPipelineBarrier2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPipelineBarrier2_Lazy(IntPtr commandBuffer, VkDependencyInfo* pDependencyInfo)
+        private static void vkCmdPipelineBarrier2_Lazy(VkCommandBuffer commandBuffer, VkDependencyInfo* pDependencyInfo)
         {
-            _vkCmdPipelineBarrier2_fnptr = (delegate* unmanaged<IntPtr, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdPipelineBarrier2");
+            _vkCmdPipelineBarrier2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdPipelineBarrier2");
             _vkCmdPipelineBarrier2_fnptr(commandBuffer, pDependencyInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkSubmitInfo2*, IntPtr, VkResult> _vkQueueSubmit2_fnptr = &vkQueueSubmit2_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult> _vkQueueSubmit2_fnptr = &vkQueueSubmit2_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkQueueSubmit2_Lazy(IntPtr queue, uint submitCount, VkSubmitInfo2* pSubmits, IntPtr fence)
+        private static VkResult vkQueueSubmit2_Lazy(VkQueue queue, uint submitCount, VkSubmitInfo2* pSubmits, VkFence fence)
         {
-            _vkQueueSubmit2_fnptr = (delegate* unmanaged<IntPtr, uint, VkSubmitInfo2*, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSubmit2");
+            _vkQueueSubmit2_fnptr = (delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSubmit2");
             return _vkQueueSubmit2_fnptr(queue, submitCount, pSubmits, fence);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineStageFlags2, IntPtr, uint, void> _vkCmdWriteTimestamp2_fnptr = &vkCmdWriteTimestamp2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkQueryPool, uint, void> _vkCmdWriteTimestamp2_fnptr = &vkCmdWriteTimestamp2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteTimestamp2_Lazy(IntPtr commandBuffer, VkPipelineStageFlags2 stage, IntPtr queryPool, uint query)
+        private static void vkCmdWriteTimestamp2_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkQueryPool queryPool, uint query)
         {
-            _vkCmdWriteTimestamp2_fnptr = (delegate* unmanaged<IntPtr, VkPipelineStageFlags2, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp2");
+            _vkCmdWriteTimestamp2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp2");
             _vkCmdWriteTimestamp2_fnptr(commandBuffer, stage, queryPool, query);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineStageFlags2, IntPtr, ulong, uint, void> _vkCmdWriteBufferMarker2AMD_fnptr = &vkCmdWriteBufferMarker2AMD_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkBuffer, ulong, uint, void> _vkCmdWriteBufferMarker2AMD_fnptr = &vkCmdWriteBufferMarker2AMD_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteBufferMarker2AMD_Lazy(IntPtr commandBuffer, VkPipelineStageFlags2 stage, IntPtr dstBuffer, ulong dstOffset, uint marker)
+        private static void vkCmdWriteBufferMarker2AMD_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
-            _vkCmdWriteBufferMarker2AMD_fnptr = (delegate* unmanaged<IntPtr, VkPipelineStageFlags2, IntPtr, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarker2AMD");
+            _vkCmdWriteBufferMarker2AMD_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkBuffer, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarker2AMD");
             _vkCmdWriteBufferMarker2AMD_fnptr(commandBuffer, stage, dstBuffer, dstOffset, marker);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkCheckpointData2NV*, void> _vkGetQueueCheckpointData2NV_fnptr = &vkGetQueueCheckpointData2NV_Lazy;
+        internal static delegate* unmanaged<VkQueue, uint*, VkCheckpointData2NV*, void> _vkGetQueueCheckpointData2NV_fnptr = &vkGetQueueCheckpointData2NV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetQueueCheckpointData2NV_Lazy(IntPtr queue, uint* pCheckpointDataCount, VkCheckpointData2NV* pCheckpointData)
+        private static void vkGetQueueCheckpointData2NV_Lazy(VkQueue queue, uint* pCheckpointDataCount, VkCheckpointData2NV* pCheckpointData)
         {
-            _vkGetQueueCheckpointData2NV_fnptr = (delegate* unmanaged<IntPtr, uint*, VkCheckpointData2NV*, void>)VKLoader.GetInstanceProcAddress("vkGetQueueCheckpointData2NV");
+            _vkGetQueueCheckpointData2NV_fnptr = (delegate* unmanaged<VkQueue, uint*, VkCheckpointData2NV*, void>)VKLoader.GetInstanceProcAddress("vkGetQueueCheckpointData2NV");
             _vkGetQueueCheckpointData2NV_fnptr(queue, pCheckpointDataCount, pCheckpointData);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyMemoryToImageInfoEXT*, VkResult> _vkCopyMemoryToImageEXT_fnptr = &vkCopyMemoryToImageEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCopyMemoryToImageInfoEXT*, VkResult> _vkCopyMemoryToImageEXT_fnptr = &vkCopyMemoryToImageEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyMemoryToImageEXT_Lazy(IntPtr device, VkCopyMemoryToImageInfoEXT* pCopyMemoryToImageInfo)
+        private static VkResult vkCopyMemoryToImageEXT_Lazy(VkDevice device, VkCopyMemoryToImageInfoEXT* pCopyMemoryToImageInfo)
         {
-            _vkCopyMemoryToImageEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyMemoryToImageInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToImageEXT");
+            _vkCopyMemoryToImageEXT_fnptr = (delegate* unmanaged<VkDevice, VkCopyMemoryToImageInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToImageEXT");
             return _vkCopyMemoryToImageEXT_fnptr(device, pCopyMemoryToImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyImageToMemoryInfoEXT*, VkResult> _vkCopyImageToMemoryEXT_fnptr = &vkCopyImageToMemoryEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCopyImageToMemoryInfoEXT*, VkResult> _vkCopyImageToMemoryEXT_fnptr = &vkCopyImageToMemoryEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyImageToMemoryEXT_Lazy(IntPtr device, VkCopyImageToMemoryInfoEXT* pCopyImageToMemoryInfo)
+        private static VkResult vkCopyImageToMemoryEXT_Lazy(VkDevice device, VkCopyImageToMemoryInfoEXT* pCopyImageToMemoryInfo)
         {
-            _vkCopyImageToMemoryEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyImageToMemoryInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyImageToMemoryEXT");
+            _vkCopyImageToMemoryEXT_fnptr = (delegate* unmanaged<VkDevice, VkCopyImageToMemoryInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyImageToMemoryEXT");
             return _vkCopyImageToMemoryEXT_fnptr(device, pCopyImageToMemoryInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyImageToImageInfoEXT*, VkResult> _vkCopyImageToImageEXT_fnptr = &vkCopyImageToImageEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCopyImageToImageInfoEXT*, VkResult> _vkCopyImageToImageEXT_fnptr = &vkCopyImageToImageEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyImageToImageEXT_Lazy(IntPtr device, VkCopyImageToImageInfoEXT* pCopyImageToImageInfo)
+        private static VkResult vkCopyImageToImageEXT_Lazy(VkDevice device, VkCopyImageToImageInfoEXT* pCopyImageToImageInfo)
         {
-            _vkCopyImageToImageEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyImageToImageInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyImageToImageEXT");
+            _vkCopyImageToImageEXT_fnptr = (delegate* unmanaged<VkDevice, VkCopyImageToImageInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyImageToImageEXT");
             return _vkCopyImageToImageEXT_fnptr(device, pCopyImageToImageInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkHostImageLayoutTransitionInfoEXT*, VkResult> _vkTransitionImageLayoutEXT_fnptr = &vkTransitionImageLayoutEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkHostImageLayoutTransitionInfoEXT*, VkResult> _vkTransitionImageLayoutEXT_fnptr = &vkTransitionImageLayoutEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkTransitionImageLayoutEXT_Lazy(IntPtr device, uint transitionCount, VkHostImageLayoutTransitionInfoEXT* pTransitions)
+        private static VkResult vkTransitionImageLayoutEXT_Lazy(VkDevice device, uint transitionCount, VkHostImageLayoutTransitionInfoEXT* pTransitions)
         {
-            _vkTransitionImageLayoutEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkHostImageLayoutTransitionInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkTransitionImageLayoutEXT");
+            _vkTransitionImageLayoutEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkHostImageLayoutTransitionInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkTransitionImageLayoutEXT");
             return _vkTransitionImageLayoutEXT_fnptr(device, transitionCount, pTransitions);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkCommandPoolMemoryConsumption*, void> _vkGetCommandPoolMemoryConsumption_fnptr = &vkGetCommandPoolMemoryConsumption_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCommandPool, VkCommandBuffer, VkCommandPoolMemoryConsumption*, void> _vkGetCommandPoolMemoryConsumption_fnptr = &vkGetCommandPoolMemoryConsumption_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetCommandPoolMemoryConsumption_Lazy(IntPtr device, IntPtr commandPool, IntPtr commandBuffer, VkCommandPoolMemoryConsumption* pConsumption)
+        private static void vkGetCommandPoolMemoryConsumption_Lazy(VkDevice device, VkCommandPool commandPool, VkCommandBuffer commandBuffer, VkCommandPoolMemoryConsumption* pConsumption)
         {
-            _vkGetCommandPoolMemoryConsumption_fnptr = (delegate* unmanaged<IntPtr, IntPtr, IntPtr, VkCommandPoolMemoryConsumption*, void>)VKLoader.GetInstanceProcAddress("vkGetCommandPoolMemoryConsumption");
+            _vkGetCommandPoolMemoryConsumption_fnptr = (delegate* unmanaged<VkDevice, VkCommandPool, VkCommandBuffer, VkCommandPoolMemoryConsumption*, void>)VKLoader.GetInstanceProcAddress("vkGetCommandPoolMemoryConsumption");
             _vkGetCommandPoolMemoryConsumption_fnptr(device, commandPool, commandBuffer, pConsumption);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult> _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr = &vkGetPhysicalDeviceVideoCapabilitiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult> _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr = &vkGetPhysicalDeviceVideoCapabilitiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceVideoCapabilitiesKHR_Lazy(IntPtr physicalDevice, VkVideoProfileInfoKHR* pVideoProfile, VkVideoCapabilitiesKHR* pCapabilities)
+        private static VkResult vkGetPhysicalDeviceVideoCapabilitiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkVideoProfileInfoKHR* pVideoProfile, VkVideoCapabilitiesKHR* pCapabilities)
         {
-            _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoCapabilitiesKHR");
+            _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkVideoProfileInfoKHR*, VkVideoCapabilitiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoCapabilitiesKHR");
             return _vkGetPhysicalDeviceVideoCapabilitiesKHR_fnptr(physicalDevice, pVideoProfile, pCapabilities);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr = &vkGetPhysicalDeviceVideoFormatPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr = &vkGetPhysicalDeviceVideoFormatPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceVideoFormatPropertiesKHR_Lazy(IntPtr physicalDevice, VkPhysicalDeviceVideoFormatInfoKHR* pVideoFormatInfo, uint* pVideoFormatPropertyCount, VkVideoFormatPropertiesKHR* pVideoFormatProperties)
+        private static VkResult vkGetPhysicalDeviceVideoFormatPropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceVideoFormatInfoKHR* pVideoFormatInfo, uint* pVideoFormatPropertyCount, VkVideoFormatPropertiesKHR* pVideoFormatProperties)
         {
-            _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoFormatPropertiesKHR");
+            _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoFormatInfoKHR*, uint*, VkVideoFormatPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoFormatPropertiesKHR");
             return _vkGetPhysicalDeviceVideoFormatPropertiesKHR_fnptr(physicalDevice, pVideoFormatInfo, pVideoFormatPropertyCount, pVideoFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr = &vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult> _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr = &vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_Lazy(IntPtr physicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR* pQualityLevelInfo, VkVideoEncodeQualityLevelPropertiesKHR* pQualityLevelProperties)
+        private static VkResult vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR* pQualityLevelInfo, VkVideoEncodeQualityLevelPropertiesKHR* pQualityLevelProperties)
         {
-            _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR");
+            _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkPhysicalDeviceVideoEncodeQualityLevelInfoKHR*, VkVideoEncodeQualityLevelPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR");
             return _vkGetPhysicalDeviceVideoEncodeQualityLevelPropertiesKHR_fnptr(physicalDevice, pQualityLevelInfo, pQualityLevelProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoSessionCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateVideoSessionKHR_fnptr = &vkCreateVideoSessionKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionCreateInfoKHR*, VkAllocationCallbacks*, VkVideoSessionKHR*, VkResult> _vkCreateVideoSessionKHR_fnptr = &vkCreateVideoSessionKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateVideoSessionKHR_Lazy(IntPtr device, VkVideoSessionCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pVideoSession)
+        private static VkResult vkCreateVideoSessionKHR_Lazy(VkDevice device, VkVideoSessionCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkVideoSessionKHR* pVideoSession)
         {
-            _vkCreateVideoSessionKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoSessionCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateVideoSessionKHR");
+            _vkCreateVideoSessionKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionCreateInfoKHR*, VkAllocationCallbacks*, VkVideoSessionKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateVideoSessionKHR");
             return _vkCreateVideoSessionKHR_fnptr(device, pCreateInfo, pAllocator, pVideoSession);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyVideoSessionKHR_fnptr = &vkDestroyVideoSessionKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionKHR, VkAllocationCallbacks*, void> _vkDestroyVideoSessionKHR_fnptr = &vkDestroyVideoSessionKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyVideoSessionKHR_Lazy(IntPtr device, IntPtr videoSession, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyVideoSessionKHR_Lazy(VkDevice device, VkVideoSessionKHR videoSession, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyVideoSessionKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyVideoSessionKHR");
+            _vkDestroyVideoSessionKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyVideoSessionKHR");
             _vkDestroyVideoSessionKHR_fnptr(device, videoSession, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoSessionParametersCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateVideoSessionParametersKHR_fnptr = &vkCreateVideoSessionParametersKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionParametersCreateInfoKHR*, VkAllocationCallbacks*, VkVideoSessionParametersKHR*, VkResult> _vkCreateVideoSessionParametersKHR_fnptr = &vkCreateVideoSessionParametersKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateVideoSessionParametersKHR_Lazy(IntPtr device, VkVideoSessionParametersCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pVideoSessionParameters)
+        private static VkResult vkCreateVideoSessionParametersKHR_Lazy(VkDevice device, VkVideoSessionParametersCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkVideoSessionParametersKHR* pVideoSessionParameters)
         {
-            _vkCreateVideoSessionParametersKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoSessionParametersCreateInfoKHR*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateVideoSessionParametersKHR");
+            _vkCreateVideoSessionParametersKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionParametersCreateInfoKHR*, VkAllocationCallbacks*, VkVideoSessionParametersKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateVideoSessionParametersKHR");
             return _vkCreateVideoSessionParametersKHR_fnptr(device, pCreateInfo, pAllocator, pVideoSessionParameters);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkVideoSessionParametersUpdateInfoKHR*, VkResult> _vkUpdateVideoSessionParametersKHR_fnptr = &vkUpdateVideoSessionParametersKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionParametersKHR, VkVideoSessionParametersUpdateInfoKHR*, VkResult> _vkUpdateVideoSessionParametersKHR_fnptr = &vkUpdateVideoSessionParametersKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkUpdateVideoSessionParametersKHR_Lazy(IntPtr device, IntPtr videoSessionParameters, VkVideoSessionParametersUpdateInfoKHR* pUpdateInfo)
+        private static VkResult vkUpdateVideoSessionParametersKHR_Lazy(VkDevice device, VkVideoSessionParametersKHR videoSessionParameters, VkVideoSessionParametersUpdateInfoKHR* pUpdateInfo)
         {
-            _vkUpdateVideoSessionParametersKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkVideoSessionParametersUpdateInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkUpdateVideoSessionParametersKHR");
+            _vkUpdateVideoSessionParametersKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionParametersKHR, VkVideoSessionParametersUpdateInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkUpdateVideoSessionParametersKHR");
             return _vkUpdateVideoSessionParametersKHR_fnptr(device, videoSessionParameters, pUpdateInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoEncodeSessionParametersGetInfoKHR*, VkVideoEncodeSessionParametersFeedbackInfoKHR*, nuint*, void*, VkResult> _vkGetEncodedVideoSessionParametersKHR_fnptr = &vkGetEncodedVideoSessionParametersKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoEncodeSessionParametersGetInfoKHR*, VkVideoEncodeSessionParametersFeedbackInfoKHR*, nuint*, void*, VkResult> _vkGetEncodedVideoSessionParametersKHR_fnptr = &vkGetEncodedVideoSessionParametersKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetEncodedVideoSessionParametersKHR_Lazy(IntPtr device, VkVideoEncodeSessionParametersGetInfoKHR* pVideoSessionParametersInfo, VkVideoEncodeSessionParametersFeedbackInfoKHR* pFeedbackInfo, nuint* pDataSize, void* pData)
+        private static VkResult vkGetEncodedVideoSessionParametersKHR_Lazy(VkDevice device, VkVideoEncodeSessionParametersGetInfoKHR* pVideoSessionParametersInfo, VkVideoEncodeSessionParametersFeedbackInfoKHR* pFeedbackInfo, nuint* pDataSize, void* pData)
         {
-            _vkGetEncodedVideoSessionParametersKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoEncodeSessionParametersGetInfoKHR*, VkVideoEncodeSessionParametersFeedbackInfoKHR*, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetEncodedVideoSessionParametersKHR");
+            _vkGetEncodedVideoSessionParametersKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoEncodeSessionParametersGetInfoKHR*, VkVideoEncodeSessionParametersFeedbackInfoKHR*, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetEncodedVideoSessionParametersKHR");
             return _vkGetEncodedVideoSessionParametersKHR_fnptr(device, pVideoSessionParametersInfo, pFeedbackInfo, pDataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyVideoSessionParametersKHR_fnptr = &vkDestroyVideoSessionParametersKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionParametersKHR, VkAllocationCallbacks*, void> _vkDestroyVideoSessionParametersKHR_fnptr = &vkDestroyVideoSessionParametersKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyVideoSessionParametersKHR_Lazy(IntPtr device, IntPtr videoSessionParameters, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyVideoSessionParametersKHR_Lazy(VkDevice device, VkVideoSessionParametersKHR videoSessionParameters, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyVideoSessionParametersKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyVideoSessionParametersKHR");
+            _vkDestroyVideoSessionParametersKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionParametersKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyVideoSessionParametersKHR");
             _vkDestroyVideoSessionParametersKHR_fnptr(device, videoSessionParameters, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkVideoSessionMemoryRequirementsKHR*, VkResult> _vkGetVideoSessionMemoryRequirementsKHR_fnptr = &vkGetVideoSessionMemoryRequirementsKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionKHR, uint*, VkVideoSessionMemoryRequirementsKHR*, VkResult> _vkGetVideoSessionMemoryRequirementsKHR_fnptr = &vkGetVideoSessionMemoryRequirementsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetVideoSessionMemoryRequirementsKHR_Lazy(IntPtr device, IntPtr videoSession, uint* pMemoryRequirementsCount, VkVideoSessionMemoryRequirementsKHR* pMemoryRequirements)
+        private static VkResult vkGetVideoSessionMemoryRequirementsKHR_Lazy(VkDevice device, VkVideoSessionKHR videoSession, uint* pMemoryRequirementsCount, VkVideoSessionMemoryRequirementsKHR* pMemoryRequirements)
         {
-            _vkGetVideoSessionMemoryRequirementsKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkVideoSessionMemoryRequirementsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetVideoSessionMemoryRequirementsKHR");
+            _vkGetVideoSessionMemoryRequirementsKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionKHR, uint*, VkVideoSessionMemoryRequirementsKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetVideoSessionMemoryRequirementsKHR");
             return _vkGetVideoSessionMemoryRequirementsKHR_fnptr(device, videoSession, pMemoryRequirementsCount, pMemoryRequirements);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkBindVideoSessionMemoryInfoKHR*, VkResult> _vkBindVideoSessionMemoryKHR_fnptr = &vkBindVideoSessionMemoryKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkVideoSessionKHR, uint, VkBindVideoSessionMemoryInfoKHR*, VkResult> _vkBindVideoSessionMemoryKHR_fnptr = &vkBindVideoSessionMemoryKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindVideoSessionMemoryKHR_Lazy(IntPtr device, IntPtr videoSession, uint bindSessionMemoryInfoCount, VkBindVideoSessionMemoryInfoKHR* pBindSessionMemoryInfos)
+        private static VkResult vkBindVideoSessionMemoryKHR_Lazy(VkDevice device, VkVideoSessionKHR videoSession, uint bindSessionMemoryInfoCount, VkBindVideoSessionMemoryInfoKHR* pBindSessionMemoryInfos)
         {
-            _vkBindVideoSessionMemoryKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkBindVideoSessionMemoryInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindVideoSessionMemoryKHR");
+            _vkBindVideoSessionMemoryKHR_fnptr = (delegate* unmanaged<VkDevice, VkVideoSessionKHR, uint, VkBindVideoSessionMemoryInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkBindVideoSessionMemoryKHR");
             return _vkBindVideoSessionMemoryKHR_fnptr(device, videoSession, bindSessionMemoryInfoCount, pBindSessionMemoryInfos);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoDecodeInfoKHR*, void> _vkCmdDecodeVideoKHR_fnptr = &vkCmdDecodeVideoKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkVideoDecodeInfoKHR*, void> _vkCmdDecodeVideoKHR_fnptr = &vkCmdDecodeVideoKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDecodeVideoKHR_Lazy(IntPtr commandBuffer, VkVideoDecodeInfoKHR* pDecodeInfo)
+        private static void vkCmdDecodeVideoKHR_Lazy(VkCommandBuffer commandBuffer, VkVideoDecodeInfoKHR* pDecodeInfo)
         {
-            _vkCmdDecodeVideoKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoDecodeInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdDecodeVideoKHR");
+            _vkCmdDecodeVideoKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoDecodeInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdDecodeVideoKHR");
             _vkCmdDecodeVideoKHR_fnptr(commandBuffer, pDecodeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoBeginCodingInfoKHR*, void> _vkCmdBeginVideoCodingKHR_fnptr = &vkCmdBeginVideoCodingKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkVideoBeginCodingInfoKHR*, void> _vkCmdBeginVideoCodingKHR_fnptr = &vkCmdBeginVideoCodingKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginVideoCodingKHR_Lazy(IntPtr commandBuffer, VkVideoBeginCodingInfoKHR* pBeginInfo)
+        private static void vkCmdBeginVideoCodingKHR_Lazy(VkCommandBuffer commandBuffer, VkVideoBeginCodingInfoKHR* pBeginInfo)
         {
-            _vkCmdBeginVideoCodingKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoBeginCodingInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginVideoCodingKHR");
+            _vkCmdBeginVideoCodingKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoBeginCodingInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginVideoCodingKHR");
             _vkCmdBeginVideoCodingKHR_fnptr(commandBuffer, pBeginInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoCodingControlInfoKHR*, void> _vkCmdControlVideoCodingKHR_fnptr = &vkCmdControlVideoCodingKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkVideoCodingControlInfoKHR*, void> _vkCmdControlVideoCodingKHR_fnptr = &vkCmdControlVideoCodingKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdControlVideoCodingKHR_Lazy(IntPtr commandBuffer, VkVideoCodingControlInfoKHR* pCodingControlInfo)
+        private static void vkCmdControlVideoCodingKHR_Lazy(VkCommandBuffer commandBuffer, VkVideoCodingControlInfoKHR* pCodingControlInfo)
         {
-            _vkCmdControlVideoCodingKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoCodingControlInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdControlVideoCodingKHR");
+            _vkCmdControlVideoCodingKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoCodingControlInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdControlVideoCodingKHR");
             _vkCmdControlVideoCodingKHR_fnptr(commandBuffer, pCodingControlInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoEndCodingInfoKHR*, void> _vkCmdEndVideoCodingKHR_fnptr = &vkCmdEndVideoCodingKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkVideoEndCodingInfoKHR*, void> _vkCmdEndVideoCodingKHR_fnptr = &vkCmdEndVideoCodingKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndVideoCodingKHR_Lazy(IntPtr commandBuffer, VkVideoEndCodingInfoKHR* pEndCodingInfo)
+        private static void vkCmdEndVideoCodingKHR_Lazy(VkCommandBuffer commandBuffer, VkVideoEndCodingInfoKHR* pEndCodingInfo)
         {
-            _vkCmdEndVideoCodingKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoEndCodingInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndVideoCodingKHR");
+            _vkCmdEndVideoCodingKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoEndCodingInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdEndVideoCodingKHR");
             _vkCmdEndVideoCodingKHR_fnptr(commandBuffer, pEndCodingInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkVideoEncodeInfoKHR*, void> _vkCmdEncodeVideoKHR_fnptr = &vkCmdEncodeVideoKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkVideoEncodeInfoKHR*, void> _vkCmdEncodeVideoKHR_fnptr = &vkCmdEncodeVideoKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEncodeVideoKHR_Lazy(IntPtr commandBuffer, VkVideoEncodeInfoKHR* pEncodeInfo)
+        private static void vkCmdEncodeVideoKHR_Lazy(VkCommandBuffer commandBuffer, VkVideoEncodeInfoKHR* pEncodeInfo)
         {
-            _vkCmdEncodeVideoKHR_fnptr = (delegate* unmanaged<IntPtr, VkVideoEncodeInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdEncodeVideoKHR");
+            _vkCmdEncodeVideoKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkVideoEncodeInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdEncodeVideoKHR");
             _vkCmdEncodeVideoKHR_fnptr(commandBuffer, pEncodeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkDecompressMemoryRegionNV*, void> _vkCmdDecompressMemoryNV_fnptr = &vkCmdDecompressMemoryNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkDecompressMemoryRegionNV*, void> _vkCmdDecompressMemoryNV_fnptr = &vkCmdDecompressMemoryNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDecompressMemoryNV_Lazy(IntPtr commandBuffer, uint decompressRegionCount, VkDecompressMemoryRegionNV* pDecompressMemoryRegions)
+        private static void vkCmdDecompressMemoryNV_Lazy(VkCommandBuffer commandBuffer, uint decompressRegionCount, VkDecompressMemoryRegionNV* pDecompressMemoryRegions)
         {
-            _vkCmdDecompressMemoryNV_fnptr = (delegate* unmanaged<IntPtr, uint, VkDecompressMemoryRegionNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdDecompressMemoryNV");
+            _vkCmdDecompressMemoryNV_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkDecompressMemoryRegionNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdDecompressMemoryNV");
             _vkCmdDecompressMemoryNV_fnptr(commandBuffer, decompressRegionCount, pDecompressMemoryRegions);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, ulong, uint, void> _vkCmdDecompressMemoryIndirectCountNV_fnptr = &vkCmdDecompressMemoryIndirectCountNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, ulong, uint, void> _vkCmdDecompressMemoryIndirectCountNV_fnptr = &vkCmdDecompressMemoryIndirectCountNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDecompressMemoryIndirectCountNV_Lazy(IntPtr commandBuffer, ulong indirectCommandsAddress, ulong indirectCommandsCountAddress, uint stride)
+        private static void vkCmdDecompressMemoryIndirectCountNV_Lazy(VkCommandBuffer commandBuffer, ulong indirectCommandsAddress, ulong indirectCommandsCountAddress, uint stride)
         {
-            _vkCmdDecompressMemoryIndirectCountNV_fnptr = (delegate* unmanaged<IntPtr, ulong, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDecompressMemoryIndirectCountNV");
+            _vkCmdDecompressMemoryIndirectCountNV_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdDecompressMemoryIndirectCountNV");
             _vkCmdDecompressMemoryIndirectCountNV_fnptr(commandBuffer, indirectCommandsAddress, indirectCommandsCountAddress, stride);
         }
-        internal static delegate* unmanaged<IntPtr, VkCuModuleCreateInfoNVX*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateCuModuleNVX_fnptr = &vkCreateCuModuleNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCuModuleCreateInfoNVX*, VkAllocationCallbacks*, VkCuModuleNVX*, VkResult> _vkCreateCuModuleNVX_fnptr = &vkCreateCuModuleNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateCuModuleNVX_Lazy(IntPtr device, VkCuModuleCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pModule)
+        private static VkResult vkCreateCuModuleNVX_Lazy(VkDevice device, VkCuModuleCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCuModuleNVX* pModule)
         {
-            _vkCreateCuModuleNVX_fnptr = (delegate* unmanaged<IntPtr, VkCuModuleCreateInfoNVX*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCuModuleNVX");
+            _vkCreateCuModuleNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuModuleCreateInfoNVX*, VkAllocationCallbacks*, VkCuModuleNVX*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCuModuleNVX");
             return _vkCreateCuModuleNVX_fnptr(device, pCreateInfo, pAllocator, pModule);
         }
-        internal static delegate* unmanaged<IntPtr, VkCuFunctionCreateInfoNVX*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateCuFunctionNVX_fnptr = &vkCreateCuFunctionNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCuFunctionCreateInfoNVX*, VkAllocationCallbacks*, VkCuFunctionNVX*, VkResult> _vkCreateCuFunctionNVX_fnptr = &vkCreateCuFunctionNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateCuFunctionNVX_Lazy(IntPtr device, VkCuFunctionCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFunction)
+        private static VkResult vkCreateCuFunctionNVX_Lazy(VkDevice device, VkCuFunctionCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCuFunctionNVX* pFunction)
         {
-            _vkCreateCuFunctionNVX_fnptr = (delegate* unmanaged<IntPtr, VkCuFunctionCreateInfoNVX*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCuFunctionNVX");
+            _vkCreateCuFunctionNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuFunctionCreateInfoNVX*, VkAllocationCallbacks*, VkCuFunctionNVX*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCuFunctionNVX");
             return _vkCreateCuFunctionNVX_fnptr(device, pCreateInfo, pAllocator, pFunction);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyCuModuleNVX_fnptr = &vkDestroyCuModuleNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCuModuleNVX, VkAllocationCallbacks*, void> _vkDestroyCuModuleNVX_fnptr = &vkDestroyCuModuleNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyCuModuleNVX_Lazy(IntPtr device, IntPtr module, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyCuModuleNVX_Lazy(VkDevice device, VkCuModuleNVX module, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyCuModuleNVX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCuModuleNVX");
+            _vkDestroyCuModuleNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuModuleNVX, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCuModuleNVX");
             _vkDestroyCuModuleNVX_fnptr(device, module, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyCuFunctionNVX_fnptr = &vkDestroyCuFunctionNVX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCuFunctionNVX, VkAllocationCallbacks*, void> _vkDestroyCuFunctionNVX_fnptr = &vkDestroyCuFunctionNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyCuFunctionNVX_Lazy(IntPtr device, IntPtr function, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyCuFunctionNVX_Lazy(VkDevice device, VkCuFunctionNVX function, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyCuFunctionNVX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCuFunctionNVX");
+            _vkDestroyCuFunctionNVX_fnptr = (delegate* unmanaged<VkDevice, VkCuFunctionNVX, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCuFunctionNVX");
             _vkDestroyCuFunctionNVX_fnptr(device, function, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkCuLaunchInfoNVX*, void> _vkCmdCuLaunchKernelNVX_fnptr = &vkCmdCuLaunchKernelNVX_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCuLaunchInfoNVX*, void> _vkCmdCuLaunchKernelNVX_fnptr = &vkCmdCuLaunchKernelNVX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCuLaunchKernelNVX_Lazy(IntPtr commandBuffer, VkCuLaunchInfoNVX* pLaunchInfo)
+        private static void vkCmdCuLaunchKernelNVX_Lazy(VkCommandBuffer commandBuffer, VkCuLaunchInfoNVX* pLaunchInfo)
         {
-            _vkCmdCuLaunchKernelNVX_fnptr = (delegate* unmanaged<IntPtr, VkCuLaunchInfoNVX*, void>)VKLoader.GetInstanceProcAddress("vkCmdCuLaunchKernelNVX");
+            _vkCmdCuLaunchKernelNVX_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCuLaunchInfoNVX*, void>)VKLoader.GetInstanceProcAddress("vkCmdCuLaunchKernelNVX");
             _vkCmdCuLaunchKernelNVX_fnptr(commandBuffer, pLaunchInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong*, void> _vkGetDescriptorSetLayoutSizeEXT_fnptr = &vkGetDescriptorSetLayoutSizeEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetLayout, ulong*, void> _vkGetDescriptorSetLayoutSizeEXT_fnptr = &vkGetDescriptorSetLayoutSizeEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorSetLayoutSizeEXT_Lazy(IntPtr device, IntPtr layout, ulong* pLayoutSizeInBytes)
+        private static void vkGetDescriptorSetLayoutSizeEXT_Lazy(VkDevice device, VkDescriptorSetLayout layout, ulong* pLayoutSizeInBytes)
         {
-            _vkGetDescriptorSetLayoutSizeEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutSizeEXT");
+            _vkGetDescriptorSetLayoutSizeEXT_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetLayout, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutSizeEXT");
             _vkGetDescriptorSetLayoutSizeEXT_fnptr(device, layout, pLayoutSizeInBytes);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, ulong*, void> _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr = &vkGetDescriptorSetLayoutBindingOffsetEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetLayout, uint, ulong*, void> _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr = &vkGetDescriptorSetLayoutBindingOffsetEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorSetLayoutBindingOffsetEXT_Lazy(IntPtr device, IntPtr layout, uint binding, ulong* pOffset)
+        private static void vkGetDescriptorSetLayoutBindingOffsetEXT_Lazy(VkDevice device, VkDescriptorSetLayout layout, uint binding, ulong* pOffset)
         {
-            _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutBindingOffsetEXT");
+            _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetLayout, uint, ulong*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutBindingOffsetEXT");
             _vkGetDescriptorSetLayoutBindingOffsetEXT_fnptr(device, layout, binding, pOffset);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorGetInfoEXT*, nuint, void*, void> _vkGetDescriptorEXT_fnptr = &vkGetDescriptorEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorGetInfoEXT*, nuint, void*, void> _vkGetDescriptorEXT_fnptr = &vkGetDescriptorEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorEXT_Lazy(IntPtr device, VkDescriptorGetInfoEXT* pDescriptorInfo, nuint dataSize, void* pDescriptor)
+        private static void vkGetDescriptorEXT_Lazy(VkDevice device, VkDescriptorGetInfoEXT* pDescriptorInfo, nuint dataSize, void* pDescriptor)
         {
-            _vkGetDescriptorEXT_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorGetInfoEXT*, nuint, void*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorEXT");
+            _vkGetDescriptorEXT_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorGetInfoEXT*, nuint, void*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorEXT");
             _vkGetDescriptorEXT_fnptr(device, pDescriptorInfo, dataSize, pDescriptor);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkDescriptorBufferBindingInfoEXT*, void> _vkCmdBindDescriptorBuffersEXT_fnptr = &vkCmdBindDescriptorBuffersEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkDescriptorBufferBindingInfoEXT*, void> _vkCmdBindDescriptorBuffersEXT_fnptr = &vkCmdBindDescriptorBuffersEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindDescriptorBuffersEXT_Lazy(IntPtr commandBuffer, uint bufferCount, VkDescriptorBufferBindingInfoEXT* pBindingInfos)
+        private static void vkCmdBindDescriptorBuffersEXT_Lazy(VkCommandBuffer commandBuffer, uint bufferCount, VkDescriptorBufferBindingInfoEXT* pBindingInfos)
         {
-            _vkCmdBindDescriptorBuffersEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkDescriptorBufferBindingInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBuffersEXT");
+            _vkCmdBindDescriptorBuffersEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkDescriptorBufferBindingInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBuffersEXT");
             _vkCmdBindDescriptorBuffersEXT_fnptr(commandBuffer, bufferCount, pBindingInfos);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, uint*, ulong*, void> _vkCmdSetDescriptorBufferOffsetsEXT_fnptr = &vkCmdSetDescriptorBufferOffsetsEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, uint*, ulong*, void> _vkCmdSetDescriptorBufferOffsetsEXT_fnptr = &vkCmdSetDescriptorBufferOffsetsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDescriptorBufferOffsetsEXT_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr layout, uint firstSet, uint setCount, uint* pBufferIndices, ulong* pOffsets)
+        private static void vkCmdSetDescriptorBufferOffsetsEXT_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint firstSet, uint setCount, uint* pBufferIndices, ulong* pOffsets)
         {
-            _vkCmdSetDescriptorBufferOffsetsEXT_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, uint, uint*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDescriptorBufferOffsetsEXT");
+            _vkCmdSetDescriptorBufferOffsetsEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, uint, uint*, ulong*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDescriptorBufferOffsetsEXT");
             _vkCmdSetDescriptorBufferOffsetsEXT_fnptr(commandBuffer, pipelineBindPoint, layout, firstSet, setCount, pBufferIndices, pOffsets);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, void> _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr = &vkCmdBindDescriptorBufferEmbeddedSamplersEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, void> _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr = &vkCmdBindDescriptorBufferEmbeddedSamplersEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindDescriptorBufferEmbeddedSamplersEXT_Lazy(IntPtr commandBuffer, VkPipelineBindPoint pipelineBindPoint, IntPtr layout, uint set)
+        private static void vkCmdBindDescriptorBufferEmbeddedSamplersEXT_Lazy(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint set)
         {
-            _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr = (delegate* unmanaged<IntPtr, VkPipelineBindPoint, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBufferEmbeddedSamplersEXT");
+            _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineBindPoint, VkPipelineLayout, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBufferEmbeddedSamplersEXT");
             _vkCmdBindDescriptorBufferEmbeddedSamplersEXT_fnptr(commandBuffer, pipelineBindPoint, layout, set);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetBufferOpaqueCaptureDescriptorDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetBufferOpaqueCaptureDescriptorDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetBufferOpaqueCaptureDescriptorDataEXT_Lazy(IntPtr device, VkBufferCaptureDescriptorDataInfoEXT* pInfo, void* pData)
+        private static VkResult vkGetBufferOpaqueCaptureDescriptorDataEXT_Lazy(VkDevice device, VkBufferCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
-            _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<IntPtr, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetBufferOpaqueCaptureDescriptorDataEXT");
+            _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkBufferCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetBufferOpaqueCaptureDescriptorDataEXT");
             return _vkGetBufferOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetImageOpaqueCaptureDescriptorDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetImageOpaqueCaptureDescriptorDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetImageOpaqueCaptureDescriptorDataEXT_Lazy(IntPtr device, VkImageCaptureDescriptorDataInfoEXT* pInfo, void* pData)
+        private static VkResult vkGetImageOpaqueCaptureDescriptorDataEXT_Lazy(VkDevice device, VkImageCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
-            _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<IntPtr, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageOpaqueCaptureDescriptorDataEXT");
+            _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkImageCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageOpaqueCaptureDescriptorDataEXT");
             return _vkGetImageOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
-        internal static delegate* unmanaged<IntPtr, VkImageViewCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetImageViewOpaqueCaptureDescriptorDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImageViewCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetImageViewOpaqueCaptureDescriptorDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetImageViewOpaqueCaptureDescriptorDataEXT_Lazy(IntPtr device, VkImageViewCaptureDescriptorDataInfoEXT* pInfo, void* pData)
+        private static VkResult vkGetImageViewOpaqueCaptureDescriptorDataEXT_Lazy(VkDevice device, VkImageViewCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
-            _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<IntPtr, VkImageViewCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageViewOpaqueCaptureDescriptorDataEXT");
+            _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkImageViewCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetImageViewOpaqueCaptureDescriptorDataEXT");
             return _vkGetImageViewOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
-        internal static delegate* unmanaged<IntPtr, VkSamplerCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetSamplerOpaqueCaptureDescriptorDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSamplerCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetSamplerOpaqueCaptureDescriptorDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetSamplerOpaqueCaptureDescriptorDataEXT_Lazy(IntPtr device, VkSamplerCaptureDescriptorDataInfoEXT* pInfo, void* pData)
+        private static VkResult vkGetSamplerOpaqueCaptureDescriptorDataEXT_Lazy(VkDevice device, VkSamplerCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
-            _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<IntPtr, VkSamplerCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSamplerOpaqueCaptureDescriptorDataEXT");
+            _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkSamplerCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetSamplerOpaqueCaptureDescriptorDataEXT");
             return _vkGetSamplerOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult> _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr = &vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_Lazy(IntPtr device, VkAccelerationStructureCaptureDescriptorDataInfoEXT* pInfo, void* pData)
+        private static VkResult vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_Lazy(VkDevice device, VkAccelerationStructureCaptureDescriptorDataInfoEXT* pInfo, void* pData)
         {
-            _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT");
+            _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureCaptureDescriptorDataInfoEXT*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT");
             return _vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT_fnptr(device, pInfo, pData);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, float, void> _vkSetDeviceMemoryPriorityEXT_fnptr = &vkSetDeviceMemoryPriorityEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceMemory, float, void> _vkSetDeviceMemoryPriorityEXT_fnptr = &vkSetDeviceMemoryPriorityEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkSetDeviceMemoryPriorityEXT_Lazy(IntPtr device, IntPtr memory, float priority)
+        private static void vkSetDeviceMemoryPriorityEXT_Lazy(VkDevice device, VkDeviceMemory memory, float priority)
         {
-            _vkSetDeviceMemoryPriorityEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, float, void>)VKLoader.GetInstanceProcAddress("vkSetDeviceMemoryPriorityEXT");
+            _vkSetDeviceMemoryPriorityEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeviceMemory, float, void>)VKLoader.GetInstanceProcAddress("vkSetDeviceMemoryPriorityEXT");
             _vkSetDeviceMemoryPriorityEXT_fnptr(device, memory, priority);
         }
-        internal static delegate* unmanaged<IntPtr, int, IntPtr, VkResult> _vkAcquireDrmDisplayEXT_fnptr = &vkAcquireDrmDisplayEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, int, VkDisplayKHR, VkResult> _vkAcquireDrmDisplayEXT_fnptr = &vkAcquireDrmDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkAcquireDrmDisplayEXT_Lazy(IntPtr physicalDevice, int drmFd, IntPtr display)
+        private static VkResult vkAcquireDrmDisplayEXT_Lazy(VkPhysicalDevice physicalDevice, int drmFd, VkDisplayKHR display)
         {
-            _vkAcquireDrmDisplayEXT_fnptr = (delegate* unmanaged<IntPtr, int, IntPtr, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireDrmDisplayEXT");
+            _vkAcquireDrmDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, int, VkDisplayKHR, VkResult>)VKLoader.GetInstanceProcAddress("vkAcquireDrmDisplayEXT");
             return _vkAcquireDrmDisplayEXT_fnptr(physicalDevice, drmFd, display);
         }
-        internal static delegate* unmanaged<IntPtr, int, uint, IntPtr*, VkResult> _vkGetDrmDisplayEXT_fnptr = &vkGetDrmDisplayEXT_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, int, uint, VkDisplayKHR*, VkResult> _vkGetDrmDisplayEXT_fnptr = &vkGetDrmDisplayEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDrmDisplayEXT_Lazy(IntPtr physicalDevice, int drmFd, uint connectorId, IntPtr* display)
+        private static VkResult vkGetDrmDisplayEXT_Lazy(VkPhysicalDevice physicalDevice, int drmFd, uint connectorId, VkDisplayKHR* display)
         {
-            _vkGetDrmDisplayEXT_fnptr = (delegate* unmanaged<IntPtr, int, uint, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDrmDisplayEXT");
+            _vkGetDrmDisplayEXT_fnptr = (delegate* unmanaged<VkPhysicalDevice, int, uint, VkDisplayKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDrmDisplayEXT");
             return _vkGetDrmDisplayEXT_fnptr(physicalDevice, drmFd, connectorId, display);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkResult> _vkWaitForPresentKHR_fnptr = &vkWaitForPresentKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, ulong, ulong, VkResult> _vkWaitForPresentKHR_fnptr = &vkWaitForPresentKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkWaitForPresentKHR_Lazy(IntPtr device, IntPtr swapchain, ulong presentId, ulong timeout)
+        private static VkResult vkWaitForPresentKHR_Lazy(VkDevice device, VkSwapchainKHR swapchain, ulong presentId, ulong timeout)
         {
-            _vkWaitForPresentKHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, ulong, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForPresentKHR");
+            _vkWaitForPresentKHR_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, ulong, ulong, VkResult>)VKLoader.GetInstanceProcAddress("vkWaitForPresentKHR");
             return _vkWaitForPresentKHR_fnptr(device, swapchain, presentId, timeout);
         }
-        internal static delegate* unmanaged<IntPtr, VkBufferCollectionCreateInfoFUCHSIA*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateBufferCollectionFUCHSIA_fnptr = &vkCreateBufferCollectionFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCollectionCreateInfoFUCHSIA*, VkAllocationCallbacks*, VkBufferCollectionFUCHSIA*, VkResult> _vkCreateBufferCollectionFUCHSIA_fnptr = &vkCreateBufferCollectionFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateBufferCollectionFUCHSIA_Lazy(IntPtr device, VkBufferCollectionCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pCollection)
+        private static VkResult vkCreateBufferCollectionFUCHSIA_Lazy(VkDevice device, VkBufferCollectionCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBufferCollectionFUCHSIA* pCollection)
         {
-            _vkCreateBufferCollectionFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, VkBufferCollectionCreateInfoFUCHSIA*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBufferCollectionFUCHSIA");
+            _vkCreateBufferCollectionFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionCreateInfoFUCHSIA*, VkAllocationCallbacks*, VkBufferCollectionFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateBufferCollectionFUCHSIA");
             return _vkCreateBufferCollectionFUCHSIA_fnptr(device, pCreateInfo, pAllocator, pCollection);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkBufferConstraintsInfoFUCHSIA*, VkResult> _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr = &vkSetBufferCollectionBufferConstraintsFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferConstraintsInfoFUCHSIA*, VkResult> _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr = &vkSetBufferCollectionBufferConstraintsFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetBufferCollectionBufferConstraintsFUCHSIA_Lazy(IntPtr device, IntPtr collection, VkBufferConstraintsInfoFUCHSIA* pBufferConstraintsInfo)
+        private static VkResult vkSetBufferCollectionBufferConstraintsFUCHSIA_Lazy(VkDevice device, VkBufferCollectionFUCHSIA collection, VkBufferConstraintsInfoFUCHSIA* pBufferConstraintsInfo)
         {
-            _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkBufferConstraintsInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetBufferCollectionBufferConstraintsFUCHSIA");
+            _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferConstraintsInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetBufferCollectionBufferConstraintsFUCHSIA");
             return _vkSetBufferCollectionBufferConstraintsFUCHSIA_fnptr(device, collection, pBufferConstraintsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageConstraintsInfoFUCHSIA*, VkResult> _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr = &vkSetBufferCollectionImageConstraintsFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkImageConstraintsInfoFUCHSIA*, VkResult> _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr = &vkSetBufferCollectionImageConstraintsFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetBufferCollectionImageConstraintsFUCHSIA_Lazy(IntPtr device, IntPtr collection, VkImageConstraintsInfoFUCHSIA* pImageConstraintsInfo)
+        private static VkResult vkSetBufferCollectionImageConstraintsFUCHSIA_Lazy(VkDevice device, VkBufferCollectionFUCHSIA collection, VkImageConstraintsInfoFUCHSIA* pImageConstraintsInfo)
         {
-            _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageConstraintsInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetBufferCollectionImageConstraintsFUCHSIA");
+            _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkImageConstraintsInfoFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetBufferCollectionImageConstraintsFUCHSIA");
             return _vkSetBufferCollectionImageConstraintsFUCHSIA_fnptr(device, collection, pImageConstraintsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyBufferCollectionFUCHSIA_fnptr = &vkDestroyBufferCollectionFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkAllocationCallbacks*, void> _vkDestroyBufferCollectionFUCHSIA_fnptr = &vkDestroyBufferCollectionFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyBufferCollectionFUCHSIA_Lazy(IntPtr device, IntPtr collection, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyBufferCollectionFUCHSIA_Lazy(VkDevice device, VkBufferCollectionFUCHSIA collection, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyBufferCollectionFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBufferCollectionFUCHSIA");
+            _vkDestroyBufferCollectionFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyBufferCollectionFUCHSIA");
             _vkDestroyBufferCollectionFUCHSIA_fnptr(device, collection, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkBufferCollectionPropertiesFUCHSIA*, VkResult> _vkGetBufferCollectionPropertiesFUCHSIA_fnptr = &vkGetBufferCollectionPropertiesFUCHSIA_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferCollectionPropertiesFUCHSIA*, VkResult> _vkGetBufferCollectionPropertiesFUCHSIA_fnptr = &vkGetBufferCollectionPropertiesFUCHSIA_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetBufferCollectionPropertiesFUCHSIA_Lazy(IntPtr device, IntPtr collection, VkBufferCollectionPropertiesFUCHSIA* pProperties)
+        private static VkResult vkGetBufferCollectionPropertiesFUCHSIA_Lazy(VkDevice device, VkBufferCollectionFUCHSIA collection, VkBufferCollectionPropertiesFUCHSIA* pProperties)
         {
-            _vkGetBufferCollectionPropertiesFUCHSIA_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkBufferCollectionPropertiesFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetBufferCollectionPropertiesFUCHSIA");
+            _vkGetBufferCollectionPropertiesFUCHSIA_fnptr = (delegate* unmanaged<VkDevice, VkBufferCollectionFUCHSIA, VkBufferCollectionPropertiesFUCHSIA*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetBufferCollectionPropertiesFUCHSIA");
             return _vkGetBufferCollectionPropertiesFUCHSIA_fnptr(device, collection, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkCudaModuleCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateCudaModuleNV_fnptr = &vkCreateCudaModuleNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCudaModuleCreateInfoNV*, VkAllocationCallbacks*, VkCudaModuleNV*, VkResult> _vkCreateCudaModuleNV_fnptr = &vkCreateCudaModuleNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateCudaModuleNV_Lazy(IntPtr device, VkCudaModuleCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pModule)
+        private static VkResult vkCreateCudaModuleNV_Lazy(VkDevice device, VkCudaModuleCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCudaModuleNV* pModule)
         {
-            _vkCreateCudaModuleNV_fnptr = (delegate* unmanaged<IntPtr, VkCudaModuleCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCudaModuleNV");
+            _vkCreateCudaModuleNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaModuleCreateInfoNV*, VkAllocationCallbacks*, VkCudaModuleNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCudaModuleNV");
             return _vkCreateCudaModuleNV_fnptr(device, pCreateInfo, pAllocator, pModule);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult> _vkGetCudaModuleCacheNV_fnptr = &vkGetCudaModuleCacheNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCudaModuleNV, nuint*, void*, VkResult> _vkGetCudaModuleCacheNV_fnptr = &vkGetCudaModuleCacheNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetCudaModuleCacheNV_Lazy(IntPtr device, IntPtr module, nuint* pCacheSize, void* pCacheData)
+        private static VkResult vkGetCudaModuleCacheNV_Lazy(VkDevice device, VkCudaModuleNV module, nuint* pCacheSize, void* pCacheData)
         {
-            _vkGetCudaModuleCacheNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetCudaModuleCacheNV");
+            _vkGetCudaModuleCacheNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaModuleNV, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetCudaModuleCacheNV");
             return _vkGetCudaModuleCacheNV_fnptr(device, module, pCacheSize, pCacheData);
         }
-        internal static delegate* unmanaged<IntPtr, VkCudaFunctionCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateCudaFunctionNV_fnptr = &vkCreateCudaFunctionNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCudaFunctionCreateInfoNV*, VkAllocationCallbacks*, VkCudaFunctionNV*, VkResult> _vkCreateCudaFunctionNV_fnptr = &vkCreateCudaFunctionNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateCudaFunctionNV_Lazy(IntPtr device, VkCudaFunctionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pFunction)
+        private static VkResult vkCreateCudaFunctionNV_Lazy(VkDevice device, VkCudaFunctionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCudaFunctionNV* pFunction)
         {
-            _vkCreateCudaFunctionNV_fnptr = (delegate* unmanaged<IntPtr, VkCudaFunctionCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCudaFunctionNV");
+            _vkCreateCudaFunctionNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaFunctionCreateInfoNV*, VkAllocationCallbacks*, VkCudaFunctionNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateCudaFunctionNV");
             return _vkCreateCudaFunctionNV_fnptr(device, pCreateInfo, pAllocator, pFunction);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyCudaModuleNV_fnptr = &vkDestroyCudaModuleNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCudaModuleNV, VkAllocationCallbacks*, void> _vkDestroyCudaModuleNV_fnptr = &vkDestroyCudaModuleNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyCudaModuleNV_Lazy(IntPtr device, IntPtr module, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyCudaModuleNV_Lazy(VkDevice device, VkCudaModuleNV module, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyCudaModuleNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCudaModuleNV");
+            _vkDestroyCudaModuleNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaModuleNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCudaModuleNV");
             _vkDestroyCudaModuleNV_fnptr(device, module, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyCudaFunctionNV_fnptr = &vkDestroyCudaFunctionNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkCudaFunctionNV, VkAllocationCallbacks*, void> _vkDestroyCudaFunctionNV_fnptr = &vkDestroyCudaFunctionNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyCudaFunctionNV_Lazy(IntPtr device, IntPtr function, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyCudaFunctionNV_Lazy(VkDevice device, VkCudaFunctionNV function, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyCudaFunctionNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCudaFunctionNV");
+            _vkDestroyCudaFunctionNV_fnptr = (delegate* unmanaged<VkDevice, VkCudaFunctionNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyCudaFunctionNV");
             _vkDestroyCudaFunctionNV_fnptr(device, function, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkCudaLaunchInfoNV*, void> _vkCmdCudaLaunchKernelNV_fnptr = &vkCmdCudaLaunchKernelNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCudaLaunchInfoNV*, void> _vkCmdCudaLaunchKernelNV_fnptr = &vkCmdCudaLaunchKernelNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCudaLaunchKernelNV_Lazy(IntPtr commandBuffer, VkCudaLaunchInfoNV* pLaunchInfo)
+        private static void vkCmdCudaLaunchKernelNV_Lazy(VkCommandBuffer commandBuffer, VkCudaLaunchInfoNV* pLaunchInfo)
         {
-            _vkCmdCudaLaunchKernelNV_fnptr = (delegate* unmanaged<IntPtr, VkCudaLaunchInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdCudaLaunchKernelNV");
+            _vkCmdCudaLaunchKernelNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCudaLaunchInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdCudaLaunchKernelNV");
             _vkCmdCudaLaunchKernelNV_fnptr(commandBuffer, pLaunchInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderingInfo*, void> _vkCmdBeginRendering_fnptr = &vkCmdBeginRendering_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRenderingInfo*, void> _vkCmdBeginRendering_fnptr = &vkCmdBeginRendering_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBeginRendering_Lazy(IntPtr commandBuffer, VkRenderingInfo* pRenderingInfo)
+        private static void vkCmdBeginRendering_Lazy(VkCommandBuffer commandBuffer, VkRenderingInfo* pRenderingInfo)
         {
-            _vkCmdBeginRendering_fnptr = (delegate* unmanaged<IntPtr, VkRenderingInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRendering");
+            _vkCmdBeginRendering_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderingInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdBeginRendering");
             _vkCmdBeginRendering_fnptr(commandBuffer, pRenderingInfo);
         }
-        internal static delegate* unmanaged<IntPtr, void> _vkCmdEndRendering_fnptr = &vkCmdEndRendering_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, void> _vkCmdEndRendering_fnptr = &vkCmdEndRendering_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdEndRendering_Lazy(IntPtr commandBuffer)
+        private static void vkCmdEndRendering_Lazy(VkCommandBuffer commandBuffer)
         {
-            _vkCmdEndRendering_fnptr = (delegate* unmanaged<IntPtr, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRendering");
+            _vkCmdEndRendering_fnptr = (delegate* unmanaged<VkCommandBuffer, void>)VKLoader.GetInstanceProcAddress("vkCmdEndRendering");
             _vkCmdEndRendering_fnptr(commandBuffer);
         }
-        internal static delegate* unmanaged<IntPtr, VkDescriptorSetBindingReferenceVALVE*, VkDescriptorSetLayoutHostMappingInfoVALVE*, void> _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr = &vkGetDescriptorSetLayoutHostMappingInfoVALVE_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSetBindingReferenceVALVE*, VkDescriptorSetLayoutHostMappingInfoVALVE*, void> _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr = &vkGetDescriptorSetLayoutHostMappingInfoVALVE_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorSetLayoutHostMappingInfoVALVE_Lazy(IntPtr device, VkDescriptorSetBindingReferenceVALVE* pBindingReference, VkDescriptorSetLayoutHostMappingInfoVALVE* pHostMapping)
+        private static void vkGetDescriptorSetLayoutHostMappingInfoVALVE_Lazy(VkDevice device, VkDescriptorSetBindingReferenceVALVE* pBindingReference, VkDescriptorSetLayoutHostMappingInfoVALVE* pHostMapping)
         {
-            _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr = (delegate* unmanaged<IntPtr, VkDescriptorSetBindingReferenceVALVE*, VkDescriptorSetLayoutHostMappingInfoVALVE*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutHostMappingInfoVALVE");
+            _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSetBindingReferenceVALVE*, VkDescriptorSetLayoutHostMappingInfoVALVE*, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetLayoutHostMappingInfoVALVE");
             _vkGetDescriptorSetLayoutHostMappingInfoVALVE_fnptr(device, pBindingReference, pHostMapping);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, void**, void> _vkGetDescriptorSetHostMappingVALVE_fnptr = &vkGetDescriptorSetHostMappingVALVE_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDescriptorSet, void**, void> _vkGetDescriptorSetHostMappingVALVE_fnptr = &vkGetDescriptorSetHostMappingVALVE_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDescriptorSetHostMappingVALVE_Lazy(IntPtr device, IntPtr descriptorSet, void** ppData)
+        private static void vkGetDescriptorSetHostMappingVALVE_Lazy(VkDevice device, VkDescriptorSet descriptorSet, void** ppData)
         {
-            _vkGetDescriptorSetHostMappingVALVE_fnptr = (delegate* unmanaged<IntPtr, IntPtr, void**, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetHostMappingVALVE");
+            _vkGetDescriptorSetHostMappingVALVE_fnptr = (delegate* unmanaged<VkDevice, VkDescriptorSet, void**, void>)VKLoader.GetInstanceProcAddress("vkGetDescriptorSetHostMappingVALVE");
             _vkGetDescriptorSetHostMappingVALVE_fnptr(device, descriptorSet, ppData);
         }
-        internal static delegate* unmanaged<IntPtr, VkMicromapCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateMicromapEXT_fnptr = &vkCreateMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMicromapCreateInfoEXT*, VkAllocationCallbacks*, VkMicromapEXT*, VkResult> _vkCreateMicromapEXT_fnptr = &vkCreateMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateMicromapEXT_Lazy(IntPtr device, VkMicromapCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pMicromap)
+        private static VkResult vkCreateMicromapEXT_Lazy(VkDevice device, VkMicromapCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkMicromapEXT* pMicromap)
         {
-            _vkCreateMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, VkMicromapCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMicromapEXT");
+            _vkCreateMicromapEXT_fnptr = (delegate* unmanaged<VkDevice, VkMicromapCreateInfoEXT*, VkAllocationCallbacks*, VkMicromapEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateMicromapEXT");
             return _vkCreateMicromapEXT_fnptr(device, pCreateInfo, pAllocator, pMicromap);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkMicromapBuildInfoEXT*, void> _vkCmdBuildMicromapsEXT_fnptr = &vkCmdBuildMicromapsEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkMicromapBuildInfoEXT*, void> _vkCmdBuildMicromapsEXT_fnptr = &vkCmdBuildMicromapsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBuildMicromapsEXT_Lazy(IntPtr commandBuffer, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
+        private static void vkCmdBuildMicromapsEXT_Lazy(VkCommandBuffer commandBuffer, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
-            _vkCmdBuildMicromapsEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkMicromapBuildInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildMicromapsEXT");
+            _vkCmdBuildMicromapsEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkMicromapBuildInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBuildMicromapsEXT");
             _vkCmdBuildMicromapsEXT_fnptr(commandBuffer, infoCount, pInfos);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkMicromapBuildInfoEXT*, VkResult> _vkBuildMicromapsEXT_fnptr = &vkBuildMicromapsEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkMicromapBuildInfoEXT*, VkResult> _vkBuildMicromapsEXT_fnptr = &vkBuildMicromapsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBuildMicromapsEXT_Lazy(IntPtr device, IntPtr deferredOperation, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
+        private static VkResult vkBuildMicromapsEXT_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, uint infoCount, VkMicromapBuildInfoEXT* pInfos)
         {
-            _vkBuildMicromapsEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkMicromapBuildInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkBuildMicromapsEXT");
+            _vkBuildMicromapsEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, uint, VkMicromapBuildInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkBuildMicromapsEXT");
             return _vkBuildMicromapsEXT_fnptr(device, deferredOperation, infoCount, pInfos);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyMicromapEXT_fnptr = &vkDestroyMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMicromapEXT, VkAllocationCallbacks*, void> _vkDestroyMicromapEXT_fnptr = &vkDestroyMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyMicromapEXT_Lazy(IntPtr device, IntPtr micromap, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyMicromapEXT_Lazy(VkDevice device, VkMicromapEXT micromap, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyMicromapEXT");
+            _vkDestroyMicromapEXT_fnptr = (delegate* unmanaged<VkDevice, VkMicromapEXT, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyMicromapEXT");
             _vkDestroyMicromapEXT_fnptr(device, micromap, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyMicromapInfoEXT*, void> _vkCmdCopyMicromapEXT_fnptr = &vkCmdCopyMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyMicromapInfoEXT*, void> _vkCmdCopyMicromapEXT_fnptr = &vkCmdCopyMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMicromapEXT_Lazy(IntPtr commandBuffer, VkCopyMicromapInfoEXT* pInfo)
+        private static void vkCmdCopyMicromapEXT_Lazy(VkCommandBuffer commandBuffer, VkCopyMicromapInfoEXT* pInfo)
         {
-            _vkCmdCopyMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyMicromapInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMicromapEXT");
+            _vkCmdCopyMicromapEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyMicromapInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMicromapEXT");
             _vkCmdCopyMicromapEXT_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyMicromapInfoEXT*, VkResult> _vkCopyMicromapEXT_fnptr = &vkCopyMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMicromapInfoEXT*, VkResult> _vkCopyMicromapEXT_fnptr = &vkCopyMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyMicromapEXT_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyMicromapInfoEXT* pInfo)
+        private static VkResult vkCopyMicromapEXT_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMicromapInfoEXT* pInfo)
         {
-            _vkCopyMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyMicromapInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMicromapEXT");
+            _vkCopyMicromapEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMicromapInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMicromapEXT");
             return _vkCopyMicromapEXT_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyMicromapToMemoryInfoEXT*, void> _vkCmdCopyMicromapToMemoryEXT_fnptr = &vkCmdCopyMicromapToMemoryEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyMicromapToMemoryInfoEXT*, void> _vkCmdCopyMicromapToMemoryEXT_fnptr = &vkCmdCopyMicromapToMemoryEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMicromapToMemoryEXT_Lazy(IntPtr commandBuffer, VkCopyMicromapToMemoryInfoEXT* pInfo)
+        private static void vkCmdCopyMicromapToMemoryEXT_Lazy(VkCommandBuffer commandBuffer, VkCopyMicromapToMemoryInfoEXT* pInfo)
         {
-            _vkCmdCopyMicromapToMemoryEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyMicromapToMemoryInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMicromapToMemoryEXT");
+            _vkCmdCopyMicromapToMemoryEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyMicromapToMemoryInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMicromapToMemoryEXT");
             _vkCmdCopyMicromapToMemoryEXT_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyMicromapToMemoryInfoEXT*, VkResult> _vkCopyMicromapToMemoryEXT_fnptr = &vkCopyMicromapToMemoryEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMicromapToMemoryInfoEXT*, VkResult> _vkCopyMicromapToMemoryEXT_fnptr = &vkCopyMicromapToMemoryEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyMicromapToMemoryEXT_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyMicromapToMemoryInfoEXT* pInfo)
+        private static VkResult vkCopyMicromapToMemoryEXT_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMicromapToMemoryInfoEXT* pInfo)
         {
-            _vkCopyMicromapToMemoryEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyMicromapToMemoryInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMicromapToMemoryEXT");
+            _vkCopyMicromapToMemoryEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMicromapToMemoryInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMicromapToMemoryEXT");
             return _vkCopyMicromapToMemoryEXT_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkCopyMemoryToMicromapInfoEXT*, void> _vkCmdCopyMemoryToMicromapEXT_fnptr = &vkCmdCopyMemoryToMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkCopyMemoryToMicromapInfoEXT*, void> _vkCmdCopyMemoryToMicromapEXT_fnptr = &vkCmdCopyMemoryToMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdCopyMemoryToMicromapEXT_Lazy(IntPtr commandBuffer, VkCopyMemoryToMicromapInfoEXT* pInfo)
+        private static void vkCmdCopyMemoryToMicromapEXT_Lazy(VkCommandBuffer commandBuffer, VkCopyMemoryToMicromapInfoEXT* pInfo)
         {
-            _vkCmdCopyMemoryToMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, VkCopyMemoryToMicromapInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToMicromapEXT");
+            _vkCmdCopyMemoryToMicromapEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkCopyMemoryToMicromapInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdCopyMemoryToMicromapEXT");
             _vkCmdCopyMemoryToMicromapEXT_fnptr(commandBuffer, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkCopyMemoryToMicromapInfoEXT*, VkResult> _vkCopyMemoryToMicromapEXT_fnptr = &vkCopyMemoryToMicromapEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMemoryToMicromapInfoEXT*, VkResult> _vkCopyMemoryToMicromapEXT_fnptr = &vkCopyMemoryToMicromapEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCopyMemoryToMicromapEXT_Lazy(IntPtr device, IntPtr deferredOperation, VkCopyMemoryToMicromapInfoEXT* pInfo)
+        private static VkResult vkCopyMemoryToMicromapEXT_Lazy(VkDevice device, VkDeferredOperationKHR deferredOperation, VkCopyMemoryToMicromapInfoEXT* pInfo)
         {
-            _vkCopyMemoryToMicromapEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkCopyMemoryToMicromapInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToMicromapEXT");
+            _vkCopyMemoryToMicromapEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeferredOperationKHR, VkCopyMemoryToMicromapInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCopyMemoryToMicromapEXT");
             return _vkCopyMemoryToMicromapEXT_fnptr(device, deferredOperation, pInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void> _vkCmdWriteMicromapsPropertiesEXT_fnptr = &vkCmdWriteMicromapsPropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkMicromapEXT*, VkQueryType, VkQueryPool, uint, void> _vkCmdWriteMicromapsPropertiesEXT_fnptr = &vkCmdWriteMicromapsPropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteMicromapsPropertiesEXT_Lazy(IntPtr commandBuffer, uint micromapCount, IntPtr* pMicromaps, VkQueryType queryType, IntPtr queryPool, uint firstQuery)
+        private static void vkCmdWriteMicromapsPropertiesEXT_Lazy(VkCommandBuffer commandBuffer, uint micromapCount, VkMicromapEXT* pMicromaps, VkQueryType queryType, VkQueryPool queryPool, uint firstQuery)
         {
-            _vkCmdWriteMicromapsPropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, IntPtr, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteMicromapsPropertiesEXT");
+            _vkCmdWriteMicromapsPropertiesEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkMicromapEXT*, VkQueryType, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteMicromapsPropertiesEXT");
             _vkCmdWriteMicromapsPropertiesEXT_fnptr(commandBuffer, micromapCount, pMicromaps, queryType, queryPool, firstQuery);
         }
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteMicromapsPropertiesEXT_fnptr = &vkWriteMicromapsPropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkMicromapEXT*, VkQueryType, nuint, void*, nuint, VkResult> _vkWriteMicromapsPropertiesEXT_fnptr = &vkWriteMicromapsPropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkWriteMicromapsPropertiesEXT_Lazy(IntPtr device, uint micromapCount, IntPtr* pMicromaps, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
+        private static VkResult vkWriteMicromapsPropertiesEXT_Lazy(VkDevice device, uint micromapCount, VkMicromapEXT* pMicromaps, VkQueryType queryType, nuint dataSize, void* pData, nuint stride)
         {
-            _vkWriteMicromapsPropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetInstanceProcAddress("vkWriteMicromapsPropertiesEXT");
+            _vkWriteMicromapsPropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkMicromapEXT*, VkQueryType, nuint, void*, nuint, VkResult>)VKLoader.GetInstanceProcAddress("vkWriteMicromapsPropertiesEXT");
             return _vkWriteMicromapsPropertiesEXT_fnptr(device, micromapCount, pMicromaps, queryType, dataSize, pData, stride);
         }
-        internal static delegate* unmanaged<IntPtr, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceMicromapCompatibilityEXT_fnptr = &vkGetDeviceMicromapCompatibilityEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void> _vkGetDeviceMicromapCompatibilityEXT_fnptr = &vkGetDeviceMicromapCompatibilityEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceMicromapCompatibilityEXT_Lazy(IntPtr device, VkMicromapVersionInfoEXT* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
+        private static void vkGetDeviceMicromapCompatibilityEXT_Lazy(VkDevice device, VkMicromapVersionInfoEXT* pVersionInfo, VkAccelerationStructureCompatibilityKHR* pCompatibility)
         {
-            _vkGetDeviceMicromapCompatibilityEXT_fnptr = (delegate* unmanaged<IntPtr, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceMicromapCompatibilityEXT");
+            _vkGetDeviceMicromapCompatibilityEXT_fnptr = (delegate* unmanaged<VkDevice, VkMicromapVersionInfoEXT*, VkAccelerationStructureCompatibilityKHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceMicromapCompatibilityEXT");
             _vkGetDeviceMicromapCompatibilityEXT_fnptr(device, pVersionInfo, pCompatibility);
         }
-        internal static delegate* unmanaged<IntPtr, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void> _vkGetMicromapBuildSizesEXT_fnptr = &vkGetMicromapBuildSizesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void> _vkGetMicromapBuildSizesEXT_fnptr = &vkGetMicromapBuildSizesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetMicromapBuildSizesEXT_Lazy(IntPtr device, VkAccelerationStructureBuildTypeKHR buildType, VkMicromapBuildInfoEXT* pBuildInfo, VkMicromapBuildSizesInfoEXT* pSizeInfo)
+        private static void vkGetMicromapBuildSizesEXT_Lazy(VkDevice device, VkAccelerationStructureBuildTypeKHR buildType, VkMicromapBuildInfoEXT* pBuildInfo, VkMicromapBuildSizesInfoEXT* pSizeInfo)
         {
-            _vkGetMicromapBuildSizesEXT_fnptr = (delegate* unmanaged<IntPtr, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetMicromapBuildSizesEXT");
+            _vkGetMicromapBuildSizesEXT_fnptr = (delegate* unmanaged<VkDevice, VkAccelerationStructureBuildTypeKHR, VkMicromapBuildInfoEXT*, VkMicromapBuildSizesInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetMicromapBuildSizesEXT");
             _vkGetMicromapBuildSizesEXT_fnptr(device, buildType, pBuildInfo, pSizeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkShaderModuleIdentifierEXT*, void> _vkGetShaderModuleIdentifierEXT_fnptr = &vkGetShaderModuleIdentifierEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderModule, VkShaderModuleIdentifierEXT*, void> _vkGetShaderModuleIdentifierEXT_fnptr = &vkGetShaderModuleIdentifierEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetShaderModuleIdentifierEXT_Lazy(IntPtr device, IntPtr shaderModule, VkShaderModuleIdentifierEXT* pIdentifier)
+        private static void vkGetShaderModuleIdentifierEXT_Lazy(VkDevice device, VkShaderModule shaderModule, VkShaderModuleIdentifierEXT* pIdentifier)
         {
-            _vkGetShaderModuleIdentifierEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkShaderModuleIdentifierEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetShaderModuleIdentifierEXT");
+            _vkGetShaderModuleIdentifierEXT_fnptr = (delegate* unmanaged<VkDevice, VkShaderModule, VkShaderModuleIdentifierEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetShaderModuleIdentifierEXT");
             _vkGetShaderModuleIdentifierEXT_fnptr(device, shaderModule, pIdentifier);
         }
-        internal static delegate* unmanaged<IntPtr, VkShaderModuleCreateInfo*, VkShaderModuleIdentifierEXT*, void> _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr = &vkGetShaderModuleCreateInfoIdentifierEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderModuleCreateInfo*, VkShaderModuleIdentifierEXT*, void> _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr = &vkGetShaderModuleCreateInfoIdentifierEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetShaderModuleCreateInfoIdentifierEXT_Lazy(IntPtr device, VkShaderModuleCreateInfo* pCreateInfo, VkShaderModuleIdentifierEXT* pIdentifier)
+        private static void vkGetShaderModuleCreateInfoIdentifierEXT_Lazy(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkShaderModuleIdentifierEXT* pIdentifier)
         {
-            _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr = (delegate* unmanaged<IntPtr, VkShaderModuleCreateInfo*, VkShaderModuleIdentifierEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetShaderModuleCreateInfoIdentifierEXT");
+            _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr = (delegate* unmanaged<VkDevice, VkShaderModuleCreateInfo*, VkShaderModuleIdentifierEXT*, void>)VKLoader.GetInstanceProcAddress("vkGetShaderModuleCreateInfoIdentifierEXT");
             _vkGetShaderModuleCreateInfoIdentifierEXT_fnptr(device, pCreateInfo, pIdentifier);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkImageSubresource2KHR*, VkSubresourceLayout2KHR*, void> _vkGetImageSubresourceLayout2KHR_fnptr = &vkGetImageSubresourceLayout2KHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkImage, VkImageSubresource2KHR*, VkSubresourceLayout2KHR*, void> _vkGetImageSubresourceLayout2KHR_fnptr = &vkGetImageSubresourceLayout2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetImageSubresourceLayout2KHR_Lazy(IntPtr device, IntPtr image, VkImageSubresource2KHR* pSubresource, VkSubresourceLayout2KHR* pLayout)
+        private static void vkGetImageSubresourceLayout2KHR_Lazy(VkDevice device, VkImage image, VkImageSubresource2KHR* pSubresource, VkSubresourceLayout2KHR* pLayout)
         {
-            _vkGetImageSubresourceLayout2KHR_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkImageSubresource2KHR*, VkSubresourceLayout2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSubresourceLayout2KHR");
+            _vkGetImageSubresourceLayout2KHR_fnptr = (delegate* unmanaged<VkDevice, VkImage, VkImageSubresource2KHR*, VkSubresourceLayout2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetImageSubresourceLayout2KHR");
             _vkGetImageSubresourceLayout2KHR_fnptr(device, image, pSubresource, pLayout);
         }
-        internal static delegate* unmanaged<IntPtr, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult> _vkGetPipelinePropertiesEXT_fnptr = &vkGetPipelinePropertiesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult> _vkGetPipelinePropertiesEXT_fnptr = &vkGetPipelinePropertiesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPipelinePropertiesEXT_Lazy(IntPtr device, VkPipelineInfoEXT* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
+        private static VkResult vkGetPipelinePropertiesEXT_Lazy(VkDevice device, VkPipelineInfoEXT* pPipelineInfo, VkBaseOutStructure* pPipelineProperties)
         {
-            _vkGetPipelinePropertiesEXT_fnptr = (delegate* unmanaged<IntPtr, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelinePropertiesEXT");
+            _vkGetPipelinePropertiesEXT_fnptr = (delegate* unmanaged<VkDevice, VkPipelineInfoEXT*, VkBaseOutStructure*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelinePropertiesEXT");
             return _vkGetPipelinePropertiesEXT_fnptr(device, pPipelineInfo, pPipelineProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkExportMetalObjectsInfoEXT*, void> _vkExportMetalObjectsEXT_fnptr = &vkExportMetalObjectsEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkExportMetalObjectsInfoEXT*, void> _vkExportMetalObjectsEXT_fnptr = &vkExportMetalObjectsEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkExportMetalObjectsEXT_Lazy(IntPtr device, VkExportMetalObjectsInfoEXT* pMetalObjectsInfo)
+        private static void vkExportMetalObjectsEXT_Lazy(VkDevice device, VkExportMetalObjectsInfoEXT* pMetalObjectsInfo)
         {
-            _vkExportMetalObjectsEXT_fnptr = (delegate* unmanaged<IntPtr, VkExportMetalObjectsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkExportMetalObjectsEXT");
+            _vkExportMetalObjectsEXT_fnptr = (delegate* unmanaged<VkDevice, VkExportMetalObjectsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkExportMetalObjectsEXT");
             _vkExportMetalObjectsEXT_fnptr(device, pMetalObjectsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint*, VkTilePropertiesQCOM*, VkResult> _vkGetFramebufferTilePropertiesQCOM_fnptr = &vkGetFramebufferTilePropertiesQCOM_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkFramebuffer, uint*, VkTilePropertiesQCOM*, VkResult> _vkGetFramebufferTilePropertiesQCOM_fnptr = &vkGetFramebufferTilePropertiesQCOM_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetFramebufferTilePropertiesQCOM_Lazy(IntPtr device, IntPtr framebuffer, uint* pPropertiesCount, VkTilePropertiesQCOM* pProperties)
+        private static VkResult vkGetFramebufferTilePropertiesQCOM_Lazy(VkDevice device, VkFramebuffer framebuffer, uint* pPropertiesCount, VkTilePropertiesQCOM* pProperties)
         {
-            _vkGetFramebufferTilePropertiesQCOM_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint*, VkTilePropertiesQCOM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFramebufferTilePropertiesQCOM");
+            _vkGetFramebufferTilePropertiesQCOM_fnptr = (delegate* unmanaged<VkDevice, VkFramebuffer, uint*, VkTilePropertiesQCOM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetFramebufferTilePropertiesQCOM");
             return _vkGetFramebufferTilePropertiesQCOM_fnptr(device, framebuffer, pPropertiesCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderingInfo*, VkTilePropertiesQCOM*, VkResult> _vkGetDynamicRenderingTilePropertiesQCOM_fnptr = &vkGetDynamicRenderingTilePropertiesQCOM_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkRenderingInfo*, VkTilePropertiesQCOM*, VkResult> _vkGetDynamicRenderingTilePropertiesQCOM_fnptr = &vkGetDynamicRenderingTilePropertiesQCOM_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDynamicRenderingTilePropertiesQCOM_Lazy(IntPtr device, VkRenderingInfo* pRenderingInfo, VkTilePropertiesQCOM* pProperties)
+        private static VkResult vkGetDynamicRenderingTilePropertiesQCOM_Lazy(VkDevice device, VkRenderingInfo* pRenderingInfo, VkTilePropertiesQCOM* pProperties)
         {
-            _vkGetDynamicRenderingTilePropertiesQCOM_fnptr = (delegate* unmanaged<IntPtr, VkRenderingInfo*, VkTilePropertiesQCOM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDynamicRenderingTilePropertiesQCOM");
+            _vkGetDynamicRenderingTilePropertiesQCOM_fnptr = (delegate* unmanaged<VkDevice, VkRenderingInfo*, VkTilePropertiesQCOM*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDynamicRenderingTilePropertiesQCOM");
             return _vkGetDynamicRenderingTilePropertiesQCOM_fnptr(device, pRenderingInfo, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkOpticalFlowImageFormatInfoNV*, uint*, VkOpticalFlowImageFormatPropertiesNV*, VkResult> _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr = &vkGetPhysicalDeviceOpticalFlowImageFormatsNV_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, VkOpticalFlowImageFormatInfoNV*, uint*, VkOpticalFlowImageFormatPropertiesNV*, VkResult> _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr = &vkGetPhysicalDeviceOpticalFlowImageFormatsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceOpticalFlowImageFormatsNV_Lazy(IntPtr physicalDevice, VkOpticalFlowImageFormatInfoNV* pOpticalFlowImageFormatInfo, uint* pFormatCount, VkOpticalFlowImageFormatPropertiesNV* pImageFormatProperties)
+        private static VkResult vkGetPhysicalDeviceOpticalFlowImageFormatsNV_Lazy(VkPhysicalDevice physicalDevice, VkOpticalFlowImageFormatInfoNV* pOpticalFlowImageFormatInfo, uint* pFormatCount, VkOpticalFlowImageFormatPropertiesNV* pImageFormatProperties)
         {
-            _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr = (delegate* unmanaged<IntPtr, VkOpticalFlowImageFormatInfoNV*, uint*, VkOpticalFlowImageFormatPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceOpticalFlowImageFormatsNV");
+            _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr = (delegate* unmanaged<VkPhysicalDevice, VkOpticalFlowImageFormatInfoNV*, uint*, VkOpticalFlowImageFormatPropertiesNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceOpticalFlowImageFormatsNV");
             return _vkGetPhysicalDeviceOpticalFlowImageFormatsNV_fnptr(physicalDevice, pOpticalFlowImageFormatInfo, pFormatCount, pImageFormatProperties);
         }
-        internal static delegate* unmanaged<IntPtr, VkOpticalFlowSessionCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateOpticalFlowSessionNV_fnptr = &vkCreateOpticalFlowSessionNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkOpticalFlowSessionCreateInfoNV*, VkAllocationCallbacks*, VkOpticalFlowSessionNV*, VkResult> _vkCreateOpticalFlowSessionNV_fnptr = &vkCreateOpticalFlowSessionNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateOpticalFlowSessionNV_Lazy(IntPtr device, VkOpticalFlowSessionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, IntPtr* pSession)
+        private static VkResult vkCreateOpticalFlowSessionNV_Lazy(VkDevice device, VkOpticalFlowSessionCreateInfoNV* pCreateInfo, VkAllocationCallbacks* pAllocator, VkOpticalFlowSessionNV* pSession)
         {
-            _vkCreateOpticalFlowSessionNV_fnptr = (delegate* unmanaged<IntPtr, VkOpticalFlowSessionCreateInfoNV*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateOpticalFlowSessionNV");
+            _vkCreateOpticalFlowSessionNV_fnptr = (delegate* unmanaged<VkDevice, VkOpticalFlowSessionCreateInfoNV*, VkAllocationCallbacks*, VkOpticalFlowSessionNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateOpticalFlowSessionNV");
             return _vkCreateOpticalFlowSessionNV_fnptr(device, pCreateInfo, pAllocator, pSession);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyOpticalFlowSessionNV_fnptr = &vkDestroyOpticalFlowSessionNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkOpticalFlowSessionNV, VkAllocationCallbacks*, void> _vkDestroyOpticalFlowSessionNV_fnptr = &vkDestroyOpticalFlowSessionNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyOpticalFlowSessionNV_Lazy(IntPtr device, IntPtr session, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyOpticalFlowSessionNV_Lazy(VkDevice device, VkOpticalFlowSessionNV session, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyOpticalFlowSessionNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyOpticalFlowSessionNV");
+            _vkDestroyOpticalFlowSessionNV_fnptr = (delegate* unmanaged<VkDevice, VkOpticalFlowSessionNV, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyOpticalFlowSessionNV");
             _vkDestroyOpticalFlowSessionNV_fnptr(device, session, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkOpticalFlowSessionBindingPointNV, IntPtr, VkImageLayout, VkResult> _vkBindOpticalFlowSessionImageNV_fnptr = &vkBindOpticalFlowSessionImageNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkOpticalFlowSessionNV, VkOpticalFlowSessionBindingPointNV, VkImageView, VkImageLayout, VkResult> _vkBindOpticalFlowSessionImageNV_fnptr = &vkBindOpticalFlowSessionImageNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkBindOpticalFlowSessionImageNV_Lazy(IntPtr device, IntPtr session, VkOpticalFlowSessionBindingPointNV bindingPoint, IntPtr view, VkImageLayout layout)
+        private static VkResult vkBindOpticalFlowSessionImageNV_Lazy(VkDevice device, VkOpticalFlowSessionNV session, VkOpticalFlowSessionBindingPointNV bindingPoint, VkImageView view, VkImageLayout layout)
         {
-            _vkBindOpticalFlowSessionImageNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkOpticalFlowSessionBindingPointNV, IntPtr, VkImageLayout, VkResult>)VKLoader.GetInstanceProcAddress("vkBindOpticalFlowSessionImageNV");
+            _vkBindOpticalFlowSessionImageNV_fnptr = (delegate* unmanaged<VkDevice, VkOpticalFlowSessionNV, VkOpticalFlowSessionBindingPointNV, VkImageView, VkImageLayout, VkResult>)VKLoader.GetInstanceProcAddress("vkBindOpticalFlowSessionImageNV");
             return _vkBindOpticalFlowSessionImageNV_fnptr(device, session, bindingPoint, view, layout);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkOpticalFlowExecuteInfoNV*, void> _vkCmdOpticalFlowExecuteNV_fnptr = &vkCmdOpticalFlowExecuteNV_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkOpticalFlowSessionNV, VkOpticalFlowExecuteInfoNV*, void> _vkCmdOpticalFlowExecuteNV_fnptr = &vkCmdOpticalFlowExecuteNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdOpticalFlowExecuteNV_Lazy(IntPtr commandBuffer, IntPtr session, VkOpticalFlowExecuteInfoNV* pExecuteInfo)
+        private static void vkCmdOpticalFlowExecuteNV_Lazy(VkCommandBuffer commandBuffer, VkOpticalFlowSessionNV session, VkOpticalFlowExecuteInfoNV* pExecuteInfo)
         {
-            _vkCmdOpticalFlowExecuteNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkOpticalFlowExecuteInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdOpticalFlowExecuteNV");
+            _vkCmdOpticalFlowExecuteNV_fnptr = (delegate* unmanaged<VkCommandBuffer, VkOpticalFlowSessionNV, VkOpticalFlowExecuteInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkCmdOpticalFlowExecuteNV");
             _vkCmdOpticalFlowExecuteNV_fnptr(commandBuffer, session, pExecuteInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult> _vkGetDeviceFaultInfoEXT_fnptr = &vkGetDeviceFaultInfoEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult> _vkGetDeviceFaultInfoEXT_fnptr = &vkGetDeviceFaultInfoEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetDeviceFaultInfoEXT_Lazy(IntPtr device, VkDeviceFaultCountsEXT* pFaultCounts, VkDeviceFaultInfoEXT* pFaultInfo)
+        private static VkResult vkGetDeviceFaultInfoEXT_Lazy(VkDevice device, VkDeviceFaultCountsEXT* pFaultCounts, VkDeviceFaultInfoEXT* pFaultInfo)
         {
-            _vkGetDeviceFaultInfoEXT_fnptr = (delegate* unmanaged<IntPtr, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceFaultInfoEXT");
+            _vkGetDeviceFaultInfoEXT_fnptr = (delegate* unmanaged<VkDevice, VkDeviceFaultCountsEXT*, VkDeviceFaultInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetDeviceFaultInfoEXT");
             return _vkGetDeviceFaultInfoEXT_fnptr(device, pFaultCounts, pFaultInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDepthBiasInfoEXT*, void> _vkCmdSetDepthBias2EXT_fnptr = &vkCmdSetDepthBias2EXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkDepthBiasInfoEXT*, void> _vkCmdSetDepthBias2EXT_fnptr = &vkCmdSetDepthBias2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDepthBias2EXT_Lazy(IntPtr commandBuffer, VkDepthBiasInfoEXT* pDepthBiasInfo)
+        private static void vkCmdSetDepthBias2EXT_Lazy(VkCommandBuffer commandBuffer, VkDepthBiasInfoEXT* pDepthBiasInfo)
         {
-            _vkCmdSetDepthBias2EXT_fnptr = (delegate* unmanaged<IntPtr, VkDepthBiasInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBias2EXT");
+            _vkCmdSetDepthBias2EXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkDepthBiasInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDepthBias2EXT");
             _vkCmdSetDepthBias2EXT_fnptr(commandBuffer, pDepthBiasInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkReleaseSwapchainImagesInfoEXT*, VkResult> _vkReleaseSwapchainImagesEXT_fnptr = &vkReleaseSwapchainImagesEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoEXT*, VkResult> _vkReleaseSwapchainImagesEXT_fnptr = &vkReleaseSwapchainImagesEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkReleaseSwapchainImagesEXT_Lazy(IntPtr device, VkReleaseSwapchainImagesInfoEXT* pReleaseInfo)
+        private static VkResult vkReleaseSwapchainImagesEXT_Lazy(VkDevice device, VkReleaseSwapchainImagesInfoEXT* pReleaseInfo)
         {
-            _vkReleaseSwapchainImagesEXT_fnptr = (delegate* unmanaged<IntPtr, VkReleaseSwapchainImagesInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseSwapchainImagesEXT");
+            _vkReleaseSwapchainImagesEXT_fnptr = (delegate* unmanaged<VkDevice, VkReleaseSwapchainImagesInfoEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseSwapchainImagesEXT");
             return _vkReleaseSwapchainImagesEXT_fnptr(device, pReleaseInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkDeviceImageSubresourceInfoKHR*, VkSubresourceLayout2KHR*, void> _vkGetDeviceImageSubresourceLayoutKHR_fnptr = &vkGetDeviceImageSubresourceLayoutKHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkDeviceImageSubresourceInfoKHR*, VkSubresourceLayout2KHR*, void> _vkGetDeviceImageSubresourceLayoutKHR_fnptr = &vkGetDeviceImageSubresourceLayoutKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetDeviceImageSubresourceLayoutKHR_Lazy(IntPtr device, VkDeviceImageSubresourceInfoKHR* pInfo, VkSubresourceLayout2KHR* pLayout)
+        private static void vkGetDeviceImageSubresourceLayoutKHR_Lazy(VkDevice device, VkDeviceImageSubresourceInfoKHR* pInfo, VkSubresourceLayout2KHR* pLayout)
         {
-            _vkGetDeviceImageSubresourceLayoutKHR_fnptr = (delegate* unmanaged<IntPtr, VkDeviceImageSubresourceInfoKHR*, VkSubresourceLayout2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageSubresourceLayoutKHR");
+            _vkGetDeviceImageSubresourceLayoutKHR_fnptr = (delegate* unmanaged<VkDevice, VkDeviceImageSubresourceInfoKHR*, VkSubresourceLayout2KHR*, void>)VKLoader.GetInstanceProcAddress("vkGetDeviceImageSubresourceLayoutKHR");
             _vkGetDeviceImageSubresourceLayoutKHR_fnptr(device, pInfo, pLayout);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryMapInfoKHR*, void**, VkResult> _vkMapMemory2KHR_fnptr = &vkMapMemory2KHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryMapInfoKHR*, void**, VkResult> _vkMapMemory2KHR_fnptr = &vkMapMemory2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkMapMemory2KHR_Lazy(IntPtr device, VkMemoryMapInfoKHR* pMemoryMapInfo, void** ppData)
+        private static VkResult vkMapMemory2KHR_Lazy(VkDevice device, VkMemoryMapInfoKHR* pMemoryMapInfo, void** ppData)
         {
-            _vkMapMemory2KHR_fnptr = (delegate* unmanaged<IntPtr, VkMemoryMapInfoKHR*, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkMapMemory2KHR");
+            _vkMapMemory2KHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryMapInfoKHR*, void**, VkResult>)VKLoader.GetInstanceProcAddress("vkMapMemory2KHR");
             return _vkMapMemory2KHR_fnptr(device, pMemoryMapInfo, ppData);
         }
-        internal static delegate* unmanaged<IntPtr, VkMemoryUnmapInfoKHR*, VkResult> _vkUnmapMemory2KHR_fnptr = &vkUnmapMemory2KHR_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkMemoryUnmapInfoKHR*, VkResult> _vkUnmapMemory2KHR_fnptr = &vkUnmapMemory2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkUnmapMemory2KHR_Lazy(IntPtr device, VkMemoryUnmapInfoKHR* pMemoryUnmapInfo)
+        private static VkResult vkUnmapMemory2KHR_Lazy(VkDevice device, VkMemoryUnmapInfoKHR* pMemoryUnmapInfo)
         {
-            _vkUnmapMemory2KHR_fnptr = (delegate* unmanaged<IntPtr, VkMemoryUnmapInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkUnmapMemory2KHR");
+            _vkUnmapMemory2KHR_fnptr = (delegate* unmanaged<VkDevice, VkMemoryUnmapInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkUnmapMemory2KHR");
             return _vkUnmapMemory2KHR_fnptr(device, pMemoryUnmapInfo);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkShaderCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateShadersEXT_fnptr = &vkCreateShadersEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, uint, VkShaderCreateInfoEXT*, VkAllocationCallbacks*, VkShaderEXT*, VkResult> _vkCreateShadersEXT_fnptr = &vkCreateShadersEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateShadersEXT_Lazy(IntPtr device, uint createInfoCount, VkShaderCreateInfoEXT* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pShaders)
+        private static VkResult vkCreateShadersEXT_Lazy(VkDevice device, uint createInfoCount, VkShaderCreateInfoEXT* pCreateInfos, VkAllocationCallbacks* pAllocator, VkShaderEXT* pShaders)
         {
-            _vkCreateShadersEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkShaderCreateInfoEXT*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateShadersEXT");
+            _vkCreateShadersEXT_fnptr = (delegate* unmanaged<VkDevice, uint, VkShaderCreateInfoEXT*, VkAllocationCallbacks*, VkShaderEXT*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateShadersEXT");
             return _vkCreateShadersEXT_fnptr(device, createInfoCount, pCreateInfos, pAllocator, pShaders);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void> _vkDestroyShaderEXT_fnptr = &vkDestroyShaderEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderEXT, VkAllocationCallbacks*, void> _vkDestroyShaderEXT_fnptr = &vkDestroyShaderEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkDestroyShaderEXT_Lazy(IntPtr device, IntPtr shader, VkAllocationCallbacks* pAllocator)
+        private static void vkDestroyShaderEXT_Lazy(VkDevice device, VkShaderEXT shader, VkAllocationCallbacks* pAllocator)
         {
-            _vkDestroyShaderEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyShaderEXT");
+            _vkDestroyShaderEXT_fnptr = (delegate* unmanaged<VkDevice, VkShaderEXT, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyShaderEXT");
             _vkDestroyShaderEXT_fnptr(device, shader, pAllocator);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult> _vkGetShaderBinaryDataEXT_fnptr = &vkGetShaderBinaryDataEXT_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkShaderEXT, nuint*, void*, VkResult> _vkGetShaderBinaryDataEXT_fnptr = &vkGetShaderBinaryDataEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetShaderBinaryDataEXT_Lazy(IntPtr device, IntPtr shader, nuint* pDataSize, void* pData)
+        private static VkResult vkGetShaderBinaryDataEXT_Lazy(VkDevice device, VkShaderEXT shader, nuint* pDataSize, void* pData)
         {
-            _vkGetShaderBinaryDataEXT_fnptr = (delegate* unmanaged<IntPtr, IntPtr, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetShaderBinaryDataEXT");
+            _vkGetShaderBinaryDataEXT_fnptr = (delegate* unmanaged<VkDevice, VkShaderEXT, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetShaderBinaryDataEXT");
             return _vkGetShaderBinaryDataEXT_fnptr(device, shader, pDataSize, pData);
         }
-        internal static delegate* unmanaged<IntPtr, uint, VkShaderStageFlagBits*, IntPtr*, void> _vkCmdBindShadersEXT_fnptr = &vkCmdBindShadersEXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, uint, VkShaderStageFlagBits*, VkShaderEXT*, void> _vkCmdBindShadersEXT_fnptr = &vkCmdBindShadersEXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindShadersEXT_Lazy(IntPtr commandBuffer, uint stageCount, VkShaderStageFlagBits* pStages, IntPtr* pShaders)
+        private static void vkCmdBindShadersEXT_Lazy(VkCommandBuffer commandBuffer, uint stageCount, VkShaderStageFlagBits* pStages, VkShaderEXT* pShaders)
         {
-            _vkCmdBindShadersEXT_fnptr = (delegate* unmanaged<IntPtr, uint, VkShaderStageFlagBits*, IntPtr*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindShadersEXT");
+            _vkCmdBindShadersEXT_fnptr = (delegate* unmanaged<VkCommandBuffer, uint, VkShaderStageFlagBits*, VkShaderEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindShadersEXT");
             _vkCmdBindShadersEXT_fnptr(commandBuffer, stageCount, pStages, pShaders);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr*, VkScreenBufferPropertiesQNX*, VkResult> _vkGetScreenBufferPropertiesQNX_fnptr = &vkGetScreenBufferPropertiesQNX_Lazy;
+        internal static delegate* unmanaged<VkDevice, IntPtr*, VkScreenBufferPropertiesQNX*, VkResult> _vkGetScreenBufferPropertiesQNX_fnptr = &vkGetScreenBufferPropertiesQNX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetScreenBufferPropertiesQNX_Lazy(IntPtr device, IntPtr* buffer, VkScreenBufferPropertiesQNX* pProperties)
+        private static VkResult vkGetScreenBufferPropertiesQNX_Lazy(VkDevice device, IntPtr* buffer, VkScreenBufferPropertiesQNX* pProperties)
         {
-            _vkGetScreenBufferPropertiesQNX_fnptr = (delegate* unmanaged<IntPtr, IntPtr*, VkScreenBufferPropertiesQNX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetScreenBufferPropertiesQNX");
+            _vkGetScreenBufferPropertiesQNX_fnptr = (delegate* unmanaged<VkDevice, IntPtr*, VkScreenBufferPropertiesQNX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetScreenBufferPropertiesQNX");
             return _vkGetScreenBufferPropertiesQNX_fnptr(device, buffer, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = &vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_Lazy;
+        internal static delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult> _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = &vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_Lazy(IntPtr physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesKHR* pProperties)
+        private static VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_Lazy(VkPhysicalDevice physicalDevice, uint* pPropertyCount, VkCooperativeMatrixPropertiesKHR* pProperties)
         {
-            _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = (delegate* unmanaged<IntPtr, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
+            _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr = (delegate* unmanaged<VkPhysicalDevice, uint*, VkCooperativeMatrixPropertiesKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR");
             return _vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR_fnptr(physicalDevice, pPropertyCount, pProperties);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult> _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = &vkGetExecutionGraphPipelineScratchSizeAMDX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult> _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = &vkGetExecutionGraphPipelineScratchSizeAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetExecutionGraphPipelineScratchSizeAMDX_Lazy(IntPtr device, IntPtr executionGraph, VkExecutionGraphPipelineScratchSizeAMDX* pSizeInfo)
+        private static VkResult vkGetExecutionGraphPipelineScratchSizeAMDX_Lazy(VkDevice device, VkPipeline executionGraph, VkExecutionGraphPipelineScratchSizeAMDX* pSizeInfo)
         {
-            _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetExecutionGraphPipelineScratchSizeAMDX");
+            _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkExecutionGraphPipelineScratchSizeAMDX*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetExecutionGraphPipelineScratchSizeAMDX");
             return _vkGetExecutionGraphPipelineScratchSizeAMDX_fnptr(device, executionGraph, pSizeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult> _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr = &vkGetExecutionGraphPipelineNodeIndexAMDX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipeline, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult> _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr = &vkGetExecutionGraphPipelineNodeIndexAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkGetExecutionGraphPipelineNodeIndexAMDX_Lazy(IntPtr device, IntPtr executionGraph, VkPipelineShaderStageNodeCreateInfoAMDX* pNodeInfo, uint* pNodeIndex)
+        private static VkResult vkGetExecutionGraphPipelineNodeIndexAMDX_Lazy(VkDevice device, VkPipeline executionGraph, VkPipelineShaderStageNodeCreateInfoAMDX* pNodeInfo, uint* pNodeIndex)
         {
-            _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetExecutionGraphPipelineNodeIndexAMDX");
+            _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipeline, VkPipelineShaderStageNodeCreateInfoAMDX*, uint*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetExecutionGraphPipelineNodeIndexAMDX");
             return _vkGetExecutionGraphPipelineNodeIndexAMDX_fnptr(device, executionGraph, pNodeInfo, pNodeIndex);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, IntPtr*, VkResult> _vkCreateExecutionGraphPipelinesAMDX_fnptr = &vkCreateExecutionGraphPipelinesAMDX_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateExecutionGraphPipelinesAMDX_fnptr = &vkCreateExecutionGraphPipelinesAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkCreateExecutionGraphPipelinesAMDX_Lazy(IntPtr device, IntPtr pipelineCache, uint createInfoCount, VkExecutionGraphPipelineCreateInfoAMDX* pCreateInfos, VkAllocationCallbacks* pAllocator, IntPtr* pPipelines)
+        private static VkResult vkCreateExecutionGraphPipelinesAMDX_Lazy(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkExecutionGraphPipelineCreateInfoAMDX* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
-            _vkCreateExecutionGraphPipelinesAMDX_fnptr = (delegate* unmanaged<IntPtr, IntPtr, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, IntPtr*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateExecutionGraphPipelinesAMDX");
+            _vkCreateExecutionGraphPipelinesAMDX_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkExecutionGraphPipelineCreateInfoAMDX*, VkAllocationCallbacks*, VkPipeline*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreateExecutionGraphPipelinesAMDX");
             return _vkCreateExecutionGraphPipelinesAMDX_fnptr(device, pipelineCache, createInfoCount, pCreateInfos, pAllocator, pPipelines);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, void> _vkCmdInitializeGraphScratchMemoryAMDX_fnptr = &vkCmdInitializeGraphScratchMemoryAMDX_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, void> _vkCmdInitializeGraphScratchMemoryAMDX_fnptr = &vkCmdInitializeGraphScratchMemoryAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdInitializeGraphScratchMemoryAMDX_Lazy(IntPtr commandBuffer, ulong scratch)
+        private static void vkCmdInitializeGraphScratchMemoryAMDX_Lazy(VkCommandBuffer commandBuffer, ulong scratch)
         {
-            _vkCmdInitializeGraphScratchMemoryAMDX_fnptr = (delegate* unmanaged<IntPtr, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdInitializeGraphScratchMemoryAMDX");
+            _vkCmdInitializeGraphScratchMemoryAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdInitializeGraphScratchMemoryAMDX");
             _vkCmdInitializeGraphScratchMemoryAMDX_fnptr(commandBuffer, scratch);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphAMDX_fnptr = &vkCmdDispatchGraphAMDX_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphAMDX_fnptr = &vkCmdDispatchGraphAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchGraphAMDX_Lazy(IntPtr commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
+        private static void vkCmdDispatchGraphAMDX_Lazy(VkCommandBuffer commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
-            _vkCmdDispatchGraphAMDX_fnptr = (delegate* unmanaged<IntPtr, ulong, VkDispatchGraphCountInfoAMDX*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphAMDX");
+            _vkCmdDispatchGraphAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, VkDispatchGraphCountInfoAMDX*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphAMDX");
             _vkCmdDispatchGraphAMDX_fnptr(commandBuffer, scratch, pCountInfo);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphIndirectAMDX_fnptr = &vkCmdDispatchGraphIndirectAMDX_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, VkDispatchGraphCountInfoAMDX*, void> _vkCmdDispatchGraphIndirectAMDX_fnptr = &vkCmdDispatchGraphIndirectAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchGraphIndirectAMDX_Lazy(IntPtr commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
+        private static void vkCmdDispatchGraphIndirectAMDX_Lazy(VkCommandBuffer commandBuffer, ulong scratch, VkDispatchGraphCountInfoAMDX* pCountInfo)
         {
-            _vkCmdDispatchGraphIndirectAMDX_fnptr = (delegate* unmanaged<IntPtr, ulong, VkDispatchGraphCountInfoAMDX*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphIndirectAMDX");
+            _vkCmdDispatchGraphIndirectAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, VkDispatchGraphCountInfoAMDX*, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphIndirectAMDX");
             _vkCmdDispatchGraphIndirectAMDX_fnptr(commandBuffer, scratch, pCountInfo);
         }
-        internal static delegate* unmanaged<IntPtr, ulong, ulong, void> _vkCmdDispatchGraphIndirectCountAMDX_fnptr = &vkCmdDispatchGraphIndirectCountAMDX_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, ulong, ulong, void> _vkCmdDispatchGraphIndirectCountAMDX_fnptr = &vkCmdDispatchGraphIndirectCountAMDX_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdDispatchGraphIndirectCountAMDX_Lazy(IntPtr commandBuffer, ulong scratch, ulong countInfo)
+        private static void vkCmdDispatchGraphIndirectCountAMDX_Lazy(VkCommandBuffer commandBuffer, ulong scratch, ulong countInfo)
         {
-            _vkCmdDispatchGraphIndirectCountAMDX_fnptr = (delegate* unmanaged<IntPtr, ulong, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphIndirectCountAMDX");
+            _vkCmdDispatchGraphIndirectCountAMDX_fnptr = (delegate* unmanaged<VkCommandBuffer, ulong, ulong, void>)VKLoader.GetInstanceProcAddress("vkCmdDispatchGraphIndirectCountAMDX");
             _vkCmdDispatchGraphIndirectCountAMDX_fnptr(commandBuffer, scratch, countInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkBindDescriptorSetsInfoKHR*, void> _vkCmdBindDescriptorSets2KHR_fnptr = &vkCmdBindDescriptorSets2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBindDescriptorSetsInfoKHR*, void> _vkCmdBindDescriptorSets2KHR_fnptr = &vkCmdBindDescriptorSets2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindDescriptorSets2KHR_Lazy(IntPtr commandBuffer, VkBindDescriptorSetsInfoKHR* pBindDescriptorSetsInfo)
+        private static void vkCmdBindDescriptorSets2KHR_Lazy(VkCommandBuffer commandBuffer, VkBindDescriptorSetsInfoKHR* pBindDescriptorSetsInfo)
         {
-            _vkCmdBindDescriptorSets2KHR_fnptr = (delegate* unmanaged<IntPtr, VkBindDescriptorSetsInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorSets2KHR");
+            _vkCmdBindDescriptorSets2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBindDescriptorSetsInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorSets2KHR");
             _vkCmdBindDescriptorSets2KHR_fnptr(commandBuffer, pBindDescriptorSetsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPushConstantsInfoKHR*, void> _vkCmdPushConstants2KHR_fnptr = &vkCmdPushConstants2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfoKHR*, void> _vkCmdPushConstants2KHR_fnptr = &vkCmdPushConstants2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushConstants2KHR_Lazy(IntPtr commandBuffer, VkPushConstantsInfoKHR* pPushConstantsInfo)
+        private static void vkCmdPushConstants2KHR_Lazy(VkCommandBuffer commandBuffer, VkPushConstantsInfoKHR* pPushConstantsInfo)
         {
-            _vkCmdPushConstants2KHR_fnptr = (delegate* unmanaged<IntPtr, VkPushConstantsInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushConstants2KHR");
+            _vkCmdPushConstants2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushConstantsInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushConstants2KHR");
             _vkCmdPushConstants2KHR_fnptr(commandBuffer, pPushConstantsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPushDescriptorSetInfoKHR*, void> _vkCmdPushDescriptorSet2KHR_fnptr = &vkCmdPushDescriptorSet2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfoKHR*, void> _vkCmdPushDescriptorSet2KHR_fnptr = &vkCmdPushDescriptorSet2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushDescriptorSet2KHR_Lazy(IntPtr commandBuffer, VkPushDescriptorSetInfoKHR* pPushDescriptorSetInfo)
+        private static void vkCmdPushDescriptorSet2KHR_Lazy(VkCommandBuffer commandBuffer, VkPushDescriptorSetInfoKHR* pPushDescriptorSetInfo)
         {
-            _vkCmdPushDescriptorSet2KHR_fnptr = (delegate* unmanaged<IntPtr, VkPushDescriptorSetInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSet2KHR");
+            _vkCmdPushDescriptorSet2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSet2KHR");
             _vkCmdPushDescriptorSet2KHR_fnptr(commandBuffer, pPushDescriptorSetInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkPushDescriptorSetWithTemplateInfoKHR*, void> _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr = &vkCmdPushDescriptorSetWithTemplate2KHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetWithTemplateInfoKHR*, void> _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr = &vkCmdPushDescriptorSetWithTemplate2KHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdPushDescriptorSetWithTemplate2KHR_Lazy(IntPtr commandBuffer, VkPushDescriptorSetWithTemplateInfoKHR* pPushDescriptorSetWithTemplateInfo)
+        private static void vkCmdPushDescriptorSetWithTemplate2KHR_Lazy(VkCommandBuffer commandBuffer, VkPushDescriptorSetWithTemplateInfoKHR* pPushDescriptorSetWithTemplateInfo)
         {
-            _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr = (delegate* unmanaged<IntPtr, VkPushDescriptorSetWithTemplateInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetWithTemplate2KHR");
+            _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPushDescriptorSetWithTemplateInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdPushDescriptorSetWithTemplate2KHR");
             _vkCmdPushDescriptorSetWithTemplate2KHR_fnptr(commandBuffer, pPushDescriptorSetWithTemplateInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkSetDescriptorBufferOffsetsInfoEXT*, void> _vkCmdSetDescriptorBufferOffsets2EXT_fnptr = &vkCmdSetDescriptorBufferOffsets2EXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkSetDescriptorBufferOffsetsInfoEXT*, void> _vkCmdSetDescriptorBufferOffsets2EXT_fnptr = &vkCmdSetDescriptorBufferOffsets2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetDescriptorBufferOffsets2EXT_Lazy(IntPtr commandBuffer, VkSetDescriptorBufferOffsetsInfoEXT* pSetDescriptorBufferOffsetsInfo)
+        private static void vkCmdSetDescriptorBufferOffsets2EXT_Lazy(VkCommandBuffer commandBuffer, VkSetDescriptorBufferOffsetsInfoEXT* pSetDescriptorBufferOffsetsInfo)
         {
-            _vkCmdSetDescriptorBufferOffsets2EXT_fnptr = (delegate* unmanaged<IntPtr, VkSetDescriptorBufferOffsetsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDescriptorBufferOffsets2EXT");
+            _vkCmdSetDescriptorBufferOffsets2EXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkSetDescriptorBufferOffsetsInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetDescriptorBufferOffsets2EXT");
             _vkCmdSetDescriptorBufferOffsets2EXT_fnptr(commandBuffer, pSetDescriptorBufferOffsetsInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkBindDescriptorBufferEmbeddedSamplersInfoEXT*, void> _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr = &vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkBindDescriptorBufferEmbeddedSamplersInfoEXT*, void> _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr = &vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_Lazy(IntPtr commandBuffer, VkBindDescriptorBufferEmbeddedSamplersInfoEXT* pBindDescriptorBufferEmbeddedSamplersInfo)
+        private static void vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_Lazy(VkCommandBuffer commandBuffer, VkBindDescriptorBufferEmbeddedSamplersInfoEXT* pBindDescriptorBufferEmbeddedSamplersInfo)
         {
-            _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr = (delegate* unmanaged<IntPtr, VkBindDescriptorBufferEmbeddedSamplersInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBufferEmbeddedSamplers2EXT");
+            _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr = (delegate* unmanaged<VkCommandBuffer, VkBindDescriptorBufferEmbeddedSamplersInfoEXT*, void>)VKLoader.GetInstanceProcAddress("vkCmdBindDescriptorBufferEmbeddedSamplers2EXT");
             _vkCmdBindDescriptorBufferEmbeddedSamplers2EXT_fnptr(commandBuffer, pBindDescriptorBufferEmbeddedSamplersInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkLatencySleepModeInfoNV*, VkResult> _vkSetLatencySleepModeNV_fnptr = &vkSetLatencySleepModeNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkLatencySleepModeInfoNV*, VkResult> _vkSetLatencySleepModeNV_fnptr = &vkSetLatencySleepModeNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkSetLatencySleepModeNV_Lazy(IntPtr device, IntPtr swapchain, VkLatencySleepModeInfoNV* pSleepModeInfo)
+        private static VkResult vkSetLatencySleepModeNV_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkLatencySleepModeInfoNV* pSleepModeInfo)
         {
-            _vkSetLatencySleepModeNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkLatencySleepModeInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetLatencySleepModeNV");
+            _vkSetLatencySleepModeNV_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkLatencySleepModeInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkSetLatencySleepModeNV");
             return _vkSetLatencySleepModeNV_fnptr(device, swapchain, pSleepModeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkLatencySleepInfoNV*, VkResult> _vkLatencySleepNV_fnptr = &vkLatencySleepNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkLatencySleepInfoNV*, VkResult> _vkLatencySleepNV_fnptr = &vkLatencySleepNV_Lazy;
         [UnmanagedCallersOnly]
-        private static VkResult vkLatencySleepNV_Lazy(IntPtr device, IntPtr swapchain, VkLatencySleepInfoNV* pSleepInfo)
+        private static VkResult vkLatencySleepNV_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkLatencySleepInfoNV* pSleepInfo)
         {
-            _vkLatencySleepNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkLatencySleepInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkLatencySleepNV");
+            _vkLatencySleepNV_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkLatencySleepInfoNV*, VkResult>)VKLoader.GetInstanceProcAddress("vkLatencySleepNV");
             return _vkLatencySleepNV_fnptr(device, swapchain, pSleepInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkSetLatencyMarkerInfoNV*, void> _vkSetLatencyMarkerNV_fnptr = &vkSetLatencyMarkerNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSetLatencyMarkerInfoNV*, void> _vkSetLatencyMarkerNV_fnptr = &vkSetLatencyMarkerNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkSetLatencyMarkerNV_Lazy(IntPtr device, IntPtr swapchain, VkSetLatencyMarkerInfoNV* pLatencyMarkerInfo)
+        private static void vkSetLatencyMarkerNV_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkSetLatencyMarkerInfoNV* pLatencyMarkerInfo)
         {
-            _vkSetLatencyMarkerNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkSetLatencyMarkerInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkSetLatencyMarkerNV");
+            _vkSetLatencyMarkerNV_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkSetLatencyMarkerInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkSetLatencyMarkerNV");
             _vkSetLatencyMarkerNV_fnptr(device, swapchain, pLatencyMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, IntPtr, VkGetLatencyMarkerInfoNV*, void> _vkGetLatencyTimingsNV_fnptr = &vkGetLatencyTimingsNV_Lazy;
+        internal static delegate* unmanaged<VkDevice, VkSwapchainKHR, VkGetLatencyMarkerInfoNV*, void> _vkGetLatencyTimingsNV_fnptr = &vkGetLatencyTimingsNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkGetLatencyTimingsNV_Lazy(IntPtr device, IntPtr swapchain, VkGetLatencyMarkerInfoNV* pLatencyMarkerInfo)
+        private static void vkGetLatencyTimingsNV_Lazy(VkDevice device, VkSwapchainKHR swapchain, VkGetLatencyMarkerInfoNV* pLatencyMarkerInfo)
         {
-            _vkGetLatencyTimingsNV_fnptr = (delegate* unmanaged<IntPtr, IntPtr, VkGetLatencyMarkerInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkGetLatencyTimingsNV");
+            _vkGetLatencyTimingsNV_fnptr = (delegate* unmanaged<VkDevice, VkSwapchainKHR, VkGetLatencyMarkerInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkGetLatencyTimingsNV");
             _vkGetLatencyTimingsNV_fnptr(device, swapchain, pLatencyMarkerInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkOutOfBandQueueTypeInfoNV*, void> _vkQueueNotifyOutOfBandNV_fnptr = &vkQueueNotifyOutOfBandNV_Lazy;
+        internal static delegate* unmanaged<VkQueue, VkOutOfBandQueueTypeInfoNV*, void> _vkQueueNotifyOutOfBandNV_fnptr = &vkQueueNotifyOutOfBandNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkQueueNotifyOutOfBandNV_Lazy(IntPtr queue, VkOutOfBandQueueTypeInfoNV* pQueueTypeInfo)
+        private static void vkQueueNotifyOutOfBandNV_Lazy(VkQueue queue, VkOutOfBandQueueTypeInfoNV* pQueueTypeInfo)
         {
-            _vkQueueNotifyOutOfBandNV_fnptr = (delegate* unmanaged<IntPtr, VkOutOfBandQueueTypeInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkQueueNotifyOutOfBandNV");
+            _vkQueueNotifyOutOfBandNV_fnptr = (delegate* unmanaged<VkQueue, VkOutOfBandQueueTypeInfoNV*, void>)VKLoader.GetInstanceProcAddress("vkQueueNotifyOutOfBandNV");
             _vkQueueNotifyOutOfBandNV_fnptr(queue, pQueueTypeInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderingAttachmentLocationInfoKHR*, void> _vkCmdSetRenderingAttachmentLocationsKHR_fnptr = &vkCmdSetRenderingAttachmentLocationsKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRenderingAttachmentLocationInfoKHR*, void> _vkCmdSetRenderingAttachmentLocationsKHR_fnptr = &vkCmdSetRenderingAttachmentLocationsKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRenderingAttachmentLocationsKHR_Lazy(IntPtr commandBuffer, VkRenderingAttachmentLocationInfoKHR* pLocationInfo)
+        private static void vkCmdSetRenderingAttachmentLocationsKHR_Lazy(VkCommandBuffer commandBuffer, VkRenderingAttachmentLocationInfoKHR* pLocationInfo)
         {
-            _vkCmdSetRenderingAttachmentLocationsKHR_fnptr = (delegate* unmanaged<IntPtr, VkRenderingAttachmentLocationInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRenderingAttachmentLocationsKHR");
+            _vkCmdSetRenderingAttachmentLocationsKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderingAttachmentLocationInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRenderingAttachmentLocationsKHR");
             _vkCmdSetRenderingAttachmentLocationsKHR_fnptr(commandBuffer, pLocationInfo);
         }
-        internal static delegate* unmanaged<IntPtr, VkRenderingInputAttachmentIndexInfoKHR*, void> _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr = &vkCmdSetRenderingInputAttachmentIndicesKHR_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkRenderingInputAttachmentIndexInfoKHR*, void> _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr = &vkCmdSetRenderingInputAttachmentIndicesKHR_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdSetRenderingInputAttachmentIndicesKHR_Lazy(IntPtr commandBuffer, VkRenderingInputAttachmentIndexInfoKHR* pInputAttachmentIndexInfo)
+        private static void vkCmdSetRenderingInputAttachmentIndicesKHR_Lazy(VkCommandBuffer commandBuffer, VkRenderingInputAttachmentIndexInfoKHR* pInputAttachmentIndexInfo)
         {
-            _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr = (delegate* unmanaged<IntPtr, VkRenderingInputAttachmentIndexInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRenderingInputAttachmentIndicesKHR");
+            _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr = (delegate* unmanaged<VkCommandBuffer, VkRenderingInputAttachmentIndexInfoKHR*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetRenderingInputAttachmentIndicesKHR");
             _vkCmdSetRenderingInputAttachmentIndicesKHR_fnptr(commandBuffer, pInputAttachmentIndexInfo);
         }
     }

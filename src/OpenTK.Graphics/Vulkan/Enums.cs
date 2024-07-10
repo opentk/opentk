@@ -15,17 +15,87 @@ namespace OpenTK.Graphics.Vulkan
         ImageLayoutTransferSrcOptimal = 6,
         ImageLayoutTransferDstOptimal = 7,
         ImageLayoutPreinitialized = 8,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageLayoutDepthReadOnlyStencilAttachmentOptimal = 1000117000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageLayoutDepthAttachmentStencilReadOnlyOptimal = 1000117001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ImageLayoutDepthAttachmentOptimal = 1000241000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ImageLayoutDepthReadOnlyOptimal = 1000241001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ImageLayoutStencilAttachmentOptimal = 1000241002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ImageLayoutStencilReadOnlyOptimal = 1000241003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        ImageLayoutReadOnlyOptimal = 1000314000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        ImageLayoutAttachmentOptimal = 1000314001,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        ImageLayoutPresentSrcKhr = 1000001002,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageLayoutVideoDecodeDstKhr = 1000024000,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageLayoutVideoDecodeSrcKhr = 1000024001,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageLayoutVideoDecodeDpbKhr = 1000024002,
+        /// <summary>[requires: VK_KHR_shared_presentable_image]</summary>
+        ImageLayoutSharedPresentKhr = 1000111000,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        ImageLayoutFragmentDensityMapOptimalExt = 1000218000,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        ImageLayoutFragmentShadingRateAttachmentOptimalKhr = 1000164003,
+        /// <summary>[requires: VK_KHR_dynamic_rendering_local_read]</summary>
+        ImageLayoutRenderingLocalReadKhr = 1000232000,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageLayoutVideoEncodeDstKhr = 1000299000,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageLayoutVideoEncodeSrcKhr = 1000299001,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageLayoutVideoEncodeDpbKhr = 1000299002,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        ImageLayoutAttachmentFeedbackLoopOptimalExt = 1000339000,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        ImageLayoutDepthReadOnlyStencilAttachmentOptimalKhr = 1000117000,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        ImageLayoutDepthAttachmentStencilReadOnlyOptimalKhr = 1000117001,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        ImageLayoutShadingRateOptimalNv = 1000164003,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        ImageLayoutDepthAttachmentOptimalKhr = 1000241000,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        ImageLayoutDepthReadOnlyOptimalKhr = 1000241001,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        ImageLayoutStencilAttachmentOptimalKhr = 1000241002,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        ImageLayoutStencilReadOnlyOptimalKhr = 1000241003,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        ImageLayoutReadOnlyOptimalKhr = 1000314000,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        ImageLayoutAttachmentOptimalKhr = 1000314001,
     }
     public enum VkAttachmentLoadOp : int
     {
         AttachmentLoadOpLoad = 0,
         AttachmentLoadOpClear = 1,
         AttachmentLoadOpDontCare = 2,
+        /// <summary>[requires: VK_KHR_load_store_op_none]</summary>
+        AttachmentLoadOpNoneKhr = 1000400000,
+        /// <summary>[requires: VK_EXT_load_store_op_none]</summary>
+        AttachmentLoadOpNoneExt = 1000400000,
     }
     public enum VkAttachmentStoreOp : int
     {
         AttachmentStoreOpStore = 0,
         AttachmentStoreOpDontCare = 1,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        AttachmentStoreOpNone = 1000301000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        AttachmentStoreOpNoneKhr = 1000301000,
+        /// <summary>[requires: VK_QCOM_render_pass_store_ops]</summary>
+        AttachmentStoreOpNoneQcom = 1000301000,
+        /// <summary>[requires: VK_EXT_load_store_op_none]</summary>
+        AttachmentStoreOpNoneExt = 1000301000,
     }
     public enum VkImageType : int
     {
@@ -37,6 +107,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         ImageTilingOptimal = 0,
         ImageTilingLinear = 1,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ImageTilingDrmFormatModifierExt = 1000158000,
     }
     public enum VkImageViewType : int
     {
@@ -76,12 +148,56 @@ namespace OpenTK.Graphics.Vulkan
         DescriptorTypeUniformBufferDynamic = 8,
         DescriptorTypeStorageBufferDynamic = 9,
         DescriptorTypeInputAttachment = 10,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DescriptorTypeInlineUniformBlock = 1000138000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        DescriptorTypeAccelerationStructureKhr = 1000150000,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        DescriptorTypeAccelerationStructureNv = 1000165000,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        DescriptorTypeSampleWeightImageQcom = 1000440000,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        DescriptorTypeBlockMatchImageQcom = 1000440001,
+        /// <summary>[requires: VK_EXT_mutable_descriptor_type]</summary>
+        DescriptorTypeMutableExt = 1000351000,
+        /// <summary>[requires: VK_EXT_inline_uniform_block]</summary>
+        DescriptorTypeInlineUniformBlockExt = 1000138000,
+        /// <summary>[requires: VK_VALVE_mutable_descriptor_type]</summary>
+        DescriptorTypeMutableValve = 1000351000,
     }
     public enum VkQueryType : int
     {
         QueryTypeOcclusion = 0,
         QueryTypePipelineStatistics = 1,
         QueryTypeTimestamp = 2,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        QueryTypeResultStatusOnlyKhr = 1000023000,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        QueryTypeTransformFeedbackStreamExt = 1000028004,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        QueryTypePerformanceQueryKhr = 1000116000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        QueryTypeAccelerationStructureCompactedSizeKhr = 1000150000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        QueryTypeAccelerationStructureSerializationSizeKhr = 1000150001,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        QueryTypeAccelerationStructureCompactedSizeNv = 1000165000,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        QueryTypePerformanceQueryIntel = 1000210000,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        QueryTypeVideoEncodeFeedbackKhr = 1000299000,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        QueryTypeMeshPrimitivesGeneratedExt = 1000328000,
+        /// <summary>[requires: VK_EXT_primitives_generated_query]</summary>
+        QueryTypePrimitivesGeneratedExt = 1000382000,
+        /// <summary>[requires: VK_KHR_ray_tracing_maintenance1]</summary>
+        QueryTypeAccelerationStructureSerializationBottomLevelPointersKhr = 1000386000,
+        /// <summary>[requires: VK_KHR_ray_tracing_maintenance1]</summary>
+        QueryTypeAccelerationStructureSizeKhr = 1000386001,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        QueryTypeMicromapSerializationSizeExt = 1000396000,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        QueryTypeMicromapCompactedSizeExt = 1000396001,
     }
     public enum VkBorderColor : int
     {
@@ -91,11 +207,23 @@ namespace OpenTK.Graphics.Vulkan
         BorderColorIntOpaqueBlack = 3,
         BorderColorFloatOpaqueWhite = 4,
         BorderColorIntOpaqueWhite = 5,
+        /// <summary>[requires: VK_EXT_custom_border_color]</summary>
+        BorderColorFloatCustomExt = 1000287003,
+        /// <summary>[requires: VK_EXT_custom_border_color]</summary>
+        BorderColorIntCustomExt = 1000287004,
     }
     public enum VkPipelineBindPoint : int
     {
         PipelineBindPointGraphics = 0,
         PipelineBindPointCompute = 1,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        PipelineBindPointExecutionGraphAmdx = 1000134000,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineBindPointRayTracingKhr = 1000165000,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        PipelineBindPointSubpassShadingHuawei = 1000369003,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        PipelineBindPointRayTracingNv = 1000165000,
     }
     public enum VkPipelineCacheHeaderVersion : int
     {
@@ -104,6 +232,10 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkPipelineCacheCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineCacheCreateExternallySynchronizedBit = 1,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        PipelineCacheCreateExternallySynchronizedBitExt = 1,
     }
     public enum VkPrimitiveTopology : int
     {
@@ -128,11 +260,23 @@ namespace OpenTK.Graphics.Vulkan
     {
         IndexTypeUint16 = 0,
         IndexTypeUint32 = 1,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        IndexTypeNoneKhr = 1000165000,
+        /// <summary>[requires: VK_KHR_index_type_uint8]</summary>
+        IndexTypeUint8Khr = 1000265000,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        IndexTypeNoneNv = 1000165000,
+        /// <summary>[requires: VK_EXT_index_type_uint8]</summary>
+        IndexTypeUint8Ext = 1000265000,
     }
     public enum VkFilter : int
     {
         FilterNearest = 0,
         FilterLinear = 1,
+        /// <summary>[requires: VK_EXT_filter_cubic]</summary>
+        FilterCubicExt = 1000015000,
+        /// <summary>[requires: VK_IMG_filter_cubic]</summary>
+        FilterCubicImg = 1000015000,
     }
     public enum VkSamplerMipmapMode : int
     {
@@ -145,6 +289,10 @@ namespace OpenTK.Graphics.Vulkan
         SamplerAddressModeMirroredRepeat = 1,
         SamplerAddressModeClampToEdge = 2,
         SamplerAddressModeClampToBorder = 3,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        SamplerAddressModeMirrorClampToEdge = 4,
+        /// <summary>[requires: VK_KHR_sampler_mirror_clamp_to_edge]</summary>
+        SamplerAddressModeMirrorClampToEdgeKhr = 4,
     }
     public enum VkCompareOp : int
     {
@@ -162,6 +310,8 @@ namespace OpenTK.Graphics.Vulkan
         PolygonModeFill = 0,
         PolygonModeLine = 1,
         PolygonModePoint = 2,
+        /// <summary>[requires: VK_NV_fill_rectangle]</summary>
+        PolygonModeFillRectangleNv = 1000153000,
     }
     public enum VkFrontFace : int
     {
@@ -197,6 +347,98 @@ namespace OpenTK.Graphics.Vulkan
         BlendOpReverseSubtract = 2,
         BlendOpMin = 3,
         BlendOpMax = 4,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpZeroExt = 1000148000,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSrcExt = 1000148001,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDstExt = 1000148002,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSrcOverExt = 1000148003,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDstOverExt = 1000148004,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSrcInExt = 1000148005,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDstInExt = 1000148006,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSrcOutExt = 1000148007,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDstOutExt = 1000148008,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSrcAtopExt = 1000148009,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDstAtopExt = 1000148010,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpXorExt = 1000148011,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpMultiplyExt = 1000148012,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpScreenExt = 1000148013,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpOverlayExt = 1000148014,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDarkenExt = 1000148015,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpLightenExt = 1000148016,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpColordodgeExt = 1000148017,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpColorburnExt = 1000148018,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHardlightExt = 1000148019,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpSoftlightExt = 1000148020,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpDifferenceExt = 1000148021,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpExclusionExt = 1000148022,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpInvertExt = 1000148023,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpInvertRgbExt = 1000148024,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpLineardodgeExt = 1000148025,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpLinearburnExt = 1000148026,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpVividlightExt = 1000148027,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpLinearlightExt = 1000148028,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpPinlightExt = 1000148029,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHardmixExt = 1000148030,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHslHueExt = 1000148031,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHslSaturationExt = 1000148032,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHslColorExt = 1000148033,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpHslLuminosityExt = 1000148034,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpPlusExt = 1000148035,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpPlusClampedExt = 1000148036,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpPlusClampedAlphaExt = 1000148037,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpPlusDarkerExt = 1000148038,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpMinusExt = 1000148039,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpMinusClampedExt = 1000148040,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpContrastExt = 1000148041,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpInvertOvgExt = 1000148042,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpRedExt = 1000148043,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpGreenExt = 1000148044,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        BlendOpBlueExt = 1000148045,
     }
     public enum VkStencilOp : int
     {
@@ -440,6 +682,246 @@ namespace OpenTK.Graphics.Vulkan
         FormatAstc12x10SrgbBlock = 182,
         FormatAstc12x12UnormBlock = 183,
         FormatAstc12x12SrgbBlock = 184,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8b8g8r8422Unorm = 1000156000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatB8g8r8g8422Unorm = 1000156001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8B8R83plane420Unorm = 1000156002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8B8r82plane420Unorm = 1000156003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8B8R83plane422Unorm = 1000156004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8B8r82plane422Unorm = 1000156005,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG8B8R83plane444Unorm = 1000156006,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR10x6UnormPack16 = 1000156007,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR10x6g10x6Unorm2pack16 = 1000156008,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR10x6g10x6b10x6a10x6Unorm4pack16 = 1000156009,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6b10x6g10x6r10x6422Unorm4pack16 = 1000156010,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatB10x6g10x6r10x6g10x6422Unorm4pack16 = 1000156011,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6B10x6R10x63plane420Unorm3pack16 = 1000156012,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6B10x6r10x62plane420Unorm3pack16 = 1000156013,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6B10x6R10x63plane422Unorm3pack16 = 1000156014,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6B10x6r10x62plane422Unorm3pack16 = 1000156015,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG10x6B10x6R10x63plane444Unorm3pack16 = 1000156016,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR12x4UnormPack16 = 1000156017,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR12x4g12x4Unorm2pack16 = 1000156018,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatR12x4g12x4b12x4a12x4Unorm4pack16 = 1000156019,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4b12x4g12x4r12x4422Unorm4pack16 = 1000156020,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatB12x4g12x4r12x4g12x4422Unorm4pack16 = 1000156021,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4B12x4R12x43plane420Unorm3pack16 = 1000156022,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4B12x4r12x42plane420Unorm3pack16 = 1000156023,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4B12x4R12x43plane422Unorm3pack16 = 1000156024,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4B12x4r12x42plane422Unorm3pack16 = 1000156025,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG12x4B12x4R12x43plane444Unorm3pack16 = 1000156026,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16b16g16r16422Unorm = 1000156027,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatB16g16r16g16422Unorm = 1000156028,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16B16R163plane420Unorm = 1000156029,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16B16r162plane420Unorm = 1000156030,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16B16R163plane422Unorm = 1000156031,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16B16r162plane422Unorm = 1000156032,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatG16B16R163plane444Unorm = 1000156033,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatG8B8r82plane444Unorm = 1000330000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatG10x6B10x6r10x62plane444Unorm3pack16 = 1000330001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatG12x4B12x4r12x42plane444Unorm3pack16 = 1000330002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatG16B16r162plane444Unorm = 1000330003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatA4r4g4b4UnormPack16 = 1000340000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatA4b4g4r4UnormPack16 = 1000340001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc4x4SfloatBlock = 1000066000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc5x4SfloatBlock = 1000066001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc5x5SfloatBlock = 1000066002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc6x5SfloatBlock = 1000066003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc6x6SfloatBlock = 1000066004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc8x5SfloatBlock = 1000066005,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc8x6SfloatBlock = 1000066006,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc8x8SfloatBlock = 1000066007,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc10x5SfloatBlock = 1000066008,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc10x6SfloatBlock = 1000066009,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc10x8SfloatBlock = 1000066010,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc10x10SfloatBlock = 1000066011,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc12x10SfloatBlock = 1000066012,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        FormatAstc12x12SfloatBlock = 1000066013,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc12bppUnormBlockImg = 1000054000,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc14bppUnormBlockImg = 1000054001,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc22bppUnormBlockImg = 1000054002,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc24bppUnormBlockImg = 1000054003,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc12bppSrgbBlockImg = 1000054004,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc14bppSrgbBlockImg = 1000054005,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc22bppSrgbBlockImg = 1000054006,
+        /// <summary>[requires: VK_IMG_format_pvrtc]</summary>
+        FormatPvrtc24bppSrgbBlockImg = 1000054007,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        FormatR16g16Sfixed5Nv = 1000464000,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        FormatA1b5g5r5UnormPack16Khr = 1000470000,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        FormatA8UnormKhr = 1000470001,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc4x4SfloatBlockExt = 1000066000,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc5x4SfloatBlockExt = 1000066001,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc5x5SfloatBlockExt = 1000066002,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc6x5SfloatBlockExt = 1000066003,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc6x6SfloatBlockExt = 1000066004,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc8x5SfloatBlockExt = 1000066005,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc8x6SfloatBlockExt = 1000066006,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc8x8SfloatBlockExt = 1000066007,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc10x5SfloatBlockExt = 1000066008,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc10x6SfloatBlockExt = 1000066009,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc10x8SfloatBlockExt = 1000066010,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc10x10SfloatBlockExt = 1000066011,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc12x10SfloatBlockExt = 1000066012,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        FormatAstc12x12SfloatBlockExt = 1000066013,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8b8g8r8422UnormKhr = 1000156000,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatB8g8r8g8422UnormKhr = 1000156001,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8B8R83plane420UnormKhr = 1000156002,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8B8r82plane420UnormKhr = 1000156003,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8B8R83plane422UnormKhr = 1000156004,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8B8r82plane422UnormKhr = 1000156005,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG8B8R83plane444UnormKhr = 1000156006,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR10x6UnormPack16Khr = 1000156007,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR10x6g10x6Unorm2pack16Khr = 1000156008,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR10x6g10x6b10x6a10x6Unorm4pack16Khr = 1000156009,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6b10x6g10x6r10x6422Unorm4pack16Khr = 1000156010,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatB10x6g10x6r10x6g10x6422Unorm4pack16Khr = 1000156011,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6B10x6R10x63plane420Unorm3pack16Khr = 1000156012,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6B10x6r10x62plane420Unorm3pack16Khr = 1000156013,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6B10x6R10x63plane422Unorm3pack16Khr = 1000156014,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6B10x6r10x62plane422Unorm3pack16Khr = 1000156015,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG10x6B10x6R10x63plane444Unorm3pack16Khr = 1000156016,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR12x4UnormPack16Khr = 1000156017,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR12x4g12x4Unorm2pack16Khr = 1000156018,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatR12x4g12x4b12x4a12x4Unorm4pack16Khr = 1000156019,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4b12x4g12x4r12x4422Unorm4pack16Khr = 1000156020,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatB12x4g12x4r12x4g12x4422Unorm4pack16Khr = 1000156021,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4B12x4R12x43plane420Unorm3pack16Khr = 1000156022,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4B12x4r12x42plane420Unorm3pack16Khr = 1000156023,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4B12x4R12x43plane422Unorm3pack16Khr = 1000156024,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4B12x4r12x42plane422Unorm3pack16Khr = 1000156025,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG12x4B12x4R12x43plane444Unorm3pack16Khr = 1000156026,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16b16g16r16422UnormKhr = 1000156027,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatB16g16r16g16422UnormKhr = 1000156028,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16B16R163plane420UnormKhr = 1000156029,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16B16r162plane420UnormKhr = 1000156030,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16B16R163plane422UnormKhr = 1000156031,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16B16r162plane422UnormKhr = 1000156032,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatG16B16R163plane444UnormKhr = 1000156033,
+        /// <summary>[requires: VK_EXT_ycbcr_2plane_444_formats]</summary>
+        FormatG8B8r82plane444UnormExt = 1000330000,
+        /// <summary>[requires: VK_EXT_ycbcr_2plane_444_formats]</summary>
+        FormatG10x6B10x6r10x62plane444Unorm3pack16Ext = 1000330001,
+        /// <summary>[requires: VK_EXT_ycbcr_2plane_444_formats]</summary>
+        FormatG12x4B12x4r12x42plane444Unorm3pack16Ext = 1000330002,
+        /// <summary>[requires: VK_EXT_ycbcr_2plane_444_formats]</summary>
+        FormatG16B16r162plane444UnormExt = 1000330003,
+        /// <summary>[requires: VK_EXT_4444_formats]</summary>
+        FormatA4r4g4b4UnormPack16Ext = 1000340000,
+        /// <summary>[requires: VK_EXT_4444_formats]</summary>
+        FormatA4b4g4r4UnormPack16Ext = 1000340001,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        FormatR16g16S105Nv = 1000464000,
     }
     public enum VkStructureType : int
     {
@@ -492,11 +974,2133 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeMemoryBarrier = 46,
         StructureTypeLoaderInstanceCreateInfo = 47,
         StructureTypeLoaderDeviceCreateInfo = 48,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceSubgroupProperties = 1000094000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBindBufferMemoryInfo = 1000157000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBindImageMemoryInfo = 1000157001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDevice16bitStorageFeatures = 1000083000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeMemoryDedicatedRequirements = 1000127000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeMemoryDedicatedAllocateInfo = 1000127001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeMemoryAllocateFlagsInfo = 1000060000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceGroupRenderPassBeginInfo = 1000060003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceGroupCommandBufferBeginInfo = 1000060004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceGroupSubmitInfo = 1000060005,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceGroupBindSparseInfo = 1000060006,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBindBufferMemoryDeviceGroupInfo = 1000060013,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBindImageMemoryDeviceGroupInfo = 1000060014,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceGroupProperties = 1000070000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceGroupDeviceCreateInfo = 1000070001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBufferMemoryRequirementsInfo2 = 1000146000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeImageMemoryRequirementsInfo2 = 1000146001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeImageSparseMemoryRequirementsInfo2 = 1000146002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeMemoryRequirements2 = 1000146003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeSparseImageMemoryRequirements2 = 1000146004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceFeatures2 = 1000059000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceProperties2 = 1000059001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeFormatProperties2 = 1000059002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeImageFormatProperties2 = 1000059003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceImageFormatInfo2 = 1000059004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeQueueFamilyProperties2 = 1000059005,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceMemoryProperties2 = 1000059006,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeSparseImageFormatProperties2 = 1000059007,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceSparseImageFormatInfo2 = 1000059008,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDevicePointClippingProperties = 1000117000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeRenderPassInputAttachmentAspectCreateInfo = 1000117001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeImageViewUsageCreateInfo = 1000117002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePipelineTessellationDomainOriginStateCreateInfo = 1000117003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeRenderPassMultiviewCreateInfo = 1000053000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceMultiviewFeatures = 1000053001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceMultiviewProperties = 1000053002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceVariablePointersFeatures = 1000120000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeProtectedSubmitInfo = 1000145000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceProtectedMemoryFeatures = 1000145001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceProtectedMemoryProperties = 1000145002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDeviceQueueInfo2 = 1000145003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeSamplerYcbcrConversionCreateInfo = 1000156000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeSamplerYcbcrConversionInfo = 1000156001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeBindImagePlaneMemoryInfo = 1000156002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeImagePlaneMemoryRequirementsInfo = 1000156003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceSamplerYcbcrConversionFeatures = 1000156004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeSamplerYcbcrConversionImageFormatProperties = 1000156005,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDescriptorUpdateTemplateCreateInfo = 1000085000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceExternalImageFormatInfo = 1000071000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalImageFormatProperties = 1000071001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceExternalBufferInfo = 1000071002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalBufferProperties = 1000071003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceIdProperties = 1000071004,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalMemoryBufferCreateInfo = 1000072000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalMemoryImageCreateInfo = 1000072001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExportMemoryAllocateInfo = 1000072002,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceExternalFenceInfo = 1000112000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalFenceProperties = 1000112001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExportFenceCreateInfo = 1000113000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExportSemaphoreCreateInfo = 1000077000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceExternalSemaphoreInfo = 1000076000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeExternalSemaphoreProperties = 1000076001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceMaintenance3Properties = 1000168000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypeDescriptorSetLayoutSupport = 1000168001,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceShaderDrawParametersFeatures = 1000063000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceVulkan11Features = 49,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceVulkan11Properties = 50,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceVulkan12Features = 51,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceVulkan12Properties = 52,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeImageFormatListCreateInfo = 1000147000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeAttachmentDescription2 = 1000109000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeAttachmentReference2 = 1000109001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSubpassDescription2 = 1000109002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSubpassDependency2 = 1000109003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeRenderPassCreateInfo2 = 1000109004,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSubpassBeginInfo = 1000109005,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSubpassEndInfo = 1000109006,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDevice8bitStorageFeatures = 1000177000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceDriverProperties = 1000196000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceShaderAtomicInt64Features = 1000180000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceShaderFloat16Int8Features = 1000082000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceFloatControlsProperties = 1000197000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeDescriptorSetLayoutBindingFlagsCreateInfo = 1000161000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceDescriptorIndexingFeatures = 1000161001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceDescriptorIndexingProperties = 1000161002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeDescriptorSetVariableDescriptorCountAllocateInfo = 1000161003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeDescriptorSetVariableDescriptorCountLayoutSupport = 1000161004,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceDepthStencilResolveProperties = 1000199000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSubpassDescriptionDepthStencilResolve = 1000199001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceScalarBlockLayoutFeatures = 1000221000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeImageStencilUsageCreateInfo = 1000246000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceSamplerFilterMinmaxProperties = 1000130000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSamplerReductionModeCreateInfo = 1000130001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceVulkanMemoryModelFeatures = 1000211000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceImagelessFramebufferFeatures = 1000108000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeFramebufferAttachmentsCreateInfo = 1000108001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeFramebufferAttachmentImageInfo = 1000108002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeRenderPassAttachmentBeginInfo = 1000108003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceUniformBufferStandardLayoutFeatures = 1000253000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceShaderSubgroupExtendedTypesFeatures = 1000175000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceSeparateDepthStencilLayoutsFeatures = 1000241000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeAttachmentReferenceStencilLayout = 1000241001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeAttachmentDescriptionStencilLayout = 1000241002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceHostQueryResetFeatures = 1000261000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceTimelineSemaphoreFeatures = 1000207000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceTimelineSemaphoreProperties = 1000207001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSemaphoreTypeCreateInfo = 1000207002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeTimelineSemaphoreSubmitInfo = 1000207003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSemaphoreWaitInfo = 1000207004,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeSemaphoreSignalInfo = 1000207005,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypePhysicalDeviceBufferDeviceAddressFeatures = 1000257000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeBufferDeviceAddressInfo = 1000244001,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeBufferOpaqueCaptureAddressCreateInfo = 1000257002,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeMemoryOpaqueCaptureAddressAllocateInfo = 1000257003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        StructureTypeDeviceMemoryOpaqueCaptureAddressInfo = 1000257004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceVulkan13Features = 53,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceVulkan13Properties = 54,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePipelineCreationFeedbackCreateInfo = 1000192000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceShaderTerminateInvocationFeatures = 1000215000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceToolProperties = 1000245000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceShaderDemoteToHelperInvocationFeatures = 1000276000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDevicePrivateDataFeatures = 1000295000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeDevicePrivateDataCreateInfo = 1000295001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePrivateDataSlotCreateInfo = 1000295002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDevicePipelineCreationCacheControlFeatures = 1000297000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeMemoryBarrier2 = 1000314000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeBufferMemoryBarrier2 = 1000314001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeImageMemoryBarrier2 = 1000314002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeDependencyInfo = 1000314003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeSubmitInfo2 = 1000314004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeSemaphoreSubmitInfo = 1000314005,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCommandBufferSubmitInfo = 1000314006,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceSynchronization2Features = 1000314007,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceZeroInitializeWorkgroupMemoryFeatures = 1000325000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceImageRobustnessFeatures = 1000335000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCopyBufferInfo2 = 1000337000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCopyImageInfo2 = 1000337001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCopyBufferToImageInfo2 = 1000337002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCopyImageToBufferInfo2 = 1000337003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeBlitImageInfo2 = 1000337004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeResolveImageInfo2 = 1000337005,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeBufferCopy2 = 1000337006,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeImageCopy2 = 1000337007,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeImageBlit2 = 1000337008,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeBufferImageCopy2 = 1000337009,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeImageResolve2 = 1000337010,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceSubgroupSizeControlProperties = 1000225000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePipelineShaderStageRequiredSubgroupSizeCreateInfo = 1000225001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceSubgroupSizeControlFeatures = 1000225002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceInlineUniformBlockFeatures = 1000138000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceInlineUniformBlockProperties = 1000138001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeWriteDescriptorSetInlineUniformBlock = 1000138002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeDescriptorPoolInlineUniformBlockCreateInfo = 1000138003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceTextureCompressionAstcHdrFeatures = 1000066000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeRenderingInfo = 1000044000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeRenderingAttachmentInfo = 1000044001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePipelineRenderingCreateInfo = 1000044002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceDynamicRenderingFeatures = 1000044003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeCommandBufferInheritanceRenderingInfo = 1000044004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceShaderIntegerDotProductFeatures = 1000280000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceShaderIntegerDotProductProperties = 1000280001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceTexelBufferAlignmentProperties = 1000281001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeFormatProperties3 = 1000360000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceMaintenance4Features = 1000413000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypePhysicalDeviceMaintenance4Properties = 1000413001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeDeviceBufferMemoryRequirements = 1000413002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        StructureTypeDeviceImageMemoryRequirements = 1000413003,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceVariablePointerFeatures = 1000120000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        StructureTypePhysicalDeviceShaderDrawParameterFeatures = 1000063000,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeSwapchainCreateInfoKhr = 1000001000,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypePresentInfoKhr = 1000001001,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeDeviceGroupPresentCapabilitiesKhr = 1000060007,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeImageSwapchainCreateInfoKhr = 1000060008,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeBindImageMemorySwapchainInfoKhr = 1000060009,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeAcquireNextImageInfoKhr = 1000060010,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeDeviceGroupPresentInfoKhr = 1000060011,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        StructureTypeDeviceGroupSwapchainCreateInfoKhr = 1000060012,
+        /// <summary>[requires: VK_KHR_display]</summary>
+        StructureTypeDisplayModeCreateInfoKhr = 1000002000,
+        /// <summary>[requires: VK_KHR_display]</summary>
+        StructureTypeDisplaySurfaceCreateInfoKhr = 1000002001,
+        /// <summary>[requires: VK_KHR_display_swapchain]</summary>
+        StructureTypeDisplayPresentInfoKhr = 1000003000,
+        /// <summary>[requires: VK_KHR_xlib_surface]</summary>
+        StructureTypeXlibSurfaceCreateInfoKhr = 1000004000,
+        /// <summary>[requires: VK_KHR_xcb_surface]</summary>
+        StructureTypeXcbSurfaceCreateInfoKhr = 1000005000,
+        /// <summary>[requires: VK_KHR_wayland_surface]</summary>
+        StructureTypeWaylandSurfaceCreateInfoKhr = 1000006000,
+        /// <summary>[requires: VK_KHR_android_surface]</summary>
+        StructureTypeAndroidSurfaceCreateInfoKhr = 1000008000,
+        /// <summary>[requires: VK_KHR_win32_surface]</summary>
+        StructureTypeWin32SurfaceCreateInfoKhr = 1000009000,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        StructureTypeDebugReportCallbackCreateInfoExt = 1000011000,
+        /// <summary>[requires: VK_AMD_rasterization_order]</summary>
+        StructureTypePipelineRasterizationStateRasterizationOrderAmd = 1000018000,
+        /// <summary>[requires: VK_EXT_debug_marker]</summary>
+        StructureTypeDebugMarkerObjectNameInfoExt = 1000022000,
+        /// <summary>[requires: VK_EXT_debug_marker]</summary>
+        StructureTypeDebugMarkerObjectTagInfoExt = 1000022001,
+        /// <summary>[requires: VK_EXT_debug_marker]</summary>
+        StructureTypeDebugMarkerMarkerInfoExt = 1000022002,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoProfileInfoKhr = 1000023000,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoCapabilitiesKhr = 1000023001,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoPictureResourceInfoKhr = 1000023002,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoSessionMemoryRequirementsKhr = 1000023003,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeBindVideoSessionMemoryInfoKhr = 1000023004,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoSessionCreateInfoKhr = 1000023005,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoSessionParametersCreateInfoKhr = 1000023006,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoSessionParametersUpdateInfoKhr = 1000023007,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoBeginCodingInfoKhr = 1000023008,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoEndCodingInfoKhr = 1000023009,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoCodingControlInfoKhr = 1000023010,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoReferenceSlotInfoKhr = 1000023011,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeQueueFamilyVideoPropertiesKhr = 1000023012,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoProfileListInfoKhr = 1000023013,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypePhysicalDeviceVideoFormatInfoKhr = 1000023014,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeVideoFormatPropertiesKhr = 1000023015,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        StructureTypeQueueFamilyQueryResultStatusPropertiesKhr = 1000023016,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        StructureTypeVideoDecodeInfoKhr = 1000024000,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        StructureTypeVideoDecodeCapabilitiesKhr = 1000024001,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        StructureTypeVideoDecodeUsageInfoKhr = 1000024002,
+        /// <summary>[requires: VK_NV_dedicated_allocation]</summary>
+        StructureTypeDedicatedAllocationImageCreateInfoNv = 1000026000,
+        /// <summary>[requires: VK_NV_dedicated_allocation]</summary>
+        StructureTypeDedicatedAllocationBufferCreateInfoNv = 1000026001,
+        /// <summary>[requires: VK_NV_dedicated_allocation]</summary>
+        StructureTypeDedicatedAllocationMemoryAllocateInfoNv = 1000026002,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        StructureTypePhysicalDeviceTransformFeedbackFeaturesExt = 1000028000,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        StructureTypePhysicalDeviceTransformFeedbackPropertiesExt = 1000028001,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        StructureTypePipelineRasterizationStateStreamCreateInfoExt = 1000028002,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        StructureTypeCuModuleCreateInfoNvx = 1000029000,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        StructureTypeCuFunctionCreateInfoNvx = 1000029001,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        StructureTypeCuLaunchInfoNvx = 1000029002,
+        /// <summary>[requires: VK_NVX_image_view_handle]</summary>
+        StructureTypeImageViewHandleInfoNvx = 1000030000,
+        /// <summary>[requires: VK_NVX_image_view_handle]</summary>
+        StructureTypeImageViewAddressPropertiesNvx = 1000030001,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264CapabilitiesKhr = 1000038000,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264SessionParametersCreateInfoKhr = 1000038001,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264SessionParametersAddInfoKhr = 1000038002,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264PictureInfoKhr = 1000038003,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264DpbSlotInfoKhr = 1000038004,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264NaluSliceInfoKhr = 1000038005,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264GopRemainingFrameInfoKhr = 1000038006,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264ProfileInfoKhr = 1000038007,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264RateControlInfoKhr = 1000038008,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264RateControlLayerInfoKhr = 1000038009,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264SessionCreateInfoKhr = 1000038010,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264QualityLevelPropertiesKhr = 1000038011,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264SessionParametersGetInfoKhr = 1000038012,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        StructureTypeVideoEncodeH264SessionParametersFeedbackInfoKhr = 1000038013,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265CapabilitiesKhr = 1000039000,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265SessionParametersCreateInfoKhr = 1000039001,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265SessionParametersAddInfoKhr = 1000039002,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265PictureInfoKhr = 1000039003,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265DpbSlotInfoKhr = 1000039004,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265NaluSliceSegmentInfoKhr = 1000039005,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265GopRemainingFrameInfoKhr = 1000039006,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265ProfileInfoKhr = 1000039007,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265RateControlInfoKhr = 1000039009,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265RateControlLayerInfoKhr = 1000039010,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265SessionCreateInfoKhr = 1000039011,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265QualityLevelPropertiesKhr = 1000039012,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265SessionParametersGetInfoKhr = 1000039013,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        StructureTypeVideoEncodeH265SessionParametersFeedbackInfoKhr = 1000039014,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264CapabilitiesKhr = 1000040000,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264PictureInfoKhr = 1000040001,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264ProfileInfoKhr = 1000040003,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264SessionParametersCreateInfoKhr = 1000040004,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264SessionParametersAddInfoKhr = 1000040005,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        StructureTypeVideoDecodeH264DpbSlotInfoKhr = 1000040006,
+        /// <summary>[requires: VK_AMD_texture_gather_bias_lod]</summary>
+        StructureTypeTextureLodGatherFormatPropertiesAmd = 1000041000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeRenderingFragmentShadingRateAttachmentInfoKhr = 1000044006,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeRenderingFragmentDensityMapAttachmentInfoExt = 1000044007,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeAttachmentSampleCountInfoAmd = 1000044008,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeMultiviewPerViewAttributesInfoNvx = 1000044009,
+        /// <summary>[requires: VK_GGP_stream_descriptor_surface]</summary>
+        StructureTypeStreamDescriptorSurfaceCreateInfoGgp = 1000049000,
+        /// <summary>[requires: VK_NV_corner_sampled_image]</summary>
+        StructureTypePhysicalDeviceCornerSampledImageFeaturesNv = 1000050000,
+        /// <summary>[requires: VK_NV_private_vendor_info]</summary>
+        StructureTypePrivateVendorInfoPlaceholderOffset0Nv = 1000051000,
+        /// <summary>[requires: VK_NV_external_memory]</summary>
+        StructureTypeExternalMemoryImageCreateInfoNv = 1000056000,
+        /// <summary>[requires: VK_NV_external_memory]</summary>
+        StructureTypeExportMemoryAllocateInfoNv = 1000056001,
+        /// <summary>[requires: VK_NV_external_memory_win32]</summary>
+        StructureTypeImportMemoryWin32HandleInfoNv = 1000057000,
+        /// <summary>[requires: VK_NV_external_memory_win32]</summary>
+        StructureTypeExportMemoryWin32HandleInfoNv = 1000057001,
+        /// <summary>[requires: VK_NV_win32_keyed_mutex]</summary>
+        StructureTypeWin32KeyedMutexAcquireReleaseInfoNv = 1000058000,
+        /// <summary>[requires: VK_EXT_validation_flags]</summary>
+        StructureTypeValidationFlagsExt = 1000061000,
+        /// <summary>[requires: VK_NN_vi_surface]</summary>
+        StructureTypeViSurfaceCreateInfoNn = 1000062000,
+        /// <summary>[requires: VK_EXT_astc_decode_mode]</summary>
+        StructureTypeImageViewAstcDecodeModeExt = 1000067000,
+        /// <summary>[requires: VK_EXT_astc_decode_mode]</summary>
+        StructureTypePhysicalDeviceAstcDecodeFeaturesExt = 1000067001,
+        /// <summary>[requires: VK_EXT_pipeline_robustness]</summary>
+        StructureTypePipelineRobustnessCreateInfoExt = 1000068000,
+        /// <summary>[requires: VK_EXT_pipeline_robustness]</summary>
+        StructureTypePhysicalDevicePipelineRobustnessFeaturesExt = 1000068001,
+        /// <summary>[requires: VK_EXT_pipeline_robustness]</summary>
+        StructureTypePhysicalDevicePipelineRobustnessPropertiesExt = 1000068002,
+        /// <summary>[requires: VK_KHR_external_memory_win32]</summary>
+        StructureTypeImportMemoryWin32HandleInfoKhr = 1000073000,
+        /// <summary>[requires: VK_KHR_external_memory_win32]</summary>
+        StructureTypeExportMemoryWin32HandleInfoKhr = 1000073001,
+        /// <summary>[requires: VK_KHR_external_memory_win32]</summary>
+        StructureTypeMemoryWin32HandlePropertiesKhr = 1000073002,
+        /// <summary>[requires: VK_KHR_external_memory_win32]</summary>
+        StructureTypeMemoryGetWin32HandleInfoKhr = 1000073003,
+        /// <summary>[requires: VK_KHR_external_memory_fd]</summary>
+        StructureTypeImportMemoryFdInfoKhr = 1000074000,
+        /// <summary>[requires: VK_KHR_external_memory_fd]</summary>
+        StructureTypeMemoryFdPropertiesKhr = 1000074001,
+        /// <summary>[requires: VK_KHR_external_memory_fd]</summary>
+        StructureTypeMemoryGetFdInfoKhr = 1000074002,
+        /// <summary>[requires: VK_KHR_win32_keyed_mutex]</summary>
+        StructureTypeWin32KeyedMutexAcquireReleaseInfoKhr = 1000075000,
+        /// <summary>[requires: VK_KHR_external_semaphore_win32]</summary>
+        StructureTypeImportSemaphoreWin32HandleInfoKhr = 1000078000,
+        /// <summary>[requires: VK_KHR_external_semaphore_win32]</summary>
+        StructureTypeExportSemaphoreWin32HandleInfoKhr = 1000078001,
+        /// <summary>[requires: VK_KHR_external_semaphore_win32]</summary>
+        StructureTypeD3d12FenceSubmitInfoKhr = 1000078002,
+        /// <summary>[requires: VK_KHR_external_semaphore_win32]</summary>
+        StructureTypeSemaphoreGetWin32HandleInfoKhr = 1000078003,
+        /// <summary>[requires: VK_KHR_external_semaphore_fd]</summary>
+        StructureTypeImportSemaphoreFdInfoKhr = 1000079000,
+        /// <summary>[requires: VK_KHR_external_semaphore_fd]</summary>
+        StructureTypeSemaphoreGetFdInfoKhr = 1000079001,
+        /// <summary>[requires: VK_KHR_push_descriptor]</summary>
+        StructureTypePhysicalDevicePushDescriptorPropertiesKhr = 1000080000,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        StructureTypeCommandBufferInheritanceConditionalRenderingInfoExt = 1000081000,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        StructureTypePhysicalDeviceConditionalRenderingFeaturesExt = 1000081001,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        StructureTypeConditionalRenderingBeginInfoExt = 1000081002,
+        /// <summary>[requires: VK_KHR_incremental_present]</summary>
+        StructureTypePresentRegionsKhr = 1000084000,
+        /// <summary>[requires: VK_NV_clip_space_w_scaling]</summary>
+        StructureTypePipelineViewportWScalingStateCreateInfoNv = 1000087000,
+        /// <summary>[requires: VK_EXT_display_surface_counter]</summary>
+        StructureTypeSurfaceCapabilities2Ext = 1000090000,
+        /// <summary>[requires: VK_EXT_display_control]</summary>
+        StructureTypeDisplayPowerInfoExt = 1000091000,
+        /// <summary>[requires: VK_EXT_display_control]</summary>
+        StructureTypeDeviceEventInfoExt = 1000091001,
+        /// <summary>[requires: VK_EXT_display_control]</summary>
+        StructureTypeDisplayEventInfoExt = 1000091002,
+        /// <summary>[requires: VK_EXT_display_control]</summary>
+        StructureTypeSwapchainCounterCreateInfoExt = 1000091003,
+        /// <summary>[requires: VK_GOOGLE_display_timing]</summary>
+        StructureTypePresentTimesInfoGoogle = 1000092000,
+        /// <summary>[requires: VK_NVX_multiview_per_view_attributes]</summary>
+        StructureTypePhysicalDeviceMultiviewPerViewAttributesPropertiesNvx = 1000097000,
+        /// <summary>[requires: VK_NV_viewport_swizzle]</summary>
+        StructureTypePipelineViewportSwizzleStateCreateInfoNv = 1000098000,
+        /// <summary>[requires: VK_EXT_discard_rectangles]</summary>
+        StructureTypePhysicalDeviceDiscardRectanglePropertiesExt = 1000099000,
+        /// <summary>[requires: VK_EXT_discard_rectangles]</summary>
+        StructureTypePipelineDiscardRectangleStateCreateInfoExt = 1000099001,
+        /// <summary>[requires: VK_EXT_conservative_rasterization]</summary>
+        StructureTypePhysicalDeviceConservativeRasterizationPropertiesExt = 1000101000,
+        /// <summary>[requires: VK_EXT_conservative_rasterization]</summary>
+        StructureTypePipelineRasterizationConservativeStateCreateInfoExt = 1000101001,
+        /// <summary>[requires: VK_EXT_depth_clip_enable]</summary>
+        StructureTypePhysicalDeviceDepthClipEnableFeaturesExt = 1000102000,
+        /// <summary>[requires: VK_EXT_depth_clip_enable]</summary>
+        StructureTypePipelineRasterizationDepthClipStateCreateInfoExt = 1000102001,
+        /// <summary>[requires: VK_EXT_hdr_metadata]</summary>
+        StructureTypeHdrMetadataExt = 1000105000,
+        /// <summary>[requires: VK_IMG_relaxed_line_rasterization]</summary>
+        StructureTypePhysicalDeviceRelaxedLineRasterizationFeaturesImg = 1000110000,
+        /// <summary>[requires: VK_KHR_shared_presentable_image]</summary>
+        StructureTypeSharedPresentSurfaceCapabilitiesKhr = 1000111000,
+        /// <summary>[requires: VK_KHR_external_fence_win32]</summary>
+        StructureTypeImportFenceWin32HandleInfoKhr = 1000114000,
+        /// <summary>[requires: VK_KHR_external_fence_win32]</summary>
+        StructureTypeExportFenceWin32HandleInfoKhr = 1000114001,
+        /// <summary>[requires: VK_KHR_external_fence_win32]</summary>
+        StructureTypeFenceGetWin32HandleInfoKhr = 1000114002,
+        /// <summary>[requires: VK_KHR_external_fence_fd]</summary>
+        StructureTypeImportFenceFdInfoKhr = 1000115000,
+        /// <summary>[requires: VK_KHR_external_fence_fd]</summary>
+        StructureTypeFenceGetFdInfoKhr = 1000115001,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypePhysicalDevicePerformanceQueryFeaturesKhr = 1000116000,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypePhysicalDevicePerformanceQueryPropertiesKhr = 1000116001,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypeQueryPoolPerformanceCreateInfoKhr = 1000116002,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypePerformanceQuerySubmitInfoKhr = 1000116003,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypeAcquireProfilingLockInfoKhr = 1000116004,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypePerformanceCounterKhr = 1000116005,
+        /// <summary>[requires: VK_KHR_performance_query]</summary>
+        StructureTypePerformanceCounterDescriptionKhr = 1000116006,
+        /// <summary>[requires: VK_KHR_get_surface_capabilities2]</summary>
+        StructureTypePhysicalDeviceSurfaceInfo2Khr = 1000119000,
+        /// <summary>[requires: VK_KHR_get_surface_capabilities2]</summary>
+        StructureTypeSurfaceCapabilities2Khr = 1000119001,
+        /// <summary>[requires: VK_KHR_get_surface_capabilities2]</summary>
+        StructureTypeSurfaceFormat2Khr = 1000119002,
+        /// <summary>[requires: VK_KHR_get_display_properties2]</summary>
+        StructureTypeDisplayProperties2Khr = 1000121000,
+        /// <summary>[requires: VK_KHR_get_display_properties2]</summary>
+        StructureTypeDisplayPlaneProperties2Khr = 1000121001,
+        /// <summary>[requires: VK_KHR_get_display_properties2]</summary>
+        StructureTypeDisplayModeProperties2Khr = 1000121002,
+        /// <summary>[requires: VK_KHR_get_display_properties2]</summary>
+        StructureTypeDisplayPlaneInfo2Khr = 1000121003,
+        /// <summary>[requires: VK_KHR_get_display_properties2]</summary>
+        StructureTypeDisplayPlaneCapabilities2Khr = 1000121004,
+        /// <summary>[requires: VK_MVK_ios_surface]</summary>
+        StructureTypeIosSurfaceCreateInfoMvk = 1000122000,
+        /// <summary>[requires: VK_MVK_macos_surface]</summary>
+        StructureTypeMacosSurfaceCreateInfoMvk = 1000123000,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        StructureTypeDebugUtilsObjectNameInfoExt = 1000128000,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        StructureTypeDebugUtilsObjectTagInfoExt = 1000128001,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        StructureTypeDebugUtilsLabelExt = 1000128002,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        StructureTypeDebugUtilsMessengerCallbackDataExt = 1000128003,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        StructureTypeDebugUtilsMessengerCreateInfoExt = 1000128004,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeAndroidHardwareBufferUsageAndroid = 1000129000,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeAndroidHardwareBufferPropertiesAndroid = 1000129001,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeAndroidHardwareBufferFormatPropertiesAndroid = 1000129002,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeImportAndroidHardwareBufferInfoAndroid = 1000129003,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeMemoryGetAndroidHardwareBufferInfoAndroid = 1000129004,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeExternalFormatAndroid = 1000129005,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        StructureTypeAndroidHardwareBufferFormatProperties2Android = 1000129006,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        StructureTypePhysicalDeviceShaderEnqueueFeaturesAmdx = 1000134000,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        StructureTypePhysicalDeviceShaderEnqueuePropertiesAmdx = 1000134001,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        StructureTypeExecutionGraphPipelineScratchSizeAmdx = 1000134002,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        StructureTypeExecutionGraphPipelineCreateInfoAmdx = 1000134003,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        StructureTypePipelineShaderStageNodeCreateInfoAmdx = 1000134004,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        StructureTypeSampleLocationsInfoExt = 1000143000,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        StructureTypeRenderPassSampleLocationsBeginInfoExt = 1000143001,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        StructureTypePipelineSampleLocationsStateCreateInfoExt = 1000143002,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        StructureTypePhysicalDeviceSampleLocationsPropertiesExt = 1000143003,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        StructureTypeMultisamplePropertiesExt = 1000143004,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        StructureTypePhysicalDeviceBlendOperationAdvancedFeaturesExt = 1000148000,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        StructureTypePhysicalDeviceBlendOperationAdvancedPropertiesExt = 1000148001,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        StructureTypePipelineColorBlendAdvancedStateCreateInfoExt = 1000148002,
+        /// <summary>[requires: VK_NV_fragment_coverage_to_color]</summary>
+        StructureTypePipelineCoverageToColorStateCreateInfoNv = 1000149000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeWriteDescriptorSetAccelerationStructureKhr = 1000150007,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureBuildGeometryInfoKhr = 1000150000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureDeviceAddressInfoKhr = 1000150002,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureGeometryAabbsDataKhr = 1000150003,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureGeometryInstancesDataKhr = 1000150004,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureGeometryTrianglesDataKhr = 1000150005,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureGeometryKhr = 1000150006,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureVersionInfoKhr = 1000150009,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeCopyAccelerationStructureInfoKhr = 1000150010,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeCopyAccelerationStructureToMemoryInfoKhr = 1000150011,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeCopyMemoryToAccelerationStructureInfoKhr = 1000150012,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypePhysicalDeviceAccelerationStructureFeaturesKhr = 1000150013,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypePhysicalDeviceAccelerationStructurePropertiesKhr = 1000150014,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureCreateInfoKhr = 1000150017,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        StructureTypeAccelerationStructureBuildSizesInfoKhr = 1000150020,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        StructureTypePhysicalDeviceRayTracingPipelineFeaturesKhr = 1000347000,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        StructureTypePhysicalDeviceRayTracingPipelinePropertiesKhr = 1000347001,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        StructureTypeRayTracingPipelineCreateInfoKhr = 1000150015,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        StructureTypeRayTracingShaderGroupCreateInfoKhr = 1000150016,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        StructureTypeRayTracingPipelineInterfaceCreateInfoKhr = 1000150018,
+        /// <summary>[requires: VK_KHR_ray_query]</summary>
+        StructureTypePhysicalDeviceRayQueryFeaturesKhr = 1000348013,
+        /// <summary>[requires: VK_NV_framebuffer_mixed_samples]</summary>
+        StructureTypePipelineCoverageModulationStateCreateInfoNv = 1000152000,
+        /// <summary>[requires: VK_NV_shader_sm_builtins]</summary>
+        StructureTypePhysicalDeviceShaderSmBuiltinsFeaturesNv = 1000154000,
+        /// <summary>[requires: VK_NV_shader_sm_builtins]</summary>
+        StructureTypePhysicalDeviceShaderSmBuiltinsPropertiesNv = 1000154001,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypeDrmFormatModifierPropertiesListExt = 1000158000,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypePhysicalDeviceImageDrmFormatModifierInfoExt = 1000158002,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypeImageDrmFormatModifierListCreateInfoExt = 1000158003,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypeImageDrmFormatModifierExplicitCreateInfoExt = 1000158004,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypeImageDrmFormatModifierPropertiesExt = 1000158005,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        StructureTypeDrmFormatModifierPropertiesList2Ext = 1000158006,
+        /// <summary>[requires: VK_EXT_validation_cache]</summary>
+        StructureTypeValidationCacheCreateInfoExt = 1000160000,
+        /// <summary>[requires: VK_EXT_validation_cache]</summary>
+        StructureTypeShaderModuleValidationCacheCreateInfoExt = 1000160001,
+        /// <summary>[requires: VK_KHR_portability_subset]</summary>
+        StructureTypePhysicalDevicePortabilitySubsetFeaturesKhr = 1000163000,
+        /// <summary>[requires: VK_KHR_portability_subset]</summary>
+        StructureTypePhysicalDevicePortabilitySubsetPropertiesKhr = 1000163001,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        StructureTypePipelineViewportShadingRateImageStateCreateInfoNv = 1000164000,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        StructureTypePhysicalDeviceShadingRateImageFeaturesNv = 1000164001,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        StructureTypePhysicalDeviceShadingRateImagePropertiesNv = 1000164002,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        StructureTypePipelineViewportCoarseSampleOrderStateCreateInfoNv = 1000164005,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeRayTracingPipelineCreateInfoNv = 1000165000,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeAccelerationStructureCreateInfoNv = 1000165001,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeGeometryNv = 1000165003,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeGeometryTrianglesNv = 1000165004,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeGeometryAabbNv = 1000165005,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeBindAccelerationStructureMemoryInfoNv = 1000165006,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeWriteDescriptorSetAccelerationStructureNv = 1000165007,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeAccelerationStructureMemoryRequirementsInfoNv = 1000165008,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypePhysicalDeviceRayTracingPropertiesNv = 1000165009,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeRayTracingShaderGroupCreateInfoNv = 1000165011,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        StructureTypeAccelerationStructureInfoNv = 1000165012,
+        /// <summary>[requires: VK_NV_representative_fragment_test]</summary>
+        StructureTypePhysicalDeviceRepresentativeFragmentTestFeaturesNv = 1000166000,
+        /// <summary>[requires: VK_NV_representative_fragment_test]</summary>
+        StructureTypePipelineRepresentativeFragmentTestStateCreateInfoNv = 1000166001,
+        /// <summary>[requires: VK_EXT_filter_cubic]</summary>
+        StructureTypePhysicalDeviceImageViewImageFormatInfoExt = 1000170000,
+        /// <summary>[requires: VK_EXT_filter_cubic]</summary>
+        StructureTypeFilterCubicImageViewImageFormatPropertiesExt = 1000170001,
+        /// <summary>[requires: VK_EXT_external_memory_host]</summary>
+        StructureTypeImportMemoryHostPointerInfoExt = 1000178000,
+        /// <summary>[requires: VK_EXT_external_memory_host]</summary>
+        StructureTypeMemoryHostPointerPropertiesExt = 1000178001,
+        /// <summary>[requires: VK_EXT_external_memory_host]</summary>
+        StructureTypePhysicalDeviceExternalMemoryHostPropertiesExt = 1000178002,
+        /// <summary>[requires: VK_KHR_shader_clock]</summary>
+        StructureTypePhysicalDeviceShaderClockFeaturesKhr = 1000181000,
+        /// <summary>[requires: VK_AMD_pipeline_compiler_control]</summary>
+        StructureTypePipelineCompilerControlCreateInfoAmd = 1000183000,
+        /// <summary>[requires: VK_AMD_shader_core_properties]</summary>
+        StructureTypePhysicalDeviceShaderCorePropertiesAmd = 1000185000,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265CapabilitiesKhr = 1000187000,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265SessionParametersCreateInfoKhr = 1000187001,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265SessionParametersAddInfoKhr = 1000187002,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265ProfileInfoKhr = 1000187003,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265PictureInfoKhr = 1000187004,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        StructureTypeVideoDecodeH265DpbSlotInfoKhr = 1000187005,
+        /// <summary>[requires: VK_KHR_global_priority]</summary>
+        StructureTypeDeviceQueueGlobalPriorityCreateInfoKhr = 1000174000,
+        /// <summary>[requires: VK_KHR_global_priority]</summary>
+        StructureTypePhysicalDeviceGlobalPriorityQueryFeaturesKhr = 1000388000,
+        /// <summary>[requires: VK_KHR_global_priority]</summary>
+        StructureTypeQueueFamilyGlobalPriorityPropertiesKhr = 1000388001,
+        /// <summary>[requires: VK_AMD_memory_overallocation_behavior]</summary>
+        StructureTypeDeviceMemoryOverallocationCreateInfoAmd = 1000189000,
+        /// <summary>[requires: VK_EXT_vertex_attribute_divisor]</summary>
+        StructureTypePhysicalDeviceVertexAttributeDivisorPropertiesExt = 1000190000,
+        /// <summary>[requires: VK_GGP_frame_token]</summary>
+        StructureTypePresentFrameTokenGgp = 1000191000,
+        /// <summary>[requires: VK_NV_compute_shader_derivatives]</summary>
+        StructureTypePhysicalDeviceComputeShaderDerivativesFeaturesNv = 1000201000,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        StructureTypePhysicalDeviceMeshShaderFeaturesNv = 1000202000,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        StructureTypePhysicalDeviceMeshShaderPropertiesNv = 1000202001,
+        /// <summary>[requires: VK_NV_shader_image_footprint]</summary>
+        StructureTypePhysicalDeviceShaderImageFootprintFeaturesNv = 1000204000,
+        /// <summary>[requires: VK_NV_scissor_exclusive]</summary>
+        StructureTypePipelineViewportExclusiveScissorStateCreateInfoNv = 1000205000,
+        /// <summary>[requires: VK_NV_scissor_exclusive]</summary>
+        StructureTypePhysicalDeviceExclusiveScissorFeaturesNv = 1000205002,
+        /// <summary>[requires: VK_NV_device_diagnostic_checkpoints]</summary>
+        StructureTypeCheckpointDataNv = 1000206000,
+        /// <summary>[requires: VK_NV_device_diagnostic_checkpoints]</summary>
+        StructureTypeQueueFamilyCheckpointPropertiesNv = 1000206001,
+        /// <summary>[requires: VK_INTEL_shader_integer_functions2]</summary>
+        StructureTypePhysicalDeviceShaderIntegerFunctions2FeaturesIntel = 1000209000,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypeQueryPoolPerformanceQueryCreateInfoIntel = 1000210000,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypeInitializePerformanceApiInfoIntel = 1000210001,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypePerformanceMarkerInfoIntel = 1000210002,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypePerformanceStreamMarkerInfoIntel = 1000210003,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypePerformanceOverrideInfoIntel = 1000210004,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypePerformanceConfigurationAcquireInfoIntel = 1000210005,
+        /// <summary>[requires: VK_EXT_pci_bus_info]</summary>
+        StructureTypePhysicalDevicePciBusInfoPropertiesExt = 1000212000,
+        /// <summary>[requires: VK_AMD_display_native_hdr]</summary>
+        StructureTypeDisplayNativeHdrSurfaceCapabilitiesAmd = 1000213000,
+        /// <summary>[requires: VK_AMD_display_native_hdr]</summary>
+        StructureTypeSwapchainDisplayNativeHdrCreateInfoAmd = 1000213001,
+        /// <summary>[requires: VK_FUCHSIA_imagepipe_surface]</summary>
+        StructureTypeImagepipeSurfaceCreateInfoFuchsia = 1000214000,
+        /// <summary>[requires: VK_EXT_metal_surface]</summary>
+        StructureTypeMetalSurfaceCreateInfoExt = 1000217000,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMapFeaturesExt = 1000218000,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMapPropertiesExt = 1000218001,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        StructureTypeRenderPassFragmentDensityMapCreateInfoExt = 1000218002,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        StructureTypeFragmentShadingRateAttachmentInfoKhr = 1000226000,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        StructureTypePipelineFragmentShadingRateStateCreateInfoKhr = 1000226001,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        StructureTypePhysicalDeviceFragmentShadingRatePropertiesKhr = 1000226002,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        StructureTypePhysicalDeviceFragmentShadingRateFeaturesKhr = 1000226003,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        StructureTypePhysicalDeviceFragmentShadingRateKhr = 1000226004,
+        /// <summary>[requires: VK_AMD_shader_core_properties2]</summary>
+        StructureTypePhysicalDeviceShaderCoreProperties2Amd = 1000227000,
+        /// <summary>[requires: VK_AMD_device_coherent_memory]</summary>
+        StructureTypePhysicalDeviceCoherentMemoryFeaturesAmd = 1000229000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering_local_read]</summary>
+        StructureTypePhysicalDeviceDynamicRenderingLocalReadFeaturesKhr = 1000232000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering_local_read]</summary>
+        StructureTypeRenderingAttachmentLocationInfoKhr = 1000232001,
+        /// <summary>[requires: VK_KHR_dynamic_rendering_local_read]</summary>
+        StructureTypeRenderingInputAttachmentIndexInfoKhr = 1000232002,
+        /// <summary>[requires: VK_EXT_shader_image_atomic_int64]</summary>
+        StructureTypePhysicalDeviceShaderImageAtomicInt64FeaturesExt = 1000234000,
+        /// <summary>[requires: VK_KHR_shader_quad_control]</summary>
+        StructureTypePhysicalDeviceShaderQuadControlFeaturesKhr = 1000235000,
+        /// <summary>[requires: VK_EXT_memory_budget]</summary>
+        StructureTypePhysicalDeviceMemoryBudgetPropertiesExt = 1000237000,
+        /// <summary>[requires: VK_EXT_memory_priority]</summary>
+        StructureTypePhysicalDeviceMemoryPriorityFeaturesExt = 1000238000,
+        /// <summary>[requires: VK_EXT_memory_priority]</summary>
+        StructureTypeMemoryPriorityAllocateInfoExt = 1000238001,
+        /// <summary>[requires: VK_KHR_surface_protected_capabilities]</summary>
+        StructureTypeSurfaceProtectedCapabilitiesKhr = 1000239000,
+        /// <summary>[requires: VK_NV_dedicated_allocation_image_aliasing]</summary>
+        StructureTypePhysicalDeviceDedicatedAllocationImageAliasingFeaturesNv = 1000240000,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        StructureTypePhysicalDeviceBufferDeviceAddressFeaturesExt = 1000244000,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        StructureTypeBufferDeviceAddressCreateInfoExt = 1000244002,
+        /// <summary>[requires: VK_EXT_validation_features]</summary>
+        StructureTypeValidationFeaturesExt = 1000247000,
+        /// <summary>[requires: VK_KHR_present_wait]</summary>
+        StructureTypePhysicalDevicePresentWaitFeaturesKhr = 1000248000,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        StructureTypePhysicalDeviceCooperativeMatrixFeaturesNv = 1000249000,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        StructureTypeCooperativeMatrixPropertiesNv = 1000249001,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        StructureTypePhysicalDeviceCooperativeMatrixPropertiesNv = 1000249002,
+        /// <summary>[requires: VK_NV_coverage_reduction_mode]</summary>
+        StructureTypePhysicalDeviceCoverageReductionModeFeaturesNv = 1000250000,
+        /// <summary>[requires: VK_NV_coverage_reduction_mode]</summary>
+        StructureTypePipelineCoverageReductionStateCreateInfoNv = 1000250001,
+        /// <summary>[requires: VK_NV_coverage_reduction_mode]</summary>
+        StructureTypeFramebufferMixedSamplesCombinationNv = 1000250002,
+        /// <summary>[requires: VK_EXT_fragment_shader_interlock]</summary>
+        StructureTypePhysicalDeviceFragmentShaderInterlockFeaturesExt = 1000251000,
+        /// <summary>[requires: VK_EXT_ycbcr_image_arrays]</summary>
+        StructureTypePhysicalDeviceYcbcrImageArraysFeaturesExt = 1000252000,
+        /// <summary>[requires: VK_EXT_provoking_vertex]</summary>
+        StructureTypePhysicalDeviceProvokingVertexFeaturesExt = 1000254000,
+        /// <summary>[requires: VK_EXT_provoking_vertex]</summary>
+        StructureTypePipelineRasterizationProvokingVertexStateCreateInfoExt = 1000254001,
+        /// <summary>[requires: VK_EXT_provoking_vertex]</summary>
+        StructureTypePhysicalDeviceProvokingVertexPropertiesExt = 1000254002,
+        /// <summary>[requires: VK_EXT_full_screen_exclusive]</summary>
+        StructureTypeSurfaceFullScreenExclusiveInfoExt = 1000255000,
+        /// <summary>[requires: VK_EXT_full_screen_exclusive]</summary>
+        StructureTypeSurfaceCapabilitiesFullScreenExclusiveExt = 1000255002,
+        /// <summary>[requires: VK_EXT_full_screen_exclusive]</summary>
+        StructureTypeSurfaceFullScreenExclusiveWin32InfoExt = 1000255001,
+        /// <summary>[requires: VK_EXT_headless_surface]</summary>
+        StructureTypeHeadlessSurfaceCreateInfoExt = 1000256000,
+        /// <summary>[requires: VK_EXT_shader_atomic_float]</summary>
+        StructureTypePhysicalDeviceShaderAtomicFloatFeaturesExt = 1000260000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        StructureTypePhysicalDeviceExtendedDynamicStateFeaturesExt = 1000267000,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePhysicalDevicePipelineExecutablePropertiesFeaturesKhr = 1000269000,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePipelineInfoKhr = 1000269001,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePipelineExecutablePropertiesKhr = 1000269002,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePipelineExecutableInfoKhr = 1000269003,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePipelineExecutableStatisticKhr = 1000269004,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        StructureTypePipelineExecutableInternalRepresentationKhr = 1000269005,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypePhysicalDeviceHostImageCopyFeaturesExt = 1000270000,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypePhysicalDeviceHostImageCopyPropertiesExt = 1000270001,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeMemoryToImageCopyExt = 1000270002,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeImageToMemoryCopyExt = 1000270003,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeCopyImageToMemoryInfoExt = 1000270004,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeCopyMemoryToImageInfoExt = 1000270005,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeHostImageLayoutTransitionInfoExt = 1000270006,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeCopyImageToImageInfoExt = 1000270007,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeSubresourceHostMemcpySizeExt = 1000270008,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        StructureTypeHostImageCopyDevicePerformanceQueryExt = 1000270009,
+        /// <summary>[requires: VK_KHR_map_memory2]</summary>
+        StructureTypeMemoryMapInfoKhr = 1000271000,
+        /// <summary>[requires: VK_KHR_map_memory2]</summary>
+        StructureTypeMemoryUnmapInfoKhr = 1000271001,
+        /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
+        StructureTypePhysicalDeviceMapMemoryPlacedFeaturesExt = 1000272000,
+        /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
+        StructureTypePhysicalDeviceMapMemoryPlacedPropertiesExt = 1000272001,
+        /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
+        StructureTypeMemoryMapPlacedInfoExt = 1000272002,
+        /// <summary>[requires: VK_EXT_shader_atomic_float2]</summary>
+        StructureTypePhysicalDeviceShaderAtomicFloat2FeaturesExt = 1000273000,
+        /// <summary>[requires: VK_EXT_surface_maintenance1]</summary>
+        StructureTypeSurfacePresentModeExt = 1000274000,
+        /// <summary>[requires: VK_EXT_surface_maintenance1]</summary>
+        StructureTypeSurfacePresentScalingCapabilitiesExt = 1000274001,
+        /// <summary>[requires: VK_EXT_surface_maintenance1]</summary>
+        StructureTypeSurfacePresentModeCompatibilityExt = 1000274002,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypePhysicalDeviceSwapchainMaintenance1FeaturesExt = 1000275000,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypeSwapchainPresentFenceInfoExt = 1000275001,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypeSwapchainPresentModesCreateInfoExt = 1000275002,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypeSwapchainPresentModeInfoExt = 1000275003,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypeSwapchainPresentScalingCreateInfoExt = 1000275004,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        StructureTypeReleaseSwapchainImagesInfoExt = 1000275005,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypePhysicalDeviceDeviceGeneratedCommandsPropertiesNv = 1000277000,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeGraphicsShaderGroupCreateInfoNv = 1000277001,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeGraphicsPipelineShaderGroupsCreateInfoNv = 1000277002,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeIndirectCommandsLayoutTokenNv = 1000277003,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeIndirectCommandsLayoutCreateInfoNv = 1000277004,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeGeneratedCommandsInfoNv = 1000277005,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypeGeneratedCommandsMemoryRequirementsInfoNv = 1000277006,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        StructureTypePhysicalDeviceDeviceGeneratedCommandsFeaturesNv = 1000277007,
+        /// <summary>[requires: VK_NV_inherited_viewport_scissor]</summary>
+        StructureTypePhysicalDeviceInheritedViewportScissorFeaturesNv = 1000278000,
+        /// <summary>[requires: VK_NV_inherited_viewport_scissor]</summary>
+        StructureTypeCommandBufferInheritanceViewportScissorInfoNv = 1000278001,
+        /// <summary>[requires: VK_EXT_texel_buffer_alignment]</summary>
+        StructureTypePhysicalDeviceTexelBufferAlignmentFeaturesExt = 1000281000,
+        /// <summary>[requires: VK_QCOM_render_pass_transform]</summary>
+        StructureTypeCommandBufferInheritanceRenderPassTransformInfoQcom = 1000282000,
+        /// <summary>[requires: VK_QCOM_render_pass_transform]</summary>
+        StructureTypeRenderPassTransformBeginInfoQcom = 1000282001,
+        /// <summary>[requires: VK_EXT_depth_bias_control]</summary>
+        StructureTypePhysicalDeviceDepthBiasControlFeaturesExt = 1000283000,
+        /// <summary>[requires: VK_EXT_depth_bias_control]</summary>
+        StructureTypeDepthBiasInfoExt = 1000283001,
+        /// <summary>[requires: VK_EXT_depth_bias_control]</summary>
+        StructureTypeDepthBiasRepresentationInfoExt = 1000283002,
+        /// <summary>[requires: VK_EXT_device_memory_report]</summary>
+        StructureTypePhysicalDeviceDeviceMemoryReportFeaturesExt = 1000284000,
+        /// <summary>[requires: VK_EXT_device_memory_report]</summary>
+        StructureTypeDeviceDeviceMemoryReportCreateInfoExt = 1000284001,
+        /// <summary>[requires: VK_EXT_device_memory_report]</summary>
+        StructureTypeDeviceMemoryReportCallbackDataExt = 1000284002,
+        /// <summary>[requires: VK_EXT_robustness2]</summary>
+        StructureTypePhysicalDeviceRobustness2FeaturesExt = 1000286000,
+        /// <summary>[requires: VK_EXT_robustness2]</summary>
+        StructureTypePhysicalDeviceRobustness2PropertiesExt = 1000286001,
+        /// <summary>[requires: VK_EXT_custom_border_color]</summary>
+        StructureTypeSamplerCustomBorderColorCreateInfoExt = 1000287000,
+        /// <summary>[requires: VK_EXT_custom_border_color]</summary>
+        StructureTypePhysicalDeviceCustomBorderColorPropertiesExt = 1000287001,
+        /// <summary>[requires: VK_EXT_custom_border_color]</summary>
+        StructureTypePhysicalDeviceCustomBorderColorFeaturesExt = 1000287002,
+        /// <summary>[requires: VK_KHR_pipeline_library]</summary>
+        StructureTypePipelineLibraryCreateInfoKhr = 1000290000,
+        /// <summary>[requires: VK_NV_present_barrier]</summary>
+        StructureTypePhysicalDevicePresentBarrierFeaturesNv = 1000292000,
+        /// <summary>[requires: VK_NV_present_barrier]</summary>
+        StructureTypeSurfaceCapabilitiesPresentBarrierNv = 1000292001,
+        /// <summary>[requires: VK_NV_present_barrier]</summary>
+        StructureTypeSwapchainPresentBarrierCreateInfoNv = 1000292002,
+        /// <summary>[requires: VK_KHR_present_id]</summary>
+        StructureTypePresentIdKhr = 1000294000,
+        /// <summary>[requires: VK_KHR_present_id]</summary>
+        StructureTypePhysicalDevicePresentIdFeaturesKhr = 1000294001,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeInfoKhr = 1000299000,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeRateControlInfoKhr = 1000299001,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeRateControlLayerInfoKhr = 1000299002,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeCapabilitiesKhr = 1000299003,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeUsageInfoKhr = 1000299004,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeQueryPoolVideoEncodeFeedbackCreateInfoKhr = 1000299005,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypePhysicalDeviceVideoEncodeQualityLevelInfoKhr = 1000299006,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeQualityLevelPropertiesKhr = 1000299007,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeQualityLevelInfoKhr = 1000299008,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeSessionParametersGetInfoKhr = 1000299009,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        StructureTypeVideoEncodeSessionParametersFeedbackInfoKhr = 1000299010,
+        /// <summary>[requires: VK_NV_device_diagnostics_config]</summary>
+        StructureTypePhysicalDeviceDiagnosticsConfigFeaturesNv = 1000300000,
+        /// <summary>[requires: VK_NV_device_diagnostics_config]</summary>
+        StructureTypeDeviceDiagnosticsConfigCreateInfoNv = 1000300001,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        StructureTypeCudaModuleCreateInfoNv = 1000307000,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        StructureTypeCudaFunctionCreateInfoNv = 1000307001,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        StructureTypeCudaLaunchInfoNv = 1000307002,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        StructureTypePhysicalDeviceCudaKernelLaunchFeaturesNv = 1000307003,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        StructureTypePhysicalDeviceCudaKernelLaunchPropertiesNv = 1000307004,
+        /// <summary>[requires: VK_KHR_object_refresh]</summary>
+        StructureTypeRefreshObjectListKhr = 1000308000,
+        /// <summary>[requires: VK_NV_low_latency]</summary>
+        StructureTypeQueryLowLatencySupportNv = 1000310000,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalObjectCreateInfoExt = 1000311000,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalObjectsInfoExt = 1000311001,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalDeviceInfoExt = 1000311002,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalCommandQueueInfoExt = 1000311003,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalBufferInfoExt = 1000311004,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeImportMetalBufferInfoExt = 1000311005,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalTextureInfoExt = 1000311006,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeImportMetalTextureInfoExt = 1000311007,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalIoSurfaceInfoExt = 1000311008,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeImportMetalIoSurfaceInfoExt = 1000311009,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeExportMetalSharedEventInfoExt = 1000311010,
+        /// <summary>[requires: VK_EXT_metal_objects]</summary>
+        StructureTypeImportMetalSharedEventInfoExt = 1000311011,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeQueueFamilyCheckpointProperties2Nv = 1000314008,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeCheckpointData2Nv = 1000314009,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypePhysicalDeviceDescriptorBufferPropertiesExt = 1000316000,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypePhysicalDeviceDescriptorBufferDensityMapPropertiesExt = 1000316001,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypePhysicalDeviceDescriptorBufferFeaturesExt = 1000316002,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeDescriptorAddressInfoExt = 1000316003,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeDescriptorGetInfoExt = 1000316004,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeBufferCaptureDescriptorDataInfoExt = 1000316005,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeImageCaptureDescriptorDataInfoExt = 1000316006,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeImageViewCaptureDescriptorDataInfoExt = 1000316007,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeSamplerCaptureDescriptorDataInfoExt = 1000316008,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeOpaqueCaptureDescriptorDataCreateInfoExt = 1000316010,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeDescriptorBufferBindingInfoExt = 1000316011,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeDescriptorBufferBindingPushDescriptorBufferHandleExt = 1000316012,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        StructureTypeAccelerationStructureCaptureDescriptorDataInfoExt = 1000316009,
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        StructureTypePhysicalDeviceGraphicsPipelineLibraryFeaturesExt = 1000320000,
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        StructureTypePhysicalDeviceGraphicsPipelineLibraryPropertiesExt = 1000320001,
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        StructureTypeGraphicsPipelineLibraryCreateInfoExt = 1000320002,
+        /// <summary>[requires: VK_AMD_shader_early_and_late_fragment_tests]</summary>
+        StructureTypePhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAmd = 1000321000,
+        /// <summary>[requires: VK_KHR_fragment_shader_barycentric]</summary>
+        StructureTypePhysicalDeviceFragmentShaderBarycentricFeaturesKhr = 1000203000,
+        /// <summary>[requires: VK_KHR_fragment_shader_barycentric]</summary>
+        StructureTypePhysicalDeviceFragmentShaderBarycentricPropertiesKhr = 1000322000,
+        /// <summary>[requires: VK_KHR_shader_subgroup_uniform_control_flow]</summary>
+        StructureTypePhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKhr = 1000323000,
+        /// <summary>[requires: VK_NV_fragment_shading_rate_enums]</summary>
+        StructureTypePhysicalDeviceFragmentShadingRateEnumsPropertiesNv = 1000326000,
+        /// <summary>[requires: VK_NV_fragment_shading_rate_enums]</summary>
+        StructureTypePhysicalDeviceFragmentShadingRateEnumsFeaturesNv = 1000326001,
+        /// <summary>[requires: VK_NV_fragment_shading_rate_enums]</summary>
+        StructureTypePipelineFragmentShadingRateEnumStateCreateInfoNv = 1000326002,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        StructureTypeAccelerationStructureGeometryMotionTrianglesDataNv = 1000327000,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        StructureTypePhysicalDeviceRayTracingMotionBlurFeaturesNv = 1000327001,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        StructureTypeAccelerationStructureMotionInfoNv = 1000327002,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        StructureTypePhysicalDeviceMeshShaderFeaturesExt = 1000328000,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        StructureTypePhysicalDeviceMeshShaderPropertiesExt = 1000328001,
+        /// <summary>[requires: VK_EXT_ycbcr_2plane_444_formats]</summary>
+        StructureTypePhysicalDeviceYcbcr2Plane444FormatsFeaturesExt = 1000330000,
+        /// <summary>[requires: VK_EXT_fragment_density_map2]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMap2FeaturesExt = 1000332000,
+        /// <summary>[requires: VK_EXT_fragment_density_map2]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMap2PropertiesExt = 1000332001,
+        /// <summary>[requires: VK_QCOM_rotated_copy_commands]</summary>
+        StructureTypeCopyCommandTransformInfoQcom = 1000333000,
+        /// <summary>[requires: VK_KHR_workgroup_memory_explicit_layout]</summary>
+        StructureTypePhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKhr = 1000336000,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        StructureTypePhysicalDeviceImageCompressionControlFeaturesExt = 1000338000,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        StructureTypeImageCompressionControlExt = 1000338001,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        StructureTypeImageCompressionPropertiesExt = 1000338004,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        StructureTypePhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesExt = 1000339000,
+        /// <summary>[requires: VK_EXT_4444_formats]</summary>
+        StructureTypePhysicalDevice4444FormatsFeaturesExt = 1000340000,
+        /// <summary>[requires: VK_EXT_device_fault]</summary>
+        StructureTypePhysicalDeviceFaultFeaturesExt = 1000341000,
+        /// <summary>[requires: VK_EXT_device_fault]</summary>
+        StructureTypeDeviceFaultCountsExt = 1000341001,
+        /// <summary>[requires: VK_EXT_device_fault]</summary>
+        StructureTypeDeviceFaultInfoExt = 1000341002,
+        /// <summary>[requires: VK_EXT_rgba10x6_formats]</summary>
+        StructureTypePhysicalDeviceRgba10x6FormatsFeaturesExt = 1000344000,
+        /// <summary>[requires: VK_EXT_directfb_surface]</summary>
+        StructureTypeDirectfbSurfaceCreateInfoExt = 1000346000,
+        /// <summary>[requires: VK_EXT_vertex_input_dynamic_state]</summary>
+        StructureTypePhysicalDeviceVertexInputDynamicStateFeaturesExt = 1000352000,
+        /// <summary>[requires: VK_EXT_vertex_input_dynamic_state]</summary>
+        StructureTypeVertexInputBindingDescription2Ext = 1000352001,
+        /// <summary>[requires: VK_EXT_vertex_input_dynamic_state]</summary>
+        StructureTypeVertexInputAttributeDescription2Ext = 1000352002,
+        /// <summary>[requires: VK_EXT_physical_device_drm]</summary>
+        StructureTypePhysicalDeviceDrmPropertiesExt = 1000353000,
+        /// <summary>[requires: VK_EXT_device_address_binding_report]</summary>
+        StructureTypePhysicalDeviceAddressBindingReportFeaturesExt = 1000354000,
+        /// <summary>[requires: VK_EXT_device_address_binding_report]</summary>
+        StructureTypeDeviceAddressBindingCallbackDataExt = 1000354001,
+        /// <summary>[requires: VK_EXT_depth_clip_control]</summary>
+        StructureTypePhysicalDeviceDepthClipControlFeaturesExt = 1000355000,
+        /// <summary>[requires: VK_EXT_depth_clip_control]</summary>
+        StructureTypePipelineViewportDepthClipControlCreateInfoExt = 1000355001,
+        /// <summary>[requires: VK_EXT_primitive_topology_list_restart]</summary>
+        StructureTypePhysicalDevicePrimitiveTopologyListRestartFeaturesExt = 1000356000,
+        /// <summary>[requires: VK_FUCHSIA_external_memory]</summary>
+        StructureTypeImportMemoryZirconHandleInfoFuchsia = 1000364000,
+        /// <summary>[requires: VK_FUCHSIA_external_memory]</summary>
+        StructureTypeMemoryZirconHandlePropertiesFuchsia = 1000364001,
+        /// <summary>[requires: VK_FUCHSIA_external_memory]</summary>
+        StructureTypeMemoryGetZirconHandleInfoFuchsia = 1000364002,
+        /// <summary>[requires: VK_FUCHSIA_external_semaphore]</summary>
+        StructureTypeImportSemaphoreZirconHandleInfoFuchsia = 1000365000,
+        /// <summary>[requires: VK_FUCHSIA_external_semaphore]</summary>
+        StructureTypeSemaphoreGetZirconHandleInfoFuchsia = 1000365001,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferCollectionCreateInfoFuchsia = 1000366000,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeImportMemoryBufferCollectionFuchsia = 1000366001,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferCollectionImageCreateInfoFuchsia = 1000366002,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferCollectionPropertiesFuchsia = 1000366003,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferConstraintsInfoFuchsia = 1000366004,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferCollectionBufferCreateInfoFuchsia = 1000366005,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeImageConstraintsInfoFuchsia = 1000366006,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeImageFormatConstraintsInfoFuchsia = 1000366007,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeSysmemColorSpaceFuchsia = 1000366008,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        StructureTypeBufferCollectionConstraintsInfoFuchsia = 1000366009,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        StructureTypeSubpassShadingPipelineCreateInfoHuawei = 1000369000,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        StructureTypePhysicalDeviceSubpassShadingFeaturesHuawei = 1000369001,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        StructureTypePhysicalDeviceSubpassShadingPropertiesHuawei = 1000369002,
+        /// <summary>[requires: VK_HUAWEI_invocation_mask]</summary>
+        StructureTypePhysicalDeviceInvocationMaskFeaturesHuawei = 1000370000,
+        /// <summary>[requires: VK_NV_external_memory_rdma]</summary>
+        StructureTypeMemoryGetRemoteAddressInfoNv = 1000371000,
+        /// <summary>[requires: VK_NV_external_memory_rdma]</summary>
+        StructureTypePhysicalDeviceExternalMemoryRdmaFeaturesNv = 1000371001,
+        /// <summary>[requires: VK_EXT_pipeline_properties]</summary>
+        StructureTypePipelinePropertiesIdentifierExt = 1000372000,
+        /// <summary>[requires: VK_EXT_pipeline_properties]</summary>
+        StructureTypePhysicalDevicePipelinePropertiesFeaturesExt = 1000372001,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeImportFenceSciSyncInfoNv = 1000373000,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeExportFenceSciSyncInfoNv = 1000373001,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeFenceGetSciSyncInfoNv = 1000373002,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeSciSyncAttributesInfoNv = 1000373003,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeImportSemaphoreSciSyncInfoNv = 1000373004,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeExportSemaphoreSciSyncInfoNv = 1000373005,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypeSemaphoreGetSciSyncInfoNv = 1000373006,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        StructureTypePhysicalDeviceExternalSciSyncFeaturesNv = 1000373007,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypeImportMemorySciBufInfoNv = 1000374000,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypeExportMemorySciBufInfoNv = 1000374001,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypeMemoryGetSciBufInfoNv = 1000374002,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypeMemorySciBufPropertiesNv = 1000374003,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypePhysicalDeviceExternalMemorySciBufFeaturesNv = 1000374004,
+        /// <summary>[requires: VK_EXT_frame_boundary]</summary>
+        StructureTypePhysicalDeviceFrameBoundaryFeaturesExt = 1000375000,
+        /// <summary>[requires: VK_EXT_frame_boundary]</summary>
+        StructureTypeFrameBoundaryExt = 1000375001,
+        /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
+        StructureTypePhysicalDeviceMultisampledRenderToSingleSampledFeaturesExt = 1000376000,
+        /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
+        StructureTypeSubpassResolvePerformanceQueryExt = 1000376001,
+        /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
+        StructureTypeMultisampledRenderToSingleSampledInfoExt = 1000376002,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        StructureTypePhysicalDeviceExtendedDynamicState2FeaturesExt = 1000377000,
+        /// <summary>[requires: VK_QNX_screen_surface]</summary>
+        StructureTypeScreenSurfaceCreateInfoQnx = 1000378000,
+        /// <summary>[requires: VK_EXT_color_write_enable]</summary>
+        StructureTypePhysicalDeviceColorWriteEnableFeaturesExt = 1000381000,
+        /// <summary>[requires: VK_EXT_color_write_enable]</summary>
+        StructureTypePipelineColorWriteCreateInfoExt = 1000381001,
+        /// <summary>[requires: VK_EXT_primitives_generated_query]</summary>
+        StructureTypePhysicalDevicePrimitivesGeneratedQueryFeaturesExt = 1000382000,
+        /// <summary>[requires: VK_KHR_ray_tracing_maintenance1]</summary>
+        StructureTypePhysicalDeviceRayTracingMaintenance1FeaturesKhr = 1000386000,
+        /// <summary>[requires: VK_EXT_image_view_min_lod]</summary>
+        StructureTypePhysicalDeviceImageViewMinLodFeaturesExt = 1000391000,
+        /// <summary>[requires: VK_EXT_image_view_min_lod]</summary>
+        StructureTypeImageViewMinLodCreateInfoExt = 1000391001,
+        /// <summary>[requires: VK_EXT_multi_draw]</summary>
+        StructureTypePhysicalDeviceMultiDrawFeaturesExt = 1000392000,
+        /// <summary>[requires: VK_EXT_multi_draw]</summary>
+        StructureTypePhysicalDeviceMultiDrawPropertiesExt = 1000392001,
+        /// <summary>[requires: VK_EXT_image_2d_view_of_3d]</summary>
+        StructureTypePhysicalDeviceImage2dViewOf3dFeaturesExt = 1000393000,
+        /// <summary>[requires: VK_EXT_shader_tile_image]</summary>
+        StructureTypePhysicalDeviceShaderTileImageFeaturesExt = 1000395000,
+        /// <summary>[requires: VK_EXT_shader_tile_image]</summary>
+        StructureTypePhysicalDeviceShaderTileImagePropertiesExt = 1000395001,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeMicromapBuildInfoExt = 1000396000,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeMicromapVersionInfoExt = 1000396001,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeCopyMicromapInfoExt = 1000396002,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeCopyMicromapToMemoryInfoExt = 1000396003,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeCopyMemoryToMicromapInfoExt = 1000396004,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypePhysicalDeviceOpacityMicromapFeaturesExt = 1000396005,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypePhysicalDeviceOpacityMicromapPropertiesExt = 1000396006,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeMicromapCreateInfoExt = 1000396007,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeMicromapBuildSizesInfoExt = 1000396008,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        StructureTypeAccelerationStructureTrianglesOpacityMicromapExt = 1000396009,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        StructureTypePhysicalDeviceDisplacementMicromapFeaturesNv = 1000397000,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        StructureTypePhysicalDeviceDisplacementMicromapPropertiesNv = 1000397001,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        StructureTypeAccelerationStructureTrianglesDisplacementMicromapNv = 1000397002,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        StructureTypePhysicalDeviceClusterCullingShaderFeaturesHuawei = 1000404000,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        StructureTypePhysicalDeviceClusterCullingShaderPropertiesHuawei = 1000404001,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        StructureTypePhysicalDeviceClusterCullingShaderVrsFeaturesHuawei = 1000404002,
+        /// <summary>[requires: VK_EXT_border_color_swizzle]</summary>
+        StructureTypePhysicalDeviceBorderColorSwizzleFeaturesExt = 1000411000,
+        /// <summary>[requires: VK_EXT_border_color_swizzle]</summary>
+        StructureTypeSamplerBorderColorComponentMappingCreateInfoExt = 1000411001,
+        /// <summary>[requires: VK_EXT_pageable_device_local_memory]</summary>
+        StructureTypePhysicalDevicePageableDeviceLocalMemoryFeaturesExt = 1000412000,
+        /// <summary>[requires: VK_ARM_shader_core_properties]</summary>
+        StructureTypePhysicalDeviceShaderCorePropertiesArm = 1000415000,
+        /// <summary>[requires: VK_KHR_shader_subgroup_rotate]</summary>
+        StructureTypePhysicalDeviceShaderSubgroupRotateFeaturesKhr = 1000416000,
+        /// <summary>[requires: VK_ARM_scheduling_controls]</summary>
+        StructureTypeDeviceQueueShaderCoreControlCreateInfoArm = 1000417000,
+        /// <summary>[requires: VK_ARM_scheduling_controls]</summary>
+        StructureTypePhysicalDeviceSchedulingControlsFeaturesArm = 1000417001,
+        /// <summary>[requires: VK_ARM_scheduling_controls]</summary>
+        StructureTypePhysicalDeviceSchedulingControlsPropertiesArm = 1000417002,
+        /// <summary>[requires: VK_EXT_image_sliced_view_of_3d]</summary>
+        StructureTypePhysicalDeviceImageSlicedViewOf3dFeaturesExt = 1000418000,
+        /// <summary>[requires: VK_EXT_image_sliced_view_of_3d]</summary>
+        StructureTypeImageViewSlicedCreateInfoExt = 1000418001,
+        /// <summary>[requires: VK_VALVE_descriptor_set_host_mapping]</summary>
+        StructureTypePhysicalDeviceDescriptorSetHostMappingFeaturesValve = 1000420000,
+        /// <summary>[requires: VK_VALVE_descriptor_set_host_mapping]</summary>
+        StructureTypeDescriptorSetBindingReferenceValve = 1000420001,
+        /// <summary>[requires: VK_VALVE_descriptor_set_host_mapping]</summary>
+        StructureTypeDescriptorSetLayoutHostMappingInfoValve = 1000420002,
+        /// <summary>[requires: VK_EXT_depth_clamp_zero_one]</summary>
+        StructureTypePhysicalDeviceDepthClampZeroOneFeaturesExt = 1000421000,
+        /// <summary>[requires: VK_EXT_non_seamless_cube_map]</summary>
+        StructureTypePhysicalDeviceNonSeamlessCubeMapFeaturesExt = 1000422000,
+        /// <summary>[requires: VK_ARM_render_pass_striped]</summary>
+        StructureTypePhysicalDeviceRenderPassStripedFeaturesArm = 1000424000,
+        /// <summary>[requires: VK_ARM_render_pass_striped]</summary>
+        StructureTypePhysicalDeviceRenderPassStripedPropertiesArm = 1000424001,
+        /// <summary>[requires: VK_ARM_render_pass_striped]</summary>
+        StructureTypeRenderPassStripeBeginInfoArm = 1000424002,
+        /// <summary>[requires: VK_ARM_render_pass_striped]</summary>
+        StructureTypeRenderPassStripeInfoArm = 1000424003,
+        /// <summary>[requires: VK_ARM_render_pass_striped]</summary>
+        StructureTypeRenderPassStripeSubmitInfoArm = 1000424004,
+        /// <summary>[requires: VK_QCOM_fragment_density_map_offset]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMapOffsetFeaturesQcom = 1000425000,
+        /// <summary>[requires: VK_QCOM_fragment_density_map_offset]</summary>
+        StructureTypePhysicalDeviceFragmentDensityMapOffsetPropertiesQcom = 1000425001,
+        /// <summary>[requires: VK_QCOM_fragment_density_map_offset]</summary>
+        StructureTypeSubpassFragmentDensityMapOffsetEndInfoQcom = 1000425002,
+        /// <summary>[requires: VK_NV_copy_memory_indirect]</summary>
+        StructureTypePhysicalDeviceCopyMemoryIndirectFeaturesNv = 1000426000,
+        /// <summary>[requires: VK_NV_copy_memory_indirect]</summary>
+        StructureTypePhysicalDeviceCopyMemoryIndirectPropertiesNv = 1000426001,
+        /// <summary>[requires: VK_NV_memory_decompression]</summary>
+        StructureTypePhysicalDeviceMemoryDecompressionFeaturesNv = 1000427000,
+        /// <summary>[requires: VK_NV_memory_decompression]</summary>
+        StructureTypePhysicalDeviceMemoryDecompressionPropertiesNv = 1000427001,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        StructureTypePhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNv = 1000428000,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        StructureTypeComputePipelineIndirectBufferInfoNv = 1000428001,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        StructureTypePipelineIndirectDeviceAddressInfoNv = 1000428002,
+        /// <summary>[requires: VK_NV_linear_color_attachment]</summary>
+        StructureTypePhysicalDeviceLinearColorAttachmentFeaturesNv = 1000430000,
+        /// <summary>[requires: VK_KHR_shader_maximal_reconvergence]</summary>
+        StructureTypePhysicalDeviceShaderMaximalReconvergenceFeaturesKhr = 1000434000,
+        /// <summary>[requires: VK_EXT_application_parameters]</summary>
+        StructureTypeApplicationParametersExt = 1000435000,
+        /// <summary>[requires: VK_EXT_image_compression_control_swapchain]</summary>
+        StructureTypePhysicalDeviceImageCompressionControlSwapchainFeaturesExt = 1000437000,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        StructureTypePhysicalDeviceImageProcessingFeaturesQcom = 1000440000,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        StructureTypePhysicalDeviceImageProcessingPropertiesQcom = 1000440001,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        StructureTypeImageViewSampleWeightCreateInfoQcom = 1000440002,
+        /// <summary>[requires: VK_EXT_nested_command_buffer]</summary>
+        StructureTypePhysicalDeviceNestedCommandBufferFeaturesExt = 1000451000,
+        /// <summary>[requires: VK_EXT_nested_command_buffer]</summary>
+        StructureTypePhysicalDeviceNestedCommandBufferPropertiesExt = 1000451001,
+        /// <summary>[requires: VK_EXT_external_memory_acquire_unmodified]</summary>
+        StructureTypeExternalMemoryAcquireUnmodifiedExt = 1000453000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        StructureTypePhysicalDeviceExtendedDynamicState3FeaturesExt = 1000455000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        StructureTypePhysicalDeviceExtendedDynamicState3PropertiesExt = 1000455001,
+        /// <summary>[requires: VK_EXT_subpass_merge_feedback]</summary>
+        StructureTypePhysicalDeviceSubpassMergeFeedbackFeaturesExt = 1000458000,
+        /// <summary>[requires: VK_EXT_subpass_merge_feedback]</summary>
+        StructureTypeRenderPassCreationControlExt = 1000458001,
+        /// <summary>[requires: VK_EXT_subpass_merge_feedback]</summary>
+        StructureTypeRenderPassCreationFeedbackCreateInfoExt = 1000458002,
+        /// <summary>[requires: VK_EXT_subpass_merge_feedback]</summary>
+        StructureTypeRenderPassSubpassFeedbackCreateInfoExt = 1000458003,
+        /// <summary>[requires: VK_LUNARG_direct_driver_loading]</summary>
+        StructureTypeDirectDriverLoadingInfoLunarg = 1000459000,
+        /// <summary>[requires: VK_LUNARG_direct_driver_loading]</summary>
+        StructureTypeDirectDriverLoadingListLunarg = 1000459001,
+        /// <summary>[requires: VK_EXT_shader_module_identifier]</summary>
+        StructureTypePhysicalDeviceShaderModuleIdentifierFeaturesExt = 1000462000,
+        /// <summary>[requires: VK_EXT_shader_module_identifier]</summary>
+        StructureTypePhysicalDeviceShaderModuleIdentifierPropertiesExt = 1000462001,
+        /// <summary>[requires: VK_EXT_shader_module_identifier]</summary>
+        StructureTypePipelineShaderStageModuleIdentifierCreateInfoExt = 1000462002,
+        /// <summary>[requires: VK_EXT_shader_module_identifier]</summary>
+        StructureTypeShaderModuleIdentifierExt = 1000462003,
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        StructureTypePhysicalDeviceRasterizationOrderAttachmentAccessFeaturesExt = 1000342000,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypePhysicalDeviceOpticalFlowFeaturesNv = 1000464000,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypePhysicalDeviceOpticalFlowPropertiesNv = 1000464001,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypeOpticalFlowImageFormatInfoNv = 1000464002,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypeOpticalFlowImageFormatPropertiesNv = 1000464003,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypeOpticalFlowSessionCreateInfoNv = 1000464004,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypeOpticalFlowExecuteInfoNv = 1000464005,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        StructureTypeOpticalFlowSessionCreatePrivateDataInfoNv = 1000464010,
+        /// <summary>[requires: VK_EXT_legacy_dithering]</summary>
+        StructureTypePhysicalDeviceLegacyDitheringFeaturesExt = 1000465000,
+        /// <summary>[requires: VK_EXT_pipeline_protected_access]</summary>
+        StructureTypePhysicalDevicePipelineProtectedAccessFeaturesExt = 1000466000,
+        /// <summary>[requires: VK_ANDROID_external_format_resolve]</summary>
+        StructureTypePhysicalDeviceExternalFormatResolveFeaturesAndroid = 1000468000,
+        /// <summary>[requires: VK_ANDROID_external_format_resolve]</summary>
+        StructureTypePhysicalDeviceExternalFormatResolvePropertiesAndroid = 1000468001,
+        /// <summary>[requires: VK_ANDROID_external_format_resolve]</summary>
+        StructureTypeAndroidHardwareBufferFormatResolvePropertiesAndroid = 1000468002,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypePhysicalDeviceMaintenance5FeaturesKhr = 1000470000,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypePhysicalDeviceMaintenance5PropertiesKhr = 1000470001,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypeRenderingAreaInfoKhr = 1000470003,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypeDeviceImageSubresourceInfoKhr = 1000470004,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypeSubresourceLayout2Khr = 1000338002,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypeImageSubresource2Khr = 1000338003,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypePipelineCreateFlags2CreateInfoKhr = 1000470005,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        StructureTypeBufferUsageFlags2CreateInfoKhr = 1000470006,
+        /// <summary>[requires: VK_KHR_ray_tracing_position_fetch]</summary>
+        StructureTypePhysicalDeviceRayTracingPositionFetchFeaturesKhr = 1000481000,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        StructureTypePhysicalDeviceShaderObjectFeaturesExt = 1000482000,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        StructureTypePhysicalDeviceShaderObjectPropertiesExt = 1000482001,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        StructureTypeShaderCreateInfoExt = 1000482002,
+        /// <summary>[requires: VK_QCOM_tile_properties]</summary>
+        StructureTypePhysicalDeviceTilePropertiesFeaturesQcom = 1000484000,
+        /// <summary>[requires: VK_QCOM_tile_properties]</summary>
+        StructureTypeTilePropertiesQcom = 1000484001,
+        /// <summary>[requires: VK_SEC_amigo_profiling]</summary>
+        StructureTypePhysicalDeviceAmigoProfilingFeaturesSec = 1000485000,
+        /// <summary>[requires: VK_SEC_amigo_profiling]</summary>
+        StructureTypeAmigoProfilingSubmitInfoSec = 1000485001,
+        /// <summary>[requires: VK_QCOM_multiview_per_view_viewports]</summary>
+        StructureTypePhysicalDeviceMultiviewPerViewViewportsFeaturesQcom = 1000488000,
+        /// <summary>[requires: VK_NV_external_sci_sync2]</summary>
+        StructureTypeSemaphoreSciSyncPoolCreateInfoNv = 1000489000,
+        /// <summary>[requires: VK_NV_external_sci_sync2]</summary>
+        StructureTypeSemaphoreSciSyncCreateInfoNv = 1000489001,
+        /// <summary>[requires: VK_NV_external_sci_sync2]</summary>
+        StructureTypePhysicalDeviceExternalSciSync2FeaturesNv = 1000489002,
+        /// <summary>[requires: VK_NV_ray_tracing_invocation_reorder]</summary>
+        StructureTypePhysicalDeviceRayTracingInvocationReorderFeaturesNv = 1000490000,
+        /// <summary>[requires: VK_NV_ray_tracing_invocation_reorder]</summary>
+        StructureTypePhysicalDeviceRayTracingInvocationReorderPropertiesNv = 1000490001,
+        /// <summary>[requires: VK_NV_extended_sparse_address_space]</summary>
+        StructureTypePhysicalDeviceExtendedSparseAddressSpaceFeaturesNv = 1000492000,
+        /// <summary>[requires: VK_NV_extended_sparse_address_space]</summary>
+        StructureTypePhysicalDeviceExtendedSparseAddressSpacePropertiesNv = 1000492001,
+        /// <summary>[requires: VK_EXT_mutable_descriptor_type]</summary>
+        StructureTypePhysicalDeviceMutableDescriptorTypeFeaturesExt = 1000351000,
+        /// <summary>[requires: VK_EXT_mutable_descriptor_type]</summary>
+        StructureTypeMutableDescriptorTypeCreateInfoExt = 1000351002,
+        /// <summary>[requires: VK_EXT_legacy_vertex_attributes]</summary>
+        StructureTypePhysicalDeviceLegacyVertexAttributesFeaturesExt = 1000495000,
+        /// <summary>[requires: VK_EXT_legacy_vertex_attributes]</summary>
+        StructureTypePhysicalDeviceLegacyVertexAttributesPropertiesExt = 1000495001,
+        /// <summary>[requires: VK_EXT_layer_settings]</summary>
+        StructureTypeLayerSettingsCreateInfoExt = 1000496000,
+        /// <summary>[requires: VK_ARM_shader_core_builtins]</summary>
+        StructureTypePhysicalDeviceShaderCoreBuiltinsFeaturesArm = 1000497000,
+        /// <summary>[requires: VK_ARM_shader_core_builtins]</summary>
+        StructureTypePhysicalDeviceShaderCoreBuiltinsPropertiesArm = 1000497001,
+        /// <summary>[requires: VK_EXT_pipeline_library_group_handles]</summary>
+        StructureTypePhysicalDevicePipelineLibraryGroupHandlesFeaturesExt = 1000498000,
+        /// <summary>[requires: VK_EXT_dynamic_rendering_unused_attachments]</summary>
+        StructureTypePhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesExt = 1000499000,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeLatencySleepModeInfoNv = 1000505000,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeLatencySleepInfoNv = 1000505001,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeSetLatencyMarkerInfoNv = 1000505002,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeGetLatencyMarkerInfoNv = 1000505003,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeLatencyTimingsFrameReportNv = 1000505004,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeLatencySubmissionPresentIdNv = 1000505005,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeOutOfBandQueueTypeInfoNv = 1000505006,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeSwapchainLatencyCreateInfoNv = 1000505007,
+        /// <summary>[requires: VK_NV_low_latency2]</summary>
+        StructureTypeLatencySurfaceCapabilitiesNv = 1000505008,
+        /// <summary>[requires: VK_KHR_cooperative_matrix]</summary>
+        StructureTypePhysicalDeviceCooperativeMatrixFeaturesKhr = 1000506000,
+        /// <summary>[requires: VK_KHR_cooperative_matrix]</summary>
+        StructureTypeCooperativeMatrixPropertiesKhr = 1000506001,
+        /// <summary>[requires: VK_KHR_cooperative_matrix]</summary>
+        StructureTypePhysicalDeviceCooperativeMatrixPropertiesKhr = 1000506002,
+        /// <summary>[requires: VK_QCOM_multiview_per_view_render_areas]</summary>
+        StructureTypePhysicalDeviceMultiviewPerViewRenderAreasFeaturesQcom = 1000510000,
+        /// <summary>[requires: VK_QCOM_multiview_per_view_render_areas]</summary>
+        StructureTypeMultiviewPerViewRenderAreasRenderPassBeginInfoQcom = 1000510001,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        StructureTypeVideoDecodeAv1CapabilitiesKhr = 1000512000,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        StructureTypeVideoDecodeAv1PictureInfoKhr = 1000512001,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        StructureTypeVideoDecodeAv1ProfileInfoKhr = 1000512003,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        StructureTypeVideoDecodeAv1SessionParametersCreateInfoKhr = 1000512004,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        StructureTypeVideoDecodeAv1DpbSlotInfoKhr = 1000512005,
+        /// <summary>[requires: VK_KHR_video_maintenance1]</summary>
+        StructureTypePhysicalDeviceVideoMaintenance1FeaturesKhr = 1000515000,
+        /// <summary>[requires: VK_KHR_video_maintenance1]</summary>
+        StructureTypeVideoInlineQueryInfoKhr = 1000515001,
+        /// <summary>[requires: VK_NV_per_stage_descriptor_set]</summary>
+        StructureTypePhysicalDevicePerStageDescriptorSetFeaturesNv = 1000516000,
+        /// <summary>[requires: VK_QCOM_image_processing2]</summary>
+        StructureTypePhysicalDeviceImageProcessing2FeaturesQcom = 1000518000,
+        /// <summary>[requires: VK_QCOM_image_processing2]</summary>
+        StructureTypePhysicalDeviceImageProcessing2PropertiesQcom = 1000518001,
+        /// <summary>[requires: VK_QCOM_image_processing2]</summary>
+        StructureTypeSamplerBlockMatchWindowCreateInfoQcom = 1000518002,
+        /// <summary>[requires: VK_QCOM_filter_cubic_weights]</summary>
+        StructureTypeSamplerCubicWeightsCreateInfoQcom = 1000519000,
+        /// <summary>[requires: VK_QCOM_filter_cubic_weights]</summary>
+        StructureTypePhysicalDeviceCubicWeightsFeaturesQcom = 1000519001,
+        /// <summary>[requires: VK_QCOM_filter_cubic_weights]</summary>
+        StructureTypeBlitImageCubicWeightsInfoQcom = 1000519002,
+        /// <summary>[requires: VK_QCOM_ycbcr_degamma]</summary>
+        StructureTypePhysicalDeviceYcbcrDegammaFeaturesQcom = 1000520000,
+        /// <summary>[requires: VK_QCOM_ycbcr_degamma]</summary>
+        StructureTypeSamplerYcbcrConversionYcbcrDegammaCreateInfoQcom = 1000520001,
+        /// <summary>[requires: VK_QCOM_filter_cubic_clamp]</summary>
+        StructureTypePhysicalDeviceCubicClampFeaturesQcom = 1000521000,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_dynamic_state]</summary>
+        StructureTypePhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesExt = 1000524000,
+        /// <summary>[requires: VK_KHR_vertex_attribute_divisor]</summary>
+        StructureTypePhysicalDeviceVertexAttributeDivisorPropertiesKhr = 1000525000,
+        /// <summary>[requires: VK_KHR_vertex_attribute_divisor]</summary>
+        StructureTypePipelineVertexInputDivisorStateCreateInfoKhr = 1000190001,
+        /// <summary>[requires: VK_KHR_vertex_attribute_divisor]</summary>
+        StructureTypePhysicalDeviceVertexAttributeDivisorFeaturesKhr = 1000190002,
+        /// <summary>[requires: VK_KHR_shader_float_controls2]</summary>
+        StructureTypePhysicalDeviceShaderFloatControls2FeaturesKhr = 1000528000,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        StructureTypeScreenBufferPropertiesQnx = 1000529000,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        StructureTypeScreenBufferFormatPropertiesQnx = 1000529001,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        StructureTypeImportScreenBufferInfoQnx = 1000529002,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        StructureTypeExternalFormatQnx = 1000529003,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        StructureTypePhysicalDeviceExternalMemoryScreenBufferFeaturesQnx = 1000529004,
+        /// <summary>[requires: VK_MSFT_layered_driver]</summary>
+        StructureTypePhysicalDeviceLayeredDriverPropertiesMsft = 1000530000,
+        /// <summary>[requires: VK_KHR_index_type_uint8]</summary>
+        StructureTypePhysicalDeviceIndexTypeUint8FeaturesKhr = 1000265000,
+        /// <summary>[requires: VK_KHR_line_rasterization]</summary>
+        StructureTypePhysicalDeviceLineRasterizationFeaturesKhr = 1000259000,
+        /// <summary>[requires: VK_KHR_line_rasterization]</summary>
+        StructureTypePipelineRasterizationLineStateCreateInfoKhr = 1000259001,
+        /// <summary>[requires: VK_KHR_line_rasterization]</summary>
+        StructureTypePhysicalDeviceLineRasterizationPropertiesKhr = 1000259002,
+        /// <summary>[requires: VK_KHR_calibrated_timestamps]</summary>
+        StructureTypeCalibratedTimestampInfoKhr = 1000184000,
+        /// <summary>[requires: VK_KHR_shader_expect_assume]</summary>
+        StructureTypePhysicalDeviceShaderExpectAssumeFeaturesKhr = 1000544000,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypePhysicalDeviceMaintenance6FeaturesKhr = 1000545000,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypePhysicalDeviceMaintenance6PropertiesKhr = 1000545001,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypeBindMemoryStatusKhr = 1000545002,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypeBindDescriptorSetsInfoKhr = 1000545003,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypePushConstantsInfoKhr = 1000545004,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypePushDescriptorSetInfoKhr = 1000545005,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypePushDescriptorSetWithTemplateInfoKhr = 1000545006,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypeSetDescriptorBufferOffsetsInfoExt = 1000545007,
+        /// <summary>[requires: VK_KHR_maintenance6]</summary>
+        StructureTypeBindDescriptorBufferEmbeddedSamplersInfoExt = 1000545008,
+        /// <summary>[requires: VK_NV_descriptor_pool_overallocation]</summary>
+        StructureTypePhysicalDeviceDescriptorPoolOverallocationFeaturesNv = 1000546000,
+        /// <summary>[requires: VK_NV_raw_access_chains]</summary>
+        StructureTypePhysicalDeviceRawAccessChainsFeaturesNv = 1000555000,
+        /// <summary>[requires: VK_KHR_shader_relaxed_extended_instruction]</summary>
+        StructureTypePhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKhr = 1000558000,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        StructureTypePhysicalDeviceMaintenance7FeaturesKhr = 1000562000,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        StructureTypePhysicalDeviceMaintenance7PropertiesKhr = 1000562001,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        StructureTypePhysicalDeviceLayeredApiPropertiesListKhr = 1000562002,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        StructureTypePhysicalDeviceLayeredApiPropertiesKhr = 1000562003,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        StructureTypePhysicalDeviceLayeredApiVulkanPropertiesKhr = 1000562004,
+        /// <summary>[requires: VK_NV_shader_atomic_float16_vector]</summary>
+        StructureTypePhysicalDeviceShaderAtomicFloat16VectorFeaturesNv = 1000563000,
+        /// <summary>[requires: VK_EXT_shader_replicated_composites]</summary>
+        StructureTypePhysicalDeviceShaderReplicatedCompositesFeaturesExt = 1000564000,
+        /// <summary>[requires: VK_NV_ray_tracing_validation]</summary>
+        StructureTypePhysicalDeviceRayTracingValidationFeaturesNv = 1000568000,
+        /// <summary>[requires: VK_MESA_image_alignment_control]</summary>
+        StructureTypePhysicalDeviceImageAlignmentControlFeaturesMesa = 1000575000,
+        /// <summary>[requires: VK_MESA_image_alignment_control]</summary>
+        StructureTypePhysicalDeviceImageAlignmentControlPropertiesMesa = 1000575001,
+        /// <summary>[requires: VK_MESA_image_alignment_control]</summary>
+        StructureTypeImageAlignmentControlCreateInfoMesa = 1000575002,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        StructureTypeDebugReportCreateInfoExt = 1000011000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeRenderingInfoKhr = 1000044000,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeRenderingAttachmentInfoKhr = 1000044001,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypePipelineRenderingCreateInfoKhr = 1000044002,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypePhysicalDeviceDynamicRenderingFeaturesKhr = 1000044003,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeCommandBufferInheritanceRenderingInfoKhr = 1000044004,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        StructureTypeAttachmentSampleCountInfoNv = 1000044008,
+        /// <summary>[requires: VK_KHR_multiview]</summary>
+        StructureTypeRenderPassMultiviewCreateInfoKhr = 1000053000,
+        /// <summary>[requires: VK_KHR_multiview]</summary>
+        StructureTypePhysicalDeviceMultiviewFeaturesKhr = 1000053001,
+        /// <summary>[requires: VK_KHR_multiview]</summary>
+        StructureTypePhysicalDeviceMultiviewPropertiesKhr = 1000053002,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypePhysicalDeviceFeatures2Khr = 1000059000,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypePhysicalDeviceProperties2Khr = 1000059001,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypeFormatProperties2Khr = 1000059002,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypeImageFormatProperties2Khr = 1000059003,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypePhysicalDeviceImageFormatInfo2Khr = 1000059004,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypeQueueFamilyProperties2Khr = 1000059005,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypePhysicalDeviceMemoryProperties2Khr = 1000059006,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypeSparseImageFormatProperties2Khr = 1000059007,
+        /// <summary>[requires: VK_KHR_get_physical_device_properties2]</summary>
+        StructureTypePhysicalDeviceSparseImageFormatInfo2Khr = 1000059008,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeMemoryAllocateFlagsInfoKhr = 1000060000,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeDeviceGroupRenderPassBeginInfoKhr = 1000060003,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeDeviceGroupCommandBufferBeginInfoKhr = 1000060004,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeDeviceGroupSubmitInfoKhr = 1000060005,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeDeviceGroupBindSparseInfoKhr = 1000060006,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeBindBufferMemoryDeviceGroupInfoKhr = 1000060013,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        StructureTypeBindImageMemoryDeviceGroupInfoKhr = 1000060014,
+        /// <summary>[requires: VK_EXT_texture_compression_astc_hdr]</summary>
+        StructureTypePhysicalDeviceTextureCompressionAstcHdrFeaturesExt = 1000066000,
+        /// <summary>[requires: VK_KHR_device_group_creation]</summary>
+        StructureTypePhysicalDeviceGroupPropertiesKhr = 1000070000,
+        /// <summary>[requires: VK_KHR_device_group_creation]</summary>
+        StructureTypeDeviceGroupDeviceCreateInfoKhr = 1000070001,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        StructureTypePhysicalDeviceExternalImageFormatInfoKhr = 1000071000,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        StructureTypeExternalImageFormatPropertiesKhr = 1000071001,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        StructureTypePhysicalDeviceExternalBufferInfoKhr = 1000071002,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        StructureTypeExternalBufferPropertiesKhr = 1000071003,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        StructureTypePhysicalDeviceIdPropertiesKhr = 1000071004,
+        /// <summary>[requires: VK_KHR_external_memory]</summary>
+        StructureTypeExternalMemoryBufferCreateInfoKhr = 1000072000,
+        /// <summary>[requires: VK_KHR_external_memory]</summary>
+        StructureTypeExternalMemoryImageCreateInfoKhr = 1000072001,
+        /// <summary>[requires: VK_KHR_external_memory]</summary>
+        StructureTypeExportMemoryAllocateInfoKhr = 1000072002,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        StructureTypePhysicalDeviceExternalSemaphoreInfoKhr = 1000076000,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        StructureTypeExternalSemaphorePropertiesKhr = 1000076001,
+        /// <summary>[requires: VK_KHR_external_semaphore]</summary>
+        StructureTypeExportSemaphoreCreateInfoKhr = 1000077000,
+        /// <summary>[requires: VK_KHR_shader_float16_int8]</summary>
+        StructureTypePhysicalDeviceShaderFloat16Int8FeaturesKhr = 1000082000,
+        /// <summary>[requires: VK_KHR_shader_float16_int8]</summary>
+        StructureTypePhysicalDeviceFloat16Int8FeaturesKhr = 1000082000,
+        /// <summary>[requires: VK_KHR_16bit_storage]</summary>
+        StructureTypePhysicalDevice16bitStorageFeaturesKhr = 1000083000,
+        /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
+        StructureTypeDescriptorUpdateTemplateCreateInfoKhr = 1000085000,
+        /// <summary>[requires: VK_KHR_imageless_framebuffer]</summary>
+        StructureTypePhysicalDeviceImagelessFramebufferFeaturesKhr = 1000108000,
+        /// <summary>[requires: VK_KHR_imageless_framebuffer]</summary>
+        StructureTypeFramebufferAttachmentsCreateInfoKhr = 1000108001,
+        /// <summary>[requires: VK_KHR_imageless_framebuffer]</summary>
+        StructureTypeFramebufferAttachmentImageInfoKhr = 1000108002,
+        /// <summary>[requires: VK_KHR_imageless_framebuffer]</summary>
+        StructureTypeRenderPassAttachmentBeginInfoKhr = 1000108003,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeAttachmentDescription2Khr = 1000109000,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeAttachmentReference2Khr = 1000109001,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeSubpassDescription2Khr = 1000109002,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeSubpassDependency2Khr = 1000109003,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeRenderPassCreateInfo2Khr = 1000109004,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeSubpassBeginInfoKhr = 1000109005,
+        /// <summary>[requires: VK_KHR_create_renderpass2]</summary>
+        StructureTypeSubpassEndInfoKhr = 1000109006,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        StructureTypePhysicalDeviceExternalFenceInfoKhr = 1000112000,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        StructureTypeExternalFencePropertiesKhr = 1000112001,
+        /// <summary>[requires: VK_KHR_external_fence]</summary>
+        StructureTypeExportFenceCreateInfoKhr = 1000113000,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        StructureTypePhysicalDevicePointClippingPropertiesKhr = 1000117000,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        StructureTypeRenderPassInputAttachmentAspectCreateInfoKhr = 1000117001,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        StructureTypeImageViewUsageCreateInfoKhr = 1000117002,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        StructureTypePipelineTessellationDomainOriginStateCreateInfoKhr = 1000117003,
+        /// <summary>[requires: VK_KHR_variable_pointers]</summary>
+        StructureTypePhysicalDeviceVariablePointersFeaturesKhr = 1000120000,
+        /// <summary>[requires: VK_KHR_variable_pointers]</summary>
+        StructureTypePhysicalDeviceVariablePointerFeaturesKhr = 1000120000,
+        /// <summary>[requires: VK_KHR_dedicated_allocation]</summary>
+        StructureTypeMemoryDedicatedRequirementsKhr = 1000127000,
+        /// <summary>[requires: VK_KHR_dedicated_allocation]</summary>
+        StructureTypeMemoryDedicatedAllocateInfoKhr = 1000127001,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        StructureTypePhysicalDeviceSamplerFilterMinmaxPropertiesExt = 1000130000,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        StructureTypeSamplerReductionModeCreateInfoExt = 1000130001,
+        /// <summary>[requires: VK_EXT_inline_uniform_block]</summary>
+        StructureTypePhysicalDeviceInlineUniformBlockFeaturesExt = 1000138000,
+        /// <summary>[requires: VK_EXT_inline_uniform_block]</summary>
+        StructureTypePhysicalDeviceInlineUniformBlockPropertiesExt = 1000138001,
+        /// <summary>[requires: VK_EXT_inline_uniform_block]</summary>
+        StructureTypeWriteDescriptorSetInlineUniformBlockExt = 1000138002,
+        /// <summary>[requires: VK_EXT_inline_uniform_block]</summary>
+        StructureTypeDescriptorPoolInlineUniformBlockCreateInfoExt = 1000138003,
+        /// <summary>[requires: VK_KHR_get_memory_requirements2]</summary>
+        StructureTypeBufferMemoryRequirementsInfo2Khr = 1000146000,
+        /// <summary>[requires: VK_KHR_get_memory_requirements2]</summary>
+        StructureTypeImageMemoryRequirementsInfo2Khr = 1000146001,
+        /// <summary>[requires: VK_KHR_get_memory_requirements2]</summary>
+        StructureTypeImageSparseMemoryRequirementsInfo2Khr = 1000146002,
+        /// <summary>[requires: VK_KHR_get_memory_requirements2]</summary>
+        StructureTypeMemoryRequirements2Khr = 1000146003,
+        /// <summary>[requires: VK_KHR_get_memory_requirements2]</summary>
+        StructureTypeSparseImageMemoryRequirements2Khr = 1000146004,
+        /// <summary>[requires: VK_KHR_image_format_list]</summary>
+        StructureTypeImageFormatListCreateInfoKhr = 1000147000,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypeSamplerYcbcrConversionCreateInfoKhr = 1000156000,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypeSamplerYcbcrConversionInfoKhr = 1000156001,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypeBindImagePlaneMemoryInfoKhr = 1000156002,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypeImagePlaneMemoryRequirementsInfoKhr = 1000156003,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypePhysicalDeviceSamplerYcbcrConversionFeaturesKhr = 1000156004,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        StructureTypeSamplerYcbcrConversionImageFormatPropertiesKhr = 1000156005,
+        /// <summary>[requires: VK_KHR_bind_memory2]</summary>
+        StructureTypeBindBufferMemoryInfoKhr = 1000157000,
+        /// <summary>[requires: VK_KHR_bind_memory2]</summary>
+        StructureTypeBindImageMemoryInfoKhr = 1000157001,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        StructureTypeDescriptorSetLayoutBindingFlagsCreateInfoExt = 1000161000,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        StructureTypePhysicalDeviceDescriptorIndexingFeaturesExt = 1000161001,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        StructureTypePhysicalDeviceDescriptorIndexingPropertiesExt = 1000161002,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        StructureTypeDescriptorSetVariableDescriptorCountAllocateInfoExt = 1000161003,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        StructureTypeDescriptorSetVariableDescriptorCountLayoutSupportExt = 1000161004,
+        /// <summary>[requires: VK_KHR_maintenance3]</summary>
+        StructureTypePhysicalDeviceMaintenance3PropertiesKhr = 1000168000,
+        /// <summary>[requires: VK_KHR_maintenance3]</summary>
+        StructureTypeDescriptorSetLayoutSupportKhr = 1000168001,
+        /// <summary>[requires: VK_EXT_global_priority]</summary>
+        StructureTypeDeviceQueueGlobalPriorityCreateInfoExt = 1000174000,
+        /// <summary>[requires: VK_KHR_shader_subgroup_extended_types]</summary>
+        StructureTypePhysicalDeviceShaderSubgroupExtendedTypesFeaturesKhr = 1000175000,
+        /// <summary>[requires: VK_KHR_8bit_storage]</summary>
+        StructureTypePhysicalDevice8bitStorageFeaturesKhr = 1000177000,
+        /// <summary>[requires: VK_KHR_shader_atomic_int64]</summary>
+        StructureTypePhysicalDeviceShaderAtomicInt64FeaturesKhr = 1000180000,
+        /// <summary>[requires: VK_EXT_calibrated_timestamps]</summary>
+        StructureTypeCalibratedTimestampInfoExt = 1000184000,
+        /// <summary>[requires: VK_EXT_vertex_attribute_divisor]</summary>
+        StructureTypePipelineVertexInputDivisorStateCreateInfoExt = 1000190001,
+        /// <summary>[requires: VK_EXT_vertex_attribute_divisor]</summary>
+        StructureTypePhysicalDeviceVertexAttributeDivisorFeaturesExt = 1000190002,
+        /// <summary>[requires: VK_EXT_pipeline_creation_feedback]</summary>
+        StructureTypePipelineCreationFeedbackCreateInfoExt = 1000192000,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        StructureTypePhysicalDeviceDriverPropertiesKhr = 1000196000,
+        /// <summary>[requires: VK_KHR_shader_float_controls]</summary>
+        StructureTypePhysicalDeviceFloatControlsPropertiesKhr = 1000197000,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        StructureTypePhysicalDeviceDepthStencilResolvePropertiesKhr = 1000199000,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        StructureTypeSubpassDescriptionDepthStencilResolveKhr = 1000199001,
+        /// <summary>[requires: VK_NV_fragment_shader_barycentric]</summary>
+        StructureTypePhysicalDeviceFragmentShaderBarycentricFeaturesNv = 1000203000,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypePhysicalDeviceTimelineSemaphoreFeaturesKhr = 1000207000,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypePhysicalDeviceTimelineSemaphorePropertiesKhr = 1000207001,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypeSemaphoreTypeCreateInfoKhr = 1000207002,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypeTimelineSemaphoreSubmitInfoKhr = 1000207003,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypeSemaphoreWaitInfoKhr = 1000207004,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        StructureTypeSemaphoreSignalInfoKhr = 1000207005,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        StructureTypeQueryPoolCreateInfoIntel = 1000210000,
+        /// <summary>[requires: VK_KHR_vulkan_memory_model]</summary>
+        StructureTypePhysicalDeviceVulkanMemoryModelFeaturesKhr = 1000211000,
+        /// <summary>[requires: VK_KHR_shader_terminate_invocation]</summary>
+        StructureTypePhysicalDeviceShaderTerminateInvocationFeaturesKhr = 1000215000,
+        /// <summary>[requires: VK_EXT_scalar_block_layout]</summary>
+        StructureTypePhysicalDeviceScalarBlockLayoutFeaturesExt = 1000221000,
+        /// <summary>[requires: VK_EXT_subgroup_size_control]</summary>
+        StructureTypePhysicalDeviceSubgroupSizeControlPropertiesExt = 1000225000,
+        /// <summary>[requires: VK_EXT_subgroup_size_control]</summary>
+        StructureTypePipelineShaderStageRequiredSubgroupSizeCreateInfoExt = 1000225001,
+        /// <summary>[requires: VK_EXT_subgroup_size_control]</summary>
+        StructureTypePhysicalDeviceSubgroupSizeControlFeaturesExt = 1000225002,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        StructureTypePhysicalDeviceSeparateDepthStencilLayoutsFeaturesKhr = 1000241000,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        StructureTypeAttachmentReferenceStencilLayoutKhr = 1000241001,
+        /// <summary>[requires: VK_KHR_separate_depth_stencil_layouts]</summary>
+        StructureTypeAttachmentDescriptionStencilLayoutKhr = 1000241002,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        StructureTypePhysicalDeviceBufferAddressFeaturesExt = 1000244000,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        StructureTypeBufferDeviceAddressInfoExt = 1000244001,
+        /// <summary>[requires: VK_EXT_tooling_info]</summary>
+        StructureTypePhysicalDeviceToolPropertiesExt = 1000245000,
+        /// <summary>[requires: VK_EXT_separate_stencil_usage]</summary>
+        StructureTypeImageStencilUsageCreateInfoExt = 1000246000,
+        /// <summary>[requires: VK_KHR_uniform_buffer_standard_layout]</summary>
+        StructureTypePhysicalDeviceUniformBufferStandardLayoutFeaturesKhr = 1000253000,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        StructureTypePhysicalDeviceBufferDeviceAddressFeaturesKhr = 1000257000,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        StructureTypeBufferDeviceAddressInfoKhr = 1000244001,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        StructureTypeBufferOpaqueCaptureAddressCreateInfoKhr = 1000257002,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        StructureTypeMemoryOpaqueCaptureAddressAllocateInfoKhr = 1000257003,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        StructureTypeDeviceMemoryOpaqueCaptureAddressInfoKhr = 1000257004,
+        /// <summary>[requires: VK_EXT_line_rasterization]</summary>
+        StructureTypePhysicalDeviceLineRasterizationFeaturesExt = 1000259000,
+        /// <summary>[requires: VK_EXT_line_rasterization]</summary>
+        StructureTypePipelineRasterizationLineStateCreateInfoExt = 1000259001,
+        /// <summary>[requires: VK_EXT_line_rasterization]</summary>
+        StructureTypePhysicalDeviceLineRasterizationPropertiesExt = 1000259002,
+        /// <summary>[requires: VK_EXT_host_query_reset]</summary>
+        StructureTypePhysicalDeviceHostQueryResetFeaturesExt = 1000261000,
+        /// <summary>[requires: VK_EXT_index_type_uint8]</summary>
+        StructureTypePhysicalDeviceIndexTypeUint8FeaturesExt = 1000265000,
+        /// <summary>[requires: VK_EXT_shader_demote_to_helper_invocation]</summary>
+        StructureTypePhysicalDeviceShaderDemoteToHelperInvocationFeaturesExt = 1000276000,
+        /// <summary>[requires: VK_KHR_shader_integer_dot_product]</summary>
+        StructureTypePhysicalDeviceShaderIntegerDotProductFeaturesKhr = 1000280000,
+        /// <summary>[requires: VK_KHR_shader_integer_dot_product]</summary>
+        StructureTypePhysicalDeviceShaderIntegerDotProductPropertiesKhr = 1000280001,
+        /// <summary>[requires: VK_EXT_texel_buffer_alignment]</summary>
+        StructureTypePhysicalDeviceTexelBufferAlignmentPropertiesExt = 1000281001,
+        /// <summary>[requires: VK_EXT_private_data]</summary>
+        StructureTypePhysicalDevicePrivateDataFeaturesExt = 1000295000,
+        /// <summary>[requires: VK_EXT_private_data]</summary>
+        StructureTypeDevicePrivateDataCreateInfoExt = 1000295001,
+        /// <summary>[requires: VK_EXT_private_data]</summary>
+        StructureTypePrivateDataSlotCreateInfoExt = 1000295002,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        StructureTypePhysicalDevicePipelineCreationCacheControlFeaturesExt = 1000297000,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeMemoryBarrier2Khr = 1000314000,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeBufferMemoryBarrier2Khr = 1000314001,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeImageMemoryBarrier2Khr = 1000314002,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeDependencyInfoKhr = 1000314003,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeSubmitInfo2Khr = 1000314004,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeSemaphoreSubmitInfoKhr = 1000314005,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypeCommandBufferSubmitInfoKhr = 1000314006,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        StructureTypePhysicalDeviceSynchronization2FeaturesKhr = 1000314007,
+        /// <summary>[requires: VK_KHR_zero_initialize_workgroup_memory]</summary>
+        StructureTypePhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKhr = 1000325000,
+        /// <summary>[requires: VK_EXT_image_robustness]</summary>
+        StructureTypePhysicalDeviceImageRobustnessFeaturesExt = 1000335000,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeCopyBufferInfo2Khr = 1000337000,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeCopyImageInfo2Khr = 1000337001,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeCopyBufferToImageInfo2Khr = 1000337002,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeCopyImageToBufferInfo2Khr = 1000337003,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeBlitImageInfo2Khr = 1000337004,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeResolveImageInfo2Khr = 1000337005,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeBufferCopy2Khr = 1000337006,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeImageCopy2Khr = 1000337007,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeImageBlit2Khr = 1000337008,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeBufferImageCopy2Khr = 1000337009,
+        /// <summary>[requires: VK_KHR_copy_commands2]</summary>
+        StructureTypeImageResolve2Khr = 1000337010,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        StructureTypeSubresourceLayout2Ext = 1000338002,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        StructureTypeImageSubresource2Ext = 1000338003,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        StructureTypePhysicalDeviceRasterizationOrderAttachmentAccessFeaturesArm = 1000342000,
+        /// <summary>[requires: VK_VALVE_mutable_descriptor_type]</summary>
+        StructureTypePhysicalDeviceMutableDescriptorTypeFeaturesValve = 1000351000,
+        /// <summary>[requires: VK_VALVE_mutable_descriptor_type]</summary>
+        StructureTypeMutableDescriptorTypeCreateInfoValve = 1000351002,
+        /// <summary>[requires: VK_KHR_format_feature_flags2]</summary>
+        StructureTypeFormatProperties3Khr = 1000360000,
+        /// <summary>[requires: VK_EXT_pipeline_properties]</summary>
+        StructureTypePipelineInfoExt = 1000269001,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        StructureTypePhysicalDeviceExternalSciBufFeaturesNv = 1000374004,
+        /// <summary>[requires: VK_EXT_global_priority_query]</summary>
+        StructureTypePhysicalDeviceGlobalPriorityQueryFeaturesExt = 1000388000,
+        /// <summary>[requires: VK_EXT_global_priority_query]</summary>
+        StructureTypeQueueFamilyGlobalPriorityPropertiesExt = 1000388001,
+        /// <summary>[requires: VK_KHR_maintenance4]</summary>
+        StructureTypePhysicalDeviceMaintenance4FeaturesKhr = 1000413000,
+        /// <summary>[requires: VK_KHR_maintenance4]</summary>
+        StructureTypePhysicalDeviceMaintenance4PropertiesKhr = 1000413001,
+        /// <summary>[requires: VK_KHR_maintenance4]</summary>
+        StructureTypeDeviceBufferMemoryRequirementsKhr = 1000413002,
+        /// <summary>[requires: VK_KHR_maintenance4]</summary>
+        StructureTypeDeviceImageMemoryRequirementsKhr = 1000413003,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        StructureTypeShaderRequiredSubgroupSizeCreateInfoExt = 1000225001,
     }
     public enum VkSubpassContents : int
     {
         SubpassContentsInline = 0,
         SubpassContentsSecondaryCommandBuffers = 1,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        SubpassContentsInlineAndSecondaryCommandBuffersKhr = 1000451000,
+        /// <summary>[requires: VK_EXT_nested_command_buffer]</summary>
+        SubpassContentsInlineAndSecondaryCommandBuffersExt = 1000451000,
     }
     public enum VkResult : int
     {
@@ -519,6 +3123,80 @@ namespace OpenTK.Graphics.Vulkan
         ErrorFormatNotSupported = -11,
         ErrorFragmentedPool = -12,
         ErrorUnknown = -13,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ErrorOutOfPoolMemory = -1000069000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ErrorInvalidExternalHandle = -1000072003,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ErrorFragmentation = -1000161000,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        ErrorInvalidOpaqueCaptureAddress = -1000257000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineCompileRequired = 1000297000,
+        /// <summary>[requires: VK_KHR_surface]</summary>
+        ErrorSurfaceLostKhr = -1000000000,
+        /// <summary>[requires: VK_KHR_surface]</summary>
+        ErrorNativeWindowInUseKhr = -1000000001,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        SuboptimalKhr = 1000001003,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        ErrorOutOfDateKhr = -1000001004,
+        /// <summary>[requires: VK_KHR_display_swapchain]</summary>
+        ErrorIncompatibleDisplayKhr = -1000003001,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        ErrorValidationFailedExt = -1000011001,
+        /// <summary>[requires: VK_NV_glsl_shader]</summary>
+        ErrorInvalidShaderNv = -1000012000,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorImageUsageNotSupportedKhr = -1000023000,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorVideoPictureLayoutNotSupportedKhr = -1000023001,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorVideoProfileOperationNotSupportedKhr = -1000023002,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorVideoProfileFormatNotSupportedKhr = -1000023003,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorVideoProfileCodecNotSupportedKhr = -1000023004,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ErrorVideoStdVersionNotSupportedKhr = -1000023005,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ErrorInvalidDrmFormatModifierPlaneLayoutExt = -1000158000,
+        /// <summary>[requires: VK_KHR_global_priority]</summary>
+        ErrorNotPermittedKhr = -1000174001,
+        /// <summary>[requires: VK_EXT_full_screen_exclusive]</summary>
+        ErrorFullScreenExclusiveModeLostExt = -1000255000,
+        /// <summary>[requires: VK_KHR_deferred_host_operations]</summary>
+        ThreadIdleKhr = 1000268000,
+        /// <summary>[requires: VK_KHR_deferred_host_operations]</summary>
+        ThreadDoneKhr = 1000268001,
+        /// <summary>[requires: VK_KHR_deferred_host_operations]</summary>
+        OperationDeferredKhr = 1000268002,
+        /// <summary>[requires: VK_KHR_deferred_host_operations]</summary>
+        OperationNotDeferredKhr = 1000268003,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ErrorInvalidVideoStdParametersKhr = -1000299000,
+        /// <summary>[requires: VK_EXT_image_compression_control]</summary>
+        ErrorCompressionExhaustedExt = -1000338000,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        IncompatibleShaderBinaryExt = 1000482000,
+        /// <summary>[requires: VK_KHR_maintenance1]</summary>
+        ErrorOutOfPoolMemoryKhr = -1000069000,
+        /// <summary>[requires: VK_KHR_external_memory]</summary>
+        ErrorInvalidExternalHandleKhr = -1000072003,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        ErrorFragmentationExt = -1000161000,
+        /// <summary>[requires: VK_EXT_global_priority]</summary>
+        ErrorNotPermittedExt = -1000174001,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        ErrorInvalidDeviceAddressExt = -1000257000,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        ErrorInvalidOpaqueCaptureAddressKhr = -1000257000,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        PipelineCompileRequiredExt = 1000297000,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        ErrorPipelineCompileRequiredExt = 1000297000,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ErrorIncompatibleShaderBinaryExt = 1000482000,
     }
     public enum VkDynamicState : int
     {
@@ -531,10 +3209,172 @@ namespace OpenTK.Graphics.Vulkan
         DynamicStateStencilCompareMask = 6,
         DynamicStateStencilWriteMask = 7,
         DynamicStateStencilReference = 8,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateCullMode = 1000267000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateFrontFace = 1000267001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStatePrimitiveTopology = 1000267002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateViewportWithCount = 1000267003,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateScissorWithCount = 1000267004,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateVertexInputBindingStride = 1000267005,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateDepthTestEnable = 1000267006,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateDepthWriteEnable = 1000267007,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateDepthCompareOp = 1000267008,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateDepthBoundsTestEnable = 1000267009,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateStencilTestEnable = 1000267010,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateStencilOp = 1000267011,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateRasterizerDiscardEnable = 1000377001,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStateDepthBiasEnable = 1000377002,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        DynamicStatePrimitiveRestartEnable = 1000377004,
+        /// <summary>[requires: VK_NV_clip_space_w_scaling]</summary>
+        DynamicStateViewportWScalingNv = 1000087000,
+        /// <summary>[requires: VK_EXT_discard_rectangles]</summary>
+        DynamicStateDiscardRectangleExt = 1000099000,
+        /// <summary>[requires: VK_EXT_discard_rectangles]</summary>
+        DynamicStateDiscardRectangleEnableExt = 1000099001,
+        /// <summary>[requires: VK_EXT_discard_rectangles]</summary>
+        DynamicStateDiscardRectangleModeExt = 1000099002,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        DynamicStateSampleLocationsExt = 1000143000,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        DynamicStateRayTracingPipelineStackSizeKhr = 1000347000,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        DynamicStateViewportShadingRatePaletteNv = 1000164004,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        DynamicStateViewportCoarseSampleOrderNv = 1000164006,
+        /// <summary>[requires: VK_NV_scissor_exclusive]</summary>
+        DynamicStateExclusiveScissorEnableNv = 1000205000,
+        /// <summary>[requires: VK_NV_scissor_exclusive]</summary>
+        DynamicStateExclusiveScissorNv = 1000205001,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        DynamicStateFragmentShadingRateKhr = 1000226000,
+        /// <summary>[requires: VK_EXT_vertex_input_dynamic_state]</summary>
+        DynamicStateVertexInputExt = 1000352000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        DynamicStatePatchControlPointsExt = 1000377000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        DynamicStateLogicOpExt = 1000377003,
+        /// <summary>[requires: VK_EXT_color_write_enable]</summary>
+        DynamicStateColorWriteEnableExt = 1000381000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateDepthClampEnableExt = 1000455003,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStatePolygonModeExt = 1000455004,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateRasterizationSamplesExt = 1000455005,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateSampleMaskExt = 1000455006,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateAlphaToCoverageEnableExt = 1000455007,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateAlphaToOneEnableExt = 1000455008,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateLogicOpEnableExt = 1000455009,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateColorBlendEnableExt = 1000455010,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateColorBlendEquationExt = 1000455011,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateColorWriteMaskExt = 1000455012,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateTessellationDomainOriginExt = 1000455002,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateRasterizationStreamExt = 1000455013,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateConservativeRasterizationModeExt = 1000455014,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateExtraPrimitiveOverestimationSizeExt = 1000455015,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateDepthClipEnableExt = 1000455016,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateSampleLocationsEnableExt = 1000455017,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateColorBlendAdvancedExt = 1000455018,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateProvokingVertexModeExt = 1000455019,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateLineRasterizationModeExt = 1000455020,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateLineStippleEnableExt = 1000455021,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateDepthClipNegativeOneToOneExt = 1000455022,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateViewportWScalingEnableNv = 1000455023,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateViewportSwizzleNv = 1000455024,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageToColorEnableNv = 1000455025,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageToColorLocationNv = 1000455026,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageModulationModeNv = 1000455027,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageModulationTableEnableNv = 1000455028,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageModulationTableNv = 1000455029,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateShadingRateImageEnableNv = 1000455030,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateRepresentativeFragmentTestEnableNv = 1000455031,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state3]</summary>
+        DynamicStateCoverageReductionModeNv = 1000455032,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_dynamic_state]</summary>
+        DynamicStateAttachmentFeedbackLoopEnableExt = 1000524000,
+        /// <summary>[requires: VK_KHR_line_rasterization]</summary>
+        DynamicStateLineStippleKhr = 1000259000,
+        /// <summary>[requires: VK_EXT_line_rasterization]</summary>
+        DynamicStateLineStippleExt = 1000259000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateCullModeExt = 1000267000,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateFrontFaceExt = 1000267001,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStatePrimitiveTopologyExt = 1000267002,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateViewportWithCountExt = 1000267003,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateScissorWithCountExt = 1000267004,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateVertexInputBindingStrideExt = 1000267005,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateDepthTestEnableExt = 1000267006,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateDepthWriteEnableExt = 1000267007,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateDepthCompareOpExt = 1000267008,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateDepthBoundsTestEnableExt = 1000267009,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateStencilTestEnableExt = 1000267010,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        DynamicStateStencilOpExt = 1000267011,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        DynamicStateRasterizerDiscardEnableExt = 1000377001,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        DynamicStateDepthBiasEnableExt = 1000377002,
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        DynamicStatePrimitiveRestartEnableExt = 1000377004,
     }
     public enum VkDescriptorUpdateTemplateType : int
     {
         DescriptorUpdateTemplateTypeDescriptorSet = 0,
+        /// <summary>[requires: VK_KHR_push_descriptor]</summary>
+        DescriptorUpdateTemplateTypePushDescriptorsKhr = 1,
+        /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
+        DescriptorUpdateTemplateTypeDescriptorSetKhr = 0,
     }
     public enum VkObjectType : int
     {
@@ -564,6 +3404,64 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeDescriptorSet = 23,
         ObjectTypeFramebuffer = 24,
         ObjectTypeCommandPool = 25,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ObjectTypeSamplerYcbcrConversion = 1000156000,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ObjectTypeDescriptorUpdateTemplate = 1000085000,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        ObjectTypePrivateDataSlot = 1000295000,
+        /// <summary>[requires: VK_KHR_surface]</summary>
+        ObjectTypeSurfaceKhr = 1000000000,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        ObjectTypeSwapchainKhr = 1000001000,
+        /// <summary>[requires: VK_KHR_display]</summary>
+        ObjectTypeDisplayKhr = 1000002000,
+        /// <summary>[requires: VK_KHR_display]</summary>
+        ObjectTypeDisplayModeKhr = 1000002001,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        ObjectTypeDebugReportCallbackExt = 1000011000,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ObjectTypeVideoSessionKhr = 1000023000,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        ObjectTypeVideoSessionParametersKhr = 1000023001,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        ObjectTypeCuModuleNvx = 1000029000,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        ObjectTypeCuFunctionNvx = 1000029001,
+        /// <summary>[requires: VK_EXT_debug_utils]</summary>
+        ObjectTypeDebugUtilsMessengerExt = 1000128000,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        ObjectTypeAccelerationStructureKhr = 1000150000,
+        /// <summary>[requires: VK_EXT_validation_cache]</summary>
+        ObjectTypeValidationCacheExt = 1000160000,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ObjectTypeAccelerationStructureNv = 1000165000,
+        /// <summary>[requires: VK_INTEL_performance_query]</summary>
+        ObjectTypePerformanceConfigurationIntel = 1000210000,
+        /// <summary>[requires: VK_KHR_deferred_host_operations]</summary>
+        ObjectTypeDeferredOperationKhr = 1000268000,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        ObjectTypeIndirectCommandsLayoutNv = 1000277000,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        ObjectTypeCudaModuleNv = 1000307000,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        ObjectTypeCudaFunctionNv = 1000307001,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        ObjectTypeBufferCollectionFuchsia = 1000366000,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        ObjectTypeMicromapExt = 1000396000,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        ObjectTypeOpticalFlowSessionNv = 1000464000,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ObjectTypeShaderExt = 1000482000,
+        /// <summary>[requires: VK_NV_external_sci_sync2]</summary>
+        ObjectTypeSemaphoreSciSyncPoolNv = 1000489000,
+        /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
+        ObjectTypeDescriptorUpdateTemplateKhr = 1000085000,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ObjectTypeSamplerYcbcrConversionKhr = 1000156000,
+        /// <summary>[requires: VK_EXT_private_data]</summary>
+        ObjectTypePrivateDataSlotExt = 1000295000,
     }
     public enum VkRayTracingInvocationReorderModeNV : int
     {
@@ -582,6 +3480,14 @@ namespace OpenTK.Graphics.Vulkan
         QueueComputeBit = 2,
         QueueTransferBit = 4,
         QueueSparseBindingBit = 8,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        QueueProtectedBit = 16,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        QueueVideoDecodeBitKhr = 32,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        QueueVideoEncodeBitKhr = 64,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        QueueOpticalFlowBitNv = 256,
     }
     [Flags]
     public enum VkCullModeFlagBits : int
@@ -594,10 +3500,14 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkRenderPassCreateFlagBits : int
     {
+        /// <summary>[requires: VK_QCOM_render_pass_transform]</summary>
+        RenderPassCreateTransformBitQcom = 2,
     }
     [Flags]
     public enum VkDeviceQueueCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        DeviceQueueCreateProtectedBit = 1,
     }
     [Flags]
     public enum VkMemoryPropertyFlagBits : int
@@ -607,11 +3517,23 @@ namespace OpenTK.Graphics.Vulkan
         MemoryPropertyHostCoherentBit = 4,
         MemoryPropertyHostCachedBit = 8,
         MemoryPropertyLazilyAllocatedBit = 16,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        MemoryPropertyProtectedBit = 32,
+        /// <summary>[requires: VK_AMD_device_coherent_memory]</summary>
+        MemoryPropertyDeviceCoherentBitAmd = 64,
+        /// <summary>[requires: VK_AMD_device_coherent_memory]</summary>
+        MemoryPropertyDeviceUncachedBitAmd = 128,
+        /// <summary>[requires: VK_NV_external_memory_rdma]</summary>
+        MemoryPropertyRdmaCapableBitNv = 256,
     }
     [Flags]
     public enum VkMemoryHeapFlagBits : int
     {
         MemoryHeapDeviceLocalBit = 1,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        MemoryHeapMultiInstanceBit = 2,
+        /// <summary>[requires: VK_KHR_device_group_creation]</summary>
+        MemoryHeapMultiInstanceBitKhr = 2,
     }
     [Flags]
     public enum VkAccessFlagBits : int
@@ -633,6 +3555,38 @@ namespace OpenTK.Graphics.Vulkan
         AccessHostWriteBit = 16384,
         AccessMemoryReadBit = 32768,
         AccessMemoryWriteBit = 65536,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        AccessNone = 0,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        AccessTransformFeedbackWriteBitExt = 33554432,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        AccessTransformFeedbackCounterReadBitExt = 67108864,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        AccessTransformFeedbackCounterWriteBitExt = 134217728,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        AccessConditionalRenderingReadBitExt = 1048576,
+        /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
+        AccessColorAttachmentReadNoncoherentBitExt = 524288,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        AccessAccelerationStructureReadBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        AccessAccelerationStructureWriteBitKhr = 4194304,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        AccessFragmentDensityMapReadBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        AccessFragmentShadingRateAttachmentReadBitKhr = 8388608,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        AccessCommandPreprocessReadBitNv = 131072,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        AccessCommandPreprocessWriteBitNv = 262144,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        AccessShadingRateImageReadBitNv = 8388608,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        AccessAccelerationStructureReadBitNv = 2097152,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        AccessAccelerationStructureWriteBitNv = 4194304,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        AccessNoneKhr = 0,
     }
     [Flags]
     public enum VkBufferUsageFlagBits : int
@@ -646,6 +3600,46 @@ namespace OpenTK.Graphics.Vulkan
         BufferUsageIndexBufferBit = 64,
         BufferUsageVertexBufferBit = 128,
         BufferUsageIndirectBufferBit = 256,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        BufferUsageShaderDeviceAddressBit = 131072,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        BufferUsageVideoDecodeSrcBitKhr = 8192,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        BufferUsageVideoDecodeDstBitKhr = 16384,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        BufferUsageTransformFeedbackBufferBitExt = 2048,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        BufferUsageTransformFeedbackCounterBufferBitExt = 4096,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        BufferUsageConditionalRenderingBitExt = 512,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        BufferUsageExecutionGraphScratchBitAmdx = 33554432,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        BufferUsageAccelerationStructureBuildInputReadOnlyBitKhr = 524288,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        BufferUsageAccelerationStructureStorageBitKhr = 1048576,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        BufferUsageShaderBindingTableBitKhr = 1024,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        BufferUsageVideoEncodeDstBitKhr = 32768,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        BufferUsageVideoEncodeSrcBitKhr = 65536,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        BufferUsageSamplerDescriptorBufferBitExt = 2097152,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        BufferUsageResourceDescriptorBufferBitExt = 4194304,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        BufferUsagePushDescriptorsDescriptorBufferBitExt = 67108864,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        BufferUsageMicromapBuildInputReadOnlyBitExt = 8388608,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        BufferUsageMicromapStorageBitExt = 16777216,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BufferUsageRayTracingBitNv = 1024,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        BufferUsageShaderDeviceAddressBitExt = 131072,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        BufferUsageShaderDeviceAddressBitKhr = 131072,
     }
     [Flags]
     public enum VkBufferUsageFlagBits2KHR : int
@@ -659,6 +3653,42 @@ namespace OpenTK.Graphics.Vulkan
         BufferUsage2IndexBufferBitKhr = 64,
         BufferUsage2VertexBufferBitKhr = 128,
         BufferUsage2IndirectBufferBitKhr = 256,
+        /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
+        BufferUsage2ExecutionGraphScratchBitAmdx = 33554432,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2ConditionalRenderingBitExt = 512,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2ShaderBindingTableBitKhr = 1024,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2TransformFeedbackBufferBitExt = 2048,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2TransformFeedbackCounterBufferBitExt = 4096,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2VideoDecodeSrcBitKhr = 8192,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2VideoDecodeDstBitKhr = 16384,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2VideoEncodeDstBitKhr = 32768,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2VideoEncodeSrcBitKhr = 65536,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2ShaderDeviceAddressBitKhr = 131072,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2AccelerationStructureBuildInputReadOnlyBitKhr = 524288,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2AccelerationStructureStorageBitKhr = 1048576,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2SamplerDescriptorBufferBitExt = 2097152,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2ResourceDescriptorBufferBitExt = 4194304,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2PushDescriptorsDescriptorBufferBitExt = 67108864,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2MicromapBuildInputReadOnlyBitExt = 8388608,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2MicromapStorageBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        BufferUsage2RayTracingBitNv = 1024,
     }
     [Flags]
     public enum VkBufferCreateFlagBits : int
@@ -666,6 +3696,18 @@ namespace OpenTK.Graphics.Vulkan
         BufferCreateSparseBindingBit = 1,
         BufferCreateSparseResidencyBit = 2,
         BufferCreateSparseAliasedBit = 4,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        BufferCreateProtectedBit = 8,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        BufferCreateDeviceAddressCaptureReplayBit = 16,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        BufferCreateDescriptorBufferCaptureReplayBitExt = 32,
+        /// <summary>[requires: VK_KHR_video_maintenance1]</summary>
+        BufferCreateVideoProfileIndependentBitKhr = 64,
+        /// <summary>[requires: VK_EXT_buffer_device_address]</summary>
+        BufferCreateDeviceAddressCaptureReplayBitExt = 16,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        BufferCreateDeviceAddressCaptureReplayBitKhr = 16,
     }
     [Flags]
     public enum VkShaderStageFlagBits : int
@@ -678,6 +3720,42 @@ namespace OpenTK.Graphics.Vulkan
         ShaderStageComputeBit = 32,
         ShaderStageAllGraphics = 31,
         ShaderStageAll = 2147483647,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageRaygenBitKhr = 256,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageAnyHitBitKhr = 512,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageClosestHitBitKhr = 1024,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageMissBitKhr = 2048,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageIntersectionBitKhr = 4096,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        ShaderStageCallableBitKhr = 8192,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        ShaderStageTaskBitExt = 64,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        ShaderStageMeshBitExt = 128,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        ShaderStageSubpassShadingBitHuawei = 16384,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        ShaderStageClusterCullingBitHuawei = 524288,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageRaygenBitNv = 256,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageAnyHitBitNv = 512,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageClosestHitBitNv = 1024,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageMissBitNv = 2048,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageIntersectionBitNv = 4096,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        ShaderStageCallableBitNv = 8192,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        ShaderStageTaskBitNv = 64,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        ShaderStageMeshBitNv = 128,
     }
     [Flags]
     public enum VkImageUsageFlagBits : int
@@ -690,6 +3768,34 @@ namespace OpenTK.Graphics.Vulkan
         ImageUsageDepthStencilAttachmentBit = 32,
         ImageUsageTransientAttachmentBit = 64,
         ImageUsageInputAttachmentBit = 128,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageUsageVideoDecodeDstBitKhr = 1024,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageUsageVideoDecodeSrcBitKhr = 2048,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        ImageUsageVideoDecodeDpbBitKhr = 4096,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        ImageUsageFragmentDensityMapBitExt = 512,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        ImageUsageFragmentShadingRateAttachmentBitKhr = 256,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        ImageUsageHostTransferBitExt = 4194304,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageUsageVideoEncodeDstBitKhr = 8192,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageUsageVideoEncodeSrcBitKhr = 16384,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        ImageUsageVideoEncodeDpbBitKhr = 32768,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        ImageUsageAttachmentFeedbackLoopBitExt = 524288,
+        /// <summary>[requires: VK_HUAWEI_invocation_mask]</summary>
+        ImageUsageInvocationMaskBitHuawei = 262144,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        ImageUsageSampleWeightBitQcom = 1048576,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        ImageUsageSampleBlockMatchBitQcom = 2097152,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        ImageUsageShadingRateImageBitNv = 256,
     }
     [Flags]
     public enum VkImageCreateFlagBits : int
@@ -699,14 +3805,72 @@ namespace OpenTK.Graphics.Vulkan
         ImageCreateSparseAliasedBit = 4,
         ImageCreateMutableFormatBit = 8,
         ImageCreateCubeCompatibleBit = 16,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateAliasBit = 1024,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateSplitInstanceBindRegionsBit = 64,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreate2dArrayCompatibleBit = 32,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateBlockTexelViewCompatibleBit = 128,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateExtendedUsageBit = 256,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateProtectedBit = 2048,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageCreateDisjointBit = 512,
+        /// <summary>[requires: VK_NV_corner_sampled_image]</summary>
+        ImageCreateCornerSampledBitNv = 8192,
+        /// <summary>[requires: VK_EXT_sample_locations]</summary>
+        ImageCreateSampleLocationsCompatibleDepthBitExt = 4096,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        ImageCreateSubsampledBitExt = 16384,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        ImageCreateDescriptorBufferCaptureReplayBitExt = 65536,
+        /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
+        ImageCreateMultisampledRenderToSingleSampledBitExt = 262144,
+        /// <summary>[requires: VK_EXT_image_2d_view_of_3d]</summary>
+        ImageCreate2dViewCompatibleBitExt = 131072,
+        /// <summary>[requires: VK_QCOM_fragment_density_map_offset]</summary>
+        ImageCreateFragmentDensityMapOffsetBitQcom = 32768,
+        /// <summary>[requires: VK_KHR_video_maintenance1]</summary>
+        ImageCreateVideoProfileIndependentBitKhr = 1048576,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        ImageCreateSplitInstanceBindRegionsBitKhr = 64,
+        /// <summary>[requires: VK_KHR_maintenance1]</summary>
+        ImageCreate2dArrayCompatibleBitKhr = 32,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        ImageCreateBlockTexelViewCompatibleBitKhr = 128,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        ImageCreateExtendedUsageBitKhr = 256,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ImageCreateDisjointBitKhr = 512,
+        /// <summary>[requires: VK_KHR_bind_memory2]</summary>
+        ImageCreateAliasBitKhr = 1024,
     }
     [Flags]
     public enum VkImageViewCreateFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        ImageViewCreateFragmentDensityMapDynamicBitExt = 1,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        ImageViewCreateDescriptorBufferCaptureReplayBitExt = 4,
+        /// <summary>[requires: VK_EXT_fragment_density_map2]</summary>
+        ImageViewCreateFragmentDensityMapDeferredBitExt = 2,
     }
     [Flags]
     public enum VkSamplerCreateFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        SamplerCreateSubsampledBitExt = 1,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        SamplerCreateSubsampledCoarseReconstructionBitExt = 2,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        SamplerCreateDescriptorBufferCaptureReplayBitExt = 8,
+        /// <summary>[requires: VK_EXT_non_seamless_cube_map]</summary>
+        SamplerCreateNonSeamlessCubeMapBitExt = 4,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        SamplerCreateImageProcessingBitQcom = 16,
     }
     [Flags]
     public enum VkPipelineCreateFlagBits : int
@@ -714,6 +3878,76 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreateDisableOptimizationBit = 1,
         PipelineCreateAllowDerivativesBit = 2,
         PipelineCreateDerivativeBit = 4,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        PipelineCreateViewIndexFromDeviceIndexBit = 8,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        PipelineCreateDispatchBaseBit = 16,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineCreateFailOnPipelineCompileRequiredBit = 256,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineCreateEarlyReturnOnFailureBit = 512,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        PipelineCreateDispatchBase = 16,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        PipelineCreateRenderingFragmentShadingRateAttachmentBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        PipelineCreateRenderingFragmentDensityMapAttachmentBitExt = 4194304,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingNoNullAnyHitShadersBitKhr = 16384,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingNoNullClosestHitShadersBitKhr = 32768,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingNoNullMissShadersBitKhr = 65536,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingNoNullIntersectionShadersBitKhr = 131072,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingSkipTrianglesBitKhr = 4096,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingSkipAabbsBitKhr = 8192,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineCreateRayTracingShaderGroupHandleCaptureReplayBitKhr = 524288,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        PipelineCreateDeferCompileBitNv = 32,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        PipelineCreateCaptureStatisticsBitKhr = 64,
+        /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
+        PipelineCreateCaptureInternalRepresentationsBitKhr = 128,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        PipelineCreateIndirectBindableBitNv = 262144,
+        /// <summary>[requires: VK_KHR_pipeline_library]</summary>
+        PipelineCreateLibraryBitKhr = 2048,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        PipelineCreateDescriptorBufferBitExt = 536870912,
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        PipelineCreateRetainLinkTimeOptimizationInfoBitExt = 8388608,
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        PipelineCreateLinkTimeOptimizationBitExt = 1024,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        PipelineCreateRayTracingAllowMotionBitNv = 1048576,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        PipelineCreateColorAttachmentFeedbackLoopBitExt = 33554432,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        PipelineCreateDepthStencilAttachmentFeedbackLoopBitExt = 67108864,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        PipelineCreateRayTracingOpacityMicromapBitExt = 16777216,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        PipelineCreateRayTracingDisplacementMicromapBitNv = 268435456,
+        /// <summary>[requires: VK_EXT_pipeline_protected_access]</summary>
+        PipelineCreateNoProtectedAccessBitExt = 134217728,
+        /// <summary>[requires: VK_EXT_pipeline_protected_access]</summary>
+        PipelineCreateProtectedAccessOnlyBitExt = 1073741824,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        PipelineRasterizationStateCreateFragmentShadingRateAttachmentBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_dynamic_rendering]</summary>
+        PipelineRasterizationStateCreateFragmentDensityMapAttachmentBitExt = 4194304,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PipelineCreateViewIndexFromDeviceIndexBitKhr = 8,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PipelineCreateDispatchBaseKhr = 16,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        PipelineCreateFailOnPipelineCompileRequiredBitExt = 256,
+        /// <summary>[requires: VK_EXT_pipeline_creation_cache_control]</summary>
+        PipelineCreateEarlyReturnOnFailureBitExt = 512,
     }
     [Flags]
     public enum VkPipelineCreateFlagBits2KHR : int
@@ -721,10 +3955,76 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreate2DisableOptimizationBitKhr = 1,
         PipelineCreate2AllowDerivativesBitKhr = 2,
         PipelineCreate2DerivativeBitKhr = 4,
+        /// <summary>[requires: VK_EXT_legacy_dithering]</summary>
+        PipelineCreate2EnableLegacyDitheringBitExt = 4,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2ViewIndexFromDeviceIndexBitKhr = 8,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2DispatchBaseBitKhr = 16,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2DeferCompileBitNv = 32,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2CaptureStatisticsBitKhr = 64,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2CaptureInternalRepresentationsBitKhr = 128,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2FailOnPipelineCompileRequiredBitKhr = 256,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2EarlyReturnOnFailureBitKhr = 512,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2LinkTimeOptimizationBitExt = 1024,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RetainLinkTimeOptimizationInfoBitExt = 8388608,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2LibraryBitKhr = 2048,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingSkipTrianglesBitKhr = 4096,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingSkipAabbsBitKhr = 8192,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingNoNullAnyHitShadersBitKhr = 16384,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingNoNullClosestHitShadersBitKhr = 32768,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingNoNullMissShadersBitKhr = 65536,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingNoNullIntersectionShadersBitKhr = 131072,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingShaderGroupHandleCaptureReplayBitKhr = 524288,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2IndirectBindableBitNv = 262144,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingAllowMotionBitNv = 1048576,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RenderingFragmentShadingRateAttachmentBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RenderingFragmentDensityMapAttachmentBitExt = 4194304,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingOpacityMicromapBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2ColorAttachmentFeedbackLoopBitExt = 33554432,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2DepthStencilAttachmentFeedbackLoopBitExt = 67108864,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2NoProtectedAccessBitExt = 134217728,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2ProtectedAccessOnlyBitExt = 1073741824,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2RayTracingDisplacementMicromapBitNv = 268435456,
+        /// <summary>[requires: VK_KHR_maintenance5]</summary>
+        PipelineCreate2DescriptorBufferBitExt = 536870912,
     }
     [Flags]
     public enum VkPipelineShaderStageCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineShaderStageCreateAllowVaryingSubgroupSizeBit = 1,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineShaderStageCreateRequireFullSubgroupsBit = 2,
+        /// <summary>[requires: VK_EXT_subgroup_size_control]</summary>
+        PipelineShaderStageCreateAllowVaryingSubgroupSizeBitExt = 1,
+        /// <summary>[requires: VK_EXT_subgroup_size_control]</summary>
+        PipelineShaderStageCreateRequireFullSubgroupsBitExt = 2,
     }
     [Flags]
     public enum VkColorComponentFlagBits : int
@@ -759,6 +4059,64 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeatureBlitSrcBit = 1024,
         FormatFeatureBlitDstBit = 2048,
         FormatFeatureSampledImageFilterLinearBit = 4096,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureTransferSrcBit = 16384,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureTransferDstBit = 32768,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureMidpointChromaSamplesBit = 131072,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureSampledImageYcbcrConversionLinearFilterBit = 262144,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilterBit = 524288,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitBit = 1048576,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceableBit = 2097152,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureDisjointBit = 4194304,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        FormatFeatureCositedChromaSamplesBit = 8388608,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        FormatFeatureSampledImageFilterMinmaxBit = 65536,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        FormatFeatureVideoDecodeOutputBitKhr = 33554432,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        FormatFeatureVideoDecodeDpbBitKhr = 67108864,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        FormatFeatureAccelerationStructureVertexBufferBitKhr = 536870912,
+        /// <summary>[requires: VK_EXT_filter_cubic]</summary>
+        FormatFeatureSampledImageFilterCubicBitExt = 8192,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        FormatFeatureFragmentDensityMapBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        FormatFeatureFragmentShadingRateAttachmentBitKhr = 1073741824,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        FormatFeatureVideoEncodeInputBitKhr = 134217728,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        FormatFeatureVideoEncodeDpbBitKhr = 268435456,
+        /// <summary>[requires: VK_IMG_filter_cubic]</summary>
+        FormatFeatureSampledImageFilterCubicBitImg = 8192,
+        /// <summary>[requires: VK_KHR_maintenance1]</summary>
+        FormatFeatureTransferSrcBitKhr = 16384,
+        /// <summary>[requires: VK_KHR_maintenance1]</summary>
+        FormatFeatureTransferDstBitKhr = 32768,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        FormatFeatureSampledImageFilterMinmaxBitExt = 65536,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureMidpointChromaSamplesBitKhr = 131072,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureSampledImageYcbcrConversionLinearFilterBitKhr = 262144,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilterBitKhr = 524288,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitBitKhr = 1048576,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceableBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureDisjointBitKhr = 4194304,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        FormatFeatureCositedChromaSamplesBitKhr = 8388608,
     }
     [Flags]
     public enum VkQueryControlFlagBits : int
@@ -772,6 +4130,8 @@ namespace OpenTK.Graphics.Vulkan
         QueryResultWaitBit = 2,
         QueryResultWithAvailabilityBit = 4,
         QueryResultPartialBit = 8,
+        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        QueryResultWithStatusBitKhr = 16,
     }
     [Flags]
     public enum VkCommandBufferUsageFlagBits : int
@@ -794,10 +4154,18 @@ namespace OpenTK.Graphics.Vulkan
         QueryPipelineStatisticTessellationControlShaderPatchesBit = 256,
         QueryPipelineStatisticTessellationEvaluationShaderInvocationsBit = 512,
         QueryPipelineStatisticComputeShaderInvocationsBit = 1024,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        QueryPipelineStatisticTaskShaderInvocationsBitExt = 2048,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        QueryPipelineStatisticMeshShaderInvocationsBitExt = 4096,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        QueryPipelineStatisticClusterCullingShaderInvocationsBitHuawei = 8192,
     }
     [Flags]
     public enum VkMemoryMapFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
+        MemoryMapPlacedBitExt = 1,
     }
     [Flags]
     public enum VkImageAspectFlagBits : int
@@ -806,6 +4174,30 @@ namespace OpenTK.Graphics.Vulkan
         ImageAspectDepthBit = 2,
         ImageAspectStencilBit = 4,
         ImageAspectMetadataBit = 8,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageAspectPlane0Bit = 16,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageAspectPlane1Bit = 32,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        ImageAspectPlane2Bit = 64,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        ImageAspectNone = 0,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ImageAspectMemoryPlane0BitExt = 128,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ImageAspectMemoryPlane1BitExt = 256,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ImageAspectMemoryPlane2BitExt = 512,
+        /// <summary>[requires: VK_EXT_image_drm_format_modifier]</summary>
+        ImageAspectMemoryPlane3BitExt = 1024,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ImageAspectPlane0BitKhr = 16,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ImageAspectPlane1BitKhr = 32,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ImageAspectPlane2BitKhr = 64,
+        /// <summary>[requires: VK_KHR_maintenance4]</summary>
+        ImageAspectNoneKhr = 0,
     }
     [Flags]
     public enum VkSparseImageFormatFlagBits : int
@@ -839,12 +4231,46 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStageHostBit = 16384,
         PipelineStageAllGraphicsBit = 32768,
         PipelineStageAllCommandsBit = 65536,
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        PipelineStageNone = 0,
+        /// <summary>[requires: VK_EXT_transform_feedback]</summary>
+        PipelineStageTransformFeedbackBitExt = 16777216,
+        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        PipelineStageConditionalRenderingBitExt = 262144,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        PipelineStageAccelerationStructureBuildBitKhr = 33554432,
+        /// <summary>[requires: VK_KHR_ray_tracing_pipeline]</summary>
+        PipelineStageRayTracingShaderBitKhr = 2097152,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        PipelineStageFragmentDensityProcessBitExt = 8388608,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        PipelineStageFragmentShadingRateAttachmentBitKhr = 4194304,
+        /// <summary>[requires: VK_NV_device_generated_commands]</summary>
+        PipelineStageCommandPreprocessBitNv = 131072,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        PipelineStageTaskShaderBitExt = 524288,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        PipelineStageMeshShaderBitExt = 1048576,
+        /// <summary>[requires: VK_NV_shading_rate_image]</summary>
+        PipelineStageShadingRateImageBitNv = 4194304,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        PipelineStageRayTracingShaderBitNv = 2097152,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        PipelineStageAccelerationStructureBuildBitNv = 33554432,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        PipelineStageTaskShaderBitNv = 524288,
+        /// <summary>[requires: VK_NV_mesh_shader]</summary>
+        PipelineStageMeshShaderBitNv = 1048576,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStageNoneKhr = 0,
     }
     [Flags]
     public enum VkCommandPoolCreateFlagBits : int
     {
         CommandPoolCreateTransientBit = 1,
         CommandPoolCreateResetCommandBufferBit = 2,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        CommandPoolCreateProtectedBit = 4,
     }
     [Flags]
     public enum VkCommandPoolResetFlagBits : int
@@ -884,21 +4310,49 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkDescriptorPoolCreateFlagBits : int
     {
         DescriptorPoolCreateFreeDescriptorSetBit = 1,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        DescriptorPoolCreateUpdateAfterBindBit = 2,
+        /// <summary>[requires: VK_EXT_mutable_descriptor_type]</summary>
+        DescriptorPoolCreateHostOnlyBitExt = 4,
+        /// <summary>[requires: VK_NV_descriptor_pool_overallocation]</summary>
+        DescriptorPoolCreateAllowOverallocationSetsBitNv = 8,
+        /// <summary>[requires: VK_NV_descriptor_pool_overallocation]</summary>
+        DescriptorPoolCreateAllowOverallocationPoolsBitNv = 16,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorPoolCreateUpdateAfterBindBitExt = 2,
+        /// <summary>[requires: VK_VALVE_mutable_descriptor_type]</summary>
+        DescriptorPoolCreateHostOnlyBitValve = 4,
     }
     [Flags]
     public enum VkDependencyFlagBits : int
     {
         DependencyByRegionBit = 1,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        DependencyDeviceGroupBit = 4,
+        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        DependencyViewLocalBit = 2,
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        DependencyFeedbackLoopBitExt = 8,
+        /// <summary>[requires: VK_KHR_multiview]</summary>
+        DependencyViewLocalBitKhr = 2,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        DependencyDeviceGroupBitKhr = 4,
     }
     public enum VkSemaphoreType : int
     {
         SemaphoreTypeBinary = 0,
         SemaphoreTypeTimeline = 1,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        SemaphoreTypeBinaryKhr = 0,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        SemaphoreTypeTimelineKhr = 1,
     }
     [Flags]
     public enum VkSemaphoreWaitFlagBits : int
     {
         SemaphoreWaitAnyBit = 1,
+        /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
+        SemaphoreWaitAnyBitKhr = 1,
     }
     public enum VkPresentModeKHR : int
     {
@@ -906,11 +4360,47 @@ namespace OpenTK.Graphics.Vulkan
         PresentModeMailboxKhr = 1,
         PresentModeFifoKhr = 2,
         PresentModeFifoRelaxedKhr = 3,
+        /// <summary>[requires: VK_KHR_shared_presentable_image]</summary>
+        PresentModeSharedDemandRefreshKhr = 1000111000,
+        /// <summary>[requires: VK_KHR_shared_presentable_image]</summary>
+        PresentModeSharedContinuousRefreshKhr = 1000111001,
     }
     public enum VkColorSpaceKHR : int
     {
         ColorSpaceSrgbNonlinearKhr = 0,
         ColorspaceSrgbNonlinearKhr = 0,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceDisplayP3NonlinearExt = 1000104001,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceExtendedSrgbLinearExt = 1000104002,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceDisplayP3LinearExt = 1000104003,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceDciP3NonlinearExt = 1000104004,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceBt709LinearExt = 1000104005,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceBt709NonlinearExt = 1000104006,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceBt2020LinearExt = 1000104007,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceHdr10St2084Ext = 1000104008,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceDolbyvisionExt = 1000104009,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceHdr10HlgExt = 1000104010,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceAdobergbLinearExt = 1000104011,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceAdobergbNonlinearExt = 1000104012,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpacePassThroughExt = 1000104013,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceExtendedSrgbNonlinearExt = 1000104014,
+        /// <summary>[requires: VK_AMD_display_native_hdr]</summary>
+        ColorSpaceDisplayNativeAmd = 1000213000,
+        /// <summary>[requires: VK_EXT_swapchain_colorspace]</summary>
+        ColorSpaceDciP3LinearExt = 1000104003,
     }
     [Flags]
     public enum VkDisplayPlaneAlphaFlagBitsKHR : int
@@ -952,6 +4442,14 @@ namespace OpenTK.Graphics.Vulkan
         TimeDomainClockMonotonicKhr = 1,
         TimeDomainClockMonotonicRawKhr = 2,
         TimeDomainQueryPerformanceCounterKhr = 3,
+        /// <summary>[requires: VK_EXT_calibrated_timestamps]</summary>
+        TimeDomainDeviceExt = 0,
+        /// <summary>[requires: VK_EXT_calibrated_timestamps]</summary>
+        TimeDomainClockMonotonicExt = 1,
+        /// <summary>[requires: VK_EXT_calibrated_timestamps]</summary>
+        TimeDomainClockMonotonicRawExt = 2,
+        /// <summary>[requires: VK_EXT_calibrated_timestamps]</summary>
+        TimeDomainQueryPerformanceCounterExt = 3,
     }
     [Flags]
     public enum VkDebugReportFlagBitsEXT : int
@@ -998,6 +4496,28 @@ namespace OpenTK.Graphics.Vulkan
         DebugReportObjectTypeDisplayModeKhrExt = 30,
         DebugReportObjectTypeValidationCacheExtExt = 33,
         DebugReportObjectTypeValidationCacheExt = 33,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        DebugReportObjectTypeSamplerYcbcrConversionExt = 1000156000,
+        /// <summary>[requires: VK_EXT_debug_report]</summary>
+        DebugReportObjectTypeDescriptorUpdateTemplateExt = 1000085000,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        DebugReportObjectTypeCuModuleNvxExt = 1000029000,
+        /// <summary>[requires: VK_NVX_binary_import]</summary>
+        DebugReportObjectTypeCuFunctionNvxExt = 1000029001,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        DebugReportObjectTypeAccelerationStructureKhrExt = 1000150000,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        DebugReportObjectTypeAccelerationStructureNvExt = 1000165000,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        DebugReportObjectTypeCudaModuleNvExt = 1000307000,
+        /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
+        DebugReportObjectTypeCudaFunctionNvExt = 1000307001,
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        DebugReportObjectTypeBufferCollectionFuchsiaExt = 1000366000,
+        /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
+        DebugReportObjectTypeDescriptorUpdateTemplateKhrExt = 1000085000,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        DebugReportObjectTypeSamplerYcbcrConversionKhrExt = 1000156000,
     }
     public enum VkDeviceMemoryReportEventTypeEXT : int
     {
@@ -1073,6 +4593,12 @@ namespace OpenTK.Graphics.Vulkan
         SubgroupFeatureShuffleRelativeBit = 32,
         SubgroupFeatureClusteredBit = 64,
         SubgroupFeatureQuadBit = 128,
+        /// <summary>[requires: VK_NV_shader_subgroup_partitioned]</summary>
+        SubgroupFeaturePartitionedBitNv = 256,
+        /// <summary>[requires: VK_KHR_shader_subgroup_rotate]</summary>
+        SubgroupFeatureRotateBitKhr = 512,
+        /// <summary>[requires: VK_KHR_shader_subgroup_rotate]</summary>
+        SubgroupFeatureRotateClusteredBitKhr = 1024,
     }
     [Flags]
     public enum VkIndirectCommandsLayoutUsageFlagBitsNV : int
@@ -1096,6 +4622,12 @@ namespace OpenTK.Graphics.Vulkan
         IndirectCommandsTokenTypeDrawIndexedNv = 5,
         IndirectCommandsTokenTypeDrawNv = 6,
         IndirectCommandsTokenTypeDrawTasksNv = 7,
+        /// <summary>[requires: VK_EXT_mesh_shader]</summary>
+        IndirectCommandsTokenTypeDrawMeshTasksNv = 1000328000,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        IndirectCommandsTokenTypePipelineNv = 1000428003,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        IndirectCommandsTokenTypeDispatchNv = 1000428004,
     }
     [Flags]
     public enum VkPrivateDataSlotCreateFlagBits : int
@@ -1104,6 +4636,24 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkDescriptorSetLayoutCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        DescriptorSetLayoutCreateUpdateAfterBindPoolBit = 2,
+        /// <summary>[requires: VK_KHR_push_descriptor]</summary>
+        DescriptorSetLayoutCreatePushDescriptorBitKhr = 1,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        DescriptorSetLayoutCreateDescriptorBufferBitExt = 16,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        DescriptorSetLayoutCreateEmbeddedImmutableSamplersBitExt = 32,
+        /// <summary>[requires: VK_NV_device_generated_commands_compute]</summary>
+        DescriptorSetLayoutCreateIndirectBindableBitNv = 128,
+        /// <summary>[requires: VK_EXT_mutable_descriptor_type]</summary>
+        DescriptorSetLayoutCreateHostOnlyPoolBitExt = 4,
+        /// <summary>[requires: VK_NV_per_stage_descriptor_set]</summary>
+        DescriptorSetLayoutCreatePerStageBitNv = 64,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorSetLayoutCreateUpdateAfterBindPoolBitExt = 2,
+        /// <summary>[requires: VK_VALVE_mutable_descriptor_type]</summary>
+        DescriptorSetLayoutCreateHostOnlyPoolBitValve = 4,
     }
     [Flags]
     public enum VkExternalMemoryHandleTypeFlagBits : int
@@ -1115,6 +4665,36 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryHandleTypeD3d11TextureKmtBit = 16,
         ExternalMemoryHandleTypeD3d12HeapBit = 32,
         ExternalMemoryHandleTypeD3d12ResourceBit = 64,
+        /// <summary>[requires: VK_EXT_external_memory_dma_buf]</summary>
+        ExternalMemoryHandleTypeDmaBufBitExt = 512,
+        /// <summary>[requires: VK_ANDROID_external_memory_android_hardware_buffer]</summary>
+        ExternalMemoryHandleTypeAndroidHardwareBufferBitAndroid = 1024,
+        /// <summary>[requires: VK_EXT_external_memory_host]</summary>
+        ExternalMemoryHandleTypeHostAllocationBitExt = 128,
+        /// <summary>[requires: VK_EXT_external_memory_host]</summary>
+        ExternalMemoryHandleTypeHostMappedForeignMemoryBitExt = 256,
+        /// <summary>[requires: VK_FUCHSIA_external_memory]</summary>
+        ExternalMemoryHandleTypeZirconVmoBitFuchsia = 2048,
+        /// <summary>[requires: VK_NV_external_memory_rdma]</summary>
+        ExternalMemoryHandleTypeRdmaAddressBitNv = 4096,
+        /// <summary>[requires: VK_NV_external_memory_sci_buf]</summary>
+        ExternalMemoryHandleTypeSciBufBitNv = 8192,
+        /// <summary>[requires: VK_QNX_external_memory_screen_buffer]</summary>
+        ExternalMemoryHandleTypeScreenBufferBitQnx = 16384,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeOpaqueFdBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeOpaqueWin32BitKhr = 2,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeOpaqueWin32KmtBitKhr = 4,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeD3d11TextureBitKhr = 8,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeD3d11TextureKmtBitKhr = 16,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeD3d12HeapBitKhr = 32,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryHandleTypeD3d12ResourceBitKhr = 64,
     }
     [Flags]
     public enum VkExternalMemoryFeatureFlagBits : int
@@ -1122,6 +4702,12 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryFeatureDedicatedOnlyBit = 1,
         ExternalMemoryFeatureExportableBit = 2,
         ExternalMemoryFeatureImportableBit = 4,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryFeatureDedicatedOnlyBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryFeatureExportableBitKhr = 2,
+        /// <summary>[requires: VK_KHR_external_memory_capabilities]</summary>
+        ExternalMemoryFeatureImportableBitKhr = 4,
     }
     [Flags]
     public enum VkExternalSemaphoreHandleTypeFlagBits : int
@@ -1132,17 +4718,37 @@ namespace OpenTK.Graphics.Vulkan
         ExternalSemaphoreHandleTypeD3d12FenceBit = 8,
         ExternalSemaphoreHandleTypeD3d11FenceBit = 8,
         ExternalSemaphoreHandleTypeSyncFdBit = 16,
+        /// <summary>[requires: VK_FUCHSIA_external_semaphore]</summary>
+        ExternalSemaphoreHandleTypeZirconEventBitFuchsia = 128,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        ExternalSemaphoreHandleTypeSciSyncObjBitNv = 32,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreHandleTypeOpaqueFdBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreHandleTypeOpaqueWin32BitKhr = 2,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreHandleTypeOpaqueWin32KmtBitKhr = 4,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreHandleTypeD3d12FenceBitKhr = 8,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreHandleTypeSyncFdBitKhr = 16,
     }
     [Flags]
     public enum VkExternalSemaphoreFeatureFlagBits : int
     {
         ExternalSemaphoreFeatureExportableBit = 1,
         ExternalSemaphoreFeatureImportableBit = 2,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreFeatureExportableBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_semaphore_capabilities]</summary>
+        ExternalSemaphoreFeatureImportableBitKhr = 2,
     }
     [Flags]
     public enum VkSemaphoreImportFlagBits : int
     {
         SemaphoreImportTemporaryBit = 1,
+        /// <summary>[requires: VK_KHR_external_semaphore]</summary>
+        SemaphoreImportTemporaryBitKhr = 1,
     }
     [Flags]
     public enum VkExternalFenceHandleTypeFlagBits : int
@@ -1151,17 +4757,35 @@ namespace OpenTK.Graphics.Vulkan
         ExternalFenceHandleTypeOpaqueWin32Bit = 2,
         ExternalFenceHandleTypeOpaqueWin32KmtBit = 4,
         ExternalFenceHandleTypeSyncFdBit = 8,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        ExternalFenceHandleTypeSciSyncObjBitNv = 16,
+        /// <summary>[requires: VK_NV_external_sci_sync]</summary>
+        ExternalFenceHandleTypeSciSyncFenceBitNv = 32,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceHandleTypeOpaqueFdBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceHandleTypeOpaqueWin32BitKhr = 2,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceHandleTypeOpaqueWin32KmtBitKhr = 4,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceHandleTypeSyncFdBitKhr = 8,
     }
     [Flags]
     public enum VkExternalFenceFeatureFlagBits : int
     {
         ExternalFenceFeatureExportableBit = 1,
         ExternalFenceFeatureImportableBit = 2,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceFeatureExportableBitKhr = 1,
+        /// <summary>[requires: VK_KHR_external_fence_capabilities]</summary>
+        ExternalFenceFeatureImportableBitKhr = 2,
     }
     [Flags]
     public enum VkFenceImportFlagBits : int
     {
         FenceImportTemporaryBit = 1,
+        /// <summary>[requires: VK_KHR_external_fence]</summary>
+        FenceImportTemporaryBitKhr = 1,
     }
     [Flags]
     public enum VkSurfaceCounterFlagBitsEXT : int
@@ -1190,11 +4814,29 @@ namespace OpenTK.Graphics.Vulkan
         PeerMemoryFeatureCopyDstBit = 2,
         PeerMemoryFeatureGenericSrcBit = 4,
         PeerMemoryFeatureGenericDstBit = 8,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PeerMemoryFeatureCopySrcBitKhr = 1,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PeerMemoryFeatureCopyDstBitKhr = 2,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PeerMemoryFeatureGenericSrcBitKhr = 4,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        PeerMemoryFeatureGenericDstBitKhr = 8,
     }
     [Flags]
     public enum VkMemoryAllocateFlagBits : int
     {
         MemoryAllocateDeviceMaskBit = 1,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        MemoryAllocateDeviceAddressBit = 2,
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        MemoryAllocateDeviceAddressCaptureReplayBit = 4,
+        /// <summary>[requires: VK_KHR_device_group]</summary>
+        MemoryAllocateDeviceMaskBitKhr = 1,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        MemoryAllocateDeviceAddressBitKhr = 2,
+        /// <summary>[requires: VK_KHR_buffer_device_address]</summary>
+        MemoryAllocateDeviceAddressCaptureReplayBitKhr = 4,
     }
     [Flags]
     public enum VkDeviceGroupPresentModeFlagBitsKHR : int
@@ -1207,6 +4849,14 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkSwapchainCreateFlagBitsKHR : int
     {
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        SwapchainCreateSplitInstanceBindRegionsBitKhr = 1,
+        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        SwapchainCreateProtectedBitKhr = 2,
+        /// <summary>[requires: VK_KHR_swapchain_mutable_format]</summary>
+        SwapchainCreateMutableFormatBitKhr = 4,
+        /// <summary>[requires: VK_EXT_swapchain_maintenance1]</summary>
+        SwapchainCreateDeferredMemoryAllocationBitExt = 8,
     }
     public enum VkViewportCoordinateSwizzleNV : int
     {
@@ -1227,22 +4877,60 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkSubpassDescriptionFlagBits : int
     {
+        /// <summary>[requires: VK_NVX_multiview_per_view_attributes]</summary>
+        SubpassDescriptionPerViewAttributesBitNvx = 1,
+        /// <summary>[requires: VK_NVX_multiview_per_view_attributes]</summary>
+        SubpassDescriptionPerViewPositionXOnlyBitNvx = 2,
+        /// <summary>[requires: VK_QCOM_render_pass_shader_resolve]</summary>
+        SubpassDescriptionFragmentRegionBitQcom = 4,
+        /// <summary>[requires: VK_QCOM_render_pass_shader_resolve]</summary>
+        SubpassDescriptionShaderResolveBitQcom = 8,
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentColorAccessBitExt = 16,
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentDepthAccessBitExt = 32,
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentStencilAccessBitExt = 64,
+        /// <summary>[requires: VK_EXT_legacy_dithering]</summary>
+        SubpassDescriptionEnableLegacyDitheringBitExt = 128,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentColorAccessBitArm = 16,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentDepthAccessBitArm = 32,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        SubpassDescriptionRasterizationOrderAttachmentStencilAccessBitArm = 64,
     }
     public enum VkPointClippingBehavior : int
     {
         PointClippingBehaviorAllClipPlanes = 0,
         PointClippingBehaviorUserClipPlanesOnly = 1,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        PointClippingBehaviorAllClipPlanesKhr = 0,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        PointClippingBehaviorUserClipPlanesOnlyKhr = 1,
     }
     public enum VkSamplerReductionMode : int
     {
         SamplerReductionModeWeightedAverage = 0,
         SamplerReductionModeMin = 1,
         SamplerReductionModeMax = 2,
+        /// <summary>[requires: VK_QCOM_filter_cubic_clamp]</summary>
+        SamplerReductionModeWeightedAverageRangeclampQcom = 1000521000,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        SamplerReductionModeWeightedAverageExt = 0,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        SamplerReductionModeMinExt = 1,
+        /// <summary>[requires: VK_EXT_sampler_filter_minmax]</summary>
+        SamplerReductionModeMaxExt = 2,
     }
     public enum VkTessellationDomainOrigin : int
     {
         TessellationDomainOriginUpperLeft = 0,
         TessellationDomainOriginLowerLeft = 1,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        TessellationDomainOriginUpperLeftKhr = 0,
+        /// <summary>[requires: VK_KHR_maintenance2]</summary>
+        TessellationDomainOriginLowerLeftKhr = 1,
     }
     public enum VkSamplerYcbcrModelConversion : int
     {
@@ -1251,16 +4939,34 @@ namespace OpenTK.Graphics.Vulkan
         SamplerYcbcrModelConversionYcbcr709 = 2,
         SamplerYcbcrModelConversionYcbcr601 = 3,
         SamplerYcbcrModelConversionYcbcr2020 = 4,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrModelConversionRgbIdentityKhr = 0,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrModelConversionYcbcrIdentityKhr = 1,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrModelConversionYcbcr709Khr = 2,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrModelConversionYcbcr601Khr = 3,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrModelConversionYcbcr2020Khr = 4,
     }
     public enum VkSamplerYcbcrRange : int
     {
         SamplerYcbcrRangeItuFull = 0,
         SamplerYcbcrRangeItuNarrow = 1,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrRangeItuFullKhr = 0,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        SamplerYcbcrRangeItuNarrowKhr = 1,
     }
     public enum VkChromaLocation : int
     {
         ChromaLocationCositedEven = 0,
         ChromaLocationMidpoint = 1,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ChromaLocationCositedEvenKhr = 0,
+        /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
+        ChromaLocationMidpointKhr = 1,
     }
     public enum VkBlendOverlapEXT : int
     {
@@ -1315,6 +5021,8 @@ namespace OpenTK.Graphics.Vulkan
         DebugUtilsMessageTypeGeneralBitExt = 1,
         DebugUtilsMessageTypeValidationBitExt = 2,
         DebugUtilsMessageTypePerformanceBitExt = 4,
+        /// <summary>[requires: VK_EXT_device_address_binding_report]</summary>
+        DebugUtilsMessageTypeDeviceAddressBindingBitExt = 8,
     }
     public enum VkConservativeRasterizationModeEXT : int
     {
@@ -1329,6 +5037,14 @@ namespace OpenTK.Graphics.Vulkan
         DescriptorBindingUpdateUnusedWhilePendingBit = 2,
         DescriptorBindingPartiallyBoundBit = 4,
         DescriptorBindingVariableDescriptorCountBit = 8,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorBindingUpdateAfterBindBitExt = 1,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorBindingUpdateUnusedWhilePendingBitExt = 2,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorBindingPartiallyBoundBitExt = 4,
+        /// <summary>[requires: VK_EXT_descriptor_indexing]</summary>
+        DescriptorBindingVariableDescriptorCountBitExt = 8,
     }
     public enum VkVendorId : int
     {
@@ -1370,6 +5086,30 @@ namespace OpenTK.Graphics.Vulkan
         DriverIdImaginationOpenSourceMesa = 25,
         DriverIdMesaHoneykrisp = 26,
         DriverIdReserved27 = 27,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdAmdProprietaryKhr = 1,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdAmdOpenSourceKhr = 2,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdMesaRadvKhr = 3,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdNvidiaProprietaryKhr = 4,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdIntelProprietaryWindowsKhr = 5,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdIntelOpenSourceMesaKhr = 6,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdImaginationProprietaryKhr = 7,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdQualcommProprietaryKhr = 8,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdArmProprietaryKhr = 9,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdGoogleSwiftshaderKhr = 10,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdGgpProprietaryKhr = 11,
+        /// <summary>[requires: VK_KHR_driver_properties]</summary>
+        DriverIdBroadcomProprietaryKhr = 12,
     }
     [Flags]
     public enum VkConditionalRenderingFlagBitsEXT : int
@@ -1384,6 +5124,18 @@ namespace OpenTK.Graphics.Vulkan
         ResolveModeAverageBit = 2,
         ResolveModeMinBit = 4,
         ResolveModeMaxBit = 8,
+        /// <summary>[requires: VK_ANDROID_external_format_resolve]</summary>
+        ResolveModeExternalFormatDownsampleAndroid = 16,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        ResolveModeNoneKhr = 0,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        ResolveModeSampleZeroBitKhr = 1,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        ResolveModeAverageBitKhr = 2,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        ResolveModeMinBitKhr = 4,
+        /// <summary>[requires: VK_KHR_depth_stencil_resolve]</summary>
+        ResolveModeMaxBitKhr = 8,
     }
     public enum VkShadingRatePaletteEntryNV : int
     {
@@ -1415,12 +5167,28 @@ namespace OpenTK.Graphics.Vulkan
         GeometryInstanceForceOpaqueBitKhr = 4,
         GeometryInstanceForceNoOpaqueBitKhr = 8,
         GeometryInstanceTriangleFrontCounterclockwiseBitKhr = 2,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        GeometryInstanceForceOpacityMicromap2StateExt = 16,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        GeometryInstanceDisableOpacityMicromapsExt = 32,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryInstanceTriangleCullDisableBitNv = 1,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryInstanceTriangleFrontCounterclockwiseBitNv = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryInstanceForceOpaqueBitNv = 4,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryInstanceForceNoOpaqueBitNv = 8,
     }
     [Flags]
     public enum VkGeometryFlagBitsKHR : int
     {
         GeometryOpaqueBitKhr = 1,
         GeometryNoDuplicateAnyHitInvocationBitKhr = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryOpaqueBitNv = 1,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryNoDuplicateAnyHitInvocationBitNv = 2,
     }
     [Flags]
     public enum VkBuildAccelerationStructureFlagBitsKHR : int
@@ -1430,11 +5198,37 @@ namespace OpenTK.Graphics.Vulkan
         BuildAccelerationStructurePreferFastTraceBitKhr = 4,
         BuildAccelerationStructurePreferFastBuildBitKhr = 8,
         BuildAccelerationStructureLowMemoryBitKhr = 16,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        BuildAccelerationStructureMotionBitNv = 32,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        BuildAccelerationStructureAllowOpacityMicromapUpdateExt = 64,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        BuildAccelerationStructureAllowDisableOpacityMicromapsExt = 128,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        BuildAccelerationStructureAllowOpacityMicromapDataUpdateExt = 256,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        BuildAccelerationStructureAllowDisplacementMicromapUpdateNv = 512,
+        /// <summary>[requires: VK_KHR_ray_tracing_position_fetch]</summary>
+        BuildAccelerationStructureAllowDataAccessKhr = 2048,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BuildAccelerationStructureAllowUpdateBitNv = 1,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BuildAccelerationStructureAllowCompactionBitNv = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BuildAccelerationStructurePreferFastTraceBitNv = 4,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BuildAccelerationStructurePreferFastBuildBitNv = 8,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        BuildAccelerationStructureLowMemoryBitNv = 16,
     }
     [Flags]
     public enum VkAccelerationStructureCreateFlagBitsKHR : int
     {
         AccelerationStructureCreateDeviceAddressCaptureReplayBitKhr = 1,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        AccelerationStructureCreateDescriptorBufferCaptureReplayBitExt = 8,
+        /// <summary>[requires: VK_NV_ray_tracing_motion_blur]</summary>
+        AccelerationStructureCreateMotionBitNv = 4,
     }
     public enum VkCopyAccelerationStructureModeKHR : int
     {
@@ -1442,6 +5236,10 @@ namespace OpenTK.Graphics.Vulkan
         CopyAccelerationStructureModeCompactKhr = 1,
         CopyAccelerationStructureModeSerializeKhr = 2,
         CopyAccelerationStructureModeDeserializeKhr = 3,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        CopyAccelerationStructureModeCloneNv = 0,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        CopyAccelerationStructureModeCompactNv = 1,
     }
     public enum VkBuildAccelerationStructureModeKHR : int
     {
@@ -1453,12 +5251,20 @@ namespace OpenTK.Graphics.Vulkan
         AccelerationStructureTypeTopLevelKhr = 0,
         AccelerationStructureTypeBottomLevelKhr = 1,
         AccelerationStructureTypeGenericKhr = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        AccelerationStructureTypeTopLevelNv = 0,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        AccelerationStructureTypeBottomLevelNv = 1,
     }
     public enum VkGeometryTypeKHR : int
     {
         GeometryTypeTrianglesKhr = 0,
         GeometryTypeAabbsKhr = 1,
         GeometryTypeInstancesKhr = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryTypeTrianglesNv = 0,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        GeometryTypeAabbsNv = 1,
     }
     public enum VkAccelerationStructureMemoryRequirementsTypeNV : int
     {
@@ -1477,6 +5283,12 @@ namespace OpenTK.Graphics.Vulkan
         RayTracingShaderGroupTypeGeneralKhr = 0,
         RayTracingShaderGroupTypeTrianglesHitGroupKhr = 1,
         RayTracingShaderGroupTypeProceduralHitGroupKhr = 2,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        RayTracingShaderGroupTypeGeneralNv = 0,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        RayTracingShaderGroupTypeTrianglesHitGroupNv = 1,
+        /// <summary>[requires: VK_NV_ray_tracing]</summary>
+        RayTracingShaderGroupTypeProceduralHitGroupNv = 2,
     }
     public enum VkAccelerationStructureCompatibilityKHR : int
     {
@@ -1499,6 +5311,10 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkFramebufferCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        FramebufferCreateImagelessBit = 1,
+        /// <summary>[requires: VK_KHR_imageless_framebuffer]</summary>
+        FramebufferCreateImagelessBitKhr = 1,
     }
     [Flags]
     public enum VkDeviceDiagnosticsConfigFlagBitsNV : int
@@ -1613,6 +5429,12 @@ namespace OpenTK.Graphics.Vulkan
         ShaderFloatControlsIndependence32BitOnly = 0,
         ShaderFloatControlsIndependenceAll = 1,
         ShaderFloatControlsIndependenceNone = 2,
+        /// <summary>[requires: VK_KHR_shader_float_controls]</summary>
+        ShaderFloatControlsIndependence32BitOnlyKhr = 0,
+        /// <summary>[requires: VK_KHR_shader_float_controls]</summary>
+        ShaderFloatControlsIndependenceAllKhr = 1,
+        /// <summary>[requires: VK_KHR_shader_float_controls]</summary>
+        ShaderFloatControlsIndependenceNoneKhr = 2,
     }
     public enum VkPipelineExecutableStatisticFormatKHR : int
     {
@@ -1674,6 +5496,10 @@ namespace OpenTK.Graphics.Vulkan
         ToolPurposeAdditionalFeaturesBitExt = 8,
         ToolPurposeModifyingFeaturesBit = 16,
         ToolPurposeModifyingFeaturesBitExt = 16,
+        /// <summary>[requires: VK_EXT_tooling_info]</summary>
+        ToolPurposeDebugReportingBitExt = 32,
+        /// <summary>[requires: VK_EXT_tooling_info]</summary>
+        ToolPurposeDebugMarkersBitExt = 64,
     }
     public enum VkPipelineMatchControl : int
     {
@@ -1769,6 +5595,56 @@ namespace OpenTK.Graphics.Vulkan
         Access2ShaderStorageReadBitKhr = 2,
         Access2ShaderStorageWriteBit = 4,
         Access2ShaderStorageWriteBitKhr = 4,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        Access2VideoDecodeReadBitKhr = 8,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        Access2VideoDecodeWriteBitKhr = 16,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        Access2VideoEncodeReadBitKhr = 32,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        Access2VideoEncodeWriteBitKhr = 64,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2TransformFeedbackWriteBitExt = 33554432,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2TransformFeedbackCounterReadBitExt = 67108864,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2TransformFeedbackCounterWriteBitExt = 134217728,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2ConditionalRenderingReadBitExt = 1048576,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2CommandPreprocessReadBitNv = 131072,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2CommandPreprocessWriteBitNv = 262144,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2FragmentShadingRateAttachmentReadBitKhr = 8388608,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2AccelerationStructureReadBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2AccelerationStructureWriteBitKhr = 4194304,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2FragmentDensityMapReadBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2ColorAttachmentReadNoncoherentBitExt = 524288,
+        /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
+        Access2DescriptorBufferReadBitExt = 512,
+        /// <summary>[requires: VK_HUAWEI_invocation_mask]</summary>
+        Access2InvocationMaskReadBitHuawei = 128,
+        /// <summary>[requires: VK_KHR_ray_tracing_maintenance1]</summary>
+        Access2ShaderBindingTableReadBitKhr = 256,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        Access2MicromapReadBitExt = 4096,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        Access2MicromapWriteBitExt = 8192,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        Access2OpticalFlowReadBitNv = 1024,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        Access2OpticalFlowWriteBitNv = 2048,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2ShadingRateImageReadBitNv = 8388608,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2AccelerationStructureReadBitNv = 2097152,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        Access2AccelerationStructureWriteBitNv = 4194304,
     }
     [Flags]
     public enum VkPipelineStageFlagBits2 : int
@@ -1825,6 +5701,52 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStage2VertexAttributeInputBitKhr = 32,
         PipelineStage2PreRasterizationShadersBit = 64,
         PipelineStage2PreRasterizationShadersBitKhr = 64,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        PipelineStage2VideoDecodeBitKhr = 67108864,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        PipelineStage2VideoEncodeBitKhr = 134217728,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2TransformFeedbackBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2ConditionalRenderingBitExt = 262144,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2CommandPreprocessBitNv = 131072,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2FragmentShadingRateAttachmentBitKhr = 4194304,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2AccelerationStructureBuildBitKhr = 33554432,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2RayTracingShaderBitKhr = 2097152,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2FragmentDensityProcessBitExt = 8388608,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2TaskShaderBitExt = 524288,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2MeshShaderBitExt = 1048576,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        PipelineStage2SubpassShaderBitHuawei = 128,
+        /// <summary>[requires: VK_HUAWEI_invocation_mask]</summary>
+        PipelineStage2InvocationMaskBitHuawei = 256,
+        /// <summary>[requires: VK_KHR_ray_tracing_maintenance1]</summary>
+        PipelineStage2AccelerationStructureCopyBitKhr = 268435456,
+        /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
+        PipelineStage2MicromapBuildBitExt = 1073741824,
+        /// <summary>[requires: VK_HUAWEI_cluster_culling_shader]</summary>
+        PipelineStage2ClusterCullingShaderBitHuawei = 512,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        PipelineStage2OpticalFlowBitNv = 536870912,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2ShadingRateImageBitNv = 4194304,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2RayTracingShaderBitNv = 2097152,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2AccelerationStructureBuildBitNv = 33554432,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2TaskShaderBitNv = 524288,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        PipelineStage2MeshShaderBitNv = 1048576,
+        /// <summary>[requires: VK_HUAWEI_subpass_shading]</summary>
+        PipelineStage2SubpassShadingBitHuawei = 128,
     }
     [Flags]
     public enum VkSubmitFlagBits : int
@@ -1835,10 +5757,16 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkEventCreateFlagBits : int
     {
+        /// <summary>[requires: VK_VERSION_1_3]</summary>
+        EventCreateDeviceOnlyBit = 1,
+        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        EventCreateDeviceOnlyBitKhr = 1,
     }
     [Flags]
     public enum VkPipelineLayoutCreateFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
+        PipelineLayoutCreateIndependentSetsBitExt = 2,
     }
     public enum VkSciSyncClientTypeNV : int
     {
@@ -1869,10 +5797,22 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkPipelineColorBlendStateCreateFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        PipelineColorBlendStateCreateRasterizationOrderAttachmentAccessBitExt = 1,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        PipelineColorBlendStateCreateRasterizationOrderAttachmentAccessBitArm = 1,
     }
     [Flags]
     public enum VkPipelineDepthStencilStateCreateFlagBits : int
     {
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        PipelineDepthStencilStateCreateRasterizationOrderAttachmentDepthAccessBitExt = 1,
+        /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
+        PipelineDepthStencilStateCreateRasterizationOrderAttachmentStencilAccessBitExt = 2,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        PipelineDepthStencilStateCreateRasterizationOrderAttachmentDepthAccessBitArm = 1,
+        /// <summary>[requires: VK_ARM_rasterization_order_attachment_access]</summary>
+        PipelineDepthStencilStateCreateRasterizationOrderAttachmentStencilAccessBitArm = 2,
     }
     [Flags]
     public enum VkGraphicsPipelineLibraryFlagBitsEXT : int
@@ -1920,6 +5860,16 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkVideoCodecOperationFlagBitsKHR : int
     {
         VideoCodecOperationNoneKhr = 0,
+        /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
+        VideoCodecOperationEncodeH264BitKhr = 65536,
+        /// <summary>[requires: VK_KHR_video_encode_h265]</summary>
+        VideoCodecOperationEncodeH265BitKhr = 131072,
+        /// <summary>[requires: VK_KHR_video_decode_h264]</summary>
+        VideoCodecOperationDecodeH264BitKhr = 1,
+        /// <summary>[requires: VK_KHR_video_decode_h265]</summary>
+        VideoCodecOperationDecodeH265BitKhr = 2,
+        /// <summary>[requires: VK_KHR_video_decode_av1]</summary>
+        VideoCodecOperationDecodeAv1BitKhr = 4,
     }
     [Flags]
     public enum VkVideoChromaSubsamplingFlagBitsKHR : int
@@ -1948,6 +5898,10 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkVideoSessionCreateFlagBitsKHR : int
     {
         VideoSessionCreateProtectedContentBitKhr = 1,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        VideoSessionCreateAllowEncodeParameterOptimizationsBitKhr = 2,
+        /// <summary>[requires: VK_KHR_video_maintenance1]</summary>
+        VideoSessionCreateInlineQueriesBitKhr = 4,
     }
     [Flags]
     public enum VkVideoDecodeH264PictureLayoutFlagBitsKHR : int
@@ -1960,12 +5914,18 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkVideoCodingControlFlagBitsKHR : int
     {
         VideoCodingControlResetBitKhr = 1,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        VideoCodingControlEncodeRateControlBitKhr = 2,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        VideoCodingControlEncodeQualityLevelBitKhr = 4,
     }
     public enum VkQueryResultStatusKHR : int
     {
         QueryResultStatusErrorKhr = -1,
         QueryResultStatusNotReadyKhr = 0,
         QueryResultStatusCompleteKhr = 1,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        QueryResultStatusInsufficientBitstreamBufferRangeKhr = -1000299000,
     }
     [Flags]
     public enum VkVideoDecodeUsageFlagBitsKHR : int
@@ -2152,6 +6112,38 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeature2StorageWriteWithoutFormatBitKhr = 1,
         FormatFeature2SampledImageDepthComparisonBit = 2,
         FormatFeature2SampledImageDepthComparisonBitKhr = 2,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        FormatFeature2VideoDecodeOutputBitKhr = 33554432,
+        /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
+        FormatFeature2VideoDecodeDpbBitKhr = 67108864,
+        /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
+        FormatFeature2AccelerationStructureVertexBufferBitKhr = 536870912,
+        /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
+        FormatFeature2FragmentDensityMapBitExt = 16777216,
+        /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
+        FormatFeature2FragmentShadingRateAttachmentBitKhr = 1073741824,
+        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        FormatFeature2HostImageTransferBitExt = 16384,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        FormatFeature2VideoEncodeInputBitKhr = 134217728,
+        /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
+        FormatFeature2VideoEncodeDpbBitKhr = 268435456,
+        /// <summary>[requires: VK_NV_linear_color_attachment]</summary>
+        FormatFeature2LinearColorAttachmentBitNv = 64,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        FormatFeature2WeightImageBitQcom = 4,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        FormatFeature2WeightSampledImageBitQcom = 8,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        FormatFeature2BlockMatchingBitQcom = 16,
+        /// <summary>[requires: VK_QCOM_image_processing]</summary>
+        FormatFeature2BoxFilterSampledBitQcom = 32,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        FormatFeature2OpticalFlowImageBitNv = 256,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        FormatFeature2OpticalFlowVectorBitNv = 512,
+        /// <summary>[requires: VK_NV_optical_flow]</summary>
+        FormatFeature2OpticalFlowCostBitNv = 1024,
     }
     [Flags]
     public enum VkRenderingFlagBits : int
@@ -2162,6 +6154,12 @@ namespace OpenTK.Graphics.Vulkan
         RenderingSuspendingBitKhr = 2,
         RenderingResumingBit = 4,
         RenderingResumingBitKhr = 4,
+        /// <summary>[requires: VK_EXT_legacy_dithering]</summary>
+        RenderingEnableLegacyDitheringBitExt = 8,
+        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        RenderingContentsInlineBitKhr = 16,
+        /// <summary>[requires: VK_EXT_nested_command_buffer]</summary>
+        RenderingContentsInlineBitExt = 16,
     }
     [Flags]
     public enum VkVideoEncodeH265CapabilityFlagBitsKHR : int
@@ -2239,6 +6237,8 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkInstanceCreateFlagBits : int
     {
+        /// <summary>[requires: VK_KHR_portability_enumeration]</summary>
+        InstanceCreateEnumeratePortabilityBitKhr = 1,
     }
     [Flags]
     public enum VkImageCompressionFlagBitsEXT : int
@@ -2346,6 +6346,8 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkMicromapTypeEXT : int
     {
         MicromapTypeOpacityMicromapExt = 0,
+        /// <summary>[requires: VK_NV_displacement_micromap]</summary>
+        MicromapTypeDisplacementMicromapNv = 1000397000,
     }
     [Flags]
     public enum VkBuildMicromapFlagBitsEXT : int
@@ -2412,6 +6414,18 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkShaderCreateFlagBitsEXT : int
     {
         ShaderCreateLinkStageBitExt = 1,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateAllowVaryingSubgroupSizeBitExt = 2,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateRequireFullSubgroupsBitExt = 4,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateNoTaskShaderBitExt = 8,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateDispatchBaseBitExt = 16,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateFragmentShadingRateAttachmentBitExt = 32,
+        /// <summary>[requires: VK_EXT_shader_object]</summary>
+        ShaderCreateFragmentDensityMapAttachmentBitExt = 64,
     }
     public enum VkShaderCodeTypeEXT : int
     {
@@ -2424,6 +6438,14 @@ namespace OpenTK.Graphics.Vulkan
         ScopeWorkgroupKhr = 2,
         ScopeSubgroupKhr = 3,
         ScopeQueueFamilyKhr = 5,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ScopeDeviceNv = 1,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ScopeWorkgroupNv = 2,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ScopeSubgroupNv = 3,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ScopeQueueFamilyNv = 5,
     }
     public enum VkComponentTypeKHR : int
     {
@@ -2438,6 +6460,28 @@ namespace OpenTK.Graphics.Vulkan
         ComponentTypeUint16Khr = 8,
         ComponentTypeUint32Khr = 9,
         ComponentTypeUint64Khr = 10,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeFloat16Nv = 0,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeFloat32Nv = 1,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeFloat64Nv = 2,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeSint8Nv = 3,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeSint16Nv = 4,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeSint32Nv = 5,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeSint64Nv = 6,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeUint8Nv = 7,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeUint16Nv = 8,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeUint32Nv = 9,
+        /// <summary>[requires: VK_NV_cooperative_matrix]</summary>
+        ComponentTypeUint64Nv = 10,
     }
     public enum VkCubicFilterWeightsQCOM : int
     {
@@ -2487,6 +6531,8 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkMemoryUnmapFlagBitsKHR : int
     {
+        /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
+        MemoryUnmapReserveBitExt = 1,
     }
     [Flags]
     public enum VkQueryPoolCreateFlags : int

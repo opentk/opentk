@@ -17,8 +17,10 @@ namespace VkGenerator
 
             var specData = SpecificationParser.Parse(specificationStream);
 
-            var typeMap = Processor.BuildTypeMap(specData);
+            Processor.ApplyFeatureEnums(specData);
+            Processor.ApplyExtensionEnums(specData);
 
+            var typeMap = Processor.BuildTypeMap(specData);
             Processor.ResolveStructMemberTypes(specData, typeMap);
             Processor.ResolveCommandTypes(specData, typeMap);
 

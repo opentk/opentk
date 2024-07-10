@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +19,9 @@ namespace VkGenerator.Parsing
             Dictionary<string, Constant> Constants,
             List<BitmaskName> Bitmasks,
             List<HandleType> Handles,
-            List<Command> Commands);
+            List<Command> Commands,
+            List<Feature> Features,
+            List<Extension> Extensions);
 
     public record TypeData (
         List<StructType> Structs,
@@ -47,8 +48,8 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongType { get; set; }
     };
 
-    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask);
-    public record EnumMember(string Name, int Value, string? Comment, string? Alias);
+    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension);
+    public record EnumMember(string Name, int Value, string? Comment, string? Alias, string? Extension);
 
     public record Command(string Name, string ReturnType, List<CommandParameter> Parameters)
     {
@@ -58,6 +59,32 @@ namespace VkGenerator.Parsing
     {
         public BaseCSType? StrongType;
     }
+
+    public record Feature(string Name, string Number, string? Depends, string? Comment, List<RequireTag> RequireTags);
+
+    public record Extension(
+        string Name,
+        int Number,
+        int SortOrder,
+        string? Protect,
+        string? Platform,
+        string Author,
+        string Contact,
+        string Type,
+        string? Depends,
+        string? Supported,
+        string? Ratified,
+        string? PromotedTo,
+        string? DeprecatedBy,
+        string? ObsoletedBy,
+        bool Provisional,
+        string? SpecialUse,
+        List<RequireTag> RequireTags);
+    public record RequireTag(List<RequireEnum> RequiredEnums, List<RequireCommand> RequiredCommands, List<RequireType> RequiredTypes, string? Comment);
+    /// <summary>We either know Value or Alias.</summary>
+    public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
+    public record RequireCommand(string Name);
+    public record RequireType(string Name);
 
     public enum ConstantType
     {
@@ -91,6 +118,12 @@ namespace VkGenerator.Parsing
 
             List<Command> commands = ParseCommands(xdocument.Root);
 
+            List<Feature> features = ParseFeatures(xdocument.Root);
+
+            List<Extension> extensions = ParseExtensions(xdocument.Root);
+
+            ParseExtensions(xdocument.Root);
+
             return new SpecificationData(
                 enums,
                 typeData.EnumNames,
@@ -99,7 +132,9 @@ namespace VkGenerator.Parsing
                 constantsMap,
                 typeData.BitmaskNames,
                 typeData.HandleTypes,
-                commands);
+                commands,
+                features,
+                extensions);
         }
 
         public static TypeData ParseTypes(XElement root)
@@ -321,7 +356,7 @@ namespace VkGenerator.Parsing
                             EnumMember aliasMember = members.Find(m => m.Name == alias) ?? throw new Exception();
                             string memberName = member.Attribute("name")?.Value ?? throw new Exception();
                             // FIXME: Should we check if this one has a comment?
-                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias));
+                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias, null));
                         }
                         else
                         {
@@ -329,11 +364,11 @@ namespace VkGenerator.Parsing
                             string value = member.Attribute("value")?.Value ?? throw new Exception();
                             string? comment = member.Attribute("comment")?.Value;
 
-                            members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null));
+                            members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null, null));
                         }
                     }
 
-                    enumTypes.Add(new EnumType(name, members, false));
+                    enumTypes.Add(new EnumType(name, members, false, null));
                 }
                 else if (type == "bitmask")
                 {
@@ -346,7 +381,7 @@ namespace VkGenerator.Parsing
                             EnumMember aliasMember = members.Find(m => m.Name == alias) ?? throw new Exception();
                             string memberName = member.Attribute("name")?.Value ?? throw new Exception();
                             // FIXME: Should we check if this one has a comment?
-                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias));
+                            members.Add(new EnumMember(memberName, aliasMember.Value, aliasMember.Comment, alias, null));
                         }
                         else
                         {
@@ -356,17 +391,17 @@ namespace VkGenerator.Parsing
                             string? bitpos = member.Attribute("bitpos")?.Value;
                             if (bitpos != null)
                             {
-                                members.Add(new EnumMember(memberName, 1 << int.Parse(bitpos), comment, null));
+                                members.Add(new EnumMember(memberName, 1 << int.Parse(bitpos), comment, null, null));
                             }
                             else
                             {
                                 string value = member.Attribute("value")?.Value ?? throw new Exception();
-                                members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null));
+                                members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null, null));
                             }
                         }
                     }
 
-                    enumTypes.Add(new EnumType(name, members, true));
+                    enumTypes.Add(new EnumType(name, members, true, null));
                 }
                 else
                 {
@@ -428,6 +463,183 @@ namespace VkGenerator.Parsing
             }
 
             return commands;
+        }
+
+        public static List<Feature> ParseFeatures(XElement root)
+        {
+            List<Feature> features = new List<Feature>();
+            foreach (XElement feature in root.Elements("feature"))
+            {
+                string[] apis = feature.Attribute("api")?.Value.Split(',') ?? Array.Empty<string>();
+                if (apis.Contains("vulkan"))
+                {
+                    string name = feature.Attribute("name")?.Value ?? throw new Exception();
+                    string number = feature.Attribute("number")?.Value ?? throw new Exception();
+                    string? depends = feature.Attribute("depends")?.Value;
+                    string? comment = feature.Attribute("comment")?.Value;
+
+                    List<RequireTag> requireTags = new List<RequireTag>();
+                    foreach (XElement require in feature.Elements("require"))
+                    {
+                        if (require.Attribute("api")?.Value == "vulkansc")
+                            continue;
+
+                        // Features have extension number 0
+                        requireTags.Add(ParseRequireTag(require, 0));
+                    }
+
+                    features.Add(new Feature(name, number, depends, comment, requireTags));
+                }
+            }
+
+            return features;
+        }
+
+        public static List<Extension> ParseExtensions(XElement root)
+        {
+            XElement xelement = root.Element("extensions")!;
+
+            List<Extension> extensions = new List<Extension>();
+            foreach (XElement extension in xelement.Elements("extension"))
+            {
+                if (extension.Attribute("api")?.Value == "vulkansc")
+                    continue;
+
+                string? supported = extension.Attribute("supported")?.Value;
+                if (supported == "disabled")
+                    continue;
+
+                string name = extension.Attribute("name")?.Value ?? throw new Exception();
+                int number  = int.Parse(extension.Attribute("number")?.Value ?? throw new Exception());
+
+                if (int.TryParse(extension.Attribute("sortorder")?.Value, out int sortOrder) == false)
+                    sortOrder = 0;
+                string? protect = extension.Attribute("protect")?.Value;
+                string? platform = extension.Attribute("platform")?.Value;
+                string author = extension.Attribute("author")?.Value ?? throw new Exception();
+                string contact = extension.Attribute("contact")?.Value ?? throw new Exception();
+                // "device" or "instance"
+                string type = extension.Attribute("type")?.Value ?? throw new Exception();
+                string? depends = extension.Attribute("depends")?.Value;
+                string? ratified = extension.Attribute("ratified")?.Value;
+                string? promotedTo = extension.Attribute("promotedto")?.Value;
+                string? deprecatedBy = extension.Attribute("deprecatedby")?.Value;
+                string? obsoletedBy = extension.Attribute("obsoletedby")?.Value;
+                bool provisional = extension.Attribute("provisional")?.Value == "true";
+                string? specialUse = extension.Attribute("specialuse")?.Value;
+
+                List<RequireTag> requireTags = new List<RequireTag>();
+                foreach (XElement require in extension.Elements("require"))
+                {
+                    if (require.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    requireTags.Add(ParseRequireTag(require, number));
+                }
+
+                extensions.Add(new Extension(
+                    name,
+                    number,
+                    sortOrder,
+                    protect,
+                    platform,
+                    author,
+                    contact,
+                    type,
+                    depends,
+                    supported,
+                    ratified,
+                    promotedTo,
+                    deprecatedBy,
+                    obsoletedBy,
+                    provisional,
+                    specialUse,
+                    requireTags));
+            }
+
+            return extensions;
+        }
+
+        public static RequireTag ParseRequireTag(XElement require, int number)
+        {
+            // FIXME: use?
+            string? requireDepends = require.Attribute("depends")?.Value;
+            string? tagComment = require.Attribute("comment")?.Value;
+
+            List<RequireEnum> requiredEnums = new List<RequireEnum>();
+            foreach (XElement @enum in require.Elements("enum"))
+            {
+                if (@enum.Attribute("api")?.Value == "vulkansc")
+                    continue;
+
+                string? extends = @enum.Attribute("extends")?.Value;
+                if (extends == null)
+                {
+                    // Extensions add a few global constants that are not part of
+                    // any enum. We skip these for now.
+                    continue;
+                }
+
+                string? comment = @enum.Attribute("comment")?.Value;
+
+                string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                string? alias = @enum.Attribute("alias")?.Value;
+                if (alias != null)
+                {
+                    requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                }
+                else
+                {
+                    string? offsetStr = @enum.Attribute("offset")?.Value;
+                    string? bitposStr = @enum.Attribute("bitpos")?.Value;
+                    string? valueStr = @enum.Attribute("value")?.Value;
+
+                    int value;
+                    if (offsetStr != null)
+                    {
+                        if (int.TryParse(@enum.Attribute("extnumber")?.Value ?? "", out int extNumber) == false)
+                            extNumber = number;
+
+                        value = 1000000000 + ((extNumber - 1) * 1000) + int.Parse(offsetStr);
+
+                        if (@enum.Attribute("dir")?.Value == "-")
+                            value = -value;
+                    }
+                    else if (bitposStr != null)
+                    {
+                        value = 1 << int.Parse(bitposStr);
+                    }
+                    else if (valueStr != null)
+                    {
+                        value = int.Parse(valueStr);
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                    requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                }
+            }
+
+            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            foreach (XElement command in require.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                requiredCommands.Add(new RequireCommand(commandName));
+            }
+            
+            List<RequireType> requiredTypes = new List<RequireType>();
+            foreach (XElement command in require.Elements("type"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                requiredTypes.Add(new RequireType(commandName));
+            }
+
+            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, tagComment);
         }
     }
 }

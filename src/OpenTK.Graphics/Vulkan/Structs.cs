@@ -234,7 +234,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public ulong offset;
         public ulong size;
     }
@@ -254,37 +254,37 @@ namespace OpenTK.Graphics.Vulkan
     }
     public unsafe struct VkDescriptorBufferInfo
     {
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public ulong range;
     }
     public unsafe struct VkDescriptorImageInfo
     {
-        public IntPtr sampler;
-        public IntPtr imageView;
+        public VkSampler sampler;
+        public VkImageView imageView;
         public VkImageLayout imageLayout;
     }
     public unsafe struct VkWriteDescriptorSet
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr dstSet;
+        public VkDescriptorSet dstSet;
         public uint dstBinding;
         public uint dstArrayElement;
         public uint descriptorCount;
         public VkDescriptorType descriptorType;
         public VkDescriptorImageInfo* pImageInfo;
         public VkDescriptorBufferInfo* pBufferInfo;
-        public IntPtr* pTexelBufferView;
+        public VkBufferView* pTexelBufferView;
     }
     public unsafe struct VkCopyDescriptorSet
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcSet;
+        public VkDescriptorSet srcSet;
         public uint srcBinding;
         public uint srcArrayElement;
-        public IntPtr dstSet;
+        public VkDescriptorSet dstSet;
         public uint dstBinding;
         public uint dstArrayElement;
         public uint descriptorCount;
@@ -311,7 +311,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkBufferViewCreateFlags flags;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public VkFormat format;
         public ulong offset;
         public ulong range;
@@ -352,7 +352,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkAccessFlagBits dstAccessMask;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public ulong size;
     }
@@ -366,7 +366,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkImageLayout newLayout;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
-        public IntPtr image;
+        public VkImage image;
         public VkImageSubresourceRange subresourceRange;
     }
     public unsafe struct VkImageCreateInfo
@@ -400,7 +400,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkImageViewCreateFlagBits flags;
-        public IntPtr image;
+        public VkImage image;
         public VkImageViewType viewType;
         public VkFormat format;
         public VkComponentMapping components;
@@ -416,7 +416,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public ulong resourceOffset;
         public ulong size;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
         public VkSparseMemoryBindFlagBits flags;
     }
@@ -425,25 +425,25 @@ namespace OpenTK.Graphics.Vulkan
         public VkImageSubresource subresource;
         public VkOffset3D offset;
         public VkExtent3D extent;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
         public VkSparseMemoryBindFlagBits flags;
     }
     public unsafe struct VkSparseBufferMemoryBindInfo
     {
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public uint bindCount;
         public VkSparseMemoryBind* pBinds;
     }
     public unsafe struct VkSparseImageOpaqueMemoryBindInfo
     {
-        public IntPtr image;
+        public VkImage image;
         public uint bindCount;
         public VkSparseMemoryBind* pBinds;
     }
     public unsafe struct VkSparseImageMemoryBindInfo
     {
-        public IntPtr image;
+        public VkImage image;
         public uint bindCount;
         public VkSparseImageMemoryBind* pBinds;
     }
@@ -452,7 +452,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint waitSemaphoreCount;
-        public IntPtr* pWaitSemaphores;
+        public VkSemaphore* pWaitSemaphores;
         public uint bufferBindCount;
         public VkSparseBufferMemoryBindInfo* pBufferBinds;
         public uint imageOpaqueBindCount;
@@ -460,7 +460,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint imageBindCount;
         public VkSparseImageMemoryBindInfo* pImageBinds;
         public uint signalSemaphoreCount;
-        public IntPtr* pSignalSemaphores;
+        public VkSemaphore* pSignalSemaphores;
     }
     public unsafe struct VkImageCopy
     {
@@ -533,7 +533,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkDescriptorType descriptorType;
         public uint descriptorCount;
         public VkShaderStageFlagBits stageFlags;
-        public IntPtr* pImmutableSamplers;
+        public VkSampler* pImmutableSamplers;
     }
     public unsafe struct VkDescriptorSetLayoutCreateInfo
     {
@@ -561,9 +561,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr descriptorPool;
+        public VkDescriptorPool descriptorPool;
         public uint descriptorSetCount;
-        public IntPtr* pSetLayouts;
+        public VkDescriptorSetLayout* pSetLayouts;
     }
     public unsafe struct VkSpecializationMapEntry
     {
@@ -584,7 +584,7 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkPipelineShaderStageCreateFlagBits flags;
         public VkShaderStageFlagBits stage;
-        public IntPtr module;
+        public VkShaderModule module;
         public byte* pName;
         public VkSpecializationInfo* pSpecializationInfo;
     }
@@ -594,8 +594,8 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkPipelineCreateFlagBits flags;
         public VkPipelineShaderStageCreateInfo stage;
-        public IntPtr layout;
-        public IntPtr basePipelineHandle;
+        public VkPipelineLayout layout;
+        public VkPipeline basePipelineHandle;
         public int basePipelineIndex;
     }
     public unsafe struct VkComputePipelineIndirectBufferInfoNV
@@ -759,10 +759,10 @@ namespace OpenTK.Graphics.Vulkan
         public VkPipelineDepthStencilStateCreateInfo* pDepthStencilState;
         public VkPipelineColorBlendStateCreateInfo* pColorBlendState;
         public VkPipelineDynamicStateCreateInfo* pDynamicState;
-        public IntPtr layout;
-        public IntPtr renderPass;
+        public VkPipelineLayout layout;
+        public VkRenderPass renderPass;
         public uint subpass;
-        public IntPtr basePipelineHandle;
+        public VkPipeline basePipelineHandle;
         public int basePipelineIndex;
     }
     public unsafe struct VkPipelineCacheCreateInfo
@@ -817,7 +817,7 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkPipelineLayoutCreateFlagBits flags;
         public uint setLayoutCount;
-        public IntPtr* pSetLayouts;
+        public VkDescriptorSetLayout* pSetLayouts;
         public uint pushConstantRangeCount;
         public VkPushConstantRange* pPushConstantRanges;
     }
@@ -853,7 +853,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr commandPool;
+        public VkCommandPool commandPool;
         public VkCommandBufferLevel level;
         public uint commandBufferCount;
     }
@@ -861,9 +861,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr renderPass;
+        public VkRenderPass renderPass;
         public uint subpass;
-        public IntPtr framebuffer;
+        public VkFramebuffer framebuffer;
         public int occlusionQueryEnable;
         public VkQueryControlFlagBits queryFlags;
         public VkQueryPipelineStatisticFlagBits pipelineStatistics;
@@ -879,8 +879,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr renderPass;
-        public IntPtr framebuffer;
+        public VkRenderPass renderPass;
+        public VkFramebuffer framebuffer;
         public VkRect2D renderArea;
         public uint clearValueCount;
         public VkClearValue* pClearValues;
@@ -1166,9 +1166,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkFramebufferCreateFlagBits flags;
-        public IntPtr renderPass;
+        public VkRenderPass renderPass;
         public uint attachmentCount;
-        public IntPtr* pAttachments;
+        public VkImageView* pAttachments;
         public uint width;
         public uint height;
         public uint layers;
@@ -1210,16 +1210,16 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint waitSemaphoreCount;
-        public IntPtr* pWaitSemaphores;
+        public VkSemaphore* pWaitSemaphores;
         public VkPipelineStageFlagBits* pWaitDstStageMask;
         public uint commandBufferCount;
-        public IntPtr* pCommandBuffers;
+        public VkCommandBuffer* pCommandBuffers;
         public uint signalSemaphoreCount;
-        public IntPtr* pSignalSemaphores;
+        public VkSemaphore* pSignalSemaphores;
     }
     public unsafe struct VkDisplayPropertiesKHR
     {
-        public IntPtr display;
+        public VkDisplayKHR display;
         public byte* displayName;
         public VkExtent2D physicalDimensions;
         public VkExtent2D physicalResolution;
@@ -1229,7 +1229,7 @@ namespace OpenTK.Graphics.Vulkan
     }
     public unsafe struct VkDisplayPlanePropertiesKHR
     {
-        public IntPtr currentDisplay;
+        public VkDisplayKHR currentDisplay;
         public uint currentStackIndex;
     }
     public unsafe struct VkDisplayModeParametersKHR
@@ -1239,7 +1239,7 @@ namespace OpenTK.Graphics.Vulkan
     }
     public unsafe struct VkDisplayModePropertiesKHR
     {
-        public IntPtr displayMode;
+        public VkDisplayModeKHR displayMode;
         public VkDisplayModeParametersKHR parameters;
     }
     public unsafe struct VkDisplayModeCreateInfoKHR
@@ -1266,7 +1266,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkDisplaySurfaceCreateFlagsKHR flags;
-        public IntPtr displayMode;
+        public VkDisplayModeKHR displayMode;
         public uint planeIndex;
         public uint planeStackIndex;
         public VkSurfaceTransformFlagBitsKHR transform;
@@ -1380,7 +1380,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkSwapchainCreateFlagBitsKHR flags;
-        public IntPtr surface;
+        public VkSurfaceKHR surface;
         public uint minImageCount;
         public VkFormat imageFormat;
         public VkColorSpaceKHR imageColorSpace;
@@ -1394,16 +1394,16 @@ namespace OpenTK.Graphics.Vulkan
         public VkCompositeAlphaFlagBitsKHR compositeAlpha;
         public VkPresentModeKHR presentMode;
         public int clipped;
-        public IntPtr oldSwapchain;
+        public VkSwapchainKHR oldSwapchain;
     }
     public unsafe struct VkPresentInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
         public uint waitSemaphoreCount;
-        public IntPtr* pWaitSemaphores;
+        public VkSemaphore* pWaitSemaphores;
         public uint swapchainCount;
-        public IntPtr* pSwapchains;
+        public VkSwapchainKHR* pSwapchains;
         public uint* pImageIndices;
         public VkResult* pResults;
     }
@@ -1502,8 +1502,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
-        public IntPtr buffer;
+        public VkImage image;
+        public VkBuffer buffer;
     }
     public unsafe struct VkExternalImageFormatPropertiesNV
     {
@@ -1555,7 +1555,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public VkExternalMemoryHandleTypeFlagBits handleType;
     }
     public unsafe struct VkMemorySciBufPropertiesNV
@@ -1579,11 +1579,11 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint acquireCount;
-        public IntPtr* pAcquireSyncs;
+        public VkDeviceMemory* pAcquireSyncs;
         public ulong* pAcquireKeys;
         public uint* pAcquireTimeoutMilliseconds;
         public uint releaseCount;
-        public IntPtr* pReleaseSyncs;
+        public VkDeviceMemory* pReleaseSyncs;
         public ulong* pReleaseKeys;
     }
     public unsafe struct VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV
@@ -1663,7 +1663,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint groupCount;
         public VkGraphicsShaderGroupCreateInfoNV* pGroups;
         public uint pipelineCount;
-        public IntPtr* pPipelines;
+        public VkPipeline* pPipelines;
     }
     public unsafe struct VkBindShaderGroupIndirectCommandNV
     {
@@ -1687,7 +1687,7 @@ namespace OpenTK.Graphics.Vulkan
     }
     public unsafe struct VkIndirectCommandsStreamNV
     {
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
     }
     public unsafe struct VkIndirectCommandsLayoutTokenNV
@@ -1699,7 +1699,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint offset;
         public uint vertexBindingUnit;
         public int vertexDynamicStride;
-        public IntPtr pushconstantPipelineLayout;
+        public VkPipelineLayout pushconstantPipelineLayout;
         public VkShaderStageFlagBits pushconstantShaderStageFlags;
         public uint pushconstantOffset;
         public uint pushconstantSize;
@@ -1724,17 +1724,17 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkPipelineBindPoint pipelineBindPoint;
-        public IntPtr pipeline;
-        public IntPtr indirectCommandsLayout;
+        public VkPipeline pipeline;
+        public VkIndirectCommandsLayoutNV indirectCommandsLayout;
         public uint streamCount;
         public VkIndirectCommandsStreamNV* pStreams;
         public uint sequencesCount;
-        public IntPtr preprocessBuffer;
+        public VkBuffer preprocessBuffer;
         public ulong preprocessOffset;
         public ulong preprocessSize;
-        public IntPtr sequencesCountBuffer;
+        public VkBuffer sequencesCountBuffer;
         public ulong sequencesCountOffset;
-        public IntPtr sequencesIndexBuffer;
+        public VkBuffer sequencesIndexBuffer;
         public ulong sequencesIndexOffset;
     }
     public unsafe struct VkGeneratedCommandsMemoryRequirementsInfoNV
@@ -1742,8 +1742,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkPipelineBindPoint pipelineBindPoint;
-        public IntPtr pipeline;
-        public IntPtr indirectCommandsLayout;
+        public VkPipeline pipeline;
+        public VkIndirectCommandsLayoutNV indirectCommandsLayout;
         public uint maxSequencesCount;
     }
     public unsafe struct VkPipelineIndirectDeviceAddressInfoNV
@@ -1751,7 +1751,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkPipelineBindPoint pipelineBindPoint;
-        public IntPtr pipeline;
+        public VkPipeline pipeline;
     }
     public unsafe struct VkBindPipelineIndirectCommandNV
     {
@@ -2038,7 +2038,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public VkExternalMemoryHandleTypeFlagBits handleType;
     }
     public unsafe struct VkMemoryWin32HandlePropertiesKHR
@@ -2051,7 +2051,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public VkExternalMemoryHandleTypeFlagBits handleType;
     }
     public unsafe struct VkImportMemoryFdInfoKHR
@@ -2071,7 +2071,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public VkExternalMemoryHandleTypeFlagBits handleType;
     }
     public unsafe struct VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -2079,11 +2079,11 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint acquireCount;
-        public IntPtr* pAcquireSyncs;
+        public VkDeviceMemory* pAcquireSyncs;
         public ulong* pAcquireKeys;
         public uint* pAcquireTimeouts;
         public uint releaseCount;
-        public IntPtr* pReleaseSyncs;
+        public VkDeviceMemory* pReleaseSyncs;
         public ulong* pReleaseKeys;
     }
     public unsafe struct VkPhysicalDeviceExternalSemaphoreInfo
@@ -2119,7 +2119,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkSemaphoreImportFlagBits flags;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
         public IntPtr handle;
@@ -2146,14 +2146,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
     }
     public unsafe struct VkImportSemaphoreFdInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkSemaphoreImportFlagBits flags;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
         public int fd;
@@ -2162,14 +2162,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
     }
     public unsafe struct VkImportSemaphoreZirconHandleInfoFUCHSIA
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkSemaphoreImportFlagBits flags;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
         public int zirconHandle;
@@ -2178,7 +2178,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
     }
     public unsafe struct VkPhysicalDeviceExternalFenceInfo
@@ -2214,7 +2214,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkFenceImportFlagBits flags;
         public VkExternalFenceHandleTypeFlagBits handleType;
         public IntPtr handle;
@@ -2232,14 +2232,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkExternalFenceHandleTypeFlagBits handleType;
     }
     public unsafe struct VkImportFenceFdInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkFenceImportFlagBits flags;
         public VkExternalFenceHandleTypeFlagBits handleType;
         public int fd;
@@ -2248,7 +2248,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkExternalFenceHandleTypeFlagBits handleType;
     }
     public unsafe struct VkExportFenceSciSyncInfoNV
@@ -2261,7 +2261,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkExternalFenceHandleTypeFlagBits handleType;
         public void* handle;
     }
@@ -2269,7 +2269,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr fence;
+        public VkFence fence;
         public VkExternalFenceHandleTypeFlagBits handleType;
     }
     public unsafe struct VkExportSemaphoreSciSyncInfoNV
@@ -2282,7 +2282,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
         public void* handle;
     }
@@ -2290,7 +2290,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public VkExternalSemaphoreHandleTypeFlagBits handleType;
     }
     public unsafe struct VkSciSyncAttributesInfoNV
@@ -2328,7 +2328,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphorePool;
+        public VkSemaphoreSciSyncPoolNV semaphorePool;
         public IntPtr pFence;
     }
     public unsafe struct VkDeviceSemaphoreSciSyncPoolReservationCreateInfoNV
@@ -2420,7 +2420,7 @@ namespace OpenTK.Graphics.Vulkan
         [InlineArray(32)]
         public struct physicalDevicesInlineArray
         {
-            public IntPtr element;
+            public VkPhysicalDevice element;
         }
         public physicalDevicesInlineArray physicalDevices;
         public int subsetAllocation;
@@ -2442,8 +2442,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
-        public IntPtr memory;
+        public VkBuffer buffer;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
     }
     public unsafe struct VkBindBufferMemoryInfoKHR
@@ -2463,8 +2463,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
-        public IntPtr memory;
+        public VkImage image;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
     }
     public unsafe struct VkBindImageMemoryInfoKHR
@@ -2537,23 +2537,23 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr swapchain;
+        public VkSwapchainKHR swapchain;
     }
     public unsafe struct VkBindImageMemorySwapchainInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr swapchain;
+        public VkSwapchainKHR swapchain;
         public uint imageIndex;
     }
     public unsafe struct VkAcquireNextImageInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr swapchain;
+        public VkSwapchainKHR swapchain;
         public ulong timeout;
-        public IntPtr semaphore;
-        public IntPtr fence;
+        public VkSemaphore semaphore;
+        public VkFence fence;
         public uint deviceMask;
     }
     public unsafe struct VkDeviceGroupPresentInfoKHR
@@ -2569,7 +2569,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint physicalDeviceCount;
-        public IntPtr* pPhysicalDevices;
+        public VkPhysicalDevice* pPhysicalDevices;
     }
     public unsafe struct VkDeviceGroupDeviceCreateInfoKHR
     {
@@ -2600,9 +2600,9 @@ namespace OpenTK.Graphics.Vulkan
         public uint descriptorUpdateEntryCount;
         public VkDescriptorUpdateTemplateEntry* pDescriptorUpdateEntries;
         public VkDescriptorUpdateTemplateType templateType;
-        public IntPtr descriptorSetLayout;
+        public VkDescriptorSetLayout descriptorSetLayout;
         public VkPipelineBindPoint pipelineBindPoint;
-        public IntPtr pipelineLayout;
+        public VkPipelineLayout pipelineLayout;
         public uint set;
     }
     public unsafe struct VkDescriptorUpdateTemplateCreateInfoKHR
@@ -2774,7 +2774,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr surface;
+        public VkSurfaceKHR surface;
     }
     public unsafe struct VkSurfaceCapabilities2KHR
     {
@@ -2810,7 +2810,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr mode;
+        public VkDisplayModeKHR mode;
         public uint planeIndex;
     }
     public unsafe struct VkDisplayPlaneCapabilities2KHR
@@ -2859,7 +2859,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
+        public VkBuffer buffer;
     }
     public unsafe struct VkBufferMemoryRequirementsInfo2KHR
     {
@@ -2877,7 +2877,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
+        public VkImage image;
     }
     public unsafe struct VkImageMemoryRequirementsInfo2KHR
     {
@@ -2886,7 +2886,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
+        public VkImage image;
     }
     public unsafe struct VkImageSparseMemoryRequirementsInfo2KHR
     {
@@ -2942,8 +2942,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
-        public IntPtr buffer;
+        public VkImage image;
+        public VkBuffer buffer;
     }
     public unsafe struct VkMemoryDedicatedAllocateInfoKHR
     {
@@ -2977,7 +2977,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr conversion;
+        public VkSamplerYcbcrConversion conversion;
     }
     public unsafe struct VkSamplerYcbcrConversionInfoKHR
     {
@@ -3044,7 +3044,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public VkConditionalRenderingFlagBitsEXT flags;
     }
@@ -3262,7 +3262,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr validationCache;
+        public VkValidationCacheEXT validationCache;
     }
     public unsafe struct VkPhysicalDeviceMaintenance3Properties
     {
@@ -3905,7 +3905,7 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkSemaphoreWaitFlagBits flags;
         public uint semaphoreCount;
-        public IntPtr* pSemaphores;
+        public VkSemaphore* pSemaphores;
         public ulong* pValues;
     }
     public unsafe struct VkSemaphoreWaitInfoKHR
@@ -3915,7 +3915,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public ulong value;
     }
     public unsafe struct VkSemaphoreSignalInfoKHR
@@ -3984,7 +3984,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
     }
     public unsafe struct VkAndroidHardwareBufferFormatPropertiesANDROID
     {
@@ -4414,8 +4414,8 @@ namespace OpenTK.Graphics.Vulkan
         public uint groupCount;
         public VkRayTracingShaderGroupCreateInfoNV* pGroups;
         public uint maxRecursionDepth;
-        public IntPtr layout;
-        public IntPtr basePipelineHandle;
+        public VkPipelineLayout layout;
+        public VkPipeline basePipelineHandle;
         public int basePipelineIndex;
     }
     public unsafe struct VkRayTracingPipelineCreateInfoKHR
@@ -4431,31 +4431,31 @@ namespace OpenTK.Graphics.Vulkan
         public VkPipelineLibraryCreateInfoKHR* pLibraryInfo;
         public VkRayTracingPipelineInterfaceCreateInfoKHR* pLibraryInterface;
         public VkPipelineDynamicStateCreateInfo* pDynamicState;
-        public IntPtr layout;
-        public IntPtr basePipelineHandle;
+        public VkPipelineLayout layout;
+        public VkPipeline basePipelineHandle;
         public int basePipelineIndex;
     }
     public unsafe struct VkGeometryTrianglesNV
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr vertexData;
+        public VkBuffer vertexData;
         public ulong vertexOffset;
         public uint vertexCount;
         public ulong vertexStride;
         public VkFormat vertexFormat;
-        public IntPtr indexData;
+        public VkBuffer indexData;
         public ulong indexOffset;
         public uint indexCount;
         public VkIndexType indexType;
-        public IntPtr transformData;
+        public VkBuffer transformData;
         public ulong transformOffset;
     }
     public unsafe struct VkGeometryAABBNV
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr aabbData;
+        public VkBuffer aabbData;
         public uint numAABBs;
         public uint stride;
         public ulong offset;
@@ -4494,8 +4494,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr accelerationStructure;
-        public IntPtr memory;
+        public VkAccelerationStructureNV accelerationStructure;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
         public uint deviceIndexCount;
         public uint* pDeviceIndices;
@@ -4505,21 +4505,21 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint accelerationStructureCount;
-        public IntPtr* pAccelerationStructures;
+        public VkAccelerationStructureKHR* pAccelerationStructures;
     }
     public unsafe struct VkWriteDescriptorSetAccelerationStructureNV
     {
         public VkStructureType sType;
         public void* pNext;
         public uint accelerationStructureCount;
-        public IntPtr* pAccelerationStructures;
+        public VkAccelerationStructureNV* pAccelerationStructures;
     }
     public unsafe struct VkAccelerationStructureMemoryRequirementsInfoNV
     {
         public VkStructureType sType;
         public void* pNext;
         public VkAccelerationStructureMemoryRequirementsTypeNV type;
-        public IntPtr accelerationStructure;
+        public VkAccelerationStructureNV accelerationStructure;
     }
     public unsafe struct VkPhysicalDeviceAccelerationStructureFeaturesKHR
     {
@@ -4824,7 +4824,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
+        public VkBuffer buffer;
     }
     public unsafe struct VkBufferDeviceAddressInfoKHR
     {
@@ -4899,7 +4899,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint attachmentCount;
-        public IntPtr* pAttachments;
+        public VkImageView* pAttachments;
     }
     public unsafe struct VkRenderPassAttachmentBeginInfoKHR
     {
@@ -4949,9 +4949,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr imageView;
+        public VkImageView imageView;
         public VkDescriptorType descriptorType;
-        public IntPtr sampler;
+        public VkSampler sampler;
     }
     public unsafe struct VkImageViewAddressPropertiesNVX
     {
@@ -5272,7 +5272,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr pipeline;
+        public VkPipeline pipeline;
     }
     public unsafe struct VkPipelineInfoEXT
     {
@@ -5300,7 +5300,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr pipeline;
+        public VkPipeline pipeline;
         public uint executableIndex;
     }
     public unsafe struct VkPipelineExecutableStatisticValueKHR
@@ -5414,7 +5414,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr renderPass;
+        public VkRenderPass renderPass;
         public uint subpass;
     }
     public unsafe struct VkPhysicalDeviceSubpassShadingPropertiesHUAWEI
@@ -5445,7 +5445,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
     }
     public unsafe struct VkDeviceMemoryOpaqueCaptureAddressInfoKHR
     {
@@ -5876,8 +5876,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkAccelerationStructureTypeKHR type;
         public VkBuildAccelerationStructureFlagBitsKHR flags;
         public VkBuildAccelerationStructureModeKHR mode;
-        public IntPtr srcAccelerationStructure;
-        public IntPtr dstAccelerationStructure;
+        public VkAccelerationStructureKHR srcAccelerationStructure;
+        public VkAccelerationStructureKHR dstAccelerationStructure;
         public uint geometryCount;
         public VkAccelerationStructureGeometryKHR* pGeometries;
         public VkAccelerationStructureGeometryKHR** ppGeometries;
@@ -5895,7 +5895,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkAccelerationStructureCreateFlagBitsKHR createFlags;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public ulong size;
         public VkAccelerationStructureTypeKHR type;
@@ -5936,7 +5936,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr accelerationStructure;
+        public VkAccelerationStructureKHR accelerationStructure;
     }
     public unsafe struct VkAccelerationStructureVersionInfoKHR
     {
@@ -5948,15 +5948,15 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr src;
-        public IntPtr dst;
+        public VkAccelerationStructureKHR src;
+        public VkAccelerationStructureKHR dst;
         public VkCopyAccelerationStructureModeKHR mode;
     }
     public unsafe struct VkCopyAccelerationStructureToMemoryInfoKHR
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr src;
+        public VkAccelerationStructureKHR src;
         public VkDeviceOrHostAddressKHR dst;
         public VkCopyAccelerationStructureModeKHR mode;
     }
@@ -5965,7 +5965,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkDeviceOrHostAddressConstKHR src;
-        public IntPtr dst;
+        public VkAccelerationStructureKHR dst;
         public VkCopyAccelerationStructureModeKHR mode;
     }
     public unsafe struct VkRayTracingPipelineInterfaceCreateInfoKHR
@@ -5980,7 +5980,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint libraryCount;
-        public IntPtr* pLibraries;
+        public VkPipeline* pLibraries;
     }
     public unsafe struct VkRefreshObjectKHR
     {
@@ -6284,8 +6284,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcBuffer;
-        public IntPtr dstBuffer;
+        public VkBuffer srcBuffer;
+        public VkBuffer dstBuffer;
         public uint regionCount;
         public VkBufferCopy2* pRegions;
     }
@@ -6296,9 +6296,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
-        public IntPtr dstImage;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkImageCopy2* pRegions;
@@ -6310,9 +6310,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
-        public IntPtr dstImage;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkImageBlit2* pRegions;
@@ -6325,8 +6325,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcBuffer;
-        public IntPtr dstImage;
+        public VkBuffer srcBuffer;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkBufferImageCopy2* pRegions;
@@ -6338,9 +6338,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
-        public IntPtr dstBuffer;
+        public VkBuffer dstBuffer;
         public uint regionCount;
         public VkBufferImageCopy2* pRegions;
     }
@@ -6351,9 +6351,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
-        public IntPtr dstImage;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkImageResolve2* pRegions;
@@ -6611,7 +6611,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkImageLayout newLayout;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
-        public IntPtr image;
+        public VkImage image;
         public VkImageSubresourceRange subresourceRange;
     }
     public unsafe struct VkImageMemoryBarrier2KHR
@@ -6627,7 +6627,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkAccessFlags2 dstAccessMask;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public ulong size;
     }
@@ -6653,7 +6653,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
+        public VkSemaphore semaphore;
         public ulong value;
         public VkPipelineStageFlags2 stageMask;
         public uint deviceIndex;
@@ -6665,7 +6665,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr commandBuffer;
+        public VkCommandBuffer commandBuffer;
         public uint deviceMask;
     }
     public unsafe struct VkCommandBufferSubmitInfoKHR
@@ -6752,7 +6752,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkHostImageCopyFlagBitsEXT flags;
-        public IntPtr dstImage;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkMemoryToImageCopyEXT* pRegions;
@@ -6762,7 +6762,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkHostImageCopyFlagBitsEXT flags;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
         public uint regionCount;
         public VkImageToMemoryCopyEXT* pRegions;
@@ -6772,9 +6772,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkHostImageCopyFlagBitsEXT flags;
-        public IntPtr srcImage;
+        public VkImage srcImage;
         public VkImageLayout srcImageLayout;
-        public IntPtr dstImage;
+        public VkImage dstImage;
         public VkImageLayout dstImageLayout;
         public uint regionCount;
         public VkImageCopy2* pRegions;
@@ -6783,7 +6783,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
+        public VkImage image;
         public VkImageLayout oldLayout;
         public VkImageLayout newLayout;
         public VkImageSubresourceRange subresourceRange;
@@ -7008,7 +7008,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint memoryBindIndex;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public ulong memoryOffset;
         public ulong memorySize;
     }
@@ -7019,7 +7019,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkOffset2D codedOffset;
         public VkExtent2D codedExtent;
         public uint baseArrayLayer;
-        public IntPtr imageViewBinding;
+        public VkImageView imageViewBinding;
     }
     public unsafe struct VkVideoReferenceSlotInfoKHR
     {
@@ -7045,7 +7045,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkVideoDecodeFlagsKHR flags;
-        public IntPtr srcBuffer;
+        public VkBuffer srcBuffer;
         public ulong srcBufferOffset;
         public ulong srcBufferRange;
         public VkVideoPictureResourceInfoKHR dstPictureResource;
@@ -7063,7 +7063,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr queryPool;
+        public VkQueryPool queryPool;
         public uint firstQuery;
         public uint queryCount;
     }
@@ -7213,8 +7213,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkVideoSessionParametersCreateFlagsKHR flags;
-        public IntPtr videoSessionParametersTemplate;
-        public IntPtr videoSession;
+        public VkVideoSessionParametersKHR videoSessionParametersTemplate;
+        public VkVideoSessionKHR videoSession;
     }
     public unsafe struct VkVideoSessionParametersUpdateInfoKHR
     {
@@ -7226,7 +7226,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr videoSessionParameters;
+        public VkVideoSessionParametersKHR videoSessionParameters;
     }
     public unsafe struct VkVideoEncodeSessionParametersFeedbackInfoKHR
     {
@@ -7239,8 +7239,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkVideoBeginCodingFlagsKHR flags;
-        public IntPtr videoSession;
-        public IntPtr videoSessionParameters;
+        public VkVideoSessionKHR videoSession;
+        public VkVideoSessionParametersKHR videoSessionParameters;
         public uint referenceSlotCount;
         public VkVideoReferenceSlotInfoKHR* pReferenceSlots;
     }
@@ -7269,7 +7269,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkVideoEncodeFlagBitsKHR flags;
-        public IntPtr dstBuffer;
+        public VkBuffer dstBuffer;
         public ulong dstBufferOffset;
         public ulong dstBufferRange;
         public VkVideoPictureResourceInfoKHR srcPictureResource;
@@ -7678,14 +7678,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr module;
+        public VkCuModuleNVX module;
         public byte* pName;
     }
     public unsafe struct VkCuLaunchInfoNVX
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr function;
+        public VkCuFunctionNVX function;
         public uint gridDimX;
         public uint gridDimY;
         public uint gridDimZ;
@@ -7770,11 +7770,11 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
+        public VkBuffer buffer;
     }
     public unsafe struct VkDescriptorDataEXT
     {
-        public IntPtr* pSampler;
+        public VkSampler* pSampler;
         public VkDescriptorImageInfo* pCombinedImageSampler;
         public VkDescriptorImageInfo* pInputAttachmentImage;
         public VkDescriptorImageInfo* pSampledImage;
@@ -7796,32 +7796,32 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr buffer;
+        public VkBuffer buffer;
     }
     public unsafe struct VkImageCaptureDescriptorDataInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
+        public VkImage image;
     }
     public unsafe struct VkImageViewCaptureDescriptorDataInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr imageView;
+        public VkImageView imageView;
     }
     public unsafe struct VkSamplerCaptureDescriptorDataInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr sampler;
+        public VkSampler sampler;
     }
     public unsafe struct VkAccelerationStructureCaptureDescriptorDataInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr accelerationStructure;
-        public IntPtr accelerationStructureNV;
+        public VkAccelerationStructureKHR accelerationStructure;
+        public VkAccelerationStructureNV accelerationStructureNV;
     }
     public unsafe struct VkOpaqueCaptureDescriptorDataCreateInfoEXT
     {
@@ -7980,28 +7980,28 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public VkExternalMemoryHandleTypeFlagBits handleType;
     }
     public unsafe struct VkImportMemoryBufferCollectionFUCHSIA
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr collection;
+        public VkBufferCollectionFUCHSIA collection;
         public uint index;
     }
     public unsafe struct VkBufferCollectionImageCreateInfoFUCHSIA
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr collection;
+        public VkBufferCollectionFUCHSIA collection;
         public uint index;
     }
     public unsafe struct VkBufferCollectionBufferCreateInfoFUCHSIA
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr collection;
+        public VkBufferCollectionFUCHSIA collection;
         public uint index;
     }
     public unsafe struct VkBufferCollectionCreateInfoFUCHSIA
@@ -8081,14 +8081,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr module;
+        public VkCudaModuleNV module;
         public byte* pName;
     }
     public unsafe struct VkCudaLaunchInfoNV
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr function;
+        public VkCudaFunctionNV function;
         public uint gridDimX;
         public uint gridDimY;
         public uint gridDimZ;
@@ -8177,10 +8177,10 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr imageView;
+        public VkImageView imageView;
         public VkImageLayout imageLayout;
         public VkResolveModeFlagBits resolveMode;
-        public IntPtr resolveImageView;
+        public VkImageView resolveImageView;
         public VkImageLayout resolveImageLayout;
         public VkAttachmentLoadOp loadOp;
         public VkAttachmentStoreOp storeOp;
@@ -8193,7 +8193,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr imageView;
+        public VkImageView imageView;
         public VkImageLayout imageLayout;
         public VkExtent2D shadingRateAttachmentTexelSize;
     }
@@ -8201,7 +8201,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr imageView;
+        public VkImageView imageView;
         public VkImageLayout imageLayout;
     }
     public unsafe struct VkPhysicalDeviceDynamicRenderingFeatures
@@ -8304,7 +8304,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr descriptorSetLayout;
+        public VkDescriptorSetLayout descriptorSetLayout;
         public uint binding;
     }
     public unsafe struct VkDescriptorSetLayoutHostMappingInfoVALVE
@@ -8445,7 +8445,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkMicromapTypeEXT type;
         public VkBuildMicromapFlagBitsEXT flags;
         public VkBuildMicromapModeEXT mode;
-        public IntPtr dstMicromap;
+        public VkMicromapEXT dstMicromap;
         public uint usageCountsCount;
         public VkMicromapUsageEXT* pUsageCounts;
         public VkMicromapUsageEXT** ppUsageCounts;
@@ -8459,7 +8459,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkMicromapCreateFlagBitsEXT createFlags;
-        public IntPtr buffer;
+        public VkBuffer buffer;
         public ulong offset;
         public ulong size;
         public VkMicromapTypeEXT type;
@@ -8475,15 +8475,15 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr src;
-        public IntPtr dst;
+        public VkMicromapEXT src;
+        public VkMicromapEXT dst;
         public VkCopyMicromapModeEXT mode;
     }
     public unsafe struct VkCopyMicromapToMemoryInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr src;
+        public VkMicromapEXT src;
         public VkDeviceOrHostAddressKHR dst;
         public VkCopyMicromapModeEXT mode;
     }
@@ -8492,7 +8492,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkDeviceOrHostAddressConstKHR src;
-        public IntPtr dst;
+        public VkMicromapEXT dst;
         public VkCopyMicromapModeEXT mode;
     }
     public unsafe struct VkMicromapBuildSizesInfoEXT
@@ -8541,7 +8541,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint usageCountsCount;
         public VkMicromapUsageEXT* pUsageCounts;
         public VkMicromapUsageEXT** ppUsageCounts;
-        public IntPtr micromap;
+        public VkMicromapEXT micromap;
     }
     public unsafe struct VkPhysicalDeviceDisplacementMicromapFeaturesNV
     {
@@ -8574,7 +8574,7 @@ namespace OpenTK.Graphics.Vulkan
         public uint usageCountsCount;
         public VkMicromapUsageEXT* pUsageCounts;
         public VkMicromapUsageEXT** ppUsageCounts;
-        public IntPtr micromap;
+        public VkMicromapEXT micromap;
     }
     public unsafe struct VkPipelinePropertiesIdentifierEXT
     {
@@ -8621,14 +8621,14 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr queue;
+        public VkQueue queue;
         public IntPtr mtlCommandQueue;
     }
     public unsafe struct VkExportMetalBufferInfoEXT
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public IntPtr mtlBuffer;
     }
     public unsafe struct VkImportMetalBufferInfoEXT
@@ -8641,9 +8641,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
-        public IntPtr imageView;
-        public IntPtr bufferView;
+        public VkImage image;
+        public VkImageView imageView;
+        public VkBufferView bufferView;
         public VkImageAspectFlagBits plane;
         public IntPtr mtlTexture;
     }
@@ -8658,7 +8658,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr image;
+        public VkImage image;
         public IntPtr ioSurface;
     }
     public unsafe struct VkImportMetalIOSurfaceInfoEXT
@@ -8671,8 +8671,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr semaphore;
-        public IntPtr @event;
+        public VkSemaphore semaphore;
+        public VkEvent @event;
         public IntPtr mtlSharedEvent;
     }
     public unsafe struct VkImportMetalSharedEventInfoEXT
@@ -8964,9 +8964,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkFrameBoundaryFlagBitsEXT flags;
         public ulong frameID;
         public uint imageCount;
-        public IntPtr* pImages;
+        public VkImage* pImages;
         public uint bufferCount;
-        public IntPtr* pBuffers;
+        public VkBuffer* pBuffers;
         public ulong tagName;
         public nuint tagSize;
         public void* pTag;
@@ -9017,7 +9017,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public uint swapchainCount;
-        public IntPtr* pFences;
+        public VkFence* pFences;
     }
     public unsafe struct VkSwapchainPresentModesCreateInfoEXT
     {
@@ -9045,7 +9045,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr swapchain;
+        public VkSwapchainKHR swapchain;
         public uint imageIndexCount;
         public uint* pImageIndices;
     }
@@ -9150,7 +9150,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkMemoryMapFlagBits flags;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
         public ulong offset;
         public ulong size;
     }
@@ -9159,7 +9159,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkMemoryUnmapFlagBitsKHR flags;
-        public IntPtr memory;
+        public VkDeviceMemory memory;
     }
     public unsafe struct VkPhysicalDeviceShaderObjectFeaturesEXT
     {
@@ -9186,7 +9186,7 @@ namespace OpenTK.Graphics.Vulkan
         public void* pCode;
         public byte* pName;
         public uint setLayoutCount;
-        public IntPtr* pSetLayouts;
+        public VkDescriptorSetLayout* pSetLayouts;
         public uint pushConstantRangeCount;
         public VkPushConstantRange* pPushConstantRanges;
         public VkSpecializationInfo* pSpecializationInfo;
@@ -9297,8 +9297,8 @@ namespace OpenTK.Graphics.Vulkan
         public uint stageCount;
         public VkPipelineShaderStageCreateInfo* pStages;
         public VkPipelineLibraryCreateInfoKHR* pLibraryInfo;
-        public IntPtr layout;
-        public IntPtr basePipelineHandle;
+        public VkPipelineLayout layout;
+        public VkPipeline basePipelineHandle;
         public int basePipelineIndex;
     }
     public unsafe struct VkPipelineShaderStageNodeCreateInfoAMDX
@@ -9338,10 +9338,10 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkShaderStageFlagBits stageFlags;
-        public IntPtr layout;
+        public VkPipelineLayout layout;
         public uint firstSet;
         public uint descriptorSetCount;
-        public IntPtr* pDescriptorSets;
+        public VkDescriptorSet* pDescriptorSets;
         public uint dynamicOffsetCount;
         public uint* pDynamicOffsets;
     }
@@ -9349,7 +9349,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr layout;
+        public VkPipelineLayout layout;
         public VkShaderStageFlagBits stageFlags;
         public uint offset;
         public uint size;
@@ -9360,7 +9360,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkShaderStageFlagBits stageFlags;
-        public IntPtr layout;
+        public VkPipelineLayout layout;
         public uint set;
         public uint descriptorWriteCount;
         public VkWriteDescriptorSet* pDescriptorWrites;
@@ -9369,8 +9369,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr descriptorUpdateTemplate;
-        public IntPtr layout;
+        public VkDescriptorUpdateTemplate descriptorUpdateTemplate;
+        public VkPipelineLayout layout;
         public uint set;
         public void* pData;
     }
@@ -9379,7 +9379,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkShaderStageFlagBits stageFlags;
-        public IntPtr layout;
+        public VkPipelineLayout layout;
         public uint firstSet;
         public uint setCount;
         public uint* pBufferIndices;
@@ -9390,7 +9390,7 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType;
         public void* pNext;
         public VkShaderStageFlagBits stageFlags;
-        public IntPtr layout;
+        public VkPipelineLayout layout;
         public uint set;
     }
     public unsafe struct VkPhysicalDeviceCubicClampFeaturesQCOM
@@ -9500,7 +9500,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType;
         public void* pNext;
-        public IntPtr signalSemaphore;
+        public VkSemaphore signalSemaphore;
         public ulong value;
     }
     public unsafe struct VkSetLatencyMarkerInfoNV
