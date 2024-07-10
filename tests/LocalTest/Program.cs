@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics;
+﻿using OpenTK.Core.Native;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics.Vulkan;
 using OpenTK.Mathematics;
@@ -19,9 +20,11 @@ namespace LocalTest
         VkInstance VulkanInstance;
         VkPhysicalDevice PhysicalDevice;
         VkDevice Device;
+        VkSurfaceKHR Surface;
 
         VkQueue GraphicsQueue;
         VkRenderPass RenderPass;
+        VkCommandPool CommandPool;
         VkCommandBuffer CommandBuffer;
 
         VkExtent2D SwapchainExtents;
@@ -66,12 +69,6 @@ namespace LocalTest
         {
         }
 
-        public uint VK_MAKE_API_VERSION(uint variant, uint major, uint minor, uint patch) =>
-            ((((uint)(variant)) << 29) | (((uint)(major)) << 22) | (((uint)(minor)) << 12) | ((uint)(patch)));
-
-        [DllImport("kernel32.dll")]
-        public static extern IntPtr GetModuleHandle(IntPtr m);
-
         protected unsafe override void OnLoad()
         {
             base.OnLoad();
@@ -85,17 +82,27 @@ namespace LocalTest
             applicationInfo.applicationVersion = 1;
             applicationInfo.pEngineName = null;
             applicationInfo.engineVersion = 0;
-            applicationInfo.apiVersion = VK_MAKE_API_VERSION(0, 1, 3, 0);
+            applicationInfo.apiVersion = Vk.MAKE_API_VERSION(0, 1, 3, 0);
 
             byte** extensionsStr = GLFW.GetRequiredInstanceExtensionsRaw(out uint extensionCount);
+            string[] extensionsStrings = MarshalTk.MarshalAnsiStringArrayPtrToStringArray(extensionsStr, extensionCount);
+
+            // Add the VK_EXT_debug_utils extension.
+            Array.Resize(ref extensionsStrings, extensionsStrings.Length + 1);
+            extensionsStrings[^1] = "VK_EXT_debug_utils";
+
+            extensionsStr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(extensionsStrings, out extensionCount);
+
+            string[] validationLayers = { "VK_LAYER_KHRONOS_validation" };
+            byte** validationLayersStr = MarshalTk.MarshalStringArrayToAnsiStringArrayPtr(validationLayers, out uint validationLayerCount);
 
             VkInstanceCreateInfo instanceCreateInfo;
             instanceCreateInfo.sType = VkStructureType.StructureTypeInstanceCreateInfo;
             instanceCreateInfo.pNext = null;
             instanceCreateInfo.flags = 0;
             instanceCreateInfo.pApplicationInfo = &applicationInfo;
-            instanceCreateInfo.enabledLayerCount = 0;
-            instanceCreateInfo.ppEnabledLayerNames = null;
+            instanceCreateInfo.enabledLayerCount = validationLayerCount;
+            instanceCreateInfo.ppEnabledLayerNames = validationLayersStr;
             instanceCreateInfo.enabledExtensionCount = extensionCount;
             instanceCreateInfo.ppEnabledExtensionNames = extensionsStr;
 
@@ -106,6 +113,8 @@ namespace LocalTest
                 throw new Exception($"Was not able to create vk instance: {result}");
             }
             VulkanInstance = instance;
+
+            MarshalTk.FreeAnsiStringArrayPtr(validationLayersStr, validationLayerCount);
 
             VKLoader.SetInstance(VulkanInstance);
 
@@ -191,16 +200,16 @@ namespace LocalTest
             GraphicsQueue = graphicsQueue;
 
             result = (VkResult)GLFW.CreateWindowSurface(new VkHandle(instance.Handle), WindowPtr, null, out VkHandle surfaceH);
-            VkSurfaceKHR surface = (VkSurfaceKHR)surfaceH.Handle;
+            Surface = (VkSurfaceKHR)surfaceH.Handle;
 
             VkSurfaceCapabilitiesKHR surfaceCaps;
-            result = Vk.GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice, surface, &surfaceCaps);
+            result = Vk.GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice, Surface, &surfaceCaps);
 
             uint surfaceFormatCount;
-            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, surface, &surfaceFormatCount, null);
+            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, null);
 
             Span<VkSurfaceFormatKHR> surfaceFormats = stackalloc VkSurfaceFormatKHR[(int)surfaceFormatCount];
-            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, surface, &surfaceFormatCount, (VkSurfaceFormatKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(surfaceFormats)));
+            result = Vk.GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice, Surface, &surfaceFormatCount, (VkSurfaceFormatKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(surfaceFormats)));
 
             VkSurfaceFormatKHR choosenFormat = default;
             bool foundFormat = false;
@@ -220,16 +229,16 @@ namespace LocalTest
 
 
             uint presentModeCount = 0;
-            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, surface, &presentModeCount, null);
+            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, null);
 
             Span<VkPresentModeKHR> presentModes = stackalloc VkPresentModeKHR[(int)presentModeCount];
-            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, surface, &presentModeCount, (VkPresentModeKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(presentModes)));
+            result = Vk.GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice, Surface, &presentModeCount, (VkPresentModeKHR*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(presentModes)));
 
             VkSwapchainCreateInfoKHR swapchainCreate;
             swapchainCreate.sType = VkStructureType.StructureTypeSwapchainCreateInfoKhr;
             swapchainCreate.pNext = null;
             swapchainCreate.flags = 0;
-            swapchainCreate.surface = surface;
+            swapchainCreate.surface = Surface;
             swapchainCreate.minImageCount = surfaceCaps.minImageCount;
             swapchainCreate.imageFormat = choosenFormat.format;
             swapchainCreate.imageColorSpace = choosenFormat.colorSpace;
@@ -349,6 +358,7 @@ namespace LocalTest
 
             VkCommandPool commandPool;
             result = Vk.CreateCommandPool(Device, &commandPoolCreate, null, &commandPool);
+            CommandPool = commandPool;
 
             VkCommandBufferAllocateInfo cmdBufferAlloc;
             cmdBufferAlloc.sType = VkStructureType.StructureTypeCommandBufferAllocateInfo;
@@ -363,7 +373,7 @@ namespace LocalTest
 
             {
                 VkSemaphoreCreateInfo semaphoreCreate;
-                semaphoreCreate.sType = VkStructureType.StructureTypeExportSemaphoreCreateInfo;
+                semaphoreCreate.sType = VkStructureType.StructureTypeSemaphoreCreateInfo;
                 semaphoreCreate.pNext = null;
                 semaphoreCreate.flags = 0;
 
@@ -450,6 +460,23 @@ namespace LocalTest
 =======
 
             Vk.DeviceWaitIdle(Device);
+
+            for (int i = 0; i < SwapchainImageViews.Length; i++)
+            {
+                Vk.DestroyFramebuffer(Device, SwapchainFramebuffers[i], null);
+                Vk.DestroyImageView(Device, SwapchainImageViews[i], null);
+            }
+            Vk.DestroySwapchainKHR(Device, Swapchain, null);
+
+            Vk.DestroyCommandPool(Device, CommandPool, null);
+
+            Vk.DestroyRenderPass(Device, RenderPass, null);
+
+            Vk.DestroySemaphore(Device, ImageAvailableSemaphore, null);
+            Vk.DestroySemaphore(Device, RenderFinishedSemaphore, null);
+            Vk.DestroyFence(Device, InFlightFence, null);
+
+            Vk.DestroySurfaceKHR(VulkanInstance, Surface, null);
             Vk.DestroyDevice(Device, null);
             Vk.DestroyInstance(VulkanInstance, null);
 >>>>>>> 4892cb779 (Added vulkan features and extension definitions to binder.)

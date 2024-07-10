@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using VkGenerator.Parsing;
 using VkGenerator.Process;
 
@@ -9,6 +10,8 @@ namespace VkGenerator
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+
+            Stopwatch watch = Stopwatch.StartNew();
 
             CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
@@ -25,6 +28,10 @@ namespace VkGenerator
             Processor.ResolveCommandTypes(specData, typeMap);
 
             Writer.Write(specData);
+
+            watch.Stop();
+
+            Console.WriteLine($"Wrote vulkan bindings in {watch.Elapsed.TotalMilliseconds}ms");
         }
     }
 }

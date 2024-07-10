@@ -6,14 +6,23 @@ namespace OpenTK.Graphics.Vulkan
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum VkImageLayout : int
     {
+        /// <summary>Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)</summary>
         ImageLayoutUndefined = 0,
+        /// <summary>General layout when image can be used for any kind of access</summary>
         ImageLayoutGeneral = 1,
+        /// <summary>Optimal layout when image is only used for color attachment read/write</summary>
         ImageLayoutColorAttachmentOptimal = 2,
+        /// <summary>Optimal layout when image is only used for depth/stencil attachment read/write</summary>
         ImageLayoutDepthStencilAttachmentOptimal = 3,
+        /// <summary>Optimal layout when image is used for read only depth/stencil attachment and shader access</summary>
         ImageLayoutDepthStencilReadOnlyOptimal = 4,
+        /// <summary>Optimal layout when image is used for read only shader access</summary>
         ImageLayoutShaderReadOnlyOptimal = 5,
+        /// <summary>Optimal layout when image is used only as source of transfer operations</summary>
         ImageLayoutTransferSrcOptimal = 6,
+        /// <summary>Optimal layout when image is used only as destination of transfer operations</summary>
         ImageLayoutTransferDstOptimal = 7,
+        /// <summary>Initial layout used when the data is populated by the CPU</summary>
         ImageLayoutPreinitialized = 8,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ImageLayoutDepthReadOnlyStencilAttachmentOptimal = 1000117000,
@@ -168,6 +177,7 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkQueryType : int
     {
         QueryTypeOcclusion = 0,
+        /// <summary>Optional</summary>
         QueryTypePipelineStatistics = 1,
         QueryTypeTimestamp = 2,
         /// <summary>[requires: VK_KHR_video_queue]</summary>
@@ -280,7 +290,9 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkSamplerMipmapMode : int
     {
+        /// <summary>Choose nearest mip level</summary>
         SamplerMipmapModeNearest = 0,
+        /// <summary>Linear filter between mip levels</summary>
         SamplerMipmapModeLinear = 1,
     }
     public enum VkSamplerAddressMode : int
@@ -289,9 +301,9 @@ namespace OpenTK.Graphics.Vulkan
         SamplerAddressModeMirroredRepeat = 1,
         SamplerAddressModeClampToEdge = 2,
         SamplerAddressModeClampToBorder = 3,
-        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        /// <summary>[requires: VK_VERSION_1_2]No need to add an extnumber attribute, since this uses a core enum value</summary>
         SamplerAddressModeMirrorClampToEdge = 4,
-        /// <summary>[requires: VK_KHR_sampler_mirror_clamp_to_edge]</summary>
+        /// <summary>[requires: VK_KHR_sampler_mirror_clamp_to_edge]Introduced for consistency with extension suffixing rules</summary>
         SamplerAddressModeMirrorClampToEdgeKhr = 4,
     }
     public enum VkCompareOp : int
@@ -972,7 +984,9 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeBufferMemoryBarrier = 44,
         StructureTypeImageMemoryBarrier = 45,
         StructureTypeMemoryBarrier = 46,
+        /// <summary>Reserved for internal use by the loader, layers, and ICDs</summary>
         StructureTypeLoaderInstanceCreateInfo = 47,
+        /// <summary>Reserved for internal use by the loader, layers, and ICDs</summary>
         StructureTypeLoaderDeviceCreateInfo = 48,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         StructureTypePhysicalDeviceSubgroupProperties = 1000094000,
@@ -1956,7 +1970,7 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeHeadlessSurfaceCreateInfoExt = 1000256000,
         /// <summary>[requires: VK_EXT_shader_atomic_float]</summary>
         StructureTypePhysicalDeviceShaderAtomicFloatFeaturesExt = 1000260000,
-        /// <summary>[requires: VK_EXT_extended_dynamic_state]</summary>
+        /// <summary>[requires: VK_EXT_extended_dynamic_state]Not promoted to 1.3</summary>
         StructureTypePhysicalDeviceExtendedDynamicStateFeaturesExt = 1000267000,
         /// <summary>[requires: VK_KHR_pipeline_executable_properties]</summary>
         StructureTypePhysicalDevicePipelineExecutablePropertiesFeaturesKhr = 1000269000,
@@ -2040,7 +2054,7 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceInheritedViewportScissorFeaturesNv = 1000278000,
         /// <summary>[requires: VK_NV_inherited_viewport_scissor]</summary>
         StructureTypeCommandBufferInheritanceViewportScissorInfoNv = 1000278001,
-        /// <summary>[requires: VK_EXT_texel_buffer_alignment]</summary>
+        /// <summary>[requires: VK_EXT_texel_buffer_alignment]Not promoted to 1.3</summary>
         StructureTypePhysicalDeviceTexelBufferAlignmentFeaturesExt = 1000281000,
         /// <summary>[requires: VK_QCOM_render_pass_transform]</summary>
         StructureTypeCommandBufferInheritanceRenderPassTransformInfoQcom = 1000282000,
@@ -2334,7 +2348,7 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypeSubpassResolvePerformanceQueryExt = 1000376001,
         /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
         StructureTypeMultisampledRenderToSingleSampledInfoExt = 1000376002,
-        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]Not promoted to 1.3</summary>
         StructureTypePhysicalDeviceExtendedDynamicState2FeaturesExt = 1000377000,
         /// <summary>[requires: VK_QNX_screen_surface]</summary>
         StructureTypeScreenSurfaceCreateInfoQnx = 1000378000,
@@ -3104,24 +3118,43 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkResult : int
     {
+        /// <summary>Command completed successfully</summary>
         Success = 0,
+        /// <summary>A fence or query has not yet completed</summary>
         NotReady = 1,
+        /// <summary>A wait operation has not completed in the specified time</summary>
         Timeout = 2,
+        /// <summary>An event is signaled</summary>
         EventSet = 3,
+        /// <summary>An event is unsignaled</summary>
         EventReset = 4,
+        /// <summary>A return array was too small for the result</summary>
         Incomplete = 5,
+        /// <summary>A host memory allocation has failed</summary>
         ErrorOutOfHostMemory = -1,
+        /// <summary>A device memory allocation has failed</summary>
         ErrorOutOfDeviceMemory = -2,
+        /// <summary>Initialization of an object has failed</summary>
         ErrorInitializationFailed = -3,
+        /// <summary>The logical device has been lost. See <<devsandqueues-lost-device>></summary>
         ErrorDeviceLost = -4,
+        /// <summary>Mapping of a memory object has failed</summary>
         ErrorMemoryMapFailed = -5,
+        /// <summary>Layer specified does not exist</summary>
         ErrorLayerNotPresent = -6,
+        /// <summary>Extension specified does not exist</summary>
         ErrorExtensionNotPresent = -7,
+        /// <summary>Requested feature is not available on this device</summary>
         ErrorFeatureNotPresent = -8,
+        /// <summary>Unable to find a Vulkan driver</summary>
         ErrorIncompatibleDriver = -9,
+        /// <summary>Too many objects of the type have already been created</summary>
         ErrorTooManyObjects = -10,
+        /// <summary>Requested format is not supported on this device</summary>
         ErrorFormatNotSupported = -11,
+        /// <summary>A requested pool allocation has failed due to fragmentation of the pool's memory</summary>
         ErrorFragmentedPool = -12,
+        /// <summary>An unknown error has occurred, due to an implementation or application bug</summary>
         ErrorUnknown = -13,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ErrorOutOfPoolMemory = -1000069000,
@@ -3263,9 +3296,9 @@ namespace OpenTK.Graphics.Vulkan
         DynamicStateFragmentShadingRateKhr = 1000226000,
         /// <summary>[requires: VK_EXT_vertex_input_dynamic_state]</summary>
         DynamicStateVertexInputExt = 1000352000,
-        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]Not promoted to 1.3</summary>
         DynamicStatePatchControlPointsExt = 1000377000,
-        /// <summary>[requires: VK_EXT_extended_dynamic_state2]</summary>
+        /// <summary>[requires: VK_EXT_extended_dynamic_state2]Not promoted to 1.3</summary>
         DynamicStateLogicOpExt = 1000377003,
         /// <summary>[requires: VK_EXT_color_write_enable]</summary>
         DynamicStateColorWriteEnableExt = 1000381000,
@@ -3370,8 +3403,9 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkDescriptorUpdateTemplateType : int
     {
+        /// <summary>Create descriptor update template for descriptor set updates</summary>
         DescriptorUpdateTemplateTypeDescriptorSet = 0,
-        /// <summary>[requires: VK_KHR_push_descriptor]</summary>
+        /// <summary>[requires: VK_KHR_push_descriptor]Create descriptor update template for pushed descriptor updates</summary>
         DescriptorUpdateTemplateTypePushDescriptorsKhr = 1,
         /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
         DescriptorUpdateTemplateTypeDescriptorSetKhr = 0,
@@ -3420,9 +3454,9 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeDisplayModeKhr = 1000002001,
         /// <summary>[requires: VK_EXT_debug_report]</summary>
         ObjectTypeDebugReportCallbackExt = 1000011000,
-        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        /// <summary>[requires: VK_KHR_video_queue]VkVideoSessionKHR</summary>
         ObjectTypeVideoSessionKhr = 1000023000,
-        /// <summary>[requires: VK_KHR_video_queue]</summary>
+        /// <summary>[requires: VK_KHR_video_queue]VkVideoSessionParametersKHR</summary>
         ObjectTypeVideoSessionParametersKhr = 1000023001,
         /// <summary>[requires: VK_NVX_binary_import]</summary>
         ObjectTypeCuModuleNvx = 1000029000,
@@ -3446,7 +3480,7 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeCudaModuleNv = 1000307000,
         /// <summary>[requires: VK_NV_cuda_kernel_launch]</summary>
         ObjectTypeCudaFunctionNv = 1000307001,
-        /// <summary>[requires: VK_FUCHSIA_buffer_collection]</summary>
+        /// <summary>[requires: VK_FUCHSIA_buffer_collection]VkBufferCollectionFUCHSIA</summary>
         ObjectTypeBufferCollectionFuchsia = 1000366000,
         /// <summary>[requires: VK_EXT_opacity_micromap]</summary>
         ObjectTypeMicromapExt = 1000396000,
@@ -3454,7 +3488,7 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeOpticalFlowSessionNv = 1000464000,
         /// <summary>[requires: VK_EXT_shader_object]</summary>
         ObjectTypeShaderExt = 1000482000,
-        /// <summary>[requires: VK_NV_external_sci_sync2]</summary>
+        /// <summary>[requires: VK_NV_external_sci_sync2]VkSemaphoreSciSyncPoolNV</summary>
         ObjectTypeSemaphoreSciSyncPoolNv = 1000489000,
         /// <summary>[requires: VK_KHR_descriptor_update_template]</summary>
         ObjectTypeDescriptorUpdateTemplateKhr = 1000085000,
@@ -3476,11 +3510,15 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkQueueFlagBits : int
     {
+        /// <summary>Queue supports graphics operations</summary>
         QueueGraphicsBit = 1,
+        /// <summary>Queue supports compute operations</summary>
         QueueComputeBit = 2,
+        /// <summary>Queue supports transfer operations</summary>
         QueueTransferBit = 4,
+        /// <summary>Queue supports sparse resource memory management operations</summary>
         QueueSparseBindingBit = 8,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Queues may support protected operations</summary>
         QueueProtectedBit = 16,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         QueueVideoDecodeBitKhr = 32,
@@ -3506,18 +3544,23 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkDeviceQueueCreateFlagBits : int
     {
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Queue is a protected-capable device queue</summary>
         DeviceQueueCreateProtectedBit = 1,
     }
     [Flags]
     public enum VkMemoryPropertyFlagBits : int
     {
+        /// <summary>If otherwise stated, then allocate memory on device</summary>
         MemoryPropertyDeviceLocalBit = 1,
+        /// <summary>Memory is mappable by host</summary>
         MemoryPropertyHostVisibleBit = 2,
+        /// <summary>Memory will have i/o coherency. If not set, application may need to use vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges to flush/invalidate host cache</summary>
         MemoryPropertyHostCoherentBit = 4,
+        /// <summary>Memory will be cached by the host</summary>
         MemoryPropertyHostCachedBit = 8,
+        /// <summary>Memory may be allocated by the driver when it is required</summary>
         MemoryPropertyLazilyAllocatedBit = 16,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Memory is protected</summary>
         MemoryPropertyProtectedBit = 32,
         /// <summary>[requires: VK_AMD_device_coherent_memory]</summary>
         MemoryPropertyDeviceCoherentBitAmd = 64,
@@ -3529,8 +3572,9 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkMemoryHeapFlagBits : int
     {
+        /// <summary>If set, heap represents device memory</summary>
         MemoryHeapDeviceLocalBit = 1,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]If set, heap allocations allocate multiple instances by default</summary>
         MemoryHeapMultiInstanceBit = 2,
         /// <summary>[requires: VK_KHR_device_group_creation]</summary>
         MemoryHeapMultiInstanceBitKhr = 2,
@@ -3538,22 +3582,39 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkAccessFlagBits : int
     {
+        /// <summary>Controls coherency of indirect command reads</summary>
         AccessIndirectCommandReadBit = 1,
+        /// <summary>Controls coherency of index reads</summary>
         AccessIndexReadBit = 2,
+        /// <summary>Controls coherency of vertex attribute reads</summary>
         AccessVertexAttributeReadBit = 4,
+        /// <summary>Controls coherency of uniform buffer reads</summary>
         AccessUniformReadBit = 8,
+        /// <summary>Controls coherency of input attachment reads</summary>
         AccessInputAttachmentReadBit = 16,
+        /// <summary>Controls coherency of shader reads</summary>
         AccessShaderReadBit = 32,
+        /// <summary>Controls coherency of shader writes</summary>
         AccessShaderWriteBit = 64,
+        /// <summary>Controls coherency of color attachment reads</summary>
         AccessColorAttachmentReadBit = 128,
+        /// <summary>Controls coherency of color attachment writes</summary>
         AccessColorAttachmentWriteBit = 256,
+        /// <summary>Controls coherency of depth/stencil attachment reads</summary>
         AccessDepthStencilAttachmentReadBit = 512,
+        /// <summary>Controls coherency of depth/stencil attachment writes</summary>
         AccessDepthStencilAttachmentWriteBit = 1024,
+        /// <summary>Controls coherency of transfer reads</summary>
         AccessTransferReadBit = 2048,
+        /// <summary>Controls coherency of transfer writes</summary>
         AccessTransferWriteBit = 4096,
+        /// <summary>Controls coherency of host reads</summary>
         AccessHostReadBit = 8192,
+        /// <summary>Controls coherency of host writes</summary>
         AccessHostWriteBit = 16384,
+        /// <summary>Controls coherency of memory reads</summary>
         AccessMemoryReadBit = 32768,
+        /// <summary>Controls coherency of memory writes</summary>
         AccessMemoryWriteBit = 65536,
         /// <summary>[requires: VK_VERSION_1_3]</summary>
         AccessNone = 0,
@@ -3563,7 +3624,7 @@ namespace OpenTK.Graphics.Vulkan
         AccessTransformFeedbackCounterReadBitExt = 67108864,
         /// <summary>[requires: VK_EXT_transform_feedback]</summary>
         AccessTransformFeedbackCounterWriteBitExt = 134217728,
-        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        /// <summary>[requires: VK_EXT_conditional_rendering]read access flag for reading conditional rendering predicate</summary>
         AccessConditionalRenderingReadBitExt = 1048576,
         /// <summary>[requires: VK_EXT_blend_operation_advanced]</summary>
         AccessColorAttachmentReadNoncoherentBitExt = 524288,
@@ -3591,14 +3652,23 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkBufferUsageFlagBits : int
     {
+        /// <summary>Can be used as a source of transfer operations</summary>
         BufferUsageTransferSrcBit = 1,
+        /// <summary>Can be used as a destination of transfer operations</summary>
         BufferUsageTransferDstBit = 2,
+        /// <summary>Can be used as TBO</summary>
         BufferUsageUniformTexelBufferBit = 4,
+        /// <summary>Can be used as IBO</summary>
         BufferUsageStorageTexelBufferBit = 8,
+        /// <summary>Can be used as UBO</summary>
         BufferUsageUniformBufferBit = 16,
+        /// <summary>Can be used as SSBO</summary>
         BufferUsageStorageBufferBit = 32,
+        /// <summary>Can be used as source of fixed-function index fetch (index buffer)</summary>
         BufferUsageIndexBufferBit = 64,
+        /// <summary>Can be used as source of fixed-function vertex fetch (VBO)</summary>
         BufferUsageVertexBufferBit = 128,
+        /// <summary>Can be the source of indirect parameters (e.g. indirect buffer, parameter buffer)</summary>
         BufferUsageIndirectBufferBit = 256,
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         BufferUsageShaderDeviceAddressBit = 131072,
@@ -3610,7 +3680,7 @@ namespace OpenTK.Graphics.Vulkan
         BufferUsageTransformFeedbackBufferBitExt = 2048,
         /// <summary>[requires: VK_EXT_transform_feedback]</summary>
         BufferUsageTransformFeedbackCounterBufferBitExt = 4096,
-        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        /// <summary>[requires: VK_EXT_conditional_rendering]Specifies the buffer can be used as predicate in conditional rendering</summary>
         BufferUsageConditionalRenderingBitExt = 512,
         /// <summary>[requires: VK_AMDX_shader_enqueue]</summary>
         BufferUsageExecutionGraphScratchBitAmdx = 33554432,
@@ -3693,10 +3763,13 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkBufferCreateFlagBits : int
     {
+        /// <summary>Buffer should support sparse backing</summary>
         BufferCreateSparseBindingBit = 1,
+        /// <summary>Buffer should support sparse backing with partial residency</summary>
         BufferCreateSparseResidencyBit = 2,
+        /// <summary>Buffer should support constant data access to physical memory ranges mapped into multiple locations of sparse buffers</summary>
         BufferCreateSparseAliasedBit = 4,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Buffer requires protected memory</summary>
         BufferCreateProtectedBit = 8,
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         BufferCreateDeviceAddressCaptureReplayBit = 16,
@@ -3760,13 +3833,21 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkImageUsageFlagBits : int
     {
+        /// <summary>Can be used as a source of transfer operations</summary>
         ImageUsageTransferSrcBit = 1,
+        /// <summary>Can be used as a destination of transfer operations</summary>
         ImageUsageTransferDstBit = 2,
+        /// <summary>Can be sampled from (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)</summary>
         ImageUsageSampledBit = 4,
+        /// <summary>Can be used as storage image (STORAGE_IMAGE descriptor type)</summary>
         ImageUsageStorageBit = 8,
+        /// <summary>Can be used as framebuffer color attachment</summary>
         ImageUsageColorAttachmentBit = 16,
+        /// <summary>Can be used as framebuffer depth/stencil attachment</summary>
         ImageUsageDepthStencilAttachmentBit = 32,
+        /// <summary>Image data not needed outside of rendering</summary>
         ImageUsageTransientAttachmentBit = 64,
+        /// <summary>Can be used as framebuffer input attachment</summary>
         ImageUsageInputAttachmentBit = 128,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         ImageUsageVideoDecodeDstBitKhr = 1024,
@@ -3778,7 +3859,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageUsageFragmentDensityMapBitExt = 512,
         /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
         ImageUsageFragmentShadingRateAttachmentBitKhr = 256,
-        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        /// <summary>[requires: VK_EXT_host_image_copy]Can be used with host image copies</summary>
         ImageUsageHostTransferBitExt = 4194304,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
         ImageUsageVideoEncodeDstBitKhr = 8192,
@@ -3800,22 +3881,27 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkImageCreateFlagBits : int
     {
+        /// <summary>Image should support sparse backing</summary>
         ImageCreateSparseBindingBit = 1,
+        /// <summary>Image should support sparse backing with partial residency</summary>
         ImageCreateSparseResidencyBit = 2,
+        /// <summary>Image should support constant data access to physical memory ranges mapped into multiple locations of sparse images</summary>
         ImageCreateSparseAliasedBit = 4,
+        /// <summary>Allows image views to have different format than the base image</summary>
         ImageCreateMutableFormatBit = 8,
+        /// <summary>Allows creating image views with cube type from the created image</summary>
         ImageCreateCubeCompatibleBit = 16,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ImageCreateAliasBit = 1024,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Allows using VkBindImageMemoryDeviceGroupInfo::pSplitInstanceBindRegions when binding memory to the image</summary>
         ImageCreateSplitInstanceBindRegionsBit = 64,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]The 3D image can be viewed as a 2D or 2D array image</summary>
         ImageCreate2dArrayCompatibleBit = 32,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ImageCreateBlockTexelViewCompatibleBit = 128,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ImageCreateExtendedUsageBit = 256,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Image requires protected memory</summary>
         ImageCreateProtectedBit = 2048,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         ImageCreateDisjointBit = 512,
@@ -3829,7 +3915,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageCreateDescriptorBufferCaptureReplayBitExt = 65536,
         /// <summary>[requires: VK_EXT_multisampled_render_to_single_sampled]</summary>
         ImageCreateMultisampledRenderToSingleSampledBitExt = 262144,
-        /// <summary>[requires: VK_EXT_image_2d_view_of_3d]</summary>
+        /// <summary>[requires: VK_EXT_image_2d_view_of_3d]Image is created with a layout where individual slices are capable of being used as 2D images</summary>
         ImageCreate2dViewCompatibleBitExt = 131072,
         /// <summary>[requires: VK_QCOM_fragment_density_map_offset]</summary>
         ImageCreateFragmentDensityMapOffsetBitQcom = 32768,
@@ -4046,38 +4132,51 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkFormatFeatureFlagBits : int
     {
+        /// <summary>Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)</summary>
         FormatFeatureSampledImageBit = 1,
+        /// <summary>Format can be used for storage images (STORAGE_IMAGE descriptor type)</summary>
         FormatFeatureStorageImageBit = 2,
+        /// <summary>Format supports atomic operations in case it is used for storage images</summary>
         FormatFeatureStorageImageAtomicBit = 4,
+        /// <summary>Format can be used for uniform texel buffers (TBOs)</summary>
         FormatFeatureUniformTexelBufferBit = 8,
+        /// <summary>Format can be used for storage texel buffers (IBOs)</summary>
         FormatFeatureStorageTexelBufferBit = 16,
+        /// <summary>Format supports atomic operations in case it is used for storage texel buffers</summary>
         FormatFeatureStorageTexelBufferAtomicBit = 32,
+        /// <summary>Format can be used for vertex buffers (VBOs)</summary>
         FormatFeatureVertexBufferBit = 64,
+        /// <summary>Format can be used for color attachment images</summary>
         FormatFeatureColorAttachmentBit = 128,
+        /// <summary>Format supports blending in case it is used for color attachment images</summary>
         FormatFeatureColorAttachmentBlendBit = 256,
+        /// <summary>Format can be used for depth/stencil attachment images</summary>
         FormatFeatureDepthStencilAttachmentBit = 512,
+        /// <summary>Format can be used as the source image of blits with vkCmdBlitImage</summary>
         FormatFeatureBlitSrcBit = 1024,
+        /// <summary>Format can be used as the destination image of blits with vkCmdBlitImage</summary>
         FormatFeatureBlitDstBit = 2048,
+        /// <summary>Format can be filtered with VK_FILTER_LINEAR when being sampled</summary>
         FormatFeatureSampledImageFilterLinearBit = 4096,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can be used as the source image of image transfer commands</summary>
         FormatFeatureTransferSrcBit = 16384,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can be used as the destination image of image transfer commands</summary>
         FormatFeatureTransferDstBit = 32768,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can have midpoint rather than cosited chroma samples</summary>
         FormatFeatureMidpointChromaSamplesBit = 131072,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can be used with linear filtering whilst color conversion is enabled</summary>
         FormatFeatureSampledImageYcbcrConversionLinearFilterBit = 262144,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can have different chroma, min and mag filters</summary>
         FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilterBit = 524288,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitBit = 1048576,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceableBit = 2097152,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format supports disjoint planes</summary>
         FormatFeatureDisjointBit = 4194304,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Format can have cosited rather than midpoint chroma samples</summary>
         FormatFeatureCositedChromaSamplesBit = 8388608,
-        /// <summary>[requires: VK_VERSION_1_2]</summary>
+        /// <summary>[requires: VK_VERSION_1_2]Format can be used with min/max reduction filtering</summary>
         FormatFeatureSampledImageFilterMinmaxBit = 65536,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         FormatFeatureVideoDecodeOutputBitKhr = 33554432,
@@ -4095,7 +4194,7 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeatureVideoEncodeInputBitKhr = 134217728,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
         FormatFeatureVideoEncodeDpbBitKhr = 268435456,
-        /// <summary>[requires: VK_IMG_filter_cubic]</summary>
+        /// <summary>[requires: VK_IMG_filter_cubic]Format can be filtered with VK_FILTER_CUBIC_IMG when being sampled</summary>
         FormatFeatureSampledImageFilterCubicBitImg = 8192,
         /// <summary>[requires: VK_KHR_maintenance1]</summary>
         FormatFeatureTransferSrcBitKhr = 16384,
@@ -4121,14 +4220,19 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkQueryControlFlagBits : int
     {
+        /// <summary>Require precise results to be collected by the query</summary>
         QueryControlPreciseBit = 1,
     }
     [Flags]
     public enum VkQueryResultFlagBits : int
     {
+        /// <summary>Results of the queries are written to the destination buffer as 64-bit values</summary>
         QueryResult64Bit = 1,
+        /// <summary>Results of the queries are waited on before proceeding with the result copy</summary>
         QueryResultWaitBit = 2,
+        /// <summary>Besides the results of the query, the availability of the results is also written</summary>
         QueryResultWithAvailabilityBit = 4,
+        /// <summary>Copy the partial results of the query even if the final results are not available</summary>
         QueryResultPartialBit = 8,
         /// <summary>[requires: VK_KHR_video_queue]</summary>
         QueryResultWithStatusBitKhr = 16,
@@ -4138,21 +4242,33 @@ namespace OpenTK.Graphics.Vulkan
     {
         CommandBufferUsageOneTimeSubmitBit = 1,
         CommandBufferUsageRenderPassContinueBit = 2,
+        /// <summary>Command buffer may be submitted/executed more than once simultaneously</summary>
         CommandBufferUsageSimultaneousUseBit = 4,
     }
     [Flags]
     public enum VkQueryPipelineStatisticFlagBits : int
     {
+        /// <summary>Optional</summary>
         QueryPipelineStatisticInputAssemblyVerticesBit = 1,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticInputAssemblyPrimitivesBit = 2,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticVertexShaderInvocationsBit = 4,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticGeometryShaderInvocationsBit = 8,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticGeometryShaderPrimitivesBit = 16,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticClippingInvocationsBit = 32,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticClippingPrimitivesBit = 64,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticFragmentShaderInvocationsBit = 128,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticTessellationControlShaderPatchesBit = 256,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticTessellationEvaluationShaderInvocationsBit = 512,
+        /// <summary>Optional</summary>
         QueryPipelineStatisticComputeShaderInvocationsBit = 1024,
         /// <summary>[requires: VK_EXT_mesh_shader]</summary>
         QueryPipelineStatisticTaskShaderInvocationsBitExt = 2048,
@@ -4202,40 +4318,61 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkSparseImageFormatFlagBits : int
     {
+        /// <summary>Image uses a single mip tail region for all array layers</summary>
         SparseImageFormatSingleMiptailBit = 1,
+        /// <summary>Image requires mip level dimensions to be an integer multiple of the sparse image block dimensions for non-tail mip levels.</summary>
         SparseImageFormatAlignedMipSizeBit = 2,
+        /// <summary>Image uses a non-standard sparse image block dimensions</summary>
         SparseImageFormatNonstandardBlockSizeBit = 4,
     }
     [Flags]
     public enum VkSparseMemoryBindFlagBits : int
     {
+        /// <summary>Operation binds resource metadata to memory</summary>
         SparseMemoryBindMetadataBit = 1,
     }
     [Flags]
     public enum VkPipelineStageFlagBits : int
     {
+        /// <summary>Before subsequent commands are processed</summary>
         PipelineStageTopOfPipeBit = 1,
+        /// <summary>Draw/DispatchIndirect command fetch</summary>
         PipelineStageDrawIndirectBit = 2,
+        /// <summary>Vertex/index fetch</summary>
         PipelineStageVertexInputBit = 4,
+        /// <summary>Vertex shading</summary>
         PipelineStageVertexShaderBit = 8,
+        /// <summary>Tessellation control shading</summary>
         PipelineStageTessellationControlShaderBit = 16,
+        /// <summary>Tessellation evaluation shading</summary>
         PipelineStageTessellationEvaluationShaderBit = 32,
+        /// <summary>Geometry shading</summary>
         PipelineStageGeometryShaderBit = 64,
+        /// <summary>Fragment shading</summary>
         PipelineStageFragmentShaderBit = 128,
+        /// <summary>Early fragment (depth and stencil) tests</summary>
         PipelineStageEarlyFragmentTestsBit = 256,
+        /// <summary>Late fragment (depth and stencil) tests</summary>
         PipelineStageLateFragmentTestsBit = 512,
+        /// <summary>Color attachment writes</summary>
         PipelineStageColorAttachmentOutputBit = 1024,
+        /// <summary>Compute shading</summary>
         PipelineStageComputeShaderBit = 2048,
+        /// <summary>Transfer/copy operations</summary>
         PipelineStageTransferBit = 4096,
+        /// <summary>After previous commands have completed</summary>
         PipelineStageBottomOfPipeBit = 8192,
+        /// <summary>Indicates host (CPU) is a source/sink of the dependency</summary>
         PipelineStageHostBit = 16384,
+        /// <summary>All stages of the graphics pipeline</summary>
         PipelineStageAllGraphicsBit = 32768,
+        /// <summary>All stages supported on the queue</summary>
         PipelineStageAllCommandsBit = 65536,
         /// <summary>[requires: VK_VERSION_1_3]</summary>
         PipelineStageNone = 0,
         /// <summary>[requires: VK_EXT_transform_feedback]</summary>
         PipelineStageTransformFeedbackBitExt = 16777216,
-        /// <summary>[requires: VK_EXT_conditional_rendering]</summary>
+        /// <summary>[requires: VK_EXT_conditional_rendering]A pipeline stage for conditional rendering predicate fetch</summary>
         PipelineStageConditionalRenderingBitExt = 262144,
         /// <summary>[requires: VK_KHR_acceleration_structure]</summary>
         PipelineStageAccelerationStructureBuildBitKhr = 33554432,
@@ -4267,48 +4404,65 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkCommandPoolCreateFlagBits : int
     {
+        /// <summary>Command buffers have a short lifetime</summary>
         CommandPoolCreateTransientBit = 1,
+        /// <summary>Command buffers may release their memory individually</summary>
         CommandPoolCreateResetCommandBufferBit = 2,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Command buffers allocated from pool are protected command buffers</summary>
         CommandPoolCreateProtectedBit = 4,
     }
     [Flags]
     public enum VkCommandPoolResetFlagBits : int
     {
+        /// <summary>Release resources owned by the pool</summary>
         CommandPoolResetReleaseResourcesBit = 1,
     }
     [Flags]
     public enum VkCommandBufferResetFlagBits : int
     {
+        /// <summary>Release resources owned by the buffer</summary>
         CommandBufferResetReleaseResourcesBit = 1,
     }
     [Flags]
     public enum VkSampleCountFlagBits : int
     {
+        /// <summary>Sample count 1 supported</summary>
         SampleCount1Bit = 1,
+        /// <summary>Sample count 2 supported</summary>
         SampleCount2Bit = 2,
+        /// <summary>Sample count 4 supported</summary>
         SampleCount4Bit = 4,
+        /// <summary>Sample count 8 supported</summary>
         SampleCount8Bit = 8,
+        /// <summary>Sample count 16 supported</summary>
         SampleCount16Bit = 16,
+        /// <summary>Sample count 32 supported</summary>
         SampleCount32Bit = 32,
+        /// <summary>Sample count 64 supported</summary>
         SampleCount64Bit = 64,
     }
     [Flags]
     public enum VkAttachmentDescriptionFlagBits : int
     {
+        /// <summary>The attachment may alias physical memory of another attachment in the same render pass</summary>
         AttachmentDescriptionMayAliasBit = 1,
     }
     [Flags]
     public enum VkStencilFaceFlagBits : int
     {
+        /// <summary>Front face</summary>
         StencilFaceFrontBit = 1,
+        /// <summary>Back face</summary>
         StencilFaceBackBit = 2,
+        /// <summary>Front and back faces</summary>
         StencilFaceFrontAndBack = 3,
+        /// <summary>Front and back faces</summary>
         StencilFrontAndBack = 3,
     }
     [Flags]
     public enum VkDescriptorPoolCreateFlagBits : int
     {
+        /// <summary>Descriptor sets may be freed individually</summary>
         DescriptorPoolCreateFreeDescriptorSetBit = 1,
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         DescriptorPoolCreateUpdateAfterBindBit = 2,
@@ -4326,12 +4480,13 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkDependencyFlagBits : int
     {
+        /// <summary>Dependency is per pixel region </summary>
         DependencyByRegionBit = 1,
-        /// <summary>[requires: VK_VERSION_1_1]</summary>
+        /// <summary>[requires: VK_VERSION_1_1]Dependency is across devices</summary>
         DependencyDeviceGroupBit = 4,
         /// <summary>[requires: VK_VERSION_1_1]</summary>
         DependencyViewLocalBit = 2,
-        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]</summary>
+        /// <summary>[requires: VK_EXT_attachment_feedback_loop_layout]Dependency may be a feedback loop</summary>
         DependencyFeedbackLoopBitExt = 8,
         /// <summary>[requires: VK_KHR_multiview]</summary>
         DependencyViewLocalBitKhr = 2,
@@ -4585,13 +4740,21 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkSubgroupFeatureFlagBits : int
     {
+        /// <summary>Basic subgroup operations</summary>
         SubgroupFeatureBasicBit = 1,
+        /// <summary>Vote subgroup operations</summary>
         SubgroupFeatureVoteBit = 2,
+        /// <summary>Arithmetic subgroup operations</summary>
         SubgroupFeatureArithmeticBit = 4,
+        /// <summary>Ballot subgroup operations</summary>
         SubgroupFeatureBallotBit = 8,
+        /// <summary>Shuffle subgroup operations</summary>
         SubgroupFeatureShuffleBit = 16,
+        /// <summary>Shuffle relative subgroup operations</summary>
         SubgroupFeatureShuffleRelativeBit = 32,
+        /// <summary>Clustered subgroup operations</summary>
         SubgroupFeatureClusteredBit = 64,
+        /// <summary>Quad subgroup operations</summary>
         SubgroupFeatureQuadBit = 128,
         /// <summary>[requires: VK_NV_shader_subgroup_partitioned]</summary>
         SubgroupFeaturePartitionedBitNv = 256,
@@ -4638,7 +4801,7 @@ namespace OpenTK.Graphics.Vulkan
     {
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         DescriptorSetLayoutCreateUpdateAfterBindPoolBit = 2,
-        /// <summary>[requires: VK_KHR_push_descriptor]</summary>
+        /// <summary>[requires: VK_KHR_push_descriptor]Descriptors are pushed via flink:vkCmdPushDescriptorSetKHR</summary>
         DescriptorSetLayoutCreatePushDescriptorBitKhr = 1,
         /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
         DescriptorSetLayoutCreateDescriptorBufferBitExt = 16,
@@ -4810,9 +4973,13 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkPeerMemoryFeatureFlagBits : int
     {
+        /// <summary>Can read with vkCmdCopy commands</summary>
         PeerMemoryFeatureCopySrcBit = 1,
+        /// <summary>Can write with vkCmdCopy commands</summary>
         PeerMemoryFeatureCopyDstBit = 2,
+        /// <summary>Can read with any access type/command</summary>
         PeerMemoryFeatureGenericSrcBit = 4,
+        /// <summary>Can write with and access type/command</summary>
         PeerMemoryFeatureGenericDstBit = 8,
         /// <summary>[requires: VK_KHR_device_group]</summary>
         PeerMemoryFeatureCopySrcBitKhr = 1,
@@ -4826,6 +4993,7 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkMemoryAllocateFlagBits : int
     {
+        /// <summary>Force allocation on specific devices</summary>
         MemoryAllocateDeviceMaskBit = 1,
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         MemoryAllocateDeviceAddressBit = 2,
@@ -4841,17 +5009,21 @@ namespace OpenTK.Graphics.Vulkan
     [Flags]
     public enum VkDeviceGroupPresentModeFlagBitsKHR : int
     {
+        /// <summary>Present from local memory</summary>
         DeviceGroupPresentModeLocalBitKhr = 1,
+        /// <summary>Present from remote memory</summary>
         DeviceGroupPresentModeRemoteBitKhr = 2,
+        /// <summary>Present sum of local and/or remote memory</summary>
         DeviceGroupPresentModeSumBitKhr = 4,
+        /// <summary>Each physical device presents from local memory</summary>
         DeviceGroupPresentModeLocalMultiDeviceBitKhr = 8,
     }
     [Flags]
     public enum VkSwapchainCreateFlagBitsKHR : int
     {
-        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        /// <summary>[requires: VK_KHR_swapchain]Allow images with VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT</summary>
         SwapchainCreateSplitInstanceBindRegionsBitKhr = 1,
-        /// <summary>[requires: VK_KHR_swapchain]</summary>
+        /// <summary>[requires: VK_KHR_swapchain]Swapchain is protected</summary>
         SwapchainCreateProtectedBitKhr = 2,
         /// <summary>[requires: VK_KHR_swapchain_mutable_format]</summary>
         SwapchainCreateMutableFormatBitKhr = 4,
@@ -4935,9 +5107,13 @@ namespace OpenTK.Graphics.Vulkan
     public enum VkSamplerYcbcrModelConversion : int
     {
         SamplerYcbcrModelConversionRgbIdentity = 0,
+        /// <summary>just range expansion</summary>
         SamplerYcbcrModelConversionYcbcrIdentity = 1,
+        /// <summary>aka HD YUV</summary>
         SamplerYcbcrModelConversionYcbcr709 = 2,
+        /// <summary>aka SD YUV</summary>
         SamplerYcbcrModelConversionYcbcr601 = 3,
+        /// <summary>aka UHD YUV</summary>
         SamplerYcbcrModelConversionYcbcr2020 = 4,
         /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
         SamplerYcbcrModelConversionRgbIdentityKhr = 0,
@@ -4952,7 +5128,9 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkSamplerYcbcrRange : int
     {
+        /// <summary>Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)</summary>
         SamplerYcbcrRangeItuFull = 0,
+        /// <summary>Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240</summary>
         SamplerYcbcrRangeItuNarrow = 1,
         /// <summary>[requires: VK_KHR_sampler_ycbcr_conversion]</summary>
         SamplerYcbcrRangeItuFullKhr = 0,
@@ -5048,43 +5226,78 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkVendorId : int
     {
+        /// <summary>Khronos vendor ID</summary>
         VendorIdKhronos = 65536,
+        /// <summary>Vivante vendor ID</summary>
         VendorIdViv = 65537,
+        /// <summary>VeriSilicon vendor ID</summary>
         VendorIdVsi = 65538,
+        /// <summary>Kazan Software Renderer</summary>
         VendorIdKazan = 65539,
+        /// <summary>Codeplay Software Ltd. vendor ID</summary>
         VendorIdCodeplay = 65540,
+        /// <summary>Mesa vendor ID</summary>
         VendorIdMesa = 65541,
+        /// <summary>PoCL vendor ID</summary>
         VendorIdPocl = 65542,
+        /// <summary>Mobileye vendor ID</summary>
         VendorIdMobileye = 65543,
     }
     public enum VkDriverId : int
     {
+        /// <summary>Advanced Micro Devices, Inc.</summary>
         DriverIdAmdProprietary = 1,
+        /// <summary>Advanced Micro Devices, Inc.</summary>
         DriverIdAmdOpenSource = 2,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaRadv = 3,
+        /// <summary>NVIDIA Corporation</summary>
         DriverIdNvidiaProprietary = 4,
+        /// <summary>Intel Corporation</summary>
         DriverIdIntelProprietaryWindows = 5,
+        /// <summary>Intel Corporation</summary>
         DriverIdIntelOpenSourceMesa = 6,
+        /// <summary>Imagination Technologies</summary>
         DriverIdImaginationProprietary = 7,
+        /// <summary>Qualcomm Technologies, Inc.</summary>
         DriverIdQualcommProprietary = 8,
+        /// <summary>Arm Limited</summary>
         DriverIdArmProprietary = 9,
+        /// <summary>Google LLC</summary>
         DriverIdGoogleSwiftshader = 10,
+        /// <summary>Google LLC</summary>
         DriverIdGgpProprietary = 11,
+        /// <summary>Broadcom Inc.</summary>
         DriverIdBroadcomProprietary = 12,
+        /// <summary>Mesa</summary>
         DriverIdMesaLlvmpipe = 13,
+        /// <summary>MoltenVK</summary>
         DriverIdMoltenvk = 14,
+        /// <summary>Core Avionics & Industrial Inc.</summary>
         DriverIdCoreaviProprietary = 15,
+        /// <summary>Juice Technologies, Inc.</summary>
         DriverIdJuiceProprietary = 16,
+        /// <summary>Verisilicon, Inc.</summary>
         DriverIdVerisiliconProprietary = 17,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaTurnip = 18,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaV3dv = 19,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaPanvk = 20,
+        /// <summary>Samsung Electronics Co., Ltd.</summary>
         DriverIdSamsungProprietary = 21,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaVenus = 22,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaDozen = 23,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaNvk = 24,
+        /// <summary>Imagination Technologies</summary>
         DriverIdImaginationOpenSourceMesa = 25,
+        /// <summary>Mesa open source project</summary>
         DriverIdMesaHoneykrisp = 26,
+        /// <summary>Reserved for undisclosed driver project</summary>
         DriverIdReserved27 = 27,
         /// <summary>[requires: VK_KHR_driver_properties]</summary>
         DriverIdAmdProprietaryKhr = 1,
@@ -5609,7 +5822,7 @@ namespace OpenTK.Graphics.Vulkan
         Access2TransformFeedbackCounterReadBitExt = 67108864,
         /// <summary>[requires: VK_KHR_synchronization2]</summary>
         Access2TransformFeedbackCounterWriteBitExt = 134217728,
-        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        /// <summary>[requires: VK_KHR_synchronization2]read access flag for reading conditional rendering predicate</summary>
         Access2ConditionalRenderingReadBitExt = 1048576,
         /// <summary>[requires: VK_KHR_synchronization2]</summary>
         Access2CommandPreprocessReadBitNv = 131072,
@@ -5707,7 +5920,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStage2VideoEncodeBitKhr = 134217728,
         /// <summary>[requires: VK_KHR_synchronization2]</summary>
         PipelineStage2TransformFeedbackBitExt = 16777216,
-        /// <summary>[requires: VK_KHR_synchronization2]</summary>
+        /// <summary>[requires: VK_KHR_synchronization2]A pipeline stage for conditional rendering predicate fetch</summary>
         PipelineStage2ConditionalRenderingBitExt = 262144,
         /// <summary>[requires: VK_KHR_synchronization2]</summary>
         PipelineStage2CommandPreprocessBitNv = 131072,
@@ -6122,13 +6335,13 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeature2FragmentDensityMapBitExt = 16777216,
         /// <summary>[requires: VK_KHR_fragment_shading_rate]</summary>
         FormatFeature2FragmentShadingRateAttachmentBitKhr = 1073741824,
-        /// <summary>[requires: VK_EXT_host_image_copy]</summary>
+        /// <summary>[requires: VK_EXT_host_image_copy]Host image copies are supported</summary>
         FormatFeature2HostImageTransferBitExt = 16384,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
         FormatFeature2VideoEncodeInputBitKhr = 134217728,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
         FormatFeature2VideoEncodeDpbBitKhr = 268435456,
-        /// <summary>[requires: VK_NV_linear_color_attachment]</summary>
+        /// <summary>[requires: VK_NV_linear_color_attachment]Format support linear image as render target, it cannot be mixed with non linear attachment</summary>
         FormatFeature2LinearColorAttachmentBitNv = 64,
         /// <summary>[requires: VK_QCOM_image_processing]</summary>
         FormatFeature2WeightImageBitQcom = 4,
@@ -6156,7 +6369,7 @@ namespace OpenTK.Graphics.Vulkan
         RenderingResumingBitKhr = 4,
         /// <summary>[requires: VK_EXT_legacy_dithering]</summary>
         RenderingEnableLegacyDitheringBitExt = 8,
-        /// <summary>[requires: VK_KHR_maintenance7]</summary>
+        /// <summary>[requires: VK_KHR_maintenance7]Promoted from extension 452</summary>
         RenderingContentsInlineBitKhr = 16,
         /// <summary>[requires: VK_EXT_nested_command_buffer]</summary>
         RenderingContentsInlineBitExt = 16,
@@ -6392,6 +6605,7 @@ namespace OpenTK.Graphics.Vulkan
     }
     public enum VkDeviceFaultAddressTypeEXT : int
     {
+        /// <summary>Currently unused</summary>
         DeviceFaultAddressTypeNoneExt = 0,
         DeviceFaultAddressTypeReadInvalidExt = 1,
         DeviceFaultAddressTypeWriteInvalidExt = 2,

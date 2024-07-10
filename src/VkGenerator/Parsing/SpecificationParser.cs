@@ -42,8 +42,8 @@ namespace VkGenerator.Parsing
 
     public record ExternalType(string Name, string? HeaderFile);
 
-    public record StructType(string Name, List<StructMember> Members, bool Union);
-    public record StructMember(string Type, string Name)
+    public record StructType(string Name, List<StructMember> Members, bool Union, string? Comment);
+    public record StructMember(string Type, string Name, string? Values)
     {
         public BaseCSType? StrongType { get; set; }
     };
@@ -159,6 +159,7 @@ namespace VkGenerator.Parsing
                 string? parent = type.Attribute("parent")?.Value;
                 string? alias = type.Attribute("alias")?.Value;
                 bool returnedonly = type.Attribute("returnedonly")?.Value == "true";
+                string? comment = type.Attribute("comment")?.Value;
 
                 // FIXME: For now we don't deal with vulkansc
                 if (api == "vulkansc")
@@ -182,12 +183,12 @@ namespace VkGenerator.Parsing
                 else if (category == "union")
                 {
                     // FIXME
-                    structs.Add(new StructType(name!, ParseStructMembers(type), true));
+                    structs.Add(new StructType(name!, ParseStructMembers(type), true, comment));
                 }
                 else if (category == "struct")
                 {
                     //Console.WriteLine($"struct {name} {{ c: {category} r: {requires} api: {api} ote: {objtypeenum} p: {parent} a: {alias} d: {deprecated} ro: {returnedonly}");
-                    structs.Add(new StructType(name!, ParseStructMembers(type), false));
+                    structs.Add(new StructType(name!, ParseStructMembers(type), false, comment));
                 }
                 else if (category == "enum")
                 {
@@ -257,6 +258,8 @@ namespace VkGenerator.Parsing
                 if (member.Attribute("api")?.Value == "vulkansc")
                     continue;
 
+                string? values = member.Attribute("values")?.Value;
+
                 bool optional = member.Attribute("optional")?.Value == "true";
                 string? len = member.Attribute("len")?.Value;
                 string? limittype = member.Attribute("limittype")?.Value;
@@ -264,7 +267,7 @@ namespace VkGenerator.Parsing
                 string? typeStr = member.GetXmlText(element => (element.Name != "name" && element.Name != "comment") ? element.Value : string.Empty).Trim();
                 string name = member.Element("name")!.Value;
 
-                members.Add(new StructMember(typeStr, name));
+                members.Add(new StructMember(typeStr, name, values));
             }
 
             return members;

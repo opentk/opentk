@@ -26,6 +26,17 @@ namespace VkGenerator.Utility
     {
         public static NameManglerSettings Settings = new NameManglerSettings();
 
+        public static string? MaybeRemoveStart(string? str, string start)
+        {
+            if (str == null)
+                return str;
+
+            if (!str.StartsWith(start))
+                return str;
+
+            return str[start.Length..];
+        }
+
         public static string RemoveStart(string str, string start)
         {
             if (!str.StartsWith(start))

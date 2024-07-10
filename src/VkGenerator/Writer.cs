@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -33,7 +34,7 @@ namespace VkGenerator
 
             WriteEnums(directoryPath, data.Enums);
 
-            WriteStructs(directoryPath, data.Structs);
+            WriteStructs(directoryPath, data.Structs, data.Enums);
             WriteHandles(directoryPath, data.Handles);
 
             WriteFunctionPointers(directoryPath, data.Commands);
@@ -65,9 +66,14 @@ namespace VkGenerator
                     {
                         foreach (EnumMember member in @enum.Members)
                         {
+                            string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (member.Extension != null)
                             {
-                                writer.WriteLine($"/// <summary>[requires: {member.Extension}]</summary>");
+                                writer.WriteLine($"/// <summary>[requires: {member.Extension}]{comment}</summary>");
+                            }
+                            else if (comment != null)
+                            {
+                                writer.WriteLine($"/// <summary>{comment}</summary>");
                             }
                             writer.WriteLine($"{NameMangler.MangleEnumName(member.Name)} = {member.Value},");
                         }
@@ -78,7 +84,7 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteStructs(string directoryPath, List<StructType> structs)
+        private static void WriteStructs(string directoryPath, List<StructType> structs, List<EnumType> enums)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Structs.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -94,6 +100,7 @@ namespace VkGenerator
             writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
             using (writer.CsScope())
@@ -102,19 +109,39 @@ namespace VkGenerator
 
                 foreach (StructType @struct in structs)
                 {
+                    if (@struct.Comment != null)
+                    {
+                        writer.WriteLine($"/// <summary>{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}</summary>");
+                    }
+
+                    if (@struct.Union)
+                    {
+                        writer.WriteLine($"[StructLayout(LayoutKind.Explicit)]");
+                    }
+
                     // FIXME: Figure out the right underlying type!s
                     writer.WriteLine($"public unsafe struct {@struct.Name}");
                     using (writer.CsScope())
                     {
+                        bool canWriteSimpleCtor = (@struct.Union == false);
+                        bool hasSType = false;
                         foreach (StructMember member in @struct.Members)
                         {
                             // FIXME: What do we do with these?
                             if (member.StrongType is CSNotSupportedType)
                             {
+                                // We can't have unsupported types in our ctor
+                                canWriteSimpleCtor &= false;
+
+                                Console.WriteLine("Unsupported type in struct!!");
+                                writer.WriteLine($"// Unsupported type for field {member.Name}");
                                 continue;
                             }
                             else if (member.StrongType is CSFixedSizeArray csFixedSizeArray)
                             {
+                                // We can't have fixed sized arrays in our ctor
+                                canWriteSimpleCtor &= false;
+
                                 if (csFixedSizeArray.BaseType is not CSPrimitive csPrimitive || csPrimitive.TypeName == "IntPtr")
                                 {
                                     string helperTypeName = $"{member.Name}InlineArray";
@@ -125,17 +152,78 @@ namespace VkGenerator
                                         writer.WriteLine($"public {csFixedSizeArray.BaseType.ToCSString()} element;");
                                     }
 
+                                    if (@struct.Union)
+                                    {
+                                        writer.WriteLine($"[FieldOffset(0)]");
+                                    }
                                     writer.WriteLine($"public {helperTypeName} {member.Name};");
                                 }
                                 else
                                 {
+                                    if (@struct.Union)
+                                    {
+                                        writer.WriteLine($"[FieldOffset(0)]");
+                                    }
                                     writer.WriteLine($"public fixed {csFixedSizeArray.BaseType.ToCSString()} {NameMangler.MangleMemberName(member.Name)}[{csFixedSizeArray.Size}];");
+                                }
+                            }
+                            else if (member.StrongType is CSEnum csEnum && csEnum.TypeName == "VkStructureType" && member.Values != null)
+                            {
+                                Debug.Assert(@struct.Union == false);
+                                Debug.Assert(member.Values.Contains(',') == false, "We assume only one valid value.");
+                                Debug.Assert(member.Name == "sType" && member.Type == "VkStructureType", "Atm we only support sType values.");
+                                // FIXME: Assert that the enum member is from the VkStructureType enum!
+                                EnumMember? enumMember = Processor.FindEnumMember(enums, member.Values);
+                                if (enumMember == null)
+                                {
+                                    Console.WriteLine($"Could't find sType '{member.Values}'");
+                                    writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
+                                }
+                                else
+                                {
+                                    hasSType = true;
+
+                                    writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)} = VkStructureType.{NameMangler.MangleEnumName(member.Values)};");
                                 }
                             }
                             else
                             {
+                                if (@struct.Union)
+                                {
+                                    writer.WriteLine($"[FieldOffset(0)]");
+                                }
                                 writer.WriteLine($"public {member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)};");
                             }
+                        }
+
+                        if (canWriteSimpleCtor)
+                        {
+                            StringBuilder signature = new StringBuilder();
+                            foreach (StructMember member in @struct.Members)
+                            {
+                                signature.Append($"{member.StrongType!.ToCSString()} {NameMangler.MangleMemberName(member.Name)}, ");
+                            }
+                            if (@struct.Members.Count > 0)
+                            {
+                                signature.Length -= 2;
+                            }
+                            
+                            writer.WriteLine($"public {@struct.Name}({signature})");
+                            using (writer.CsScope())
+                            {
+                                foreach (StructMember member in @struct.Members)
+                                {
+                                    string memberName = NameMangler.MangleMemberName(member.Name);
+                                    writer.WriteLine($"this.{memberName} = {memberName};");
+                                }
+                            }
+                        }
+                        else if (hasSType)
+                        {
+                            // A struct with field initializers must include an explicitly declared ctor.
+                            // So we just add an empty ctor.
+                            // - Noggin_bops 2024-07-10
+                            writer.WriteLine($"public {@struct.Name}(){{ }}");
                         }
                     }
                 }
@@ -166,16 +254,16 @@ namespace VkGenerator
                     using (writer.CsScope())
                     {
                         writer.WriteLine($"public static {handle.Name} Zero => new {handle.Name}(0);");
-                        writer.WriteLine($"public IntPtr Handle;");
-                        writer.WriteLine($"public {handle.Name}(IntPtr handle) => Handle = handle;");
+                        writer.WriteLine($"public ulong Handle;");
+                        writer.WriteLine($"public {handle.Name}(ulong handle) => Handle = handle;");
                         writer.WriteLine($"public override bool Equals(object? obj) => obj is {handle.Name} instance && Equals(instance);");
                         writer.WriteLine($"public bool Equals({handle.Name} other) => Handle.Equals(other.Handle);");
                         writer.WriteLine($"public override int GetHashCode() => HashCode.Combine(Handle);");
                         writer.WriteLine($"public override string? ToString() => Handle.ToString();");
                         writer.WriteLine($"public static bool operator ==({handle.Name} left, {handle.Name} right) => left.Equals(right);");
                         writer.WriteLine($"public static bool operator !=({handle.Name} left, {handle.Name} right) => !(left == right);");
-                        writer.WriteLine($"public static explicit operator IntPtr({handle.Name} handle) => handle.Handle;");
-                        writer.WriteLine($"public static explicit operator {handle.Name}(IntPtr handle) => new {handle.Name}(handle);");
+                        writer.WriteLine($"public static explicit operator ulong({handle.Name} handle) => handle.Handle;");
+                        writer.WriteLine($"public static explicit operator {handle.Name}(ulong handle) => new {handle.Name}(handle);");
                     }
                 }
 

@@ -13,7 +13,7 @@ namespace VkGenerator.Process
 
     internal class Processor
     {
-        static EnumMember? FindEnumMember(List<EnumType> enums, string memberName)
+        public static EnumMember? FindEnumMember(List<EnumType> enums, string memberName)
         {
             foreach (EnumType @enum in enums)
             {
