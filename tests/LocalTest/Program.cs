@@ -179,7 +179,6 @@ namespace LocalTest
             deviceCreateInfo.ppEnabledLayerNames = null;
             deviceCreateInfo.enabledExtensionCount = 1;
             ReadOnlySpan<byte> extensionNames = "VK_KHR_swapchain"u8;
-            
             fixed (byte* extptr = extensionNames)
             {
                 deviceCreateInfo.ppEnabledExtensionNames = &extptr;
@@ -267,17 +266,6 @@ namespace LocalTest
             Span<VkImage> swapchainImages = new VkImage[swapchainImageCount];
             result = Vk.GetSwapchainImagesKHR(Device, swapchain, &swapchainImageCount, (VkImage*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(swapchainImages)));
 
-            VkAttachmentDescription colorAttachment;
-            colorAttachment.flags = 0;
-            colorAttachment.format = choosenFormat.format;
-            colorAttachment.samples = VkSampleCountFlagBits.SampleCount1Bit;
-            colorAttachment.loadOp = VkAttachmentLoadOp.AttachmentLoadOpClear;
-            colorAttachment.storeOp = VkAttachmentStoreOp.AttachmentStoreOpStore;
-            colorAttachment.stencilLoadOp = VkAttachmentLoadOp.AttachmentLoadOpClear;
-            colorAttachment.stencilStoreOp = VkAttachmentStoreOp.AttachmentStoreOpStore;
-            colorAttachment.initialLayout = VkImageLayout.ImageLayoutUndefined;
-            colorAttachment.finalLayout = VkImageLayout.ImageLayoutPresentSrcKhr;
-
             VkAttachmentReference colorAttachmentRef;
             colorAttachmentRef.attachment = 0;
             colorAttachmentRef.layout = VkImageLayout.ImageLayoutColorAttachmentOptimal;
@@ -293,6 +281,17 @@ namespace LocalTest
             subpass.pDepthStencilAttachment = null;
             subpass.preserveAttachmentCount = 0;
             subpass.pPreserveAttachments = null;
+
+            VkAttachmentDescription colorAttachment;
+            colorAttachment.flags = 0;
+            colorAttachment.format = choosenFormat.format;
+            colorAttachment.samples = VkSampleCountFlagBits.SampleCount1Bit;
+            colorAttachment.loadOp = VkAttachmentLoadOp.AttachmentLoadOpClear;
+            colorAttachment.storeOp = VkAttachmentStoreOp.AttachmentStoreOpStore;
+            colorAttachment.stencilLoadOp = VkAttachmentLoadOp.AttachmentLoadOpClear;
+            colorAttachment.stencilStoreOp = VkAttachmentStoreOp.AttachmentStoreOpStore;
+            colorAttachment.initialLayout = VkImageLayout.ImageLayoutUndefined;
+            colorAttachment.finalLayout = VkImageLayout.ImageLayoutPresentSrcKhr;
 
             VkRenderPassCreateInfo renderPassCreateInfo;
             renderPassCreateInfo.sType = VkStructureType.StructureTypeRenderPassCreateInfo;
