@@ -70,6 +70,14 @@ namespace VkGenerator
             return ReadFileFromGithub(url, filePath);
         }
 
+        public static FileStream ReadVKVideoSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/Vulkan-Docs/main/xml/video.xml";
+            string filePath = Path.Combine(TempDirectory, "video.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
         private static FileStream CreateCache(string upstreamUrl, string filePath)
         {
             HttpWebRequest fileRequest = WebRequest.CreateHttp(upstreamUrl);
