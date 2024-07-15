@@ -1,13 +1,14 @@
 // This file is auto generated, do not edit.
 using OpenTK.Mathematics;
-using OpenTK.Graphics.Vulkan.VideoCodecH264;
-using OpenTK.Graphics.Vulkan.VideoCodecH264.Decode;
-using OpenTK.Graphics.Vulkan.VideoCodecH264.Encode;
-using OpenTK.Graphics.Vulkan.VideoCodecH265;
-using OpenTK.Graphics.Vulkan.VideoCodecH265.Decode;
-using OpenTK.Graphics.Vulkan.VideoCodecH265.Encode;
-using OpenTK.Graphics.Vulkan.VideoCodecAV1;
-using OpenTK.Graphics.Vulkan.VideoCodecAV1.Decode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecsCommon;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdDecode;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

@@ -39,8 +39,8 @@ namespace VkGenerator
             WriteStructs(directoryPath, data.Structs, data.Enums, video);
             WriteHandles(directoryPath, data.Handles);
 
-            WriteFunctionPointers(directoryPath, data.Commands);
-            WriteCommands(directoryPath, data.Commands);
+            WriteFunctionPointers(directoryPath, data.Commands, video);
+            WriteCommands(directoryPath, data.Commands, video);
         }
 
         private static void WriteEnums(string directoryPath, List<EnumType> enums)
@@ -174,20 +174,16 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteCommands(string directoryPath, List<Command> commands)
+        private static void WriteCommands(string directoryPath, List<Command> commands, SpecificationData video)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Decode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Encode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Decode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Encode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
+            foreach (Extension extension in video.Extensions)
+            {
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+            }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine();
@@ -235,20 +231,16 @@ namespace VkGenerator
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<Command> commands)
+        private static void WriteFunctionPointers(string directoryPath, List<Command> commands, SpecificationData video)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Vulkan.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using OpenTK.Mathematics;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Decode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH264.Encode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Decode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecH265.Encode;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1;");
-            writer.WriteLine($"using {GraphicsNamespace}.Vulkan.VideoCodecAV1.Decode;");
+            foreach (Extension extension in video.Extensions)
+            {
+                writer.WriteLine($"using {GraphicsNamespace}.Vulkan.{NameMangler.MangleExtensionName(extension.Name)};");
+            }
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
