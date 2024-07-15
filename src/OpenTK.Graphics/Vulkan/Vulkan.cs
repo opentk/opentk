@@ -1988,7 +1988,7 @@ namespace OpenTK.Graphics.Vulkan
         {
             VkPointers._vkCmdSetEvent2_fnptr(commandBuffer, @event, pDependencyInfo);
         }
-        public static void CmdResetEvent2(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlags2 stageMask)
+        public static void CmdResetEvent2(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits2 stageMask)
         {
             VkPointers._vkCmdResetEvent2_fnptr(commandBuffer, @event, stageMask);
         }
@@ -2004,11 +2004,11 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkQueueSubmit2_fnptr(queue, submitCount, pSubmits, fence);
         }
-        public static void CmdWriteTimestamp2(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkQueryPool queryPool, uint query)
+        public static void CmdWriteTimestamp2(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkQueryPool queryPool, uint query)
         {
             VkPointers._vkCmdWriteTimestamp2_fnptr(commandBuffer, stage, queryPool, query);
         }
-        public static void CmdWriteBufferMarker2AMD(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
+        public static void CmdWriteBufferMarker2AMD(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
             VkPointers._vkCmdWriteBufferMarker2AMD_fnptr(commandBuffer, stage, dstBuffer, dstOffset, marker);
         }

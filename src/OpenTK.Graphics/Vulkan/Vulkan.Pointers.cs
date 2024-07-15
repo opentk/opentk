@@ -3468,11 +3468,11 @@ namespace OpenTK.Graphics.Vulkan
             _vkCmdSetEvent2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkDependencyInfo*, void>)VKLoader.GetInstanceProcAddress("vkCmdSetEvent2");
             _vkCmdSetEvent2_fnptr(commandBuffer, @event, pDependencyInfo);
         }
-        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlags2, void> _vkCmdResetEvent2_fnptr = &vkCmdResetEvent2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits2, void> _vkCmdResetEvent2_fnptr = &vkCmdResetEvent2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdResetEvent2_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlags2 stageMask)
+        private static void vkCmdResetEvent2_Lazy(VkCommandBuffer commandBuffer, VkEvent @event, VkPipelineStageFlagBits2 stageMask)
         {
-            _vkCmdResetEvent2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlags2, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent2");
+            _vkCmdResetEvent2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkEvent, VkPipelineStageFlagBits2, void>)VKLoader.GetInstanceProcAddress("vkCmdResetEvent2");
             _vkCmdResetEvent2_fnptr(commandBuffer, @event, stageMask);
         }
         internal static delegate* unmanaged<VkCommandBuffer, uint, VkEvent*, VkDependencyInfo*, void> _vkCmdWaitEvents2_fnptr = &vkCmdWaitEvents2_Lazy;
@@ -3496,18 +3496,18 @@ namespace OpenTK.Graphics.Vulkan
             _vkQueueSubmit2_fnptr = (delegate* unmanaged<VkQueue, uint, VkSubmitInfo2*, VkFence, VkResult>)VKLoader.GetInstanceProcAddress("vkQueueSubmit2");
             return _vkQueueSubmit2_fnptr(queue, submitCount, pSubmits, fence);
         }
-        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkQueryPool, uint, void> _vkCmdWriteTimestamp2_fnptr = &vkCmdWriteTimestamp2_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void> _vkCmdWriteTimestamp2_fnptr = &vkCmdWriteTimestamp2_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteTimestamp2_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkQueryPool queryPool, uint query)
+        private static void vkCmdWriteTimestamp2_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkQueryPool queryPool, uint query)
         {
-            _vkCmdWriteTimestamp2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp2");
+            _vkCmdWriteTimestamp2_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkQueryPool, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteTimestamp2");
             _vkCmdWriteTimestamp2_fnptr(commandBuffer, stage, queryPool, query);
         }
-        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkBuffer, ulong, uint, void> _vkCmdWriteBufferMarker2AMD_fnptr = &vkCmdWriteBufferMarker2AMD_Lazy;
+        internal static delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkBuffer, ulong, uint, void> _vkCmdWriteBufferMarker2AMD_fnptr = &vkCmdWriteBufferMarker2AMD_Lazy;
         [UnmanagedCallersOnly]
-        private static void vkCmdWriteBufferMarker2AMD_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlags2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
+        private static void vkCmdWriteBufferMarker2AMD_Lazy(VkCommandBuffer commandBuffer, VkPipelineStageFlagBits2 stage, VkBuffer dstBuffer, ulong dstOffset, uint marker)
         {
-            _vkCmdWriteBufferMarker2AMD_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlags2, VkBuffer, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarker2AMD");
+            _vkCmdWriteBufferMarker2AMD_fnptr = (delegate* unmanaged<VkCommandBuffer, VkPipelineStageFlagBits2, VkBuffer, ulong, uint, void>)VKLoader.GetInstanceProcAddress("vkCmdWriteBufferMarker2AMD");
             _vkCmdWriteBufferMarker2AMD_fnptr(commandBuffer, stage, dstBuffer, dstOffset, marker);
         }
         internal static delegate* unmanaged<VkQueue, uint*, VkCheckpointData2NV*, void> _vkGetQueueCheckpointData2NV_fnptr = &vkGetQueueCheckpointData2NV_Lazy;

@@ -44,7 +44,7 @@ namespace VkGenerator.Process
                             Debug.Assert(extends != null);
                             if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
                             {
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, requiredEnum.Value!.Value, requiredEnum.Comment, null, feature.Name));
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, (ulong)requiredEnum.Value!.Value, requiredEnum.Comment, null, feature.Name));
                             }
                         }
                     }
@@ -95,7 +95,7 @@ namespace VkGenerator.Process
                             Debug.Assert(extends != null);
                             if (extends.Members.Find(m => m.Name == requiredEnum.Name) == null)
                             {
-                                extends.Members.Add(new EnumMember(requiredEnum.Name, requiredEnum.Value!.Value, requiredEnum.Comment, null, extension.Name));
+                                extends.Members.Add(new EnumMember(requiredEnum.Name, (ulong)requiredEnum.Value!.Value, requiredEnum.Comment, null, extension.Name));
                             }
                         }
                     }
@@ -131,9 +131,17 @@ namespace VkGenerator.Process
             }
         }
 
-        public static Dictionary<string, BaseCSType> BuildTypeMap(SpecificationData data)
+        public static void ApplyVideoEnums(SpecificationData data, SpecificationData video)
+        {
+            // FIXME: We want to generate these somewhere else!
+            //data.Enums.AddRange(video.Enums);
+            //data.EnumNames.AddRange(video.EnumNames);
+        }
+
+        public static Dictionary<string, BaseCSType> BuildTypeMap(SpecificationData data, SpecificationData video)
         {
             Dictionary<string, BaseCSType> typeMap = new Dictionary<string, BaseCSType>();
+
             foreach (StructType @struct in data.Structs)
             {
                 typeMap.Add(@struct.Name, new CSStruct(@struct.Name, true));
@@ -141,8 +149,23 @@ namespace VkGenerator.Process
 
             foreach (EnumType @enum in data.Enums)
             {
-                // FIXME: Underlying enum type!
-                typeMap.Add(@enum.Name, new CSEnum(@enum.Name, CSPrimitive.Int(true), true));
+                BitmaskName? bitmaskName = data.BitmaskNames.Find(en => en.Requires == @enum.Name);
+
+                if (bitmaskName != null)
+                {
+                    CSPrimitive type = bitmaskName.Type switch
+                    {
+                        "VkFlags" => CSPrimitive.Uint(true),
+                        "VkFlags64" => CSPrimitive.Ulong(true),
+                        _ => throw new Exception(),
+                    };
+                    typeMap.Add(@enum.Name, new CSEnum(@enum.Name, type, true));
+                }
+                else
+                {
+                    // FIXME: Underlying enum type!
+                    typeMap.Add(@enum.Name, new CSEnum(@enum.Name, CSPrimitive.Uint(true), true));
+                }
             }
 
             foreach (EnumName enumName in data.EnumNames)
@@ -183,12 +206,16 @@ namespace VkGenerator.Process
                 }
                 else
                 {
-                    // FIXME: Some of this is going to be fixed when we add in extensions...
-                    typeMap.Add(bitmask.Name, new CSEnum(bitmask.Name, CSPrimitive.Int(true), true));
-                    Console.WriteLine(bitmask.Name);
+                    CSPrimitive type = bitmask.Type switch
+                    {
+                        "VkFlags" => CSPrimitive.Uint(true),
+                        "VkFlags64" => CSPrimitive.Ulong(true),
+                        _ => throw new Exception(),
+                    };
+                    typeMap.Add(bitmask.Name, new CSEnum(bitmask.Name, type, true));
 
                     // FIXME: This isn't the place to do this!!!!
-                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true, null));
+                    data.Enums.Add(new EnumType(bitmask.Name, new List<EnumMember>(), true, null) { StrongUnderlyingType = type });
                 }
             }
 
@@ -197,16 +224,90 @@ namespace VkGenerator.Process
                 typeMap.Add(handle.Name, new CSStruct(handle.Name, true));
             }
 
+            // Add video.xml types so we can reference them
+            foreach (StructType @struct in video.Structs)
+            {
+                typeMap.Add(@struct.Name, new CSStruct(@struct.Name, true));
+            }
+
+            foreach (EnumType @enum in video.Enums)
+            {
+                typeMap.Add(@enum.Name, new CSEnum(@enum.Name, CSPrimitive.Int(true), true));
+            }
+
+            foreach (EnumName enumName in video.EnumNames)
+            {
+                if (enumName.Alias != null)
+                {
+                    if (typeMap.TryGetValue(enumName.Alias, out BaseCSType? enumType))
+                    {
+                        typeMap.Add(enumName.Name, enumType);
+                    }
+                    else
+                    {
+                        Debug.Assert(false);
+                    }
+                }
+                else
+                {
+                    // FIXME: There are a bunch more empty enums like VkPipelineVertexInputStateCreateFlags etc
+
+                    // VkQueryPoolCreateFlags, VkQueryPoolCreateFlagBits, VkDeviceCreateFlags, and VkDeviceCreateFlagBits have no members
+                    if (enumName.Name != "VkQueryPoolCreateFlags" &&
+                        enumName.Name != "VkQueryPoolCreateFlagBits" &&
+                        enumName.Name != "VkDeviceCreateFlags" &&
+                        enumName.Name != "VkDeviceCreateFlagBits")
+                    {
+                        Debug.Assert(typeMap.ContainsKey(enumName.Name));
+                    }
+                }
+            }
+
+            Debug.Assert(video.Bitmasks.Count == 0);
+
+            Debug.Assert(video.Handles.Count == 0);
+
             return typeMap;
         }
 
-        public static void ResolveStructMemberTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
+        public static Dictionary<string, Constant> BuildConstantsMap(SpecificationData data, SpecificationData video)
+        {
+            Dictionary<string, Constant> constantsMap = new Dictionary<string, Constant>(data.Constants);
+
+            Debug.Assert(video.Constants.Count == 0);
+
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (RequireTag requireTag in extension.RequireTags)
+                {
+                    foreach (Constant constant in requireTag.Constants)
+                    {
+                        constantsMap.Add(constant.Name, constant);
+                    }
+                }
+            }
+
+            foreach (Extension extension in video.Extensions)
+            {
+                foreach (RequireTag requireTag in extension.RequireTags)
+                {
+                    foreach (Constant constant in requireTag.Constants)
+                    {
+                        constantsMap.Add(constant.Name, constant);
+                    }
+                }
+            }
+
+            return constantsMap;
+        }
+
+        public static void ResolveStructMemberTypes(SpecificationData data, Dictionary<string, BaseCSType> typeMap, Dictionary<string, Constant> constantsMap)
         {
             foreach (StructType @struct in data.Structs)
             {
                 foreach (StructMember member in @struct.Members)
                 {
-                    member.StrongType = ParseType(member.Type, typeMap, data.Constants);
+                    member.StrongType = ParseType(member.Type, typeMap, constantsMap);
                     member.StrongType = ReplaceOpaqueStructPointers(member.StrongType);
                 }
             }
@@ -226,6 +327,30 @@ namespace VkGenerator.Process
                     param.StrongType = ParseType(param.Type, typeMap, data.Constants);
                     param.StrongType = ReplaceOpaqueStructPointers(param.StrongType);
                     param.StrongType = ReplaceFixedSizeArraysWithPointers(param.StrongType);
+                }
+            }
+        }
+
+        public static void ResolveEnumUnderlyingTypes(SpecificationData data)
+        {
+            foreach (EnumType @enum in data.Enums)
+            {
+                // FIXME: Can we refer to thing between vk.xml and video.xml?
+                BitmaskName? bitmaskName = data.BitmaskNames.Find(en => en.Requires == @enum.Name);
+
+                if (bitmaskName != null)
+                {
+                    CSPrimitive type = bitmaskName.Type switch
+                    {
+                        "VkFlags" => CSPrimitive.Uint(true),
+                        "VkFlags64" => CSPrimitive.Ulong(true),
+                        _ => throw new Exception(),
+                    };
+                    @enum.StrongUnderlyingType = type;
+                }
+                else
+                {
+                    @enum.StrongUnderlyingType = CSPrimitive.Int(true);
                 }
             }
         }
@@ -254,8 +379,6 @@ namespace VkGenerator.Process
             }
             else if (type.EndsWith(']'))
             {
-                // There is just a single place in the specification with a
-                // double array type. It's VkTransformMatrixKHR.
                 // To simplify the code we just detect this special case.
                 if (type == "float[3][4]")
                 {
@@ -263,12 +386,8 @@ namespace VkGenerator.Process
                     return new CSStruct("Matrix4x3", false);
                 }
 
-                Debug.Assert(type.Count(c => c == '[') == 1, "We don't support 2d arrays...");
-
-                int startIndex = type.IndexOf("[");
-
+                int startIndex = type.LastIndexOf('[');
                 string sizeStr = type[(startIndex + 1)..^1];
-                // FIXME: Resolve size!
 
                 ulong size;
                 if (constantsMap.TryGetValue(sizeStr, out Constant? @const))
@@ -289,11 +408,21 @@ namespace VkGenerator.Process
                     throw new Exception();
                 }
 
-                string typeWithoutArray = type.Substring(0, startIndex);
+                string typeWithoutArray = type[..startIndex];
 
                 BaseCSType baseType = ParseType(typeWithoutArray, typeMap, constantsMap);
 
                 return new CSFixedSizeArray(baseType, size);
+            }
+            else if (type.Contains(':'))
+            {
+                int colonIndex = type.IndexOf(':');
+                int bitWidth = int.Parse(type[(colonIndex + 1)..]);
+
+                string typeWithoutBitfield = type[0..colonIndex].TrimEnd();
+                BaseCSType baseType = ParseType(typeWithoutBitfield, typeMap, constantsMap);
+
+                return new CSBitfield(baseType, bitWidth);
             }
             else
             {
@@ -326,6 +455,56 @@ namespace VkGenerator.Process
                     Console.WriteLine(type);
                     type = type[..^":8".Length];
                 }
+                else if (type.EndsWith(": 1"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 1".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 30"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 30".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 27"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 27".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 31"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 31".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 8"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 8".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 20"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 20".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 23"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 23".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 28"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 28".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 13"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 13".Length].TrimEnd();
+                }
+                else if (type.EndsWith(": 3"))
+                {
+                    Console.WriteLine(type);
+                    type = type[..^": 3".Length].TrimEnd();
+                }
 
                 if (typeMap.TryGetValue(type, out BaseCSType? csMapType))
                 {
@@ -356,8 +535,10 @@ namespace VkGenerator.Process
                         "void" => new CSVoid(@const),
                         "char" => new CSChar8(@const),
                         "uint8_t" => CSPrimitive.Byte(@const),
+                        "int8_t" => CSPrimitive.Sbyte(@const),
                         "int" => CSPrimitive.Int(@const),
                         "uint16_t" => CSPrimitive.Ushort(@const),
+                        "int16_t" => CSPrimitive.Short(@const),
                         "int32_t" => CSPrimitive.Int(@const),
                         "uint32_t" => CSPrimitive.Uint(@const),
                         "int64_t" => CSPrimitive.Long(@const),
@@ -511,6 +692,7 @@ namespace VkGenerator.Process
                         "MTLSharedEvent_id" => CSPrimitive.IntPtr(@const),
                         "IOSurfaceRef" => CSPrimitive.IntPtr(@const),
 
+                        /*
                         // From vk_video/vulkan_video_codec_h264std.h
                         "StdVideoH264ProfileIdc" => new CSEnum("StdVideoH264ProfileIdc", CSPrimitive.Int(@const), @const),
                         "StdVideoH264LevelIdc" => new CSEnum("StdVideoH264LevelIdc", CSPrimitive.Int(@const), @const),
@@ -589,6 +771,7 @@ namespace VkGenerator.Process
                         "StdVideoEncodeH265SliceSegmentHeaderFlags" => new CSStruct("StdVideoEncodeH265SliceSegmentHeaderFlags", @const),
                         "StdVideoEncodeH265ReferenceInfoFlags" => new CSStruct("StdVideoEncodeH265ReferenceInfoFlags", @const),
                         "StdVideoEncodeH265ReferenceModificationFlags" => new CSStruct("StdVideoEncodeH265ReferenceModificationFlags", @const),
+                        */
 
                         _ => throw new Exception($"Type conversion has not been created for type {type}"),
                     };

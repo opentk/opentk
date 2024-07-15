@@ -26,16 +26,24 @@ namespace VkGenerator
             var specData = SpecificationParser.Parse(specificationStream);
 
             // Specific parsing for video.xml is it seems to be just slightly different.
-            //var videoSpecData = SpecificationParser.Parse(videoSpecificationStream);
+            var videoSpecData = SpecificationParser.ParseVideo(videoSpecificationStream);
 
             Processor.ApplyFeatureEnums(specData);
             Processor.ApplyExtensionEnums(specData);
+            Processor.ApplyVideoEnums(specData, videoSpecData);
 
-            var typeMap = Processor.BuildTypeMap(specData);
-            Processor.ResolveStructMemberTypes(specData, typeMap);
+            Processor.ResolveEnumUnderlyingTypes(specData);
+            Processor.ResolveEnumUnderlyingTypes(videoSpecData);
+
+            var typeMap = Processor.BuildTypeMap(specData, videoSpecData);
+            var constMap = Processor.BuildConstantsMap(specData, videoSpecData);
+            Processor.ResolveStructMemberTypes(specData, typeMap, constMap);
             Processor.ResolveCommandTypes(specData, typeMap);
 
-            Writer.Write(specData);
+            Processor.ResolveStructMemberTypes(videoSpecData, typeMap, constMap);
+
+            Writer.Write(specData, videoSpecData);
+            Writer.WriteVideo(videoSpecData);
 
             watch.Stop();
 

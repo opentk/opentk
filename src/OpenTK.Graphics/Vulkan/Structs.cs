@@ -1,13 +1,14 @@
 // This file is auto generated, do not edit.
 using OpenTK.Mathematics;
-using OpenTK.Graphics.Vulkan.VideoCodecH264;
-using OpenTK.Graphics.Vulkan.VideoCodecH264.Decode;
-using OpenTK.Graphics.Vulkan.VideoCodecH264.Encode;
-using OpenTK.Graphics.Vulkan.VideoCodecH265;
-using OpenTK.Graphics.Vulkan.VideoCodecH265.Decode;
-using OpenTK.Graphics.Vulkan.VideoCodecH265.Encode;
-using OpenTK.Graphics.Vulkan.VideoCodecAV1;
-using OpenTK.Graphics.Vulkan.VideoCodecAV1.Decode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecsCommon;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH264stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdDecode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecH265stdEncode;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1std;
+using OpenTK.Graphics.Vulkan.VulkanVideoCodecAv1stdDecode;
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -141,11 +142,11 @@ namespace OpenTK.Graphics.Vulkan
         public uint deviceID;
         public VkPhysicalDeviceType deviceType;
         [InlineArray(256)]
-        public struct deviceNameInlineArray
+        public struct deviceNameInlineArray1
         {
             public byte element;
         }
-        public deviceNameInlineArray deviceName;
+        public deviceNameInlineArray1 deviceName;
         public fixed byte pipelineCacheUUID[16];
         public VkPhysicalDeviceLimits limits;
         public VkPhysicalDeviceSparseProperties sparseProperties;
@@ -153,29 +154,29 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkExtensionProperties
     {
         [InlineArray(256)]
-        public struct extensionNameInlineArray
+        public struct extensionNameInlineArray1
         {
             public byte element;
         }
-        public extensionNameInlineArray extensionName;
+        public extensionNameInlineArray1 extensionName;
         public uint specVersion;
     }
     public unsafe struct VkLayerProperties
     {
         [InlineArray(256)]
-        public struct layerNameInlineArray
+        public struct layerNameInlineArray1
         {
             public byte element;
         }
-        public layerNameInlineArray layerName;
+        public layerNameInlineArray1 layerName;
         public uint specVersion;
         public uint implementationVersion;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
     }
     public unsafe struct VkApplicationInfo
     {
@@ -299,18 +300,18 @@ namespace OpenTK.Graphics.Vulkan
     {
         public uint memoryTypeCount;
         [InlineArray(32)]
-        public struct memoryTypesInlineArray
+        public struct memoryTypesInlineArray1
         {
             public VkMemoryType element;
         }
-        public memoryTypesInlineArray memoryTypes;
+        public memoryTypesInlineArray1 memoryTypes;
         public uint memoryHeapCount;
         [InlineArray(16)]
-        public struct memoryHeapsInlineArray
+        public struct memoryHeapsInlineArray1
         {
             public VkMemoryHeap element;
         }
-        public memoryHeapsInlineArray memoryHeaps;
+        public memoryHeapsInlineArray1 memoryHeaps;
     }
     public unsafe struct VkMemoryAllocateInfo
     {
@@ -508,8 +509,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeBufferUsageFlags2CreateInfoKhr;
         public void* pNext;
-        public VkBufferUsageFlags2KHR usage;
-        public VkBufferUsageFlags2CreateInfoKHR(VkStructureType sType, void* pNext, VkBufferUsageFlags2KHR usage)
+        public VkBufferUsageFlagBits2KHR usage;
+        public VkBufferUsageFlags2CreateInfoKHR(VkStructureType sType, void* pNext, VkBufferUsageFlagBits2KHR usage)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -870,18 +871,18 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkImageSubresourceLayers srcSubresource;
         [InlineArray(2)]
-        public struct srcOffsetsInlineArray
+        public struct srcOffsetsInlineArray1
         {
             public VkOffset3D element;
         }
-        public srcOffsetsInlineArray srcOffsets;
+        public srcOffsetsInlineArray1 srcOffsets;
         public VkImageSubresourceLayers dstSubresource;
         [InlineArray(2)]
-        public struct dstOffsetsInlineArray
+        public struct dstOffsetsInlineArray1
         {
             public VkOffset3D element;
         }
-        public dstOffsetsInlineArray dstOffsets;
+        public dstOffsetsInlineArray1 dstOffsets;
     }
     public unsafe struct VkBufferImageCopy
     {
@@ -1125,8 +1126,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePipelineCreateFlags2CreateInfoKhr;
         public void* pNext;
-        public VkPipelineCreateFlags2KHR flags;
-        public VkPipelineCreateFlags2CreateInfoKHR(VkStructureType sType, void* pNext, VkPipelineCreateFlags2KHR flags)
+        public VkPipelineCreateFlagBits2KHR flags;
+        public VkPipelineCreateFlags2CreateInfoKHR(VkStructureType sType, void* pNext, VkPipelineCreateFlagBits2KHR flags)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -3490,17 +3491,17 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkDriverId driverID;
         [InlineArray(256)]
-        public struct driverNameInlineArray
+        public struct driverNameInlineArray1
         {
             public byte element;
         }
-        public driverNameInlineArray driverName;
+        public driverNameInlineArray1 driverName;
         [InlineArray(256)]
-        public struct driverInfoInlineArray
+        public struct driverInfoInlineArray1
         {
             public byte element;
         }
-        public driverInfoInlineArray driverInfo;
+        public driverInfoInlineArray1 driverInfo;
         public VkConformanceVersion conformanceVersion;
         public VkPhysicalDeviceDriverProperties(){ }
     }
@@ -4563,11 +4564,11 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public uint physicalDeviceCount;
         [InlineArray(32)]
-        public struct physicalDevicesInlineArray
+        public struct physicalDevicesInlineArray1
         {
             public VkPhysicalDevice element;
         }
-        public physicalDevicesInlineArray physicalDevices;
+        public physicalDevicesInlineArray1 physicalDevices;
         public int subsetAllocation;
         public VkPhysicalDeviceGroupProperties(){ }
     }
@@ -6413,11 +6414,11 @@ namespace OpenTK.Graphics.Vulkan
         public uint deviceID;
         public VkPhysicalDeviceLayeredApiKHR layeredAPI;
         [InlineArray(256)]
-        public struct deviceNameInlineArray
+        public struct deviceNameInlineArray1
         {
             public byte element;
         }
-        public deviceNameInlineArray deviceName;
+        public deviceNameInlineArray1 deviceName;
         public VkPhysicalDeviceLayeredApiPropertiesKHR(){ }
     }
     public unsafe struct VkPhysicalDeviceLayeredApiVulkanPropertiesKHR
@@ -6704,11 +6705,11 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public uint priorityCount;
         [InlineArray(16)]
-        public struct prioritiesInlineArray
+        public struct prioritiesInlineArray1
         {
             public VkQueueGlobalPriorityKHR element;
         }
-        public prioritiesInlineArray priorities;
+        public prioritiesInlineArray1 priorities;
         public VkQueueFamilyGlobalPriorityPropertiesKHR(){ }
     }
     public unsafe struct VkQueueFamilyGlobalPriorityPropertiesEXT
@@ -8155,9 +8156,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceMemoryDecompressionPropertiesNv;
         public void* pNext;
-        public VkMemoryDecompressionMethodFlagsNV decompressionMethods;
+        public VkMemoryDecompressionMethodFlagBitsNV decompressionMethods;
         public ulong maxDecompressionIndirectCount;
-        public VkPhysicalDeviceMemoryDecompressionPropertiesNV(VkStructureType sType, void* pNext, VkMemoryDecompressionMethodFlagsNV decompressionMethods, ulong maxDecompressionIndirectCount)
+        public VkPhysicalDeviceMemoryDecompressionPropertiesNV(VkStructureType sType, void* pNext, VkMemoryDecompressionMethodFlagBitsNV decompressionMethods, ulong maxDecompressionIndirectCount)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -9691,23 +9692,23 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkPerformanceCounterDescriptionFlagBitsKHR flags;
         [InlineArray(256)]
-        public struct nameInlineArray
+        public struct nameInlineArray1
         {
             public byte element;
         }
-        public nameInlineArray name;
+        public nameInlineArray1 name;
         [InlineArray(256)]
-        public struct categoryInlineArray
+        public struct categoryInlineArray1
         {
             public byte element;
         }
-        public categoryInlineArray category;
+        public categoryInlineArray1 category;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public VkPerformanceCounterDescriptionKHR(){ }
     }
     public unsafe struct VkQueryPoolPerformanceCreateInfoKHR
@@ -10135,17 +10136,17 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkShaderStageFlagBits stages;
         [InlineArray(256)]
-        public struct nameInlineArray
+        public struct nameInlineArray1
         {
             public byte element;
         }
-        public nameInlineArray name;
+        public nameInlineArray1 name;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public uint subgroupSize;
         public VkPipelineExecutablePropertiesKHR(){ }
     }
@@ -10180,17 +10181,17 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePipelineExecutableStatisticKhr;
         public void* pNext;
         [InlineArray(256)]
-        public struct nameInlineArray
+        public struct nameInlineArray1
         {
             public byte element;
         }
-        public nameInlineArray name;
+        public nameInlineArray1 name;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public VkPipelineExecutableStatisticFormatKHR format;
         public VkPipelineExecutableStatisticValueKHR value;
         public VkPipelineExecutableStatisticKHR(){ }
@@ -10200,17 +10201,17 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePipelineExecutableInternalRepresentationKhr;
         public void* pNext;
         [InlineArray(256)]
-        public struct nameInlineArray
+        public struct nameInlineArray1
         {
             public byte element;
         }
-        public nameInlineArray name;
+        public nameInlineArray1 name;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public int isText;
         public nuint dataSize;
         public void* pData;
@@ -10663,17 +10664,17 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkDriverId driverID;
         [InlineArray(256)]
-        public struct driverNameInlineArray
+        public struct driverNameInlineArray1
         {
             public byte element;
         }
-        public driverNameInlineArray driverName;
+        public driverNameInlineArray1 driverName;
         [InlineArray(256)]
-        public struct driverInfoInlineArray
+        public struct driverInfoInlineArray1
         {
             public byte element;
         }
-        public driverInfoInlineArray driverInfo;
+        public driverInfoInlineArray1 driverInfo;
         public VkConformanceVersion conformanceVersion;
         public VkShaderFloatControlsIndependence denormBehaviorIndependence;
         public VkShaderFloatControlsIndependence roundingModeIndependence;
@@ -10924,30 +10925,30 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceToolProperties;
         public void* pNext;
         [InlineArray(256)]
-        public struct nameInlineArray
+        public struct nameInlineArray1
         {
             public byte element;
         }
-        public nameInlineArray name;
+        public nameInlineArray1 name;
         [InlineArray(256)]
-        public struct versionInlineArray
+        public struct versionInlineArray1
         {
             public byte element;
         }
-        public versionInlineArray version;
+        public versionInlineArray1 version;
         public VkToolPurposeFlagBits purposes;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         [InlineArray(256)]
-        public struct layerInlineArray
+        public struct layerInlineArray1
         {
             public byte element;
         }
-        public layerInlineArray layer;
+        public layerInlineArray1 layer;
         public VkPhysicalDeviceToolProperties(){ }
     }
     public unsafe struct VkPhysicalDeviceToolPropertiesEXT
@@ -11231,20 +11232,33 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkAccelerationStructureInstanceKHR
     {
         public VkTransformMatrixKHR transform;
-        public uint instanceCustomIndex;
-        public uint mask;
-        public uint instanceShaderBindingTableRecordOffset;
-        public VkGeometryInstanceFlagBitsKHR flags;
-        public ulong accelerationStructureReference;
-        public VkAccelerationStructureInstanceKHR(VkTransformMatrixKHR transform, uint instanceCustomIndex, uint mask, uint instanceShaderBindingTableRecordOffset, VkGeometryInstanceFlagBitsKHR flags, ulong accelerationStructureReference)
+        private uint _bitfield0;
+         // TODO: Accessor property for instanceCustomIndex, size: 24, offset: 0
+        public uint instanceCustomIndex
         {
-            this.transform = transform;
-            this.instanceCustomIndex = instanceCustomIndex;
-            this.mask = mask;
-            this.instanceShaderBindingTableRecordOffset = instanceShaderBindingTableRecordOffset;
-            this.flags = flags;
-            this.accelerationStructureReference = accelerationStructureReference;
+            get => (uint)((_bitfield0 >> 0) & 0xFFFFFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
         }
+         // TODO: Accessor property for mask, size: 8, offset: 24
+        public uint mask
+        {
+            get => (uint)((_bitfield0 >> 24) & 0xFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        private uint _bitfield1;
+         // TODO: Accessor property for instanceShaderBindingTableRecordOffset, size: 24, offset: 0
+        public uint instanceShaderBindingTableRecordOffset
+        {
+            get => (uint)((_bitfield1 >> 0) & 0xFFFFFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
+        }
+         // TODO: Accessor property for flags, size: 8, offset: 24
+        public VkGeometryInstanceFlagBitsKHR flags
+        {
+            get => (VkGeometryInstanceFlagBitsKHR)((_bitfield1 >> 24) & 0xFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        public ulong accelerationStructureReference;
     }
     public unsafe struct VkAccelerationStructureInstanceNV
     {
@@ -11848,18 +11862,18 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkImageSubresourceLayers srcSubresource;
         [InlineArray(2)]
-        public struct srcOffsetsInlineArray
+        public struct srcOffsetsInlineArray1
         {
             public VkOffset3D element;
         }
-        public srcOffsetsInlineArray srcOffsets;
+        public srcOffsetsInlineArray1 srcOffsets;
         public VkImageSubresourceLayers dstSubresource;
         [InlineArray(2)]
-        public struct dstOffsetsInlineArray
+        public struct dstOffsetsInlineArray1
         {
             public VkOffset3D element;
         }
-        public dstOffsetsInlineArray dstOffsets;
+        public dstOffsetsInlineArray1 dstOffsets;
         public VkImageBlit2(){ }
     }
     public unsafe struct VkImageBlit2KHR
@@ -12118,11 +12132,11 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkExtent2D fragmentSize;
         [InlineArray(2)]
-        public struct combinerOpsInlineArray
+        public struct combinerOpsInlineArray1
         {
             public VkFragmentShadingRateCombinerOpKHR element;
         }
-        public combinerOpsInlineArray combinerOps;
+        public combinerOpsInlineArray1 combinerOps;
         public VkPipelineFragmentShadingRateStateCreateInfoKHR(){ }
     }
     public unsafe struct VkPhysicalDeviceFragmentShadingRateFeaturesKHR
@@ -12252,11 +12266,11 @@ namespace OpenTK.Graphics.Vulkan
         public VkFragmentShadingRateTypeNV shadingRateType;
         public VkFragmentShadingRateNV shadingRate;
         [InlineArray(2)]
-        public struct combinerOpsInlineArray
+        public struct combinerOpsInlineArray1
         {
             public VkFragmentShadingRateCombinerOpKHR element;
         }
-        public combinerOpsInlineArray combinerOps;
+        public combinerOpsInlineArray1 combinerOps;
         public VkPipelineFragmentShadingRateEnumStateCreateInfoNV(){ }
     }
     public unsafe struct VkAccelerationStructureBuildSizesInfoKHR
@@ -12517,11 +12531,11 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeMemoryBarrier2;
         public void* pNext;
-        public VkPipelineStageFlags2 srcStageMask;
-        public VkAccessFlags2 srcAccessMask;
-        public VkPipelineStageFlags2 dstStageMask;
-        public VkAccessFlags2 dstAccessMask;
-        public VkMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlags2 srcStageMask, VkAccessFlags2 srcAccessMask, VkPipelineStageFlags2 dstStageMask, VkAccessFlags2 dstAccessMask)
+        public VkPipelineStageFlagBits2 srcStageMask;
+        public VkAccessFlagBits2 srcAccessMask;
+        public VkPipelineStageFlagBits2 dstStageMask;
+        public VkAccessFlagBits2 dstAccessMask;
+        public VkMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlagBits2 srcStageMask, VkAccessFlagBits2 srcAccessMask, VkPipelineStageFlagBits2 dstStageMask, VkAccessFlagBits2 dstAccessMask)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -12541,17 +12555,17 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeImageMemoryBarrier2;
         public void* pNext;
-        public VkPipelineStageFlags2 srcStageMask;
-        public VkAccessFlags2 srcAccessMask;
-        public VkPipelineStageFlags2 dstStageMask;
-        public VkAccessFlags2 dstAccessMask;
+        public VkPipelineStageFlagBits2 srcStageMask;
+        public VkAccessFlagBits2 srcAccessMask;
+        public VkPipelineStageFlagBits2 dstStageMask;
+        public VkAccessFlagBits2 dstAccessMask;
         public VkImageLayout oldLayout;
         public VkImageLayout newLayout;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
         public VkImage image;
         public VkImageSubresourceRange subresourceRange;
-        public VkImageMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlags2 srcStageMask, VkAccessFlags2 srcAccessMask, VkPipelineStageFlags2 dstStageMask, VkAccessFlags2 dstAccessMask, VkImageLayout oldLayout, VkImageLayout newLayout, uint srcQueueFamilyIndex, uint dstQueueFamilyIndex, VkImage image, VkImageSubresourceRange subresourceRange)
+        public VkImageMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlagBits2 srcStageMask, VkAccessFlagBits2 srcAccessMask, VkPipelineStageFlagBits2 dstStageMask, VkAccessFlagBits2 dstAccessMask, VkImageLayout oldLayout, VkImageLayout newLayout, uint srcQueueFamilyIndex, uint dstQueueFamilyIndex, VkImage image, VkImageSubresourceRange subresourceRange)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -12577,16 +12591,16 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeBufferMemoryBarrier2;
         public void* pNext;
-        public VkPipelineStageFlags2 srcStageMask;
-        public VkAccessFlags2 srcAccessMask;
-        public VkPipelineStageFlags2 dstStageMask;
-        public VkAccessFlags2 dstAccessMask;
+        public VkPipelineStageFlagBits2 srcStageMask;
+        public VkAccessFlagBits2 srcAccessMask;
+        public VkPipelineStageFlagBits2 dstStageMask;
+        public VkAccessFlagBits2 dstAccessMask;
         public uint srcQueueFamilyIndex;
         public uint dstQueueFamilyIndex;
         public VkBuffer buffer;
         public ulong offset;
         public ulong size;
-        public VkBufferMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlags2 srcStageMask, VkAccessFlags2 srcAccessMask, VkPipelineStageFlags2 dstStageMask, VkAccessFlags2 dstAccessMask, uint srcQueueFamilyIndex, uint dstQueueFamilyIndex, VkBuffer buffer, ulong offset, ulong size)
+        public VkBufferMemoryBarrier2(VkStructureType sType, void* pNext, VkPipelineStageFlagBits2 srcStageMask, VkAccessFlagBits2 srcAccessMask, VkPipelineStageFlagBits2 dstStageMask, VkAccessFlagBits2 dstAccessMask, uint srcQueueFamilyIndex, uint dstQueueFamilyIndex, VkBuffer buffer, ulong offset, ulong size)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -12643,9 +12657,9 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkSemaphore semaphore;
         public ulong value;
-        public VkPipelineStageFlags2 stageMask;
+        public VkPipelineStageFlagBits2 stageMask;
         public uint deviceIndex;
-        public VkSemaphoreSubmitInfo(VkStructureType sType, void* pNext, VkSemaphore semaphore, ulong value, VkPipelineStageFlags2 stageMask, uint deviceIndex)
+        public VkSemaphoreSubmitInfo(VkStructureType sType, void* pNext, VkSemaphore semaphore, ulong value, VkPipelineStageFlagBits2 stageMask, uint deviceIndex)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -12715,8 +12729,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeQueueFamilyCheckpointProperties2Nv;
         public void* pNext;
-        public VkPipelineStageFlags2 checkpointExecutionStageMask;
-        public VkQueueFamilyCheckpointProperties2NV(VkStructureType sType, void* pNext, VkPipelineStageFlags2 checkpointExecutionStageMask)
+        public VkPipelineStageFlagBits2 checkpointExecutionStageMask;
+        public VkQueueFamilyCheckpointProperties2NV(VkStructureType sType, void* pNext, VkPipelineStageFlagBits2 checkpointExecutionStageMask)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -12727,9 +12741,9 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeCheckpointData2Nv;
         public void* pNext;
-        public VkPipelineStageFlags2 stage;
+        public VkPipelineStageFlagBits2 stage;
         public void* pCheckpointMarker;
-        public VkCheckpointData2NV(VkStructureType sType, void* pNext, VkPipelineStageFlags2 stage, void* pCheckpointMarker)
+        public VkCheckpointData2NV(VkStructureType sType, void* pNext, VkPipelineStageFlagBits2 stage, void* pCheckpointMarker)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -15209,41 +15223,65 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkSRTDataNV transformT0;
         public VkSRTDataNV transformT1;
-        public uint instanceCustomIndex;
-        public uint mask;
-        public uint instanceShaderBindingTableRecordOffset;
-        public VkGeometryInstanceFlagBitsKHR flags;
-        public ulong accelerationStructureReference;
-        public VkAccelerationStructureSRTMotionInstanceNV(VkSRTDataNV transformT0, VkSRTDataNV transformT1, uint instanceCustomIndex, uint mask, uint instanceShaderBindingTableRecordOffset, VkGeometryInstanceFlagBitsKHR flags, ulong accelerationStructureReference)
+        private uint _bitfield0;
+         // TODO: Accessor property for instanceCustomIndex, size: 24, offset: 0
+        public uint instanceCustomIndex
         {
-            this.transformT0 = transformT0;
-            this.transformT1 = transformT1;
-            this.instanceCustomIndex = instanceCustomIndex;
-            this.mask = mask;
-            this.instanceShaderBindingTableRecordOffset = instanceShaderBindingTableRecordOffset;
-            this.flags = flags;
-            this.accelerationStructureReference = accelerationStructureReference;
+            get => (uint)((_bitfield0 >> 0) & 0xFFFFFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
         }
+         // TODO: Accessor property for mask, size: 8, offset: 24
+        public uint mask
+        {
+            get => (uint)((_bitfield0 >> 24) & 0xFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        private uint _bitfield1;
+         // TODO: Accessor property for instanceShaderBindingTableRecordOffset, size: 24, offset: 0
+        public uint instanceShaderBindingTableRecordOffset
+        {
+            get => (uint)((_bitfield1 >> 0) & 0xFFFFFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
+        }
+         // TODO: Accessor property for flags, size: 8, offset: 24
+        public VkGeometryInstanceFlagBitsKHR flags
+        {
+            get => (VkGeometryInstanceFlagBitsKHR)((_bitfield1 >> 24) & 0xFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        public ulong accelerationStructureReference;
     }
     public unsafe struct VkAccelerationStructureMatrixMotionInstanceNV
     {
         public VkTransformMatrixKHR transformT0;
         public VkTransformMatrixKHR transformT1;
-        public uint instanceCustomIndex;
-        public uint mask;
-        public uint instanceShaderBindingTableRecordOffset;
-        public VkGeometryInstanceFlagBitsKHR flags;
-        public ulong accelerationStructureReference;
-        public VkAccelerationStructureMatrixMotionInstanceNV(VkTransformMatrixKHR transformT0, VkTransformMatrixKHR transformT1, uint instanceCustomIndex, uint mask, uint instanceShaderBindingTableRecordOffset, VkGeometryInstanceFlagBitsKHR flags, ulong accelerationStructureReference)
+        private uint _bitfield0;
+         // TODO: Accessor property for instanceCustomIndex, size: 24, offset: 0
+        public uint instanceCustomIndex
         {
-            this.transformT0 = transformT0;
-            this.transformT1 = transformT1;
-            this.instanceCustomIndex = instanceCustomIndex;
-            this.mask = mask;
-            this.instanceShaderBindingTableRecordOffset = instanceShaderBindingTableRecordOffset;
-            this.flags = flags;
-            this.accelerationStructureReference = accelerationStructureReference;
+            get => (uint)((_bitfield0 >> 0) & 0xFFFFFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
         }
+         // TODO: Accessor property for mask, size: 8, offset: 24
+        public uint mask
+        {
+            get => (uint)((_bitfield0 >> 24) & 0xFFu);
+            set => _bitfield0 = (_bitfield0 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        private uint _bitfield1;
+         // TODO: Accessor property for instanceShaderBindingTableRecordOffset, size: 24, offset: 0
+        public uint instanceShaderBindingTableRecordOffset
+        {
+            get => (uint)((_bitfield1 >> 0) & 0xFFFFFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFFFFFu << 0)) | ((((uint)value) & 0xFFFFFFu) << 0);
+        }
+         // TODO: Accessor property for flags, size: 8, offset: 24
+        public VkGeometryInstanceFlagBitsKHR flags
+        {
+            get => (VkGeometryInstanceFlagBitsKHR)((_bitfield1 >> 24) & 0xFFu);
+            set => _bitfield1 = (_bitfield1 & ~(0xFFu << 24)) | ((((uint)value) & 0xFFu) << 24);
+        }
+        public ulong accelerationStructureReference;
     }
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct VkAccelerationStructureMotionInstanceDataNV
@@ -15533,10 +15571,10 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypeFormatProperties3;
         public void* pNext;
-        public VkFormatFeatureFlags2 linearTilingFeatures;
-        public VkFormatFeatureFlags2 optimalTilingFeatures;
-        public VkFormatFeatureFlags2 bufferFeatures;
-        public VkFormatProperties3(VkStructureType sType, void* pNext, VkFormatFeatureFlags2 linearTilingFeatures, VkFormatFeatureFlags2 optimalTilingFeatures, VkFormatFeatureFlags2 bufferFeatures)
+        public VkFormatFeatureFlagBits2 linearTilingFeatures;
+        public VkFormatFeatureFlagBits2 optimalTilingFeatures;
+        public VkFormatFeatureFlagBits2 bufferFeatures;
+        public VkFormatProperties3(VkStructureType sType, void* pNext, VkFormatFeatureFlagBits2 linearTilingFeatures, VkFormatFeatureFlagBits2 optimalTilingFeatures, VkFormatFeatureFlagBits2 bufferFeatures)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -15569,8 +15607,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public ulong drmFormatModifier;
         public uint drmFormatModifierPlaneCount;
-        public VkFormatFeatureFlags2 drmFormatModifierTilingFeatures;
-        public VkDrmFormatModifierProperties2EXT(ulong drmFormatModifier, uint drmFormatModifierPlaneCount, VkFormatFeatureFlags2 drmFormatModifierTilingFeatures)
+        public VkFormatFeatureFlagBits2 drmFormatModifierTilingFeatures;
+        public VkDrmFormatModifierProperties2EXT(ulong drmFormatModifier, uint drmFormatModifierPlaneCount, VkFormatFeatureFlagBits2 drmFormatModifierTilingFeatures)
         {
             this.drmFormatModifier = drmFormatModifier;
             this.drmFormatModifierPlaneCount = drmFormatModifierPlaneCount;
@@ -15583,13 +15621,13 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public VkFormat format;
         public ulong externalFormat;
-        public VkFormatFeatureFlags2 formatFeatures;
+        public VkFormatFeatureFlagBits2 formatFeatures;
         public VkComponentMapping samplerYcbcrConversionComponents;
         public VkSamplerYcbcrModelConversion suggestedYcbcrModel;
         public VkSamplerYcbcrRange suggestedYcbcrRange;
         public VkChromaLocation suggestedXChromaOffset;
         public VkChromaLocation suggestedYChromaOffset;
-        public VkAndroidHardwareBufferFormatProperties2ANDROID(VkStructureType sType, void* pNext, VkFormat format, ulong externalFormat, VkFormatFeatureFlags2 formatFeatures, VkComponentMapping samplerYcbcrConversionComponents, VkSamplerYcbcrModelConversion suggestedYcbcrModel, VkSamplerYcbcrRange suggestedYcbcrRange, VkChromaLocation suggestedXChromaOffset, VkChromaLocation suggestedYChromaOffset)
+        public VkAndroidHardwareBufferFormatProperties2ANDROID(VkStructureType sType, void* pNext, VkFormat format, ulong externalFormat, VkFormatFeatureFlagBits2 formatFeatures, VkComponentMapping samplerYcbcrConversionComponents, VkSamplerYcbcrModelConversion suggestedYcbcrModel, VkSamplerYcbcrRange suggestedYcbcrRange, VkChromaLocation suggestedXChromaOffset, VkChromaLocation suggestedYChromaOffset)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -16138,11 +16176,11 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkSubpassMergeStatusEXT subpassMergeStatus;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public uint postMergeIndex;
     }
     public unsafe struct VkRenderPassSubpassFeedbackCreateInfoEXT
@@ -17025,11 +17063,11 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkDeviceFaultVendorInfoEXT
     {
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public ulong vendorFaultCode;
         public ulong vendorFaultData;
     }
@@ -17054,11 +17092,11 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypeDeviceFaultInfoExt;
         public void* pNext;
         [InlineArray(256)]
-        public struct descriptionInlineArray
+        public struct descriptionInlineArray1
         {
             public byte element;
         }
-        public descriptionInlineArray description;
+        public descriptionInlineArray1 description;
         public VkDeviceFaultAddressInfoEXT* pAddressInfos;
         public VkDeviceFaultVendorInfoEXT* pVendorInfos;
         public void* pVendorBinaryData;
@@ -17126,8 +17164,8 @@ namespace OpenTK.Graphics.Vulkan
         public ulong dstAddress;
         public ulong compressedSize;
         public ulong decompressedSize;
-        public VkMemoryDecompressionMethodFlagsNV decompressionMethod;
-        public VkDecompressMemoryRegionNV(ulong srcAddress, ulong dstAddress, ulong compressedSize, ulong decompressedSize, VkMemoryDecompressionMethodFlagsNV decompressionMethod)
+        public VkMemoryDecompressionMethodFlagBitsNV decompressionMethod;
+        public VkDecompressMemoryRegionNV(ulong srcAddress, ulong dstAddress, ulong compressedSize, ulong decompressedSize, VkMemoryDecompressionMethodFlagBitsNV decompressionMethod)
         {
             this.srcAddress = srcAddress;
             this.dstAddress = dstAddress;
@@ -18420,8 +18458,8 @@ namespace OpenTK.Graphics.Vulkan
     {
         public VkStructureType sType = VkStructureType.StructureTypePhysicalDeviceSchedulingControlsPropertiesArm;
         public void* pNext;
-        public VkPhysicalDeviceSchedulingControlsFlagsARM schedulingControlsFlags;
-        public VkPhysicalDeviceSchedulingControlsPropertiesARM(VkStructureType sType, void* pNext, VkPhysicalDeviceSchedulingControlsFlagsARM schedulingControlsFlags)
+        public VkPhysicalDeviceSchedulingControlsFlagBitsARM schedulingControlsFlags;
+        public VkPhysicalDeviceSchedulingControlsPropertiesARM(VkStructureType sType, void* pNext, VkPhysicalDeviceSchedulingControlsFlagBitsARM schedulingControlsFlags)
         {
             this.sType = sType;
             this.pNext = pNext;

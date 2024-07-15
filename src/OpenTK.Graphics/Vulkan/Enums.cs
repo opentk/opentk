@@ -240,7 +240,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCacheHeaderVersionOne = 1,
     }
     [Flags]
-    public enum VkPipelineCacheCreateFlagBits : int
+    public enum VkPipelineCacheCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_3]</summary>
         PipelineCacheCreateExternallySynchronizedBit = 1,
@@ -3508,7 +3508,7 @@ namespace OpenTK.Graphics.Vulkan
         DirectDriverLoadingModeInclusiveLunarg = 1,
     }
     [Flags]
-    public enum VkQueueFlagBits : int
+    public enum VkQueueFlagBits : uint
     {
         /// <summary>Queue supports graphics operations</summary>
         QueueGraphicsBit = 1,
@@ -3528,7 +3528,7 @@ namespace OpenTK.Graphics.Vulkan
         QueueOpticalFlowBitNv = 256,
     }
     [Flags]
-    public enum VkCullModeFlagBits : int
+    public enum VkCullModeFlagBits : uint
     {
         CullModeNone = 0,
         CullModeFrontBit = 1,
@@ -3536,19 +3536,19 @@ namespace OpenTK.Graphics.Vulkan
         CullModeFrontAndBack = 3,
     }
     [Flags]
-    public enum VkRenderPassCreateFlagBits : int
+    public enum VkRenderPassCreateFlagBits : uint
     {
         /// <summary>[requires: VK_QCOM_render_pass_transform]</summary>
         RenderPassCreateTransformBitQcom = 2,
     }
     [Flags]
-    public enum VkDeviceQueueCreateFlagBits : int
+    public enum VkDeviceQueueCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_1]Queue is a protected-capable device queue</summary>
         DeviceQueueCreateProtectedBit = 1,
     }
     [Flags]
-    public enum VkMemoryPropertyFlagBits : int
+    public enum VkMemoryPropertyFlagBits : uint
     {
         /// <summary>If otherwise stated, then allocate memory on device</summary>
         MemoryPropertyDeviceLocalBit = 1,
@@ -3570,7 +3570,7 @@ namespace OpenTK.Graphics.Vulkan
         MemoryPropertyRdmaCapableBitNv = 256,
     }
     [Flags]
-    public enum VkMemoryHeapFlagBits : int
+    public enum VkMemoryHeapFlagBits : uint
     {
         /// <summary>If set, heap represents device memory</summary>
         MemoryHeapDeviceLocalBit = 1,
@@ -3580,7 +3580,7 @@ namespace OpenTK.Graphics.Vulkan
         MemoryHeapMultiInstanceBitKhr = 2,
     }
     [Flags]
-    public enum VkAccessFlagBits : int
+    public enum VkAccessFlagBits : uint
     {
         /// <summary>Controls coherency of indirect command reads</summary>
         AccessIndirectCommandReadBit = 1,
@@ -3650,7 +3650,7 @@ namespace OpenTK.Graphics.Vulkan
         AccessNoneKhr = 0,
     }
     [Flags]
-    public enum VkBufferUsageFlagBits : int
+    public enum VkBufferUsageFlagBits : uint
     {
         /// <summary>Can be used as a source of transfer operations</summary>
         BufferUsageTransferSrcBit = 1,
@@ -3712,7 +3712,7 @@ namespace OpenTK.Graphics.Vulkan
         BufferUsageShaderDeviceAddressBitKhr = 131072,
     }
     [Flags]
-    public enum VkBufferUsageFlagBits2KHR : int
+    public enum VkBufferUsageFlagBits2KHR : ulong
     {
         BufferUsage2TransferSrcBitKhr = 1,
         BufferUsage2TransferDstBitKhr = 2,
@@ -3761,7 +3761,7 @@ namespace OpenTK.Graphics.Vulkan
         BufferUsage2RayTracingBitNv = 1024,
     }
     [Flags]
-    public enum VkBufferCreateFlagBits : int
+    public enum VkBufferCreateFlagBits : uint
     {
         /// <summary>Buffer should support sparse backing</summary>
         BufferCreateSparseBindingBit = 1,
@@ -3783,7 +3783,7 @@ namespace OpenTK.Graphics.Vulkan
         BufferCreateDeviceAddressCaptureReplayBitKhr = 16,
     }
     [Flags]
-    public enum VkShaderStageFlagBits : int
+    public enum VkShaderStageFlagBits : uint
     {
         ShaderStageVertexBit = 1,
         ShaderStageTessellationControlBit = 2,
@@ -3831,7 +3831,7 @@ namespace OpenTK.Graphics.Vulkan
         ShaderStageMeshBitNv = 128,
     }
     [Flags]
-    public enum VkImageUsageFlagBits : int
+    public enum VkImageUsageFlagBits : uint
     {
         /// <summary>Can be used as a source of transfer operations</summary>
         ImageUsageTransferSrcBit = 1,
@@ -3879,7 +3879,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageUsageShadingRateImageBitNv = 256,
     }
     [Flags]
-    public enum VkImageCreateFlagBits : int
+    public enum VkImageCreateFlagBits : uint
     {
         /// <summary>Image should support sparse backing</summary>
         ImageCreateSparseBindingBit = 1,
@@ -3935,7 +3935,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageCreateAliasBitKhr = 1024,
     }
     [Flags]
-    public enum VkImageViewCreateFlagBits : int
+    public enum VkImageViewCreateFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
         ImageViewCreateFragmentDensityMapDynamicBitExt = 1,
@@ -3945,7 +3945,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageViewCreateFragmentDensityMapDeferredBitExt = 2,
     }
     [Flags]
-    public enum VkSamplerCreateFlagBits : int
+    public enum VkSamplerCreateFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_fragment_density_map]</summary>
         SamplerCreateSubsampledBitExt = 1,
@@ -3959,7 +3959,7 @@ namespace OpenTK.Graphics.Vulkan
         SamplerCreateImageProcessingBitQcom = 16,
     }
     [Flags]
-    public enum VkPipelineCreateFlagBits : int
+    public enum VkPipelineCreateFlagBits : uint
     {
         PipelineCreateDisableOptimizationBit = 1,
         PipelineCreateAllowDerivativesBit = 2,
@@ -4036,7 +4036,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreateEarlyReturnOnFailureBitExt = 512,
     }
     [Flags]
-    public enum VkPipelineCreateFlagBits2KHR : int
+    public enum VkPipelineCreateFlagBits2KHR : ulong
     {
         PipelineCreate2DisableOptimizationBitKhr = 1,
         PipelineCreate2AllowDerivativesBitKhr = 2,
@@ -4101,7 +4101,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreate2DescriptorBufferBitExt = 536870912,
     }
     [Flags]
-    public enum VkPipelineShaderStageCreateFlagBits : int
+    public enum VkPipelineShaderStageCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_3]</summary>
         PipelineShaderStageCreateAllowVaryingSubgroupSizeBit = 1,
@@ -4113,7 +4113,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineShaderStageCreateRequireFullSubgroupsBitExt = 2,
     }
     [Flags]
-    public enum VkColorComponentFlagBits : int
+    public enum VkColorComponentFlagBits : uint
     {
         ColorComponentRBit = 1,
         ColorComponentGBit = 2,
@@ -4121,7 +4121,7 @@ namespace OpenTK.Graphics.Vulkan
         ColorComponentABit = 8,
     }
     [Flags]
-    public enum VkFenceCreateFlagBits : int
+    public enum VkFenceCreateFlagBits : uint
     {
         FenceCreateSignaledBit = 1,
     }
@@ -4130,7 +4130,7 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     [Flags]
-    public enum VkFormatFeatureFlagBits : int
+    public enum VkFormatFeatureFlagBits : uint
     {
         /// <summary>Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)</summary>
         FormatFeatureSampledImageBit = 1,
@@ -4218,13 +4218,13 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeatureCositedChromaSamplesBitKhr = 8388608,
     }
     [Flags]
-    public enum VkQueryControlFlagBits : int
+    public enum VkQueryControlFlagBits : uint
     {
         /// <summary>Require precise results to be collected by the query</summary>
         QueryControlPreciseBit = 1,
     }
     [Flags]
-    public enum VkQueryResultFlagBits : int
+    public enum VkQueryResultFlagBits : uint
     {
         /// <summary>Results of the queries are written to the destination buffer as 64-bit values</summary>
         QueryResult64Bit = 1,
@@ -4238,7 +4238,7 @@ namespace OpenTK.Graphics.Vulkan
         QueryResultWithStatusBitKhr = 16,
     }
     [Flags]
-    public enum VkCommandBufferUsageFlagBits : int
+    public enum VkCommandBufferUsageFlagBits : uint
     {
         CommandBufferUsageOneTimeSubmitBit = 1,
         CommandBufferUsageRenderPassContinueBit = 2,
@@ -4246,7 +4246,7 @@ namespace OpenTK.Graphics.Vulkan
         CommandBufferUsageSimultaneousUseBit = 4,
     }
     [Flags]
-    public enum VkQueryPipelineStatisticFlagBits : int
+    public enum VkQueryPipelineStatisticFlagBits : uint
     {
         /// <summary>Optional</summary>
         QueryPipelineStatisticInputAssemblyVerticesBit = 1,
@@ -4278,13 +4278,13 @@ namespace OpenTK.Graphics.Vulkan
         QueryPipelineStatisticClusterCullingShaderInvocationsBitHuawei = 8192,
     }
     [Flags]
-    public enum VkMemoryMapFlagBits : int
+    public enum VkMemoryMapFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
         MemoryMapPlacedBitExt = 1,
     }
     [Flags]
-    public enum VkImageAspectFlagBits : int
+    public enum VkImageAspectFlagBits : uint
     {
         ImageAspectColorBit = 1,
         ImageAspectDepthBit = 2,
@@ -4316,7 +4316,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageAspectNoneKhr = 0,
     }
     [Flags]
-    public enum VkSparseImageFormatFlagBits : int
+    public enum VkSparseImageFormatFlagBits : uint
     {
         /// <summary>Image uses a single mip tail region for all array layers</summary>
         SparseImageFormatSingleMiptailBit = 1,
@@ -4326,13 +4326,13 @@ namespace OpenTK.Graphics.Vulkan
         SparseImageFormatNonstandardBlockSizeBit = 4,
     }
     [Flags]
-    public enum VkSparseMemoryBindFlagBits : int
+    public enum VkSparseMemoryBindFlagBits : uint
     {
         /// <summary>Operation binds resource metadata to memory</summary>
         SparseMemoryBindMetadataBit = 1,
     }
     [Flags]
-    public enum VkPipelineStageFlagBits : int
+    public enum VkPipelineStageFlagBits : uint
     {
         /// <summary>Before subsequent commands are processed</summary>
         PipelineStageTopOfPipeBit = 1,
@@ -4402,7 +4402,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStageNoneKhr = 0,
     }
     [Flags]
-    public enum VkCommandPoolCreateFlagBits : int
+    public enum VkCommandPoolCreateFlagBits : uint
     {
         /// <summary>Command buffers have a short lifetime</summary>
         CommandPoolCreateTransientBit = 1,
@@ -4412,19 +4412,19 @@ namespace OpenTK.Graphics.Vulkan
         CommandPoolCreateProtectedBit = 4,
     }
     [Flags]
-    public enum VkCommandPoolResetFlagBits : int
+    public enum VkCommandPoolResetFlagBits : uint
     {
         /// <summary>Release resources owned by the pool</summary>
         CommandPoolResetReleaseResourcesBit = 1,
     }
     [Flags]
-    public enum VkCommandBufferResetFlagBits : int
+    public enum VkCommandBufferResetFlagBits : uint
     {
         /// <summary>Release resources owned by the buffer</summary>
         CommandBufferResetReleaseResourcesBit = 1,
     }
     [Flags]
-    public enum VkSampleCountFlagBits : int
+    public enum VkSampleCountFlagBits : uint
     {
         /// <summary>Sample count 1 supported</summary>
         SampleCount1Bit = 1,
@@ -4442,13 +4442,13 @@ namespace OpenTK.Graphics.Vulkan
         SampleCount64Bit = 64,
     }
     [Flags]
-    public enum VkAttachmentDescriptionFlagBits : int
+    public enum VkAttachmentDescriptionFlagBits : uint
     {
         /// <summary>The attachment may alias physical memory of another attachment in the same render pass</summary>
         AttachmentDescriptionMayAliasBit = 1,
     }
     [Flags]
-    public enum VkStencilFaceFlagBits : int
+    public enum VkStencilFaceFlagBits : uint
     {
         /// <summary>Front face</summary>
         StencilFaceFrontBit = 1,
@@ -4460,7 +4460,7 @@ namespace OpenTK.Graphics.Vulkan
         StencilFrontAndBack = 3,
     }
     [Flags]
-    public enum VkDescriptorPoolCreateFlagBits : int
+    public enum VkDescriptorPoolCreateFlagBits : uint
     {
         /// <summary>Descriptor sets may be freed individually</summary>
         DescriptorPoolCreateFreeDescriptorSetBit = 1,
@@ -4478,7 +4478,7 @@ namespace OpenTK.Graphics.Vulkan
         DescriptorPoolCreateHostOnlyBitValve = 4,
     }
     [Flags]
-    public enum VkDependencyFlagBits : int
+    public enum VkDependencyFlagBits : uint
     {
         /// <summary>Dependency is per pixel region </summary>
         DependencyByRegionBit = 1,
@@ -4503,7 +4503,7 @@ namespace OpenTK.Graphics.Vulkan
         SemaphoreTypeTimelineKhr = 1,
     }
     [Flags]
-    public enum VkSemaphoreWaitFlagBits : int
+    public enum VkSemaphoreWaitFlagBits : uint
     {
         SemaphoreWaitAnyBit = 1,
         /// <summary>[requires: VK_KHR_timeline_semaphore]</summary>
@@ -4558,7 +4558,7 @@ namespace OpenTK.Graphics.Vulkan
         ColorSpaceDciP3LinearExt = 1000104003,
     }
     [Flags]
-    public enum VkDisplayPlaneAlphaFlagBitsKHR : int
+    public enum VkDisplayPlaneAlphaFlagBitsKHR : uint
     {
         DisplayPlaneAlphaOpaqueBitKhr = 1,
         DisplayPlaneAlphaGlobalBitKhr = 2,
@@ -4566,7 +4566,7 @@ namespace OpenTK.Graphics.Vulkan
         DisplayPlaneAlphaPerPixelPremultipliedBitKhr = 8,
     }
     [Flags]
-    public enum VkCompositeAlphaFlagBitsKHR : int
+    public enum VkCompositeAlphaFlagBitsKHR : uint
     {
         CompositeAlphaOpaqueBitKhr = 1,
         CompositeAlphaPreMultipliedBitKhr = 2,
@@ -4574,7 +4574,7 @@ namespace OpenTK.Graphics.Vulkan
         CompositeAlphaInheritBitKhr = 8,
     }
     [Flags]
-    public enum VkSurfaceTransformFlagBitsKHR : int
+    public enum VkSurfaceTransformFlagBitsKHR : uint
     {
         SurfaceTransformIdentityBitKhr = 1,
         SurfaceTransformRotate90BitKhr = 2,
@@ -4587,7 +4587,7 @@ namespace OpenTK.Graphics.Vulkan
         SurfaceTransformInheritBitKhr = 256,
     }
     [Flags]
-    public enum VkSwapchainImageUsageFlagBitsANDROID : int
+    public enum VkSwapchainImageUsageFlagBitsANDROID : uint
     {
         SwapchainImageUsageSharedBitAndroid = 1,
     }
@@ -4607,7 +4607,7 @@ namespace OpenTK.Graphics.Vulkan
         TimeDomainQueryPerformanceCounterExt = 3,
     }
     [Flags]
-    public enum VkDebugReportFlagBitsEXT : int
+    public enum VkDebugReportFlagBitsEXT : uint
     {
         DebugReportInformationBitExt = 1,
         DebugReportWarningBitExt = 2,
@@ -4688,7 +4688,7 @@ namespace OpenTK.Graphics.Vulkan
         RasterizationOrderRelaxedAmd = 1,
     }
     [Flags]
-    public enum VkExternalMemoryHandleTypeFlagBitsNV : int
+    public enum VkExternalMemoryHandleTypeFlagBitsNV : uint
     {
         ExternalMemoryHandleTypeOpaqueWin32BitNv = 1,
         ExternalMemoryHandleTypeOpaqueWin32KmtBitNv = 2,
@@ -4696,7 +4696,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryHandleTypeD3d11ImageKmtBitNv = 8,
     }
     [Flags]
-    public enum VkExternalMemoryFeatureFlagBitsNV : int
+    public enum VkExternalMemoryFeatureFlagBitsNV : uint
     {
         ExternalMemoryFeatureDedicatedOnlyBitNv = 1,
         ExternalMemoryFeatureExportableBitNv = 2,
@@ -4738,7 +4738,7 @@ namespace OpenTK.Graphics.Vulkan
         LayerSettingTypeStringExt = 7,
     }
     [Flags]
-    public enum VkSubgroupFeatureFlagBits : int
+    public enum VkSubgroupFeatureFlagBits : uint
     {
         /// <summary>Basic subgroup operations</summary>
         SubgroupFeatureBasicBit = 1,
@@ -4764,14 +4764,14 @@ namespace OpenTK.Graphics.Vulkan
         SubgroupFeatureRotateClusteredBitKhr = 1024,
     }
     [Flags]
-    public enum VkIndirectCommandsLayoutUsageFlagBitsNV : int
+    public enum VkIndirectCommandsLayoutUsageFlagBitsNV : uint
     {
         IndirectCommandsLayoutUsageExplicitPreprocessBitNv = 1,
         IndirectCommandsLayoutUsageIndexedSequencesBitNv = 2,
         IndirectCommandsLayoutUsageUnorderedSequencesBitNv = 4,
     }
     [Flags]
-    public enum VkIndirectStateFlagBitsNV : int
+    public enum VkIndirectStateFlagBitsNV : uint
     {
         IndirectStateFlagFrontfaceBitNv = 1,
     }
@@ -4797,7 +4797,7 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     [Flags]
-    public enum VkDescriptorSetLayoutCreateFlagBits : int
+    public enum VkDescriptorSetLayoutCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         DescriptorSetLayoutCreateUpdateAfterBindPoolBit = 2,
@@ -4819,7 +4819,7 @@ namespace OpenTK.Graphics.Vulkan
         DescriptorSetLayoutCreateHostOnlyPoolBitValve = 4,
     }
     [Flags]
-    public enum VkExternalMemoryHandleTypeFlagBits : int
+    public enum VkExternalMemoryHandleTypeFlagBits : uint
     {
         ExternalMemoryHandleTypeOpaqueFdBit = 1,
         ExternalMemoryHandleTypeOpaqueWin32Bit = 2,
@@ -4860,7 +4860,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryHandleTypeD3d12ResourceBitKhr = 64,
     }
     [Flags]
-    public enum VkExternalMemoryFeatureFlagBits : int
+    public enum VkExternalMemoryFeatureFlagBits : uint
     {
         ExternalMemoryFeatureDedicatedOnlyBit = 1,
         ExternalMemoryFeatureExportableBit = 2,
@@ -4873,7 +4873,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryFeatureImportableBitKhr = 4,
     }
     [Flags]
-    public enum VkExternalSemaphoreHandleTypeFlagBits : int
+    public enum VkExternalSemaphoreHandleTypeFlagBits : uint
     {
         ExternalSemaphoreHandleTypeOpaqueFdBit = 1,
         ExternalSemaphoreHandleTypeOpaqueWin32Bit = 2,
@@ -4897,7 +4897,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalSemaphoreHandleTypeSyncFdBitKhr = 16,
     }
     [Flags]
-    public enum VkExternalSemaphoreFeatureFlagBits : int
+    public enum VkExternalSemaphoreFeatureFlagBits : uint
     {
         ExternalSemaphoreFeatureExportableBit = 1,
         ExternalSemaphoreFeatureImportableBit = 2,
@@ -4907,14 +4907,14 @@ namespace OpenTK.Graphics.Vulkan
         ExternalSemaphoreFeatureImportableBitKhr = 2,
     }
     [Flags]
-    public enum VkSemaphoreImportFlagBits : int
+    public enum VkSemaphoreImportFlagBits : uint
     {
         SemaphoreImportTemporaryBit = 1,
         /// <summary>[requires: VK_KHR_external_semaphore]</summary>
         SemaphoreImportTemporaryBitKhr = 1,
     }
     [Flags]
-    public enum VkExternalFenceHandleTypeFlagBits : int
+    public enum VkExternalFenceHandleTypeFlagBits : uint
     {
         ExternalFenceHandleTypeOpaqueFdBit = 1,
         ExternalFenceHandleTypeOpaqueWin32Bit = 2,
@@ -4934,7 +4934,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalFenceHandleTypeSyncFdBitKhr = 8,
     }
     [Flags]
-    public enum VkExternalFenceFeatureFlagBits : int
+    public enum VkExternalFenceFeatureFlagBits : uint
     {
         ExternalFenceFeatureExportableBit = 1,
         ExternalFenceFeatureImportableBit = 2,
@@ -4944,14 +4944,14 @@ namespace OpenTK.Graphics.Vulkan
         ExternalFenceFeatureImportableBitKhr = 2,
     }
     [Flags]
-    public enum VkFenceImportFlagBits : int
+    public enum VkFenceImportFlagBits : uint
     {
         FenceImportTemporaryBit = 1,
         /// <summary>[requires: VK_KHR_external_fence]</summary>
         FenceImportTemporaryBitKhr = 1,
     }
     [Flags]
-    public enum VkSurfaceCounterFlagBitsEXT : int
+    public enum VkSurfaceCounterFlagBitsEXT : uint
     {
         SurfaceCounterVblankBitExt = 1,
         SurfaceCounterVblankExt = 1,
@@ -4971,7 +4971,7 @@ namespace OpenTK.Graphics.Vulkan
         DisplayEventTypeFirstPixelOutExt = 0,
     }
     [Flags]
-    public enum VkPeerMemoryFeatureFlagBits : int
+    public enum VkPeerMemoryFeatureFlagBits : uint
     {
         /// <summary>Can read with vkCmdCopy commands</summary>
         PeerMemoryFeatureCopySrcBit = 1,
@@ -4991,7 +4991,7 @@ namespace OpenTK.Graphics.Vulkan
         PeerMemoryFeatureGenericDstBitKhr = 8,
     }
     [Flags]
-    public enum VkMemoryAllocateFlagBits : int
+    public enum VkMemoryAllocateFlagBits : uint
     {
         /// <summary>Force allocation on specific devices</summary>
         MemoryAllocateDeviceMaskBit = 1,
@@ -5007,7 +5007,7 @@ namespace OpenTK.Graphics.Vulkan
         MemoryAllocateDeviceAddressCaptureReplayBitKhr = 4,
     }
     [Flags]
-    public enum VkDeviceGroupPresentModeFlagBitsKHR : int
+    public enum VkDeviceGroupPresentModeFlagBitsKHR : uint
     {
         /// <summary>Present from local memory</summary>
         DeviceGroupPresentModeLocalBitKhr = 1,
@@ -5019,7 +5019,7 @@ namespace OpenTK.Graphics.Vulkan
         DeviceGroupPresentModeLocalMultiDeviceBitKhr = 8,
     }
     [Flags]
-    public enum VkSwapchainCreateFlagBitsKHR : int
+    public enum VkSwapchainCreateFlagBitsKHR : uint
     {
         /// <summary>[requires: VK_KHR_swapchain]Allow images with VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT</summary>
         SwapchainCreateSplitInstanceBindRegionsBitKhr = 1,
@@ -5047,7 +5047,7 @@ namespace OpenTK.Graphics.Vulkan
         DiscardRectangleModeExclusiveExt = 1,
     }
     [Flags]
-    public enum VkSubpassDescriptionFlagBits : int
+    public enum VkSubpassDescriptionFlagBits : uint
     {
         /// <summary>[requires: VK_NVX_multiview_per_view_attributes]</summary>
         SubpassDescriptionPerViewAttributesBitNvx = 1,
@@ -5186,7 +5186,7 @@ namespace OpenTK.Graphics.Vulkan
         QueueGlobalPriorityRealtimeExt = 1024,
     }
     [Flags]
-    public enum VkDebugUtilsMessageSeverityFlagBitsEXT : int
+    public enum VkDebugUtilsMessageSeverityFlagBitsEXT : uint
     {
         DebugUtilsMessageSeverityVerboseBitExt = 1,
         DebugUtilsMessageSeverityInfoBitExt = 16,
@@ -5194,7 +5194,7 @@ namespace OpenTK.Graphics.Vulkan
         DebugUtilsMessageSeverityErrorBitExt = 4096,
     }
     [Flags]
-    public enum VkDebugUtilsMessageTypeFlagBitsEXT : int
+    public enum VkDebugUtilsMessageTypeFlagBitsEXT : uint
     {
         DebugUtilsMessageTypeGeneralBitExt = 1,
         DebugUtilsMessageTypeValidationBitExt = 2,
@@ -5209,7 +5209,7 @@ namespace OpenTK.Graphics.Vulkan
         ConservativeRasterizationModeUnderestimateExt = 2,
     }
     [Flags]
-    public enum VkDescriptorBindingFlagBits : int
+    public enum VkDescriptorBindingFlagBits : uint
     {
         DescriptorBindingUpdateAfterBindBit = 1,
         DescriptorBindingUpdateUnusedWhilePendingBit = 2,
@@ -5325,12 +5325,12 @@ namespace OpenTK.Graphics.Vulkan
         DriverIdBroadcomProprietaryKhr = 12,
     }
     [Flags]
-    public enum VkConditionalRenderingFlagBitsEXT : int
+    public enum VkConditionalRenderingFlagBitsEXT : uint
     {
         ConditionalRenderingInvertedBitExt = 1,
     }
     [Flags]
-    public enum VkResolveModeFlagBits : int
+    public enum VkResolveModeFlagBits : uint
     {
         ResolveModeNone = 0,
         ResolveModeSampleZeroBit = 1,
@@ -5373,7 +5373,7 @@ namespace OpenTK.Graphics.Vulkan
         CoarseSampleOrderTypeSampleMajorNv = 3,
     }
     [Flags]
-    public enum VkGeometryInstanceFlagBitsKHR : int
+    public enum VkGeometryInstanceFlagBitsKHR : uint
     {
         GeometryInstanceTriangleFacingCullDisableBitKhr = 1,
         GeometryInstanceTriangleFlipFacingBitKhr = 2,
@@ -5394,7 +5394,7 @@ namespace OpenTK.Graphics.Vulkan
         GeometryInstanceForceNoOpaqueBitNv = 8,
     }
     [Flags]
-    public enum VkGeometryFlagBitsKHR : int
+    public enum VkGeometryFlagBitsKHR : uint
     {
         GeometryOpaqueBitKhr = 1,
         GeometryNoDuplicateAnyHitInvocationBitKhr = 2,
@@ -5404,7 +5404,7 @@ namespace OpenTK.Graphics.Vulkan
         GeometryNoDuplicateAnyHitInvocationBitNv = 2,
     }
     [Flags]
-    public enum VkBuildAccelerationStructureFlagBitsKHR : int
+    public enum VkBuildAccelerationStructureFlagBitsKHR : uint
     {
         BuildAccelerationStructureAllowUpdateBitKhr = 1,
         BuildAccelerationStructureAllowCompactionBitKhr = 2,
@@ -5435,7 +5435,7 @@ namespace OpenTK.Graphics.Vulkan
         BuildAccelerationStructureLowMemoryBitNv = 16,
     }
     [Flags]
-    public enum VkAccelerationStructureCreateFlagBitsKHR : int
+    public enum VkAccelerationStructureCreateFlagBitsKHR : uint
     {
         AccelerationStructureCreateDeviceAddressCaptureReplayBitKhr = 1,
         /// <summary>[requires: VK_EXT_descriptor_buffer]</summary>
@@ -5522,7 +5522,7 @@ namespace OpenTK.Graphics.Vulkan
         MemoryOverallocationBehaviorDisallowedAmd = 2,
     }
     [Flags]
-    public enum VkFramebufferCreateFlagBits : int
+    public enum VkFramebufferCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_2]</summary>
         FramebufferCreateImagelessBit = 1,
@@ -5530,7 +5530,7 @@ namespace OpenTK.Graphics.Vulkan
         FramebufferCreateImagelessBitKhr = 1,
     }
     [Flags]
-    public enum VkDeviceDiagnosticsConfigFlagBitsNV : int
+    public enum VkDeviceDiagnosticsConfigFlagBitsNV : uint
     {
         DeviceDiagnosticsConfigEnableShaderDebugInfoBitNv = 1,
         DeviceDiagnosticsConfigEnableResourceTrackingBitNv = 2,
@@ -5538,7 +5538,7 @@ namespace OpenTK.Graphics.Vulkan
         DeviceDiagnosticsConfigEnableShaderErrorReportingBitNv = 8,
     }
     [Flags]
-    public enum VkPipelineCreationFeedbackFlagBits : int
+    public enum VkPipelineCreationFeedbackFlagBits : uint
     {
         PipelineCreationFeedbackValidBit = 1,
         PipelineCreationFeedbackValidBitExt = 1,
@@ -5564,7 +5564,7 @@ namespace OpenTK.Graphics.Vulkan
         QueryScopeCommandKhr = 2,
     }
     [Flags]
-    public enum VkMemoryDecompressionMethodFlagBitsNV : int
+    public enum VkMemoryDecompressionMethodFlagBitsNV : ulong
     {
         MemoryDecompressionMethodGdeflate10BitNv = 1,
     }
@@ -5592,7 +5592,7 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceCounterStorageFloat64Khr = 5,
     }
     [Flags]
-    public enum VkPerformanceCounterDescriptionFlagBitsKHR : int
+    public enum VkPerformanceCounterDescriptionFlagBitsKHR : uint
     {
         PerformanceCounterDescriptionPerformanceImpactingBitKhr = 1,
         PerformanceCounterDescriptionPerformanceImpactingKhr = 1,
@@ -5600,15 +5600,15 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceCounterDescriptionConcurrentlyImpactedKhr = 2,
     }
     [Flags]
-    public enum VkAcquireProfilingLockFlagBitsKHR : int
+    public enum VkAcquireProfilingLockFlagBitsKHR : uint
     {
     }
     [Flags]
-    public enum VkShaderCorePropertiesFlagBitsAMD : int
+    public enum VkShaderCorePropertiesFlagBitsAMD : uint
     {
     }
     [Flags]
-    public enum VkRefreshObjectFlagBitsKHR : int
+    public enum VkRefreshObjectFlagBitsKHR : uint
     {
     }
     public enum VkPerformanceConfigurationTypeINTEL : int
@@ -5672,7 +5672,7 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     [Flags]
-    public enum VkPipelineCompilerControlFlagBitsAMD : int
+    public enum VkPipelineCompilerControlFlagBitsAMD : uint
     {
     }
     public enum VkFaultLevel : int
@@ -5697,7 +5697,7 @@ namespace OpenTK.Graphics.Vulkan
         FaultQueryBehaviorGetAndClearAllFaults = 0,
     }
     [Flags]
-    public enum VkToolPurposeFlagBits : int
+    public enum VkToolPurposeFlagBits : uint
     {
         ToolPurposeValidationBit = 1,
         ToolPurposeValidationBitExt = 1,
@@ -5764,7 +5764,7 @@ namespace OpenTK.Graphics.Vulkan
         SubpassMergeStatusNotMergedUnspecifiedExt = 13,
     }
     [Flags]
-    public enum VkAccessFlagBits2 : int
+    public enum VkAccessFlagBits2 : ulong
     {
         Access2None = 0,
         Access2NoneKhr = 0,
@@ -5802,12 +5802,12 @@ namespace OpenTK.Graphics.Vulkan
         Access2MemoryReadBitKhr = 32768,
         Access2MemoryWriteBit = 65536,
         Access2MemoryWriteBitKhr = 65536,
-        Access2ShaderSampledReadBit = 1,
-        Access2ShaderSampledReadBitKhr = 1,
-        Access2ShaderStorageReadBit = 2,
-        Access2ShaderStorageReadBitKhr = 2,
-        Access2ShaderStorageWriteBit = 4,
-        Access2ShaderStorageWriteBitKhr = 4,
+        Access2ShaderSampledReadBit = 4294967296,
+        Access2ShaderSampledReadBitKhr = 4294967296,
+        Access2ShaderStorageReadBit = 8589934592,
+        Access2ShaderStorageReadBitKhr = 8589934592,
+        Access2ShaderStorageWriteBit = 17179869184,
+        Access2ShaderStorageWriteBitKhr = 17179869184,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         Access2VideoDecodeReadBitKhr = 8,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
@@ -5860,7 +5860,7 @@ namespace OpenTK.Graphics.Vulkan
         Access2AccelerationStructureWriteBitNv = 4194304,
     }
     [Flags]
-    public enum VkPipelineStageFlagBits2 : int
+    public enum VkPipelineStageFlagBits2 : ulong
     {
         PipelineStage2None = 0,
         PipelineStage2NoneKhr = 0,
@@ -5900,20 +5900,20 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStage2AllGraphicsBitKhr = 32768,
         PipelineStage2AllCommandsBit = 65536,
         PipelineStage2AllCommandsBitKhr = 65536,
-        PipelineStage2CopyBit = 1,
-        PipelineStage2CopyBitKhr = 1,
-        PipelineStage2ResolveBit = 2,
-        PipelineStage2ResolveBitKhr = 2,
-        PipelineStage2BlitBit = 4,
-        PipelineStage2BlitBitKhr = 4,
-        PipelineStage2ClearBit = 8,
-        PipelineStage2ClearBitKhr = 8,
-        PipelineStage2IndexInputBit = 16,
-        PipelineStage2IndexInputBitKhr = 16,
-        PipelineStage2VertexAttributeInputBit = 32,
-        PipelineStage2VertexAttributeInputBitKhr = 32,
-        PipelineStage2PreRasterizationShadersBit = 64,
-        PipelineStage2PreRasterizationShadersBitKhr = 64,
+        PipelineStage2CopyBit = 4294967296,
+        PipelineStage2CopyBitKhr = 4294967296,
+        PipelineStage2ResolveBit = 8589934592,
+        PipelineStage2ResolveBitKhr = 8589934592,
+        PipelineStage2BlitBit = 17179869184,
+        PipelineStage2BlitBitKhr = 17179869184,
+        PipelineStage2ClearBit = 34359738368,
+        PipelineStage2ClearBitKhr = 34359738368,
+        PipelineStage2IndexInputBit = 68719476736,
+        PipelineStage2IndexInputBitKhr = 68719476736,
+        PipelineStage2VertexAttributeInputBit = 137438953472,
+        PipelineStage2VertexAttributeInputBitKhr = 137438953472,
+        PipelineStage2PreRasterizationShadersBit = 274877906944,
+        PipelineStage2PreRasterizationShadersBitKhr = 274877906944,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         PipelineStage2VideoDecodeBitKhr = 67108864,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
@@ -5962,13 +5962,13 @@ namespace OpenTK.Graphics.Vulkan
         PipelineStage2SubpassShadingBitHuawei = 128,
     }
     [Flags]
-    public enum VkSubmitFlagBits : int
+    public enum VkSubmitFlagBits : uint
     {
         SubmitProtectedBit = 1,
         SubmitProtectedBitKhr = 1,
     }
     [Flags]
-    public enum VkEventCreateFlagBits : int
+    public enum VkEventCreateFlagBits : uint
     {
         /// <summary>[requires: VK_VERSION_1_3]</summary>
         EventCreateDeviceOnlyBit = 1,
@@ -5976,7 +5976,7 @@ namespace OpenTK.Graphics.Vulkan
         EventCreateDeviceOnlyBitKhr = 1,
     }
     [Flags]
-    public enum VkPipelineLayoutCreateFlagBits : int
+    public enum VkPipelineLayoutCreateFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_graphics_pipeline_library]</summary>
         PipelineLayoutCreateIndependentSetsBitExt = 2,
@@ -6008,7 +6008,7 @@ namespace OpenTK.Graphics.Vulkan
         AccelerationStructureMotionInstanceTypeSrtMotionNv = 2,
     }
     [Flags]
-    public enum VkPipelineColorBlendStateCreateFlagBits : int
+    public enum VkPipelineColorBlendStateCreateFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
         PipelineColorBlendStateCreateRasterizationOrderAttachmentAccessBitExt = 1,
@@ -6016,7 +6016,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineColorBlendStateCreateRasterizationOrderAttachmentAccessBitArm = 1,
     }
     [Flags]
-    public enum VkPipelineDepthStencilStateCreateFlagBits : int
+    public enum VkPipelineDepthStencilStateCreateFlagBits : uint
     {
         /// <summary>[requires: VK_EXT_rasterization_order_attachment_access]</summary>
         PipelineDepthStencilStateCreateRasterizationOrderAttachmentDepthAccessBitExt = 1,
@@ -6028,7 +6028,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineDepthStencilStateCreateRasterizationOrderAttachmentStencilAccessBitArm = 2,
     }
     [Flags]
-    public enum VkGraphicsPipelineLibraryFlagBitsEXT : int
+    public enum VkGraphicsPipelineLibraryFlagBitsEXT : uint
     {
         GraphicsPipelineLibraryVertexInputInterfaceBitExt = 1,
         GraphicsPipelineLibraryPreRasterizationShadersBitExt = 2,
@@ -6036,7 +6036,7 @@ namespace OpenTK.Graphics.Vulkan
         GraphicsPipelineLibraryFragmentOutputInterfaceBitExt = 8,
     }
     [Flags]
-    public enum VkDeviceAddressBindingFlagBitsEXT : int
+    public enum VkDeviceAddressBindingFlagBitsEXT : uint
     {
         DeviceAddressBindingInternalObjectBitExt = 1,
     }
@@ -6046,31 +6046,31 @@ namespace OpenTK.Graphics.Vulkan
         DeviceAddressBindingTypeUnbindExt = 1,
     }
     [Flags]
-    public enum VkFrameBoundaryFlagBitsEXT : int
+    public enum VkFrameBoundaryFlagBitsEXT : uint
     {
         FrameBoundaryFrameEndBitExt = 1,
     }
     [Flags]
-    public enum VkPresentScalingFlagBitsEXT : int
+    public enum VkPresentScalingFlagBitsEXT : uint
     {
         PresentScalingOneToOneBitExt = 1,
         PresentScalingAspectRatioStretchBitExt = 2,
         PresentScalingStretchBitExt = 4,
     }
     [Flags]
-    public enum VkPresentGravityFlagBitsEXT : int
+    public enum VkPresentGravityFlagBitsEXT : uint
     {
         PresentGravityMinBitExt = 1,
         PresentGravityMaxBitExt = 2,
         PresentGravityCenteredBitExt = 4,
     }
     [Flags]
-    public enum VkPhysicalDeviceSchedulingControlsFlagBitsARM : int
+    public enum VkPhysicalDeviceSchedulingControlsFlagBitsARM : ulong
     {
         PhysicalDeviceSchedulingControlsShaderCoreCountArm = 1,
     }
     [Flags]
-    public enum VkVideoCodecOperationFlagBitsKHR : int
+    public enum VkVideoCodecOperationFlagBitsKHR : uint
     {
         VideoCodecOperationNoneKhr = 0,
         /// <summary>[requires: VK_KHR_video_encode_h264]</summary>
@@ -6085,7 +6085,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoCodecOperationDecodeAv1BitKhr = 4,
     }
     [Flags]
-    public enum VkVideoChromaSubsamplingFlagBitsKHR : int
+    public enum VkVideoChromaSubsamplingFlagBitsKHR : uint
     {
         VideoChromaSubsamplingInvalidKhr = 0,
         VideoChromaSubsamplingMonochromeBitKhr = 1,
@@ -6094,7 +6094,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoChromaSubsampling444BitKhr = 8,
     }
     [Flags]
-    public enum VkVideoComponentBitDepthFlagBitsKHR : int
+    public enum VkVideoComponentBitDepthFlagBitsKHR : uint
     {
         VideoComponentBitDepthInvalidKhr = 0,
         VideoComponentBitDepth8BitKhr = 1,
@@ -6102,13 +6102,13 @@ namespace OpenTK.Graphics.Vulkan
         VideoComponentBitDepth12BitKhr = 16,
     }
     [Flags]
-    public enum VkVideoCapabilityFlagBitsKHR : int
+    public enum VkVideoCapabilityFlagBitsKHR : uint
     {
         VideoCapabilityProtectedContentBitKhr = 1,
         VideoCapabilitySeparateReferenceImagesBitKhr = 2,
     }
     [Flags]
-    public enum VkVideoSessionCreateFlagBitsKHR : int
+    public enum VkVideoSessionCreateFlagBitsKHR : uint
     {
         VideoSessionCreateProtectedContentBitKhr = 1,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
@@ -6117,14 +6117,14 @@ namespace OpenTK.Graphics.Vulkan
         VideoSessionCreateInlineQueriesBitKhr = 4,
     }
     [Flags]
-    public enum VkVideoDecodeH264PictureLayoutFlagBitsKHR : int
+    public enum VkVideoDecodeH264PictureLayoutFlagBitsKHR : uint
     {
         VideoDecodeH264PictureLayoutProgressiveKhr = 0,
         VideoDecodeH264PictureLayoutInterlacedInterleavedLinesBitKhr = 1,
         VideoDecodeH264PictureLayoutInterlacedSeparatePlanesBitKhr = 2,
     }
     [Flags]
-    public enum VkVideoCodingControlFlagBitsKHR : int
+    public enum VkVideoCodingControlFlagBitsKHR : uint
     {
         VideoCodingControlResetBitKhr = 1,
         /// <summary>[requires: VK_KHR_video_encode_queue]</summary>
@@ -6141,7 +6141,7 @@ namespace OpenTK.Graphics.Vulkan
         QueryResultStatusInsufficientBitstreamBufferRangeKhr = -1000299000,
     }
     [Flags]
-    public enum VkVideoDecodeUsageFlagBitsKHR : int
+    public enum VkVideoDecodeUsageFlagBitsKHR : uint
     {
         VideoDecodeUsageDefaultKhr = 0,
         VideoDecodeUsageTranscodingBitKhr = 1,
@@ -6149,17 +6149,17 @@ namespace OpenTK.Graphics.Vulkan
         VideoDecodeUsageStreamingBitKhr = 4,
     }
     [Flags]
-    public enum VkVideoDecodeCapabilityFlagBitsKHR : int
+    public enum VkVideoDecodeCapabilityFlagBitsKHR : uint
     {
         VideoDecodeCapabilityDpbAndOutputCoincideBitKhr = 1,
         VideoDecodeCapabilityDpbAndOutputDistinctBitKhr = 2,
     }
     [Flags]
-    public enum VkVideoEncodeFlagBitsKHR : int
+    public enum VkVideoEncodeFlagBitsKHR : uint
     {
     }
     [Flags]
-    public enum VkVideoEncodeUsageFlagBitsKHR : int
+    public enum VkVideoEncodeUsageFlagBitsKHR : uint
     {
         VideoEncodeUsageDefaultKhr = 0,
         VideoEncodeUsageTranscodingBitKhr = 1,
@@ -6168,7 +6168,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeUsageConferencingBitKhr = 8,
     }
     [Flags]
-    public enum VkVideoEncodeContentFlagBitsKHR : int
+    public enum VkVideoEncodeContentFlagBitsKHR : uint
     {
         VideoEncodeContentDefaultKhr = 0,
         VideoEncodeContentCameraBitKhr = 1,
@@ -6184,20 +6184,20 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeTuningModeLosslessKhr = 4,
     }
     [Flags]
-    public enum VkVideoEncodeCapabilityFlagBitsKHR : int
+    public enum VkVideoEncodeCapabilityFlagBitsKHR : uint
     {
         VideoEncodeCapabilityPrecedingExternallyEncodedBytesBitKhr = 1,
         VideoEncodeCapabilityInsufficientBitstreamBufferRangeDetectionBitKhr = 2,
     }
     [Flags]
-    public enum VkVideoEncodeFeedbackFlagBitsKHR : int
+    public enum VkVideoEncodeFeedbackFlagBitsKHR : uint
     {
         VideoEncodeFeedbackBitstreamBufferOffsetBitKhr = 1,
         VideoEncodeFeedbackBitstreamBytesWrittenBitKhr = 2,
         VideoEncodeFeedbackBitstreamHasOverridesBitKhr = 4,
     }
     [Flags]
-    public enum VkVideoEncodeRateControlModeFlagBitsKHR : int
+    public enum VkVideoEncodeRateControlModeFlagBitsKHR : uint
     {
         VideoEncodeRateControlModeDefaultKhr = 0,
         VideoEncodeRateControlModeDisabledBitKhr = 1,
@@ -6205,7 +6205,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeRateControlModeVbrBitKhr = 4,
     }
     [Flags]
-    public enum VkVideoEncodeH264CapabilityFlagBitsKHR : int
+    public enum VkVideoEncodeH264CapabilityFlagBitsKHR : uint
     {
         VideoEncodeH264CapabilityHrdComplianceBitKhr = 1,
         VideoEncodeH264CapabilityPredictionWeightTableGeneratedBitKhr = 2,
@@ -6218,7 +6218,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264CapabilityGeneratePrefixNaluBitKhr = 256,
     }
     [Flags]
-    public enum VkVideoEncodeH264StdFlagBitsKHR : int
+    public enum VkVideoEncodeH264StdFlagBitsKHR : uint
     {
         VideoEncodeH264StdSeparateColorPlaneFlagSetBitKhr = 1,
         VideoEncodeH264StdQpprimeYZeroTransformBypassFlagSetBitKhr = 2,
@@ -6242,7 +6242,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264StdDifferentSliceQpDeltaBitKhr = 1048576,
     }
     [Flags]
-    public enum VkVideoEncodeH264RateControlFlagBitsKHR : int
+    public enum VkVideoEncodeH264RateControlFlagBitsKHR : uint
     {
         VideoEncodeH264RateControlAttemptHrdComplianceBitKhr = 1,
         VideoEncodeH264RateControlRegularGopBitKhr = 2,
@@ -6251,7 +6251,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264RateControlTemporalLayerPatternDyadicBitKhr = 16,
     }
     [Flags]
-    public enum VkHostImageCopyFlagBitsEXT : int
+    public enum VkHostImageCopyFlagBitsEXT : uint
     {
         HostImageCopyMemcpyExt = 1,
     }
@@ -6260,7 +6260,7 @@ namespace OpenTK.Graphics.Vulkan
     {
     }
     [Flags]
-    public enum VkImageConstraintsInfoFlagBitsFUCHSIA : int
+    public enum VkImageConstraintsInfoFlagBitsFUCHSIA : uint
     {
         ImageConstraintsInfoCpuReadRarelyFuchsia = 1,
         ImageConstraintsInfoCpuReadOftenFuchsia = 2,
@@ -6269,7 +6269,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageConstraintsInfoProtectedOptionalFuchsia = 16,
     }
     [Flags]
-    public enum VkFormatFeatureFlagBits2 : int
+    public enum VkFormatFeatureFlagBits2 : ulong
     {
         FormatFeature2SampledImageBit = 1,
         FormatFeature2SampledImageBitKhr = 1,
@@ -6319,12 +6319,12 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeature2DisjointBitKhr = 4194304,
         FormatFeature2CositedChromaSamplesBit = 8388608,
         FormatFeature2CositedChromaSamplesBitKhr = 8388608,
-        FormatFeature2StorageReadWithoutFormatBit = -2147483648,
-        FormatFeature2StorageReadWithoutFormatBitKhr = -2147483648,
-        FormatFeature2StorageWriteWithoutFormatBit = 1,
-        FormatFeature2StorageWriteWithoutFormatBitKhr = 1,
-        FormatFeature2SampledImageDepthComparisonBit = 2,
-        FormatFeature2SampledImageDepthComparisonBitKhr = 2,
+        FormatFeature2StorageReadWithoutFormatBit = 2147483648,
+        FormatFeature2StorageReadWithoutFormatBitKhr = 2147483648,
+        FormatFeature2StorageWriteWithoutFormatBit = 4294967296,
+        FormatFeature2StorageWriteWithoutFormatBitKhr = 4294967296,
+        FormatFeature2SampledImageDepthComparisonBit = 8589934592,
+        FormatFeature2SampledImageDepthComparisonBitKhr = 8589934592,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
         FormatFeature2VideoDecodeOutputBitKhr = 33554432,
         /// <summary>[requires: VK_KHR_video_decode_queue]</summary>
@@ -6359,7 +6359,7 @@ namespace OpenTK.Graphics.Vulkan
         FormatFeature2OpticalFlowCostBitNv = 1024,
     }
     [Flags]
-    public enum VkRenderingFlagBits : int
+    public enum VkRenderingFlagBits : uint
     {
         RenderingContentsSecondaryCommandBuffersBit = 1,
         RenderingContentsSecondaryCommandBuffersBitKhr = 1,
@@ -6375,7 +6375,7 @@ namespace OpenTK.Graphics.Vulkan
         RenderingContentsInlineBitExt = 16,
     }
     [Flags]
-    public enum VkVideoEncodeH265CapabilityFlagBitsKHR : int
+    public enum VkVideoEncodeH265CapabilityFlagBitsKHR : uint
     {
         VideoEncodeH265CapabilityHrdComplianceBitKhr = 1,
         VideoEncodeH265CapabilityPredictionWeightTableGeneratedBitKhr = 2,
@@ -6389,7 +6389,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265CapabilityMultipleSliceSegmentsPerTileBitKhr = 512,
     }
     [Flags]
-    public enum VkVideoEncodeH265StdFlagBitsKHR : int
+    public enum VkVideoEncodeH265StdFlagBitsKHR : uint
     {
         VideoEncodeH265StdSeparateColorPlaneFlagSetBitKhr = 1,
         VideoEncodeH265StdSampleAdaptiveOffsetEnabledFlagSetBitKhr = 2,
@@ -6414,7 +6414,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265StdDifferentSliceQpDeltaBitKhr = 1048576,
     }
     [Flags]
-    public enum VkVideoEncodeH265RateControlFlagBitsKHR : int
+    public enum VkVideoEncodeH265RateControlFlagBitsKHR : uint
     {
         VideoEncodeH265RateControlAttemptHrdComplianceBitKhr = 1,
         VideoEncodeH265RateControlRegularGopBitKhr = 2,
@@ -6423,14 +6423,14 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265RateControlTemporalSubLayerPatternDyadicBitKhr = 16,
     }
     [Flags]
-    public enum VkVideoEncodeH265CtbSizeFlagBitsKHR : int
+    public enum VkVideoEncodeH265CtbSizeFlagBitsKHR : uint
     {
         VideoEncodeH265CtbSize16BitKhr = 1,
         VideoEncodeH265CtbSize32BitKhr = 2,
         VideoEncodeH265CtbSize64BitKhr = 4,
     }
     [Flags]
-    public enum VkVideoEncodeH265TransformBlockSizeFlagBitsKHR : int
+    public enum VkVideoEncodeH265TransformBlockSizeFlagBitsKHR : uint
     {
         VideoEncodeH265TransformBlockSize4BitKhr = 1,
         VideoEncodeH265TransformBlockSize8BitKhr = 2,
@@ -6438,7 +6438,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265TransformBlockSize32BitKhr = 8,
     }
     [Flags]
-    public enum VkExportMetalObjectTypeFlagBitsEXT : int
+    public enum VkExportMetalObjectTypeFlagBitsEXT : uint
     {
         ExportMetalObjectTypeMetalDeviceBitExt = 1,
         ExportMetalObjectTypeMetalCommandQueueBitExt = 2,
@@ -6448,13 +6448,13 @@ namespace OpenTK.Graphics.Vulkan
         ExportMetalObjectTypeMetalSharedEventBitExt = 32,
     }
     [Flags]
-    public enum VkInstanceCreateFlagBits : int
+    public enum VkInstanceCreateFlagBits : uint
     {
         /// <summary>[requires: VK_KHR_portability_enumeration]</summary>
         InstanceCreateEnumeratePortabilityBitKhr = 1,
     }
     [Flags]
-    public enum VkImageCompressionFlagBitsEXT : int
+    public enum VkImageCompressionFlagBitsEXT : uint
     {
         ImageCompressionDefaultExt = 0,
         ImageCompressionFixedRateDefaultExt = 1,
@@ -6462,7 +6462,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageCompressionDisabledExt = 4,
     }
     [Flags]
-    public enum VkImageCompressionFixedRateFlagBitsEXT : int
+    public enum VkImageCompressionFixedRateFlagBitsEXT : uint
     {
         ImageCompressionFixedRateNoneExt = 0,
         ImageCompressionFixedRate1bpcBitExt = 1,
@@ -6505,7 +6505,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineRobustnessImageBehaviorRobustImageAccess2Ext = 3,
     }
     [Flags]
-    public enum VkOpticalFlowGridSizeFlagBitsNV : int
+    public enum VkOpticalFlowGridSizeFlagBitsNV : uint
     {
         OpticalFlowGridSizeUnknownNv = 0,
         OpticalFlowGridSize1x1BitNv = 1,
@@ -6514,7 +6514,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowGridSize8x8BitNv = 8,
     }
     [Flags]
-    public enum VkOpticalFlowUsageFlagBitsNV : int
+    public enum VkOpticalFlowUsageFlagBitsNV : uint
     {
         OpticalFlowUsageUnknownNv = 0,
         OpticalFlowUsageInputBitNv = 1,
@@ -6543,7 +6543,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowSessionBindingPointGlobalFlowNv = 8,
     }
     [Flags]
-    public enum VkOpticalFlowSessionCreateFlagBitsNV : int
+    public enum VkOpticalFlowSessionCreateFlagBitsNV : uint
     {
         OpticalFlowSessionCreateEnableHintBitNv = 1,
         OpticalFlowSessionCreateEnableCostBitNv = 2,
@@ -6552,7 +6552,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowSessionCreateBothDirectionsBitNv = 16,
     }
     [Flags]
-    public enum VkOpticalFlowExecuteFlagBitsNV : int
+    public enum VkOpticalFlowExecuteFlagBitsNV : uint
     {
         OpticalFlowExecuteDisableTemporalHintsBitNv = 1,
     }
@@ -6563,14 +6563,14 @@ namespace OpenTK.Graphics.Vulkan
         MicromapTypeDisplacementMicromapNv = 1000397000,
     }
     [Flags]
-    public enum VkBuildMicromapFlagBitsEXT : int
+    public enum VkBuildMicromapFlagBitsEXT : uint
     {
         BuildMicromapPreferFastTraceBitExt = 1,
         BuildMicromapPreferFastBuildBitExt = 2,
         BuildMicromapAllowCompactionBitExt = 4,
     }
     [Flags]
-    public enum VkMicromapCreateFlagBitsEXT : int
+    public enum VkMicromapCreateFlagBitsEXT : uint
     {
         MicromapCreateDeviceAddressCaptureReplayBitExt = 1,
     }
@@ -6625,7 +6625,7 @@ namespace OpenTK.Graphics.Vulkan
         DisplacementMicromapFormat1024Triangles128BytesNv = 3,
     }
     [Flags]
-    public enum VkShaderCreateFlagBitsEXT : int
+    public enum VkShaderCreateFlagBitsEXT : uint
     {
         ShaderCreateLinkStageBitExt = 1,
         /// <summary>[requires: VK_EXT_shader_object]</summary>
@@ -6743,353 +6743,325 @@ namespace OpenTK.Graphics.Vulkan
         OutOfBandQueueTypePresentNv = 1,
     }
     [Flags]
-    public enum VkMemoryUnmapFlagBitsKHR : int
+    public enum VkMemoryUnmapFlagBitsKHR : uint
     {
         /// <summary>[requires: VK_EXT_map_memory_placed]</summary>
         MemoryUnmapReserveBitExt = 1,
     }
     [Flags]
-    public enum VkQueryPoolCreateFlags : int
+    public enum VkQueryPoolCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineDynamicStateCreateFlags : int
+    public enum VkPipelineDynamicStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineMultisampleStateCreateFlags : int
+    public enum VkPipelineMultisampleStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineRasterizationStateCreateFlags : int
+    public enum VkPipelineRasterizationStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineViewportStateCreateFlags : int
+    public enum VkPipelineViewportStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineTessellationStateCreateFlags : int
+    public enum VkPipelineTessellationStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineInputAssemblyStateCreateFlags : int
+    public enum VkPipelineInputAssemblyStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPipelineVertexInputStateCreateFlags : int
+    public enum VkPipelineVertexInputStateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkBufferViewCreateFlags : int
+    public enum VkBufferViewCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkDeviceCreateFlags : int
+    public enum VkDeviceCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkSemaphoreCreateFlags : int
+    public enum VkSemaphoreCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkShaderModuleCreateFlags : int
+    public enum VkShaderModuleCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkDescriptorPoolResetFlags : int
+    public enum VkDescriptorPoolResetFlags : uint
     {
     }
     [Flags]
-    public enum VkGeometryFlagsNV : int
+    public enum VkGeometryFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkGeometryInstanceFlagsNV : int
+    public enum VkGeometryInstanceFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkBuildAccelerationStructureFlagsNV : int
+    public enum VkBuildAccelerationStructureFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkPrivateDataSlotCreateFlags : int
+    public enum VkPrivateDataSlotCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkPrivateDataSlotCreateFlagsEXT : int
+    public enum VkPrivateDataSlotCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkDescriptorUpdateTemplateCreateFlags : int
+    public enum VkDescriptorUpdateTemplateCreateFlags : uint
     {
     }
     [Flags]
-    public enum VkDescriptorUpdateTemplateCreateFlagsKHR : int
+    public enum VkDescriptorUpdateTemplateCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkPipelineCreationFeedbackFlagsEXT : int
+    public enum VkPipelineCreationFeedbackFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkSemaphoreWaitFlagsKHR : int
+    public enum VkSemaphoreWaitFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkAccessFlags2 : int
+    public enum VkAccessFlags2KHR : ulong
     {
     }
     [Flags]
-    public enum VkAccessFlags2KHR : int
+    public enum VkPipelineStageFlags2KHR : ulong
     {
     }
     [Flags]
-    public enum VkPipelineStageFlags2 : int
+    public enum VkAccelerationStructureMotionInfoFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkPipelineStageFlags2KHR : int
+    public enum VkAccelerationStructureMotionInstanceFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkAccelerationStructureMotionInfoFlagsNV : int
+    public enum VkFormatFeatureFlags2KHR : ulong
     {
     }
     [Flags]
-    public enum VkAccelerationStructureMotionInstanceFlagsNV : int
+    public enum VkRenderingFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkFormatFeatureFlags2 : int
+    public enum VkDirectDriverLoadingFlagsLUNARG : uint
     {
     }
     [Flags]
-    public enum VkFormatFeatureFlags2KHR : int
+    public enum VkDisplayModeCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkMemoryDecompressionMethodFlagsNV : int
+    public enum VkDisplaySurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkRenderingFlagsKHR : int
+    public enum VkAndroidSurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkDirectDriverLoadingFlagsLUNARG : int
+    public enum VkViSurfaceCreateFlagsNN : uint
     {
     }
     [Flags]
-    public enum VkPipelineCreateFlags2KHR : int
+    public enum VkWaylandSurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkBufferUsageFlags2KHR : int
+    public enum VkWin32SurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkDisplayModeCreateFlagsKHR : int
+    public enum VkXlibSurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkDisplaySurfaceCreateFlagsKHR : int
+    public enum VkXcbSurfaceCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkAndroidSurfaceCreateFlagsKHR : int
+    public enum VkDirectFBSurfaceCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkViSurfaceCreateFlagsNN : int
+    public enum VkIOSSurfaceCreateFlagsMVK : uint
     {
     }
     [Flags]
-    public enum VkWaylandSurfaceCreateFlagsKHR : int
+    public enum VkMacOSSurfaceCreateFlagsMVK : uint
     {
     }
     [Flags]
-    public enum VkWin32SurfaceCreateFlagsKHR : int
+    public enum VkMetalSurfaceCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkXlibSurfaceCreateFlagsKHR : int
+    public enum VkImagePipeSurfaceCreateFlagsFUCHSIA : uint
     {
     }
     [Flags]
-    public enum VkXcbSurfaceCreateFlagsKHR : int
+    public enum VkStreamDescriptorSurfaceCreateFlagsGGP : uint
     {
     }
     [Flags]
-    public enum VkDirectFBSurfaceCreateFlagsEXT : int
+    public enum VkHeadlessSurfaceCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkIOSSurfaceCreateFlagsMVK : int
+    public enum VkScreenSurfaceCreateFlagsQNX : uint
     {
     }
     [Flags]
-    public enum VkMacOSSurfaceCreateFlagsMVK : int
+    public enum VkPeerMemoryFeatureFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkMetalSurfaceCreateFlagsEXT : int
+    public enum VkMemoryAllocateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkImagePipeSurfaceCreateFlagsFUCHSIA : int
+    public enum VkCommandPoolTrimFlags : uint
     {
     }
     [Flags]
-    public enum VkStreamDescriptorSurfaceCreateFlagsGGP : int
+    public enum VkCommandPoolTrimFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkHeadlessSurfaceCreateFlagsEXT : int
+    public enum VkExternalMemoryHandleTypeFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkScreenSurfaceCreateFlagsQNX : int
+    public enum VkExternalMemoryFeatureFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkPeerMemoryFeatureFlagsKHR : int
+    public enum VkExternalSemaphoreHandleTypeFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkMemoryAllocateFlagsKHR : int
+    public enum VkExternalSemaphoreFeatureFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkCommandPoolTrimFlags : int
+    public enum VkSemaphoreImportFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkCommandPoolTrimFlagsKHR : int
+    public enum VkExternalFenceHandleTypeFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkExternalMemoryHandleTypeFlagsKHR : int
+    public enum VkExternalFenceFeatureFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkExternalMemoryFeatureFlagsKHR : int
+    public enum VkFenceImportFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkExternalSemaphoreHandleTypeFlagsKHR : int
+    public enum VkPipelineViewportSwizzleStateCreateFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkExternalSemaphoreFeatureFlagsKHR : int
+    public enum VkPipelineDiscardRectangleStateCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkSemaphoreImportFlagsKHR : int
+    public enum VkPipelineCoverageToColorStateCreateFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkExternalFenceHandleTypeFlagsKHR : int
+    public enum VkPipelineCoverageModulationStateCreateFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkExternalFenceFeatureFlagsKHR : int
+    public enum VkPipelineCoverageReductionStateCreateFlagsNV : uint
     {
     }
     [Flags]
-    public enum VkFenceImportFlagsKHR : int
+    public enum VkValidationCacheCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineViewportSwizzleStateCreateFlagsNV : int
+    public enum VkDebugUtilsMessengerCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineDiscardRectangleStateCreateFlagsEXT : int
+    public enum VkDebugUtilsMessengerCallbackDataFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineCoverageToColorStateCreateFlagsNV : int
+    public enum VkDeviceMemoryReportFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineCoverageModulationStateCreateFlagsNV : int
+    public enum VkPipelineRasterizationConservativeStateCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineCoverageReductionStateCreateFlagsNV : int
+    public enum VkDescriptorBindingFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkValidationCacheCreateFlagsEXT : int
+    public enum VkResolveModeFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkDebugUtilsMessengerCreateFlagsEXT : int
+    public enum VkPipelineRasterizationStateStreamCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkDebugUtilsMessengerCallbackDataFlagsEXT : int
+    public enum VkPipelineRasterizationDepthClipStateCreateFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkDeviceMemoryReportFlagsEXT : int
+    public enum VkToolPurposeFlagsEXT : uint
     {
     }
     [Flags]
-    public enum VkPipelineRasterizationConservativeStateCreateFlagsEXT : int
+    public enum VkSubmitFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkDescriptorBindingFlagsEXT : int
+    public enum VkImageFormatConstraintsFlagsFUCHSIA : uint
     {
     }
     [Flags]
-    public enum VkResolveModeFlagsKHR : int
+    public enum VkVideoSessionParametersCreateFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkPipelineRasterizationStateStreamCreateFlagsEXT : int
+    public enum VkVideoBeginCodingFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkPipelineRasterizationDepthClipStateCreateFlagsEXT : int
+    public enum VkVideoEndCodingFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkToolPurposeFlagsEXT : int
+    public enum VkVideoDecodeFlagsKHR : uint
     {
     }
     [Flags]
-    public enum VkSubmitFlagsKHR : int
-    {
-    }
-    [Flags]
-    public enum VkImageFormatConstraintsFlagsFUCHSIA : int
-    {
-    }
-    [Flags]
-    public enum VkPhysicalDeviceSchedulingControlsFlagsARM : int
-    {
-    }
-    [Flags]
-    public enum VkVideoSessionParametersCreateFlagsKHR : int
-    {
-    }
-    [Flags]
-    public enum VkVideoBeginCodingFlagsKHR : int
-    {
-    }
-    [Flags]
-    public enum VkVideoEndCodingFlagsKHR : int
-    {
-    }
-    [Flags]
-    public enum VkVideoDecodeFlagsKHR : int
-    {
-    }
-    [Flags]
-    public enum VkVideoEncodeRateControlFlagsKHR : int
+    public enum VkVideoEncodeRateControlFlagsKHR : uint
     {
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

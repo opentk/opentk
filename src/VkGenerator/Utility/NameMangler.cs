@@ -16,7 +16,7 @@ namespace VkGenerator.Utility
         {
             ExtensionPrefix = "VK_";
             FunctionPrefix = "vk";
-            EnumPrefixes = new List<string> { "VK_" };
+            EnumPrefixes = new List<string> { "VK_", "STD_" };
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
         }
@@ -95,6 +95,12 @@ namespace VkGenerator.Utility
             return extension[prefix.Length..];
         }
 
+        public static string MangleConstantName(string name)
+        {
+            var mangledName = RemoveEnumPrefix(name);
+            return MangleCapsUnderscoreName(mangledName);
+        }
+
         public static string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
@@ -103,7 +109,6 @@ namespace VkGenerator.Utility
 
         public static string MangleEnumName(string name)
         {
-            // Remove the "GL_" prefix.
             var mangledName = RemoveEnumPrefix(name);
             return MangleCapsUnderscoreName(mangledName);
         }

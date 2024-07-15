@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
 using System.Text;
+using System.Numerics;
+using System.Runtime.InteropServices.Marshalling;
 
 namespace VkGenerator.Process
 {
@@ -28,6 +30,11 @@ namespace VkGenerator.Process
         public BaseCSType CreateWithNewType(BaseCSType type);
     }
 
+    public interface IBitwidthCSType
+    {
+        public int? BitWidth { get; }
+    }
+
     public record CSNotSupportedType : BaseCSType
     {
         public override string ToCSString()
@@ -41,25 +48,25 @@ namespace VkGenerator.Process
         public override string ToCSString() => "void";
     }
 
-    public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    public record CSPrimitive(string TypeName, bool Constant, int? BitWidth) : BaseCSType, IConstantCSType, IBitwidthCSType
     {
         // FIXME: const??
-        public static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const);
-        public static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const);
-        public static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const);
-        public static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const);
-        public static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const);
-        public static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const);
-        public static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const);
-        public static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const);
+        public static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const, 8);
+        public static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const, 8);
+        public static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const, 16);
+        public static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const, 16);
+        public static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const, 32);
+        public static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const, 32);
+        public static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const, 64);
+        public static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const, 64);
 
-        public static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const);
-        public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
-        public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
+        public static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const, null);
+        public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const, null);
+        public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const, null);
 
-        public static CSPrimitive Half(bool @const) => new CSPrimitive("half", @const);
-        public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
-        public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
+        public static CSPrimitive Half(bool @const) => new CSPrimitive("half", @const, null);
+        public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const, null);
+        public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const, null);
 
         public override string ToCSString()
         {
@@ -67,8 +74,10 @@ namespace VkGenerator.Process
         }
     }
 
-    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType, IBitwidthCSType
     {
+        int? IBitwidthCSType.BitWidth => (PrimitiveType as IBitwidthCSType)?.BitWidth;
+
         public override string ToCSString()
         {
             return TypeName;
@@ -263,6 +272,16 @@ namespace VkGenerator.Process
         public override string ToCSString()
         {
             return TypeName;
+        }
+    }
+
+    public record CSBitfield(BaseCSType UnderlyingType, int BitWidth) : BaseCSType, IBitwidthCSType
+    {
+        int? IBitwidthCSType.BitWidth => BitWidth;
+
+        public override string ToCSString()
+        {
+            return $"{UnderlyingType.ToCSString()}:{BitWidth}";
         }
     }
 }

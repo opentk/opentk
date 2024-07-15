@@ -48,8 +48,11 @@ namespace VkGenerator.Parsing
         public BaseCSType? StrongType { get; set; }
     };
 
-    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension);
-    public record EnumMember(string Name, int Value, string? Comment, string? Alias, string? Extension);
+    public record EnumType(string Name, List<EnumMember> Members, bool Bitmask, string? Extension)
+    {
+        public BaseCSType? StrongUnderlyingType { get; set; }
+    }
+    public record EnumMember(string Name, ulong Value, string? Comment, string? Alias, string? Extension);
 
     public record Command(string Name, string ReturnType, List<CommandParameter> Parameters)
     {
@@ -80,7 +83,7 @@ namespace VkGenerator.Parsing
         bool Provisional,
         string? SpecialUse,
         List<RequireTag> RequireTags);
-    public record RequireTag(List<RequireEnum> RequiredEnums, List<RequireCommand> RequiredCommands, List<RequireType> RequiredTypes, string? Comment);
+    public record RequireTag(List<RequireEnum> RequiredEnums, List<RequireCommand> RequiredCommands, List<RequireType> RequiredTypes, List<Constant> Constants, string? Comment);
     /// <summary>We either know Value or Alias.</summary>
     public record RequireEnum(string Name, int? Value, string Extends, string? Alias, string? Comment);
     public record RequireCommand(string Name);
@@ -92,9 +95,10 @@ namespace VkGenerator.Parsing
         Uint32,
         Uint64,
         Float,
+        String,
     }
 
-    public record Constant(ConstantType Type, string Name, ulong IntValue, float FloatValue);
+    public record Constant(ConstantType Type, string Name, ulong IntValue, float FloatValue, string StringValue);
 
     internal class SpecificationParser
     {
@@ -122,8 +126,6 @@ namespace VkGenerator.Parsing
 
             List<Extension> extensions = ParseExtensions(xdocument.Root);
 
-            ParseExtensions(xdocument.Root);
-
             return new SpecificationData(
                 enums,
                 typeData.EnumNames,
@@ -133,6 +135,39 @@ namespace VkGenerator.Parsing
                 typeData.BitmaskNames,
                 typeData.HandleTypes,
                 commands,
+                features,
+                extensions);
+        }
+
+        public static SpecificationData ParseVideo(Stream input)
+        {
+            XDocument? xdocument = XDocument.Load(input);
+
+            if (xdocument.Root == null)
+                throw new NullReferenceException("The parsed xml didn't contain a Root node.");
+
+            //XElement registry = xdocument.Element("registry") ?? throw new Exception("No <registry> tag.");
+
+            TypeData typeData = ParseTypes(xdocument.Root);
+
+            List<EnumType> enums = ParseEnums(xdocument.Root, out Dictionary<string, Constant> constantsMap);
+
+            // video.xml doesn't contain any commands
+            //List<Command> commands = ParseCommands(xdocument.Root);
+
+            List<Feature> features = ParseFeatures(xdocument.Root);
+
+            List<Extension> extensions = ParseVideoExtensions(xdocument.Root);
+
+            return new SpecificationData(
+                enums,
+                typeData.EnumNames,
+                typeData.BitmaskNames,
+                typeData.Structs,
+                constantsMap,
+                typeData.BitmaskNames,
+                typeData.HandleTypes,
+                new List<Command>(),
                 features,
                 extensions);
         }
@@ -182,12 +217,10 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "union")
                 {
-                    // FIXME
                     structs.Add(new StructType(name!, ParseStructMembers(type), true, comment));
                 }
                 else if (category == "struct")
                 {
-                    //Console.WriteLine($"struct {name} {{ c: {category} r: {requires} api: {api} ote: {objtypeenum} p: {parent} a: {alias} d: {deprecated} ro: {returnedonly}");
                     structs.Add(new StructType(name!, ParseStructMembers(type), false, comment));
                 }
                 else if (category == "enum")
@@ -196,19 +229,19 @@ namespace VkGenerator.Parsing
                 }
                 else if (category == "bitmask")
                 {
-                    
+                    string? bitvalues = type.Attribute("bitvalues")?.Value;
+
                     if (alias != null)
                     {
                         string baseType = bitmaskNames.Find(bmn => bmn.Name == alias)?.Type ?? throw new Exception();
-                        bitmaskNames.Add(new BitmaskName(baseType, name ?? throw new Exception(), requires, alias));
+                        bitmaskNames.Add(new BitmaskName(baseType, name ?? throw new Exception(), requires ?? bitvalues, alias));
                     }
                     else
                     {
                         string bitmaskName = type.Element("name")?.Value ?? throw new Exception();
                         string baseType = type.Element("type")?.Value ?? throw new Exception();
-                        bitmaskNames.Add(new BitmaskName(baseType, bitmaskName, requires, null));
+                        bitmaskNames.Add(new BitmaskName(baseType, bitmaskName, requires ?? bitvalues, null));
                     }
-
                 }
                 else if (category == "basetype")
                 {
@@ -344,7 +377,7 @@ namespace VkGenerator.Parsing
                                 intValue = ~intValue;
                             }
 
-                            constantsMap.Add(constName, new Constant(constType, constName, intValue, floatValue));
+                            constantsMap.Add(constName, new Constant(constType, constName, intValue, floatValue, ""));
                         }
                     }
                 }
@@ -367,7 +400,7 @@ namespace VkGenerator.Parsing
                             string value = member.Attribute("value")?.Value ?? throw new Exception();
                             string? comment = member.Attribute("comment")?.Value;
 
-                            members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null, null));
+                            members.Add(new EnumMember(memberName, (ulong)(int)Int32Converter.ConvertFromString(value)!, comment, null, null));
                         }
                     }
 
@@ -394,12 +427,12 @@ namespace VkGenerator.Parsing
                             string? bitpos = member.Attribute("bitpos")?.Value;
                             if (bitpos != null)
                             {
-                                members.Add(new EnumMember(memberName, 1 << int.Parse(bitpos), comment, null, null));
+                                members.Add(new EnumMember(memberName, (ulong)1 << int.Parse(bitpos), comment, null, null));
                             }
                             else
                             {
                                 string value = member.Attribute("value")?.Value ?? throw new Exception();
-                                members.Add(new EnumMember(memberName, (int)Int32Converter.ConvertFromString(value)!, comment, null, null));
+                                members.Add(new EnumMember(memberName, (ulong)(int)Int32Converter.ConvertFromString(value)!, comment, null, null));
                             }
                         }
                     }
@@ -578,6 +611,8 @@ namespace VkGenerator.Parsing
                 string? extends = @enum.Attribute("extends")?.Value;
                 if (extends == null)
                 {
+                    // FIXME: Add these constants!
+                    Console.WriteLine(@enum);
                     // Extensions add a few global constants that are not part of
                     // any enum. We skip these for now.
                     continue;
@@ -642,7 +677,148 @@ namespace VkGenerator.Parsing
                 requiredTypes.Add(new RequireType(commandName));
             }
 
-            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, tagComment);
+            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, new List<Constant>(), tagComment);
         }
+
+
+        public static List<Extension> ParseVideoExtensions(XElement root)
+        {
+            XElement xelement = root.Element("extensions")!;
+
+            List<Extension> extensions = new List<Extension>();
+            foreach (XElement extension in xelement.Elements("extension"))
+            {
+                if (extension.Attribute("api")?.Value == "vulkansc")
+                    continue;
+
+                string? supported = extension.Attribute("supported")?.Value;
+                if (supported == "disabled")
+                    continue;
+
+                string name = extension.Attribute("name")?.Value ?? throw new Exception();
+
+                if (int.TryParse(extension.Attribute("sortorder")?.Value, out int sortOrder) == false)
+                    sortOrder = 0;
+                string? protect = extension.Attribute("protect")?.Value;
+                string? platform = extension.Attribute("platform")?.Value;
+                // "device" or "instance"
+                string? depends = extension.Attribute("depends")?.Value;
+                string? ratified = extension.Attribute("ratified")?.Value;
+                string? promotedTo = extension.Attribute("promotedto")?.Value;
+                string? deprecatedBy = extension.Attribute("deprecatedby")?.Value;
+                string? obsoletedBy = extension.Attribute("obsoletedby")?.Value;
+                bool provisional = extension.Attribute("provisional")?.Value == "true";
+                string? specialUse = extension.Attribute("specialuse")?.Value;
+
+                List<RequireTag> requireTags = new List<RequireTag>();
+                foreach (XElement require in extension.Elements("require"))
+                {
+                    if (require.Attribute("api")?.Value == "vulkansc")
+                        continue;
+
+                    requireTags.Add(ParseVideoRequireTag(require, -1));
+                }
+
+                extensions.Add(new Extension(
+                    name,
+                    -1,
+                    sortOrder,
+                    protect,
+                    platform,
+                    null,
+                    null,
+                    null,
+                    depends,
+                    supported,
+                    ratified,
+                    promotedTo,
+                    deprecatedBy,
+                    obsoletedBy,
+                    provisional,
+                    specialUse,
+                    requireTags));
+            }
+
+            return extensions;
+        }
+
+        public static RequireTag ParseVideoRequireTag(XElement require, int number)
+        {
+            // FIXME: use?
+            string? requireDepends = require.Attribute("depends")?.Value;
+            string? tagComment = require.Attribute("comment")?.Value;
+
+            List<RequireEnum> requiredEnums = new List<RequireEnum>();
+            List<Constant> requiredConstants = new List<Constant>();
+            foreach (XElement @enum in require.Elements("enum"))
+            {
+                if (@enum.Attribute("api")?.Value == "vulkansc")
+                    continue;
+
+                string? extends = @enum.Attribute("extends")?.Value;
+                if (extends == null)
+                {
+                    // This is a constant.
+
+                    string constName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                    string valueStr = @enum.Attribute("value")?.Value ?? throw new Exception();
+                    if (valueStr.StartsWith("VK_"))
+                    {
+                        Console.WriteLine(valueStr);
+                        continue;
+                    }
+                    else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                    {
+                        // This is a string constant.
+                        requiredConstants.Add(new Constant(ConstantType.String, constName, 0, 0, valueStr));
+                    }
+                    else
+                    {
+                        int value = (int)Int32Converter.ConvertFromString(valueStr)!;
+
+                        // FIXME: Figure out the type?
+                        requiredConstants.Add(new Constant(ConstantType.Uint32, constName, (ulong)value, 0, ""));
+                    }
+                }
+                else
+                {
+                    string? comment = @enum.Attribute("comment")?.Value;
+
+                    string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                    string? alias = @enum.Attribute("alias")?.Value;
+                    if (alias != null)
+                    {
+                        requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                    }
+                    else
+                    {
+                        string valueStr = @enum.Attribute("value")?.Value ?? throw new Exception();
+                        int value = int.Parse(valueStr);
+                        requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                    }
+                }
+            }
+
+            List<RequireCommand> requiredCommands = new List<RequireCommand>();
+            foreach (XElement command in require.Elements("command"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                requiredCommands.Add(new RequireCommand(commandName));
+            }
+
+            List<RequireType> requiredTypes = new List<RequireType>();
+            foreach (XElement command in require.Elements("type"))
+            {
+                string commandName = command.Attribute("name")?.Value ?? throw new Exception();
+
+                requiredTypes.Add(new RequireType(commandName));
+            }
+
+            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
+        }
+
     }
 }
