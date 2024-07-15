@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.CodeDom.Compiler;
+using System.Text;
 
 namespace VkGenerator.Process
 {
@@ -234,7 +235,22 @@ namespace VkGenerator.Process
         }
     }
 
-    public record CSFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    public record CSFunctionPointer(string TypeName, bool Constant, BaseCSType ReturnType, List<BaseCSType> ParameterTypes) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            StringBuilder types = new StringBuilder();
+            for (int i = 0; i < ParameterTypes.Count; i++)
+            {
+                types.Append(ParameterTypes[i].ToCSString());
+                types.Append(", ");
+            }
+            types.Append(ReturnType.ToCSString());
+            return $"delegate* unmanaged[Cdecl]<{types}>";
+        }
+    }
+
+    public record CSOpaqueFunctionPointer(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {

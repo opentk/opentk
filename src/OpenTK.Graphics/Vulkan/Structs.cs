@@ -200,12 +200,12 @@ namespace OpenTK.Graphics.Vulkan
     public unsafe struct VkAllocationCallbacks
     {
         public void* pUserData;
-        public IntPtr pfnAllocation;
-        public IntPtr pfnReallocation;
-        public IntPtr pfnFree;
-        public IntPtr pfnInternalAllocation;
-        public IntPtr pfnInternalFree;
-        public VkAllocationCallbacks(void* pUserData, IntPtr pfnAllocation, IntPtr pfnReallocation, IntPtr pfnFree, IntPtr pfnInternalAllocation, IntPtr pfnInternalFree)
+        public delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void*> pfnAllocation;
+        public delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void*> pfnReallocation;
+        public delegate* unmanaged[Cdecl]<void*, void*, void> pfnFree;
+        public delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalAllocation;
+        public delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalFree;
+        public VkAllocationCallbacks(void* pUserData, delegate* unmanaged[Cdecl]<void*, nuint, nuint, VkSystemAllocationScope, void*> pfnAllocation, delegate* unmanaged[Cdecl]<void*, void*, nuint, nuint, VkSystemAllocationScope, void*> pfnReallocation, delegate* unmanaged[Cdecl]<void*, void*, void> pfnFree, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalAllocation, delegate* unmanaged[Cdecl]<void*, nuint, VkInternalAllocationType, VkSystemAllocationScope, void> pfnInternalFree)
         {
             this.pUserData = pUserData;
             this.pfnAllocation = pfnAllocation;
@@ -2585,9 +2585,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypeDebugReportCallbackCreateInfoExt;
         public void* pNext;
         public VkDebugReportFlagBitsEXT flags;
-        public IntPtr pfnCallback;
+        public delegate* unmanaged[Cdecl]<VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void*, int> pfnCallback;
         public void* pUserData;
-        public VkDebugReportCallbackCreateInfoEXT(VkStructureType sType, void* pNext, VkDebugReportFlagBitsEXT flags, IntPtr pfnCallback, void* pUserData)
+        public VkDebugReportCallbackCreateInfoEXT(VkStructureType sType, void* pNext, VkDebugReportFlagBitsEXT flags, delegate* unmanaged[Cdecl]<VkDebugReportFlagBitsEXT, VkDebugReportObjectTypeEXT, ulong, nuint, int, byte*, byte*, void*, int> pfnCallback, void* pUserData)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -6768,9 +6768,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkDebugUtilsMessengerCreateFlagsEXT flags;
         public VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity;
         public VkDebugUtilsMessageTypeFlagBitsEXT messageType;
-        public IntPtr pfnUserCallback;
+        public delegate* unmanaged[Cdecl]<VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void*, int> pfnUserCallback;
         public void* pUserData;
-        public VkDebugUtilsMessengerCreateInfoEXT(VkStructureType sType, void* pNext, VkDebugUtilsMessengerCreateFlagsEXT flags, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagBitsEXT messageType, IntPtr pfnUserCallback, void* pUserData)
+        public VkDebugUtilsMessengerCreateInfoEXT(VkStructureType sType, void* pNext, VkDebugUtilsMessengerCreateFlagsEXT flags, VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagBitsEXT messageType, delegate* unmanaged[Cdecl]<VkDebugUtilsMessageSeverityFlagBitsEXT, VkDebugUtilsMessageTypeFlagBitsEXT, VkDebugUtilsMessengerCallbackDataEXT*, void*, int> pfnUserCallback, void* pUserData)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -6828,9 +6828,9 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypeDeviceDeviceMemoryReportCreateInfoExt;
         public void* pNext;
         public VkDeviceMemoryReportFlagsEXT flags;
-        public IntPtr pfnUserCallback;
+        public delegate* unmanaged[Cdecl]<VkDeviceMemoryReportCallbackDataEXT*, void*, void> pfnUserCallback;
         public void* pUserData;
-        public VkDeviceDeviceMemoryReportCreateInfoEXT(VkStructureType sType, void* pNext, VkDeviceMemoryReportFlagsEXT flags, IntPtr pfnUserCallback, void* pUserData)
+        public VkDeviceDeviceMemoryReportCreateInfoEXT(VkStructureType sType, void* pNext, VkDeviceMemoryReportFlagsEXT flags, delegate* unmanaged[Cdecl]<VkDeviceMemoryReportCallbackDataEXT*, void*, void> pfnUserCallback, void* pUserData)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -10909,8 +10909,8 @@ namespace OpenTK.Graphics.Vulkan
         public void* pNext;
         public uint faultCount;
         public VkFaultData* pFaults;
-        public IntPtr pfnFaultCallback;
-        public VkFaultCallbackInfo(VkStructureType sType, void* pNext, uint faultCount, VkFaultData* pFaults, IntPtr pfnFaultCallback)
+        public delegate* unmanaged[Cdecl]<int, uint, VkFaultData*, void> pfnFaultCallback;
+        public VkFaultCallbackInfo(VkStructureType sType, void* pNext, uint faultCount, VkFaultData* pFaults, delegate* unmanaged[Cdecl]<int, uint, VkFaultData*, void> pfnFaultCallback)
         {
             this.sType = sType;
             this.pNext = pNext;
@@ -17423,8 +17423,8 @@ namespace OpenTK.Graphics.Vulkan
         public VkStructureType sType = VkStructureType.StructureTypeDirectDriverLoadingInfoLunarg;
         public void* pNext;
         public VkDirectDriverLoadingFlagsLUNARG flags;
-        public IntPtr pfnGetInstanceProcAddr;
-        public VkDirectDriverLoadingInfoLUNARG(VkStructureType sType, void* pNext, VkDirectDriverLoadingFlagsLUNARG flags, IntPtr pfnGetInstanceProcAddr)
+        public delegate* unmanaged[Cdecl]<VkInstance, byte*, IntPtr> pfnGetInstanceProcAddr;
+        public VkDirectDriverLoadingInfoLUNARG(VkStructureType sType, void* pNext, VkDirectDriverLoadingFlagsLUNARG flags, delegate* unmanaged[Cdecl]<VkInstance, byte*, IntPtr> pfnGetInstanceProcAddr)
         {
             this.sType = sType;
             this.pNext = pNext;
