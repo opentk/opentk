@@ -138,6 +138,21 @@ namespace VkGenerator.Process
             //data.EnumNames.AddRange(video.EnumNames);
         }
 
+        public static void ApplyExtensionConstants(SpecificationData data)
+        {
+            foreach (Extension extension in data.Extensions)
+            {
+                foreach (RequireTag requireTag in extension.RequireTags)
+                {
+                    foreach (Constant constant in requireTag.Constants)
+                    {
+                        // FIXME: Mark these as from a specific extension so we can add a comment about that.
+                        data.Constants.Add(constant.Name, constant);
+                    }
+                }
+            }
+        }
+
         public static Dictionary<string, BaseCSType> BuildTypeMap(SpecificationData data, SpecificationData video)
         {
             Dictionary<string, BaseCSType> typeMap = new Dictionary<string, BaseCSType>();
@@ -274,8 +289,12 @@ namespace VkGenerator.Process
         {
             Dictionary<string, Constant> constantsMap = new Dictionary<string, Constant>(data.Constants);
 
-            Debug.Assert(video.Constants.Count == 0);
+            foreach (var (name, constant) in video.Constants)
+            {
+                constantsMap.Add(name, constant);
+            }
 
+            /*
             foreach (Extension extension in data.Extensions)
             {
                 foreach (RequireTag requireTag in extension.RequireTags)
@@ -297,6 +316,7 @@ namespace VkGenerator.Process
                     }
                 }
             }
+            */
 
             return constantsMap;
         }

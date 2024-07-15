@@ -41,6 +41,8 @@ namespace VkGenerator
 
             WriteFunctionPointers(directoryPath, data.Commands, video);
             WriteCommands(directoryPath, data.Commands, video);
+
+            WriteConstants(directoryPath, data.Constants);
         }
 
         private static void WriteEnums(string directoryPath, List<EnumType> enums)
@@ -71,7 +73,7 @@ namespace VkGenerator
                             string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
                             if (member.Extension != null)
                             {
-                                writer.WriteLine($"/// <summary>[requires: {member.Extension}]{comment}</summary>");
+                                writer.WriteLine($"/// <summary>[requires: <b>{member.Extension}</b>]{comment}</summary>");
                             }
                             else if (comment != null)
                             {
@@ -298,6 +300,61 @@ namespace VkGenerator
             }
         }
 
+        private static void WriteConstants(string directoryPath, Dictionary<string, Constant> constants)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Constants.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using OpenTK.Mathematics;");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.CompilerServices;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}.Vulkan");
+            using (writer.CsScope())
+            {
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+
+                writer.WriteLine("public static unsafe partial class Vk");
+                using (writer.CsScope())
+                {
+                    foreach ((string name, Constant constant) in constants)
+                    {
+                        if (constant.Extension != null)
+                        {
+                            writer.WriteLine($"/// <summary>[from: <b>{constant.Extension}</b>]{constant.Comment}</summary>");
+                        }
+                        else if (constant.Comment != null)
+                        {
+                            writer.WriteLine($"/// <summary>{constant.Comment}</summary>");
+                        }
+
+                        switch (constant.Type)
+                        {
+                            case ConstantType.Int32:
+                                writer.WriteLine($"public const int {NameMangler.MangleConstantName(name)} = {(int)constant.IntValue};");
+                                break;
+                            case ConstantType.Uint32:
+                                writer.WriteLine($"public const uint {NameMangler.MangleConstantName(name)} = {(uint)constant.IntValue};");
+                                break;
+                            case ConstantType.Uint64:
+                                writer.WriteLine($"public const ulong {NameMangler.MangleConstantName(name)} = {(ulong)constant.IntValue};");
+                                break;
+                            case ConstantType.Float:
+                                writer.WriteLine($"public const float {NameMangler.MangleConstantName(name)} = {(int)constant.FloatValue};");
+                                break;
+                            case ConstantType.String:
+                                writer.WriteLine($"public const string {NameMangler.MangleConstantName(name)} = {constant.StringValue};");
+                                break;
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+            }
+        }
 
 
         public static void WriteVideo(SpecificationData video)

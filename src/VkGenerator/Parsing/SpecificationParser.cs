@@ -98,7 +98,7 @@ namespace VkGenerator.Parsing
         String,
     }
 
-    public record Constant(ConstantType Type, string Name, ulong IntValue, float FloatValue, string StringValue);
+    public record Constant(ConstantType Type, string Name, string? Extension, string? Comment, ulong IntValue, float FloatValue, string StringValue);
 
     internal class SpecificationParser
     {
@@ -322,12 +322,13 @@ namespace VkGenerator.Parsing
                     foreach (XElement @const in enums.Elements("enum"))
                     {
                         string constName = @const.Attribute("name")?.Value ?? throw new Exception();
+                        string? comment = @const.Attribute("comment")?.Value;
                         string? alias = @const.Attribute("alias")?.Value;
                         if (alias != null)
                         {
                             if (constantsMap.TryGetValue(alias, out Constant? constant))
                             {
-                                constantsMap.Add(constName, constant);
+                                constantsMap.Add(constName, new Constant(constant.Type, constName, null, comment, constant.IntValue, constant.FloatValue, constant.StringValue));
                             }
                         }
                         else
@@ -377,7 +378,7 @@ namespace VkGenerator.Parsing
                                 intValue = ~intValue;
                             }
 
-                            constantsMap.Add(constName, new Constant(constType, constName, intValue, floatValue, ""));
+                            constantsMap.Add(constName, new Constant(constType, constName, null, comment, intValue, floatValue, ""));
                         }
                     }
                 }
@@ -521,7 +522,7 @@ namespace VkGenerator.Parsing
                             continue;
 
                         // Features have extension number 0
-                        requireTags.Add(ParseRequireTag(require, 0));
+                        requireTags.Add(ParseRequireTag(require, 0, null));
                     }
 
                     features.Add(new Feature(name, number, depends, comment, requireTags));
@@ -570,7 +571,7 @@ namespace VkGenerator.Parsing
                     if (require.Attribute("api")?.Value == "vulkansc")
                         continue;
 
-                    requireTags.Add(ParseRequireTag(require, number));
+                    requireTags.Add(ParseRequireTag(require, number, name));
                 }
 
                 extensions.Add(new Extension(
@@ -596,13 +597,14 @@ namespace VkGenerator.Parsing
             return extensions;
         }
 
-        public static RequireTag ParseRequireTag(XElement require, int number)
+        public static RequireTag ParseRequireTag(XElement require, int number, string? extensionName)
         {
             // FIXME: use?
             string? requireDepends = require.Attribute("depends")?.Value;
             string? tagComment = require.Attribute("comment")?.Value;
 
             List<RequireEnum> requiredEnums = new List<RequireEnum>();
+            List<Constant> requiredConstants = new List<Constant>();
             foreach (XElement @enum in require.Elements("enum"))
             {
                 if (@enum.Attribute("api")?.Value == "vulkansc")
@@ -611,53 +613,82 @@ namespace VkGenerator.Parsing
                 string? extends = @enum.Attribute("extends")?.Value;
                 if (extends == null)
                 {
-                    // FIXME: Add these constants!
-                    Console.WriteLine(@enum);
-                    // Extensions add a few global constants that are not part of
-                    // any enum. We skip these for now.
-                    continue;
-                }
+                    // This is a constant.
 
-                string? comment = @enum.Attribute("comment")?.Value;
+                    string constName = @enum.Attribute("name")?.Value ?? throw new Exception();
+                    string? comment = @enum.Attribute("comment")?.Value;
 
-                string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
-
-                string? alias = @enum.Attribute("alias")?.Value;
-                if (alias != null)
-                {
-                    requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
-                }
-                else
-                {
-                    string? offsetStr = @enum.Attribute("offset")?.Value;
-                    string? bitposStr = @enum.Attribute("bitpos")?.Value;
                     string? valueStr = @enum.Attribute("value")?.Value;
-
-                    int value;
-                    if (offsetStr != null)
+                    if (valueStr != null)
                     {
-                        if (int.TryParse(@enum.Attribute("extnumber")?.Value ?? "", out int extNumber) == false)
-                            extNumber = number;
+                        if (valueStr.StartsWith("VK_"))
+                        {
+                            Console.WriteLine(valueStr);
+                            continue;
+                        }
+                        else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
+                        {
+                            // This is a string constant.
+                            requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
+                        }
+                        else
+                        {
+                            int value = (int)Int32Converter.ConvertFromString(valueStr)!;
 
-                        value = 1000000000 + ((extNumber - 1) * 1000) + int.Parse(offsetStr);
-
-                        if (@enum.Attribute("dir")?.Value == "-")
-                            value = -value;
-                    }
-                    else if (bitposStr != null)
-                    {
-                        value = 1 << int.Parse(bitposStr);
-                    }
-                    else if (valueStr != null)
-                    {
-                        value = int.Parse(valueStr);
+                            // FIXME: Figure out the type?
+                            requiredConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
+                        }
                     }
                     else
                     {
-                        throw new Exception();
+                        // This is a reference to a constant defined previously as an enum.
+                        // Maybe we want to handle this?
+                        //Console.WriteLine($"Enum without extends= or value=: {constName}");
                     }
+                }
+                else
+                {
+                    string? comment = @enum.Attribute("comment")?.Value;
 
-                    requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                    string enumName = @enum.Attribute("name")?.Value ?? throw new Exception();
+
+                    string? alias = @enum.Attribute("alias")?.Value;
+                    if (alias != null)
+                    {
+                        requiredEnums.Add(new RequireEnum(enumName, null, extends, alias, comment));
+                    }
+                    else
+                    {
+                        string? offsetStr = @enum.Attribute("offset")?.Value;
+                        string? bitposStr = @enum.Attribute("bitpos")?.Value;
+                        string? valueStr = @enum.Attribute("value")?.Value;
+
+                        int value;
+                        if (offsetStr != null)
+                        {
+                            if (int.TryParse(@enum.Attribute("extnumber")?.Value ?? "", out int extNumber) == false)
+                                extNumber = number;
+
+                            value = 1000000000 + ((extNumber - 1) * 1000) + int.Parse(offsetStr);
+
+                            if (@enum.Attribute("dir")?.Value == "-")
+                                value = -value;
+                        }
+                        else if (bitposStr != null)
+                        {
+                            value = 1 << int.Parse(bitposStr);
+                        }
+                        else if (valueStr != null)
+                        {
+                            value = int.Parse(valueStr);
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+
+                        requiredEnums.Add(new RequireEnum(enumName, value, extends, null, comment));
+                    }
                 }
             }
 
@@ -677,7 +708,7 @@ namespace VkGenerator.Parsing
                 requiredTypes.Add(new RequireType(commandName));
             }
 
-            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, new List<Constant>(), tagComment);
+            return new RequireTag(requiredEnums, requiredCommands, requiredTypes, requiredConstants, tagComment);
         }
 
 
@@ -716,7 +747,7 @@ namespace VkGenerator.Parsing
                     if (require.Attribute("api")?.Value == "vulkansc")
                         continue;
 
-                    requireTags.Add(ParseVideoRequireTag(require, -1));
+                    requireTags.Add(ParseVideoRequireTag(require, -1, name));
                 }
 
                 extensions.Add(new Extension(
@@ -742,7 +773,7 @@ namespace VkGenerator.Parsing
             return extensions;
         }
 
-        public static RequireTag ParseVideoRequireTag(XElement require, int number)
+        public static RequireTag ParseVideoRequireTag(XElement require, int number, string? extensionName)
         {
             // FIXME: use?
             string? requireDepends = require.Attribute("depends")?.Value;
@@ -761,6 +792,7 @@ namespace VkGenerator.Parsing
                     // This is a constant.
 
                     string constName = @enum.Attribute("name")?.Value ?? throw new Exception();
+                    string? comment = @enum.Attribute("comment")?.Value;
 
                     string valueStr = @enum.Attribute("value")?.Value ?? throw new Exception();
                     if (valueStr.StartsWith("VK_"))
@@ -771,14 +803,14 @@ namespace VkGenerator.Parsing
                     else if (valueStr.StartsWith("\"") && valueStr.EndsWith("\""))
                     {
                         // This is a string constant.
-                        requiredConstants.Add(new Constant(ConstantType.String, constName, 0, 0, valueStr));
+                        requiredConstants.Add(new Constant(ConstantType.String, constName, extensionName, comment, 0, 0, valueStr));
                     }
                     else
                     {
                         int value = (int)Int32Converter.ConvertFromString(valueStr)!;
 
                         // FIXME: Figure out the type?
-                        requiredConstants.Add(new Constant(ConstantType.Uint32, constName, (ulong)value, 0, ""));
+                        requiredConstants.Add(new Constant(ConstantType.Uint32, constName, extensionName, comment, (ulong)value, 0, ""));
                     }
                 }
                 else
