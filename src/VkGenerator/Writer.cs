@@ -344,6 +344,7 @@ namespace VkGenerator
                                 writer.WriteLine($"public const float {NameMangler.MangleConstantName(name)} = {(int)constant.FloatValue};");
                                 break;
                             case ConstantType.String:
+                                // FIXME: Should expose these are string and/or ReadOnlySpan<byte>?
                                 writer.WriteLine($"public const string {NameMangler.MangleConstantName(name)} = {constant.StringValue};");
                                 break;
                             default:
