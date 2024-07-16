@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -6908,7 +6908,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TexStorageSparseAMD(TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTexStorageSparseAMD_fnptr((uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_sparse_texture]</b> <b>[entry point: <c>glTextureStorageSparseAMD</c>]</b><br/>  </summary>
-            public static void TextureStorageSparseAMD(int texture, All target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
+            public static void TextureStorageSparseAMD(int texture, TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5]</b> <b>[entry point: <c>glUniform1i64NV</c>]</b><br/>  </summary>
             public static void Uniform1i64NV(int location, long x) => GLPointers._glUniform1i64NV_fnptr(location, x);
@@ -10162,7 +10162,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TexImage3DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._glTexImage3DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_sparse_texture]</b> <b>[entry point: <c>glTexPageCommitmentARB</c>]</b><br/>  </summary>
-            public static void TexPageCommitmentARB(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
+            public static void TexPageCommitmentARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: v4.2 | GL_ARB_texture_storage]</b> <b>[entry point: <c>glTexStorage1D</c>]</b><br/> Simultaneously specify storage for all levels of a one-dimensional texture. </summary>
             /// <param name="target"> Specifies the target to which the texture object is bound for glTexStorage1D. Must be one of GL_TEXTURE_1D or GL_PROXY_TEXTURE_1D. </param>
@@ -12799,7 +12799,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TextureRenderbufferEXT(int texture, TextureTarget target, int renderbuffer) => GLPointers._glTextureRenderbufferEXT_fnptr(texture, (uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage1DEXT</c>]</b><br/>  </summary>
-            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage2DEXT</c>]</b><br/>  </summary>
             public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
@@ -15558,6 +15558,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         {
             /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
             public static void FramebufferTextureMultiviewOVR(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glFramebufferTextureMultiviewOVR_fnptr((uint)target, (uint)attachment, texture, level, baseViewIndex, numViews);
+            
+            /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glNamedFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
+            public static void NamedFramebufferTextureMultiviewOVR(int framebuffer, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glNamedFramebufferTextureMultiviewOVR_fnptr(framebuffer, (uint)attachment, texture, level, baseViewIndex, numViews);
             
         }
         /// <summary>PGI extensions.</summary>

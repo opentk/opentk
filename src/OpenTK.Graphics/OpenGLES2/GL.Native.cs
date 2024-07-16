@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -95,7 +95,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindRenderbuffer.xhtml" /></remarks>
         public static void BindRenderbuffer(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbuffer_fnptr((uint)target, renderbuffer);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glBindSampler</c>]</b><br/> Bind a named sampler to a texturing target. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glBindSampler</c>]</b><br/> Bind a named sampler to a texturing target. </summary>
         /// <param name="unit"> Specifies the index of the texture unit to which the sampler is bound. </param>
         /// <param name="sampler"> Specifies the name of a sampler. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindSampler.xhtml" /></remarks>
@@ -508,7 +508,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteRenderbuffers.xhtml" /></remarks>
         public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffers_fnptr(n, renderbuffers);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
         /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
         /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteSamplers.xhtml" /></remarks>
@@ -810,7 +810,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenRenderbuffers.xhtml" /></remarks>
         public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffers_fnptr(n, renderbuffers);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
         /// <param name="n"> Specifies the number of sampler object names to generate. </param>
         /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenSamplers.xhtml" /></remarks>
@@ -1170,7 +1170,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetRenderbufferParameteriv.xhtml" /></remarks>
         public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameteriv_fnptr((uint)target, (uint)pname, parameters);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetSamplerParameterfv</c>]</b><br/> Return sampler parameter values. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGetSamplerParameterfv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
@@ -1191,7 +1191,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
         public static void GetSamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* parameters) => GLPointers._glGetSamplerParameterIuiv_fnptr(sampler, (uint)pname, parameters);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glGetSamplerParameteriv</c>]</b><br/> Return sampler parameter values. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGetSamplerParameteriv</c>]</b><br/> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
         /// <param name="parameters"> Returns the sampler parameters. </param>
@@ -1445,7 +1445,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsRenderbuffer.xhtml" /></remarks>
         public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbuffer_fnptr(renderbuffer) != 0;
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsSampler.xhtml" /></remarks>
         public static bool IsSampler(int sampler) => GLPointers._glIsSampler_fnptr(sampler) != 0;
@@ -1928,21 +1928,21 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSampleMaski.xhtml" /></remarks>
         public static void SampleMaski(uint maskNumber, uint mask) => GLPointers._glSampleMaski_fnptr(maskNumber, mask);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameterf</c>]</b><br/> Set sampler parameters. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterf</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterf(int sampler, SamplerParameterF pname, float param) => GLPointers._glSamplerParameterf_fnptr(sampler, (uint)pname, param);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterfv(int sampler, SamplerParameterF pname, float* param) => GLPointers._glSamplerParameterfv_fnptr(sampler, (uint)pname, param);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameteri</c>]</b><br/> Set sampler parameters. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteri</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
@@ -1963,7 +1963,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
         public static void SamplerParameterIuiv(int sampler, SamplerParameterI pname, uint* param) => GLPointers._glSamplerParameterIuiv_fnptr(sampler, (uint)pname, param);
         
-        /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
+        /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
         /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
@@ -2702,7 +2702,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static SyncStatus ClientWaitSyncAPPLE(GLSync sync, SyncObjectMask flags, ulong timeout) => (SyncStatus) GLPointers._glClientWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
             
             /// <summary> <b>[requires: GL_APPLE_copy_texture_levels]</b> <b>[entry point: <c>glCopyTextureLevelsAPPLE</c>]</b><br/>  </summary>
-            public static void CopyTextureLevelsAPPLE(uint destinationTexture, uint sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+            public static void CopyTextureLevelsAPPLE(int destinationTexture, int sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b> <b>[entry point: <c>glDeleteSyncAPPLE</c>]</b><br/>  </summary>
             public static void DeleteSyncAPPLE(GLSync sync) => GLPointers._glDeleteSyncAPPLE_fnptr((IntPtr)sync);
@@ -2727,6 +2727,13 @@ namespace OpenTK.Graphics.OpenGLES2
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b> <b>[entry point: <c>glWaitSyncAPPLE</c>]</b><br/>  </summary>
             public static void WaitSyncAPPLE(GLSync sync, SyncBehaviorFlags flags, ulong timeout) => GLPointers._glWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
+            
+        }
+        /// <summary>ARM extensions.</summary>
+        public static unsafe partial class ARM
+        {
+            /// <summary> <b>[requires: GL_ARM_shader_core_properties]</b> <b>[entry point: <c>glMaxActiveShaderCoresARM</c>]</b><br/>  </summary>
+            public static void MaxActiveShaderCoresARM(uint count) => GLPointers._glMaxActiveShaderCoresARM_fnptr(count);
             
         }
         /// <summary>EXT extensions.</summary>
@@ -3204,7 +3211,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void TexBufferRangeEXT(TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTexBufferRangeEXT_fnptr((uint)target, (uint)internalformat, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_EXT_sparse_texture]</b> <b>[entry point: <c>glTexPageCommitmentEXT</c>]</b><br/>  </summary>
-            public static void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
+            public static void TexPageCommitmentEXT(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_texture_border_clamp]</b> <b>[entry point: <c>glTexParameterIivEXT</c>]</b><br/>  </summary>
             public static void TexParameterIivEXT(TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTexParameterIivEXT_fnptr((uint)target, (uint)pname, parameters);
@@ -3243,7 +3250,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTexStorageMem3DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage1DEXT</c>]</b><br/>  </summary>
-            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage2DEXT</c>]</b><br/>  </summary>
             public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
@@ -3548,11 +3555,76 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <summary>MESA extensions.</summary>
         public static unsafe partial class MESA
         {
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glBindSampler</c>]</b><br/> Bind a named sampler to a texturing target. </summary>
+            /// <param name="unit"> Specifies the index of the texture unit to which the sampler is bound. </param>
+            /// <param name="sampler"> Specifies the name of a sampler. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glBindSampler.xhtml" /></remarks>
+            public static void BindSampler(uint unit, int sampler) => GLPointers._glBindSampler_fnptr(unit, sampler);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glDeleteSamplers</c>]</b><br/> Delete named sampler objects. </summary>
+            /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
+            /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glDeleteSamplers.xhtml" /></remarks>
+            public static void DeleteSamplers(int count, int* samplers) => GLPointers._glDeleteSamplers_fnptr(count, samplers);
+            
             /// <summary> <b>[requires: GL_MESA_framebuffer_flip_y]</b> <b>[entry point: <c>glFramebufferParameteriMESA</c>]</b><br/>  </summary>
             public static void FramebufferParameteriMESA(FramebufferTarget target, FramebufferParameterName pname, int param) => GLPointers._glFramebufferParameteriMESA_fnptr((uint)target, (uint)pname, param);
             
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGenSamplers</c>]</b><br/> Generate sampler object names. </summary>
+            /// <param name="n"> Specifies the number of sampler object names to generate. </param>
+            /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGenSamplers.xhtml" /></remarks>
+            public static void GenSamplers(int count, int* samplers) => GLPointers._glGenSamplers_fnptr(count, samplers);
+            
             /// <summary> <b>[requires: GL_MESA_framebuffer_flip_y]</b> <b>[entry point: <c>glGetFramebufferParameterivMESA</c>]</b><br/>  </summary>
             public static void GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferParameterivMESA_fnptr((uint)target, (uint)pname, parameters);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGetSamplerParameterfv</c>]</b><br/> Return sampler parameter values. </summary>
+            /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+            /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
+            public static void GetSamplerParameterfv(int sampler, SamplerParameterF pname, float* parameters) => GLPointers._glGetSamplerParameterfv_fnptr(sampler, (uint)pname, parameters);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glGetSamplerParameteriv</c>]</b><br/> Return sampler parameter values. </summary>
+            /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+            /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glGetSamplerParameter.xhtml" /></remarks>
+            public static void GetSamplerParameteriv(int sampler, SamplerParameterI pname, int* parameters) => GLPointers._glGetSamplerParameteriv_fnptr(sampler, (uint)pname, parameters);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glIsSampler</c>]</b><br/> Determine if a name corresponds to a sampler object. </summary>
+            /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glIsSampler.xhtml" /></remarks>
+            public static bool IsSampler(int sampler) => GLPointers._glIsSampler_fnptr(sampler) != 0;
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterf</c>]</b><br/> Set sampler parameters. </summary>
+            /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+            /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+            /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
+            public static void SamplerParameterf(int sampler, SamplerParameterF pname, float param) => GLPointers._glSamplerParameterf_fnptr(sampler, (uint)pname, param);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameterfv</c>]</b><br/> Set sampler parameters. </summary>
+            /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+            /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
+            public static void SamplerParameterfv(int sampler, SamplerParameterF pname, float* param) => GLPointers._glSamplerParameterfv_fnptr(sampler, (uint)pname, param);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteri</c>]</b><br/> Set sampler parameters. </summary>
+            /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+            /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+            /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
+            public static void SamplerParameteri(int sampler, SamplerParameterI pname, int param) => GLPointers._glSamplerParameteri_fnptr(sampler, (uint)pname, param);
+            
+            /// <summary> <b>[requires: v3.0 | GL_MESA_sampler_objects]</b> <b>[entry point: <c>glSamplerParameteriv</c>]</b><br/> Set sampler parameters. </summary>
+            /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+            /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/html/glSamplerParameter.xhtml" /></remarks>
+            public static void SamplerParameteriv(int sampler, SamplerParameterI pname, int* param) => GLPointers._glSamplerParameteriv_fnptr(sampler, (uint)pname, param);
             
         }
         /// <summary>NV extensions.</summary>
@@ -4229,7 +4301,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void CopyImageSubDataOES(uint srcName, CopyBufferSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyBufferSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => GLPointers._glCopyImageSubDataOES_fnptr(srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
             
             /// <summary> <b>[requires: GL_OES_texture_3D]</b> <b>[entry point: <c>glCopyTexSubImage3DOES</c>]</b><br/>  </summary>
-            public static void CopyTexSubImage3DOES(All target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage3DOES_fnptr((uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
+            public static void CopyTexSubImage3DOES(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage3DOES_fnptr((uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b> <b>[entry point: <c>glDeleteVertexArraysOES</c>]</b><br/>  </summary>
             public static void DeleteVertexArraysOES(int n, int* arrays) => GLPointers._glDeleteVertexArraysOES_fnptr(n, arrays);
@@ -4375,6 +4447,9 @@ namespace OpenTK.Graphics.OpenGLES2
             
             /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
             public static void FramebufferTextureMultiviewOVR(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glFramebufferTextureMultiviewOVR_fnptr((uint)target, (uint)attachment, texture, level, baseViewIndex, numViews);
+            
+            /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glNamedFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
+            public static void NamedFramebufferTextureMultiviewOVR(int framebuffer, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glNamedFramebufferTextureMultiviewOVR_fnptr(framebuffer, (uint)attachment, texture, level, baseViewIndex, numViews);
             
         }
         /// <summary>QCOM extensions.</summary>

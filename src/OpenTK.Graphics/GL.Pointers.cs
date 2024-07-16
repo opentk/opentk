@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -3636,11 +3636,11 @@ namespace OpenTK.Graphics.OpenGL
         }
         
         /// <summary><b>[entry point: <c>glCopyTextureLevelsAPPLE</c>]</b></summary>
-        public static delegate* unmanaged<uint, uint, int, int, void> _glCopyTextureLevelsAPPLE_fnptr = &glCopyTextureLevelsAPPLE_Lazy;
+        public static delegate* unmanaged<int, int, int, int, void> _glCopyTextureLevelsAPPLE_fnptr = &glCopyTextureLevelsAPPLE_Lazy;
         [UnmanagedCallersOnly]
-        private static void glCopyTextureLevelsAPPLE_Lazy(uint destinationTexture, uint sourceTexture, int sourceBaseLevel, int sourceLevelCount)
+        private static void glCopyTextureLevelsAPPLE_Lazy(int destinationTexture, int sourceTexture, int sourceBaseLevel, int sourceLevelCount)
         {
-            _glCopyTextureLevelsAPPLE_fnptr = (delegate* unmanaged<uint, uint, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glCopyTextureLevelsAPPLE");
+            _glCopyTextureLevelsAPPLE_fnptr = (delegate* unmanaged<int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glCopyTextureLevelsAPPLE");
             _glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
         }
         
@@ -14390,6 +14390,15 @@ namespace OpenTK.Graphics.OpenGL
             _glMatrixTranslatefEXT_fnptr(mode, x, y, z);
         }
         
+        /// <summary><b>[entry point: <c>glMaxActiveShaderCoresARM</c>]</b></summary>
+        public static delegate* unmanaged<uint, void> _glMaxActiveShaderCoresARM_fnptr = &glMaxActiveShaderCoresARM_Lazy;
+        [UnmanagedCallersOnly]
+        private static void glMaxActiveShaderCoresARM_Lazy(uint count)
+        {
+            _glMaxActiveShaderCoresARM_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glMaxActiveShaderCoresARM");
+            _glMaxActiveShaderCoresARM_fnptr(count);
+        }
+        
         /// <summary><b>[entry point: <c>glMaxShaderCompilerThreadsARB</c>]</b></summary>
         public static delegate* unmanaged<uint, void> _glMaxShaderCompilerThreadsARB_fnptr = &glMaxShaderCompilerThreadsARB_Lazy;
         [UnmanagedCallersOnly]
@@ -16305,6 +16314,15 @@ namespace OpenTK.Graphics.OpenGL
         {
             _glNamedFramebufferTextureLayerEXT_fnptr = (delegate* unmanaged<int, uint, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glNamedFramebufferTextureLayerEXT");
             _glNamedFramebufferTextureLayerEXT_fnptr(framebuffer, attachment, texture, level, layer);
+        }
+        
+        /// <summary><b>[entry point: <c>glNamedFramebufferTextureMultiviewOVR</c>]</b></summary>
+        public static delegate* unmanaged<int, uint, int, int, int, int, void> _glNamedFramebufferTextureMultiviewOVR_fnptr = &glNamedFramebufferTextureMultiviewOVR_Lazy;
+        [UnmanagedCallersOnly]
+        private static void glNamedFramebufferTextureMultiviewOVR_Lazy(int framebuffer, uint attachment, int texture, int level, int baseViewIndex, int numViews)
+        {
+            _glNamedFramebufferTextureMultiviewOVR_fnptr = (delegate* unmanaged<int, uint, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glNamedFramebufferTextureMultiviewOVR");
+            _glNamedFramebufferTextureMultiviewOVR_fnptr(framebuffer, attachment, texture, level, baseViewIndex, numViews);
         }
         
         /// <summary><b>[entry point: <c>glNamedProgramLocalParameter4dEXT</c>]</b></summary>

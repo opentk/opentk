@@ -71,70 +71,70 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     <!-- Bitmasks each have their own namespace, although bits are
          sometimes reused for other purposes -->
 
-    <enums namespace="WGLLayerPlaneMask" type="bitmask" vendor="MS">
-        <enum value="0x00000001"  name="WGL_SWAP_MAIN_PLANE" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000002"  name="WGL_SWAP_OVERLAY1" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000004"  name="WGL_SWAP_OVERLAY2" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000008"  name="WGL_SWAP_OVERLAY3" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000010"  name="WGL_SWAP_OVERLAY4" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000020"  name="WGL_SWAP_OVERLAY5" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000040"  name="WGL_SWAP_OVERLAY6" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000080"  name="WGL_SWAP_OVERLAY7" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000100"  name="WGL_SWAP_OVERLAY8" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000200"  name="WGL_SWAP_OVERLAY9" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000400"  name="WGL_SWAP_OVERLAY10" group="WGLLayerPlaneMask"/>
-        <enum value="0x00000800"  name="WGL_SWAP_OVERLAY11" group="WGLLayerPlaneMask"/>
-        <enum value="0x00001000"  name="WGL_SWAP_OVERLAY12" group="WGLLayerPlaneMask"/>
-        <enum value="0x00002000"  name="WGL_SWAP_OVERLAY13" group="WGLLayerPlaneMask"/>
-        <enum value="0x00004000"  name="WGL_SWAP_OVERLAY14" group="WGLLayerPlaneMask"/>
-        <enum value="0x00008000"  name="WGL_SWAP_OVERLAY15" group="WGLLayerPlaneMask"/>
-        <enum value="0x00010000"  name="WGL_SWAP_UNDERLAY1" group="WGLLayerPlaneMask"/>
-        <enum value="0x00020000"  name="WGL_SWAP_UNDERLAY2" group="WGLLayerPlaneMask"/>
-        <enum value="0x00040000"  name="WGL_SWAP_UNDERLAY3" group="WGLLayerPlaneMask"/>
-        <enum value="0x00080000"  name="WGL_SWAP_UNDERLAY4" group="WGLLayerPlaneMask"/>
-        <enum value="0x00100000"  name="WGL_SWAP_UNDERLAY5" group="WGLLayerPlaneMask"/>
-        <enum value="0x00200000"  name="WGL_SWAP_UNDERLAY6" group="WGLLayerPlaneMask"/>
-        <enum value="0x00400000"  name="WGL_SWAP_UNDERLAY7" group="WGLLayerPlaneMask"/>
-        <enum value="0x00800000"  name="WGL_SWAP_UNDERLAY8" group="WGLLayerPlaneMask"/>
-        <enum value="0x01000000"  name="WGL_SWAP_UNDERLAY9" group="WGLLayerPlaneMask"/>
-        <enum value="0x02000000"  name="WGL_SWAP_UNDERLAY10" group="WGLLayerPlaneMask"/>
-        <enum value="0x04000000"  name="WGL_SWAP_UNDERLAY11" group="WGLLayerPlaneMask"/>
-        <enum value="0x08000000"  name="WGL_SWAP_UNDERLAY12" group="WGLLayerPlaneMask"/>
-        <enum value="0x10000000"  name="WGL_SWAP_UNDERLAY13" group="WGLLayerPlaneMask"/>
-        <enum value="0x20000000"  name="WGL_SWAP_UNDERLAY14" group="WGLLayerPlaneMask"/>
-        <enum value="0x40000000"  name="WGL_SWAP_UNDERLAY15" group="WGLLayerPlaneMask"/>
+    <enums namespace="LayerPlaneMask" type="bitmask" vendor="MS">
+        <enum value="0x00000001"  name="WGL_SWAP_MAIN_PLANE" group="LayerPlaneMask"/>
+        <enum value="0x00000002"  name="WGL_SWAP_OVERLAY1" group="LayerPlaneMask"/>
+        <enum value="0x00000004"  name="WGL_SWAP_OVERLAY2" group="LayerPlaneMask"/>
+        <enum value="0x00000008"  name="WGL_SWAP_OVERLAY3" group="LayerPlaneMask"/>
+        <enum value="0x00000010"  name="WGL_SWAP_OVERLAY4" group="LayerPlaneMask"/>
+        <enum value="0x00000020"  name="WGL_SWAP_OVERLAY5" group="LayerPlaneMask"/>
+        <enum value="0x00000040"  name="WGL_SWAP_OVERLAY6" group="LayerPlaneMask"/>
+        <enum value="0x00000080"  name="WGL_SWAP_OVERLAY7" group="LayerPlaneMask"/>
+        <enum value="0x00000100"  name="WGL_SWAP_OVERLAY8" group="LayerPlaneMask"/>
+        <enum value="0x00000200"  name="WGL_SWAP_OVERLAY9" group="LayerPlaneMask"/>
+        <enum value="0x00000400"  name="WGL_SWAP_OVERLAY10" group="LayerPlaneMask"/>
+        <enum value="0x00000800"  name="WGL_SWAP_OVERLAY11" group="LayerPlaneMask"/>
+        <enum value="0x00001000"  name="WGL_SWAP_OVERLAY12" group="LayerPlaneMask"/>
+        <enum value="0x00002000"  name="WGL_SWAP_OVERLAY13" group="LayerPlaneMask"/>
+        <enum value="0x00004000"  name="WGL_SWAP_OVERLAY14" group="LayerPlaneMask"/>
+        <enum value="0x00008000"  name="WGL_SWAP_OVERLAY15" group="LayerPlaneMask"/>
+        <enum value="0x00010000"  name="WGL_SWAP_UNDERLAY1" group="LayerPlaneMask"/>
+        <enum value="0x00020000"  name="WGL_SWAP_UNDERLAY2" group="LayerPlaneMask"/>
+        <enum value="0x00040000"  name="WGL_SWAP_UNDERLAY3" group="LayerPlaneMask"/>
+        <enum value="0x00080000"  name="WGL_SWAP_UNDERLAY4" group="LayerPlaneMask"/>
+        <enum value="0x00100000"  name="WGL_SWAP_UNDERLAY5" group="LayerPlaneMask"/>
+        <enum value="0x00200000"  name="WGL_SWAP_UNDERLAY6" group="LayerPlaneMask"/>
+        <enum value="0x00400000"  name="WGL_SWAP_UNDERLAY7" group="LayerPlaneMask"/>
+        <enum value="0x00800000"  name="WGL_SWAP_UNDERLAY8" group="LayerPlaneMask"/>
+        <enum value="0x01000000"  name="WGL_SWAP_UNDERLAY9" group="LayerPlaneMask"/>
+        <enum value="0x02000000"  name="WGL_SWAP_UNDERLAY10" group="LayerPlaneMask"/>
+        <enum value="0x04000000"  name="WGL_SWAP_UNDERLAY11" group="LayerPlaneMask"/>
+        <enum value="0x08000000"  name="WGL_SWAP_UNDERLAY12" group="LayerPlaneMask"/>
+        <enum value="0x10000000"  name="WGL_SWAP_UNDERLAY13" group="LayerPlaneMask"/>
+        <enum value="0x20000000"  name="WGL_SWAP_UNDERLAY14" group="LayerPlaneMask"/>
+        <enum value="0x40000000"  name="WGL_SWAP_UNDERLAY15" group="LayerPlaneMask"/>
     </enums>
 
-    <enums namespace="WGLColorBufferMask" type="bitmask" vendor="ARB">
-        <enum value="0x00000001"    name="WGL_FRONT_COLOR_BUFFER_BIT_ARB" group="WGLColorBufferMask"/>
-        <enum value="0x00000002"    name="WGL_BACK_COLOR_BUFFER_BIT_ARB" group="WGLColorBufferMask"/>
-        <enum value="0x00000004"    name="WGL_DEPTH_BUFFER_BIT_ARB" group="WGLColorBufferMask"/>
-        <enum value="0x00000008"    name="WGL_STENCIL_BUFFER_BIT_ARB" group="WGLColorBufferMask"/>
+    <enums namespace="ColorBufferMask" type="bitmask" vendor="ARB">
+        <enum value="0x00000001"    name="WGL_FRONT_COLOR_BUFFER_BIT_ARB" group="ColorBufferMask"/>
+        <enum value="0x00000002"    name="WGL_BACK_COLOR_BUFFER_BIT_ARB" group="ColorBufferMask"/>
+        <enum value="0x00000004"    name="WGL_DEPTH_BUFFER_BIT_ARB" group="ColorBufferMask"/>
+        <enum value="0x00000008"    name="WGL_STENCIL_BUFFER_BIT_ARB" group="ColorBufferMask"/>
     </enums>
 
-    <enums namespace="WGLContextFlagsMask" type="bitmask" vendor="ARB">
-        <enum value="0x00000001"    name="WGL_CONTEXT_DEBUG_BIT_ARB" group="WGLContextFlagsMask"/>
-        <enum value="0x00000002"    name="WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB" group="WGLContextFlagsMask"/>
-        <enum value="0x00000004"    name="WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB" group="WGLContextFlagsMask"/>
-        <enum value="0x00000008"    name="WGL_CONTEXT_RESET_ISOLATION_BIT_ARB" group="WGLContextFlagsMask"/>
+    <enums namespace="ContextFlagsMask" type="bitmask" vendor="ARB">
+        <enum value="0x00000001"    name="WGL_CONTEXT_DEBUG_BIT_ARB" group="ContextFlagsMask"/>
+        <enum value="0x00000002"    name="WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB" group="ContextFlagsMask"/>
+        <enum value="0x00000004"    name="WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB" group="ContextFlagsMask"/>
+        <enum value="0x00000008"    name="WGL_CONTEXT_RESET_ISOLATION_BIT_ARB" group="ContextFlagsMask"/>
     </enums>
 
-    <enums namespace="WGLContextProfileMask" type="bitmask" vendor="ARB">
-        <enum value="0x00000001"    name="WGL_CONTEXT_CORE_PROFILE_BIT_ARB" group="WGLContextProfileMask"/>
-        <enum value="0x00000002"    name="WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB" group="WGLContextProfileMask"/>
-        <enum value="0x00000004"    name="WGL_CONTEXT_ES_PROFILE_BIT_EXT" group="WGLContextProfileMask"/>
-        <enum value="0x00000004"    name="WGL_CONTEXT_ES2_PROFILE_BIT_EXT" alias="WGL_CONTEXT_ES_PROFILE_BIT_EXT" group="WGLContextProfileMask"/>
+    <enums namespace="ContextProfileMask" type="bitmask" vendor="ARB">
+        <enum value="0x00000001"    name="WGL_CONTEXT_CORE_PROFILE_BIT_ARB" group="ContextProfileMask"/>
+        <enum value="0x00000002"    name="WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB" group="ContextProfileMask"/>
+        <enum value="0x00000004"    name="WGL_CONTEXT_ES_PROFILE_BIT_EXT" group="ContextProfileMask"/>
+        <enum value="0x00000004"    name="WGL_CONTEXT_ES2_PROFILE_BIT_EXT" alias="WGL_CONTEXT_ES_PROFILE_BIT_EXT" group="ContextProfileMask"/>
     </enums>
 
-    <enums namespace="WGLImageBufferMaskI3D" type="bitmask" vendor="I3D">
-        <enum value="0x00000001"    name="WGL_IMAGE_BUFFER_MIN_ACCESS_I3D" group="WGLImageBufferMaskI3D"/>
-        <enum value="0x00000002"    name="WGL_IMAGE_BUFFER_LOCK_I3D" group="WGLImageBufferMaskI3D"/>
+    <enums namespace="ImageBufferMaskI3D" type="bitmask" vendor="I3D">
+        <enum value="0x00000001"    name="WGL_IMAGE_BUFFER_MIN_ACCESS_I3D" group="ImageBufferMaskI3D"/>
+        <enum value="0x00000002"    name="WGL_IMAGE_BUFFER_LOCK_I3D" group="ImageBufferMaskI3D"/>
     </enums>
 
-    <enums namespace="WGLDXInteropMaskNV" type="bitmask" vendor="NV">
-        <enum value="0x00000000"    name="WGL_ACCESS_READ_ONLY_NV" group="WGLDXInteropMaskNV"/>
-        <enum value="0x00000001"    name="WGL_ACCESS_READ_WRITE_NV" group="WGLDXInteropMaskNV"/>
-        <enum value="0x00000002"    name="WGL_ACCESS_WRITE_DISCARD_NV" group="WGLDXInteropMaskNV"/>
+    <enums namespace="DXInteropMaskNV" type="bitmask" vendor="NV">
+        <enum value="0x00000000"    name="WGL_ACCESS_READ_ONLY_NV" group="DXInteropMaskNV"/>
+        <enum value="0x00000001"    name="WGL_ACCESS_READ_WRITE_NV" group="DXInteropMaskNV"/>
+        <enum value="0x00000002"    name="WGL_ACCESS_WRITE_DISCARD_NV" group="DXInteropMaskNV"/>
     </enums>
 
     <!-- The default ("API") enum namespace starts here. While some
@@ -614,7 +614,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>HANDLE</ptype> <name>wglCreateBufferRegionARB</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param>int <name>iLayerPlane</name></param>
-            <param group="WGLColorBufferMask"><ptype>UINT</ptype> <name>uType</name></param>
+            <param group="ColorBufferMask"><ptype>UINT</ptype> <name>uType</name></param>
         </command>
         <command>
             <proto><ptype>HGLRC</ptype> <name>wglCreateContext</name></proto>
@@ -634,7 +634,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>LPVOID</ptype> <name>wglCreateImageBufferI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param><ptype>DWORD</ptype> <name>dwSize</name></param>
-            <param group="WGLImageBufferMaskI3D"><ptype>UINT</ptype> <name>uFlags</name></param>
+            <param group="ImageBufferMaskI3D"><ptype>UINT</ptype> <name>uFlags</name></param>
         </command>
         <command>
             <proto><ptype>HGLRC</ptype> <name>wglCreateLayerContext</name></proto>
@@ -723,7 +723,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXObjectAccessNV</name></proto>
             <param><ptype>HANDLE</ptype> <name>hObject</name></param>
-            <param group="WGLDXInteropMaskNV"><ptype>GLenum</ptype> <name>access</name></param>
+            <param group="DXInteropMaskNV"><ptype>GLenum</ptype> <name>access</name></param>
         </command>
         <command>
             <proto><ptype>HANDLE</ptype> <name>wglDXOpenDeviceNV</name></proto>
@@ -735,7 +735,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param len="1">void *<name>dxObject</name></param>
             <param><ptype>GLuint</ptype> <name>name</name></param>
             <param group="ObjectTypeDX"><ptype>GLenum</ptype> <name>type</name></param>
-            <param group="WGLDXInteropMaskNV"><ptype>GLenum</ptype> <name>access</name></param>
+            <param group="DXInteropMaskNV"><ptype>GLenum</ptype> <name>access</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXSetResourceShareHandleNV</name></proto>
@@ -1217,7 +1217,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSwapLayerBuffers</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param group="WGLLayerPlaneMask"><ptype>UINT</ptype> <name>fuFlags</name></param>
+            <param group="LayerPlaneMask"><ptype>UINT</ptype> <name>fuFlags</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSwapIntervalEXT</name></proto>
@@ -1226,7 +1226,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>INT64</ptype> <name>wglSwapLayerBuffersMscOML</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param group="WGLLayerPlaneMask"><ptype>INT</ptype> <name>fuPlanes</name></param>
+            <param group="LayerPlaneMask"><ptype>INT</ptype> <name>fuPlanes</name></param>
             <param><ptype>INT64</ptype> <name>target_msc</name></param>
             <param><ptype>INT64</ptype> <name>divisor</name></param>
             <param><ptype>INT64</ptype> <name>remainder</name></param>

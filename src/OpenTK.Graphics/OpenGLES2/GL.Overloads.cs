@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -5819,6 +5819,9 @@ namespace OpenTK.Graphics.OpenGLES2
                 }
             }
         }
+        public static unsafe partial class ARM
+        {
+        }
         public static unsafe partial class EXT
         {
             /// <inheritdoc cref="BindFragDataLocationEXT(int, uint, byte*)"/>
@@ -9166,55 +9169,7 @@ namespace OpenTK.Graphics.OpenGLES2
                 }
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length)
+            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -9227,7 +9182,7 @@ namespace OpenTK.Graphics.OpenGLES2
                 return label;
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -9657,6 +9612,83 @@ namespace OpenTK.Graphics.OpenGLES2
         }
         public static unsafe partial class MESA
         {
+            /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
+            public static unsafe void DeleteSampler(in int sampler)
+            {
+                int count = 1;
+                fixed(int* samplers_handle = &sampler)
+                {
+                    DeleteSamplers(count, samplers_handle);
+                }
+            }
+            /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
+            public static unsafe void DeleteSamplers(int count, ReadOnlySpan<int> samplers)
+            {
+                fixed (int* samplers_ptr = samplers)
+                {
+                    DeleteSamplers(count, samplers_ptr);
+                }
+            }
+            /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
+            public static unsafe void DeleteSamplers(int count, int[] samplers)
+            {
+                fixed (int* samplers_ptr = samplers)
+                {
+                    DeleteSamplers(count, samplers_ptr);
+                }
+            }
+            /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
+            public static unsafe void DeleteSamplers(int count, in int samplers)
+            {
+                fixed (int* samplers_ptr = &samplers)
+                {
+                    DeleteSamplers(count, samplers_ptr);
+                }
+            }
+            /// <inheritdoc cref="GenSamplers(int, int*)"/>
+            public static unsafe int GenSampler()
+            {
+                int sampler;
+                int count = 1;
+                Unsafe.SkipInit(out sampler);
+                int* samplers_handle = &sampler;
+                GenSamplers(count, samplers_handle);
+                return sampler;
+            }
+            /// <inheritdoc cref="GenSamplers(int, int*)"/>
+            public static unsafe void GenSampler(out int sampler)
+            {
+                int count = 1;
+                Unsafe.SkipInit(out sampler);
+                fixed(int* samplers_handle = &sampler)
+                {
+                    GenSamplers(count, samplers_handle);
+                }
+            }
+            /// <inheritdoc cref="GenSamplers(int, int*)"/>
+            public static unsafe void GenSamplers(int count, Span<int> samplers)
+            {
+                fixed (int* samplers_ptr = samplers)
+                {
+                    GenSamplers(count, samplers_ptr);
+                }
+            }
+            /// <inheritdoc cref="GenSamplers(int, int*)"/>
+            public static unsafe void GenSamplers(int count, int[] samplers)
+            {
+                fixed (int* samplers_ptr = samplers)
+                {
+                    GenSamplers(count, samplers_ptr);
+                }
+            }
+            /// <inheritdoc cref="GenSamplers(int, int*)"/>
+            public static unsafe void GenSamplers(int count, ref int samplers)
+            {
+                fixed (int* samplers_ptr = &samplers)
+                {
+                    GenSamplers(count, samplers_ptr);
+                }
+            }
             /// <inheritdoc cref="GetFramebufferParameterivMESA(FramebufferTarget, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname, Span<int> parameters)
             {
@@ -9689,6 +9721,122 @@ namespace OpenTK.Graphics.OpenGLES2
                 fixed (int* parameters_ptr = &parameters)
                 {
                     GetFramebufferParameterivMESA(target, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, Span<float> parameters)
+            {
+                fixed (float* parameters_ptr = parameters)
+                {
+                    GetSamplerParameterfv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, float[] parameters)
+            {
+                fixed (float* parameters_ptr = parameters)
+                {
+                    GetSamplerParameterfv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe float GetSamplerParameterf(int sampler, SamplerParameterF pname)
+            {
+                float parameters;
+                float* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameterfv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void GetSamplerParameterf(int sampler, SamplerParameterF pname, out float parameters)
+            {
+                fixed (float* parameters_ptr = &parameters)
+                {
+                    GetSamplerParameterfv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, Span<int> parameters)
+            {
+                fixed (int* parameters_ptr = parameters)
+                {
+                    GetSamplerParameteriv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, int[] parameters)
+            {
+                fixed (int* parameters_ptr = parameters)
+                {
+                    GetSamplerParameteriv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe int GetSamplerParameteri(int sampler, SamplerParameterI pname)
+            {
+                int parameters;
+                int* parameters_ptr = &parameters;
+                {
+                    GetSamplerParameteriv(sampler, pname, parameters_ptr);
+                }
+                return parameters;
+            }
+            /// <inheritdoc cref="GetSamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void GetSamplerParameteri(int sampler, SamplerParameterI pname, out int parameters)
+            {
+                fixed (int* parameters_ptr = &parameters)
+                {
+                    GetSamplerParameteriv(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, ReadOnlySpan<float> param)
+            {
+                fixed (float* param_ptr = param)
+                {
+                    SamplerParameterfv(sampler, pname, param_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, float[] param)
+            {
+                fixed (float* param_ptr = param)
+                {
+                    SamplerParameterfv(sampler, pname, param_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameterfv(int, SamplerParameterF, float*)"/>
+            public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, in float param)
+            {
+                fixed (float* param_ptr = &param)
+                {
+                    SamplerParameterfv(sampler, pname, param_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, ReadOnlySpan<int> param)
+            {
+                fixed (int* param_ptr = param)
+                {
+                    SamplerParameteriv(sampler, pname, param_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, int[] param)
+            {
+                fixed (int* param_ptr = param)
+                {
+                    SamplerParameteriv(sampler, pname, param_ptr);
+                }
+            }
+            /// <inheritdoc cref="SamplerParameteriv(int, SamplerParameterI, int*)"/>
+            public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, in int param)
+            {
+                fixed (int* param_ptr = &param)
+                {
+                    SamplerParameteriv(sampler, pname, param_ptr);
                 }
             }
         }

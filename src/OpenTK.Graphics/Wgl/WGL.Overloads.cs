@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -188,8 +188,8 @@ namespace OpenTK.Graphics.Wgl
             returnValue_bool = returnValue != 0;
             return returnValue_bool;
         }
-        /// <inheritdoc cref="SwapLayerBuffers(IntPtr, WGLLayerPlaneMask)"/>
-        public static unsafe bool SwapLayerBuffers(IntPtr hdc, WGLLayerPlaneMask fuFlags)
+        /// <inheritdoc cref="SwapLayerBuffers(IntPtr, LayerPlaneMask)"/>
+        public static unsafe bool SwapLayerBuffers(IntPtr hdc, LayerPlaneMask fuFlags)
         {
             bool returnValue_bool;
             int returnValue;
@@ -1582,8 +1582,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue_bool;
             }
-            /// <inheritdoc cref="DXObjectAccessNV(IntPtr, WGLDXInteropMaskNV)"/>
-            public static unsafe bool DXObjectAccessNV(IntPtr hObject, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXObjectAccessNV(IntPtr, DXInteropMaskNV)"/>
+            public static unsafe bool DXObjectAccessNV(IntPtr hObject, DXInteropMaskNV access)
             {
                 bool returnValue_bool;
                 int returnValue;
@@ -1610,16 +1610,16 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV(IntPtr hDevice, IntPtr dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, DXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV(IntPtr hDevice, IntPtr dxObject, uint name, ObjectTypeDX type, DXInteropMaskNV access)
             {
                 IntPtr returnValue;
                 void* dxObject_vptr = (void*)dxObject;
                 returnValue = DXRegisterObjectNV(hDevice, dxObject_vptr, name, type, access);
                 return returnValue;
             }
-            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, WGLDXInteropMaskNV)"/>
-            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, in T1 dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access)
+            /// <inheritdoc cref="DXRegisterObjectNV(IntPtr, void*, uint, ObjectTypeDX, DXInteropMaskNV)"/>
+            public static unsafe IntPtr DXRegisterObjectNV<T1>(IntPtr hDevice, in T1 dxObject, uint name, ObjectTypeDX type, DXInteropMaskNV access)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;

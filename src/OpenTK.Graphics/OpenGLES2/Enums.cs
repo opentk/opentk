@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -1132,6 +1132,7 @@ namespace OpenTK.Graphics.OpenGLES2
         MotionEstimationSearchBlockYQcom = 35985,
         AtcRgbAmd = 35986,
         AtcRgbaExplicitAlphaAmd = 35987,
+        TextureLodBiasQcom = 35990,
         LowerLeftExt = 36001,
         UpperLeftExt = 36002,
         StencilBackRef = 36003,
@@ -2375,6 +2376,15 @@ namespace OpenTK.Graphics.OpenGLES2
         FragmentShadingRateWithShaderDepthStencilWritesSupportedExt = 38621,
         FragmentShadingRateWithSampleMaskSupportedExt = 38622,
         FragmentShadingRateAttachmentWithDefaultFramebufferSupportedExt = 38623,
+        ShaderCoreCountArm = 38640,
+        ShaderCoreActiveCountArm = 38641,
+        ShaderCorePresentMaskArm = 38642,
+        ShaderCoreMaxWarpCountArm = 38643,
+        ShaderCorePixelRateArm = 38644,
+        ShaderCoreTexelRateArm = 38645,
+        ShaderCoreFmaRateArm = 38646,
+        TextureYDegammaQcom = 38672,
+        TextureCbcrDegammaQcom = 38673,
         FontXMinBoundsBitNv = 65536,
         StencilBufferBit0Qcom = 65536,
         FontYMinBoundsBitNv = 131072,
@@ -3447,6 +3457,13 @@ namespace OpenTK.Graphics.OpenGLES2
         FragmentShadingRateWithShaderDepthStencilWritesSupportedExt = 38621,
         FragmentShadingRateWithSampleMaskSupportedExt = 38622,
         FragmentShadingRateAttachmentWithDefaultFramebufferSupportedExt = 38623,
+        ShaderCoreCountArm = 38640,
+        ShaderCoreActiveCountArm = 38641,
+        ShaderCorePresentMaskArm = 38642,
+        ShaderCoreMaxWarpCountArm = 38643,
+        ShaderCorePixelRateArm = 38644,
+        ShaderCoreTexelRateArm = 38645,
+        ShaderCoreFmaRateArm = 38646,
     }
     ///<summary>Used in <see cref="GL.GetPointerv" />, <see cref="GL.KHR.GetPointerv" /></summary>
     public enum GetPointervPName : uint
@@ -3472,6 +3489,8 @@ namespace OpenTK.Graphics.OpenGLES2
         TextureAlphaSize = 32863,
         TextureUnnormalizedCoordinatesArm = 36714,
         SurfaceCompressionExt = 38592,
+        TextureYDegammaQcom = 38672,
+        TextureCbcrDegammaQcom = 38673,
     }
     ///<summary>Used in <see cref="GL.GetGraphicsResetStatus" />, <see cref="GL.KHR.GetGraphicsResetStatus" />, <see cref="GL.EXT.GetGraphicsResetStatusEXT" />, ...</summary>
     public enum GraphicsResetStatus : uint
@@ -4483,7 +4502,7 @@ namespace OpenTK.Graphics.OpenGLES2
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
-    ///<summary>Used in <see cref="GL.GetSamplerParameterfv" />, <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" /></summary>
+    ///<summary>Used in <see cref="GL.GetSamplerParameterfv" />, <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" />, ...</summary>
     public enum SamplerParameterF : uint
     {
         TextureBorderColor = 4100,
@@ -4988,6 +5007,8 @@ namespace OpenTK.Graphics.OpenGLES2
         DepthStencilTextureMode = 37098,
         TextureTilingExt = 38272,
         TextureFoveatedCutoffDensityQcom = 38560,
+        TextureYDegammaQcom = 38672,
+        TextureCbcrDegammaQcom = 38673,
     }
     public enum TextureSwizzle : uint
     {

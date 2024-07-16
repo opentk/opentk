@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -2213,55 +2213,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length)
+            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -2274,7 +2226,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 return label;
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {

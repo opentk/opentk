@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-16 17:05:18 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -17061,26 +17061,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, ReadOnlySpan<float> parameters)
+            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, in Color4<Rgba> parameters)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (Color4<Rgba>* tmp_parameters = &parameters)
                 {
-                    ColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, in float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
+                    float* parameters_ptr = (float*)tmp_parameters;
                     ColorTableParameterfv(target, pname, parameters_ptr);
                 }
             }
@@ -38694,55 +38679,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, Span<int> length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length)
-            {
-                string label;
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-                return label;
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, int[] length, out string label)
-            {
-                fixed (int* length_ptr = length)
-                {
-                    var label_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
-                    GetObjectLabelKHR(identifier, name, bufSize, length_ptr, label_ptr);
-                    label = Marshal.PtrToStringUTF8((IntPtr)label_ptr)!;
-                    Marshal.FreeCoTaskMem((IntPtr)label_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length)
+            public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length)
             {
                 string label;
                 fixed (int* length_ptr = &length)
@@ -38755,7 +38692,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return label;
             }
             /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
-            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length, out string label)
+            public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, out int length, out string label)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -49801,26 +49738,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static unsafe partial class SGI
         {
             /// <inheritdoc cref="ColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, ReadOnlySpan<float> parameters)
+            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, in Color4<Rgba> parameters)
             {
-                fixed (float* parameters_ptr = parameters)
+                fixed (Color4<Rgba>* tmp_parameters = &parameters)
                 {
-                    ColorTableParameterfvSGI(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ColorTableParameterfvSGI(target, pname, parameters_ptr);
-                }
-            }
-            /// <inheritdoc cref="ColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, in float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
+                    float* parameters_ptr = (float*)tmp_parameters;
                     ColorTableParameterfvSGI(target, pname, parameters_ptr);
                 }
             }
