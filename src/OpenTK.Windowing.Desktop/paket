@@ -3,12 +3,12 @@ id OpenTK.Windowing.Desktop
 description
     An abstraction over OpenTK.GraphicsLibraryFramework to provide a ready-to-go easy-to-use windowing and input abstraction.
 dependencies
-    framework: net7.0
+    framework: net8.0
         OpenTK.Core ~> #VERSION#
         OpenTK.Mathematics ~> #VERSION#
         OpenTK.Windowing.Common ~> #VERSION#
         OpenTK.Windowing.GraphicsLibraryFramework ~> #VERSION#
 files
-    bin\Release\net7.0\OpenTK.Windowing.Desktop.dll ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Windowing.Desktop.xml ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Windowing.Desktop.pdb ==> lib\net7.0
+    bin\Release\net8.0\OpenTK.Windowing.Desktop.dll ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Windowing.Desktop.xml ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Windowing.Desktop.pdb ==> lib\net8.0
