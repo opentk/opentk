@@ -3,6 +3,7 @@ using System.IO;
 using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native;
+using StbImageSharp;
 
 namespace OpenTK.Backends.Tests
 {
@@ -19,9 +20,18 @@ namespace OpenTK.Backends.Tests
             base.Initialize();
 
             try { canTargetDirectories = Toolkit.Dialog.CanTargetFolders; } catch { canTargetDirectories = false; }
+
+            if (Toolkit.Icon is not null)
+            {
+                ImageResult logoData = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
+                opentkIcon = Toolkit.Icon.Create(logoData.Width, logoData.Height, logoData.Data);
+            }
         }
 
         bool multiSelect = false;
+
+        IconHandle? opentkIcon;
+        bool reopenRetryDialog = false;
 
         public override void Paint(double deltaTime)
         {
@@ -57,6 +67,44 @@ namespace OpenTK.Backends.Tests
                 if (ImGui.Button("Save file"))
                 {
                     Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save file (custom title)", Directory.GetCurrentDirectory(), null, 0);
+                }
+            }
+
+            if (Toolkit.Dialog is Platform.Native.Windows.DialogComponent win32Dialog)
+            {
+                ImGui.SeparatorText("Messsage dialogs");
+
+                if (ImGui.Button("Info box"))
+                {
+                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Information);
+                }
+
+                if (ImGui.Button("Warning box"))
+                {
+                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Warning);
+                }
+
+                if (ImGui.Button("Error box"))
+                {
+                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Error);
+                }
+
+                if (ImGui.Button("Confirmation box"))
+                {
+                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Confirmation, opentkIcon);
+                }
+
+                if (ImGui.Button("Retry box") || reopenRetryDialog)
+                {
+                    MessageBoxButton button = win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Retry);
+                    if (button == MessageBoxButton.Retry)
+                    {
+                        reopenRetryDialog = true;
+                    }
+                    else
+                    {
+                        reopenRetryDialog = false;
+                    }
                 }
             }
         }

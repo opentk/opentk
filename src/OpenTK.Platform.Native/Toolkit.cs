@@ -16,6 +16,8 @@ namespace OpenTK.Platform.Native
     /// </summary>
     public static class Toolkit
     {
+        private static bool Initialized = false;
+
         private static IClipboardComponent? _clipboardComponent;
         private static ICursorComponent? _cursorComponent;
         private static IDisplayComponent? _displayComponent;
@@ -32,66 +34,78 @@ namespace OpenTK.Platform.Native
         /// <summary>
         /// Interface for creating, interacting with, and deleting windows.
         /// </summary>
-        public static IWindowComponent Window => _windowComponent;
+        public static IWindowComponent Window => _windowComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting surfaces.
         /// </summary>
-        public static ISurfaceComponent Surface => _surfaceComponent;
+        public static ISurfaceComponent Surface => _surfaceComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting OpenGL contexts.
         /// </summary>
-        public static IOpenGLComponent OpenGL => _openGLComponent;
+        public static IOpenGLComponent OpenGL => _openGLComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for querying information about displays attached to the system.
         /// </summary>
-        public static IDisplayComponent Display => _displayComponent;
+        public static IDisplayComponent Display => _displayComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for shell functions such as battery information, preferred theme, etc.
         /// </summary>
-        public static IShellComponent Shell => _shellComponent;
+        public static IShellComponent Shell => _shellComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for getting and setting the mouse position, and getting mouse button information.
         /// </summary>
-        public static IMouseComponent Mouse => _mouseComponent;
+        public static IMouseComponent Mouse => _mouseComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for dealing with keyboard layouts, conversions between <see cref="Key"/> and <see cref="Scancode"/>, and IME.
         /// </summary>
-        public static IKeyboardComponent Keyboard => _keyboardComponent;
+        public static IKeyboardComponent Keyboard => _keyboardComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting mouse cursor images.
         /// </summary>
-        public static ICursorComponent Cursor => _cursorComponent;
+        public static ICursorComponent Cursor => _cursorComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for creating, interacting with, and deleting window icon images.
         /// </summary>
-        public static IIconComponent Icon => _iconComponent;
+        public static IIconComponent Icon => _iconComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for getting and setting clipboard data.
         /// </summary>
-        public static IClipboardComponent Clipboard => _clipboardComponent;
+        public static IClipboardComponent Clipboard => _clipboardComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for getting joystick input.
         /// </summary>
-        public static IJoystickComponent Joystick => _joystickComponent;
+        public static IJoystickComponent Joystick => _joystickComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Interface for opening system dialogs such as file open dialogs.
         /// </summary>
-        public static IDialogComponent Dialog => _dialogComponent;
+        public static IDialogComponent Dialog => _dialogComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
         /// <summary>
         /// Initialize OpenTK with the given settings.
-        /// This function must be called before trying to use the OpenTK api.
+        /// This function must be called before trying to use the OpenTK API.
         /// </summary>
         /// <param name="options">The options to initialize with.</param>
         public static void Init(ToolkitOptions options)
@@ -153,6 +167,8 @@ namespace OpenTK.Platform.Native
             _clipboardComponent?.Initialize(options);
             _joystickComponent?.Initialize(options);
             _dialogComponent?.Initialize(options);
+
+            Initialized = true;
         }
     }
 }

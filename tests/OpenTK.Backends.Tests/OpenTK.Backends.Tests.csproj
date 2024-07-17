@@ -8,8 +8,13 @@
     <LangVersion>12.0</LangVersion>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
-    
-    <Win32Resource>icons.res</Win32Resource>
+
+    <!-- FIXME: We want to fix it so you don't have to have the manifest file... 
+         or make it so that the resource file can contain the manifest and that we load it correctly.
+    -->
+    <!-- Uncomment this if not using the .res resource file. -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
   <ItemGroup>

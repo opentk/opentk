@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Platform.Native.Windows;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -47,8 +48,17 @@ namespace OpenTK.Platform.Native.Windows
         internal const int ICON_BIG = 1;
 
         internal const int S_OK = 0x0;
+        internal const int S_FALSE = 0x1;
+
         internal const int E_INVALIDARG = unchecked((int)0x80070057);
         internal const int E_ACCESSDENIED = unchecked((int)0x80070005);
+        internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
+        internal const int E_FAIL = unchecked((int)0x80004005);
+
+        internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
+        internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
+        internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
+        internal const IntPtr TD_SHIELD_ICON          = unchecked((ushort)-4);
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
@@ -1281,12 +1291,6 @@ namespace OpenTK.Platform.Native.Windows
             CDS dwflags,
             IntPtr lParam);
 
-        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        internal delegate IntPtr /*INT_PTR*/ DLGPROC(IntPtr /* HWND */ unnamedParam1, WM unnamedParam2, UIntPtr /* WPARAM */ unnamedParam3, IntPtr /* LPARAM */ unnamedParam4);
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        internal static extern IntPtr /* INT_PTR */ DialogBoxIndirectParamW(IntPtr /* HINSTANCE */ hInstance, DLGTEMPLATEEX* hDialogTemplate, IntPtr /* HWND */ hWndParent, DLGPROC lpDialogFunc, IntPtr /* LPARAM */ dwInitParam);
-
         [DllImport("comdlg32.dll")]
         internal static extern uint CommDlgExtendedError();
 
@@ -1324,7 +1328,54 @@ namespace OpenTK.Platform.Native.Windows
             public uint dwReserved;
             public uint FlagsEx;
         }
-        
+
+        [DllImport("comctl32.dll")]
+        internal static extern int /* HRESULT */ TaskDialogIndirect(in TASKDIALOGCONFIG pTaskConfig, ref int pnButton, ref int pnRadioButton, ref int pfVerificationFlagChecked);
+
+        // We need to pack this struct to get the correct layout.
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        internal struct TASKDIALOGCONFIG
+        {
+            public uint cbSize;
+            public IntPtr /* HWND */ hwndParent;
+            public IntPtr /* HINSTANCE */ hInstance;
+            public TASKDIALOG_FLAGS dwFlags;
+            public TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons;
+            public char* pszWindowTitle;
+            //union {
+            public IntPtr /* HICON */ hMainIcon;
+            //PCWSTR pszMainIcon;
+            //} DUMMYUNIONNAME;
+            public char* pszMainInstruction;
+            public char* pszContent;
+            public uint cButtons;
+            public TASKDIALOG_BUTTON* pButtons;
+            public TaskDialogButtonID nDefaultButton;
+            public uint cRadioButtons;
+            public TASKDIALOG_BUTTON* pRadioButtons;
+            public int nDefaultRadioButton;
+            public char* pszVerificationText;
+            public char* pszExpandedInformation;
+            public char* pszExpandedControlText;
+            public char* pszCollapsedControlText;
+            //union {
+            public IntPtr /* HICON */ hFooterIcon;
+            //PCWSTR pszFooterIcon;
+            //} DUMMYUNIONNAME2;
+            public char* pszFooter;
+            public delegate* unmanaged[Cdecl]<IntPtr, TDN, UIntPtr, IntPtr, IntPtr, int> pfCallback;
+            public nuint lpCallbackData;
+            public uint cxWidth;
+        }
+
+        internal struct TASKDIALOG_BUTTON
+        {
+            public int nButtonID;
+            public char* pszButtonText;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        internal delegate int /* HRESULT */ PFTASKDIALOGCALLBACK(IntPtr /* HWND */ hwnd, TDN msg, UIntPtr wParam, IntPtr lParam, IntPtr lpRefData);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

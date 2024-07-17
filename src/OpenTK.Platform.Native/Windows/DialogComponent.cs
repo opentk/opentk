@@ -1,205 +1,14 @@
-﻿using Microsoft.Win32.SafeHandles;
-using OpenTK.Core.Platform;
+﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using static OpenTK.Platform.Native.Windows.XInput;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    internal class DialogHandle
-    {
-        
-    };
-
-    internal struct Button
-    {
-        public string Text;
-    }
-
-    internal struct DLGTEMPLATEEX
-    {
-        public ushort dlgVer;
-        public ushort signature;
-        public uint helpID;
-        public WindowStylesEx exStyle;
-        public DialogStyles style;
-        public ushort cDlgItems;
-        public short x;
-        public short y;
-        public short cx;
-        public short cy;
-        /*
-        sz_Or_Ord menu;
-        sz_Or_Ord windowClass;
-        char title[titleLen];
-        ushort pointsize;
-        ushort weight;
-        byte italic;
-        byte charset;
-        char typeface[stringLen];
-        */
-    }
-
-    internal struct DLGITEMTEMPLATEEX
-    {
-        public uint helpID;
-        public WindowStylesEx exStyle;
-        // FIXME: 
-        public uint style;
-        public short x;
-        public short y;
-        public short cx;
-        public short cy;
-        public uint id;
-        /*
-        sz_Or_Ord windowClass;
-        sz_Or_Ord title;
-        WORD extraCount;
-        */
-    }
-
-    // Make struct?
-    internal unsafe struct DialogData
-    {
-        public const nuint BLOCK_SIZE = 4096;
-
-        public enum ControlType : ushort
-        {
-            Button = 0x0080,
-            Edit = 0x0081,
-            Static = 0x0082,
-            Listbox = 0x0083,
-            Scrollbar = 0x0084,
-            Combobox = 0x0085,
-        }
-
-        public byte* Data;
-        public nuint Size;
-        public nuint Used;
-
-        public static DialogData Alloc()
-        {
-            DialogData data;
-            data.Size = 4096;
-            data.Data = (byte*)NativeMemory.AlignedAlloc(data.Size, sizeof(int));
-            data.Used = 0;
-            return data;
-        }
-
-        public void EnsureSize(nuint size)
-        {
-            if (Used + size > Size)
-            {
-                Data = (byte*)NativeMemory.AlignedRealloc(Data, Size + BLOCK_SIZE, sizeof(int));
-                Size += BLOCK_SIZE;
-            }
-        }
-
-        public void AlignData(nuint alignment)
-        {
-            nuint padding = Used % alignment;
-            EnsureSize(Used + padding);
-            Used += padding;
-        }
-
-        public void AddDialogData<T>(T data) where T : unmanaged
-        {
-            EnsureSize(Size + (uint)sizeof(T));
-            NativeMemory.Copy(&data, &Data[Used], (uint)sizeof(T));
-            Used += (uint)sizeof(T);
-        }
-
-        public void AddDialogString(string str)
-        {
-            uint dataSize = (uint)(str.Length * sizeof(char));
-            EnsureSize(Size + dataSize);
-            fixed (char* c = str)
-            {
-                NativeMemory.Copy(c, &Data[Used], (uint)dataSize);
-            }
-            Used += dataSize;
-        }
-
-        // FIXME: Strong type for type
-        public void AddDialogControl(ControlType type, uint style, WindowStylesEx exStyle, uint id, string caption)
-        {
-            DLGITEMTEMPLATEEX itemTemplate;
-            itemTemplate.helpID = 0;
-            itemTemplate.exStyle = exStyle;
-            itemTemplate.style = (uint)style;
-            // FIXME: position!
-            itemTemplate.x = 0;
-            itemTemplate.y = 0;
-            itemTemplate.cx = 10;
-            itemTemplate.cy = 10;
-            itemTemplate.id = id;
-
-            AlignData(sizeof(int));
-
-            AddDialogData(itemTemplate);
-
-            // windowClass
-            AddDialogData<ushort>(0xFFFF);
-            AddDialogData(type);
-
-            AddDialogString(caption);
-
-            // extraData
-            AddDialogData<short>(0);
-
-            ((DLGTEMPLATEEX*)Data)->cDlgItems++;
-        }
-
-        public void Init(int w, int h, string caption)
-        {
-            DLGTEMPLATEEX template;
-            template.dlgVer = 1;
-            template.signature = 0xFFFF;
-            template.helpID = 0;
-            template.exStyle = 0;
-            template.style = DialogStyles.Caption | DialogStyles.Center | DialogStyles.ShellFont;
-            template.cDlgItems = 0;
-            template.x = 0;
-            template.y = 0;
-            // FIXME: These are in DLU units not in pixels?
-            template.cx = (short)w;
-            template.cy = (short)h;
-
-            AddDialogData(template);
-
-            // No menu
-            AddDialogData<short>(0);
-
-            // No custom class
-            AddDialogData<short>(0);
-
-            AddDialogString(caption);
-
-            // FIXME: Font stuff!
-            // pointsize
-            AddDialogData<short>(12);
-            // weight
-            AddDialogData<short>(400);
-            // italic
-            AddDialogData<byte>(0);
-            // charset
-            AddDialogData<byte>(0);
-            // FIXME: Font name!
-            AddDialogString("Arial");
-
-            AddDialogControl(ControlType.Button, (uint)WindowStyles.Visible | (uint)WindowStyles.Child | (uint)WindowStyles.TabStop | (uint)ButtonStyles.BS_DEFPUSHBUTTON | (uint)WindowStyles.Group, 0, 1, "Hello!");
-        }
-    }
-
     public class DialogComponent : IDialogComponent
     {
         /// <inheritdoc/>
@@ -214,41 +23,151 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
+            // FIXME: Make sure we support the correct styling??
+            // Either through a manifest or enabling it ourselves?
+            // See EnableVisualStyles or https://stackoverflow.com/questions/1415270/c-comctl32-dll-version-6-in-debugger
+            // - Noggin_bops 2024-07-17
         }
 
         /// <inheritdoc/>
         public bool CanTargetFolders => false;
 
-        static IntPtr /* INT_PTR */ MessageBoxDialogProc(IntPtr /* HWND */ hDlg, WM iMessage, UIntPtr /* WPARAM */ wParam, IntPtr /* LPARAM */ lParam)
-        {
-            Console.WriteLine($"Message: {iMessage}, wParam: {wParam}, lParam: {lParam}");
-
-            switch (iMessage)
-            {
-                case WM.INITDIALOG:
-                    return 1;
-                default:
-                    break;
-            }
-
-            return 0;
-        }
-
-        internal unsafe int ShowMessageBox(WindowHandle parent, string text, IconHandle icon, ReadOnlySpan<Button> buttons)
+        /// <inheritdoc/>
+        public unsafe MessageBoxButton ShowMessageBox(WindowHandle parent, string title, string content, MessageBoxType messageBoxType, IconHandle? customIcon = null)
         {
             // FIXME:
-            HWND hwnd = parent.As<HWND>(null!);
+            HWND hwnd = parent.As<HWND>(this);
+            HIcon? hicon = customIcon?.As<HIcon>(this);
 
-            DialogData diag = DialogData.Alloc();
-            diag.Init(20, 20, "Test dialog");
-
-            var ret = Win32.DialogBoxIndirectParamW(IntPtr.Zero, (DLGTEMPLATEEX*)diag.Data, hwnd.HWnd, MessageBoxDialogProc, IntPtr.Zero);
-            if (ret == -1)
+            IntPtr iconResouce;
+            TASKDIALOG_COMMON_BUTTON_FLAGS commonButtons;
+            switch (messageBoxType)
             {
-                throw new Win32Exception();
+                case MessageBoxType.Information:
+                    iconResouce = Win32.TD_INFORMATION_ICON;
+                    commonButtons = TASKDIALOG_COMMON_BUTTON_FLAGS.OKButton;
+                    break;
+                case MessageBoxType.Warning:
+                    iconResouce = Win32.TD_WARNING_ICON;
+                    commonButtons = TASKDIALOG_COMMON_BUTTON_FLAGS.OKButton;
+                    break;
+                case MessageBoxType.Error:
+                    iconResouce = Win32.TD_ERROR_ICON;
+                    commonButtons = TASKDIALOG_COMMON_BUTTON_FLAGS.OKButton;
+                    break;
+                case MessageBoxType.Confirmation:
+                    iconResouce = Win32.TD_INFORMATION_ICON;
+                    commonButtons = TASKDIALOG_COMMON_BUTTON_FLAGS.YesButton | TASKDIALOG_COMMON_BUTTON_FLAGS.NoButton | TASKDIALOG_COMMON_BUTTON_FLAGS.CancelButton;
+                    break;
+                case MessageBoxType.Retry:
+                    iconResouce = Win32.TD_INFORMATION_ICON;
+                    commonButtons = TASKDIALOG_COMMON_BUTTON_FLAGS.RetryButton | TASKDIALOG_COMMON_BUTTON_FLAGS.CancelButton;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
             }
 
-            return 0;
+            int result;
+            int pnButton = default;
+
+            fixed (char* titlePtr = title)
+            fixed (char* contentPtr = content)
+            fixed (char* instPtr = "TEST INSTRUCTION")
+            {
+                Win32.TASKDIALOGCONFIG dialogConfig;
+                dialogConfig.cbSize = (uint)Marshal.SizeOf<Win32.TASKDIALOGCONFIG>();
+                dialogConfig.hwndParent = hwnd.HWnd;
+                dialogConfig.hInstance = IntPtr.Zero;
+                dialogConfig.dwFlags = TASKDIALOG_FLAGS.SizeToContent | (hicon != null ? TASKDIALOG_FLAGS.UseHIconMain : 0);
+                dialogConfig.dwCommonButtons = commonButtons;
+                dialogConfig.pszWindowTitle = titlePtr;
+                dialogConfig.hMainIcon = hicon?.Icon ?? iconResouce;
+                dialogConfig.pszMainInstruction = titlePtr;
+                dialogConfig.pszContent = contentPtr;
+                dialogConfig.cButtons = 0;
+                dialogConfig.pButtons = null;
+                dialogConfig.nDefaultButton = TaskDialogButtonID.IDCLOSE;
+                dialogConfig.cRadioButtons = 0;
+                dialogConfig.pRadioButtons = null;
+                dialogConfig.nDefaultRadioButton = 0;
+                dialogConfig.pszVerificationText = null;
+                dialogConfig.pszExpandedInformation = null;
+                dialogConfig.pszExpandedControlText = null;
+                dialogConfig.pszCollapsedControlText = null;
+                dialogConfig.hFooterIcon = IntPtr.Zero;
+                dialogConfig.pszFooter = null;
+                dialogConfig.pfCallback = null;
+                dialogConfig.lpCallbackData = UIntPtr.Zero;
+                dialogConfig.cxWidth = 0;
+
+                result = Win32.TaskDialogIndirect(in dialogConfig, ref pnButton, ref Unsafe.NullRef<int>(), ref Unsafe.NullRef<int>());
+            }
+
+            if (result != Win32.S_OK)
+            {
+                if (result == Win32.E_OUTOFMEMORY)
+                {
+                    throw new OutOfMemoryException();
+                }
+                else if (result == Win32.E_INVALIDARG)
+                {
+                    throw new ArgumentException();
+                }
+                else if (result == Win32.E_FAIL)
+                {
+                    Logger?.LogWarning($"TaskDialogIndirect returned E_FAIL ({result})");
+                    return MessageBoxButton.None;
+                }
+                else
+                {
+                    Logger?.LogWarning($"TaskDialogIndirect returned unknown error {result}");
+                    return MessageBoxButton.None;
+                }
+            }
+            else
+            {
+                MessageBoxButton pressedButton;
+                switch ((TaskDialogButtonID)pnButton)
+                {
+                    case TaskDialogButtonID.IDOK:
+                        pressedButton = MessageBoxButton.Ok;
+                        break;
+                    case TaskDialogButtonID.IDCANCEL:
+                        pressedButton = MessageBoxButton.Cancel;
+                        break;
+                    case TaskDialogButtonID.IDABORT:
+                        Logger?.LogWarning($"Unexpected task dialog button: {(TaskDialogButtonID)pnButton}.");
+                        pressedButton = MessageBoxButton.None;
+                        break;
+                    case TaskDialogButtonID.IDRETRY:
+                        pressedButton = MessageBoxButton.Retry;
+                        break;
+                    case TaskDialogButtonID.IDIGNORE:
+                        Logger?.LogWarning($"Unexpected task dialog button: {(TaskDialogButtonID)pnButton}.");
+                        pressedButton = MessageBoxButton.None;
+                        break;
+                    case TaskDialogButtonID.IDYES:
+                        pressedButton = MessageBoxButton.Yes;
+                        break;
+                    case TaskDialogButtonID.IDNO:
+                        pressedButton = MessageBoxButton.No;
+                        break;
+                    case TaskDialogButtonID.IDCLOSE:
+                        Logger?.LogWarning($"Unexpected task dialog button: {(TaskDialogButtonID)pnButton}.");
+                        pressedButton = MessageBoxButton.None;
+                        break;
+                    case TaskDialogButtonID.IDHELP:
+                        Logger?.LogWarning($"Unexpected task dialog button: {(TaskDialogButtonID)pnButton}.");
+                        pressedButton = MessageBoxButton.None;
+                        break;
+                    default:
+                        Logger?.LogWarning($"Unexpected task dialog button: {(TaskDialogButtonID)pnButton}.");
+                        pressedButton = MessageBoxButton.None;
+                        break;
+                }
+
+                return pressedButton;
+            }
         }
 
         // The size of the buffer used to receive file paths.

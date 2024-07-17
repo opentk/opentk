@@ -18,6 +18,8 @@ namespace OpenTK.Core.Utility
         /// </summary>
         Debug = 0,
 
+        // FIXME: Formalize what Info, Warning, and Error actually convey.
+
         /// <summary>
         /// Information that directly affects the operation of the application.
         /// </summary>

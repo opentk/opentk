@@ -1,4 +1,6 @@
-﻿opentk_ico ICON "Resources/opentk_logo_small.ico"
+﻿1 24 "app.manifest"
+
+opentk_ico ICON "Resources/opentk_logo_small.ico"
 wiki ICON "Resources/Wikipedia-Flags-UN-United-Nations-Flag.ico"
 
 light_green_cursor CURSOR "Resources/Cute Light Green Normal Select.cur"

@@ -77,6 +77,12 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public bool CanTargetFolders => true;
 
+        /// <inheritdoc/>
+        public MessageBoxButton ShowMessageBox(WindowHandle parent, string title, string content, MessageBoxType messageBoxType, IconHandle? customIcon = null)
+        {
+            throw new NotImplementedException();
+        }
+
         private IntPtr CreateAllowedContentsTypeArray(DialogFileFilter[]? allowedExtensions)
         {
             // If we have the "*" filter we don't need to create a filter...
