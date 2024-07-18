@@ -24,6 +24,13 @@ namespace OpenTK.Platform.Native.macOS
         ASCII = 0x0000_0600,
     }
 
+    internal enum NSAlertStyle : uint
+    {
+        NSAlertStyleWarning = 0,
+        NSAlertStyleInformational = 1,
+        NSAlertStyleCritical = 2,
+    }
+
     internal enum NSStringEncoding : ulong
     {
         // Incomplete enum...

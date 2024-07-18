@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -15,6 +15,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
         internal static readonly ObjCClass UTTypeClass = objc_getClass("UTType"u8);
         internal static readonly ObjCClass NSMutableArrayClass = objc_getClass("NSMutableArray"u8);
+        internal static readonly ObjCClass NSAlert = objc_getClass("NSAlert"u8);
 
         internal static readonly SEL selOpenPanel = sel_registerName("openPanel"u8);
         internal static readonly SEL selSavePanel = sel_registerName("savePanel"u8);
@@ -59,6 +60,14 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selArrayWithCapacity = sel_registerName("arrayWithCapacity:"u8);
         internal static readonly SEL selAddObject = sel_registerName("addObject:"u8);
 
+        internal static readonly SEL selInit = sel_registerName("init"u8);
+        internal static readonly SEL selSetMessageText = sel_registerName("setMessageText:"u8);
+        internal static readonly SEL selSetInformativeText = sel_registerName("setInformativeText:"u8);
+        internal static readonly SEL selSetIcon = sel_registerName("setIcon:"u8);
+        internal static readonly SEL selAddButtonWithTitle = sel_registerName("addButtonWithTitle:"u8);
+        internal static readonly SEL selSetAlertStyle = sel_registerName("setAlertStyle:"u8);
+        internal static readonly SEL selLayout = sel_registerName("layout"u8);
+        internal static readonly SEL selBeginSheetModalForWindow_completionHandler = sel_registerName("beginSheetModalForWindow:completionHandler:"u8);
 
         /// <inheritdoc/>
         public string Name => nameof(MacOSDialogComponent);
@@ -80,7 +89,105 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public MessageBoxButton ShowMessageBox(WindowHandle parent, string title, string content, MessageBoxType messageBoxType, IconHandle? customIcon = null)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = parent.As<NSWindowHandle>(this);
+            NSIconHandle? icon = customIcon?.As<NSIconHandle>(this);
+
+            IntPtr alert = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSAlert, Alloc), selInit);
+
+            IntPtr titleNSString = ToNSString(title);
+            IntPtr contentNSString = ToNSString(content);
+
+            objc_msgSend(alert, selSetMessageText, titleNSString);
+            objc_msgSend(alert, selSetInformativeText, contentNSString);
+            objc_msgSend(alert, selSetIcon, icon?.Image ?? IntPtr.Zero);
+
+            switch (messageBoxType)
+            {
+                case MessageBoxType.Information:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleInformational);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Warning:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleWarning);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Error:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleCritical);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("OK"u8));
+                    break;
+                case MessageBoxType.Confirmation:
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleInformational);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Yes"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("No"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Cancel"u8));
+                    break;
+                case MessageBoxType.Retry:
+                    // FIXME: Should we use NSAlertStyleCritical or NSAlertStyleInformational here?
+                    objc_msgSend(alert, selSetAlertStyle, (nuint)NSAlertStyle.NSAlertStyleCritical);
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Retry"u8));
+                    objc_msgSend_IntPtr(alert, selAddButtonWithTitle, ToNSString("Cancel"u8));
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
+            }
+
+            objc_msgSend(alert, selLayout);
+
+            // FIXME: Run this as a sheet modal for the window...
+            NSModalResponse response = (NSModalResponse)objc_msgSend_IntPtr(alert, selRunModal);
+
+            MessageBoxButton button = MessageBoxButton.None;
+            switch (messageBoxType)
+            {
+                case MessageBoxType.Information:
+                case MessageBoxType.Warning:
+                case MessageBoxType.Error:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Ok;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                case MessageBoxType.Confirmation:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Yes;
+                    }
+                    else if (response == NSModalResponse.AlertSecondButtonReturn)
+                    {
+                        button = MessageBoxButton.No;
+                    }
+                    else if (response == NSModalResponse.AlertThirdButtonReturn)
+                    {
+                        button = MessageBoxButton.Cancel;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                case MessageBoxType.Retry:
+                    if (response == NSModalResponse.AlertFirstButtonReturn)
+                    {
+                        button = MessageBoxButton.Retry;
+                    }
+                    else if (response == NSModalResponse.AlertSecondButtonReturn)
+                    {
+                        button = MessageBoxButton.Cancel;
+                    }
+                    else
+                    {
+                        Logger?.LogDebug($"Unexpected modal response: {response}");
+                    }
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(messageBoxType), (int)messageBoxType, messageBoxType.GetType());
+            }
+
+            return button;
         }
 
         private IntPtr CreateAllowedContentsTypeArray(DialogFileFilter[]? allowedExtensions)

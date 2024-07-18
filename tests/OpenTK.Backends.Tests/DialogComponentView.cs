@@ -70,41 +70,42 @@ namespace OpenTK.Backends.Tests
                 }
             }
 
-            if (Toolkit.Dialog is Platform.Native.Windows.DialogComponent win32Dialog)
+            ImGui.SeparatorText("Messsage dialogs");
+
+            if (ImGui.Button("Info box"))
             {
-                ImGui.SeparatorText("Messsage dialogs");
+                Toolkit.Dialog.ShowMessageBox(Program.Window, "Information message box", "This is some informational message.", MessageBoxType.Information);
+            }
 
-                if (ImGui.Button("Info box"))
+            ImGui.SameLine();
+            if (ImGui.Button("Warning box"))
+            {
+                Toolkit.Dialog.ShowMessageBox(Program.Window, "Warning message box!", "This is a warning message.", MessageBoxType.Warning);
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Button("Error box"))
+            {
+                Toolkit.Dialog.ShowMessageBox(Program.Window, "Error message box!", "This is an error message!", MessageBoxType.Error);
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Button("Confirmation box"))
+            {
+                Toolkit.Dialog.ShowMessageBox(Program.Window, "Confirm", "Are you sure?", MessageBoxType.Confirmation, opentkIcon);
+            }
+
+            ImGui.SameLine();
+            if (ImGui.Button("Retry box") || reopenRetryDialog)
+            {
+                MessageBoxButton button = Toolkit.Dialog.ShowMessageBox(Program.Window, "Retry?", "Should we retry?", MessageBoxType.Retry);
+                if (button == MessageBoxButton.Retry)
                 {
-                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Information);
+                    reopenRetryDialog = true;
                 }
-
-                if (ImGui.Button("Warning box"))
+                else
                 {
-                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Warning);
-                }
-
-                if (ImGui.Button("Error box"))
-                {
-                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Error);
-                }
-
-                if (ImGui.Button("Confirmation box"))
-                {
-                    win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Confirmation, opentkIcon);
-                }
-
-                if (ImGui.Button("Retry box") || reopenRetryDialog)
-                {
-                    MessageBoxButton button = win32Dialog.ShowMessageBox(Program.Window, "Dialog box title", "This is the content of the dialog box.", MessageBoxType.Retry);
-                    if (button == MessageBoxButton.Retry)
-                    {
-                        reopenRetryDialog = true;
-                    }
-                    else
-                    {
-                        reopenRetryDialog = false;
-                    }
+                    reopenRetryDialog = false;
                 }
             }
         }
