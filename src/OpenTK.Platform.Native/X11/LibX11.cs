@@ -368,6 +368,9 @@ namespace OpenTK.Platform.Native.X11
         internal static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* Status */ XIconifyWindow(XDisplayPtr display, XWindow w, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -463,5 +466,11 @@ namespace OpenTK.Platform.Native.X11
             string? str = Marshal.PtrToStringUTF8((nint)ptr);
             return str;
         }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int /* Status */ XQueryTree(XDisplayPtr display, XWindow w, out XWindow root_return, out XWindow parent_return, out XWindow* children_return, out uint nchildren_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int XSetTransientForHint(XDisplayPtr display, XWindow w, XWindow prop_window);
     }
 }

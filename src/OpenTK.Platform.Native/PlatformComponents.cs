@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
                 [PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
-                //[PalComponents.Dialog] = () => new X11.X11DialogComponent(),
+                [PalComponents.Dialog] = () => new X11.X11DialogComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> macosComponents =

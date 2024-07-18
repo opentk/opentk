@@ -404,7 +404,7 @@ namespace OpenTK.Platform.Native.X11
         public int Depth;
         public unsafe XVisual* Visual;
         public XWindow Root;
-        public int CClass;
+        public WindowClass Class;
         public int BitGravity;
         public int WindowGravity;
         public int BackingStore;
