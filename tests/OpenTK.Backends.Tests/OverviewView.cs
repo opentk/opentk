@@ -101,11 +101,11 @@ namespace OpenTK.Backends.Tests
                             // On windows it's nice to be able to switch to a "All files" filter so you can see all files that are in a folder.
                             // But on macOS adding this filter gives zero indication of the supported files so we would ideally avoid adding the * filter there.
                             // - Noggin_bops 2024-05-19
-                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt"), new("All files (*.*)", "*") };
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt;text"), new("All files (*.*)", "*") };
                         }
                         else
                         {
-                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt;text") };
                         }
 
                         List<string>? location = Toolkit.Dialog.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), filter, 0);

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -205,6 +207,7 @@ namespace OpenTK.Platform.Native.macOS
 
             for (int i = 0; i < allowedExtensions?.Length; i++)
             {
+                Debug.Assert(allowedExtensions[i].Filter.Contains(';') == false, "We don't support multiple extension filters in one filter on macOS atm.");
                 IntPtr ext = ToNSString(allowedExtensions[i].Filter);
                 IntPtr type = objc_msgSend_IntPtr((IntPtr)UTTypeClass, selTypeWithFilenameExtension, ext);
                 Console.WriteLine(FromNSString(objc_msgSend_IntPtr(type, sel_registerName("identifier"u8))));

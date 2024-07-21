@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -190,8 +191,10 @@ namespace OpenTK.Platform.Native.Windows
                 for (int i = 0; i < filters.Length; i++)
                 {
                     chars += filters[i].Name.Length + 1;
-                    // +2 for '*.' and +1 for \0
-                    chars += filters[i].Filter.Length + 2 + 1;
+                    // +1 for \0
+                    chars += filters[i].Filter.Length + 1;
+                    // *2 for '*.'
+                    chars += (filters[i].Filter.Count(static c => c == ';') + 1) * 3;
                 }
 
                 extensionListPtr = (char*)Marshal.AllocHGlobal(chars * 2);
@@ -204,10 +207,27 @@ namespace OpenTK.Platform.Native.Windows
                     offset += filters[i].Name.Length;
                     extensionList[offset++] = '\0';
 
-                    extensionList[offset++] = '*';
-                    extensionList[offset++] = '.';
-                    filters[i].Filter.CopyTo(extensionList.Slice(offset));
-                    offset += filters[i].Filter.Length;
+                    int currIndex = 0;
+                    do
+                    {
+                        int prevIndex = currIndex;
+                        currIndex = filters[i].Filter.IndexOf(';', prevIndex);
+                        if (currIndex == -1)
+                        {
+                            currIndex = filters[i].Filter.Length;
+                        }
+
+                        ReadOnlySpan<char> ext = filters[i].Filter.AsSpan().Slice(prevIndex, currIndex - prevIndex);
+
+                        extensionList[offset++] = '*';
+                        extensionList[offset++] = '.';
+                        ext.CopyTo(extensionList.Slice(offset));
+                        offset += ext.Length;
+                        if (currIndex < filters[i].Filter.Length)
+                            extensionList[offset++] = ';';
+
+                        currIndex++;
+                    } while (currIndex < filters[i].Filter.Length);
                     extensionList[offset++] = '\0';
                 }
                 extensionList[offset++] = '\0';

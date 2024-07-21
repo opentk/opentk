@@ -503,11 +503,10 @@ namespace OpenTK.Platform.Native.X11
             {
                 for (int i = 0; i < allowedExtensions.Length; i++)
                 {
-                    // FIXME: Split the potential filters!
-                    // The format for zenity filters is "Name|*.ext1 *.ext2" so we want to
-                    // modify the filter string to match that.
-                    // - Noggin_bops 2024-07-18
-                    arguments.Append($"--file-filter=\"{allowedExtensions[i].Name}|*.{allowedExtensions[i].Filter}\"");
+                    // FIXME: Remove linq usage and reduce allocations...
+                    // - Noggin_bops 2024-07-22
+                    string[] exts = allowedExtensions[i].Filter.Split(';');
+                    arguments.Append($"--file-filter=\"{allowedExtensions[i].Name}|*.{string.Join(" *.", exts).Substring(1)}\"");
                 }
             }
 
@@ -566,11 +565,10 @@ namespace OpenTK.Platform.Native.X11
             {
                 for (int i = 0; i < allowedExtensions.Length; i++)
                 {
-                    // FIXME: Split the potential filters!
-                    // The format for zenity filters is "Name|*.ext1 *.ext2" so we want to
-                    // modify the filter string to match that.
-                    // - Noggin_bops 2024-07-18
-                    arguments.Append($"--file-filter=\"{allowedExtensions[i].Name}|*.{allowedExtensions[i].Filter}\"");
+                    // FIXME: Remove linq usage and reduce allocations...
+                    // - Noggin_bops 2024-07-22
+                    string[] exts = allowedExtensions[i].Filter.Split(';');
+                    arguments.Append($"--file-filter=\"{allowedExtensions[i].Name}|*.{string.Join(" *.", exts).Substring(1)}\"");
                 }
             }
 
