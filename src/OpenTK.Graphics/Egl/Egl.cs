@@ -281,7 +281,7 @@ namespace OpenTK.Graphics.Egl
 
         [DllImport("libEGL", EntryPoint = "eglGetConfigs")]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool GetConfigs(EGLDisplay dpy, EGLConfig[] configs, int config_size, out int num_config);
+        public static extern bool GetConfigs(EGLDisplay dpy, EGLConfig[]? configs, int config_size, out int num_config);
 
         [DllImport("libEGL", EntryPoint = "eglChooseConfig")]
         [return: MarshalAs(UnmanagedType.I1)]

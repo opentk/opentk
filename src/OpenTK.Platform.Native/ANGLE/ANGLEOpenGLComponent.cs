@@ -1,6 +1,7 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics.Egl;
+using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -102,80 +103,122 @@ namespace OpenTK.Platform.Native.ANGLE
             if (settings == null)
             {
                 // FIXME: Exception message
-                throw new Exception("No settings");
+                throw new PalException(this, "Window has no graphics settings.");
             }
 
-            List<int> config_attribs = new List<int>() { Egl.SURFACE_TYPE, Egl.WINDOW_BIT, Egl.RENDERABLE_TYPE, Egl.OPENGL_ES3_BIT };
+            bool success = Egl.GetConfigs(eglDisplay, null, 0, out int numConfigs);
+            IntPtr[] availableConfigs = new IntPtr[numConfigs];
+            success = Egl.GetConfigs(eglDisplay, availableConfigs, numConfigs, out numConfigs);
 
-            if (settings.Multisamples > 0)
+            List<ContextValues> possibleContextValues = new List<ContextValues>();
+            for (int i = 0; i < numConfigs; i++)
             {
-                config_attribs.Add(Egl.SAMPLE_BUFFERS);
-                config_attribs.Add(1);
+                IntPtr config = availableConfigs[i];
 
-                config_attribs.Add(Egl.SAMPLES);
-                config_attribs.Add(settings.Multisamples);
-            }
+                // We only want configs that can render to a window.
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.SURFACE_TYPE, out int configSupportedSurfaceTypes);
+                if ((configSupportedSurfaceTypes & Egl.WINDOW_BIT) == 0)
+                    continue;
 
-            if (settings.sRGBFramebuffer && Extensions.Contains("EGL_KHR_gl_colorspace"))
-            {
-                config_attribs.Add(Egl.COLORSPACE);
-                config_attribs.Add(Egl.COLORSPACE_sRGB);
-            }
-
-            config_attribs.Add(Egl.RED_SIZE);
-            config_attribs.Add(settings.RedColorBits);
-            config_attribs.Add(Egl.GREEN_SIZE);
-            config_attribs.Add(settings.GreenColorBits);
-            config_attribs.Add(Egl.BLUE_SIZE);
-            config_attribs.Add(settings.BlueColorBits);
-            config_attribs.Add(Egl.ALPHA_SIZE);
-            config_attribs.Add(settings.AlphaColorBits);
-
-            if (settings.DepthBits != ContextDepthBits.None)
-            {
-                int depthBits;
-                switch (settings.DepthBits)
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.RENDERABLE_TYPE, out int renderableType);
+                if ((renderableType & Egl.OPENGL_ES_BIT) == 0 &&
+                    (renderableType & Egl.OPENGL_ES2_BIT) == 0 &&
+                    (renderableType & Egl.OPENGL_ES3_BIT) == 0)
                 {
-                    case ContextDepthBits.Depth24: depthBits = 24; break;
-                    case ContextDepthBits.Depth32: depthBits = 32; break;
-                    default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+                    continue;
                 }
 
-                config_attribs.Add(Egl.DEPTH_SIZE);
-                config_attribs.Add(depthBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.RED_SIZE, out int configRedBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.GREEN_SIZE, out int configGreenBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.BLUE_SIZE, out int configBlueBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.ALPHA_SIZE, out int configAlphaBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.DEPTH_SIZE, out int configDepthBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.STENCIL_SIZE, out int configStencilBits);
+                Egl.GetConfigAttrib(eglDisplay, config, Egl.SAMPLES, out int configSamples);
+
+                ContextValues values;
+                values.ID = (ulong)config;
+                values.RedBits = configRedBits;
+                values.GreenBits = configGreenBits;
+                values.BlueBits = configBlueBits;
+                values.AlphaBits = configAlphaBits;
+                values.DepthBits = configDepthBits;
+                values.StencilBits = configStencilBits;
+                // FIXME: Add two values one with double buffering, and one without.
+                // We don't seem to be able to guarantee double buffering when using EGL.
+                // - Noggin_bops 2024-07-21
+                values.DoubleBuffered = true;
+                // FIXME: This is something we can only set for the surface attributes
+                // so we can't really know this property either...
+                // - Noggin_bops 2024-07-21
+                values.SRGBFramebuffer = false;
+                // FIXME: Potentially use EGL_KHR_gl_colorspace with EGL_EXT_gl_colorspace_bt2020_linear
+                // to query this. But these extensions are currently not supported on ANGLE so it's
+                // not that important.
+                // - Noggin_bops 2024-07-21
+                values.PixelFormat = ContextPixelFormat.RGBA;
+                // With eglSurfaceAttrib it's possible for us to set the swap method of the
+                // surface, but this would have to be done after we've created the surface
+                // so we couldn't really guarantee it's available. For now we just say undefined.
+                // - Noggin_bops 2024-07-22
+                values.SwapMethod = ContextSwapMethod.Undefined;
+                values.Samples = configSamples;
+
+                possibleContextValues.Add(values);
             }
 
-            if (settings.StencilBits != ContextStencilBits.None)
+
+            int depthBits;
+            switch (settings.DepthBits)
             {
-                int stencilBits;
-                switch (settings.StencilBits)
-                {
-                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
-                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
-                    default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
-                }
-
-                config_attribs.Add(Egl.STENCIL_SIZE);
-                config_attribs.Add(stencilBits);
+                case ContextDepthBits.Depth24: depthBits = 24; break;
+                case ContextDepthBits.Depth32: depthBits = 32; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
             }
 
-            config_attribs.Add(Egl.NONE);
-
-            // FIXME:
-            IntPtr[] configs = new IntPtr[1];
-            bool success = Egl.ChooseConfig(eglDisplay, config_attribs.ToArray(), configs, configs.Length, out int num_configs);
-            if (success == false)
+            int stencilBits;
+            switch (settings.StencilBits)
             {
-                var error = Egl.GetError();
-                throw new PalException(this, $"eglChooseConfig failed with: {error}");
+                case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
             }
+
+            ContextValues requested = new ContextValues();
+            requested.RedBits = settings.RedColorBits;
+            requested.GreenBits = settings.GreenColorBits;
+            requested.BlueBits = settings.BlueColorBits;
+            requested.AlphaBits = settings.AlphaColorBits;
+            requested.DepthBits = depthBits;
+            requested.StencilBits = stencilBits;
+            requested.DoubleBuffered = settings.DoubleBuffer;
+            requested.SRGBFramebuffer = settings.sRGBFramebuffer;
+            requested.PixelFormat = settings.PixelFormat;
+            requested.SwapMethod = settings.SwapMethod;
+            requested.Samples = settings.Multisamples;
+
+            int selectedFormatIndex = settings.Selector(possibleContextValues, requested, Logger);
+            if (selectedFormatIndex < 0 || selectedFormatIndex >= possibleContextValues.Count)
+            {
+                throw new IndexOutOfRangeException($"The selected format index ({selectedFormatIndex}) is outside the range of valid indices. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
+            }
+
+            IntPtr selectedConfig = (IntPtr)possibleContextValues[selectedFormatIndex].ID;
 
             List<int> surface_attribs = new List<int>();
             surface_attribs.Add(Egl.RENDER_BUFFER);
             surface_attribs.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
+            // FIXME: We'd like to set this, but it's not supported by angle...
+            // - Noggin_bops 2024-07-22
+            //surface_attribs.Add(Egl.COLORSPACE);
+            //surface_attribs.Add(settings.sRGBFramebuffer ? Egl.COLORSPACE_sRGB : Egl.COLORSPACE_LINEAR);
             surface_attribs.Add(Egl.NONE);
 
-            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, configs[0], windowHandle, surface_attribs.ToArray());
+            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, selectedConfig, windowHandle, surface_attribs.ToArray());
+            if (eglSurface == IntPtr.Zero)
+            {
+                throw new PalException(this, $"Was not able to create egl surface. {Egl.GetError()}");
+            }
 
             // FIXME: Share context
             List<int> context_attribs = new List<int>() { Egl.CONTEXT_MAJOR_VERSION, settings.Version.Major, Egl.CONTEXT_MINOR_VERSION, settings.Version.Minor };
@@ -190,7 +233,7 @@ namespace OpenTK.Platform.Native.ANGLE
             ANGLEOpenGLContextHandle? shared = settings.SharedContext?.As<ANGLEOpenGLContextHandle>(this);
             IntPtr shareContext = shared?.EglContext ?? IntPtr.Zero;
 
-            IntPtr contextPtr = Egl.CreateContext(eglDisplay, configs[0], shareContext, context_attribs.ToArray());
+            IntPtr contextPtr = Egl.CreateContext(eglDisplay, selectedConfig, shareContext, context_attribs.ToArray());
 
             ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared);
 

@@ -80,7 +80,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = false;
+            PlatformComponents.PreferANGLE = true;
 
             if (PlatformComponents.PreferANGLE)
             {
@@ -128,6 +128,14 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
+                Selector = static (options, requested, logger) => {
+                    for (int i = 0; i < options.Count; i++)
+                    {
+                        logger?.LogInfo(options[i].ToString());
+                    }
+
+                    return ContextValues.DefaultValuesSelector(options, requested, logger);
+                },
             };
 
             // If we are using ANGLE we need to create a OpenGL ES context

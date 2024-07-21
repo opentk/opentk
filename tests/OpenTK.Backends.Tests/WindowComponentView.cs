@@ -57,6 +57,14 @@ namespace OpenTK.Backends.Tests
         {
             Profile = OpenGLProfile.Core,
             DebugFlag = true,
+            Selector = static (options, requested, logger) => {
+                for (int i = 0; i < options.Count; i++)
+                {
+                    logger?.LogInfo(options[i].ToString());
+                }
+
+                return ContextValues.DefaultValuesSelector(options, requested, logger);
+            },
         };
         Vector2i WindowSize = (800, 600);
         WindowMode WindowMode = WindowMode.Normal;
