@@ -1059,6 +1059,14 @@ namespace OpenTK.Platform.Native.X11
                     CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
                 }
             }
+
+            // If we are running a Glib GMainLoop we want to pump that now
+            // so that we can receive dbus messages like theme changes.
+            // - Noggin_bops 2024-07-22
+            if (X11ShellComponent.GlibMainLoop != IntPtr.Zero)
+            {
+                int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
+            }
         }
 
         /// <inheritdoc />

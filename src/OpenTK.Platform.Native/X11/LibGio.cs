@@ -5,8 +5,21 @@ namespace OpenTK.Platform.Native
 {
     internal static class LibGio
     {
+        // FIXME: All of these imports are not from GIO, some are from Glib
+        // but because these symbols live in the same shared object file
+        // this still works.
+        // - Noggin_bops 2024-07-22
         private const string Gio = "Gio";
 
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* GMainContext* */ g_main_context_default();
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* GMainLoop* */ g_main_loop_new(IntPtr /* GMainContext* */ context, int /* gboolean */ is_running);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* gboolean */ g_main_context_iteration(IntPtr /* GMainContext* */ context, int /* gboolean */ may_block); 
+ 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern IntPtr /* GDBusProxy* */ g_dbus_proxy_new_for_bus_sync(
                                 GBusType bus_type,
@@ -32,7 +45,19 @@ namespace OpenTK.Platform.Native
         internal static unsafe extern IntPtr /* GVariant* */ g_variant_new(byte* /* const gchar* */ format_string, /* ... */ byte* str1, byte* str2);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GVariant* */ g_variant_ref(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_variant_unref(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void g_variant_get(IntPtr /* GVariant* */ value, byte* /* const gchar* */ format_string, /* ... */ out IntPtr /* GVariant* */ var1);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_variant_get(IntPtr /* GVariant* */ value, byte* /* const gchar* */ format_string, /* ... */ out IntPtr /* GVariant* */ var1, out IntPtr /* GVariant* */ var2);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void g_variant_get(IntPtr /* GVariant* */ value, byte* /* const gchar* */ format_string, /* ... */ out IntPtr /* GVariant* */ var1, out IntPtr /* GVariant* */ var2, out IntPtr /* GVariant* */ var3);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint g_variant_get_uint32(IntPtr /* GVariant* */ value);
