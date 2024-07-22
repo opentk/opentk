@@ -32,6 +32,7 @@ namespace OpenTK.Platform.X11
         private readonly X11GraphicsMode ModeSelector = new X11GraphicsMode();
         private string extensions = null;
 
+
         static X11GLContext()
         {
             new Glx().LoadEntryPoints();
@@ -295,6 +296,12 @@ namespace OpenTK.Platform.X11
                 throw new InvalidOperationException(
                     String.Format("Window is invalid. Display ({0}), Handle ({1}).", Display, currentWindow.Handle));
             }
+
+            if (API.heldXLocks != 0)
+            {
+                Console.WriteLine("At least one xLock has not been closed.");
+            }
+
             using (new XLock(Display))
             {
                 Glx.SwapBuffers(Display, currentWindow.Handle);

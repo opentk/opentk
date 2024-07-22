@@ -68,6 +68,8 @@ namespace OpenTK.Platform.X11
         private const string _dll_name = "libX11";
         private const string _dll_name_vid = "libXxf86vm";
 
+        internal static int heldXLocks = 0;
+
         internal static Display DefaultDisplay { get; private set; }
 
         internal static int ScreenCount { get; }
@@ -76,8 +78,8 @@ namespace OpenTK.Platform.X11
 
         static API()
         {
-            int has_threaded_x = Functions.XInitThreads();
-            Debug.Print("Initializing threaded X11: {0}.", has_threaded_x.ToString());
+            int result = Functions.XInitThreads();
+            Console.WriteLine("Initializing threaded X: {0}.", result != 0 ? "success" : "failed");
 
             DefaultDisplay = Functions.XOpenDisplay(IntPtr.Zero);
 
@@ -1533,11 +1535,13 @@ namespace OpenTK.Platform.X11
         {
             Display = display;
             Functions.XLockDisplay(Display);
+            API.heldXLocks++;
         }
 
         public void Dispose()
         {
             Functions.XUnlockDisplay(Display);
+            API.heldXLocks--;
         }
     }
 

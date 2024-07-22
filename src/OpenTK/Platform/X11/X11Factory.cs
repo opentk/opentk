@@ -56,7 +56,7 @@ namespace OpenTK.Platform.X11
         public X11Factory()
         {
             int result = Functions.XInitThreads();
-            Debug.Print("Initializing threaded X: {0}.", result != 0 ? "success" : "failed");
+            Console.WriteLine("Initializing threaded X: {0}.", result != 0 ? "success" : "failed");
         }
 
         public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
