@@ -44,6 +44,8 @@ namespace OpenTK.Platform.Native.X11
         
         internal IntPtr GVariant_org_freedesktop_appearance_color_scheme;
 
+        internal IntPtr GVariant_org_gnome_desktop_a11y_interface_high_contrast;
+
         internal IntPtr GPowerProfileMoniforInstance;
 
         // FIXME: Make this non-static by sending this object through a GCHandle
@@ -57,11 +59,12 @@ namespace OpenTK.Platform.Native.X11
 
             GPowerProfileMoniforInstance = LibGio.g_power_profile_monitor_dup_default();
 
-            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8));
             // We take a ref to this GVariant so that it's not a "floating reference" anymore.
             // This means we can reuse this GVariant in calls to g_dbus_proxy_call_sync.
             // - Noggin_bops 2024-07-22
-            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(GVariant_org_freedesktop_appearance_color_scheme);
+            GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8)));
+
+            GVariant_org_gnome_desktop_a11y_interface_high_contrast = LibGio.g_variant_ref(LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.gnome.desktop.a11y.interface"u8), AsPtr("high-contrast"u8)));
             
             GError* error = null;
             PortalDesktop = LibGio.g_dbus_proxy_new_for_bus_sync(
@@ -102,8 +105,14 @@ namespace OpenTK.Platform.Native.X11
                 CurrentTheme.Theme = AppTheme.NoPreference;
             }
 
-            // FIXME: Read something like org.gnome.desktop.interface.a11y high-contrast if available.
-            CurrentTheme.HighContrast = false;
+            if (TryReadHighContrast(out bool highContrast))
+            {
+                CurrentTheme.HighContrast = highContrast;
+            }
+            else
+            {
+                CurrentTheme.HighContrast = false;
+            }
         }
 
         private unsafe struct SettingsChangedParameters {
@@ -152,6 +161,16 @@ namespace OpenTK.Platform.Native.X11
                 if (newTheme != CurrentTheme.Theme)
                 {
                     CurrentTheme.Theme = newTheme;
+                    EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(CurrentTheme));
+                }
+            }
+            else if (@namespace.SequenceEqual("org.gnome.desktop.a11y.interface"u8) &&
+                key.SequenceEqual("high-contrast"u8))
+            {
+                bool highContrast = LibGio.g_variant_get_boolean(args.Value) != 0;
+                if (CurrentTheme.HighContrast != highContrast)
+                {
+                    CurrentTheme.HighContrast = highContrast;
                     EventQueue.Raise(null, PlatformEventType.ThemeChange, new ThemeChangeEventArgs(CurrentTheme));
                 }
             }
@@ -364,6 +383,49 @@ namespace OpenTK.Platform.Native.X11
                 LibGio.g_variant_get(child, AsPtr("v"u8), out IntPtr value);
 
                 scheme = (int)LibGio.g_variant_get_uint32(value);
+
+                LibGio.g_variant_unref(value);
+                LibGio.g_variant_unref(child);
+                LibGio.g_variant_unref(ret);
+
+                LibGio.g_clear_error(&error);
+                return true;
+            }
+        }
+
+        internal bool TryReadHighContrast(out bool highContrast)
+        {
+            highContrast = false;
+            unsafe {
+                GError* error = null;
+                IntPtr ret = LibGio.g_dbus_proxy_call_sync(PortalDesktop, AsPtr("Read"u8), GVariant_org_gnome_desktop_a11y_interface_high_contrast, GDBusCallFlags.G_DBUS_CALL_FLAGS_NONE, int.MaxValue, IntPtr.Zero, &error);
+                if (error != null)
+                {
+                    if (error->domain == LibGio.g_dbus_error_quark())
+                    {
+                        if (error->code == (int)GDBusError.G_DBUS_ERROR_SERVICE_UNKNOWN)
+                        {
+                            Logger?.LogWarning($"Portal not found: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                            LibGio.g_clear_error(&error);
+                            return false;
+                        }
+                        else if (error->code == (int)GDBusError.G_DBUS_ERROR_UNKNOWN_METHOD)
+                        {
+                            Logger?.LogWarning($"Portal doesn't provide settings: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                            LibGio.g_clear_error(&error);
+                            return false;
+                        }
+                    }
+
+                    Logger?.LogError($"Couldn't read the high-contrast setting: {Marshal.PtrToStringUTF8((IntPtr)error->message)}");
+                    LibGio.g_clear_error(&error);
+                    return false;
+                }
+
+                LibGio.g_variant_get(ret, AsPtr("(v)"u8), out IntPtr child);
+                LibGio.g_variant_get(child, AsPtr("v"u8), out IntPtr value);
+
+                highContrast = LibGio.g_variant_get_boolean(value) != 0;
 
                 LibGio.g_variant_unref(value);
                 LibGio.g_variant_unref(child);

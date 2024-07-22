@@ -63,6 +63,18 @@ namespace OpenTK.Platform.Native
         internal static extern uint g_variant_get_uint32(IntPtr /* GVariant* */ value);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* gboolean */ g_variant_get_boolean(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* const GVariantType* */ g_variant_get_type(IntPtr /* GVariant* */ value);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* const gchar* */ g_variant_type_peek_string(IntPtr /* const GVariantType* */ type);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern nuint g_variant_type_get_string_length(IntPtr /* const GVariantType* */ type);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void g_clear_error(GError **err);
 
         [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
