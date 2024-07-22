@@ -94,5 +94,11 @@ namespace OpenTK.Platform.Native
                                 IntPtr /* gpoiner */ data,
                                 IntPtr /* GClosureNotify */ destroy_data,
                                 GConnectFlags connect_flags);
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern IntPtr /* GPowerProfileMonitor* */ g_power_profile_monitor_dup_default();
+
+        [DllImport(Gio, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int /* gboolean */ g_power_profile_monitor_get_power_saver_enabled(IntPtr /* GPowerProfileMonitor* */ monitor);
     }
 }

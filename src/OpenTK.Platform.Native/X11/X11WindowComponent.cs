@@ -1123,6 +1123,9 @@ namespace OpenTK.Platform.Native.X11
                     // We are coupling this component to the Toolkit class in an unexpected way?
                     // But maybe it's fine?
                     // - Noggin_bops 2024-06-22
+                    // FIXME: This wasn't a great idea as ANGLEOpenGLComponent is a thing which will cause
+                    // this to crash. So we need to handle ANGLEOpenGLComponent as well here.
+                    // - Noggin_bops 2024-07-22
                     X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized.");
                     // FIXME: Make these properties of the X11OpenGLComponent.
                     bool ARB_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_ARB_framebuffer_sRGB");

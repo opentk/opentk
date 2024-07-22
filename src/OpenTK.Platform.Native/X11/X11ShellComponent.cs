@@ -41,8 +41,10 @@ namespace OpenTK.Platform.Native.X11
 
         // FIXME: Make this non-static while still exposing it to X11WindowComponent.
         internal static IntPtr GlibMainLoop;
-
+        
         internal IntPtr GVariant_org_freedesktop_appearance_color_scheme;
+
+        internal IntPtr GPowerProfileMoniforInstance;
 
         // FIXME: Make this non-static by sending this object through a GCHandle
         // to the dbus callback.
@@ -52,6 +54,8 @@ namespace OpenTK.Platform.Native.X11
         public unsafe void Initialize(ToolkitOptions options)
         {
             GlibMainLoop = LibGio.g_main_loop_new(IntPtr.Zero, 0);
+
+            GPowerProfileMoniforInstance = LibGio.g_power_profile_monitor_dup_default();
 
             GVariant_org_freedesktop_appearance_color_scheme = LibGio.g_variant_new(AsPtr("(ss)"u8), AsPtr("org.freedesktop.appearance"u8), AsPtr("color-scheme"u8));
             // We take a ref to this GVariant so that it's not a "floating reference" anymore.
@@ -207,7 +211,6 @@ namespace OpenTK.Platform.Native.X11
 
             bool setBattery = false;
             bool charging = false;
-            bool powerSaver = false;
             float? batteryPercent = null;
             float? batteryTime = null;
             foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
@@ -276,15 +279,15 @@ namespace OpenTK.Platform.Native.X11
                     // FIXME: In the case of multiple batteries, pick the highest time to empty
                     // And highest battery percentage?
 
-                    // FIXME: For now we don't report power saver info on linux.
-                    //  We can get this information from "org.freedesktop.portal.PowerProfileMonitor"
-                    // using dbus.
-                    powerSaver = false;
-
                     // FIXME: Consider the case of multiple batteries.
                     setBattery = true;
                 }
             }
+
+            // FIXME: We can listen to GPowerProfileMonitor::notify::power-saver-enabled signal to get an event
+            // when this setting changes.
+            // - Noggin_bops 2024-07-22
+            bool powerSaver = LibGio.g_power_profile_monitor_get_power_saver_enabled(GPowerProfileMoniforInstance) != 0;
 
             if (setBattery == false)
             {
