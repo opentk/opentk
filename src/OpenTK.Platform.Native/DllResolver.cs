@@ -103,6 +103,14 @@ namespace OpenTK.Platform.Native
                 "libxcb-xinput.so.0",
             },
 
+            ["Xrandr"] = new string[]
+            {
+                "libXrandr.so",
+                "libXrandr.so.2",
+                "libXrandr.so.1",
+                "libXrandr.so.0",
+            },
+
             ["XScreenSaver"] = new string[]
             {
                 "libXss.so",
