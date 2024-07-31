@@ -426,6 +426,31 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    /// <summary>
+    /// This event is triggered when the mouse moves.
+    /// </summary>
+    public class RawMouseMoveEventArgs : WindowEventArgs
+    {
+        // FIXME: In what coordinate space is the mouse coords?
+
+        // FIXME: Position delta
+
+        /// <summary>
+        /// The new position of the mouse cursor.
+        /// </summary>
+        public Vector2 Delta { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RawMouseMoveEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window in which the mouse moved.</param>
+        /// <param name="delta">The mouse position.</param>
+        public RawMouseMoveEventArgs(WindowHandle window, Vector2 delta) : base(window)
+        {
+            Delta = delta;
+        }
+    }
+
     // FIXME: Maybe make MouseButtonDown and MouseButtonUp the same event type?
     // FIXME: Are mouse down and mouse up events window events?
 

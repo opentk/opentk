@@ -36,6 +36,13 @@ namespace OpenTK.Core.Platform
         /// </summary>
         bool CanSetMousePosition { get; }
 
+        /// <summary>
+        /// If raw mouse motion is supported on this platform.
+        /// </summary>
+        // FIXME: Maybe we should move raw mouse motion stuff to IWindowComponent as it's a per window setting?
+        // - Noggin_bops 2024-07-31
+        bool SupportsRawMouseMotion { get; }
+
         // FIXME: When using CaptureMode.Locked should these return the virtual position?
         // If not, we need to have a clear distinction between which coordinates get
         // virtualized and which ones do not.
@@ -59,5 +66,19 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="state">The current mouse state.</param>
         void GetMouseState(out MouseState state);
+
+        /// <summary>
+        /// Returns whether raw mouse motion is enabled for the given window or not.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>If raw mouse motion is enabled.</returns>
+        bool IsRawMouseMotionEnabled(WindowHandle window);
+
+        /// <summary>
+        /// Enables or disables raw mouse motion for a specific window.
+        /// </summary>
+        /// <param name="window">The window to enable or disable raw mouse motion for.</param>
+        /// <param name="enable">Whether to enable or disable raw mouse motion.</param>
+        void EnableRawMouseMotion(WindowHandle window, bool enable);
     }
 }

@@ -1642,6 +1642,291 @@ namespace OpenTK.Platform.Native.Windows
         DEVICE_NOTIFY_SERVICE_HANDLE = 0x00000001,
     }
 
+    internal enum HIDUsagePage : ushort
+    {
+        /// <summary>
+        /// Generic Desktop Controls
+        /// </summary>
+        Generic = 0x01,
+
+        /// <summary>
+        /// VR Controls
+        /// </summary>
+        VR = 0x03,
+
+        /// <summary>
+        /// Game Controls
+        /// </summary>
+        Game = 0x05,
+
+        /// <summary>
+        /// LEDs
+        /// </summary>
+        LED = 0x08,
+
+        /// <summary>
+        /// Button
+        /// </summary>
+        Button = 0x09,
+
+        /// <summary>
+        /// Haptics
+        /// </summary>
+        Haptics = 0x0E,
+    }
+
+    internal enum HIDUsageGeneric : ushort
+    {
+        Pointer = 0x01,
+        Mouse = 0x02,
+        Joystick = 0x04,
+        Gamepad = 0x05,
+        Keyboard = 0x06,
+        Keypad = 0x07,
+        MultiAxisController = 0x08,
+    }
+
+    [Flags]
+    internal enum RawMouseFlags : ushort
+    {
+        /// <summary>
+        /// Mouse movement data is relative to the last mouse position. For further information about mouse motion, see the following Remarks section.
+        /// </summary>
+        MoveRelative = 0x00,
+
+        /// <summary>
+        /// Mouse movement data is based on absolute position. For further information about mouse motion, see the following Remarks section.
+        /// </summary>
+        MoveAbsolute = 0x01,
+
+        /// <summary>
+        /// Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system). For further information about mouse motion, see the following Remarks section.
+        /// </summary>
+        VirtualDesktop = 0x02,
+
+        /// <summary>
+        /// Mouse attributes changed; application needs to query the mouse attributes.
+        /// </summary>
+        AttributesChanged = 0x04,
+
+        /// <summary>
+        /// This mouse movement event was not coalesced. Mouse movement events can be coalesced by default.
+        /// Windows XP/2000: This value is not supported.
+        /// </summary>
+        MoveNoCoalesce = 0x08,
+    }
+
+    [Flags]
+    internal enum RIDEV : uint
+    {
+        /// <summary>
+        /// If set, this removes the top level collection from the inclusion list. This tells the operating system to stop reading from a device which matches the top level collection.
+        /// </summary>
+        Remove = 0x00000001,
+
+        /// <summary>
+        /// If set, this specifies the top level collections to exclude when reading a complete usage page. This flag only affects a TLC whose usage page is already specified with RIDEV_PAGEONLY.
+        /// </summary>
+        Exclude = 0x00000010,
+
+        /// <summary>
+        /// If set, this specifies all devices whose top level collection is from the specified usUsagePage. Note that usUsage must be zero. To exclude a particular top level collection, use RIDEV_EXCLUDE.
+        /// </summary>
+        PageOnly = 0x00000020,
+
+        /// <summary>
+        /// If set, this prevents any devices specified by usUsagePage or usUsage from generating legacy messages. This is only for the mouse and keyboard. See Remarks.
+        /// </summary>
+        NoLegacy = 0x00000030,
+
+        /// <summary>
+        /// If set, this enables the caller to receive the input even when the caller is not in the foreground. Note that hwndTarget must be specified.
+        /// </summary>
+        InputSink = 0x00000100,
+
+        /// <summary>
+        /// If set, the mouse button click does not activate the other window. RIDEV_CAPTUREMOUSE can be specified only if RIDEV_NOLEGACY is specified for a mouse device.
+        /// </summary>
+        CaptureMouse = 0x00000200,
+
+        /// <summary>
+        /// If set, the application-defined keyboard device hotkeys are not handled. However, the system hotkeys; for example, ALT+TAB and CTRL+ALT+DEL, are still handled. By default, all keyboard hotkeys are handled. RIDEV_NOHOTKEYS can be specified even if RIDEV_NOLEGACY is not specified and hwndTarget is NULL.
+        /// </summary>
+        NoHotkeys = 0x00000200,
+
+        /// <summary>
+        /// If set, the application command keys are handled. RIDEV_APPKEYS can be specified only if RIDEV_NOLEGACY is specified for a keyboard device.
+        /// </summary>
+        AppKeys = 0x00000400,
+
+        /// <summary>
+        /// If set, this enables the caller to receive input in the background only if the foreground application does not process it. In other words, if the foreground application is not registered for raw input, then the background application that is registered will receive the input.
+        ///
+        /// Windows XP: This flag is not supported until Windows Vista
+        /// </summary>
+        ExInputSink = 0x00001000,
+
+        /// <summary>
+        /// If set, this enables the caller to receive WM_INPUT_DEVICE_CHANGE notifications for device arrival and device removal.
+        ///
+        /// Windows XP: This flag is not supported until Windows Vista
+        /// </summary>
+        DevNotify = 0x00002000,
+    }
+
+    internal enum RID : uint
+    {
+        /// <summary>
+        /// Get the header information from the RAWINPUT structure.
+        /// </summary>
+        Header = 0x10000005,
+
+        /// <summary>
+        /// Get the raw data from the RAWINPUT structure.
+        /// </summary>
+        Input = 0x10000003,
+    }
+
+    internal enum RIM : uint
+    {
+        /// <summary>
+        /// Raw input comes from the mouse.
+        /// </summary>
+        TypeMouse = 0,
+
+        /// <summary>
+        /// Raw input comes from the keyboard.
+        /// </summary>
+        TypeKeyboard = 1,
+
+        /// <summary>
+        /// Raw input comes from some device that is not a keyboard or a mouse.
+        /// </summary>
+        TypeHID = 2,
+    }
+
+    internal enum RIDI : uint
+    {
+        /// <summary>
+        /// pData is a PHIDP_PREPARSED_DATA pointer to a buffer for a top-level collection's preparsed data.
+        /// </summary>
+        PreParsedData = 0x20000005,
+
+        /// <summary>
+        /// pData points to a string that contains the device interface name.
+        /// If this device is opened with Shared Access Mode then you can call CreateFile with this name to open a HID collection and use returned handle for calling ReadFile to read input reports and WriteFile to send output reports.
+        /// 
+        /// For more information, see Opening HID Collections and Handling HID Reports.
+        ///
+        /// For this uiCommand only, the value in pcbSize is the character count (not the byte count).
+        /// </summary>
+        DeviceName = 0x20000007,
+
+        /// <summary>
+        /// pData points to an RID_DEVICE_INFO structure.
+        /// </summary>
+        DeviceInfo = 0x2000000b,
+    }
+
+    internal enum GIDC : ulong
+    {
+        /// <summary>
+        /// A new device has been added to the system.
+        ///
+        /// You can call GetRawInputDeviceInfo to get more information regarding the device.
+        /// </summary>
+        Arrival = 1,
+
+        /// <summary>
+        /// A device has been removed from the system.
+        /// </summary>
+        Removal = 2,
+    }
+
+    // FIXME: Proper name
+    [Flags]
+    internal enum RID_MOUSE_DEVICE_PROPERTIES : uint
+    {
+        /// <summary>
+        /// HID mouse
+        /// </summary>
+        MOUSE_HID_HARDWARE = 0x0080,
+
+        /// <summary>
+        /// HID wheel mouse
+        /// </summary>
+        WHEELMOUSE_HID_HARDWARE = 0x0100,
+
+        /// <summary>
+        /// Mouse with horizontal wheel
+        /// </summary>
+        HORIZONTAL_WHEEL_PRESENT = 0x8000,
+    }
+
+    public enum HIDPStatus : uint
+    {
+        // These values are taken from: https://github.com/tpn/winsdk-10/blob/9b69fd26ac0c7d0b83d378dba01080e93349c2ed/Include/10.0.16299.0/shared/hidpi.h#L1801
+
+        HIDP_STATUS_SUCCESS = 0 << 28 | 0x11 << 16 | 0,
+
+        HIDP_STATUS_NULL = unchecked((uint)0x8 << 28 | 0x11 << 16 | 1),
+
+        /// <summary>
+        /// The specified preparsed data is invalid.
+        /// </summary>
+        HIDP_STATUS_INVALID_PREPARSED_DATA = unchecked((uint)0xC << 28 | 0x11 << 16 | 1),
+
+        HIDP_STATUS_INVALID_REPORT_TYPE = unchecked((uint)0xC << 28 | 0x11 << 16 | 2),
+
+        HIDP_STATUS_INVALID_REPORT_LENGTH = unchecked((uint)0xC << 28 | 0x11 << 16 | 3),
+
+        HIDP_STATUS_USAGE_NOT_FOUND = unchecked((uint)0xC << 28 | 0x11 << 16 | 4),
+
+        HIDP_STATUS_VALUE_OUT_OF_RANGE = unchecked((uint)0xC << 28 | 0x11 << 16 | 5),
+
+        HIDP_STATUS_BAD_LOG_PHY_VALUES = unchecked((uint)0xC << 28 | 0x11 << 16 | 6),
+
+        HIDP_STATUS_BUFFER_TOO_SMALL = unchecked((uint)0xC << 28 | 0x11 << 16 | 7),
+
+        HIDP_STATUS_INTERNAL_ERROR = unchecked((uint)0xC << 28 | 0x11 << 16 | 8),
+
+        HIDP_STATUS_I8042_TRANS_UNKNOWN = unchecked((uint)0xC << 28 | 0x11 << 16 | 9),
+
+        HIDP_STATUS_INCOMPATIBLE_REPORT_ID = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xA),
+
+        HIDP_STATUS_NOT_VALUE_ARRAY = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xB),
+
+        HIDP_STATUS_IS_VALUE_ARRAY = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xC),
+
+        HIDP_STATUS_DATA_INDEX_NOT_FOUND = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xD),
+
+        HIDP_STATUS_DATA_INDEX_OUT_OF_RANGE = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xE),
+
+        HIDP_STATUS_BUTTON_NOT_PRESSED = unchecked((uint)0xC << 28 | 0x11 << 16 | 0xF),
+
+        HIDP_STATUS_REPORT_DOES_NOT_EXIST = unchecked((uint)0xC << 28 | 0x11 << 16 | 0x10),
+
+        HIDP_STATUS_NOT_IMPLEMENTED = unchecked((uint)0xC << 28 | 0x11 << 16 | 0x20),
+    }
+
+    public enum HIDPReportType : int
+    {
+        /// <summary>
+        /// Indicates an input report.
+        /// </summary>
+        Input = 0,
+
+        /// <summary>
+        /// Indicates an output report.
+        /// </summary>
+        Output = 1,
+
+        /// <summary>
+        /// Indicates a feature report.
+        /// </summary>
+        Feature = 2,
+    }
+
     [Flags]
     internal enum ExecutionState : ulong
     {

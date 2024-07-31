@@ -48,6 +48,8 @@ namespace OpenTK.Platform.Native.Windows
         public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
         public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
 
+        public bool RawMouseMotionEnabled { get; set; } = false;
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;

@@ -30,6 +30,9 @@ namespace OpenTK.Platform.Native.X11
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
+        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
@@ -79,6 +82,18 @@ namespace OpenTK.Platform.Native.X11
             state.Position = (root_x, root_y);
             state.PressedButtons = MouseButtonState;
             state.Scroll = ScrollPosition;
+        }
+
+        /// <inheritdoc/>
+        public bool IsRawMouseMotionEnabled(WindowHandle window)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void EnableRawMouseMotion(WindowHandle window, bool enable)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -33,6 +33,9 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
+        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+
+        /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
         }
@@ -107,6 +110,18 @@ namespace OpenTK.Platform.Native.macOS
                 state.PressedButtons |= MouseButtonFlags.Button7;
             if ((buttons & 1 << 7) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button8;
+        }
+
+        /// <inheritdoc/>
+        public bool IsRawMouseMotionEnabled(WindowHandle window)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void EnableRawMouseMotion(WindowHandle window, bool enable)
+        {
+            throw new NotImplementedException();
         }
     }
 }

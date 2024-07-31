@@ -80,8 +80,13 @@ void main() {
 }
 ";
 
+        bool rawMouseMotionEnabled = false;
+        float rawMouseMotionScale = 1.0f / 65536.0f;
+
         int env_program;
         int env_program_mvp_location;
+
+        Vector2i viewportSize;
 
         float cameraFov = 90;
         float cameraNear = 0.01f;
@@ -101,6 +106,14 @@ void main() {
 
             this.window = window;
             this.context = context;
+
+            if (Toolkit.Mouse.SupportsRawMouseMotion)
+            {
+                Toolkit.Mouse.EnableRawMouseMotion(window, true);
+                rawMouseMotionEnabled = true;
+            }
+
+            Toolkit.Window.GetFramebufferSize(window, out viewportSize.X, out viewportSize.Y);
 
             env_vao = GL.GenVertexArray();
             GL.BindVertexArray(env_vao);
@@ -157,6 +170,7 @@ void main() {
 
             Toolkit.Window.SetCursorCaptureMode(window, CursorCaptureMode.Locked);
             Toolkit.Window.SetCursor(window, null);
+            Toolkit.Window.FocusWindow(window);
         }
 
         public void Deinitialize()
@@ -170,6 +184,8 @@ void main() {
 
         public void Render()
         {
+            GL.Viewport(0, 0, viewportSize.X, viewportSize.Y);
+
             GL.ClearColor(Color4.Darkslategray);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -259,10 +275,23 @@ void main() {
         {
             if (args is MouseMoveEventArgs mouseMove)
             {
-                delta += prevPos - mouseMove.Position;
-                prevPos = mouseMove.Position;
+                if (rawMouseMotionEnabled == false)
+                {
+                    delta += prevPos - mouseMove.Position;
 
-                Console.WriteLine($"Mouse move: {mouseMove.Position}");
+                    Console.WriteLine($"Mouse move: {mouseMove.Position}");
+                }
+
+                prevPos = mouseMove.Position;
+            }
+            else if (args is RawMouseMoveEventArgs rawMouseMove)
+            {
+                if (rawMouseMotionEnabled == true)
+                {
+                    delta += rawMouseMove.Delta * rawMouseMotionScale;
+
+                    Console.WriteLine($"Raw mouse move: {rawMouseMove.Delta * rawMouseMotionScale}");
+                }
             }
             else if (args is FocusEventArgs focus)
             {
@@ -274,6 +303,30 @@ void main() {
                         prevPos = (x, y);
                     }
                 }
+            }
+            else if (args is KeyDownEventArgs keyDown)
+            {
+                if (keyDown.Scancode == Scancode.R)
+                {
+                    rawMouseMotionEnabled = !rawMouseMotionEnabled;
+                    Toolkit.Mouse.EnableRawMouseMotion(window, rawMouseMotionEnabled);
+                    Program.Logger.LogDebug($"Raw mouse motion: {rawMouseMotionEnabled}");
+                }
+                else if (keyDown.Scancode == Scancode.F11)
+                {
+                    if (Toolkit.Window.GetMode(window) == WindowMode.WindowedFullscreen)
+                    {
+                        Toolkit.Window.SetMode(window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        Toolkit.Window.SetMode(window, WindowMode.WindowedFullscreen);
+                    }
+                }
+            }
+            else if (args is WindowFramebufferResizeEventArgs framebufferResize)
+            {
+                viewportSize = framebufferResize.NewFramebufferSize;
             }
         }
     }

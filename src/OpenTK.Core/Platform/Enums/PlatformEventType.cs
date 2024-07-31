@@ -30,6 +30,8 @@ namespace OpenTK.Core.Platform
         /// </summary>
         MouseMove,
 
+        RawMouseMove,
+
         // FIXME: Maybe merge up and down events and add a property to the event?
         MouseDown,
         MouseUp,

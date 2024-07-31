@@ -662,6 +662,50 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.INPUT:
+                    {
+                        Win32.RAWINPUT input = default;
+                        uint size = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+                        input.header.dwSize = size;
+                        uint ret = Win32.GetRawInputData(lParam, RID.Header, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                        if (ret == 0xFFFF_FFFF)
+                        {
+                            throw new Win32Exception("GetRawInputData failed.");
+                        }
+
+                        if (input.header.dwType == RIM.TypeMouse)
+                        {
+                            ret = Win32.GetRawInputData(lParam, RID.Input, null, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                            if (ret == 0xFFFF_FFFF)
+                            {
+                                throw new Win32Exception("GetRawInputData failed.");
+                            }
+
+                            ret = Win32.GetRawInputData(lParam, RID.Input, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                            if (ret == 0xFFFF_FFFF)
+                            {
+                                throw new Win32Exception("GetRawInputData failed.");
+                            }
+
+                            ref Win32.RAWMOUSE mouse = ref input.data.mouse;
+
+                            if (mouse.usFlags == RawMouseFlags.MoveRelative)
+                            {
+                                if (mouse.lLastX != 0 && mouse.lLastY != 0)
+                                {
+                                    HWND h = HWndDict[hWnd];
+                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (-mouse.lLastX, -mouse.lLastY)));
+                                }
+                            }
+                            else
+                            {
+                                // FIXME: We don't want to spam this for every WM_INPUT message...
+                                Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
+                            }
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.NCHITTEST:
                     {
                         int x = Win32.GET_X_LPARAM(lParam);

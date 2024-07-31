@@ -17,14 +17,17 @@ namespace OpenTK.Backends.Tests
         public override bool IsVisible => Toolkit.Mouse != null;
 
         private bool canSetMousePosition;
+        private bool supportsRawMouseMotion;
 
         private Vector2 setPosition;
+        private bool enableRawInput = false;
 
         public override void Initialize()
         {
             base.Initialize();
 
             try { canSetMousePosition = Toolkit.Mouse.CanSetMousePosition; } catch { canSetMousePosition = false; }
+            try { supportsRawMouseMotion = Toolkit.Mouse.SupportsRawMouseMotion; } catch { supportsRawMouseMotion = false; }
         }
 
         public override void Paint(double deltaTime)
@@ -34,6 +37,7 @@ namespace OpenTK.Backends.Tests
             ImGui.SeparatorText("Common properties");
 
             ImGuiUtils.ReadonlyCheckbox("Can Set Mouse Position", canSetMousePosition);
+            ImGuiUtils.ReadonlyCheckbox("Supports Raw Mouse Motion", supportsRawMouseMotion);
 
             ImGui.SeparatorText("Mouse state");
 
@@ -66,6 +70,17 @@ namespace OpenTK.Backends.Tests
             {
                 Toolkit.Mouse.SetPosition((int)setPosition.X, (int)setPosition.Y);
             }
+
+            ImGui.BeginDisabled(supportsRawMouseMotion == false);
+
+            ImGui.SeparatorText("Raw mouse input");
+
+            if (ImGui.Checkbox("Raw input", ref enableRawInput))
+            {
+                Toolkit.Mouse.EnableRawMouseMotion(Program.Window, enableRawInput);
+            }
+
+            ImGui.EndDisabled();
 
             ImGui.EndDisabled();
         }

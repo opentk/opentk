@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Resources;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <inheritdoc/>
         public bool CanSetMousePosition => true;
+
+        /// <inheritdoc/>
+        public bool SupportsRawMouseMotion => true;
 
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
@@ -102,6 +106,34 @@ namespace OpenTK.Platform.Native.Windows
             {
                 state.PressedButtons |= MouseButtonFlags.Button5;
             }
+        }
+
+        /// <inheritdoc/>
+        public bool IsRawMouseMotionEnabled(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            return hwnd.RawMouseMotionEnabled;
+        }
+
+        /// <inheritdoc/>
+        public void EnableRawMouseMotion(WindowHandle handle, bool enabled)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.RAWINPUTDEVICE device;
+            device.usUsagePage = HIDUsagePage.Generic;
+            device.usUsage = (ushort)HIDUsageGeneric.Mouse;
+            // FIXME: InputSink? ExInputSink?
+            device.dwFlags = enabled ? 0 : RIDEV.Remove;
+            device.hwndTarget = enabled ? hwnd.HWnd : 0;
+
+            bool success = Win32.RegisterRawInputDevices(device, 1, (uint)Marshal.SizeOf<Win32.RAWINPUTDEVICE>());
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            hwnd.RawMouseMotionEnabled = enabled;
         }
     }
 }

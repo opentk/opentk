@@ -5,7 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -1376,7 +1378,108 @@ namespace OpenTK.Platform.Native.Windows
 
         [UnmanagedFunctionPointer(CallingConvention.Winapi)]
         internal delegate int /* HRESULT */ PFTASKDIALOGCALLBACK(IntPtr /* HWND */ hwnd, TDN msg, UIntPtr wParam, IntPtr lParam, IntPtr lpRefData);
-    }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool RegisterRawInputDevices(in RAWINPUTDEVICE pRawInputDevices, uint uiNumDevices, uint cbSize);
+
+        internal struct RAWINPUTDEVICE
+        {
+            public HIDUsagePage usUsagePage;
+            public ushort usUsage;
+            public RIDEV dwFlags;
+            public IntPtr /* HWND */ hwndTarget;
+        }
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+           IntPtr /* HRAWINPUT */ hRawInput,
+           RID uiCommand,
+           [Out] byte[]? pData,
+           ref uint pcbSize,
+           uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+            IntPtr /* HRAWINPUT */ hRawInput,
+            RID uiCommand,
+            ref RAWINPUTHEADER pData,
+            ref uint pcbSize,
+            uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+            IntPtr /* HRAWINPUT */ hRawInput,
+            RID uiCommand,
+            ref RAWINPUT pData,
+            ref uint pcbSize,
+            uint cbSizeHeader);
+
+        internal struct RAWINPUTHEADER
+        {
+            public RIM dwType;
+            public uint dwSize;
+            public IntPtr /* HANDLE */ hDevice;
+            public UIntPtr /* WPARAM */ wParam;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct RAWMOUSE
+        {
+            [FieldOffset(0)]
+            public RawMouseFlags usFlags;
+            [FieldOffset(2)]
+            public uint ulButtons;
+            [FieldOffset(2)]
+            public ushort usButtonFlags;
+            [FieldOffset(4)]
+            public ushort usButtonData;
+            [FieldOffset(6)]
+            public uint ulRawButtons;
+            [FieldOffset(10)]
+            public int lLastX;
+            [FieldOffset(14)]
+            public int lLastY;
+            [FieldOffset(18)]
+            public uint ulExtraInformation;
+        }
+
+        internal struct RAWKEYBOARD
+        {
+            public ushort MakeCode;
+            public ushort Flags;
+            public ushort Reserved;
+            public ushort VKey;
+            public uint Message;
+            public uint ExtraInformation;
+        }
+
+        internal struct RAWHID
+        {
+            public uint dwSizeHid;
+            public uint dwCount;
+            public fixed byte bRawData[1];
+        }
+
+        internal unsafe struct RAWINPUT
+        {
+            public RAWINPUTHEADER header;
+            public DUMMYUNIONNAME data;
+
+            [StructLayout(LayoutKind.Explicit)]
+            public struct DUMMYUNIONNAME
+            {
+                [FieldOffset(0)]
+                public RAWMOUSE mouse;
+                [FieldOffset(0)]
+                public RAWKEYBOARD keyboard;
+                [FieldOffset(0)]
+                public RAWHID hid;
+            }
+        }
+}
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }
