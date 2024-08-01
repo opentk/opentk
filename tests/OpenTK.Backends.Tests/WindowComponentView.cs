@@ -378,7 +378,7 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.DragInt2("Size", ref WindowSize.X);
 
-                ImGuiUtils.EnumCombo("Windowe Mode", ref WindowMode);
+                ImGuiUtils.EnumCombo("Window Mode", ref WindowMode);
 
                 if (ImGui.Button("Create Window"))
                 {

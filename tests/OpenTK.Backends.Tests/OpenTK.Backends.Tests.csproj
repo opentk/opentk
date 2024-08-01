@@ -13,7 +13,7 @@
          or make it so that the resource file can contain the manifest and that we load it correctly.
     -->
     <!-- Uncomment this if not using the .res resource file. -->
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!--<ApplicationManifest>app.manifest</ApplicationManifest>-->
     <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
@@ -48,7 +48,7 @@
     <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
-    <ProjectReference Include="..\Bejeweled\Bejeweled.csproj" />
+    <ProjectReference Include="..\Bejeweled\BejeweledLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

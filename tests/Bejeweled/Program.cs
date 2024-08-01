@@ -15,14 +15,12 @@ namespace Bejeweled
 {
     internal class Program
     {
-        private static ILogger Logger;
+#if !LIBRARY
 
         internal static WindowHandle Window;
         internal static OpenGLContextHandle Context;
 
         internal static Bejeweled Bejeweled;
-
-        public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
 
         static void Main(string[] args)
         {
@@ -207,7 +205,11 @@ namespace Bejeweled
                 Toolkit.Window.Destroy(close.Window);
             }
         }
+#endif
 
+        private static ILogger Logger;
+
+        public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
         private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
         {
             string message = Marshal.PtrToStringAnsi(messagePtr, length);

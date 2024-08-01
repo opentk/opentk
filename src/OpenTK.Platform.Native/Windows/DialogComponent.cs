@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -21,13 +22,97 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        internal IntPtr ActivationContext;
+        internal uint ActivationContextCookie;
+
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public unsafe void Initialize(ToolkitOptions options)
         {
             // FIXME: Make sure we support the correct styling??
             // Either through a manifest or enabling it ourselves?
             // See EnableVisualStyles or https://stackoverflow.com/questions/1415270/c-comctl32-dll-version-6-in-debugger
             // - Noggin_bops 2024-07-17
+
+            if (options.Windows.EnableVisualStyles)
+            {
+                Module module = typeof(DialogComponent).Module;
+                IntPtr moduleHandle = Win32.GetModuleHandle(module.Name);
+                if (moduleHandle != 0)
+                {
+                    // We where able to read the module, so we can get the embedded manifest.
+                    Win32.ACTCTXW context = default;
+                    context.cbSize = (uint)sizeof(Win32.ACTCTXW);
+                    // CSC embeds DLL manifests as native resource ID 2
+                    // https://github.com/dotnet/roslyn/blob/fab7134296816fc80019c60b0f5bef7400cf23ea/src/Compilers/Core/Portable/CvtRes.cs#L562
+                    context.lpResourceName = (char*)2;
+                    context.dwFlags = ACTCTXFlag.HModuleValid | ACTCTXFlag.ResourceNameValid;
+                    context.hModule = moduleHandle;
+
+                    ActivationContext = Win32.CreateActCtxW(ref context);
+                    if (ActivationContext == Win32.INVALID_HANDLE_VALUE)
+                    {
+                        // FIXME: Maybe don't throw the exception?
+                        throw new Win32Exception();
+                    }
+
+                    Logger?.LogDebug("Enabled visual styles through module native resource manifest.");
+                }
+                else
+                {
+                    using Stream? stream = module.Assembly.GetManifestResourceStream("OpenTK.Platform.Native.Windows.VisualStyles.manifest");
+                    if (stream != null)
+                    {
+                        string tempFilePath = Path.Join(Path.GetDirectoryName(module.Assembly.Location), Path.GetRandomFileName());
+                        tempFilePath = Path.ChangeExtension(tempFilePath, "manifest");
+                        using (FileStream tempFileStream = new FileStream(tempFilePath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Delete | FileShare.ReadWrite))
+                        {
+                            stream.CopyTo(tempFileStream);
+                        }
+
+                        fixed (char* tempFilePathPtr = tempFilePath)
+                        {
+                            File.Exists(tempFilePath);
+
+                            Win32.ACTCTXW context = default;
+                            context.cbSize = (uint)sizeof(Win32.ACTCTXW);
+                            context.lpSource = tempFilePathPtr;
+
+                            ActivationContext = Win32.CreateActCtxW(ref context);
+                            if (ActivationContext == Win32.INVALID_HANDLE_VALUE)
+                            {
+                                throw new Win32Exception();
+                            }
+                        }
+
+                        try
+                        {
+                            File.Delete(tempFilePath);
+                        }
+                        catch (Exception e) when (e is UnauthorizedAccessException or IOException)
+                        {
+                            // If we can't delete the file we continue.
+                            // - Noggin_bops 2024-08-01
+                            Logger?.LogInfo($"Wasn't able to delete temporary manifest file '{tempFilePath}'.");
+                        }
+
+                        Logger?.LogDebug("Enabled visual styles through temporary file manifest.");
+                    }
+                    else
+                    {
+                        Logger?.LogWarning("Was not able to get native module handle or open manifest resource stream. Can't enable visual styles.");
+                    }
+                }
+
+                // FIXME: Don't gobally activate this context?
+                if (ActivationContext != Win32.INVALID_HANDLE_VALUE)
+                {
+                    bool success = Win32.ActivateActCtx(ActivationContext, out ActivationContextCookie);
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>

@@ -6,6 +6,11 @@
     <Description>Platform support for OpenTK, contains backends for Windows, Linux, and macOS.</Description>
     <PackageIcon>icon.png</PackageIcon>
     <IsTrimmable>true</IsTrimmable>
+    <!-- 
+    This is used to enable visual styles on windows so dialog windows have correct styling.
+    - Noggin_bops 2024-08-01
+    -->
+    <ApplicationManifest>Windows\VisualStyles.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,5 +20,17 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+  </ItemGroup>
+
+  <!--
+  On windows we need a manifest to be able to enable visual styles, 
+  we add it both as an embedded resource aswell as an application manifest 
+  in case the application manifest doesn't work.
+  - Noggin_bops 2024-08-01
+  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Windows/VisualStyles.manifest">
+      <LogicalName>OpenTK.Platform.Native.Windows.VisualStyles.manifest</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -18,8 +18,9 @@ namespace OpenTK.Core.Platform
         AllowMultiSelect = 1 << 0,
 
         /// <summary>
-        /// Select directories instead of files.
+        /// Select directories instead of files. Should only be specified if <see cref="IDialogComponent.CanTargetFolders"/> is <see langword="true"/>.
         /// </summary>
+        /// <seealso cref="IDialogComponent.CanTargetFolders"/>
         // FIXME: Make selecting folder it's own function...
         SelectDirectory = 1 << 1,
     }

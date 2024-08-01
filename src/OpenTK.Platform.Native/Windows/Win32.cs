@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static OpenTK.Platform.Native.Windows.Win32;
 
 #nullable enable
 
@@ -62,6 +63,8 @@ namespace OpenTK.Platform.Native.Windows
         internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
         internal const IntPtr TD_SHIELD_ICON          = unchecked((ushort)-4);
 
+        internal const IntPtr INVALID_HANDLE_VALUE = -1;
+
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
         // Usefull extension methods for dealing with span string buffers.
@@ -76,6 +79,9 @@ namespace OpenTK.Platform.Native.Windows
             int index = span.IndexOf("\0");
             return index == -1 ? span : span.Slice(0, index);
         }
+
+        [DllImport("kernel32.dll", SetLastError = false)]
+        internal static extern uint GetLastError();
 
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
@@ -1479,7 +1485,31 @@ namespace OpenTK.Platform.Native.Windows
                 public RAWHID hid;
             }
         }
-}
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal extern static IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct ACTCTXW
+        {
+            public uint cbSize;
+            public ACTCTXFlag dwFlags;
+            public char* /* LPCWSTR */ lpSource;
+            public ushort wProcessorArchitecture;
+            public ushort /* LANGID */ wLangId;
+            public char* /* LPCWSTR */ lpAssemblyDirectory;
+            public char* /* LPCWSTR */ lpResourceName;
+            public char* /* LPCWSTR */ lpApplicationName;
+            public IntPtr /* HMODULE */ hModule;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal extern static bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal extern static bool DeactivateActCtx(uint dwFlags, uint lpCookie);
+
+    }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

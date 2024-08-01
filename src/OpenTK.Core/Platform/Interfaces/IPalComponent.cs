@@ -42,6 +42,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Specifies which PAL components this object provides.
         /// </summary>
+        // FIXME: Remove this?
         PalComponents Provides { get; }
 
         /// <summary>

@@ -12,6 +12,18 @@ namespace OpenTK.Platform.Native.Windows
     }
 
     [Flags]
+    internal enum ACTCTXFlag : uint
+    {
+        ProcessorArchitectureValid = 0x001,
+        LangIDValid = 0x002,
+        AssemblyDirectoryValid = 0x004,
+        ResourceNameValid = 0x008,
+        SetProcessDefault = 0x010,
+        ApplicationNameValid = 0x020,
+        HModuleValid = 0x080,
+    }
+
+    [Flags]
     internal enum BatteryFlags : byte
     {
         /// <summary>
