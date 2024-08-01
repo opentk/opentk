@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <!--<PublishAot>True</PublishAot>-->
+    <!--<PublishTrimmed>True</PublishTrimmed>-->
+    <!-- This is needed so we get the embedded window icon and cursors. -->
+    <Win32Resource>icons.res</Win32Resource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\tests\Bejeweled\Bejeweled.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="alsoft.conf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="win32-x64\soft_oal.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

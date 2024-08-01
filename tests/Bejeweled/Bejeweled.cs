@@ -845,7 +845,7 @@ namespace Bejeweled
     {
         public string Name => "Bejeweled";
 
-        internal ILogger Logger;
+        internal static ILogger Logger;
 
         WindowHandle Window;
         OpenGLContextHandle Context;
@@ -979,7 +979,7 @@ namespace Bejeweled
                 // - Noggin_bops 2024-06-16
                 GL.Enable(EnableCap.DebugOutput);
                 GL.Enable(EnableCap.DebugOutputSynchronous);
-                GL.DebugMessageCallback(Program.DebugProcCallback, IntPtr.Zero);
+                GL.DebugMessageCallback(Bejeweled.DebugProcCallback, IntPtr.Zero);
             }
 
             GL.Enable(EnableCap.FramebufferSrgb);
@@ -1708,6 +1708,55 @@ namespace Bejeweled
             ALC.MakeContextCurrent(ALContext.Null);
             ALC.DestroyContext(ALContext);
             ALC.CloseDevice(ALDevice);
+        }
+
+        public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
+        private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
+        {
+            string message = Marshal.PtrToStringAnsi(messagePtr, length);
+
+            bool showMessage = true;
+
+            switch (source)
+            {
+                case DebugSource.DebugSourceApplication:
+                    showMessage = false;
+                    break;
+                case DebugSource.DontCare:
+                case DebugSource.DebugSourceApi:
+                case DebugSource.DebugSourceWindowSystem:
+                case DebugSource.DebugSourceShaderCompiler:
+                case DebugSource.DebugSourceThirdParty:
+                case DebugSource.DebugSourceOther:
+                default:
+                    showMessage = true;
+                    break;
+            }
+
+            if (showMessage)
+            {
+                switch (severity)
+                {
+                    case DebugSeverity.DontCare:
+                        Logger?.LogInfo($"[DontCare] [{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityNotification:
+                        //Logger?.LogDebug($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityHigh:
+                        Logger?.LogError($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityMedium:
+                        Logger?.LogWarning($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityLow:
+                        Logger?.LogInfo($"[{source}] {message}");
+                        break;
+                    default:
+                        Logger?.LogInfo($"[default] [{source}] {message}");
+                        break;
+                }
+            }
         }
     }
 }

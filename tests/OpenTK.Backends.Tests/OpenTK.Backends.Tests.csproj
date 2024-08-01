@@ -48,7 +48,7 @@
     <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
-    <ProjectReference Include="..\Bejeweled\BejeweledLib.csproj" />
+    <ProjectReference Include="..\Bejeweled\Bejeweled.csproj" />
   </ItemGroup>
 
   <ItemGroup>
