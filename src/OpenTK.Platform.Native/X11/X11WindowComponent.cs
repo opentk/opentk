@@ -333,11 +333,16 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
-            // FIXME: waitForEvents!
-
             XEvent ea = new XEvent();
+            if (waitForEvents)
+            {
+                // Wait for atleast one event before we continue.
+                XNextEvent(X11.Display, out ea);
+                XPutBackEvent(X11.Display, in ea);
+            }
+
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);

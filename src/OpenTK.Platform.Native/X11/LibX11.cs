@@ -175,6 +175,9 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XPutBackEvent(XDisplayPtr display, in XEvent @event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFree(IntPtr pointer);
         
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

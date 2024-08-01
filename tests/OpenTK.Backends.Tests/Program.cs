@@ -44,6 +44,8 @@ namespace OpenTK.Backends.Tests
         public static WindowHandle Window;
         public static OpenGLContextHandle WindowContext;
 
+        public static bool WaitForEvents = false;
+
         static ImGuiController ImGuiController;
         static InputData InputData = new InputData();
 
@@ -353,7 +355,7 @@ namespace OpenTK.Backends.Tests
 
                 // FIXME: Wait for events?
                 IsProcessingEvents = true;
-                Toolkit.Window.ProcessEvents();
+                Toolkit.Window.ProcessEvents(WaitForEvents);
                 IsProcessingEvents = false;
 
                 if (Toolkit.Window.IsWindowDestroyed(Window))
@@ -575,6 +577,10 @@ namespace OpenTK.Backends.Tests
                     else if (args is MouseMoveEventArgs mouseMove)
                     {
                         ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
+                    }
+                    else if (args is RawMouseMoveEventArgs rawMouseMove)
+                    {
+                        Logger.LogDebug($"rmm {rawMouseMove.Delta.X} {rawMouseMove.Delta.Y}");
                     }
                     else if (args is ScrollEventArgs scroll)
                     {

@@ -67,8 +67,10 @@ namespace OpenTK.Platform.Native.SDL
         private readonly List<string> drops = new List<string>();
 
         /// <inheritdoc/>
-        public unsafe void ProcessEvents(bool waitForEvents = false)
+        public unsafe void ProcessEvents(bool waitForEvents)
         {
+            // FIXME: waitForEvents
+
             SDLEvent @event;
             while (SDL_PollEvent(&@event) != 0)
             {

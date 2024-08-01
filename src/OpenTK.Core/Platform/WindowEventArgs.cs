@@ -427,16 +427,15 @@ namespace OpenTK.Core.Platform
     }
 
     /// <summary>
-    /// This event is triggered when the mouse moves.
+    /// This event is triggered when the mouse moves and raw mouse motion is enabled.
     /// </summary>
     public class RawMouseMoveEventArgs : WindowEventArgs
     {
-        // FIXME: In what coordinate space is the mouse coords?
-
-        // FIXME: Position delta
-
         /// <summary>
-        /// The new position of the mouse cursor.
+        /// The unscaled movement value of the mouse.
+        /// Positive X and Y deltas indicate a right and down movement, while
+        /// negative X and Y deltas indicate a left and up movement.
+        /// The absolute values of this property will be different between different hardware.
         /// </summary>
         public Vector2 Delta { get; private set; }
 
@@ -444,7 +443,7 @@ namespace OpenTK.Core.Platform
         /// Initializes a new instance of the <see cref="RawMouseMoveEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window in which the mouse moved.</param>
-        /// <param name="delta">The mouse position.</param>
+        /// <param name="delta">The raw mouse delta.</param>
         public RawMouseMoveEventArgs(WindowHandle window, Vector2 delta) : base(window)
         {
             Delta = delta;

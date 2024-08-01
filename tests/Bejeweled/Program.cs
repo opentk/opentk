@@ -179,7 +179,7 @@ namespace Bejeweled
                 float dt = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
 
-                Toolkit.Window.ProcessEvents();
+                Toolkit.Window.ProcessEvents(false);
                 if (Toolkit.Window.IsWindowDestroyed(Window))
                 {
                     break;

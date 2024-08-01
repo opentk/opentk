@@ -694,7 +694,7 @@ namespace OpenTK.Platform.Native.Windows
                                 if (mouse.lLastX != 0 && mouse.lLastY != 0)
                                 {
                                     HWND h = HWndDict[hWnd];
-                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (-mouse.lLastX, -mouse.lLastY)));
+                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
                                 }
                             }
                             else
@@ -1079,8 +1079,16 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
+            if (waitForEvents)
+            {
+                // Wait for one message then we go into the PeekMessage loop.
+                int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+            }
+
             while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
             {
                 Win32.TranslateMessage(in lpMsg);

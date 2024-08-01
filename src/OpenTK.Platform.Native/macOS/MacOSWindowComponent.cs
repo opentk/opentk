@@ -991,7 +991,7 @@ namespace OpenTK.Platform.Native.macOS
         private long clipboardUpdateTime = 0;
 
         /// <inheritdoc/>
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
             // FIXME: Implement waitForEvents=true.
             IntPtr @event;

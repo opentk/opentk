@@ -80,6 +80,8 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndTable();
             }
 
+            ImGui.Checkbox("Wait for events", ref Program.WaitForEvents);
+
             if (ImGui.TreeNodeEx("Log", TREE_NODE_FLAGS))
             {
                 ImGui.InputText("Path", ref logPath, 4096); // Arbitrary max length.
