@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -6908,7 +6908,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TexStorageSparseAMD(TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTexStorageSparseAMD_fnptr((uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_sparse_texture]</b> <b>[entry point: <c>glTextureStorageSparseAMD</c>]</b><br/>  </summary>
-            public static void TextureStorageSparseAMD(int texture, All target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
+            public static void TextureStorageSparseAMD(int texture, TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5]</b> <b>[entry point: <c>glUniform1i64NV</c>]</b><br/>  </summary>
             public static void Uniform1i64NV(int location, long x) => GLPointers._glUniform1i64NV_fnptr(location, x);
@@ -7014,7 +7014,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetObjectParameterivAPPLE(All objectType, uint name, All pname, int* parameters) => GLPointers._glGetObjectParameterivAPPLE_fnptr((uint)objectType, name, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_texture_range]</b> <b>[entry point: <c>glGetTexParameterPointervAPPLE</c>]</b><br/>  </summary>
-            public static void GetTexParameterPointervAPPLE_(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterPointervAPPLE(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_fence]</b> <b>[entry point: <c>glIsFenceAPPLE</c>]</b><br/>  </summary>
             public static bool IsFenceAPPLE(uint fence) => GLPointers._glIsFenceAPPLE_fnptr(fence) != 0;
@@ -8247,7 +8247,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetBufferParameterivARB(BufferTarget target, BufferPName pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferPointervARB</c>]</b><br/>  </summary>
-            public static void GetBufferPointervARB_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervARB(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object]</b> <b>[entry point: <c>glGetBufferSubDataARB</c>]</b><br/>  </summary>
             public static void GetBufferSubDataARB(BufferTarget target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
@@ -9006,7 +9006,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVertexAttribLui64vARB(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader]</b> <b>[entry point: <c>glGetVertexAttribPointervARB</c>]</b><br/>  </summary>
-            public static void GetVertexAttribPointervARB_(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervARB(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> <b>[entry point: <c>glHistogram</c>]</b><br/> Define histogram table. </summary>
             /// <param name="target"> The histogram whose parameters are to be set. Must be one of GL_HISTOGRAM or GL_PROXY_HISTOGRAM. </param>
@@ -10162,7 +10162,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TexImage3DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._glTexImage3DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_sparse_texture]</b> <b>[entry point: <c>glTexPageCommitmentARB</c>]</b><br/>  </summary>
-            public static void TexPageCommitmentARB(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
+            public static void TexPageCommitmentARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: v4.2 | GL_ARB_texture_storage]</b> <b>[entry point: <c>glTexStorage1D</c>]</b><br/> Simultaneously specify storage for all levels of a one-dimensional texture. </summary>
             /// <param name="target"> Specifies the target to which the texture object is bound for glTexStorage1D. Must be one of GL_TEXTURE_1D or GL_PROXY_TEXTURE_1D. </param>
@@ -11905,7 +11905,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetNamedBufferParameterivEXT(int buffer, BufferPName pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferPointervEXT</c>]</b><br/>  </summary>
-            public static void GetNamedBufferPointervEXT_(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferPointervEXT(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetNamedBufferSubDataEXT</c>]</b><br/>  </summary>
             public static void GetNamedBufferSubDataEXT(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glGetNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
@@ -11947,13 +11947,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetPixelTransformParameterivEXT(All target, All pname, int* parameters) => GLPointers._glGetPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetPointeri_vEXT</c>]</b><br/>  </summary>
-            public static void GetPointeri_vEXT_(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
+            public static void GetPointeri_vEXT(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetPointerIndexedvEXT</c>]</b><br/>  </summary>
-            public static void GetPointerIndexedvEXT_(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetPointerIndexedvEXT(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array]</b> <b>[entry point: <c>glGetPointervEXT</c>]</b><br/>  </summary>
-            public static void GetPointervEXT_(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
+            public static void GetPointervEXT(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b> <b>[entry point: <c>glGetProgramPipelineInfoLogEXT</c>]</b><br/>  </summary>
             public static void GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramPipelineInfoLogEXT_fnptr(pipeline, bufSize, length, infoLog);
@@ -12031,7 +12031,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetVariantIntegervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader]</b> <b>[entry point: <c>glGetVariantPointervEXT</c>]</b><br/>  </summary>
-            public static void GetVariantPointervEXT_(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
+            public static void GetVariantPointervEXT(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayIntegeri_vEXT</c>]</b><br/>  </summary>
             public static void GetVertexArrayIntegeri_vEXT(int vaobj, uint index, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
@@ -12040,10 +12040,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVertexArrayIntegervEXT(int vaobj, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayPointeri_vEXT</c>]</b><br/>  </summary>
-            public static void GetVertexArrayPointeri_vEXT_(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
+            public static void GetVertexArrayPointeri_vEXT(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glGetVertexArrayPointervEXT</c>]</b><br/>  </summary>
-            public static void GetVertexArrayPointervEXT_(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
+            public static void GetVertexArrayPointervEXT(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4]</b> <b>[entry point: <c>glGetVertexAttribIivEXT</c>]</b><br/>  </summary>
             public static void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, int* parameters) => GLPointers._glGetVertexAttribIivEXT_fnptr(index, (uint)pname, parameters);
@@ -12799,7 +12799,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TextureRenderbufferEXT(int texture, TextureTarget target, int renderbuffer) => GLPointers._glTextureRenderbufferEXT_fnptr(texture, (uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage1DEXT</c>]</b><br/>  </summary>
-            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage2DEXT</c>]</b><br/>  </summary>
             public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
@@ -13338,7 +13338,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetPointervKHR</c>]</b><br/>  </summary>
-            public static void GetPointervKHR_(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
+            public static void GetPointervKHR(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_parallel_shader_compile]</b> <b>[entry point: <c>glMaxShaderCompilerThreadsKHR</c>]</b><br/>  </summary>
             public static void MaxShaderCompilerThreadsKHR(uint count) => GLPointers._glMaxShaderCompilerThreadsKHR_fnptr(count);
@@ -13973,7 +13973,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program]</b> <b>[entry point: <c>glGetVertexAttribPointervNV</c>]</b><br/>  </summary>
-            public static void GetVertexAttribPointervNV_(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervNV(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_NV_video_capture]</b> <b>[entry point: <c>glGetVideoCaptureivNV</c>]</b><br/>  </summary>
             public static void GetVideoCaptureivNV(uint video_capture_slot, All pname, int* parameters) => GLPointers._glGetVideoCaptureivNV_fnptr(video_capture_slot, (uint)pname, parameters);
@@ -15558,6 +15558,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         {
             /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
             public static void FramebufferTextureMultiviewOVR(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glFramebufferTextureMultiviewOVR_fnptr((uint)target, (uint)attachment, texture, level, baseViewIndex, numViews);
+            
+            /// <summary> <b>[requires: GL_OVR_multiview]</b> <b>[entry point: <c>glNamedFramebufferTextureMultiviewOVR</c>]</b><br/>  </summary>
+            public static void NamedFramebufferTextureMultiviewOVR(int framebuffer, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glNamedFramebufferTextureMultiviewOVR_fnptr(framebuffer, (uint)attachment, texture, level, baseViewIndex, numViews);
             
         }
         /// <summary>PGI extensions.</summary>

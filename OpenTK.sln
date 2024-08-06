@@ -23,10 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Core", "src\OpenTK.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A-02D3-4B94-B648-BDF421CC77EF}"
 	ProjectSection(SolutionItems) = preProject
-		props\common.props = props\common.props
 		Directory.Build.props = Directory.Build.props
-		props\jetbrains.props = props\jetbrains.props
-		props\netfx-mono.props = props\netfx-mono.props
 		props\nuget-common.props = props\nuget-common.props
 		props\stylecop.props = props\stylecop.props
 	EndProjectSection

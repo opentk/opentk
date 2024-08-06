@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
@@ -340,6 +340,15 @@ namespace OpenTK.Graphics.Wgl
         Aux8Arb = 8335,
         Aux9Arb = 8336,
     }
+    ///<summary>Used in <see cref="Wgl.ARB.CreateBufferRegionARB" /></summary>
+    [Flags]
+    public enum ColorBufferMask : uint
+    {
+        FrontColorBufferBitArb = 1,
+        BackColorBufferBitArb = 2,
+        DepthBufferBitArb = 4,
+        StencilBufferBitArb = 8,
+    }
     ///<summary>Used in <see cref="Wgl.ARB.CreateContextAttribsARB" /></summary>
     public enum ContextAttribs : uint
     {
@@ -355,6 +364,22 @@ namespace OpenTK.Graphics.Wgl
         NumVideoCaptureSlotsNv = 8399,
         NumVideoSlotsNv = 8432,
     }
+    [Flags]
+    public enum ContextFlagsMask : uint
+    {
+        ContextDebugBitArb = 1,
+        ContextForwardCompatibleBitArb = 2,
+        ContextRobustAccessBitArb = 4,
+        ContextResetIsolationBitArb = 8,
+    }
+    [Flags]
+    public enum ContextProfileMask : uint
+    {
+        ContextCoreProfileBitArb = 1,
+        ContextCompatibilityProfileBitArb = 2,
+        ContextEs2ProfileBitExt = 4,
+        ContextEsProfileBitExt = 4,
+    }
     ///<summary>Used in <see cref="Wgl.I3D.GetDigitalVideoParametersI3D" />, <see cref="Wgl.I3D.SetDigitalVideoParametersI3D" /></summary>
     public enum DigitalVideoAttribute : uint
     {
@@ -362,6 +387,14 @@ namespace OpenTK.Graphics.Wgl
         DigitalVideoCursorAlphaValueI3d = 8273,
         DigitalVideoCursorIncludedI3d = 8274,
         DigitalVideoGammaCorrectedI3d = 8275,
+    }
+    ///<summary>Used in <see cref="Wgl.NV.DXObjectAccessNV" />, <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
+    [Flags]
+    public enum DXInteropMaskNV : uint
+    {
+        AccessReadOnlyNv = 0,
+        AccessReadWriteNv = 1,
+        AccessWriteDiscardNv = 2,
     }
     ///<summary>Used in <see cref="Wgl.UseFontOutlines" />, <see cref="Wgl.UseFontOutlinesA" />, <see cref="Wgl.UseFontOutlinesW" /></summary>
     public enum FontFormat : uint
@@ -387,6 +420,49 @@ namespace OpenTK.Graphics.Wgl
         GpuNumSimdAmd = 8614,
         GpuNumRbAmd = 8615,
         GpuNumSpiAmd = 8616,
+    }
+    ///<summary>Used in <see cref="Wgl.I3D.CreateImageBufferI3D" /></summary>
+    [Flags]
+    public enum ImageBufferMaskI3D : uint
+    {
+        ImageBufferMinAccessI3d = 1,
+        ImageBufferLockI3d = 2,
+    }
+    ///<summary>Used in <see cref="Wgl.SwapLayerBuffers" />, <see cref="Wgl.OML.SwapLayerBuffersMscOML" /></summary>
+    [Flags]
+    public enum LayerPlaneMask : uint
+    {
+        SwapMainPlane = 1,
+        SwapOverlay1 = 2,
+        SwapOverlay2 = 4,
+        SwapOverlay3 = 8,
+        SwapOverlay4 = 16,
+        SwapOverlay5 = 32,
+        SwapOverlay6 = 64,
+        SwapOverlay7 = 128,
+        SwapOverlay8 = 256,
+        SwapOverlay9 = 512,
+        SwapOverlay10 = 1024,
+        SwapOverlay11 = 2048,
+        SwapOverlay12 = 4096,
+        SwapOverlay13 = 8192,
+        SwapOverlay14 = 16384,
+        SwapOverlay15 = 32768,
+        SwapUnderlay1 = 65536,
+        SwapUnderlay2 = 131072,
+        SwapUnderlay3 = 262144,
+        SwapUnderlay4 = 524288,
+        SwapUnderlay5 = 1048576,
+        SwapUnderlay6 = 2097152,
+        SwapUnderlay7 = 4194304,
+        SwapUnderlay8 = 8388608,
+        SwapUnderlay9 = 16777216,
+        SwapUnderlay10 = 33554432,
+        SwapUnderlay11 = 67108864,
+        SwapUnderlay12 = 134217728,
+        SwapUnderlay13 = 268435456,
+        SwapUnderlay14 = 536870912,
+        SwapUnderlay15 = 1073741824,
     }
     ///<summary>Used in <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
     public enum ObjectTypeDX : uint
@@ -567,82 +643,6 @@ namespace OpenTK.Graphics.Wgl
         VideoOutField2 = 8394,
         VideoOutStackedFields12 = 8395,
         VideoOutStackedFields21 = 8396,
-    }
-    ///<summary>Used in <see cref="Wgl.ARB.CreateBufferRegionARB" /></summary>
-    [Flags]
-    public enum WGLColorBufferMask : uint
-    {
-        FrontColorBufferBitArb = 1,
-        BackColorBufferBitArb = 2,
-        DepthBufferBitArb = 4,
-        StencilBufferBitArb = 8,
-    }
-    [Flags]
-    public enum WGLContextFlagsMask : uint
-    {
-        ContextDebugBitArb = 1,
-        ContextForwardCompatibleBitArb = 2,
-        ContextRobustAccessBitArb = 4,
-        ContextResetIsolationBitArb = 8,
-    }
-    [Flags]
-    public enum WGLContextProfileMask : uint
-    {
-        ContextCoreProfileBitArb = 1,
-        ContextCompatibilityProfileBitArb = 2,
-        ContextEs2ProfileBitExt = 4,
-        ContextEsProfileBitExt = 4,
-    }
-    ///<summary>Used in <see cref="Wgl.NV.DXObjectAccessNV" />, <see cref="Wgl.NV.DXRegisterObjectNV" /></summary>
-    [Flags]
-    public enum WGLDXInteropMaskNV : uint
-    {
-        AccessReadOnlyNv = 0,
-        AccessReadWriteNv = 1,
-        AccessWriteDiscardNv = 2,
-    }
-    ///<summary>Used in <see cref="Wgl.I3D.CreateImageBufferI3D" /></summary>
-    [Flags]
-    public enum WGLImageBufferMaskI3D : uint
-    {
-        ImageBufferMinAccessI3d = 1,
-        ImageBufferLockI3d = 2,
-    }
-    ///<summary>Used in <see cref="Wgl.SwapLayerBuffers" />, <see cref="Wgl.OML.SwapLayerBuffersMscOML" /></summary>
-    [Flags]
-    public enum WGLLayerPlaneMask : uint
-    {
-        SwapMainPlane = 1,
-        SwapOverlay1 = 2,
-        SwapOverlay2 = 4,
-        SwapOverlay3 = 8,
-        SwapOverlay4 = 16,
-        SwapOverlay5 = 32,
-        SwapOverlay6 = 64,
-        SwapOverlay7 = 128,
-        SwapOverlay8 = 256,
-        SwapOverlay9 = 512,
-        SwapOverlay10 = 1024,
-        SwapOverlay11 = 2048,
-        SwapOverlay12 = 4096,
-        SwapOverlay13 = 8192,
-        SwapOverlay14 = 16384,
-        SwapOverlay15 = 32768,
-        SwapUnderlay1 = 65536,
-        SwapUnderlay2 = 131072,
-        SwapUnderlay3 = 262144,
-        SwapUnderlay4 = 524288,
-        SwapUnderlay5 = 1048576,
-        SwapUnderlay6 = 2097152,
-        SwapUnderlay7 = 4194304,
-        SwapUnderlay8 = 8388608,
-        SwapUnderlay9 = 16777216,
-        SwapUnderlay10 = 33554432,
-        SwapUnderlay11 = 67108864,
-        SwapUnderlay12 = 134217728,
-        SwapUnderlay13 = 268435456,
-        SwapUnderlay14 = 536870912,
-        SwapUnderlay15 = 1073741824,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

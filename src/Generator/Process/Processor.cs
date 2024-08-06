@@ -87,11 +87,6 @@ namespace Generator.Process
 
                 foreach ((string originalName, string translatedName, GLFile @namespace) in @enum.Groups)
                 {
-                    if (translatedName == "ObjectTypeDX")
-                    {
-                        ;
-                    }
-
                     if (@namespace == GLFile.GL)
                     {
                         AddToGroup(allEnumGroups, OutputApi.GL, originalName, translatedName, isFlag);

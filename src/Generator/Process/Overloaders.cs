@@ -27,7 +27,7 @@ namespace Generator.Process
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
-            new GetReturnOverloader(),
+            //new GetReturnOverloader(),
             new BoolReturnOverloader(),
 
             new ColorTypeOverloader(),
@@ -113,7 +113,9 @@ namespace Generator.Process
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (overload.NativeFunction.EntryPoint.StartsWith("glGet")
+            if (overload.NativeFunction.EntryPoint.StartsWith("glGet") &&
+                overload.NativeFunction.EntryPoint.StartsWith("glGetUniform") == false &&
+                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexAttrib") == false
                 // FIXME: It might be better to be more selective about what
                 // functions we overload like this to reduce the number of
                 // garbage overloads generated.
@@ -144,6 +146,16 @@ namespace Generator.Process
                     pointer.BaseType is not CSVoid &&
                     pointer.BaseType is not CSChar8)
                 {
+                    if (overload.InputParameters[^1].Length is not null)
+                    {
+                        // If there is a length and it's not "1", we don't generate an overload.
+                        if (overload.InputParameters[^1].Length is Constant constant && constant.Value != 1)
+                        {
+                            newOverloads = null;
+                            return false;
+                        }
+                    }
+
                     string newReturnName = $"{overload.InputParameters[^1].Name}_val";
                     var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
 
@@ -1073,6 +1085,7 @@ namespace Generator.Process
 
             var nameTable = overload.NameTable.New();
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
+            nameTable.MarkFixed(overload.InputParameters[lengthParameterIndex]);
 
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
@@ -1111,8 +1124,7 @@ namespace Generator.Process
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
-                writer.WriteLine(
-                    $"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
+                writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[InParameter]})");
                 _csScope = writer.CsScope();
             }
 
@@ -1127,29 +1139,28 @@ namespace Generator.Process
             Parameter OutParameter,
             Parameter PointerParameter) : IOverloadLayer
         {
+            private CsScope? _csScope = null;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 writer.WriteLine($"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = 1;");
                 writer.WriteLine($"Unsafe.SkipInit(out {nameTable[OutParameter]});");
-                // FIXME
-                writer.WriteLine("// FIXME: This could be a problem for the overloads that take an out parameter");
-                writer.WriteLine("// as this parameter could *potentially* move while inside of this function");
-                writer.WriteLine("// which would mean that the new value never gets written to the out parameter.");
-                writer.WriteLine("// Making for a nasty bug.");
-                writer.WriteLine(
-                    "// The reason we don't use a fixed expression here is because of the \"single out parameter to return value\" overloading step");
-                writer.WriteLine(
-                    "// that will make it so this tries to fix a local variable which is not allowed in C# for some reason.");
-                writer.WriteLine(
-                    "// If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk");
-                writer.WriteLine("// - 2021-05-18");
-
-                writer.WriteLine(
-                    $"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = ({PointerParameter.Type.ToCSString()})Unsafe.AsPointer(ref {nameTable[OutParameter]});");
+                if (nameTable.IsFixed(OutParameter))
+                {
+                    writer.WriteLine($"{PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]};");
+                    _csScope = null;
+                }
+                else
+                {
+                    writer.WriteLine($"fixed({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = &{nameTable[OutParameter]})");
+                    _csScope = writer.CsScope();
+                }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
+                if (_csScope.HasValue)
+                    _csScope.Value.Dispose();
+
                 return returnName;
             }
         }
@@ -1349,115 +1360,88 @@ namespace Generator.Process
             // FIXME: We want to be able to handle more than just one Span and Array overload
             // functions like "glShaderSource" can take more than one array.
             //
-            List<Parameter> newParams = new List<Parameter>(overload.InputParameters);
-            var genericTypes = overload.GenericTypes;
+            List<Parameter> newArrayParams = new List<Parameter>(overload.InputParameters);
+            List<Parameter> newSpanParams = new List<Parameter>(overload.InputParameters);
+            string[] genericTypes = overload.GenericTypes;
             Overload arrayOverload = overload;
             Overload spanOverload = overload;
-            for (int i = newParams.Count - 1; i >= 0; i--)
+
+            // FIXME: We would ideally combine all span and array overloads into a single overload layer
+            // to reduce fixed() nesting in the generated code.
+            // - Noggin_bops 2024-03-16
+            for (int i = 0; i < overload.InputParameters.Length; i++)
             {
-                var param = newParams[i];
+                Parameter param = overload.InputParameters[i];
 
-                if (param.Type is CSPointer pt)
+                if (param.Type is CSPointer pointer)
                 {
-                    if (pt.BaseType is CSChar8)
+                    if (pointer.BaseType is CSChar8)
                     {
-                        Logger.Warning(
-                            $"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                        Logger.Warning($"Char pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         continue;
                     }
-                    else if (pt.BaseType is CSPointer)
+                    else if (pointer.BaseType is CSPointer)
                     {
-                        Logger.Warning(
-                            $"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
+                        Logger.Warning($"Pointer leaked from earlier overloaders: \"{overload.NativeFunction.EntryPoint}\" ({param})");
                         continue;
-                    }
-                }
-
-                if (param.Length != null)
-                {
-                    string? lengthParamName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
-                    var pointerParam = newParams[i];
-                    if (pointerParam.Type is not CSPointer pointer)
-                        throw new Exception("A parameter with a 'len' attribute must be a pointer type!");
-
-                    Parameter? oldLength = null;
-                    int spanArrayParameterIndex = i;
-                    Parameter? paramToBeRemoved = null;
-                    bool shouldCalculateLength = overload.InputParameters.Count(p => p.Length == param.Length) <= 1 && lengthParamName != null;
-                    if (shouldCalculateLength)
-                    {
-                        // If this is the only len attribute that references this parameter,
-                        // we can remove that parameter as we can calculate it from the length of this parameter (array/span).
-                        // FIXME: This check is going to fail if the two 'len' attributes have different "forms" e.g. "n" == "n*4" == "COMPSIZE(n)" etc.
-                        int lengthParamIndex =
-                            Array.FindIndex(overload.InputParameters, p => p.Name == lengthParamName);
-                        oldLength = overload.InputParameters[lengthParamIndex];
-
-                        paramToBeRemoved = oldLength;
-                        newParams.Remove(oldLength);
-
-                        if (lengthParamIndex < i)
-                        {
-                            spanArrayParameterIndex--;
-                            i--;
-                        }
-                    }
-
-                    BaseCSType baseType;
-                    if (pointer.BaseType is CSVoid)
-                    {
-                        genericTypes = genericTypes.MakeCopyAndGrow(1);
-                        genericTypes[^1] = $"T{genericTypes.Length}";
-                        baseType = new CSGenericType(genericTypes[^1]);
                     }
                     else
                     {
-                        baseType = pointer.BaseType;
+                        // If the parameter has length 1 there is no point in having an array overload.
+                        // We leave it to be ref overloaded instead.
+                        // - Noggin_bops 2024-03-16
+                        if (param.Length is Constant constant && constant.Value == 1)
+                        {
+                            continue;
+                        }
+
+                        BaseCSType baseType;
+                        if (pointer.BaseType is CSVoid)
+                        {
+                            genericTypes = genericTypes.MakeCopyAndGrow(1);
+                            genericTypes[^1] = $"T{genericTypes.Length}";
+                            baseType = new CSGenericType(genericTypes[^1]);
+                        }
+                        else
+                        {
+                            baseType = pointer.BaseType;
+                        }
+
+                        bool isBaseTypeConstant = false;
+                        if (pointer.BaseType is IConstantCSType constantType)
+                        {
+                            isBaseTypeConstant = constantType.Constant;
+                        }
+
+                        var spanNameTable = overload.NameTable.New();
+                        var arrayNameTable = overload.NameTable.New();
+
+                        spanNameTable.Rename(param, $"{param.Name}_ptr");
+                        arrayNameTable.Rename(param, $"{param.Name}_ptr");
+
+                        newArrayParams[i] = newArrayParams[i] with { Type = new CSArray(baseType) };
+                        newSpanParams[i] = newSpanParams[i] with { Type = new CSSpan(baseType, isBaseTypeConstant) };
+
+                        var arrayLayer = new SpanOrArrayLayer(param, newArrayParams[i]);
+                        var spanLayer = new SpanOrArrayLayer(param, newSpanParams[i]);
+
+                        arrayOverload = arrayOverload with
+                        {
+                            NestedOverload = arrayOverload,
+                            MarshalLayerToNested = arrayLayer,
+                            InputParameters = newArrayParams.ToArray(),
+                            NameTable = arrayNameTable,
+                            GenericTypes = genericTypes
+                        };
+                        spanOverload = spanOverload with
+                        {
+                            NestedOverload = spanOverload,
+                            MarshalLayerToNested = spanLayer,
+                            InputParameters = newSpanParams.ToArray(),
+                            NameTable = spanNameTable,
+                            GenericTypes = genericTypes
+                        };
                     }
-
-                    bool isBaseTypeConstant = false;
-                    if (pointer.BaseType is IConstantCSType constantType)
-                    {
-                        isBaseTypeConstant = constantType.Constant;
-                    }
-
-                    var spanNameTable = overload.NameTable.New();
-                    var arrayNameTable = overload.NameTable.New();
-
-                    spanNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-                    arrayNameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
-
-                    var newSpanParams = spanOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-                    var newArrayParams = arrayOverload.InputParameters.Where(p => p != paramToBeRemoved).ToArray();
-
-                    newSpanParams[spanArrayParameterIndex] = newSpanParams[spanArrayParameterIndex] with
-                    {
-                        Type = new CSSpan(baseType, isBaseTypeConstant)
-                    };
-                    newArrayParams[spanArrayParameterIndex] = newArrayParams[spanArrayParameterIndex] with
-                    {
-                        Type = new CSArray(baseType)
-                    };
-
-                    var spanLayer = new SpanOrArrayLayer(pointerParam, newSpanParams[spanArrayParameterIndex], oldLength, expr, baseType);
-                    var arrayLayer = new SpanOrArrayLayer(pointerParam, newArrayParams[spanArrayParameterIndex], oldLength, expr, baseType);
-
-                    spanOverload = spanOverload with
-                    {
-                        NestedOverload = spanOverload,
-                        MarshalLayerToNested = spanLayer,
-                        InputParameters = newSpanParams,
-                        NameTable = spanNameTable,
-                        GenericTypes = genericTypes
-                    };
-                    arrayOverload = arrayOverload with
-                    {
-                        NestedOverload = arrayOverload,
-                        MarshalLayerToNested = arrayLayer,
-                        InputParameters = newArrayParams,
-                        NameTable = arrayNameTable,
-                        GenericTypes = genericTypes
-                    };
                 }
             }
 
@@ -1480,28 +1464,12 @@ namespace Generator.Process
 
         private record SpanOrArrayLayer(
             Parameter PointerParameter,
-            Parameter SpanOrArrayParameter,
-            Parameter? LengthParameter,
-            Func<string, string> ParameterExpression,
-            BaseCSType BaseType) : IOverloadLayer
+            Parameter SpanOrArrayParameter) : IOverloadLayer
         {
             private CsScope _csScope;
 
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                // NOTE: We are casting the length field to the target mathType because some of
-                // the functions don't take `int` types directly, instead they take an `IntPtr`.
-                // But that is fine because we can cast `int`s to `IntPtr`.
-                // This is slightly fragile but it's fine for now.
-                // - Noggin_bops 2021-01-22
-                if (LengthParameter != null)
-                {
-                    var byteSize = BaseType is CSGenericType ? $" * sizeof({BaseType.ToCSString()})" : "";
-                    var lengthExpression = ParameterExpression(nameTable[SpanOrArrayParameter]);
-                    writer.WriteLine(
-                        $"{LengthParameter.Type.ToCSString()} {nameTable[LengthParameter]} = ({LengthParameter.Type.ToCSString()})({lengthExpression}{byteSize});");
-                }
-
                 writer.WriteLine($"fixed ({PointerParameter.Type.ToCSString()} {nameTable[PointerParameter]} = {nameTable[SpanOrArrayParameter]})");
                 _csScope = writer.CsScope();
             }
@@ -1573,8 +1541,67 @@ namespace Generator.Process
                         default:
                             throw new InvalidOperationException($"{pt} is not supported by the ref overloader.");
                     }
-                    // FIXME: When do we know it's an out ref mathType?
-                    CSRef.Type refType = constant ? CSRef.Type.In : CSRef.Type.Ref;
+
+                    bool outParamSuitable;
+                    if (parameter.Length != null)
+                    {
+                        if (parameter.Length is Constant c && c.Value == 1)
+                        {
+                            // The length is 1, in/out overload is suitable.
+                            outParamSuitable = true;
+                        }
+                        else if (parameter.Length is CompSize && overload.NativeFunction.EntryPoint.StartsWith("glGet"))
+                        {
+                            // We assume that all glGet* functions with CompSize arguments are fine to mark as out
+                            outParamSuitable = true;
+                        }
+                        else
+                        {
+                            // Non-zero length, not suitable for out overload.
+                            outParamSuitable = false;
+                        }
+                    }
+                    else
+                    {
+                        // If there is no length parameter we have very little information
+                        // about if this parameter is suitable as an out parameter.
+                        // Therefore we take a safe bet that it's not suitable.
+                        // - Noggin_bops 2024-03-16
+                        outParamSuitable = false;
+                    }
+
+                    CSRef.Type refType;
+                    // This is a list of functions that either have in parameters not marked with const in gl.xml
+                    // or functions that use the same pointer parameter for both input and output.
+                    // - Noggin_bops 2024-03-16
+                    // FIXME: Check GLX for non-const in parameters and ref parameters!
+                    switch (overload.NativeFunction.EntryPoint)
+                    {
+                        // FIXME: glImportMemoryWin32HandleEXT should take a HANDLE object, i.e. IntPtr....
+                        case "glImportMemoryWin32HandleEXT"   when parameter.Name == "handle":       refType = CSRef.Type.In; break;
+                        case "glSelectPerfMonitorCountersAMD" when parameter.Name == "counterList":  refType = CSRef.Type.In; break;
+                        case "glSharpenTexFuncSGIS"           when parameter.Name == "points":       refType = CSRef.Type.In; break;
+                        case "glVertexArrayRangeAPPLE"        when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+                        // FIXME: Should we have glCullParameter*vEXT here? They have len="4" and never get triggered...
+                        case "glCullParameterdvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
+                        case "glCullParameterfvEXT"           when parameter.Name == "params":       refType = CSRef.Type.In; break;
+                        case "glDeletePerfMonitorsAMD"        when parameter.Name == "monitors":     refType = CSRef.Type.In; break;
+                        case "glFlushVertexArrayRangeAPPLE"   when parameter.Name == "pointer":      refType = CSRef.Type.In; break;
+
+                        case "wglDXLockObjectsNV"             when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
+                        case "wglDXOpenDeviceNV"              when parameter.Name == "dxDevice":     refType = CSRef.Type.In; break;
+                        case "wglDXRegisterObjectNV"          when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
+                        case "wglDXSetResourceShareHandleNV"  when parameter.Name == "dxObject":     refType = CSRef.Type.In; break;
+                        case "wglDXUnlockObjectsNV"           when parameter.Name == "hObjects":     refType = CSRef.Type.In; break;
+                        case "wglGetPixelFormatAttribfvEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
+                        case "wglGetPixelFormatAttribivEXT"   when parameter.Name == "piAttributes": refType = CSRef.Type.In; break;
+
+                        // We do the special handling above so that we can assume that any parameter that is not marked
+                        // "const" here is an out parameter.
+                        // Any potential ref parameters should be handled above.
+                        // - Noggin_bops 2024-03-16
+                        default: refType = constant ? CSRef.Type.In : outParamSuitable ? CSRef.Type.Out : CSRef.Type.Ref;  break;
+                    }
 
                     // Rename the parameter
                     nameTable.Rename(parameter, $"{parameter.Name}_ptr");
@@ -1615,10 +1642,24 @@ namespace Generator.Process
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
+                // First we take references to all already "fixed" variables.
                 for (int i = 0; i < RefParameters.Count; i++)
                 {
-                    string type = PointerParameters[i].Type.ToCSString();
-                    writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
+                    if (nameTable.IsFixed(RefParameters[i]))
+                    {
+                        string type = PointerParameters[i].Type.ToCSString();
+                        writer.WriteLine($"{type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]};");
+                    }
+                }
+
+                // Second we fix all of the not already fixed parameters.
+                for (int i = 0; i < RefParameters.Count; i++)
+                {
+                    if (nameTable.IsFixed(RefParameters[i]) == false)
+                    {
+                        string type = PointerParameters[i].Type.ToCSString();
+                        writer.WriteLine($"fixed ({type} {nameTable[PointerParameters[i]]} = &{nameTable[RefParameters[i]]})");
+                    }
                 }
 
                 _csScope = writer.CsScope();
@@ -1643,54 +1684,38 @@ namespace Generator.Process
                 return false;
             }
 
-            // Find the one and only out parameter, if there are more we do an early return.
-            Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
-            Parameter? outParameter = null;
-            CSRef? outType = null;
-            int newIndex = 0; // The destination index of parameters
-            for (int i = 0; i < oldParameters.Length; i++)
+            if (oldParameters[^1].Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
             {
-                var parameter = oldParameters[i];
-                if (parameter.Type is CSRef pRef && pRef.RefType == CSRef.Type.Out)
+                Parameter[] newParameters = new Parameter[oldParameters.Length - 1];
+                Array.Copy(oldParameters, newParameters, newParameters.Length);
+                Parameter? outParameter = oldParameters[^1];
+                CSRef? outType = pRef;
+
+                NameTable nameTable = overload.NameTable.New();
+                nameTable.ReturnName = outParameter.Name;
+
+                // This is now a local variable.
+                nameTable.MarkFixed(outParameter);
+
+                newOverloads = new List<Overload>()
                 {
-                    if (outParameter != null)
+                    overload with
                     {
-                        newOverloads = null;
-                        return false;
-                    }
-
-                    outType = pRef;
-                    outParameter = parameter;
-                }
-                else if (newIndex != oldParameters.Length - 1)
-                {
-                    newParameters[newIndex] = parameter;
-                    newIndex++;
-                }
+                        NestedOverload = overload,
+                        InputParameters = newParameters,
+                        ReturnType = outType!.ReferencedType,
+                        MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
+                        NameTable = nameTable,
+                    },
+                    overload,
+                };
+                return true;
             }
-
-            if (outType == null || outParameter == null)
+            else
             {
                 newOverloads = null;
                 return false;
             }
-
-            var nameTable = overload.NameTable.New();
-            nameTable.ReturnName = outParameter.Name;
-
-            newOverloads = new List<Overload>()
-            {
-                overload with
-                {
-                    NestedOverload = overload,
-                    InputParameters = newParameters,
-                    ReturnType = outType!.ReferencedType,
-                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
-                    NameTable = nameTable,
-                },
-                overload,
-            };
-            return true;
         }
 
         private record OutToReturnOverloadLayer(Parameter OutParameter, CSRef OutType) : IOverloadLayer

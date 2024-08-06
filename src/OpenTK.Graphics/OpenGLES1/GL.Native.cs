@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-03-07 16:51:59 GMT+01:00
+// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -920,7 +920,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static SyncStatus ClientWaitSyncAPPLE(GLSync sync, SyncObjectMask flags, ulong timeout) => (SyncStatus) GLPointers._glClientWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
             
             /// <summary> <b>[requires: GL_APPLE_copy_texture_levels]</b> <b>[entry point: <c>glCopyTextureLevelsAPPLE</c>]</b><br/>  </summary>
-            public static void CopyTextureLevelsAPPLE(uint destinationTexture, uint sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+            public static void CopyTextureLevelsAPPLE(int destinationTexture, int sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b> <b>[entry point: <c>glDeleteSyncAPPLE</c>]</b><br/>  </summary>
             public static void DeleteSyncAPPLE(GLSync sync) => GLPointers._glDeleteSyncAPPLE_fnptr((IntPtr)sync);
@@ -1005,7 +1005,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void TexStorage3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage1DEXT</c>]</b><br/>  </summary>
-            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b> <b>[entry point: <c>glTextureStorage2DEXT</c>]</b><br/>  </summary>
             public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
@@ -1076,7 +1076,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointerv_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glGetPointervKHR</c>]</b><br/>  </summary>
-            public static void GetPointervKHR_(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
+            public static void GetPointervKHR(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_KHR_debug]</b> <b>[entry point: <c>glObjectLabel</c>]</b><br/>  </summary>
             public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => GLPointers._glObjectLabel_fnptr((uint)identifier, name, length, label);
@@ -1320,7 +1320,7 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b> <b>[entry point: <c>glGetBufferPointervOES</c>]</b><br/>  </summary>
-            public static void GetBufferPointervOES_(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervOES(BufferTarget target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_single_precision]</b> <b>[entry point: <c>glGetClipPlanefOES</c>]</b><br/>  </summary>
             public static void GetClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
