@@ -102,8 +102,8 @@ module Matrix4 =
 
         [<Property>]
         let ``Two matrices with non-identical values are equal`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p) =
-            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 0)
-            let B = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 1)
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 0.0f)
+            let B = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 1.0f)
             let equality = A = B
 
             Assert.False(equality)
