@@ -1025,13 +1025,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public bool Equals(Matrix3x4 other)
         {
-            Vector256<float> aLo = Vector256.LoadUnsafe(ref Row0.X);
-            Vector256<float> bLo = Vector256.LoadUnsafe(ref other.Row0.X);
+            Vector256<float> aRow01 = Vector256.LoadUnsafe(ref Row0.X);
+            Vector256<float> bRow01 = Vector256.LoadUnsafe(ref other.Row0.X);
 
-            Vector128<float> aHi = Vector128.LoadUnsafe(ref Row2.X);
-            Vector128<float> bHi = Vector128.LoadUnsafe(ref other.Row2.X);
+            Vector128<float> aRow2 = Vector128.LoadUnsafe(ref Row2.X);
+            Vector128<float> bRow2 = Vector128.LoadUnsafe(ref other.Row2.X);
 
-            return aLo == bLo && aHi == bHi;
+            return aRow01 == bRow01 && aRow2 == bRow2;
         }
     }
 }

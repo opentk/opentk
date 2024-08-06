@@ -23,6 +23,7 @@ SOFTWARE.
 using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -812,8 +813,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public bool Equals(Quaternion other)
         {
-            return Xyz.Equals(other.Xyz) &&
-                   W == other.W;
+            Vector128<float> thisVec = Vector128.LoadUnsafe(ref Xyz.X);
+            Vector128<float> otherVec = Vector128.LoadUnsafe(ref Xyz.X);
+
+            return thisVec == otherVec;
         }
 
         /// <inheritdoc />
