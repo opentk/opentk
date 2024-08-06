@@ -514,8 +514,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            int success = 0;
-            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, out int success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);
@@ -542,8 +541,7 @@ void main()
             GL.ShaderSource(shader, source);
             GL.CompileShader(shader);
 
-            int success = 0;
-            GL.GetShaderi(shader, ShaderParameterName.CompileStatus, ref success);
+            GL.GetShaderi(shader, ShaderParameterName.CompileStatus, out int success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(shader, out string info);
