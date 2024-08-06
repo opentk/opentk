@@ -296,7 +296,7 @@ namespace LocalTestProject
             Init();
             while (true)
             {
-                windowComp.ProcessEvents();
+                windowComp.ProcessEvents(false);
 
                 // If both of our windows are closed, we exit the application.
                 if (windowComp.IsWindowDestroyed(WindowHandle) &&
@@ -835,8 +835,7 @@ void main()
 
             CheckError("getString");
 
-            int encoding = 0;
-            GL.GetFramebufferAttachmentParameteri(FramebufferTarget.DrawFramebuffer, (FramebufferAttachment)All.BackLeft, FramebufferAttachmentParameterName.FramebufferAttachmentColorEncoding, ref encoding);
+            GL.GetFramebufferAttachmentParameteri(FramebufferTarget.DrawFramebuffer, (FramebufferAttachment)All.BackLeft, FramebufferAttachmentParameterName.FramebufferAttachmentColorEncoding, out int encoding);
 
             if ((All)encoding == All.Linear)
             {
@@ -856,7 +855,7 @@ void main()
             var buffer = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsage.StaticDraw);
 
             return buffer;
         }
@@ -893,14 +892,14 @@ void main()
             GL.CompileShader(vert);
             GL.CompileShader(frag);
 
-            int success = 0;
-            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, ref success);
+            int success;
+            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(vert, out string info);
                 Console.WriteLine(info);
             }
-            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, ref success);
+            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(frag, out string info);
@@ -914,7 +913,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, out success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);

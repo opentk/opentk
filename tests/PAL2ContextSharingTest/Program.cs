@@ -67,12 +67,13 @@ void main()
                 Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
             }
 
-            var logger = new ConsoleLogger();
-            WindowComp.Logger = logger;
-            OpenGLComponent.Logger = logger;
+            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
 
-            WindowComp.Initialize(PalComponents.Window);
-            OpenGLComponent.Initialize(PalComponents.OpenGL);
+            WindowComp.Logger = options.Logger;
+            OpenGLComponent.Logger = options.Logger;
+
+            WindowComp.Initialize(options);
+            OpenGLComponent.Initialize(options);
 
             WindowHandle1 = WindowComp.Create(new OpenGLGraphicsApiHints()
             {
@@ -148,7 +149,7 @@ void main()
 
             while (true)
             {
-                WindowComp.ProcessEvents();
+                WindowComp.ProcessEvents(false);
 
                 // If both of our windows are closed, we exit the application.
                 if (WindowComp.IsWindowDestroyed(WindowHandle1) &&
@@ -163,11 +164,11 @@ void main()
                 }
             }
 
-            WindowComp.ProcessEvents();
-            WindowComp.ProcessEvents();
-            WindowComp.ProcessEvents();
-            WindowComp.ProcessEvents();
-            WindowComp.ProcessEvents();
+            WindowComp.ProcessEvents(false);
+            WindowComp.ProcessEvents(false);
+            WindowComp.ProcessEvents(false);
+            WindowComp.ProcessEvents(false);
+            WindowComp.ProcessEvents(false);
         }
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
@@ -224,7 +225,7 @@ void main()
             var buffer = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsage.StaticDraw);
 
             return buffer;
         }
@@ -259,14 +260,14 @@ void main()
             GL.CompileShader(vert);
             GL.CompileShader(frag);
 
-            int success = 0;
-            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, ref success);
+            int success;
+            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(vert, out string info);
                 Console.WriteLine(info);
             }
-            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, ref success);
+            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(frag, out string info);
@@ -280,7 +281,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, out success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);

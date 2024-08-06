@@ -53,7 +53,7 @@ namespace X11TestProject
 
             while(!A.Done || !B.Done)
             {
-                windowComp.ProcessEvents();
+                windowComp.ProcessEvents(false);
 
                 if (XTasks.TryDequeue(out Task? task))
                 {

@@ -1814,8 +1814,9 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // FIXME: Better way of checking these!!
-            if (style.HasFlag(WindowStyles.OverlappedWindow & ~WindowStyles.ThickFrame) &&
-                style.HasFlag(WindowStyles.ThickFrame) == false)
+            if (style.HasFlag(WindowStyles.OverlappedWindow & ~(WindowStyles.ThickFrame | WindowStyles.MaximizeBox)) &&
+                style.HasFlag(WindowStyles.ThickFrame) == false &&
+                style.HasFlag(WindowStyles.MaximizeBox) == false)
             {
                 return WindowBorderStyle.FixedBorder;
             }
