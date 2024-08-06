@@ -20,20 +20,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-// Polyfill for older SDKs
-#if NETCOREAPP3_1
-#define NETCOREAPP3_1_OR_GREATER
-#endif
-
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-#if NETCOREAPP3_1_OR_GREATER
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-#endif
 
 namespace OpenTK.Mathematics
 {
@@ -1510,7 +1503,6 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix4 is singular.</exception>
         public static void Invert(in Matrix4 mat, out Matrix4 result)
         {
-#if NETCOREAPP3_1_OR_GREATER
             if (Sse3.IsSupported)
             {
                 InvertSse3(in mat, out result);
@@ -1519,12 +1511,8 @@ namespace OpenTK.Mathematics
             {
                 InvertFallback(in mat, out result);
             }
-#else
-            InvertFallback(in mat, out result);
-#endif
         }
 
-#if NETCOREAPP3_1_OR_GREATER
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertSse3(in Matrix4 mat, out Matrix4 result)
         {
@@ -1736,7 +1724,6 @@ namespace OpenTK.Mathematics
 #pragma warning restore SA1512 // Single-line comments should not be followed by blank lines
 #pragma warning restore SA1515 // Single-line comment should be preceded by blank line
         }
-#endif
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static unsafe void InvertFallback(in Matrix4 mat, out Matrix4 result)
@@ -1974,11 +1961,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public bool Equals(Matrix4 other)
         {
-            return
-                Row0 == other.Row0 &&
-                Row1 == other.Row1 &&
-                Row2 == other.Row2 &&
-                Row3 == other.Row3;
+            Vector256<float> aRow01 = Vector256.LoadUnsafe(ref Row0.X);
+            Vector256<float> bRow01 = Vector256.LoadUnsafe(ref other.Row0.X);
+
+            Vector256<float> aRow23 = Vector256.LoadUnsafe(ref Row2.X);
+            Vector256<float> bRow23 = Vector256.LoadUnsafe(ref other.Row2.X);
+
+            return aRow01 == bRow01 && aRow23 == bRow23;
         }
     }
 }

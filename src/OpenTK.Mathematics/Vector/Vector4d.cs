@@ -25,6 +25,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -2092,10 +2093,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public bool Equals(Vector4d other)
         {
-            return X == other.X &&
-                   Y == other.Y &&
-                   Z == other.Z &&
-                   W == other.W;
+            Vector256<double> thisVec = Vector256.LoadUnsafe(ref X);
+            Vector256<double> otherVec = Vector256.LoadUnsafe(ref other.X);
+
+            return thisVec == otherVec;
         }
 
         /// <inheritdoc />

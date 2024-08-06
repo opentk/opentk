@@ -101,6 +101,14 @@ module Matrix4 =
             Assert.True(equality)
 
         [<Property>]
+        let ``Two matrices with non-identical values are equal`` (a, b, c, d, e, f, g, h, i, j, k, l, m, n, o) =
+            let A = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 0.0f)
+            let B = Matrix4(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, 1.0f)
+            let equality = A = B
+
+            Assert.False(equality)
+
+        [<Property>]
         let ``A matrix is not equal to an object which is not a matrix`` (a : Matrix4, b : Vector3) =
             Assert.False(a.Equals(b))
 

@@ -12,6 +12,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -1679,10 +1680,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public bool Equals(Vector4i other)
         {
-            return X == other.X &&
-                   Y == other.Y &&
-                   Z == other.Z &&
-                   W == other.W;
+            Vector128<int> thisVec = Vector128.LoadUnsafe(ref X);
+            Vector128<int> otherVec = Vector128.LoadUnsafe(ref other.X);
+
+            return thisVec == otherVec;
         }
 
         /// <inheritdoc />
