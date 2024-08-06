@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;

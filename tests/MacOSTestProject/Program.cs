@@ -1,5 +1,5 @@
 ﻿using System;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Platform.Native.macOS;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;

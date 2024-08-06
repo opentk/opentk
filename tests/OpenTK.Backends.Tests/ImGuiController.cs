@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using ErrorCode = OpenTK.Graphics.OpenGL.ErrorCode;
 using System.Linq;

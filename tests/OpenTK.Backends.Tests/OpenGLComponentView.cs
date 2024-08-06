@@ -1,6 +1,6 @@
 using ImGuiNET;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
 using System.IO;

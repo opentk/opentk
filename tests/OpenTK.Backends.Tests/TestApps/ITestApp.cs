@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 
 namespace OpenTK.Backends.Tests
 {

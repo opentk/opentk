@@ -5,7 +5,7 @@ using System.IO;
 using System.Numerics;
 using System.Threading;
 using ImGuiNET;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Platform.Native;
 

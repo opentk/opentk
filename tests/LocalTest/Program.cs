@@ -450,13 +450,7 @@ namespace LocalTest
 
         protected unsafe override void OnUnload()
         {
-<<<<<<< HEAD
             base.OnUnload();
-<<<<<<< HEAD
-=======
-            base.OnRenderFrame(args);
->>>>>>> 849925e8f (First iteration of the vulkan bindings.)
-=======
 
             Vk.DeviceWaitIdle(Device);
 
@@ -478,7 +472,6 @@ namespace LocalTest
             Vk.DestroySurfaceKHR(VulkanInstance, Surface, null);
             Vk.DestroyDevice(Device, null);
             Vk.DestroyInstance(VulkanInstance, null);
->>>>>>> 4892cb779 (Added vulkan features and extension definitions to binder.)
         }
 
         const float CycleTime = 8.0f;

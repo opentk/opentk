@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Egl;

@@ -1,6 +1,6 @@
 ﻿
 
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Platform.Native.Windows;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;

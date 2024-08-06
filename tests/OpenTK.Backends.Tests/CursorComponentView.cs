@@ -1,5 +1,5 @@
 ﻿using ImGuiNET;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.macOS;
