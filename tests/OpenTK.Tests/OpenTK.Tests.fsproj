@@ -39,7 +39,4 @@
     <ProjectReference Include="..\..\src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
   </ItemGroup>
-
-  <Import Project="..\..\props\common.props" />
-  <Import Project="..\..\props\netfx-mono.props" />
 </Project>
