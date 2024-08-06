@@ -17,22 +17,22 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public enum AlcContextAttributes : int
     {
-        /// <summary>Followed by System.Int32 Hz</summary>
+        /// <summary>Followed by System.Int32 Hz.</summary>
         Frequency = 0x1007,
 
-        /// <summary>Followed by System.Int32 Hz</summary>
+        /// <summary>Followed by System.Int32 Hz.</summary>
         Refresh = 0x1008,
 
-        /// <summary>Followed by AlBoolean.True, or AlBoolean.False</summary>
+        /// <summary>Followed by AlBoolean.True, or AlBoolean.False.</summary>
         Sync = 0x1009,
 
-        /// <summary>Followed by System.Int32 Num of requested Mono (3D) Sources</summary>
+        /// <summary>Followed by System.Int32 Num of requested Mono (3D) Sources.</summary>
         MonoSources = 0x1010,
 
-        /// <summary>Followed by System.Int32 Num of requested Stereo Sources</summary>
+        /// <summary>Followed by System.Int32 Num of requested Stereo Sources.</summary>
         StereoSources = 0x1011,
 
-        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
+        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2.</summary>
         EfxMaxAuxiliarySends = 0x20003,
     }
 
@@ -71,7 +71,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>A list of available context extensions separated by spaces.</summary>
         Extensions = 0x1006,
 
-        /// <summary>The name of the default capture device</summary>
+        /// <summary>The name of the default capture device.</summary>
         CaptureDefaultDeviceSpecifier = 0x311, // ALC_EXT_CAPTURE extension.
 
         /// <summary>a list of the default devices.</summary>
@@ -79,13 +79,13 @@ namespace OpenTK.Audio.OpenAL
 
         // duplicates from AlcGetStringList:
 
-        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier. ALC_EXT_CAPTURE_EXT </summary>
+        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.CaptureDeviceSpecifier. ALC_EXT_CAPTURE_EXT.</summary>
         CaptureDeviceSpecifier = 0x310,
 
-        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.DeviceSpecifier</summary>
+        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.DeviceSpecifier.</summary>
         DeviceSpecifier = 0x1005,
 
-        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.AllDevicesSpecifier</summary>
+        /// <summary>Will only return the first Device, not a list. Use AlcGetStringList.AllDevicesSpecifier.</summary>
         AllDevicesSpecifier = 0x1013,
     }
 
@@ -94,13 +94,13 @@ namespace OpenTK.Audio.OpenAL
     /// </summary>
     public enum AlcGetStringList : int
     {
-        /// <summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified. ALC_EXT_CAPTURE_EXT </summary>
+        /// <summary>The name of the specified capture device, or a list of all available capture devices if no capture device is specified. ALC_EXT_CAPTURE_EXT.</summary>
         CaptureDeviceSpecifier = 0x310,
 
-        /// <summary>The specifier strings for all available devices. ALC_ENUMERATION_EXT</summary>
+        /// <summary>The specifier strings for all available devices. ALC_ENUMERATION_EXT.</summary>
         DeviceSpecifier = 0x1005,
 
-        /// <summary>The specifier strings for all available devices. ALC_ENUMERATE_ALL_EXT</summary>
+        /// <summary>The specifier strings for all available devices. ALC_ENUMERATE_ALL_EXT.</summary>
         AllDevicesSpecifier = 0x1013,
     }
 
@@ -130,7 +130,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>(EFX Extension) This property can be used by the application to retrieve the Minor version number of the Effects Extension supported by this OpenAL implementation. As this is a Context property is should be retrieved using alcGetIntegerv.</summary>
         EfxMinorVersion = 0x20002,
 
-        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2</summary>
+        /// <summary>(EFX Extension) This Context property can be passed to OpenAL during Context creation (alcCreateContext) to request a maximum number of Auxiliary Sends desired on each Source. It is not guaranteed that the desired number of sends will be available, so an application should query this property after creating the context using alcGetIntergerv. Default: 2.</summary>
         EfxMaxAuxiliarySends = 0x20003,
     }
 
@@ -140,24 +140,24 @@ namespace OpenTK.Audio.OpenAL
     public enum GetEnumerationString
     {
         /// <summary>
-        /// Gets the specifier for the default device. ALC_ENUMERATION_EXT
+        /// Gets the specifier for the default device. ALC_ENUMERATION_EXT.
         /// </summary>
         DefaultDeviceSpecifier = 0x1004,
 
         /// <summary>
         /// Gets a specific output device's specifier.
-        /// Can also be used without a device to get a list of all available output devices, see <see cref="GetEnumerationStringList.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// Can also be used without a device to get a list of all available output devices, see <see cref="GetEnumerationStringList.DeviceSpecifier"/>. ALC_ENUMERATION_EXT.
         /// </summary>
         DeviceSpecifier = 0x1005,
 
         /// <summary>
-        /// Gets the specifier for the default capture device. ALC_ENUMERATION_EXT
+        /// Gets the specifier for the default capture device. ALC_ENUMERATION_EXT.
         /// </summary>
         DefaultCaptureDeviceSpecifier = 0x311,
 
         /// <summary>
         /// Gets a specific capture device's specifier.
-        /// Can also be used without a device to get a list of all available capture devices, see <see cref="GetEnumerationStringList.CaptureDeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// Can also be used without a device to get a list of all available capture devices, see <see cref="GetEnumerationStringList.CaptureDeviceSpecifier"/>. ALC_ENUMERATION_EXT.
         /// </summary>
         CaptureDeviceSpecifier = 0x310,
     }
@@ -169,13 +169,13 @@ namespace OpenTK.Audio.OpenAL
     {
         /// <summary>
         /// Gets the specifier strings for all available output devices.
-        /// Can also be used to get the specifier for a specific device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// Can also be used to get the specifier for a specific device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT.
         /// </summary>
         DeviceSpecifier = 0x1005,
 
         /// <summary>
         /// Gets the specifier strings for all available capture devices.
-        /// Can also be used to get the specifier for a specific capture device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT
+        /// Can also be used to get the specifier for a specific capture device, see <see cref="GetEnumerationString.DeviceSpecifier"/>. ALC_ENUMERATION_EXT.
         /// </summary>
         CaptureDeviceSpecifier = 0x310,
     }

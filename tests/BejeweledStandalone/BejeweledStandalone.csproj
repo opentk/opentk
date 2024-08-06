@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\tests\Bejeweled\Bejeweled.csproj" />
+    <ProjectReference Include="..\Bejeweled\Bejeweled.csproj" />
   </ItemGroup>
 
   <ItemGroup>
