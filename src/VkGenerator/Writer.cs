@@ -275,7 +275,7 @@ namespace VkGenerator
 
                         delegateTypes.Append($"{command.StrongReturnType!.ToCSString()}");
 
-                        writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
+                        writer.WriteLine($"public static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
 
                         writer.WriteLine($"[UnmanagedCallersOnly]");
                         writer.WriteLine($"private static {command.StrongReturnType!.ToCSString()} {entryPoint}_Lazy({signature})");

@@ -52,9 +52,14 @@ namespace OpenTK.Graphics
 
         public static IntPtr GetInstanceProcAddress(string name)
         {
+            return GetInstanceProcAddress(Instance, name);
+        }
+
+        public static IntPtr GetInstanceProcAddress(VkInstance instance, string name)
+        {
             //Vulkan.VkPointers._GetInstanceProcAddr_fnptr =
             IntPtr data = Marshal.StringToCoTaskMemAnsi(name);
-            IntPtr fnptr = Vulkan.Vk.GetInstanceProcAddr(Instance, (byte*)data);
+            IntPtr fnptr = Vk.GetInstanceProcAddr(instance, (byte*)data);
             Marshal.FreeCoTaskMem(data);
 
             if (fnptr == 0)
