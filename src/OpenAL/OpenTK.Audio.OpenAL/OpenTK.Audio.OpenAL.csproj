@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <Description>OpenAL bindings.</Description>
@@ -20,11 +20,6 @@
     <PackageReference Include="System.Buffers" Version="4.5.1" />
   </ItemGroup>
 
-  <Import Project="..\..\..\props\common.props" />
   <Import Project="$(OpenTKSolutionRoot)\props\nuget-common.props" />
   <Import Project="$(OpenTKSolutionRoot)\props\stylecop.props" />
-  
-  <ItemGroup>
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
-  </ItemGroup>
 </Project>

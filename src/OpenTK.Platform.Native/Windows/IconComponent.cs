@@ -94,7 +94,7 @@ namespace OpenTK.Platform.Native.Windows
             header.bV5Compression = BI.Bitfields;
             // For some reason setting these masks to a proper ARGB format (or R, G, B, A as individual bytes) doesn't result in alpha.
             // As such we are going to have to swizzle the data.
-            // - Noggin_Bops 2023-04-14
+            // - Noggin_bops 2023-04-14
             header.bV5RedMask = 0x00_FF_00_00;
             header.bV5GreenMask = 0x00_00_FF_00;
             header.bV5BlueMask = 0x00_00_00_FF;

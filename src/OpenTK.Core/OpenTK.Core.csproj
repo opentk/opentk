@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Core</RootNamespace>
     <Description>Core shared functionality for the OpenTK library.</Description>
@@ -12,12 +12,11 @@
     <None Include="..\..\documentation\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
-  <Import Project="..\..\props\common.props" />
-  <Import Project="..\..\props\nuget-common.props" />
-  <Import Project="..\..\props\stylecop.props" />
-
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
+
+  <Import Project="..\..\props\nuget-common.props" />
+  <Import Project="..\..\props\stylecop.props" />
 </Project>

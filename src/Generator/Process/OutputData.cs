@@ -355,6 +355,8 @@ namespace Generator.Writing
     {
         internal Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
 
+        internal HashSet<Parameter> FixedTable = new HashSet<Parameter>();
+
         internal string? ReturnName = "returnValue";
 
         internal NameTable()
@@ -364,6 +366,7 @@ namespace Generator.Writing
         internal NameTable(NameTable table)
         {
             Table = new Dictionary<Parameter, string>(table.Table);
+            FixedTable = new HashSet<Parameter>(table.FixedTable);
             ReturnName = table.ReturnName;
         }
 
@@ -373,6 +376,10 @@ namespace Generator.Writing
         }
 
         internal void Rename(Parameter param, string name) => Table[param] = name;
+
+        internal void MarkFixed(Parameter param) => FixedTable.Add(param);
+
+        internal bool IsFixed(Parameter param) => FixedTable.Contains(param);
 
         internal string this[Parameter param]
         {
@@ -392,6 +399,11 @@ namespace Generator.Writing
             foreach (var (param, name) in table.Table)
             {
                 Table[param] = name;
+            }
+
+            foreach (var fixedParam in table.FixedTable)
+            {
+                FixedTable.Add(fixedParam);
             }
 
             // Replace the return name.

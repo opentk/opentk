@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <RootNamespace>OpenTK.Mathematics</RootNamespace>
@@ -16,7 +16,6 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
   </ItemGroup>
   
-  <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
 </Project>

@@ -3,8 +3,8 @@ id OpenTK.Compute
 description
     OpenCL Compute Bindings for dotnet from the Khronos OpenCL C Library.
 dependencies
-    framework: net7.0
+    framework: net8.0
 files
-    bin\Release\net7.0\OpenTK.Compute.dll ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Compute.xml ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Compute.pdb ==> lib\net7.0
+    bin\Release\net8.0\OpenTK.Compute.dll ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Compute.xml ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Compute.pdb ==> lib\net8.0

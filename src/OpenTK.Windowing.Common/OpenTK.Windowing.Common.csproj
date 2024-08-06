@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>OpenTK.Windowing.Common</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageIcon>icon.png</PackageIcon>
@@ -16,7 +16,6 @@
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
 </Project>

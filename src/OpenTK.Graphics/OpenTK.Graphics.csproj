@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <RootNamespace>OpenTK.Graphics</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -17,6 +17,10 @@
       <ProjectReference Include="../OpenTK.Mathematics/OpenTK.Mathematics.csproj" />
     </ItemGroup>
 
-  <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
+  <!-- 
+  We skip stylecop for OpenTK.Graphics as there is a bunch of generated code that would trigger tons of warnings. 
+  - Noggin_bops 2024-08-06
+  -->
+  <!--<Import Project="..\..\props\stylecop.props" />-->
 </Project>

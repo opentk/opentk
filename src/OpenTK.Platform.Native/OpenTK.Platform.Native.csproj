@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Deterministic>true</Deterministic>
+    <Nullable>enable</Nullable>
     <Description>Platform support for OpenTK, contains backends for Windows, Linux, and macOS.</Description>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
@@ -15,4 +16,13 @@
     <ProjectReference Include="..\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\OpenTK.Graphics\OpenTK.Graphics.csproj" />
   </ItemGroup>
+
+  <Import Project="..\..\props\nuget-common.props" />
+  <!-- 
+  The stylecop rules are way too overzealous about naming conventions
+  and other style rules that make understandable interop code hard to write.
+  As such we don't enable stylecop for OpenTK.Platform.Native.
+  - Noggin_bops 2024-08-06
+  -->
+  <!--<Import Project="..\..\props\stylecop.props" />-->
 </Project>

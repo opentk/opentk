@@ -137,7 +137,7 @@ let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> S
 Target.create "GenerateBindings" (fun _ ->
     Trace.log " --- Generating bindings --- "
     let releaseProjects = releaseProjects.And "src/OpenTK.Graphics/*.csproj"
-    let framework = "net7.0"
+    let framework = "net8.0"
     let projFile = "src/Generator/Generator.csproj"
 
     let args = [  ] |> asArgs
@@ -167,7 +167,7 @@ Target.create "Build"( fun _ ->
 Target.create "BuildTest" <| fun _ ->
     !!"tests/**/*.??proj"
     |> Seq.map(fun proj ->
-        DotNet.runWithDefaultOptions "net7.0" proj "" |> string)
+        DotNet.runWithDefaultOptions "net8.0" proj "" |> string)
     |> Trace.logItems "TestBuild-Output: "
 
 // Copies binaries from default VS location to expected bin folder
@@ -176,7 +176,7 @@ Target.create "CopyBinaries" (fun _ ->
     releaseProjects
     |> Seq.map
         (fun f ->
-        ((System.IO.Path.GetDirectoryName f) @@ "bin/Release/net7.0",
+        ((System.IO.Path.GetDirectoryName f) @@ "bin/Release/net8.0",
          "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
     |> Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true)))
 

@@ -14,30 +14,6 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
-            Random rand = new Random();
-
-            while (true)
-            {
-                Color4<Hsla> hsla1 = NextColor();
-                Color4<Hsva> hsva = hsla1.ToHsva();
-                Color4<Hsla> hsla2 = hsva.ToHsla();
-
-                if (!MathHelper.ApproximatelyEquivalent(hsla1.X, hsla2.X, 1e-3) ||
-                    !MathHelper.ApproximatelyEquivalent(hsla1.Y, hsla2.Y, 1e-3) ||
-                    !MathHelper.ApproximatelyEquivalent(hsla1.Z, hsla2.Z, 1e-3) ||
-                    !MathHelper.ApproximatelyEquivalent(hsla1.W, hsla2.W, 1e-3))
-                {
-                    ;
-                }
-            }
-            return;
-
-
-            Color4<Hsla> NextColor()
-            {
-                return new Color4<Hsla>(rand.NextSingle(), rand.NextSingle(), rand.NextSingle(), 1);
-            }
-
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,

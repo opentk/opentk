@@ -3,10 +3,10 @@ id OpenTK.Audio.OpenAL
 description
     OpenAL bindings for dotnet from the Khronos OpenAL C library.
 dependencies
-    framework: net7.0
+    framework: net8.0
         OpenTK.Core ~> #VERSION#
         OpenTK.Mathematics ~> #VERSION#
 files
-    bin\Release\net7.0\OpenTK.Audio.OpenAL.dll ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Audio.OpenAL.xml ==> lib\net7.0
-    bin\Release\net7.0\OpenTK.Audio.OpenAL.pdb ==> lib\net7.0
+    bin\Release\net8.0\OpenTK.Audio.OpenAL.dll ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Audio.OpenAL.xml ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Audio.OpenAL.pdb ==> lib\net8.0
