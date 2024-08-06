@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,17 +10,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fake.Api.GitHub" Version="6.0.0" />
-    <PackageReference Include="Fake.Core.Environment" Version="6.0.0" />
-    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.0.0" />
-    <PackageReference Include="Fake.Core.Target" Version="6.0.0" />
-    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.0.0" />
-    <PackageReference Include="Fake.DotNet.Cli" Version="6.0.0" />
-    <PackageReference Include="Fake.DotNet.NuGet" Version="6.0.0" />
-    <PackageReference Include="Fake.DotNet.Paket" Version="6.0.0" />
-    <PackageReference Include="Fake.IO.FileSystem" Version="6.0.0" />
-    <PackageReference Include="Fake.Tools.Git" Version="6.0.0" />
+    <PackageReference Update="FSharp.Core" Version="8.0.301" />
 
+    <PackageReference Include="Fake.Api.GitHub" Version="6.1.0" />
+    <PackageReference Include="Fake.Core.Environment" Version="6.1.0" />
+    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.1.0" />
+    <PackageReference Include="Fake.Core.Target" Version="6.1.0" />
+    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.0" />
+    <PackageReference Include="Fake.DotNet.Cli" Version="6.1.0" />
+    <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.0" />
+    <PackageReference Include="Fake.DotNet.Paket" Version="6.1.0" />
+    <PackageReference Include="Fake.IO.FileSystem" Version="6.1.0" />
+    <PackageReference Include="Fake.Tools.Git" Version="6.1.0" />
+    
     <!-- So that Fake.DotNet.Nuget.Nuget command can find nuget.exe, but because the nuget dependencies are -->
     <!-- downloaded into a shared cache of nuget packages we actually don't get a nuget.exe in our project -->
     <!-- so we must later copy the nuget.exe out from this package into our own. -->
@@ -32,13 +34,7 @@
     </PackageReference>
     
     <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
-    <PackageReference Include="MSBuild.StructuredLogger" Version="2.2.243" />
-    <!-- See https://github.com/fsprojects/FAKE/issues/2722 -->
-    <!-- 17.3.2 is the last .net6.0 version of the package -->
-    <PackageReference Include="Microsoft.Build" Version="17.3.2" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="17.3.2" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.3.2" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.3.2" />
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.2.291" />
   </ItemGroup>
 
   <ItemGroup>

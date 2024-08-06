@@ -5,5 +5,3 @@ framework: net8.0
 
 strategy: min
 
-nuget FsCheck.Xunit
-nuget xunit.assert
