@@ -83,6 +83,7 @@ let toolProjects =
 let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
+    -- "src/VkGenerator/**"
     -- "src/OpenAL/OpenALGenerator/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
