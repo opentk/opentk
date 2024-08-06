@@ -57,17 +57,20 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr kCGColorSpaceSRGB = GetStringConstant(AppKitLibrary, "kCGColorSpaceSRGB"u8);
         internal static readonly IntPtr kCGColorSpaceLinearSRGB = GetStringConstant(AppKitLibrary, "kCGColorSpaceLinearSRGB"u8);
         internal static readonly IntPtr kCGColorSpaceGenericRGBLinear = GetStringConstant(AppKitLibrary, "kCGColorSpaceGenericRGBLinear"u8);
-        
 
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSClipboardComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private static nint ChangeCount = 0;
 
+        /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
@@ -84,6 +87,7 @@ namespace OpenTK.Platform.Native.macOS
             return changed;
         }
 
+        /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _SupportedFormats;
 
         private static readonly ClipboardFormat[] _SupportedFormats = new[]
@@ -137,11 +141,13 @@ namespace OpenTK.Platform.Native.macOS
             return format;
         }
 
+        /// <inheritdoc/>
         public ClipboardFormat GetClipboardFormat()
         {
             return GetClipboardFormatInternal(Logger);
         }
 
+        /// <inheritdoc/>
         public void SetClipboardText(string text)
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
@@ -162,6 +168,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(pasteboard, Release);
         }
 
+        /// <inheritdoc/>
         public string? GetClipboardText()
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
@@ -174,6 +181,7 @@ namespace OpenTK.Platform.Native.macOS
             return str;
         }
 
+        /// <inheritdoc/>
         public unsafe AudioData? GetClipboardAudio()
         {
             // NSSound can read from the clipboard but doesn't provide access to the
@@ -244,6 +252,7 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: Do we need to free any other resources?
         }
 
+        /// <inheritdoc/>
         public unsafe Bitmap? GetClipboardBitmap()
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);
@@ -289,6 +298,7 @@ namespace OpenTK.Platform.Native.macOS
             return bitmap;
         }
 
+        /// <inheritdoc/>
         public List<string>? GetClipboardFiles()
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);

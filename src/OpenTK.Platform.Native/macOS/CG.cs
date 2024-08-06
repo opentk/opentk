@@ -137,7 +137,7 @@ namespace OpenTK.Platform.Native.macOS
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
-        /// <param name="y">The coordinate to flip.</param>
+        /// <param name="p">The coordinate to flip.</param>
         /// <returns>The flipped coordinate.</returns>
         internal static CGPoint FlipYCoordinate(CGPoint p)
         {
@@ -148,7 +148,7 @@ namespace OpenTK.Platform.Native.macOS
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
-        /// <param name="y">The rectangle to flip.</param>
+        /// <param name="rect">The rectangle to flip.</param>
         /// <returns>The flipped rectangle.</returns>
         internal static CGRect FlipYCoordinate(CGRect rect)
         {

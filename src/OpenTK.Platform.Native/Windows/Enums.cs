@@ -1875,7 +1875,7 @@ namespace OpenTK.Platform.Native.Windows
         HORIZONTAL_WHEEL_PRESENT = 0x8000,
     }
 
-    public enum HIDPStatus : uint
+    internal enum HIDPStatus : uint
     {
         // These values are taken from: https://github.com/tpn/winsdk-10/blob/9b69fd26ac0c7d0b83d378dba01080e93349c2ed/Include/10.0.16299.0/shared/hidpi.h#L1801
 
@@ -1921,7 +1921,7 @@ namespace OpenTK.Platform.Native.Windows
         HIDP_STATUS_NOT_IMPLEMENTED = unchecked((uint)0xC << 28 | 0x11 << 16 | 0x20),
     }
 
-    public enum HIDPReportType : int
+    internal enum HIDPReportType : int
     {
         /// <summary>
         /// Indicates an input report.

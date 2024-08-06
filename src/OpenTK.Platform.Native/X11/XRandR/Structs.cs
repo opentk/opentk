@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace OpenTK.Platform.Native.X11.XRandR
 {
+#pragma warning disable CS0649
     /// <summary>
     /// Opaque structure to the XRandR screen configuration structure.
     /// </summary>
@@ -18,6 +19,8 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public int MWidth;
         public int MHeight;
     }
+#pragma warning restore CS0649
+
 
     /// <summary>
     /// XRandR Output handle.

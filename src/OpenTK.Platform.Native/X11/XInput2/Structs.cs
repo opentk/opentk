@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11.XI2
 {
+#pragma warning disable CS0649
     internal unsafe struct XIAddMasterInfo {
         public HierarchyChangeType type;
         public byte*               name;
@@ -338,5 +339,6 @@ namespace OpenTK.Platform.Native.X11.XI2
         public XPointerBarrier           barrier;
         public uint /* BarrierEventID */ eventid;
     }
+#pragma warning restore CS0649
 }
 

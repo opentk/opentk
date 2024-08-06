@@ -1127,8 +1127,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal struct LUID
         {
-            uint LowPart;
-            int HighPart;
+            public uint LowPart;
+            public int HighPart;
         }
 
         [DllImport("dwmapi.dll")]

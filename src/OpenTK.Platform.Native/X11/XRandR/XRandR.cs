@@ -9,6 +9,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// </summary>
     internal static class XRandR
     {
+#pragma warning disable CS0649
         private const string xrandr = "Xrandr";
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
@@ -56,21 +57,21 @@ namespace OpenTK.Platform.Native.X11.XRandR
 
         internal unsafe struct XRROutputInfo
         {
-            internal XTime timestamp;
-            internal RRCrtc crtc;
-            internal byte* name;
-            internal int nameLen;
-            internal ulong mm_width;
-            internal ulong mm_height;
-            internal Connection connection;
-            internal SubpixelOrder subpixel_order;
-            internal int ncrtc;
-            internal RRCrtc* crtcs;
-            internal int nclone;
-            internal RROutput* clones;
-            internal int nmode;
-            internal int npreferred;
-            internal RRMode* modes;
+            public XTime timestamp;
+            public RRCrtc crtc;
+            public byte* name;
+            public int nameLen;
+            public ulong mm_width;
+            public ulong mm_height;
+            public Connection connection;
+            public SubpixelOrder subpixel_order;
+            public int ncrtc;
+            public RRCrtc* crtcs;
+            public int nclone;
+            public RROutput* clones;
+            public int nmode;
+            public int npreferred;
+            public RRMode* modes;
         }
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
@@ -81,16 +82,16 @@ namespace OpenTK.Platform.Native.X11.XRandR
 
         internal unsafe struct XRRCrtcInfo
         {
-            internal XTime timestamp;
-            internal int x, y;
-            internal uint width, height;
-            internal RRMode mode;
-            internal Rotation rotation;
-            internal int noutput;
-            internal RROutput* outputs;
-            internal Rotation rotations;
-            internal int npossible;
-            internal RROutput* possible;
+            public XTime timestamp;
+            public int x, y;
+            public uint width, height;
+            public RRMode mode;
+            public Rotation rotation;
+            public int noutput;
+            public RROutput* outputs;
+            public Rotation rotations;
+            public int npossible;
+            public RROutput* possible;
         }
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
@@ -120,4 +121,5 @@ namespace OpenTK.Platform.Native.X11.XRandR
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern RRConfigStatus XRRSetCrtcConfig(XDisplayPtr dpy, XRRScreenResources* resources, RRCrtc crtc, XTime timestamp, int x, int y, RRMode mode, Rotation rotation, RROutput* outputs, int noutputs);
     }
+#pragma warning restore CS0649
 }

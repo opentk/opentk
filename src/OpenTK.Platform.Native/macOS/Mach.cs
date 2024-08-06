@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
+#pragma warning disable CS0649
     struct vm_statistics
     {
         public uint free_count;
@@ -83,5 +84,6 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport("libSystem")]
         internal static extern int /* kern_return_t */ host_page_size(IntPtr /* host_t */ host, out nuint /* vm_size_t */ out_page_size);
     }
+#pragma warning restore CS0649
 }
 
