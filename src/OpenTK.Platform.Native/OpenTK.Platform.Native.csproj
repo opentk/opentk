@@ -24,5 +24,5 @@
   As such we don't enable stylecop for OpenTK.Platform.Native.
   - Noggin_bops 2024-08-06
   -->
-  <Import Project="..\..\props\stylecop.props" />
+  <!--<Import Project="..\..\props\stylecop.props" />-->
 </Project>
