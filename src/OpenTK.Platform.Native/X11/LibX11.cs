@@ -112,6 +112,12 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern XSizeHints* XAllocSizeHints();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XClassHint *XAllocClassHint();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void XSetClassHint(XDisplayPtr display, XWindow w, XClassHint* class_hints);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -169,6 +175,9 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XPutBackEvent(XDisplayPtr display, in XEvent @event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFree(IntPtr pointer);
         
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -194,9 +203,6 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);
-
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XGetWindowAttributes(
@@ -228,6 +234,15 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFetchName(XDisplayPtr display, XWindow window, out IntPtr name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XStatus XGetIconName(XDisplayPtr display, XWindow w, out IntPtr icon_name_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void XSetIconName(XDisplayPtr display, XWindow w, [MarshalAs(UnmanagedType.LPStr)]string name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern XAtom XInternAtom(XDisplayPtr display, string atomName, bool onlyIfExists);
@@ -283,6 +298,9 @@ namespace OpenTK.Platform.Native.X11
             long[] data,
             int elements
         );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XGetInputFocus(XDisplayPtr display, out XWindow focus_return, out RevertTo revert_to_return);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XSetInputFocus(XDisplayPtr display, XWindow focus, RevertTo revert_to, XTime time);
@@ -351,6 +369,9 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         internal static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int /* Status */ XIconifyWindow(XDisplayPtr display, XWindow w, int screen_number);
@@ -448,5 +469,11 @@ namespace OpenTK.Platform.Native.X11
             string? str = Marshal.PtrToStringUTF8((nint)ptr);
             return str;
         }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int /* Status */ XQueryTree(XDisplayPtr display, XWindow w, out XWindow root_return, out XWindow parent_return, out XWindow* children_return, out uint nchildren_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int XSetTransientForHint(XDisplayPtr display, XWindow w, XWindow prop_window);
     }
 }

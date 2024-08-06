@@ -6,6 +6,7 @@
     <Description>Core shared functionality for the OpenTK library.</Description>
     <OutputType>Library</OutputType>
     <PackageIcon>icon.png</PackageIcon>
+    <IsTrimmable>true</IsTrimmable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 
   <Import Project="..\..\props\nuget-common.props" />

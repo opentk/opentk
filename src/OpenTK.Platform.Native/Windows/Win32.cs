@@ -1,12 +1,17 @@
-﻿using System;
+﻿using OpenTK.Platform.Native.Windows;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static OpenTK.Platform.Native.Windows.Win32;
 
 #nullable enable
 
@@ -15,6 +20,8 @@ namespace OpenTK.Platform.Native.Windows
 #pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {
+        internal const int USER_DEFAULT_SCREEN_DPI = 96;
+
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
@@ -44,8 +51,19 @@ namespace OpenTK.Platform.Native.Windows
         internal const int ICON_BIG = 1;
 
         internal const int S_OK = 0x0;
+        internal const int S_FALSE = 0x1;
+
         internal const int E_INVALIDARG = unchecked((int)0x80070057);
         internal const int E_ACCESSDENIED = unchecked((int)0x80070005);
+        internal const int E_OUTOFMEMORY = unchecked((int)0x8007000E);
+        internal const int E_FAIL = unchecked((int)0x80004005);
+
+        internal const IntPtr TD_WARNING_ICON         = unchecked((ushort)-1);
+        internal const IntPtr TD_ERROR_ICON           = unchecked((ushort)-2);
+        internal const IntPtr TD_INFORMATION_ICON     = unchecked((ushort)-3);
+        internal const IntPtr TD_SHIELD_ICON          = unchecked((ushort)-4);
+
+        internal const IntPtr INVALID_HANDLE_VALUE = -1;
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
@@ -61,6 +79,9 @@ namespace OpenTK.Platform.Native.Windows
             int index = span.IndexOf("\0");
             return index == -1 ? span : span.Slice(0, index);
         }
+
+        [DllImport("kernel32.dll", SetLastError = false)]
+        internal static extern uint GetLastError();
 
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
@@ -225,6 +246,13 @@ namespace OpenTK.Platform.Native.Windows
             int nHeight,
             bool bRepaint);
 
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool RedrawWindow(
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* const RECT* */ lprcUpdate,
+            IntPtr /* HRGN */ hrgnUpdate,
+            RDW flags);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
@@ -256,7 +284,13 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool BringWindowToTop(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetForegroundWindow();
+
+        [DllImport("user32.dll")]
         internal static extern bool SetForegroundWindow(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ GetFocus();
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
@@ -305,6 +339,12 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsIconic(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool IsZoomed(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
@@ -546,6 +586,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HICON or HCURSOR */ CreateIconIndirect(in ICONINFO piconinfo);
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Auto)]
+        internal static extern IntPtr /* HDC */ CreateDC([MarshalAs(UnmanagedType.LPTStr)] string? pwszDriver, [MarshalAs(UnmanagedType.LPTStr)] string pwszDevice, [MarshalAs(UnmanagedType.LPTStr)] string? pszPort, IntPtr pdm);
 
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern IntPtr /* HDC */ CreateCompatibleDC(IntPtr /* HDC */ hdc);
@@ -1062,6 +1105,38 @@ namespace OpenTK.Platform.Native.Windows
             public POINT ptMaxTrackSize;
         }
 
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTWaitForVerticalBlankEvent(in D3DKMT_WAITFORVERTICALBLANKEVENT unnamedParam1);
+        internal struct D3DKMT_WAITFORVERTICALBLANKEVENT
+        {
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public uint /* D3DKMT_HANDLE */ hDevice;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        [DllImport("gdi32.dll")]
+        internal static extern int /* NTSTATUS */ D3DKMTOpenAdapterFromHdc(D3DKMT_OPENADAPTERFROMHDC* unnamedParam1);
+
+        internal struct D3DKMT_OPENADAPTERFROMHDC
+        {
+            public IntPtr /* HDC */ hDc;
+            public uint /* D3DKMT_HANDLE */ hAdapter;
+            public LUID AdapterLuid;
+            public uint /* D3DDDI_VIDEO_PRESENT_SOURCE_ID */ VidPnSourceId;
+        }
+
+        internal struct LUID
+        {
+            public uint LowPart;
+            public int HighPart;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmFlush();
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmIsCompositionEnabled(out bool pfEnabled);
+
         [DllImport("dwmapi.dll")]
         internal static extern int /* HRESULT */ DwmGetWindowAttribute(
             IntPtr /* HWND */ hwnd,
@@ -1189,6 +1264,26 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool GetWindowPlacement(IntPtr /* HWND */ hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool LockWindowUpdate(IntPtr /* HWND */ hWndLock);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ BeginDeferWindowPos(int nNumWindows);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDWP */ DeferWindowPos(
+            IntPtr /* HDWP */ hWinPosInfo,
+            IntPtr /* HWND */ hWnd,
+            IntPtr /* HWND */ hWndInsertAfter,
+            int x,
+            int y,
+            int cx,
+            int cy,
+            SetWindowPosFlags uFlags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool EndDeferWindowPos(IntPtr /* HDWP */ hWinPosInfo);
+
+        [DllImport("user32.dll", SetLastError = false)]
         internal static extern DispChange ChangeDisplaySettingsExW(
             [MarshalAs(UnmanagedType.LPWStr)] string? lpszDeviceName,
             ref DEVMODE lpDevMode,
@@ -1203,6 +1298,217 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr /* HWND */ hwnd,
             CDS dwflags,
             IntPtr lParam);
+
+        [DllImport("comdlg32.dll")]
+        internal static extern uint CommDlgExtendedError();
+
+        [DllImport("comdlg32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetOpenFileNameW(ref OPENFILENAMEW unnamedParam1);
+
+        [DllImport("comdlg32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetSaveFileNameW(ref OPENFILENAMEW unnamedParam1);
+
+        internal struct OPENFILENAMEW
+        {
+            public uint lStructSize;
+            public IntPtr /* HWND */ hwndOwner;
+            public IntPtr /* HINSTANCE */ hInstance;
+            public char* lpstrFilter;
+            public char* lpstrCustomFilter;
+            public uint nMaxCustFilter;
+            public uint nFilterIndex;
+            public char* lpstrFile;
+            public uint nMaxFile;
+            public char* lpstrFileTitle;
+            public uint nMaxFileTitle;
+            public char* lpstrInitialDir;
+            public char* lpstrTitle;
+            public OFN Flags;
+            public ushort nFileOffset;
+            public ushort nFileExtension;
+            public char* lpstrDefExt;
+            public IntPtr /* LPARAM */ lCustData;
+            public IntPtr /* LPOFNHOOKPROC */ lpfnHook;
+            public char* lpTemplateName;
+            public void* pvReserved;
+            public uint dwReserved;
+            public uint FlagsEx;
+        }
+
+        [DllImport("comctl32.dll")]
+        internal static extern int /* HRESULT */ TaskDialogIndirect(in TASKDIALOGCONFIG pTaskConfig, ref int pnButton, ref int pnRadioButton, ref int pfVerificationFlagChecked);
+
+        // We need to pack this struct to get the correct layout.
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        internal struct TASKDIALOGCONFIG
+        {
+            public uint cbSize;
+            public IntPtr /* HWND */ hwndParent;
+            public IntPtr /* HINSTANCE */ hInstance;
+            public TASKDIALOG_FLAGS dwFlags;
+            public TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons;
+            public char* pszWindowTitle;
+            //union {
+            public IntPtr /* HICON */ hMainIcon;
+            //PCWSTR pszMainIcon;
+            //} DUMMYUNIONNAME;
+            public char* pszMainInstruction;
+            public char* pszContent;
+            public uint cButtons;
+            public TASKDIALOG_BUTTON* pButtons;
+            public TaskDialogButtonID nDefaultButton;
+            public uint cRadioButtons;
+            public TASKDIALOG_BUTTON* pRadioButtons;
+            public int nDefaultRadioButton;
+            public char* pszVerificationText;
+            public char* pszExpandedInformation;
+            public char* pszExpandedControlText;
+            public char* pszCollapsedControlText;
+            //union {
+            public IntPtr /* HICON */ hFooterIcon;
+            //PCWSTR pszFooterIcon;
+            //} DUMMYUNIONNAME2;
+            public char* pszFooter;
+            public delegate* unmanaged[Cdecl]<IntPtr, TDN, UIntPtr, IntPtr, IntPtr, int> pfCallback;
+            public nuint lpCallbackData;
+            public uint cxWidth;
+        }
+
+        internal struct TASKDIALOG_BUTTON
+        {
+            public int nButtonID;
+            public char* pszButtonText;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        internal delegate int /* HRESULT */ PFTASKDIALOGCALLBACK(IntPtr /* HWND */ hwnd, TDN msg, UIntPtr wParam, IntPtr lParam, IntPtr lpRefData);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool RegisterRawInputDevices(in RAWINPUTDEVICE pRawInputDevices, uint uiNumDevices, uint cbSize);
+
+        internal struct RAWINPUTDEVICE
+        {
+            public HIDUsagePage usUsagePage;
+            public ushort usUsage;
+            public RIDEV dwFlags;
+            public IntPtr /* HWND */ hwndTarget;
+        }
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* LRESULT */ DefRawInputProc(IntPtr /* PRAWINPUT* */ paRawInput, int nInput, uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+           IntPtr /* HRAWINPUT */ hRawInput,
+           RID uiCommand,
+           [Out] byte[]? pData,
+           ref uint pcbSize,
+           uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+            IntPtr /* HRAWINPUT */ hRawInput,
+            RID uiCommand,
+            ref RAWINPUTHEADER pData,
+            ref uint pcbSize,
+            uint cbSizeHeader);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetRawInputData(
+            IntPtr /* HRAWINPUT */ hRawInput,
+            RID uiCommand,
+            ref RAWINPUT pData,
+            ref uint pcbSize,
+            uint cbSizeHeader);
+
+        internal struct RAWINPUTHEADER
+        {
+            public RIM dwType;
+            public uint dwSize;
+            public IntPtr /* HANDLE */ hDevice;
+            public UIntPtr /* WPARAM */ wParam;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct RAWMOUSE
+        {
+            [FieldOffset(0)]
+            public RawMouseFlags usFlags;
+            [FieldOffset(2)]
+            public uint ulButtons;
+            [FieldOffset(2)]
+            public ushort usButtonFlags;
+            [FieldOffset(4)]
+            public ushort usButtonData;
+            [FieldOffset(6)]
+            public uint ulRawButtons;
+            [FieldOffset(10)]
+            public int lLastX;
+            [FieldOffset(14)]
+            public int lLastY;
+            [FieldOffset(18)]
+            public uint ulExtraInformation;
+        }
+
+        internal struct RAWKEYBOARD
+        {
+            public ushort MakeCode;
+            public ushort Flags;
+            public ushort Reserved;
+            public ushort VKey;
+            public uint Message;
+            public uint ExtraInformation;
+        }
+
+        internal struct RAWHID
+        {
+            public uint dwSizeHid;
+            public uint dwCount;
+            public fixed byte bRawData[1];
+        }
+
+        internal unsafe struct RAWINPUT
+        {
+            public RAWINPUTHEADER header;
+            public DUMMYUNIONNAME data;
+
+            [StructLayout(LayoutKind.Explicit)]
+            public struct DUMMYUNIONNAME
+            {
+                [FieldOffset(0)]
+                public RAWMOUSE mouse;
+                [FieldOffset(0)]
+                public RAWKEYBOARD keyboard;
+                [FieldOffset(0)]
+                public RAWHID hid;
+            }
+        }
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        internal extern static IntPtr /* HANDLE */ CreateActCtxW(ref ACTCTXW actctx);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        internal struct ACTCTXW
+        {
+            public uint cbSize;
+            public ACTCTXFlag dwFlags;
+            public char* /* LPCWSTR */ lpSource;
+            public ushort wProcessorArchitecture;
+            public ushort /* LANGID */ wLangId;
+            public char* /* LPCWSTR */ lpAssemblyDirectory;
+            public char* /* LPCWSTR */ lpResourceName;
+            public char* /* LPCWSTR */ lpApplicationName;
+            public IntPtr /* HMODULE */ hModule;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal extern static bool ActivateActCtx(IntPtr /* HANDLE */ hActCtx, out uint lpCookie);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal extern static bool DeactivateActCtx(uint dwFlags, uint lpCookie);
+
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

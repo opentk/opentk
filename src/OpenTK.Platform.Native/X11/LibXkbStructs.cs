@@ -4,6 +4,7 @@ using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11 
 {
+#pragma warning disable CS0649
     internal unsafe struct XkbDescRec
     {
         public XDisplayPtr         display;        /* connection to X server */
@@ -196,23 +197,23 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XkbSectionRec
     {
-        XAtom           name;          /* section name */
-        byte            priority;      /* drawing priority, 0⇒highest, 255⇒lowest */
-        short           top;           /* top coordinate of section origin */
-        short           left;          /* left coordinate of row origin */
-        ushort          width;         /* section width, in mm/10 */
-        ushort          height;        /* section height, in mm/10 */
-        short           angle;         /* angle of section rotation, counterclockwise */
-        ushort          num_rows;      /* number of rows in the rows array */
-        ushort          num_doodads;   /* number of doodads in the doodads array */
-        ushort          num_overlays;  /* number of overlays in the overlays array */
-        ushort          sz_rows;       /* size of the rows array */
-        ushort          sz_doodads;    /* size of the doodads array */
-        ushort          sz_overlays;   /* size of the overlays array */
-        XkbRowRec*      rows;          /* section rows array */
-        XkbDoodadRec*   doodads;       /* section doodads array */
-        XkbBoundsRec    bounds;        /* bounding box for the section, before rotation */
-        XkbOverlayRec*  overlays;      /* section overlays array */
+        public XAtom           name;          /* section name */
+        public byte            priority;      /* drawing priority, 0⇒highest, 255⇒lowest */
+        public short           top;           /* top coordinate of section origin */
+        public short           left;          /* left coordinate of row origin */
+        public ushort          width;         /* section width, in mm/10 */
+        public ushort          height;        /* section height, in mm/10 */
+        public short           angle;         /* angle of section rotation, counterclockwise */
+        public ushort          num_rows;      /* number of rows in the rows array */
+        public ushort          num_doodads;   /* number of doodads in the doodads array */
+        public ushort          num_overlays;  /* number of overlays in the overlays array */
+        public ushort          sz_rows;       /* size of the rows array */
+        public ushort          sz_doodads;    /* size of the doodads array */
+        public ushort          sz_overlays;   /* size of the overlays array */
+        public XkbRowRec*      rows;          /* section rows array */
+        public XkbDoodadRec*   doodads;       /* section doodads array */
+        public XkbBoundsRec    bounds;        /* bounding box for the section, before rotation */
+        public XkbOverlayRec*  overlays;      /* section overlays array */
     }
 
     /* row in a section */
@@ -239,12 +240,12 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XkbOverlayRec
     {
-        XAtom              name;           /* overlay name */
-        XkbSectionRec*     section_under;  /* the section under this overlay */
-        ushort             num_rows;       /* number of rows in the rows array */
-        ushort             sz_rows;        /* size of the rows array */
-        XkbOverlayRowRec*  rows;           /* array of rows in the overlay */
-        XkbBoundsRec*      bounds;         /* bounding box for the overlay */
+        public XAtom              name;           /* overlay name */
+        public XkbSectionRec*     section_under;  /* the section under this overlay */
+        public ushort             num_rows;       /* number of rows in the rows array */
+        public ushort             sz_rows;        /* size of the rows array */
+        public XkbOverlayRowRec*  rows;           /* array of rows in the overlay */
+        public XkbBoundsRec*      bounds;         /* bounding box for the overlay */
     }
 
     internal unsafe struct XkbOverlayRowRec
@@ -257,8 +258,8 @@ namespace OpenTK.Platform.Native.X11
 
     internal struct XkbOverlayKeyRec
     {
-        XkbKeyNameRec      over;      /* name of this overlay key */
-        XkbKeyNameRec      under;     /* name of the key under this overlay key */
+        public XkbKeyNameRec      over;      /* name of this overlay key */
+        public XkbKeyNameRec      under;     /* name of the key under this overlay key */
     }
 
     internal struct XkbAnyDoodadRec
@@ -335,10 +336,10 @@ namespace OpenTK.Platform.Native.X11
 
     internal unsafe struct XkbOutlineRec
     {
-        ushort        num_points;     /* number of points in the outline */
-        ushort        sz_points;      /* size of the points array */
-        ushort        corner_radius;  /* draw corners as circles with this radius */
-        XkbPointRec*  points;         /* array of points defining the outline */
+        public ushort        num_points;     /* number of points in the outline */
+        public ushort        sz_points;      /* size of the points array */
+        public ushort        corner_radius;  /* draw corners as circles with this radius */
+        public XkbPointRec*  points;         /* array of points defining the outline */
     }
 
     /* x, y coordinates */
@@ -837,4 +838,5 @@ namespace OpenTK.Platform.Native.X11
         public byte    v2_ndx;      /* specifies a real valuator */
         public byte    v2_value;    /* the value for valuator 1 */
     }
+#pragma warning restore CS0649
 }

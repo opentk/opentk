@@ -23,13 +23,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Joystick)
-            {
-                throw new Exception("SDLJoystickComponent can only initialize the Joystick component.");
-            }
-
             SDL_JoystickUpdate();
             Console.WriteLine( $"{SDL_NumJoysticks()} joysticks connected." );
         }

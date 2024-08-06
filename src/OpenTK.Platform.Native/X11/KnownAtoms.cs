@@ -22,6 +22,7 @@ namespace OpenTK.Platform.Native.X11
         WM_CHANGE_STATE,
         WM_NAME,
         WM_NORMAL_HINTS,
+        WM_TRANSIENT_FOR,
 
         PRIMARY,
         SECONDARY,

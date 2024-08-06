@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -36,6 +37,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selWindow = sel_registerName("window"u8);
         internal static readonly SEL selButtonNumber = sel_registerName("buttonNumber"u8);
         internal static readonly SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
+        internal static readonly SEL selDeltaX = sel_registerName("deltaX"u8);
+        internal static readonly SEL selDeltaY = sel_registerName("deltaY"u8);
         internal static readonly SEL selMouseLocation = sel_registerName("mouseLocation"u8);
         internal static readonly SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
         internal static readonly SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
@@ -74,11 +77,14 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selInputContext = sel_registerName("inputContext"u8);
 
         internal static readonly SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
+        internal static readonly SEL selIsKeyWindow = sel_registerName("isKeyWindow"u8);
 
         internal static readonly SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
 
         internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
         internal static readonly SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
+        internal static readonly SEL selConvertPointFromScreen = sel_registerName("convertPointFromScreen:"u8);
+        internal static readonly SEL selConvertPointToScreen = sel_registerName("convertPointToScreen:"u8);
 
         internal static readonly SEL selIsMiniaturized = sel_registerName("isMiniaturized"u8);
         internal static readonly SEL selMiniaturize = sel_registerName("miniaturize:"u8);
@@ -96,6 +102,8 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly SEL selLevel = sel_registerName("level"u8);
         internal static readonly SEL selSetLevel = sel_registerName("setLevel:"u8);
+        internal static readonly SEL selHidesOnDeactivate = sel_registerName("hidesOnDeactivate"u8);
+        internal static readonly SEL selSetHidesOnDeactivate = sel_registerName("setHidesOnDeactivate:"u8);
 
         internal static readonly SEL selScreens = sel_registerName("screens"u8);
         internal static readonly SEL selCount = sel_registerName("count"u8);
@@ -132,23 +140,52 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selDefaultCenter = sel_registerName("defaultCenter"u8);
         internal static readonly SEL selAddObserver_selector_name_object = sel_registerName("addObserver:selector:name:object:"u8);
 
+        // The mouseConfinementRect property is not part of public headers, but
+        // somehow SDL developers figured out it exists...
+        // See: https://github.com/libsdl-org/SDL/commit/35d90f17e1c7d3740c75641ef94b5e5c938c20c6
+        // - Noggin_bops 2024-04-13
+        internal static readonly SEL selSetMouseConfinementRect = sel_registerName("setMouseConfinementRect:"u8);
+        internal static readonly SEL selMouseConfinementRect = sel_registerName("mouseConfinementRect"u8);
+
+        internal static readonly SEL selHide = sel_registerName("hide"u8);
+        internal static readonly SEL selUnhide = sel_registerName("unhide"u8);
+
+        internal static readonly SEL selRegisterForDraggedTypes = sel_registerName("registerForDraggedTypes:"u8);
+        internal static readonly SEL selDraggingLocation = sel_registerName("draggingLocation"u8);
+        internal static readonly SEL selDraggingDestinationWindow = sel_registerName("draggingDestinationWindow"u8);
+        internal static readonly SEL selDraggingPasteboard = sel_registerName("draggingPasteboard"u8);
+        internal static readonly SEL selPasteboardItems = sel_registerName("pasteboardItems"u8);
+        internal static readonly SEL selDataForType = sel_registerName("dataForType:"u8);
+        internal static readonly SEL selURLWithString = sel_registerName("URLWithString:"u8);
+        internal static readonly SEL selInitWithData_encoding = sel_registerName("initWithData:encoding:"u8);
+        internal static readonly SEL selFileSystemRepresentation = sel_registerName("fileSystemRepresentation"u8);
+
+
+        internal static readonly IntPtr NSPasteboardTypeFileURL = GetStringConstant(AppKitLibrary, "NSPasteboardTypeFileURL"u8);
+
         internal static readonly IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
-        internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication");
+        internal static readonly ObjCClass NSWindowClass = objc_getClass("NSWindow"u8);
+        internal static readonly ObjCClass NSApplicationClass = objc_getClass("NSApplication"u8);
         internal static readonly ObjCClass NSMenuClass = objc_getClass("NSMenu"u8);
         internal static readonly ObjCClass NSMenuItemClass = objc_getClass("NSMenuItem"u8);
         internal static readonly ObjCClass NSEventClass = objc_getClass("NSEvent"u8);
-        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen");
-        internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray");
+        internal static readonly ObjCClass NSScreenClass = objc_getClass("NSScreen"u8);
+        internal static readonly ObjCClass NSArrayClass = objc_getClass("NSArray"u8);
         internal static readonly ObjCClass NSAttributedStringClass = objc_getClass("NSAttributedString"u8);
         internal static readonly ObjCClass NSMutableAttributedStringClass = objc_getClass("NSMutableAttributedString"u8);
         internal static readonly ObjCClass NSImageViewClass = objc_getClass("NSImageView"u8);
         internal static readonly ObjCClass NSNotificationCenterClass = objc_getClass("NSNotificationCenter"u8);
+        internal static readonly ObjCClass NSCursorClass = objc_getClass("NSCursor"u8);
+        internal static readonly ObjCClass NSStringClass = objc_getClass("NSString"u8);
+        internal static readonly ObjCClass NSURLClass = objc_getClass("NSURL"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
+
+        internal static ReadOnlySpan<byte> OtkCompoenntFieldName => "otkPALWindowComponent"u8;
 
         /// <inheritdoc/>
         public string Name => nameof(MacOSWindowComponent);
@@ -160,15 +197,10 @@ namespace OpenTK.Platform.Native.macOS
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public unsafe void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Window)
-            {
-                throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
-            }
-
             // This method is called from the Quit menu option.
-            class_addMethod(NSApplicationClass, selQuit, Menu_QuitInst, "v@:"u8);
+            class_addMethod(NSApplicationClass, selQuit, (IntPtr)Menu_QuitInst, "v@:"u8);
 
             nsApplication = objc_msgSend_IntPtr((IntPtr)NSApplicationClass, selSharedApplication);
 
@@ -222,68 +254,97 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             // Allocate a window class
-            NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"u8), "NSOpenTKWindow"u8, 0);
+            NSOpenTKWindowClass = objc_allocateClassPair(NSWindowClass, "NSOpenTKWindow"u8, 0);
 
             // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
-            class_addIvar(NSOpenTKWindowClass, "otkPALWindowComponent"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
+            class_addIvar(NSOpenTKWindowClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
 
             // NSWindow methods.
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), NSOtkWindow_WindowShouldCloseInst, "b@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("zoom:"u8), NSOtkWindow_ZoomInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), (IntPtr)NSOtkWindow_WindowShouldCloseInst, "b@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("zoom:"u8), (IntPtr)NSOtkWindow_ZoomInst, "v@:@"u8);
             //class_addMethod(opentkWindowClass, sel_registerName("keyDown:"u8), (KeyDownDelegate)keyDown, "v@:@"u8);
 
             // NSWindowDelegate methods. We set the window as it's own delegate.
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidBecomeKey:"u8), NSOtkWindowDelegate_WindowDidBecomeKeyInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResignKey:"u8), NSOtkWindowDelegate_WindowDidResignKeyInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResize:"u8), NSOtkWindowDelegate_WindowDidResizeInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMove:"u8), NSOtkWindowDelegate_WindowDidMoveInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMiniaturize:"u8), NSOtkWindowDelegate_WindowDidMiniaturizeInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidDeminiaturize:"u8), NSOtkWindowDelegate_WindowDidDeminiaturizeInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidEnterFullScreen:"u8), NSOtkWindowDelegate_WindowDidEnterFullScreenInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidExitFullScreen:"u8), NSOtkWindowDelegate_WindowDidExitFullScreenInst, "v@:@"u8);
-            class_addMethod(NSOpenTKWindowClass, sel_registerName("didChangeScreenParameters:"u8), NSOtkWindowDelegate_DidChangeScreenParametersInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidBecomeKey:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidBecomeKeyInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResignKey:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidResignKeyInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidResize:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidResizeInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMove:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidMoveInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidMiniaturize:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidMiniaturizeInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidDeminiaturize:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidDeminiaturizeInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidEnterFullScreen:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidEnterFullScreenInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidExitFullScreen:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidExitFullScreenInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("didChangeScreenParameters:"u8), (IntPtr)NSOtkWindowDelegate_DidChangeScreenParametersInst, "v@:@"u8);
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowDidChangeBackingProperties:"u8), (IntPtr)NSOtkWindowDelegate_WindowDidChangeBackingPropertiesInst, "v@:@"u8);
 
             objc_registerClassPair(NSOpenTKWindowClass);
 
-            IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
-            NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"), "NSOpenTKView"u8, 0);
+            NSOpenTKViewClass = objc_allocateClassPair(objc_getClass("NSView"u8), "NSOpenTKView"u8, 0);
+
+            // Define a Ivar where we can pass a GCHandle so we can retreive it in callbacks.
+            class_addIvar(NSOpenTKViewClass, OtkCompoenntFieldName, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "^v"u8);
 
             // Add an IVar for the markedText, so we can use it without finding the managed window object.
             class_addIvar(NSOpenTKViewClass, "markedText"u8, (nuint)nuint.Size, (nuint)int.Log2(nuint.Size), "@"u8);
 
-            class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), NSOtkView_ResetCursorRectsInst, "v@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), NSOtkView_MouseEnteredInst, "v@:@"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), NSOtkView_MouseExitedInst, "v@:@"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("keyDown:"u8), NSOtkView_KeyDownInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("resetCursorRects"u8), (IntPtr)NSOtkView_ResetCursorRectsInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseEntered:"u8), (IntPtr)NSOtkView_MouseEnteredInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("mouseExited:"u8), (IntPtr)NSOtkView_MouseExitedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("keyDown:"u8), (IntPtr)NSOtkView_KeyDownInst, "v@:@"u8);
 
             // TODO: canBecomeKeyView, 
-            class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("acceptsFirstResponder"u8), (IntPtr)NSOtkView_AcceptsFirstResponderInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("viewDidChangeEffectiveAppearance"u8), (IntPtr)NSOtkView_ViewDidChangeEffectiveAppearanceInst, "v@:"u8);
 
             // NSTextInputClientProtocol functions
+            IntPtr NSTextInputClientProtocol = objc_getProtocol("NSTextInputClient"u8);
             class_addProtocol(NSOpenTKViewClass, NSTextInputClientProtocol);
             // FIXME: The method type encoding strings only work for 64-bit, as NSRange is defined using NSUInteger so it changes size depending on arch.
             // So {_NSRange=QQ} and {_NSPoint=dd} would have to have something else other than QQ and dd, but I can't figure out what it's supposed to be atm..
             // - Noggin_bops 2023-11-11
-            class_addMethod(NSOpenTKViewClass, sel_registerName("hasMarkedText"u8), NSOtkView_NSTextInputClient_HasMarkedTextInst, "c@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("markedRange"u8), NSOtkView_NSTextInputClient_MarkedRangeInst, "{_NSRange=QQ}@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("selectedRange"u8), NSOtkView_NSTextInputClient_SelectedRangeInst, "{_NSRange=QQ}@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("setMarkedText:selectedRange:replacementRange:"u8), NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst, "v@:@{_NSRange=QQ}{_NSRange=QQ}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("unmarkText"u8), NSOtkView_NSTextInputClient_UnmarkTextInst, "v@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("validAttributesForMarkedText"u8), NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst, "@@:"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("attributedSubstringForProposedRange:actualRange:"u8), NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst, "@@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("insertText:replacementRange:"u8), NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst, "v@:@{_NSRange=QQ}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("characterIndexForPoint:"u8), NSOtkView_NSTextInputClient_CharacterIndexForPointInst, "Q@:{_NSPoint=dd}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("firstRectForCharacterRange:actualRange:"u8), NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst, "{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
-            class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);;
+            class_addMethod(NSOpenTKViewClass, sel_registerName("hasMarkedText"u8), (IntPtr)NSOtkView_NSTextInputClient_HasMarkedTextInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("markedRange"u8), (IntPtr)NSOtkView_NSTextInputClient_MarkedRangeInst, "{_NSRange=QQ}@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("selectedRange"u8), (IntPtr)NSOtkView_NSTextInputClient_SelectedRangeInst, "{_NSRange=QQ}@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("setMarkedText:selectedRange:replacementRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst, "v@:@{_NSRange=QQ}{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("unmarkText"u8), (IntPtr)NSOtkView_NSTextInputClient_UnmarkTextInst, "v@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("validAttributesForMarkedText"u8), (IntPtr)NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst, "@@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("attributedSubstringForProposedRange:actualRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst, "@@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("insertText:replacementRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst, "v@:@{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("characterIndexForPoint:"u8), (IntPtr)NSOtkView_NSTextInputClient_CharacterIndexForPointInst, "Q@:{_NSPoint=dd}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("firstRectForCharacterRange:actualRange:"u8), (IntPtr)NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst, "{_NSRect={_NSPoint=dd}{_NSSize=dd}}@:{_NSRange=QQ}^{_NSRange=QQ}"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("doCommandBySelector:"u8), (IntPtr)NSOtkView_NSTextInputClient_DoCommandBySelectorInst, "v@::"u8);
+
+            IntPtr NSDraggingDestinationProtocol = objc_getProtocol("NSDraggingDestination"u8);
+            class_addProtocol(NSOpenTKViewClass, NSDraggingDestinationProtocol);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingEntered:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingEnteredInst, "L@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("wantsPeriodicDraggingUpdates"u8), (IntPtr)NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdatesInst, "c@:"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingUpdated:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingUpdatedInst, "L@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingExited:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingExitedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("draggingEnded:"u8), (IntPtr)NSOtkView_NSDraggingDestination_DraggingEndedInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("prepareForDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_PrepareForDragOperationInst, "c@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("performDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_PerformDragOperationInst, "c@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("concludeDragOperation:"u8), (IntPtr)NSOtkView_NSDraggingDestination_ConcludeDragOperationInst, "v@:@"u8);
+            class_addMethod(NSOpenTKViewClass, sel_registerName("updateDraggingItemsForDrag:"u8), (IntPtr)NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst, "v@:@"u8);
+
             objc_registerClassPair(NSOpenTKViewClass);
         }
 
-        private delegate void Menu_Quit_(IntPtr self, SEL cmd);
-        private static readonly Menu_Quit_ Menu_QuitInst = Menu_Quit;
+        private static MacOSWindowComponent GetComponentFromWindow(IntPtr window)
+        {
+            object_getInstanceVariable(window, OtkCompoenntFieldName, out IntPtr windowCompPtr);
+            return (MacOSWindowComponent)((GCHandle)windowCompPtr).Target!;
+        }
+
+        private static MacOSWindowComponent GetComponentFromView(IntPtr view)
+        {
+            object_getInstanceVariable(view, OtkCompoenntFieldName, out IntPtr windowCompPtr);
+            return (MacOSWindowComponent)((GCHandle)windowCompPtr).Target!;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> Menu_QuitInst = &Menu_Quit;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void Menu_Quit(IntPtr self, SEL cmd)
         {
-            Console.WriteLine("On quit!");
+            GetComponentFromWindow(self).Logger?.LogInfo("On quit!");
 
             // FIXME: Send an event for this?
             //EventQueue.Raise(null, 0, new ApplicationExitEventArgs());
@@ -292,27 +353,26 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nsApplication, selTerminate, nsApplication);
         }
 
-        private delegate bool NSOtkWindow_WindowShouldClose_(IntPtr windowPtr, SEL selector, IntPtr sender);
-        static NSOtkWindow_WindowShouldClose_ NSOtkWindow_WindowShouldCloseInst = NSOtkWindow_WindowShouldClose;
-        private static bool NSOtkWindow_WindowShouldClose(IntPtr window, SEL selector, IntPtr sender)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkWindow_WindowShouldCloseInst = &NSOtkWindow_WindowShouldClose;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte NSOtkWindow_WindowShouldClose(IntPtr window, SEL selector, IntPtr sender)
         {
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
                 EventQueue.Raise(nswindow, PlatformEventType.Close, new CloseEventArgs(nswindow));
 
                 // Let the user handle closing the window.
-                return false;
+                return (sbyte)NO;
             }
             else
             {
                 // We don't know about this window, let it close.
-                return true;
+                return (sbyte)YES;
             }
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSOtkWindow_Zoom_(IntPtr window, SEL selector, IntPtr sender);
-        private static readonly NSOtkWindow_Zoom_ NSOtkWindow_ZoomInst = NSOtkWindow_Zoom;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindow_ZoomInst = &NSOtkWindow_Zoom;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindow_Zoom(IntPtr window, SEL selector, IntPtr sender)
         {
             objc_super super;
@@ -335,29 +395,36 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        // We reuse this delegate definition for all window delegate notifications that return void
-        // and takes a single NSNotification as it's arguments.
-        // - Noggin_bops 2023-11-11
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate void NSOtkWindowDelegate_Notification(IntPtr @delegate, SEL selector, IntPtr notification);
-
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidBecomeKeyInst = NSOtkWindowDelegate_WindowDidBecomeKey;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidBecomeKeyInst = &NSOtkWindowDelegate_WindowDidBecomeKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidBecomeKey(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
             {
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    CG.CGAssociateMouseAndMouseCursorPosition(false);
+                    CenterCursor(nswindow);
+                }
+                else
+                {
+                    // We don't have a locked cursor anymore.
+                    CG.CGAssociateMouseAndMouseCursorPosition(true);
+                }
+
                 EventQueue.Raise(nswindow, PlatformEventType.Focus, new FocusEventArgs(nswindow, true));
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidBecomeKey for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidResignKeyInst = NSOtkWindowDelegate_WindowDidResignKey;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidResignKeyInst = &NSOtkWindowDelegate_WindowDidResignKey;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidResignKey(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -367,13 +434,12 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidBecomeKey for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidResignKey for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidResignKey for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidResizeInst = NSOtkWindowDelegate_WindowDidResize;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidResizeInst = &NSOtkWindowDelegate_WindowDidResize;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidResize(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -384,23 +450,33 @@ namespace OpenTK.Platform.Native.macOS
                     objc_msgSend(nswindow.Context.Context, selUpdate);
                 }
 
-                CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
-                CGRect backing = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
-                // FIXME: Framebuffer size event?
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    //CenterCursor(nswindow);
+                }
+
+                CGRect bounds = objc_msgSend_CGRect(nswindow.Window, selFrame);
+                CGRect clientBounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                CGRect backing = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, clientBounds);
 
                 // FIXME: Do not cast to int?
                 Vector2i newSize = new Vector2i((int)bounds.size.x, (int)bounds.size.y);
-                EventQueue.Raise(nswindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(nswindow, newSize));
+                Vector2i newClientSize = new Vector2i((int)clientBounds.size.x, (int)clientBounds.size.y);
+                EventQueue.Raise(nswindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(nswindow, newSize, newClientSize));
+
+                // FIXME: Do we need to send this event when the pixel scale changes?
+                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, ((int)backing.size.x, (int)backing.size.y)));
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidResize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidResize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidResize for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidMoveInst = NSOtkWindowDelegate_WindowDidMove;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidMoveInst = &NSOtkWindowDelegate_WindowDidMove;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidMove(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -409,6 +485,13 @@ namespace OpenTK.Platform.Native.macOS
                 if (nswindow.Context != null)
                 {
                     objc_msgSend(nswindow.Context.Context, selUpdate);
+                }
+
+                if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                {
+                    // FIXME: While we are resizing we don't want to center
+                    // the mosue cursor...
+                    //CenterCursor(nswindow);
                 }
 
                 CGRect windowFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
@@ -424,13 +507,12 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidMove for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidMove for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidMove for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidMiniaturizeInst = NSOtkWindowDelegate_WindowDidMiniaturize;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidMiniaturizeInst = &NSOtkWindowDelegate_WindowDidMiniaturize;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidMiniaturize(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -440,13 +522,12 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidMiniaturize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidMiniaturize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidMiniaturize for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidDeminiaturizeInst = NSOtkWindowDelegate_WindowDidDeminiaturize;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidDeminiaturizeInst = &NSOtkWindowDelegate_WindowDidDeminiaturize;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidDeminiaturize(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -456,13 +537,12 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidDeminiaturize for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidEnterFullScreenInst = NSOtkWindowDelegate_WindowDidEnterFullScreen;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidEnterFullScreenInst = &NSOtkWindowDelegate_WindowDidEnterFullScreen;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidEnterFullScreen(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -473,13 +553,12 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_WindowDidExitFullScreenInst = NSOtkWindowDelegate_WindowDidExitFullScreen;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidExitFullScreenInst = &NSOtkWindowDelegate_WindowDidExitFullScreen;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_WindowDidExitFullScreen(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
             IntPtr window = objc_msgSend_IntPtr(notification, selObject);
@@ -489,28 +568,55 @@ namespace OpenTK.Platform.Native.macOS
             }
             else
             {
-                // FIXME: How do we get the logger here?
-                // Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
-                Console.WriteLine($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
+                GetComponentFromWindow(@delegate).Logger?.LogDebug($"Got WindowDidEnterFullScreen for unknown window: 0x{window}");
             }
         }
 
-        private static readonly NSOtkWindowDelegate_Notification NSOtkWindowDelegate_DidChangeScreenParametersInst = NSOtkWindowDelegate_DidChangeScreenParameters;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_DidChangeScreenParametersInst = &NSOtkWindowDelegate_DidChangeScreenParameters;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkWindowDelegate_DidChangeScreenParameters(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
         {
-            object_getInstanceVariable(@delegate, "otkPALWindowComponent"u8, out IntPtr windowCompPtr);
-            ILogger? logger = null;
-            if (((GCHandle)windowCompPtr).Target is IWindowComponent windowComponent)
-            {
-                logger = windowComponent.Logger;
-            }
+            ILogger? logger = GetComponentFromWindow(@delegate).Logger;
             MacOSDisplayComponent.UpdateDisplays(logger, true);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate void NSOtkView_ResetCursorRects_(IntPtr view, SEL selector);
-        static NSOtkView_ResetCursorRects_ NSOtkView_ResetCursorRectsInst = NSOtkView_ResetCursorRects;
-        static void NSOtkView_ResetCursorRects(IntPtr view, SEL selector)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkWindowDelegate_WindowDidChangeBackingPropertiesInst = &NSOtkWindowDelegate_WindowDidChangeBackingProperties;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkWindowDelegate_WindowDidChangeBackingProperties(IntPtr @delegate, SEL selector, IntPtr /* NSNotification */ notification)
+        {
+            // FIXME: Scale factors on mac seem to be a bit weird.
+            // Changing display resolution doesn't always change the scaling.
+            // At really high resoltions and very low resolutions
+            // the scale factor seems to be 1?
+            // But at "normal" resolutions it seems to be mostly 2.
+            // Not sure what is going on.
+            // - Noggin_bops 2024-06-04
+            IntPtr wnd = objc_msgSend_IntPtr(notification, selObject);
+            if (NSWindowDict.TryGetValue(wnd, out NSWindowHandle? nswindow))
+            {
+                CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+                CGRect frameBacking = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+
+                float scaleX = (float)(frameBacking.size.x / frame.size.x);
+                float scaleY = (float)(frameBacking.size.y / frame.size.y);
+
+                EventQueue.Raise(nswindow, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(nswindow, scaleX, scaleY));
+
+                CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+                CGRect boundsBacking = objc_msgSend_CGRect(nswindow.View, selConvertRectToBacking, bounds);
+
+                Vector2i framebufferSize = ((int)boundsBacking.size.x, (int)boundsBacking.size.y);
+                EventQueue.Raise(nswindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(nswindow, framebufferSize));
+            }
+            else
+            {
+                GetComponentFromWindow(@delegate).Logger?.LogDebug("Got windowDidChangeBackingProperties for unknown window.");
+            }
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ResetCursorRectsInst = &NSOtkView_ResetCursorRects;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_ResetCursorRects(IntPtr view, SEL selector)
         {
             objc_super super;
             super.receiver = view;
@@ -520,109 +626,95 @@ namespace OpenTK.Platform.Native.macOS
             IntPtr window = objc_msgSend_IntPtr(view, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                // We could create an Ivar like we do with NSOtkWindowDelegate_DidChangeScreenParameters
-                // - Noggin_bops 2024-02-28
-                //Logger?.LogWarning($"Received ResetCurorRects event for unknown window: {window}");
-                Console.WriteLine($"Received ResetCurorRects event for unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received ResetCurorRects event for unknown window: {window}");
                 return;
             }
 
+            IntPtr cursor;
             if (nswindow.Cursor != null)
             {
-                CGRect bounds = objc_msgSend_CGRect(view, selBounds);
                 switch (nswindow.Cursor.Mode)
                 {
                     // If the cursor is animated, pick the current frame.
                     case NSCursorHandle.CursorMode.SystemAnimatedCursor:
-                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame]);
+                        cursor = nswindow.Cursor.CursorFrames![nswindow.Cursor.Frame];
                         break;
                     default:
-                        objc_msgSend(view, selAddCursorRect_Cursor, bounds, nswindow.Cursor.Cursor);
+                        cursor = nswindow.Cursor.Cursor;
                         break;
                 }
             }
             else
             {
-                // Null cursor means it is hidden.
-                // FIXME: Hide the cursor? Should we do it here?
+                cursor = MacOSCursorComponent.GetInvisibleCursor();
             }
+
+            CGRect bounds = objc_msgSend_CGRect(view, selBounds);
+            objc_msgSend(view, selAddCursorRect_Cursor, bounds, cursor);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate void MouseEnteredDelegate(IntPtr view, SEL selector, IntPtr @event);
-        static MouseEnteredDelegate NSOtkView_MouseEnteredInst = NSOtkView_MouseEntered;
-        static void NSOtkView_MouseEntered(IntPtr view, SEL selector, IntPtr @event)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_MouseEnteredInst = &NSOtkView_MouseEntered;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_MouseEntered(IntPtr view, SEL selector, IntPtr @event)
         {
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
-                Console.WriteLine($"Received MouseEntered event with unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received MouseEntered event with unknown window: {window}");
                 return;
             }
 
             EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, true));
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        delegate void MouseExitedDelegate(IntPtr view, SEL selector, IntPtr @event);
-        static MouseExitedDelegate NSOtkView_MouseExitedInst = NSOtkView_MouseExited;
-        static void NSOtkView_MouseExited(IntPtr view, SEL selector, IntPtr @event)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_MouseExitedInst = &NSOtkView_MouseExited;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_MouseExited(IntPtr view, SEL selector, IntPtr @event)
         {
             IntPtr window = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow) == false)
             {
-                // FIXME: How do we get the logger here?
-                //Logger?.LogWarning($"Received MouseEntered event with unknown window: {window}");
-                Console.WriteLine($"Received MouseExited event with unknown window: {window}");
+                GetComponentFromView(view).Logger?.LogDebug($"Received MouseExited event with unknown window: {window}");
                 return;
             }
 
             EventQueue.Raise(nswindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(nswindow, false));
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSOtkView_KeyDown_(IntPtr view, SEL selector, IntPtr @event);
-        private static NSOtkView_KeyDown_ NSOtkView_KeyDownInst = NSOtkView_KeyDown;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_KeyDownInst = &NSOtkView_KeyDown;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_KeyDown(IntPtr view, SEL selector, IntPtr @event)
         {
             IntPtr array = objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, @event);
             objc_msgSend_IntPtr(view, selInterpretKeyEvents, array);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        private delegate bool NSOtkView_AcceptsFirstResponder_(IntPtr view, SEL selector);
-        private static NSOtkView_AcceptsFirstResponder_ NSOtkView_AcceptsFirstResponderInst = NSOtkView_AcceptsFirstResponder;
-        private static bool NSOtkView_AcceptsFirstResponder(IntPtr view, SEL selector)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, byte> NSOtkView_AcceptsFirstResponderInst = &NSOtkView_AcceptsFirstResponder;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static byte NSOtkView_AcceptsFirstResponder(IntPtr view, SEL selector)
         {
-            return true;
+            return YES;
         }
 
-        private delegate void NSOtkView_ViewDidChangeEffectiveAppearance_(IntPtr view, SEL selector);
-        private static NSOtkView_ViewDidChangeEffectiveAppearance_ NSOtkView_ViewDidChangeEffectiveAppearanceInst = NSOtkView_ViewDidChangeEffectiveAppearance;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_ViewDidChangeEffectiveAppearanceInst = &NSOtkView_ViewDidChangeEffectiveAppearance;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_ViewDidChangeEffectiveAppearance(IntPtr view, SEL selector)
         {
             MacOSShellComponent.CheckPreferredThemeChange();
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        private delegate bool /* BOOL */ NSTextInputClient_HasMarkedText(IntPtr view, SEL selector);
-        private static readonly NSTextInputClient_HasMarkedText NSOtkView_NSTextInputClient_HasMarkedTextInst = NSOtkView_NSTextInputClient_HasMarkedText;
-        private static bool /* BOOL */ NSOtkView_NSTextInputClient_HasMarkedText(IntPtr view, SEL selector)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, sbyte> NSOtkView_NSTextInputClient_HasMarkedTextInst = &NSOtkView_NSTextInputClient_HasMarkedText;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSTextInputClient_HasMarkedText(IntPtr view, SEL selector)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
             object_getInstanceVariable(view, "markedText"u8, out IntPtr markedText);
             ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
-            return length > 0;
+            return length > 0 ? (sbyte)YES : (sbyte)NO;
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate NSRange NSTextInputClient_MarkedRange(IntPtr view, SEL selector);
-        private static readonly NSTextInputClient_MarkedRange NSOtkView_NSTextInputClient_MarkedRangeInst = NSOtkView_NSTextInputClient_MarkedRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, NSRange> NSOtkView_NSTextInputClient_MarkedRangeInst = &NSOtkView_NSTextInputClient_MarkedRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static NSRange NSOtkView_NSTextInputClient_MarkedRange(IntPtr view, SEL selector)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
@@ -630,7 +722,7 @@ namespace OpenTK.Platform.Native.macOS
             ulong length = (ulong)objc_msgSend_IntPtr(markedText, selLength);
             if (length > 0)
             {
-                return new NSRange(0, (nuint)length-1);
+                return new NSRange(0, (nuint)length - 1);
             }
             else
             {
@@ -638,17 +730,15 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate NSRange NSTextInputClient_SelectedRange(IntPtr view, SEL selector);
-        private static readonly NSTextInputClient_SelectedRange NSOtkView_NSTextInputClient_SelectedRangeInst = NSOtkView_NSTextInputClient_SelectedRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, NSRange> NSOtkView_NSTextInputClient_SelectedRangeInst = &NSOtkView_NSTextInputClient_SelectedRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static NSRange NSOtkView_NSTextInputClient_SelectedRange(IntPtr view, SEL selector)
         {
             return NSRange.kEmptyRange;
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange selectedRange, NSRange replacementRange);
-        private static readonly NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst = NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, NSRange, NSRange, void> NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRangeInst = &NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSTextInputClient_SetMarkedText_SelectedRange_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange selectedRange, NSRange replacementRange)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
@@ -668,9 +758,8 @@ namespace OpenTK.Platform.Native.macOS
             object_setInstanceVariable(view, "markedText"u8, markedText);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSTextInputClient_UnmarkText(IntPtr view, SEL selector);
-        private static readonly NSTextInputClient_UnmarkText NSOtkView_NSTextInputClient_UnmarkTextInst = NSOtkView_NSTextInputClient_UnmarkText;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, void> NSOtkView_NSTextInputClient_UnmarkTextInst = &NSOtkView_NSTextInputClient_UnmarkText;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSTextInputClient_UnmarkText(IntPtr view, SEL selector)
         {
             // FIXME: Store the Ivar somewhere to be able to use object_getIvar?
@@ -679,31 +768,28 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(objc_msgSend_IntPtr(markedText, selMutableString), selSetString, ToNSString(""));
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate IntPtr /* NSArray<NSAttributedStringKey>* */ NSTextInputClient_ValidAttributesForMarkedText(IntPtr view, SEL selector);
-        private static readonly NSTextInputClient_ValidAttributesForMarkedText NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst = NSOtkView_NSTextInputClient_ValidAttributesForMarkedText;
-        private static IntPtr /* NSAttributedString* */ NSOtkView_NSTextInputClient_ValidAttributesForMarkedText(IntPtr view, SEL selector)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr> NSOtkView_NSTextInputClient_ValidAttributesForMarkedTextInst = &NSOtkView_NSTextInputClient_ValidAttributesForMarkedText;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static IntPtr /* NSArray<NSAttributedStringKey>* */ NSOtkView_NSTextInputClient_ValidAttributesForMarkedText(IntPtr view, SEL selector)
         {
             return objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArray);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate IntPtr /* NSAttributedString* */ NSTextInputClient_AttributedSubstringForProposedRange_ActualRange(IntPtr view, SEL selector, NSRange range, ref NSRange actualRange);
-        private static readonly NSTextInputClient_AttributedSubstringForProposedRange_ActualRange NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst = NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange;
-        private static IntPtr /* NSAttributedString* */ NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange(IntPtr view, SEL selector, NSRange range, ref NSRange actualRange)
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, NSRange, NSRange*, IntPtr> NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRangeInst = &NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static unsafe IntPtr /* NSAttributedString* */ NSOtkView_NSTextInputClient_AttributedSubstringForProposedRange_ActualRange(IntPtr view, SEL selector, NSRange range, NSRange* actualRange)
         {
             return IntPtr.Zero;
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSTextInputClient_InsertText_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange range);
-        private static readonly NSTextInputClient_InsertText_ReplacementRange NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst = NSOtkView_NSTextInputClient_InsertText_ReplacementRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, NSRange, void> NSOtkView_NSTextInputClient_InsertText_ReplacementRangeInst = &NSOtkView_NSTextInputClient_InsertText_ReplacementRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSTextInputClient_InsertText_ReplacementRange(IntPtr view, SEL selector, IntPtr /* id */ @string, NSRange range)
         {
             IntPtr windowPtr = objc_msgSend_IntPtr(view, selWindow);
             if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
             {
-                Console.WriteLine($"Could not find NSWindow for NSView 0x{view}");
+                GetComponentFromView(view).Logger?.LogDebug($"Could not find NSWindow for NSView 0x{view}");
                 return;
             }
 
@@ -720,17 +806,15 @@ namespace OpenTK.Platform.Native.macOS
             EventQueue.Raise(nswindow, PlatformEventType.TextInput, new TextInputEventArgs(nswindow, str));
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate nuint NSTextInputClient_CharacterIndexForPoint(IntPtr view, SEL selector, CGPoint point);
-        private static readonly NSTextInputClient_CharacterIndexForPoint NSOtkView_NSTextInputClient_CharacterIndexForPointInst = NSOtkView_NSTextInputClient_CharacterIndexForPoint;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGPoint, nuint> NSOtkView_NSTextInputClient_CharacterIndexForPointInst = &NSOtkView_NSTextInputClient_CharacterIndexForPoint;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static nuint NSOtkView_NSTextInputClient_CharacterIndexForPoint(IntPtr view, SEL selector, CGPoint point)
         {
             return 0;
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate CGRect NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point);
-        private static readonly NSTextInputClient_FirstRectForCharacterRange_ActualRange NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, CGPoint, CGRect> NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRangeInst = &NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static CGRect NSOtkView_NSTextInputClient_FirstRectForCharacterRange_ActualRange(IntPtr view, SEL selector, CGPoint point)
         {
             // FIXME: Why do we do this?
@@ -738,13 +822,112 @@ namespace OpenTK.Platform.Native.macOS
             return new CGRect(frame.origin, CGPoint.Zero);
         }
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private delegate void NSTextInputClient_DoCommandBySelector(IntPtr view, SEL _selector, SEL selector);
-        private static readonly NSTextInputClient_DoCommandBySelector NSOtkView_NSTextInputClient_DoCommandBySelectorInst = NSOtkView_NSTextInputClient_DoCommandBySelector;
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, SEL, void> NSOtkView_NSTextInputClient_DoCommandBySelectorInst = &NSOtkView_NSTextInputClient_DoCommandBySelector;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
         private static void NSOtkView_NSTextInputClient_DoCommandBySelector(IntPtr view, SEL _selector, SEL selector)
         {
-            Console.WriteLine("DoCommandBySelector");
         }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nuint> NSOtkView_NSDraggingDestination_DraggingEnteredInst = &NSOtkView_NSDraggingDestination_DraggingEntered;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingEntered(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging Entered");
+            return (nuint)NSDragOperation.Copy;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, sbyte> NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdatesInst = &NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_WantsPeriodicDraggingUpdates(IntPtr view, SEL _selector)
+        {
+            Console.WriteLine("Wants periodic drag update");
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, nuint> NSOtkView_NSDraggingDestination_DraggingUpdatedInst = &NSOtkView_NSDraggingDestination_DraggingUpdated;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static nuint /* NSDragOperation */ NSOtkView_NSDraggingDestination_DraggingUpdated(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Drag update");
+            return (nuint)NSDragOperation.Copy;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingExitedInst = &NSOtkView_NSDraggingDestination_DraggingExited;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_DraggingExited(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging exited");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_DraggingEndedInst = &NSOtkView_NSDraggingDestination_DraggingEnded;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_DraggingEnded(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Dragging ended");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PrepareForDragOperationInst = &NSOtkView_NSDraggingDestination_PrepareForDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PrepareForDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Prepare drag");
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, sbyte> NSOtkView_NSDraggingDestination_PerformDragOperationInst = &NSOtkView_NSDraggingDestination_PerformDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static sbyte /* BOOL */ NSOtkView_NSDraggingDestination_PerformDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            CGPoint location = objc_msgSend_CGPoint(sender, selDraggingLocation);
+            IntPtr wnd = objc_msgSend_IntPtr(sender, selDraggingDestinationWindow);
+            if (NSWindowDict.TryGetValue(wnd, out NSWindowHandle? nswindow))
+            {
+                IntPtr pasteboard = objc_msgSend_IntPtr(sender, selDraggingPasteboard);
+                IntPtr items = objc_msgSend_IntPtr(pasteboard, selPasteboardItems);
+
+                nuint count = (nuint)objc_msgSend_IntPtr(items, selCount);
+                List<string>? files = new List<string>(int.CreateSaturating(count));
+                for (nuint i = 0; i < count; i++)
+                {
+                    IntPtr item = objc_msgSend_IntPtr(items, selObjectAtIndex, i);
+                    IntPtr itemData = objc_msgSend_IntPtr(item, selDataForType, NSPasteboardTypeFileURL);
+                    if (itemData != IntPtr.Zero)
+                    {
+                        IntPtr dataStr = objc_msgSend_IntPtr(objc_msgSend_IntPtr((IntPtr)NSStringClass, Alloc), selInitWithData_encoding, itemData, (ulong)NSStringEncoding.UTF8);
+                        IntPtr url = objc_msgSend_IntPtr((IntPtr)NSURLClass, selURLWithString, dataStr);
+                        string path = Marshal.PtrToStringUTF8(objc_msgSend_IntPtr(url, selFileSystemRepresentation))!;
+                        files.Add(path);
+                        objc_msgSend(dataStr, Release);
+                        // FIXME: Are there any other objects we need to release?
+                    }
+                }
+
+                Vector2i position = (Vector2i)CG.FlipYCoordinate(location);
+                EventQueue.Raise(nswindow, PlatformEventType.FileDrop, new FileDropEventArgs(nswindow, files, position));
+            }
+            else
+            {
+                GetComponentFromView(view).Logger?.LogDebug("Received performDragOperation for unknown window.");
+            }
+
+            return 1;
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_ConcludeDragOperationInst = &NSOtkView_NSDraggingDestination_ConcludeDragOperation;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_ConcludeDragOperation(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Conclude drag");
+        }
+
+        private static unsafe readonly delegate* unmanaged[Cdecl]<IntPtr, SEL, IntPtr, void> NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDragInst = &NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag;
+        [UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvCdecl) })]
+        private static void NSOtkView_NSDraggingDestination_UpdateDraggingItemsForDrag(IntPtr view, SEL _selector, IntPtr sender)
+        {
+            Console.WriteLine("Update dragging items");
+        }
+
+
 
         private bool ProcessHitTest(IntPtr @event)
         {
@@ -794,7 +977,7 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetCursor => true;
 
         /// <inheritdoc/>
-        public bool CanCaptureCursor => throw new NotImplementedException();
+        public bool CanCaptureCursor => true;
 
         /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
@@ -805,12 +988,14 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
 
+        private long clipboardUpdateTime = 0;
 
         /// <inheritdoc/>
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
+            // FIXME: Implement waitForEvents=true.
             IntPtr @event;
-            while((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
+            while ((@event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true)) != IntPtr.Zero)
             {
                 NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
 
@@ -827,7 +1012,7 @@ namespace OpenTK.Platform.Native.macOS
                     {
                         Logger?.LogDebug($"Event for non opentk window: {type} (0x{windowPtr})");
                     }
-                    
+
                     objc_msgSend(nsApplication, selSendEvent, @event);
 
                     continue;
@@ -914,6 +1099,9 @@ namespace OpenTK.Platform.Native.macOS
                             break;
                         }
                     case NSEventType.MouseMoved:
+                    case NSEventType.LeftMouseDragged:
+                    case NSEventType.RightMouseDragged:
+                    case NSEventType.OtherMouseDragged:
                         {
                             if (ProcessHitTest(@event))
                             {
@@ -931,32 +1119,27 @@ namespace OpenTK.Platform.Native.macOS
                                 objc_msgSend_CGRect(nswindow.View, selBounds));
 
                             // FIXME: Coordinate space
-                            Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
+                            CGPoint pos = new CGPoint(pointRect.origin.x, backing.size.y - pointRect.origin.y);
 
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
+                            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+                            {
+                                // Handle virtual cursor position
+                                NFloat dx = objc_msgSend_nfloat(@event, selDeltaX);
+                                NFloat dy = objc_msgSend_nfloat(@event, selDeltaY);
 
-                            objc_msgSend(nsApplication, selSendEvent, @event);
-                            break;
-                        }
-                    case NSEventType.LeftMouseDragged:
-                    case NSEventType.RightMouseDragged:
-                    case NSEventType.OtherMouseDragged:
-                        {
-                            CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
+                                nswindow.VirtualCursorPosition += new CGPoint(dx, dy);
 
-                            CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
+                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)nswindow.VirtualCursorPosition));
+                            }
+                            else
+                            {
+                                // Do normal mouse events
+                                EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, (Vector2)pos));
 
-                            CGRect backing = objc_msgSend_CGRect(
-                                nswindow.Window,
-                                selConvertRectToBacking,
-                                objc_msgSend_CGRect(nswindow.View, selBounds));
+                                objc_msgSend(nsApplication, selSendEvent, @event);
+                            }
 
-                            // FIXME: Coordinate space
-                            Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
-
-                            EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
-
-                            objc_msgSend(nsApplication, selSendEvent, @event);
+                            nswindow.LastMousePosition = pos;
                             break;
                         }
                     case NSEventType.ScrollWheel:
@@ -1121,6 +1304,35 @@ namespace OpenTK.Platform.Native.macOS
                         break;
                 }
             }
+
+            {
+                // Clipboard updates on macos seem to take some time.
+                // If we try to read the clipboard formats the moment the
+                // clipboard change count changed we would get zero clipboard
+                // formats and no pasteboard content. So we unfortunately need
+                // to delay our poll of the pasteboard formats to a time
+                // where the pasteboard hopefully is populated with data.
+                // Ideally we would have some other way of checking
+                // that the pasteboard contents are not ready yet, but
+                // e.g. waiting for there to be non-zero number of
+                // formats would fail if the clipboard is simply cleared.
+                // This solution also has issues with waitForEvents=true,
+                // but that might be a lower priority...
+                // - Noggin_bops 2024-06-04
+                long currTime = Stopwatch.GetTimestamp();
+                if (MacOSClipboardComponent.CheckClipboardUpdate())
+                {
+                    clipboardUpdateTime = currTime + (long)(0.5f * Stopwatch.Frequency);
+                }
+
+                if (currTime >= clipboardUpdateTime)
+                {
+                    ClipboardFormat format = MacOSClipboardComponent.GetClipboardFormatInternal(Logger);
+                    EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
+
+                    clipboardUpdateTime = long.MaxValue;
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -1158,8 +1370,10 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(windowPtr, selCenter);
             objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
 
-            // FIXME: Store the Ivar somewhere so we can use it later?
-            object_setInstanceVariable(windowPtr, "otkPALWindowComponent"u8, (IntPtr)GCHandle.Alloc(this, GCHandleType.Normal));
+            // FIXME: Store the Ivars somewhere so we can use it later?
+            GCHandle gchandle = GCHandle.Alloc(this, GCHandleType.Normal);
+            object_setInstanceVariable(windowPtr, OtkCompoenntFieldName, (IntPtr)gchandle);
+            object_setInstanceVariable(viewPtr, OtkCompoenntFieldName, (IntPtr)gchandle);
 
             IntPtr notificationCenter = objc_msgSend_IntPtr((IntPtr)NSNotificationCenterClass, selDefaultCenter);
             objc_msgSend(notificationCenter, selAddObserver_selector_name_object,
@@ -1177,6 +1391,9 @@ namespace OpenTK.Platform.Native.macOS
                 IntPtr.Zero,
                 false);
 
+            // Register that we are a drag destination for files.
+            objc_msgSend(viewPtr, selRegisterForDraggedTypes, objc_msgSend_IntPtr((IntPtr)NSArrayClass, selArrayWithObject, MacOSClipboardComponent.NSPasteboardTypeFileURL));
+
             return nswindow;
         }
 
@@ -1184,6 +1401,12 @@ namespace OpenTK.Platform.Native.macOS
         public void Destroy(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+            {
+                // Restore the cursor.
+                CG.CGAssociateMouseAndMouseCursorPosition(true);
+            }
 
             NSWindowDict.Remove(nswindow.Window);
 
@@ -1257,7 +1480,7 @@ namespace OpenTK.Platform.Native.macOS
                 image = objc_msgSend_IntPtr(nsicon.Image, selImageWithSymbolConfiguration, nsicon.SymbolConfiguration);
 
             objc_msgSend(nsApplication, selSetApplicationIconImage, image);
-            
+
             // FIXME: Maybe make a function for setting the minimized icon...
             /*
             IntPtr dockTile = objc_msgSend_IntPtr(nswindow.Window, selDockTile);
@@ -1365,8 +1588,17 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
-            // FIXME:
-            //throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: Maybe create a more direct implementation?
+
+            GetPosition(nswindow, out int wx, out int wy);
+            GetClientPosition(nswindow, out int cx, out int cy);
+
+            int offsetX = wx - cx;
+            int offsetY = wy - cy;
+
+            SetPosition(nswindow, x + offsetX, y + offsetY);
         }
 
         /// <inheritdoc/>
@@ -1377,7 +1609,7 @@ namespace OpenTK.Platform.Native.macOS
             CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
 
             CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
-            
+
             width = (int)(screenFrame.size.x);
             height = (int)(screenFrame.size.y);
         }
@@ -1413,10 +1645,15 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            throw new NotImplementedException();
+            // FIXME: Find a more direct way to set the contentSize while setting the position.
+
+            SetClientPosition(nswindow, x, y);
+
+            NSSize size = new NSSize(width, height);
+            objc_msgSend(nswindow.Window, selSetContentSize, size);
         }
 
-        // FIXME: Separate the window size from the framebuffer size?
+        /// <inheritdoc/>
         public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -1442,8 +1679,8 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            nswindow.MinWidth = width;
-            nswindow.MinHeight = height;
+            nswindow.MaxWidth = width;
+            nswindow.MaxHeight = height;
 
             float fWidth = width ?? 10000.0f;
             float fheight = height ?? 10000.0f;
@@ -1583,6 +1820,46 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
+            if (nswindow.FullscreenScreen != null)
+            {
+                if (nswindow.InNonSpaceFullscreen)
+                {
+                    // FIXME: BOOL
+                    objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, false);
+
+                    // Reapply window size limits
+                    NFloat INF = NFloat.PositiveInfinity;
+                    objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(nswindow.MaxWidth ?? INF, nswindow.MaxHeight ?? INF));
+                    objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(nswindow.MinWidth ?? 0, nswindow.MinHeight ?? 0));
+
+                    objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nswindow.PreviousStyleMask);
+                    objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)nswindow.PreviousLevel);
+
+                    nswindow.InNonSpaceFullscreen = false;
+                }
+                else
+                {
+                    objc_msgSend(nswindow.Window, selToggleFullScreen, IntPtr.Zero);
+                }
+
+                // FIXME: There seems like there might be some timing related things going on here
+                // where running this code normally it doesn't reset the frame after being in it's own space
+                // but placing a breakpoint here and stepping through it the frame actually gets reset properly.
+                // - Noggin_bops 2024-04-13
+                // FIXME: BOOL
+                objc_msgSend(nswindow.Window, selSetFrame_Display, nswindow.PreviousFrame, true);
+
+                nswindow.FullscreenScreen = null;
+            }
+
+            NSWindowStyleMask mask = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+            // FIXME: Only go out of the space if we need to...
+            if (mask.HasFlag(NSWindowStyleMask.FullScreen))
+            {
+                // Go out of fullscreen.
+                objc_msgSend(nswindow.Window, selToggleFullScreen, IntPtr.Zero);
+            }
+
             switch (mode)
             {
                 case WindowMode.Hidden:
@@ -1647,9 +1924,7 @@ namespace OpenTK.Platform.Native.macOS
                 case WindowMode.WindowedFullscreen:
                     {
                         // FIXME: deminituarize, un-zoom or whatever else needs to be done.
-
-                        // FIXME: Add a menu item for fullscreen
-                        objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
+                        SetFullscreenDisplay(nswindow, null);
                         break;
                     }
                 case WindowMode.ExclusiveFullscreen:
@@ -1662,10 +1937,70 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        /// <inheritdoc/>
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        /// <summary>
+        /// Put a window into 'windowed fullscreen' on a specific display without creating a space for it.
+        /// If <paramref name="display"/> is <c>null</c> then the window will be made fullscreen on the 'nearest' display.
+        /// </summary>
+        /// <param name="window">The window to make fullscreen.</param>
+        /// <param name="display">The display to make the window fullscreen on.</param>
+        public void SetFullscreenDisplayNoSpace(WindowHandle window, DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            if (display == null)
+            {
+                display = GetDisplay(window);
+            }
+
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+            NSScreenHandle nsscreen = display.As<NSScreenHandle>(this);
+
+            // Disable min/max size constraints while fullscreen.
+            objc_msgSend(nswindow.Window, selSetContentMaxSize, new NSSize(NFloat.PositiveInfinity, NFloat.PositiveInfinity));
+            objc_msgSend(nswindow.Window, selSetContentMinSize, new NSSize(0, 0));
+
+            nswindow.PreviousStyleMask = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+            objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)NSWindowStyleMask.Borderless);
+
+            nswindow.PreviousLevel = (NSWindowLevel)objc_msgSend_IntPtr(nswindow.Window, selLevel);
+            objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)(NSWindowLevel.MainMenu + 1));
+
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetHidesOnDeactivate, true);
+
+            // FIXME: Remember the original frame!
+            CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
+            // FIXME: Is this the correct frame to get?
+            nswindow.PreviousFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            // FIXME: BOOL
+            objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
+
+            objc_msgSend(nswindow.Window, selMakeKeyAndOrderFront, nswindow.Window);
+
+            nswindow.InNonSpaceFullscreen = true;
+            nswindow.FullscreenScreen = nsscreen;
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            NSScreenHandle? nsscreen = display?.As<NSScreenHandle>(this);
+
+            nswindow.PreviousFrame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+
+            if (nsscreen != null)
+            {
+                CGRect frame = objc_msgSend_CGRect(nsscreen.Screen, selFrame);
+                // FIXME: BOOL
+                objc_msgSend(nswindow.Window, selSetFrame_Display, frame, true);
+            }
+            else
+            {
+                nsscreen = GetDisplay(nswindow).As<NSScreenHandle>(this);
+            }
+
+            nswindow.FullscreenScreen = nsscreen;
+
+            objc_msgSend(nswindow.Window, selToggleFullScreen, nswindow.Window);
         }
 
         /// <inheritdoc/>
@@ -1677,7 +2012,9 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+            display = nswindow.FullscreenScreen;
+            return display != null;
         }
 
         /// <inheritdoc/>
@@ -1739,7 +2076,7 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case WindowBorderStyle.ToolBox:
                     {
-                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
 
                         objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
 
@@ -1817,13 +2154,98 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            return nswindow.CursorCaptureMode;
         }
 
         /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Confined &&
+                mode != CursorCaptureMode.Confined)
+            {
+                // Remove the confinement rectangle.
+                NFloat INF = NFloat.PositiveInfinity;
+                CGRect rect = new CGRect(-INF, -INF, INF, INF);
+                objc_msgSend(nswindow.Window, selSetMouseConfinementRect, rect);
+            }
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked &&
+                mode != CursorCaptureMode.Locked)
+            {
+                CG.CGAssociateMouseAndMouseCursorPosition(true);
+            }
+
+            switch (mode)
+            {
+                case CursorCaptureMode.Normal:
+                    // Getting out of the other modes is handled above.
+                    nswindow.CursorCaptureMode = CursorCaptureMode.Normal;
+                    break;
+                case CursorCaptureMode.Confined:
+                    // This undocumented property was found by the SDL developers
+                    // See: https://github.com/libsdl-org/SDL/commit/35d90f17e1c7d3740c75641ef94b5e5c938c20c6
+                    // - Noggin_bops 2024-04-13
+                    CGRect rect = objc_msgSend_CGRect(nswindow.View, selFrame);
+                    objc_msgSend(nswindow.Window, selSetMouseConfinementRect, rect);
+                    nswindow.CursorCaptureMode = mode;
+                    break;
+                case CursorCaptureMode.Locked:
+                    // FIXME: Set the mode to locked
+                    // CGAssociateMouseAndMouseCursorPosition() to allow the mouse to move separately from the cursor
+                    // [NSCursor hide] can be used to hide the cursor
+                    // Then we need to disable this when we loose key status and enable it again when we get key status again
+                    // We also need to handle warping the cursor back to the center of the window every time the cursor moves.
+                    // - Noggin_bops 2024-04-13
+
+                    // FIXME: Do we need to call CGAssociateMouseAndMouseCursorPosition?
+                    // FIXME: We want to move the mouse display to the center of the screen.
+                    // objc_msgSend((IntPtr)NSCursorClass, selHide);
+
+                    // FIXME: With multiple windows we only want to apply this
+                    // if this window is key...
+
+                    //CG.CGAssociateMouseAndMouseCursorPosition(false);
+
+                    //CenterCursor(nswindow);
+
+                    nswindow.VirtualCursorPosition = nswindow.LastMousePosition;
+
+                    nswindow.CursorCaptureMode = CursorCaptureMode.Locked;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Centers the cursor in the window.
+        /// </summary>
+        private static void CenterCursor(NSWindowHandle nswindow)
+        {
+            CGRect frame = objc_msgSend_CGRect(nswindow.View, selFrame);
+            CGRect screenFrame = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, frame);
+
+            CGPoint center = new CGPoint(screenFrame.origin.x + (screenFrame.size.x / 2),
+                                         screenFrame.origin.y + (screenFrame.size.y / 2));
+
+            // CGWarpMouseCursorPosition uses top-left coordinates.
+            center = CG.FlipYCoordinate(center);
+
+            CG.CGDisplayMoveCursorToPoint(CG.CGMainDisplayID(), center);
+            CG.CGWarpMouseCursorPosition(center);
+            nswindow.LastMousePosition = center;
+        }
+
+        /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: BOOL
+            return objc_msgSend_bool(nswindow.Window, selIsKeyWindow);
         }
 
         /// <inheritdoc/>
@@ -1843,16 +2265,50 @@ namespace OpenTK.Platform.Native.macOS
             ulong requestID = objc_msgSend_ulong(nsApplication, selRequestUserAttention, (ulong)NSRequestUserAttentionType.CriticalRequest);
         }
 
+        private float FlipClientYCoordinate(NSWindowHandle nswindow, float y)
+        {
+            float clientHeight = (float)objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, objc_msgSend_CGRect(nswindow.View, selFrame)).size.y;
+            return clientHeight - y;
+        }
+
+        private NFloat FlipClientYCoordinate(NSWindowHandle nswindow, NFloat y)
+        {
+            NFloat clientHeight = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, objc_msgSend_CGRect(nswindow.View, selFrame)).size.y;
+            return clientHeight - y;
+        }
+
         /// <inheritdoc/>
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint clientPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointFromScreen, new CGPoint(x, CG.FlipYCoordinate(y)));
+
+            clientX = (int)clientPoint.x;
+            clientY = (int)FlipClientYCoordinate(nswindow, clientPoint.y);
         }
 
         /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint screenPoint = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToScreen, new CGPoint(clientX, FlipClientYCoordinate(nswindow, clientY)));
+
+            x = (int)screenPoint.x;
+            y = (int)CG.FlipYCoordinate(screenPoint.y);
+        }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            CGRect frameBacking = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+
+            scaleX = (float)(frameBacking.size.x / frame.size.x);
+            scaleY = (float)(frameBacking.size.y / frame.size.y);
         }
 
         /// <summary>

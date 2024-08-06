@@ -5,10 +5,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>12.0</LangVersion>
     <!-- Uncomment this if not using the .res resource file. -->
     <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
-    
-    <!-- This is somehow broken on one of my machines... somehow https://github.com/dotnet/runtime/pull/89303 is supposed to fix this in .net 8? -->
+
+    <!-- FIXME: We want to fix it so you don't have to have the manifest file... 
+         or make it so that the resource file can contain the manifest and that we load it correctly.
+    -->
+    <!-- Uncomment this if not using the .res resource file. -->
+    <!--<ApplicationManifest>app.manifest</ApplicationManifest>-->
     <!--<Win32Resource>icons.res</Win32Resource>-->
   </PropertyGroup>
 
@@ -34,8 +39,8 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="StbImageSharp" Version="2.27.13" />
-    <PackageReference Include="ImGui.NET" Version="1.89.9.3" />
+    <PackageReference Include="StbImageSharp" Version="2.27.14" />
+    <PackageReference Include="ImGui.NET" Version="1.90.8.1" />
     <PackageReference Include="OpenTK.redist.SDL" Version="2.26.5-pre20230414185304" />
   </ItemGroup>
 
@@ -43,6 +48,7 @@
     <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
+    <ProjectReference Include="..\Bejeweled\Bejeweled.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    
     <None Update="win32-x64/d3dcompiler_47.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -98,6 +105,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Resources\ProggyVector\ProggyVector-Dotted.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="win32-x64\soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -35,6 +35,8 @@ namespace OpenTK.Core.Platform
     {
         // FIXME: A reference to the window that got or lost focus?
 
+        // FIXME: The mouse position
+
         /// <summary>
         /// If the window got or lost focus.
         /// </summary>
@@ -90,14 +92,43 @@ namespace OpenTK.Core.Platform
         public Vector2i NewSize { get; private set; }
 
         /// <summary>
+        /// The new client size of the window.
+        /// </summary>
+        public Vector2i NewClientSize { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WindowResizeEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window that got resized.</param>
         /// <param name="newSize">The new window size.</param>
+        /// <param name="newClientSize">The new client size of the window.</param>
         // FIXME: Window client size? framebuffer size?
-        public WindowResizeEventArgs(WindowHandle window, Vector2i newSize) : base(window)
+        public WindowResizeEventArgs(WindowHandle window, Vector2i newSize, Vector2i newClientSize) : base(window)
         {
             NewSize = newSize;
+            NewClientSize = newClientSize;
+        }
+    }
+
+    /// <summary>
+    /// This event is triggered when a window has its framebuffer change size.
+    /// This event can occur for different reasons, not only the window changing size.
+    /// </summary>
+    public class WindowFramebufferResizeEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// The new framebuffer size of the window.
+        /// </summary>
+        public Vector2i NewFramebufferSize { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowFramebufferResizeEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window whoes framebuffer changed size.</param>
+        /// <param name="newFramebufferSize">The new framebuffer size.</param>
+        public WindowFramebufferResizeEventArgs(WindowHandle window, Vector2i newFramebufferSize) : base(window)
+        {
+            NewFramebufferSize = newFramebufferSize;
         }
     }
 
@@ -127,18 +158,8 @@ namespace OpenTK.Core.Platform
     /// This can happen if the window is moved between monitors with
     /// different DPI scaling settings or if the user changes DPI settings.
     /// </summary>
-    public class WindowDpiChangeEventArgs : WindowEventArgs
+    public class WindowScaleChangeEventArgs : WindowEventArgs
     {
-        /// <summary>
-        /// The new DPI value in the x-axis.
-        /// </summary>
-        public int DpiX { get; private set; }
-
-        /// <summary>
-        /// The new DPI value in the y-axis.
-        /// </summary>
-        public int DpiY { get; private set; }
-
         /// <summary>
         /// The new scale value in the x-axis.
         /// </summary>
@@ -150,17 +171,13 @@ namespace OpenTK.Core.Platform
         public float ScaleY { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowDpiChangeEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="WindowScaleChangeEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window whose dpi has changed.</param>
-        /// <param name="dpiX">The new x axis dpi.</param>
-        /// <param name="dpiY">The new y axis dpi.</param>
         /// <param name="scaleX">The new x axis scale factor.</param>
         /// <param name="scaleY">The new y axis scale factor.</param>
-        public WindowDpiChangeEventArgs(WindowHandle window, int dpiX, int dpiY, float scaleX, float scaleY) : base(window)
+        public WindowScaleChangeEventArgs(WindowHandle window, float scaleX, float scaleY) : base(window)
         {
-            DpiX = dpiX;
-            DpiY = dpiY;
             ScaleX = scaleX;
             ScaleY = scaleY;
         }
@@ -391,6 +408,8 @@ namespace OpenTK.Core.Platform
     {
         // FIXME: In what coordinate space is the mouse coords?
 
+        // FIXME: Position delta
+
         /// <summary>
         /// The new position of the mouse cursor.
         /// </summary>
@@ -404,6 +423,30 @@ namespace OpenTK.Core.Platform
         public MouseMoveEventArgs(WindowHandle window, Vector2 position) : base(window)
         {
             Position = position;
+        }
+    }
+
+    /// <summary>
+    /// This event is triggered when the mouse moves and raw mouse motion is enabled.
+    /// </summary>
+    public class RawMouseMoveEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// The unscaled movement value of the mouse.
+        /// Positive X and Y deltas indicate a right and down movement, while
+        /// negative X and Y deltas indicate a left and up movement.
+        /// The absolute values of this property will be different between different hardware.
+        /// </summary>
+        public Vector2 Delta { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RawMouseMoveEventArgs"/> class.
+        /// </summary>
+        /// <param name="window">The window in which the mouse moved.</param>
+        /// <param name="delta">The raw mouse delta.</param>
+        public RawMouseMoveEventArgs(WindowHandle window, Vector2 delta) : base(window)
+        {
+            Delta = delta;
         }
     }
 

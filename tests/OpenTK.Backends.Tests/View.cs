@@ -35,6 +35,6 @@ namespace OpenTK.Backends.Tests
         /// <summary>
         /// Paint tab contents.
         /// </summary>
-        public virtual void Paint(double deltaTimex) { }
+        public virtual void Paint(double deltaTime) { }
     }
 }

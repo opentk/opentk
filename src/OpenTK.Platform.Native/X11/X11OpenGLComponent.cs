@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
@@ -21,7 +22,7 @@ namespace OpenTK.Platform.Native.X11
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc />
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
             if (!glXQueryExtension(X11.Display, out int errorBase, out int eventBase))
             {
@@ -78,12 +79,18 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_ARB_create_context"))
             {
-                s_glXCreateContextAttribARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
+                // FIXME: Can we use a function pointer instead of a delegate?
+                s_glXCreateContextAttribsARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
             }
             else
             {
                 throw new PalException(this, "GLX_ARB_create_context is required (for the time being).");
             }
+
+            ARB_create_context_robustness = GLXExtensions.Contains("GLX_ARB_create_context_robustness");
+            ARB_robustness_isolation = GLXExtensions.Contains("GLX_ARB_robustness_application_isolation");
+            ARB_create_context_no_error = GLXExtensions.Contains("GLX_ARB_create_context_no_error");
+            ARB_context_flush_control = GLXExtensions.Contains("GLX_ARB_context_flush_control");
 
             Logger?.LogInfo(
                 $"GLX Version {major}.{minor}\n" +
@@ -117,12 +124,17 @@ namespace OpenTK.Platform.Native.X11
         public Version? GLXServerVersion { get; private set; }
         public Version? GLXClientVersion { get; private set; }
 
+        internal bool ARB_robustness_isolation { get; set; }
+        internal bool ARB_create_context_robustness { get; set; }
+        internal bool ARB_create_context_no_error { get; set; }
+        internal bool ARB_context_flush_control { get; set; }
+
         private static Dictionary<GLXContext, XOpenGLContextHandle> contextDict = new Dictionary<GLXContext, XOpenGLContextHandle>();
 
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
         private glXGetProcAddressProc s_glXGetProcAddress = null!;
-        private glXCreateContextAttribARBProc s_glXCreateContextAttribARB = null!;
+        private glXCreateContextAttribARBProc s_glXCreateContextAttribsARB = null!;
 
         /// <inheritdoc />
         public OpenGLContextHandle CreateFromSurface()
@@ -144,10 +156,34 @@ namespace OpenTK.Platform.Native.X11
             {
                 GLX_CONTEXT_MAJOR_VERSION_ARB, hints.Version.Major,
                 GLX_CONTEXT_MINOR_VERSION_ARB, hints.Version.Minor,
-
-                GLX_CONTEXT_FLAGS_ARB, (hints.DebugFlag ? GLX_CONTEXT_DEBUG_BIT_ARB : 0) |
-                                       (hints.ForwardCompatibleFlag ? GLX_CONTEXT_FORWARD_COMPATIBLE_BIT : 0)
             };
+
+            {
+                int flags = 0;
+
+                if (hints.DebugFlag)
+                {
+                    flags |= GLX_CONTEXT_DEBUG_BIT_ARB;
+                }
+
+                if (hints.ForwardCompatibleFlag)
+                {
+                    flags |= GLX_CONTEXT_FORWARD_COMPATIBLE_BIT;
+                }
+
+                if (ARB_create_context_robustness && hints.RobustnessFlag)
+                {
+                    flags |= GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB;
+                }
+
+                if (ARB_robustness_isolation && hints.ResetIsolation)
+                {
+                    flags |= GLX_CONTEXT_RESET_ISOLATION_BIT_ARB;
+                }
+
+                attribs.Add(GLX_CONTEXT_FLAGS_ARB);
+                attribs.Add(flags);
+            }
 
             if (hints.Profile != OpenGLProfile.None)
             {
@@ -160,6 +196,62 @@ namespace OpenTK.Platform.Native.X11
                 });
             }
 
+            if (ARB_create_context_robustness && hints.RobustnessFlag)
+            {
+                attribs.Add(GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB);
+                switch (hints.ResetNotificationStrategy)
+                {
+                    case ContextResetNotificationStrategy.NoResetNotification:
+                        attribs.Add(GLX_NO_RESET_NOTIFICATION_ARB);
+                        break;
+                    case ContextResetNotificationStrategy.LoseContextOnReset:
+                        attribs.Add(GLX_LOSE_CONTEXT_ON_RESET_ARB);
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(hints.ResetNotificationStrategy), (int)hints.ResetNotificationStrategy, hints.ResetNotificationStrategy.GetType());
+                }
+            }
+
+            if (ARB_create_context_no_error && hints.NoError)
+            {
+                attribs.Add(GLX_CONTEXT_OPENGL_NO_ERROR_ARB);
+                attribs.Add(1);
+            }
+
+            if (ARB_context_flush_control && hints.UseFlushControl)
+            {
+                attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB);
+                switch (hints.ReleaseBehaviour)
+                {
+                    case ContextReleaseBehaviour.None:
+                        attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB);
+                        break;
+                    case ContextReleaseBehaviour.Flush:
+                        attribs.Add(GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB);
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(hints.ReleaseBehaviour), (int)hints.ReleaseBehaviour, hints.ReleaseBehaviour.GetType());
+                }
+            }
+
+            {
+                attribs.Add(GLX_RENDER_TYPE);
+                switch (window.PixelFormat)
+                {
+                    case ContextPixelFormat.RGBAPackedFloat:
+                        attribs.Add(GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT);
+                        break;
+                    case ContextPixelFormat.RGBAFloat:
+                        attribs.Add(GLX_RGBA_FLOAT_TYPE);
+                        break;
+                    case ContextPixelFormat.RGBA:
+                        attribs.Add(GLX_RGBA_TYPE);
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException(nameof(window.PixelFormat), (int)window.PixelFormat, window.PixelFormat.GetType());
+                }
+            }
+
             // Add the terminating attribute.
             attribs.Add(0);
             attribs.Add(0);
@@ -169,7 +261,7 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: This might not be able to create OpenGL 1.0 contexts...
             // See: https://github.com/glfw/glfw/blob/3eaf1255b29fdf5c2895856c7be7d7185ef2b241/src/glx_context.c#L592-L595
             // - Noggin_bops 2023-08-26
-            GLXContext context = s_glXCreateContextAttribARB(
+            GLXContext context = s_glXCreateContextAttribsARB(
                 window.Display,
                 window.FBConfig!.Value,
                 sharedContext?.Context ?? new GLXContext(IntPtr.Zero),

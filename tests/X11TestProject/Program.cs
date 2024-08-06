@@ -27,9 +27,10 @@ namespace X11TestProject
             glComp = PlatformComponents.CreateOpenGLComponent();
             dispComp = PlatformComponents.CreateDisplayComponent();
 
-            windowComp.Initialize(PalComponents.Window);
-            glComp.Initialize(PalComponents.OpenGL);
-            dispComp.Initialize(PalComponents.Display);
+            ToolkitOptions options = new ToolkitOptions();
+            windowComp.Initialize(options);
+            glComp.Initialize(options);
+            dispComp.Initialize(options);
 
             window = windowComp.Create(new OpenGLGraphicsApiHints());
             context = glComp.CreateFromWindow(window);

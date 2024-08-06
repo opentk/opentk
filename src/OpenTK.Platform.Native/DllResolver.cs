@@ -70,6 +70,14 @@ namespace OpenTK.Platform.Native
                 "libX11.so.0",
             },
 
+            ["Xrandr"] = new string[]
+            {
+                "libXrandr.so",
+                "libXrandr.so.3",
+                "libXrandr.so.2",
+                "libXrandr.so.1",
+            },
+
             ["XFixes"] = new string[]
             {
                 "libXfixes.so",

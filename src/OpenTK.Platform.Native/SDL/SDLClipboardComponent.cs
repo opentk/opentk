@@ -21,12 +21,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Clipboard)
-            {
-                throw new PalException(this, "SDLClipboardComponent can only initialize the Clipboard component.");
-            }
         }
 
         private ClipboardFormat[] _supportedFormats = {
@@ -85,12 +81,6 @@ namespace OpenTK.Platform.Native.SDL
         public Bitmap? GetClipboardBitmap()
         {
             throw new InvalidOperationException("SDL 2 doesn't support bitmap clipboard data.");
-        }
-
-        /// <inheritdoc/>
-        public string? GetClipboardHTML()
-        {
-            throw new InvalidOperationException("SDL 2 doesn't support HTML clipboard data.");
         }
 
         /// <inheritdoc/>

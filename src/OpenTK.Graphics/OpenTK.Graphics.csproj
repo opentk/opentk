@@ -5,6 +5,7 @@
         <RootNamespace>OpenTK.Graphics</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
       <PackageIcon>icon.png</PackageIcon>
+      <IsTrimmable>true</IsTrimmable>
     </PropertyGroup>
 
     <ItemGroup>

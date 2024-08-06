@@ -18,6 +18,8 @@ namespace OpenTK.Core.Utility
         /// </summary>
         Debug = 0,
 
+        // FIXME: Formalize what Info, Warning, and Error actually convey.
+
         /// <summary>
         /// Information that directly affects the operation of the application.
         /// </summary>
@@ -102,5 +104,12 @@ namespace OpenTK.Core.Utility
         /// <param name="line">The callsite line number.</param>
         /// <param name="member">The member name at the callsite.</param>
         void LogError(string str, [CallerFilePath] string filePath = null, [CallerLineNumber] int line = -1, [CallerMemberName] string member = null) => Log(str, LogLevel.Error, filePath, line, member);
+
+        /// <summary>
+        /// Flushes any pending IO operations.
+        /// This is useful when e.g. the application is terminating
+        /// and the final log messages containing the termination reason needs to be written.
+        /// </summary>
+        void Flush();
     }
 }

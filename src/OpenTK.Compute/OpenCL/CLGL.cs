@@ -16,22 +16,22 @@ namespace OpenTK.Compute.OpenCL
             ObjectRenderBuffer = 0x2003,
 
             /// <summary>
-            /// Introduced in OpenCL 1.2
+            /// Introduced in OpenCL 1.2.
             /// </summary>
             ObjectTexture2DArray = 0x200E,
 
             /// <summary>
-            /// Introduced in OpenCL 1.2
+            /// Introduced in OpenCL 1.2.
             /// </summary>
             ObjectTexture1D = 0x200F,
 
             /// <summary>
-            /// Introduced in OpenCL 1.2
+            /// Introduced in OpenCL 1.2.
             /// </summary>
             ObjectTexture1DArray = 0x2010,
 
             /// <summary>
-            /// Introduced in OpenCL 1.2
+            /// Introduced in OpenCL 1.2.
             /// </summary>
             ObjectTextureBuffer = 0x2011,
         }
@@ -42,7 +42,7 @@ namespace OpenTK.Compute.OpenCL
             MipmapLevel = 0x2005,
 
             /// <summary>
-            /// Introduced in OpenCL 1.2
+            /// Introduced in OpenCL 1.2.
             /// </summary>
             NumSamples = 0x2012,
         }

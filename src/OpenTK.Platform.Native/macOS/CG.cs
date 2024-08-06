@@ -60,6 +60,58 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint /* CGDirectDisplayID */ CGMainDisplayID();
 
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGAssociateMouseAndMouseCursorPosition([MarshalAs(UnmanagedType.Bool)] bool connected);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern CGError CGDisplayMoveCursorToPoint(uint /* CGDirectDisplayID */ display, CGPoint point);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGColorSpaceRef */ CGColorSpaceCreateWithName(IntPtr /* CFStringRef */ name);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGContextRef */ CGBitmapContextCreate(void* data, nuint width, nuint height, nuint bitsPerComponent, nuint bytesPerRow, IntPtr /* CGColorSpaceRef */ space, uint bitmapInfo);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextRelease(IntPtr /* CGContextRef */ c);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextTranslateCTM(IntPtr /* CGContextRef */ c, NFloat tx, NFloat ty);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGContextScaleCTM(IntPtr /* CGContextRef */ c, NFloat sx, NFloat sy);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGImageRef */ CGImageCreate(
+            nuint /* size_t */ width,
+            nuint /* size_t */ height,
+            nuint /* size_t */ bitsPerComponent,
+            nuint /* size_t */ bitsPerPixel,
+            nuint /* size_t */ bytesPerRow,
+            IntPtr /* CGColorSpaceRef */ space,
+            uint /* CGBitmapInfo */ bitmapInfo,
+            IntPtr /* CGDataProviderRef */ provider,
+            NFloat* /* const CGFloat* */ decode,
+            bool shouldInterpolate,
+            CGColorRenderingIntent intent);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr /* CGDataProviderRef */ CGDataProviderCreateWithData(
+            void* info,
+            void* /* const void* */ data,
+            nuint /* size_t */ size,
+            // FIXME: Proper function pointer type...
+            delegate* unmanaged[Cdecl]<void*, void*, nuint /* size_t */, void> /* CGDataProviderReleaseDataCallback */ releaseData);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGImageRelease(IntPtr /* CGImageRef */ image);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void CGDataProviderRelease(IntPtr /* CGDataProviderRef */ provider);
+
+        [DllImport(Lib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint /* CGOpenGLDisplayMask */ CGDisplayIDToOpenGLDisplayMask(uint /* CGDirectDisplayID */ display);
+
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
@@ -68,7 +120,7 @@ namespace OpenTK.Platform.Native.macOS
         internal static float FlipYCoordinate(float y)
         {
             float height = (float)CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
@@ -79,24 +131,24 @@ namespace OpenTK.Platform.Native.macOS
         internal static NFloat FlipYCoordinate(NFloat y)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return (height - 1) - y;
+            return height - y;
         }
 
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
-        /// <param name="y">The coordinate to flip.</param>
+        /// <param name="p">The coordinate to flip.</param>
         /// <returns>The flipped coordinate.</returns>
         internal static CGPoint FlipYCoordinate(CGPoint p)
         {
             NFloat height = CGDisplayBounds(CGMainDisplayID()).size.y;
-            return new CGPoint(p.x, (height - 1) - p.y);
+            return new CGPoint(p.x, height - p.y);
         }
 
         /// <summary>
         /// Flips the Y coordinate from a bottom to top space to a top to bottom space, and vice versa.
         /// </summary>
-        /// <param name="y">The rectangle to flip.</param>
+        /// <param name="rect">The rectangle to flip.</param>
         /// <returns>The flipped rectangle.</returns>
         internal static CGRect FlipYCoordinate(CGRect rect)
         {

@@ -25,12 +25,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Display)
-            {
-                throw new PalException(this, "SDLDisplayComponent can only initialize the Display component.");
-            }
         }
 
         /// <inheritdoc/>

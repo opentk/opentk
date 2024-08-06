@@ -48,6 +48,8 @@ namespace OpenTK.Platform.Native.Windows
         public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
         public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
 
+        public bool RawMouseMotionEnabled { get; set; } = false;
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;
@@ -63,6 +65,8 @@ namespace OpenTK.Platform.Native.Windows
         public IntPtr HDC { get; private set; }
 
         public HGLRC? SharedContext { get; private set; }
+
+        public bool UseDwmFlush { get; set; } = false;
 
         public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext)
         {

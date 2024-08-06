@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Utility;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -9,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
-    public sealed class ToolkitOptions
-    {
-        public string ApplicationName { get; set; } = "OpenTK Application";
-
-        public ILogger? Logger { get; set; } = null;
-    }
 
     // FIXME: Maybe find another name for this?
+    /// <summary>
+    /// Provides static access to all OpenTK platform abstraction interfaces.
+    /// This is the main way to access the OpenTK PAL2 api.
+    /// </summary>
     public static class Toolkit
     {
+        private static bool Initialized = false;
+
         private static IClipboardComponent? _clipboardComponent;
         private static ICursorComponent? _cursorComponent;
         private static IDisplayComponent? _displayComponent;
@@ -30,29 +29,85 @@ namespace OpenTK.Platform.Native
         private static IWindowComponent? _windowComponent;
         private static IShellComponent? _shellComponent;
         private static IJoystickComponent? _joystickComponent;
+        private static IDialogComponent? _dialogComponent;
 
-        public static IWindowComponent Window => _windowComponent;
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting windows.
+        /// </summary>
+        public static IWindowComponent Window => _windowComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static ISurfaceComponent Surface => _surfaceComponent;
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting surfaces.
+        /// </summary>
+        public static ISurfaceComponent Surface => _surfaceComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IOpenGLComponent OpenGL => _openGLComponent;
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting OpenGL contexts.
+        /// </summary>
+        public static IOpenGLComponent OpenGL => _openGLComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IDisplayComponent Display => _displayComponent;
+        /// <summary>
+        /// Interface for querying information about displays attached to the system.
+        /// </summary>
+        public static IDisplayComponent Display => _displayComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IShellComponent Shell => _shellComponent;
+        /// <summary>
+        /// Interface for shell functions such as battery information, preferred theme, etc.
+        /// </summary>
+        public static IShellComponent Shell => _shellComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IMouseComponent Mouse => _mouseComponent;
+        /// <summary>
+        /// Interface for getting and setting the mouse position, and getting mouse button information.
+        /// </summary>
+        public static IMouseComponent Mouse => _mouseComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IKeyboardComponent Keyboard => _keyboardComponent;
+        /// <summary>
+        /// Interface for dealing with keyboard layouts, conversions between <see cref="Key"/> and <see cref="Scancode"/>, and IME.
+        /// </summary>
+        public static IKeyboardComponent Keyboard => _keyboardComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static ICursorComponent Cursor => _cursorComponent;
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting mouse cursor images.
+        /// </summary>
+        public static ICursorComponent Cursor => _cursorComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IIconComponent Icon => _iconComponent;
+        /// <summary>
+        /// Interface for creating, interacting with, and deleting window icon images.
+        /// </summary>
+        public static IIconComponent Icon => _iconComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IClipboardComponent Clipboard => _clipboardComponent;
+        /// <summary>
+        /// Interface for getting and setting clipboard data.
+        /// </summary>
+        public static IClipboardComponent Clipboard => _clipboardComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
-        public static IJoystickComponent Joystick => _joystickComponent;
+        /// <summary>
+        /// Interface for getting joystick input.
+        /// </summary>
+        public static IJoystickComponent Joystick => _joystickComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
 
+        /// <summary>
+        /// Interface for opening system dialogs such as file open dialogs.
+        /// </summary>
+        public static IDialogComponent Dialog => _dialogComponent ??
+            (Initialized ? null! : throw new InvalidOperationException("You need to call Toolkit.Init() before you can use it."));
+
+        /// <summary>
+        /// Initialize OpenTK with the given settings.
+        /// This function must be called before trying to use the OpenTK API.
+        /// </summary>
+        /// <param name="options">The options to initialize with.</param>
         public static void Init(ToolkitOptions options)
         {
             // FIXME: Figure out options...
@@ -68,6 +123,7 @@ namespace OpenTK.Platform.Native
             try { _iconComponent = PlatformComponents.CreateIconComponent(); } catch (NotSupportedException) { }
             try { _clipboardComponent = PlatformComponents.CreateClipboardComponent(); } catch (NotSupportedException) { }
             try { _joystickComponent = PlatformComponents.CreateJoystickComponent(); } catch (NotSupportedException) { }
+            try { _dialogComponent = PlatformComponents.CreateDialogComponent(); } catch (NotSupportedException) { }
 
             if (_windowComponent != null)
                 _windowComponent.Logger = options.Logger;
@@ -91,23 +147,28 @@ namespace OpenTK.Platform.Native
                 _clipboardComponent.Logger = options.Logger;
             if (_joystickComponent != null)
                 _joystickComponent.Logger = options.Logger;
+            if (_dialogComponent != null)
+                _dialogComponent.Logger = options.Logger;
 
             // FIXME: Change initialize to take toolkit options
             // This will also allow us to potentially remove the need
             // to have static classes in the different components
             // as they could get instances to each other through
             // this object...
-            _windowComponent?.Initialize(PalComponents.Window);
-            _surfaceComponent?.Initialize(PalComponents.Surface);
-            _openGLComponent?.Initialize(PalComponents.OpenGL);
-            _displayComponent?.Initialize(PalComponents.Display);
-            _shellComponent?.Initialize(PalComponents.Shell);
-            _mouseComponent?.Initialize(PalComponents.MiceInput);
-            _keyboardComponent?.Initialize(PalComponents.KeyboardInput);
-            _cursorComponent?.Initialize(PalComponents.MouseCursor);
-            _iconComponent?.Initialize(PalComponents.WindowIcon);
-            _clipboardComponent?.Initialize(PalComponents.Clipboard);
-            _joystickComponent?.Initialize(PalComponents.Joystick);
+            _windowComponent?.Initialize(options);
+            _surfaceComponent?.Initialize(options);
+            _openGLComponent?.Initialize(options);
+            _displayComponent?.Initialize(options);
+            _shellComponent?.Initialize(options);
+            _mouseComponent?.Initialize(options);
+            _keyboardComponent?.Initialize(options);
+            _cursorComponent?.Initialize(options);
+            _iconComponent?.Initialize(options);
+            _clipboardComponent?.Initialize(options);
+            _joystickComponent?.Initialize(options);
+            _dialogComponent?.Initialize(options);
+
+            Initialized = true;
         }
     }
 }

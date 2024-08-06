@@ -16,12 +16,13 @@ namespace OpenTK.Core.Platform
         bool CanShareContexts { get; }
 
         /// <summary>
-        /// True if the component driver can create a context from windows.
+        /// True if the component driver can create a context from windows using <see cref="CreateFromWindow(WindowHandle)"/>.
         /// </summary>
+        /// <seealso cref="CreateFromWindow(WindowHandle)"/>
         bool CanCreateFromWindow { get; }
 
         /// <summary>
-        /// True if the component driver can create a context from surfaces.
+        /// True if the component driver can create a context from surfaces using <see cref="CreateFromSurface"/>.
         /// </summary>
         bool CanCreateFromSurface { get; }
 

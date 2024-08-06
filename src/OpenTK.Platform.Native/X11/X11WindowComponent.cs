@@ -51,17 +51,16 @@ namespace OpenTK.Platform.Native.X11
 
         internal static XWindow HelperWindow { get; private set; }
 
-        /// <inheritdoc />
-        public void Initialize(PalComponents which)
-        {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
+        internal static string ApplicationName;
 
+        /// <inheritdoc />
+        public void Initialize(ToolkitOptions options)
+        {
             // Later on we can replace this with a hint.
             string? displayName = null;
             X11.Display = XOpenDisplay(displayName);
+
+            ApplicationName = options.ApplicationName;
 
             if (X11.Display.Value == IntPtr.Zero)
             {
@@ -174,7 +173,7 @@ namespace OpenTK.Platform.Native.X11
 
                 XFree(array);
             }
-        
+
             // Create a helper window to help with clipboard stuff.
             // FIXME: Will this only be used for clipboard stuff?
             unsafe 
@@ -334,11 +333,16 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
-            // FIXME: waitForEvents!
-
             XEvent ea = new XEvent();
+            if (waitForEvents)
+            {
+                // Wait for atleast one event before we continue.
+                XNextEvent(X11.Display, out ea);
+                XPutBackEvent(X11.Display, in ea);
+            }
+
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
@@ -1014,8 +1018,19 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 xwindow.Width = configure.width;
                                 xwindow.Height = configure.height;
-                                
-                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
+
+                                Vector2i clientSize = (xwindow.Width, xwindow.Height);
+                                Vector2i size = clientSize;
+                                if (IsWindowManagerFreedesktop)
+                                {
+                                    GetWindowExtents(xwindow, out int left, out int right, out int top, out int bottom);
+                                    size.X += left + right;
+                                    size.Y += top + bottom;
+                                }
+
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, size, clientSize));
+
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(xwindow, clientSize));
                             }
 
                             if (configure.x != xwindow.X ||
@@ -1049,6 +1064,14 @@ namespace OpenTK.Platform.Native.X11
                     CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
                 }
             }
+
+            // If we are running a Glib GMainLoop we want to pump that now
+            // so that we can receive dbus messages like theme changes.
+            // - Noggin_bops 2024-07-22
+            if (X11ShellComponent.GlibMainLoop != IntPtr.Zero)
+            {
+                int wasEventsDispatched = LibGio.g_main_context_iteration(LibGio.g_main_context_default(), 0);
+            }
         }
 
         /// <inheritdoc />
@@ -1056,6 +1079,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindow window;
             GLXFBConfig? chosenConfig = null;
+            ContextPixelFormat chosenPixelFormat = ContextPixelFormat.RGBA;
             XColorMap? map = null;
 
             if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
@@ -1066,6 +1090,8 @@ namespace OpenTK.Platform.Native.X11
                 byte depthBits;
                 switch (glhints.DepthBits)
                 {
+                    case ContextDepthBits.None:    depthBits = 0;  break;
+                    case ContextDepthBits.Depth16: depthBits = 16; break;
                     case ContextDepthBits.Depth24: depthBits = 24; break;
                     case ContextDepthBits.Depth32: depthBits = 32; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
@@ -1074,35 +1100,168 @@ namespace OpenTK.Platform.Native.X11
                 byte stencilBits;
                 switch (glhints.StencilBits)
                 {
+                    case ContextStencilBits.None:     stencilBits = 0; break;
                     case ContextStencilBits.Stencil1: stencilBits = 1; break;
                     case ContextStencilBits.Stencil8: stencilBits = 8; break;
                     default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
                 }
 
-                Span<int> visualAttribs = stackalloc int[]
-                {
-                    GLX_X_RENDERABLE, 1,
-                    GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
-                    GLX_RENDER_TYPE, GLX_RGBA_BIT,
-                    GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
-                    GLX_RED_SIZE, glhints.RedColorBits,
-                    GLX_GREEN_SIZE, glhints.GreenColorBits,
-                    GLX_BLUE_SIZE, glhints.BlueColorBits,
-                    GLX_ALPHA_SIZE, glhints.AlphaColorBits,
-                    GLX_DEPTH_SIZE, depthBits,
-                    GLX_STENCIL_SIZE, stencilBits,
-                    GLX_DOUBLEBUFFER, glhints.DoubleBuffer ? 1 : 0,
-                    GLX_SAMPLE_BUFFERS, glhints.Multisamples == 0 ? 0 : 1,
-                    GLX_SAMPLES, glhints.Multisamples,
-                    /* fin */ 0
-                };
+                ContextValues requested = new ContextValues();
+                requested.RedBits = glhints.RedColorBits;
+                requested.GreenBits = glhints.GreenColorBits;
+                requested.BlueBits = glhints.BlueColorBits;
+                requested.AlphaBits = glhints.AlphaColorBits;
+                requested.DepthBits = depthBits;
+                requested.StencilBits = stencilBits;
+                requested.DoubleBuffered = glhints.DoubleBuffer;
+                requested.SRGBFramebuffer = glhints.sRGBFramebuffer;
+                requested.PixelFormat = glhints.PixelFormat;
+                requested.SwapMethod = glhints.SwapMethod;
+                requested.Samples = glhints.Multisamples;
 
-                int items = visualAttribs.Length;
                 unsafe
                 {
-                    GLXFBConfig *configs = glXChooseFBConfig(X11.Display, X11.DefaultScreen, ref visualAttribs[0], ref items);
-                    chosenConfig = *configs;
-                    XFree((IntPtr)configs);
+                    GLXFBConfig* configsPtr = glXGetFBConfigs(X11.Display, X11.DefaultScreen, out int noConfigs);
+                    Span<GLXFBConfig> configs = new Span<GLXFBConfig>(configsPtr, noConfigs);
+
+                    // FIXME: Relying on Toolkit to get the OpenGL component seems like a bad idea.
+                    // We are coupling this component to the Toolkit class in an unexpected way?
+                    // But maybe it's fine?
+                    // - Noggin_bops 2024-06-22
+                    // FIXME: This wasn't a great idea as ANGLEOpenGLComponent is a thing which will cause
+                    // this to crash. So we need to handle ANGLEOpenGLComponent as well here.
+                    // - Noggin_bops 2024-07-22
+                    X11OpenGLComponent x11OpenGL = (Toolkit.OpenGL as X11OpenGLComponent) ?? throw new PalException(this, "OpenGL component needs to be initialized.");
+                    // FIXME: Make these properties of the X11OpenGLComponent.
+                    bool ARB_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_ARB_framebuffer_sRGB");
+                    bool EXT_framebuffer_sRGB = x11OpenGL.GLXExtensions.Contains("GLX_EXT_framebuffer_sRGB");
+                    bool ARB_multisample = x11OpenGL.GLXExtensions.Contains("GLX_ARB_multisample");
+                    bool ARB_fbconfig_float = x11OpenGL.GLXExtensions.Contains("GLX_ARB_fbconfig_float");
+                    bool EXT_fbconfig_packed_float = x11OpenGL.GLXExtensions.Contains("GLX_EXT_fbconfig_packed_float");
+                    bool OML_swap_method = x11OpenGL.GLXExtensions.Contains("GLX_OML_swap_method");
+
+                    Version glxVersion = x11OpenGL.GLXVersion;
+
+                    List<ContextValues> options = new List<ContextValues>();
+                    for (int i = 0; i < configs.Length; i++)
+                    {
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_X_RENDERABLE, out int xRenderable);
+                        if (xRenderable == 0)
+                        {
+                            continue;
+                        }
+                        XVisualInfo* visual = glXGetVisualFromFBConfig(X11.Display, configsPtr[i]);
+                        glXGetConfig(X11.Display, visual, GLX_USE_GL, out int useGL);
+                        if (useGL == 0)
+                        {
+                            continue;
+                        }
+
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DRAWABLE_TYPE, out int drawableType);
+                        if ((drawableType & GLX_WINDOW_BIT) == 0)
+                        {
+                            continue;
+                        }
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RENDER_TYPE, out int renderType);
+                        // Remove the color index bit.
+                        renderType = renderType & ~GLX_COLOR_INDEX_BIT;
+                        if (renderType == 0)
+                        {
+                            // If only get color index bit is set we skip this fbconfig.
+                            continue;
+                        }
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DOUBLEBUFFER, out int doubleBuffer);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_RED_SIZE, out int redSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_GREEN_SIZE, out int greenSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_BLUE_SIZE, out int blueSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_ALPHA_SIZE, out int alphaSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_DEPTH_SIZE, out int depthSize);
+                        glXGetFBConfigAttrib(X11.Display, configs[i], GLX_STENCIL_SIZE, out int stencilSize);
+
+                        int srgbCapable = 0;
+                        if ((ARB_framebuffer_sRGB || EXT_framebuffer_sRGB))
+                        {
+                            glXGetFBConfigAttrib(X11.Display, configs[i], GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB, out srgbCapable);
+                        }
+
+                        int sampleBuffers = 0;
+                        int samples = 0;
+                        
+                        // GLX 1.4 or GLX_ARB_multisample
+                        if ((glxVersion.Major > 1 || (glxVersion.Major == 1 && glxVersion.Minor >= 4)) || ARB_multisample)
+                        {
+                            glXGetConfig(X11.Display, visual, GLX_SAMPLE_BUFFERS, out sampleBuffers);
+                            glXGetConfig(X11.Display, visual, GLX_SAMPLES, out samples);
+                        }
+
+                        ContextSwapMethod swapMethod = ContextSwapMethod.Undefined;
+                        if (OML_swap_method)
+                        {
+                            glXGetFBConfigAttrib(X11.Display, configs[i], GLX_SWAP_METHOD_OML, out int swapMethodOML);
+                            switch (swapMethodOML)
+                            {
+                                case GLX_SWAP_EXCHANGE_OML:
+                                    swapMethod = ContextSwapMethod.Exchange;
+                                    break;
+                                case GLX_SWAP_COPY_OML:
+                                    swapMethod = ContextSwapMethod.Copy;
+                                    break;
+                                case GLX_SWAP_UNDEFINED_OML:
+                                    swapMethod = ContextSwapMethod.Undefined;
+                                    break;
+                                default:
+                                    Logger?.LogWarning($"Unknown swap method: {swapMethodOML}. Using undefined.");
+                                    swapMethod = ContextSwapMethod.Undefined;
+                                    break;
+                            }
+                        }
+
+                        ContextValues option;
+                        option.ID = (ulong)i;
+                        option.RedBits = redSize;
+                        option.GreenBits = greenSize;
+                        option.BlueBits = blueSize;
+                        option.AlphaBits = alphaSize;
+                        option.DepthBits = depthBits;
+                        option.StencilBits = stencilBits;
+                        option.DoubleBuffered = doubleBuffer == 1;
+                        option.SRGBFramebuffer = srgbCapable == 1;
+                        option.Samples = samples;
+                        option.SwapMethod = swapMethod;
+
+                        if ((renderType & GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBAPackedFloat;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & GLX_RGBA_FLOAT_BIT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBAFloat;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & GLX_RGBA_BIT) != 0)
+                        {
+                            option.PixelFormat = ContextPixelFormat.RGBA;
+                            options.Add(option);
+                        }
+
+                        if ((renderType & ~(GLX_RGBA_BIT | GLX_RGBA_FLOAT_BIT | GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT)) != 0)
+                        {
+                            Logger?.LogWarning($"Unknown RenderType bits set for fbconfig {i}. RenderType: {renderType}.");
+                        }
+                    }
+                
+                    int selectedIndex = glhints.Selector(options, requested, Logger);
+                    if (selectedIndex < 0 || selectedIndex >= options.Count) 
+                    {
+                        throw new IndexOutOfRangeException($"The selected format index ({selectedIndex}) is outside the range of valid indeces. This is either an OpenTK bug or an issue with your custom ContextValueSelector.");
+                    }
+
+                    chosenPixelFormat = options[selectedIndex].PixelFormat;
+                    chosenConfig = configs[(int)options[selectedIndex].ID];
+                    XFree(configsPtr);
                 }
 
                 XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
@@ -1158,7 +1317,7 @@ namespace OpenTK.Platform.Native.X11
                 X11.Display,
                 window,
                 "OpenTK Window [Native:X11]",
-                "ICO_OPENTK",
+                "OTK Window",
                 XPixmap.None,
                 null,
                 0,
@@ -1190,6 +1349,16 @@ namespace OpenTK.Platform.Native.X11
                 wmHints->input = 1;
 
                 XSetWMHints(X11.Display, window, wmHints);
+            }
+
+            unsafe {
+                XClassHint* classHints = XAllocClassHint();
+                // FIXME: Add a way to select two separate strings for these.
+                classHints->res_name = (byte*)Marshal.StringToCoTaskMemUTF8(ApplicationName);
+                classHints->res_class = classHints->res_name;
+                XSetClassHint(X11.Display, window, classHints);
+                Marshal.FreeCoTaskMem((nint)classHints->res_name);
+                XFree(classHints);
             }
 
             if (X11.XI2Available)
@@ -1224,7 +1393,7 @@ namespace OpenTK.Platform.Native.X11
                 dndVersion,
                 1);
 
-            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, chosenPixelFormat, map);
 
             XWindowDict.Add(handle.Window, handle);
 
@@ -1282,6 +1451,8 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr name);
 
+            // FIXME: Make sure to free name before we reassign it?
+
             // If the property is empty or does not exist or an error,
             // fetch the classic name.
             if (returnedType.IsNone || status != 0)
@@ -1298,12 +1469,12 @@ namespace OpenTK.Platform.Native.X11
         public void SetTitle(WindowHandle handle, string title)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
-            byte[] titleBytes = System.Text.Encoding.UTF8.GetBytes(title);
+            byte[] titleBytes = Encoding.UTF8.GetBytes(title);
 
             XStoreName(window.Display, window.Window, title);   // Set classic name,
             unsafe
             {
-                fixed(byte *titlePtr = &titleBytes[0])
+                fixed(byte *titlePtr = titleBytes)
                 {
                     // Set freedesktop name.
                     XChangeProperty(
@@ -1321,6 +1492,68 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Seems like on some machines we need to call XFlush to get the changes to be made.
             XFlush(X11.Display);
+        }
+
+        /// <summary>
+        /// Gets the iconified title of the window using either <c>_NET_WM_ICON_NAME</c> or <c>WM_ICON_NAME</c>.
+        /// </summary>
+        /// <param name="handle">A handle to the window to get the iconified title of.</param>
+        /// <returns>The title of the window when it's iconified.</returns>
+        public unsafe string GetIconifiedTitle(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            int status = XGetWindowProperty(
+                xwindow.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
+                0, long.MaxValue,
+                false,
+                X11.Atoms[KnownAtoms.UTF8_STRING],
+                out XAtom returnedType,
+                out _,
+                out _,
+                out _,
+                out IntPtr iconName);
+
+            // FIXME: Make sure to free name before we reassign it?
+
+            if (returnedType.IsNone || status != 0)
+            {
+                XGetIconName(xwindow.Display, xwindow.Window, out iconName);
+            }
+
+            string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
+            XFree(iconName);
+            return str;
+        }
+
+        /// <summary>
+        /// Sets the iconified title of the window using both <c>_NET_WM_ICON_NAME</c> and <c>WM_ICON_NAME</c>.
+        /// </summary>
+        /// <param name="handle">A handle to the window to set the iconified title of.</param>
+        /// <param name="iconTitle">The new iconified title.</param>
+        public void SetIconifiedTitle(WindowHandle handle, string iconTitle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSetIconName(xwindow.Display, xwindow.Window, iconTitle);
+
+            unsafe {
+                byte[] titleBytes = Encoding.UTF8.GetBytes(iconTitle);
+                fixed (byte* titleBytesPtr = titleBytes)
+                {
+                    XChangeProperty(
+                        xwindow.Display,
+                        xwindow.Window,
+                        X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
+                        X11.Atoms[KnownAtoms.UTF8_STRING],
+                        8,
+                        XPropertyMode.Replace,
+                        (IntPtr)titleBytesPtr,
+                        titleBytes.Length);
+                }
+            }
         }
 
         /// <inheritdoc />
@@ -1551,8 +1784,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            XWindowHandle window = handle.As<XWindowHandle>(this);
-            int status = XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            int status = XGetWindowAttributes(xwindow.Display, xwindow.Window, out XWindowAttributes attributes);
 
             width = attributes.Width;
             height = attributes.Height;
@@ -1588,6 +1821,15 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XMoveResizeWindow(X11.Display, xwindow.Window, x, y, (uint)width, (uint)height);
+        }
+
+        /// <inheritdoc />
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // The client size on X11 is already in pixels.
+            GetClientSize(xwindow, out width, out height);
         }
 
         /// <inheritdoc />
@@ -2575,6 +2817,16 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
+        public bool IsFocused(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XGetInputFocus(X11.Display, out XWindow focus, out _);
+
+            return xwindow.Window == focus;
+        }
+
+        /// <inheritdoc />
         public void FocusWindow(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -2666,6 +2918,14 @@ namespace OpenTK.Platform.Native.X11
             XTranslateCoordinates(X11.Display, xwindow.Window, X11.DefaultRootWindow, clientX, clientY, out x, out y, out _);
 
             // FIXME: Extents?
+        }
+
+        /// <inheritdoc />
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
+            scaleX = 1;
+            scaleY = 1;
         }
 
         /// <summary>

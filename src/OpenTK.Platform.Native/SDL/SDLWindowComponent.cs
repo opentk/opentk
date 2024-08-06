@@ -27,13 +27,8 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Window)
-            {
-                throw new PalException(this, "SDLWindowComponent can only initialize the Window component.");
-            }
-
             // Load SDLLib
             int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS | SDL_INIT.SDL_INIT_JOYSTICK | SDL_INIT.SDL_INIT_GAMECONTROLLER);
 
@@ -72,8 +67,10 @@ namespace OpenTK.Platform.Native.SDL
         private readonly List<string> drops = new List<string>();
 
         /// <inheritdoc/>
-        public unsafe void ProcessEvents(bool waitForEvents = false)
+        public unsafe void ProcessEvents(bool waitForEvents)
         {
+            // FIXME: waitForEvents
+
             SDLEvent @event;
             while (SDL_PollEvent(&@event) != 0)
             {
@@ -150,10 +147,15 @@ namespace OpenTK.Platform.Native.SDL
                                     }
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
                                     {
-                                        Vector2i newSize = new Vector2i(windowEvent.data1, windowEvent.data2);
+                                        SDL_GetWindowBordersSize(sdlWindow.Window, out int top, out int left, out int bottom, out int right);
 
-                                        // FIXME: Client area position!
-                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize));
+                                        Vector2i newClientSize = new Vector2i(windowEvent.data1, windowEvent.data2);
+                                        Vector2i newSize = new Vector2i(newClientSize.X + left + right, newClientSize.Y + top + bottom);
+
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize, newClientSize));
+
+                                        SDL_GetWindowSizeInPixels(sdlWindow.Window, out int framebufferWidth, out int framebufferHeight);
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(sdlWindow, (framebufferWidth, framebufferHeight)));
 
                                         break;
                                     }
@@ -719,6 +721,14 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowSizeInPixels(window.Window, out width, out height);
+        }
+
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -1140,6 +1150,14 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            return SDL_GetWindowFlags(window.Window).HasFlag(SDL_WindowFlags.SDL_WINDOW_INPUT_FOCUS);
+        }
+
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -1173,6 +1191,18 @@ namespace OpenTK.Platform.Native.SDL
             // FIXME: How to do this??
 
             throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            SDLWindow window = handle.As<SDLWindow>(this);
+
+            SDL_GetWindowSize(window.Window, out int width, out int height);
+            SDL_GetWindowSizeInPixels(window.Window, out int pixelWidth, out int pixelHeight);
+
+            scaleX = pixelWidth / (float)width;
+            scaleY = pixelHeight / (float)height;
         }
     }
 }

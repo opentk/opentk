@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Numerics;
+using System.Threading;
 using ImGuiNET;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -78,26 +80,103 @@ namespace OpenTK.Backends.Tests
                 ImGui.EndTable();
             }
 
+            ImGui.Checkbox("Wait for events", ref Program.WaitForEvents);
+
             if (ImGui.TreeNodeEx("Log", TREE_NODE_FLAGS))
             {
                 ImGui.InputText("Path", ref logPath, 4096); // Arbitrary max length.
-                ImGui.SameLine();
-
-                if (ImGui.Button("Save"))
+                if (ImGui.BeginItemTooltip())
                 {
-                    try
-                    {
-                        using Stream str = File.OpenWrite(logPath);
-                        using StreamWriter writer = new StreamWriter(str);
+                    ImGui.TextUnformatted(logPath);
+                    ImGui.EndTooltip();
+                }
 
-                        foreach (string line in log)
+                if (Toolkit.Dialog != null)
+                {
+                    ImGui.SameLine();
+                    if (ImGui.Button("Browse..."))
+                    {
+
+                        DialogFileFilter[] filter;
+                        if (OperatingSystem.IsMacOS())
                         {
-                            writer.WriteLine(line);
+                            // On windows and linux it's nice to be able to switch to a "All files" filter so you can see all files that are in a folder.
+                            // But on macOS adding this filter gives zero indication of the supported files so we would ideally avoid adding the * filter on macOS.
+                            // - Noggin_bops 2024-07-22
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
+                        }
+                        else
+                        {
+                            // The "text" filter here is only to test the multi filter feature.
+                            // - Noggin_bops 2024-07-22
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt;*.text)", "txt;text"), new("All files (*.*)", "*") };
+                        }
+
+                        List<string>? location = Toolkit.Dialog.ShowOpenDialog(Program.Window, "Choose file...", Directory.GetCurrentDirectory(), filter, 0);
+                        if (location != null)
+                        {
+                            Debug.Assert(location.Count <= 1);
+
+                            logPath = location[0];
                         }
                     }
-                    catch (Exception ex)
+
+                    ImGui.SameLine();
+                    if (ImGui.Button("Save"))
                     {
-                        Program.Logger.LogError($"Could not save log file: {ex}");
+                        DialogFileFilter[] filter;
+                        if (OperatingSystem.IsMacOS())
+                        {
+                            // On windows and linux it's nice to be able to switch to a "All files" filter so you can see all files that are in a folder.
+                            // But on macOS adding this filter gives zero indication of the supported files so we would ideally avoid adding the * filter on macOS.
+                            // - Noggin_bops 2024-07-22
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt)", "txt") };
+                        }
+                        else
+                        {
+                            // The "text" filter here is only to test the multi filter feature.
+                            // - Noggin_bops 2024-07-22
+                            filter = new DialogFileFilter[] { new("Text documents (*.txt;*.text)", "txt;text"), new("All files (*.*)", "*") };
+                        }
+
+                        string? location = Toolkit.Dialog.ShowSaveDialog(Program.Window, "Save", Directory.GetCurrentDirectory(), filter, 0);
+                        if (location != null)
+                        {
+                            if (Path.HasExtension(location) == false)
+                            {
+                                location = location + ".txt";
+                            }
+                            logPath = location;
+
+                            using Stream str = File.OpenWrite(logPath);
+                            using StreamWriter writer = new StreamWriter(str);
+
+                            foreach (string line in log)
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    ImGui.SameLine();
+                    if (ImGui.Button("Save"))
+                    {
+                        try
+                        {
+                            using Stream str = File.OpenWrite(logPath);
+                            using StreamWriter writer = new StreamWriter(str);
+
+                            foreach (string line in log)
+                            {
+                                writer.WriteLine(line);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Program.Logger.LogError($"Could not save log file: {ex}");
+                        }
                     }
                 }
 
@@ -107,9 +186,8 @@ namespace OpenTK.Backends.Tests
                 //                 how to make it unformatted since the C ... parameter is unimplemented.
                 //                      ImGui::TextWrappped("%s", line);
 
-                // FIXME: When the next imgui update comes we can follow the "Auto-resize with constraints" demo and make the log window have a min height.
-                // ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
-                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+                ImGui.SetNextWindowSizeConstraints(new Vector2(0, ImGui.GetTextLineHeightWithSpacing() * 4), new Vector2(float.PositiveInfinity, float.PositiveInfinity));
+                if (ImGui.BeginChild("overview_log_table", new Vector2(0, 0 /* ImGui.GetTextLineHeightWithSpacing() * 4 */), ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
                 {
                     if (log.Count == 0)
                     {

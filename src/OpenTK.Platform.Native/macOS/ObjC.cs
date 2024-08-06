@@ -26,6 +26,9 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly IntPtr /* NSString */ NSApplicationDidChangeScreenParametersNotification = GetStringConstant(AppKitLibrary, "NSApplicationDidChangeScreenParametersNotification"u8);
 
+        internal const byte YES = 1;
+        internal const byte NO = 0;
+
         // FIXME: Number type enum!
         internal const int kCFNumberIntType = 9;
 
@@ -107,9 +110,6 @@ namespace OpenTK.Platform.Native.macOS
             static extern IntPtr dlsym(IntPtr handle, IntPtr symbol);
         }
 
-        [DllImport(AppKitFramework, CharSet = CharSet.Ansi)]
-        internal static extern ObjCClass objc_getClass(string name);
-
         internal static ObjCClass objc_getClass(ReadOnlySpan<byte> name)
         {
             fixed(byte* ptr = name)
@@ -132,6 +132,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGRect value1, IntPtr value2);
@@ -159,6 +162,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, CGPoint value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value0, NSSize value1);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, NSSize value1);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -177,7 +183,17 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, ulong value2);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect rect);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, nuint value2, bool value3);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, bool value2);
+
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, bool value);
@@ -226,6 +242,9 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, SEL value);
 
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
+
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector)
         {
             objc_msgSend_CGRect(out CGRect rect, receiver, selector);
@@ -259,6 +278,10 @@ namespace OpenTK.Platform.Native.macOS
         // https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector);
+
+        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1);
 
         // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -403,18 +426,31 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern bool class_addProtocol(ObjCClass cls, IntPtr /* Protocol */ protocol);
 
-        internal static bool class_addMethod(ObjCClass cls, SEL name, Delegate imp, ReadOnlySpan<byte> types)
+        internal static bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, ReadOnlySpan<byte> types)
         {
-            // FIXME: Maybe avoid marshalling the delegate?
-            IntPtr impPtr = Marshal.GetFunctionPointerForDelegate(imp);
-            fixed(byte* ptr = types)
+            fixed (byte* ptr = types)
             {
-                return class_addMethod(cls, name, impPtr, ptr);
+                return class_addMethod(cls, name, imp, ptr);
             }
 
             // FIXME: What framework?
             [DllImport(FoundationFramework)]
             static extern bool class_addMethod(ObjCClass cls, SEL name, IntPtr imp, byte* types);
+        }
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr /* objc_property_t* */ class_copyPropertyList(ObjCClass cls, out uint outCount);
+
+        internal static string property_getName(IntPtr property) {
+
+            byte** name = property_getName(property);
+            return Marshal.PtrToStringUTF8((IntPtr)(*name))!;
+
+            // FIXME: For some reason we are getting a char** when the documentation says
+            // we should be getting a char*???
+            // - Noggin_bops 2024-04-13
+            [DllImport(FoundationFramework, CallingConvention = CallingConvention.Cdecl)]
+            static extern byte** /* char* */ property_getName(IntPtr /* objc_property_t */ property);
         }
 
         internal static IntPtr /* Ivar */ object_getInstanceVariable(IntPtr /* id */ @object, ReadOnlySpan<byte> name, out IntPtr outValue)

@@ -12,6 +12,7 @@ namespace OpenTK.Core.Platform
         /// True if icon objects can be populated from common system icons.
         /// If this is true, then <see cref="Create(SystemIconType)"/> will work, otherwise an exception will be thrown.
         /// </summary>
+        /// <seealso cref="Create(SystemIconType)"/>
         bool CanLoadSystemIcons { get; }
 
         /// <summary>

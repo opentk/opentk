@@ -56,13 +56,8 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.Window)
-            {
-                throw new PalException(this, "WindowComponent can only initialize the Window component.");
-            }
-
             // Set the WindowProc delegate so that we capture "this".
             // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
@@ -186,6 +181,31 @@ namespace OpenTK.Platform.Native.Windows
                         }
 
                         return (IntPtr)1;
+                    }
+                    case WM.DEVICECHANGE:
+                    {
+                        DBT dbt = (DBT)wParam;
+                        switch (dbt)
+                        {
+                            case DBT.DeviceArrival:
+                            case DBT.DeviceRemoveComplete:
+                                // FIXME: Implement joystick events!
+                                // JoystickComponent.UpdateJoysticks();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                    case WM.CLIPBOARDUPDATE:
+                    {
+                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+
+                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                     default:
                     {
@@ -642,6 +662,50 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.INPUT:
+                    {
+                        Win32.RAWINPUT input = default;
+                        uint size = (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>();
+                        input.header.dwSize = size;
+                        uint ret = Win32.GetRawInputData(lParam, RID.Header, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                        if (ret == 0xFFFF_FFFF)
+                        {
+                            throw new Win32Exception("GetRawInputData failed.");
+                        }
+
+                        if (input.header.dwType == RIM.TypeMouse)
+                        {
+                            ret = Win32.GetRawInputData(lParam, RID.Input, null, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                            if (ret == 0xFFFF_FFFF)
+                            {
+                                throw new Win32Exception("GetRawInputData failed.");
+                            }
+
+                            ret = Win32.GetRawInputData(lParam, RID.Input, ref input, ref size, (uint)Marshal.SizeOf<Win32.RAWINPUTHEADER>());
+                            if (ret == 0xFFFF_FFFF)
+                            {
+                                throw new Win32Exception("GetRawInputData failed.");
+                            }
+
+                            ref Win32.RAWMOUSE mouse = ref input.data.mouse;
+
+                            if (mouse.usFlags == RawMouseFlags.MoveRelative)
+                            {
+                                if (mouse.lLastX != 0 && mouse.lLastY != 0)
+                                {
+                                    HWND h = HWndDict[hWnd];
+                                    EventQueue.Raise(h, PlatformEventType.RawMouseMove, new RawMouseMoveEventArgs(h, (mouse.lLastX, mouse.lLastY)));
+                                }
+                            }
+                            else
+                            {
+                                // FIXME: We don't want to spam this for every WM_INPUT message...
+                                Logger?.LogError("MOUSE_MOVE_ABSOLUTE not supported yet. This might happen when using remote desktop. Open an issue on the OpenTK github if this happens to you.");
+                            }
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.NCHITTEST:
                     {
                         int x = Win32.GET_X_LPARAM(lParam);
@@ -728,7 +792,16 @@ namespace OpenTK.Platform.Native.Windows
                         int x = Win32.GET_X_LPARAM(lParam);
                         int y = Win32.GET_Y_LPARAM(lParam);
 
-                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(x, y)));
+                        // Get the window size as the WM_SIZE message only gives us the client size.
+                        bool success = Win32.GetWindowRect(h.HWnd, out Win32.RECT lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(lpRect.Width, lpRect.Height), new Vector2i(x, y)));
+
+                        EventQueue.Raise(h, PlatformEventType.WindowFramebufferResize, new WindowFramebufferResizeEventArgs(h, new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -810,23 +883,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         return IntPtr.Zero;
                     }
-                case WM.DEVICECHANGE:
-                    {
-                        DBT dbt = (DBT)wParam;
-                        switch (dbt)
-                        {
-                            case DBT.DeviceArrival:
-                            case DBT.DeviceRemoveComplete:
-                                // FIXME: Implement joystick events!
-                                // JoystickComponent.UpdateJoysticks();
-                                break;
-                            default:
-                                break;
-                        }
-
-                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                 case WM.DISPLAYCHANGE:
                     {
                         // FIXME: We should not only look for changes in resolution and connectivity, we should also look for
@@ -842,20 +898,18 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DPICHANGED:
                     {
-                        const int USER_DEFAULT_SCREEN_DPI = 96;
-
                         int dpiX = (int)(wParam.ToUInt32() & Win32.LoWordMask);
                         int dpiY = (int)((wParam.ToUInt32() & Win32.HiWordMask) >> 16);
 
-                        float scaleX = dpiX / (float)USER_DEFAULT_SCREEN_DPI;
-                        float scaleY = dpiY / (float)USER_DEFAULT_SCREEN_DPI;
+                        float scaleX = dpiX / (float)Win32.USER_DEFAULT_SCREEN_DPI;
+                        float scaleY = dpiY / (float)Win32.USER_DEFAULT_SCREEN_DPI;
 
                         Logger?.LogDebug($"DPI Changed! dpiY: {dpiY}, dpiX: {dpiX}");
 
                         HWND h = HWndDict[hWnd];
 
                         // FIXME: Should we send this message before or after resizing the application?
-                        EventQueue.Raise(h, PlatformEventType.WindowDpiChange, new WindowDpiChangeEventArgs(h, dpiX, dpiY, scaleX, scaleY));
+                        EventQueue.Raise(h, PlatformEventType.WindowScaleChange, new WindowScaleChangeEventArgs(h, scaleX, scaleY));
 
                         // FIXME: glfw limits this to windows 10 only??
                         // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/win32_window.c#L1186
@@ -906,14 +960,6 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETTINGCHANGE:
                     {
                         ShellComponent.CheckPreferredThemeChange();
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
-                case WM.CLIPBOARDUPDATE:
-                    {
-                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
-
-                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -1033,8 +1079,16 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void ProcessEvents(bool waitForEvents = false)
+        public void ProcessEvents(bool waitForEvents)
         {
+            if (waitForEvents)
+            {
+                // Wait for one message then we go into the PeekMessage loop.
+                int ret = Win32.GetMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0);
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+            }
+
             while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
             {
                 Win32.TranslateMessage(in lpMsg);
@@ -1442,6 +1496,15 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // The client size on windows is already in pixels.
+            GetClientSize(hwnd, out width, out height);
+        }
+
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1811,6 +1874,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WindowBorderStyle.FixedBorder:
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyle &= ~WindowStyles.ThickFrame;
+                    windowStyle &= ~WindowStyles.MaximizeBox;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
@@ -1957,6 +2021,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public bool IsFocused(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.HWnd == Win32.GetForegroundWindow();
+        }
+
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -2034,6 +2106,16 @@ namespace OpenTK.Platform.Native.Windows
 
             x = point.X;
             y = point.Y;
+        }
+
+        /// <inheritdoc/>
+        public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+            uint dpi = Win32.GetDpiForWindow(hwnd.HWnd);
+            float scale = dpi / (float)Win32.USER_DEFAULT_SCREEN_DPI;
+            scaleX = scale;
+            scaleY = scale;
         }
 
         /// <summary>

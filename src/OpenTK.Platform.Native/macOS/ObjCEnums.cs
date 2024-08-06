@@ -1,6 +1,19 @@
 ﻿using System;
 namespace OpenTK.Platform.Native.macOS
 {
+    [Flags]
+    internal enum NSDragOperation : ulong
+    {
+        None = 0,
+        Copy = 1,
+        Link = 2,
+        Generic = 4,
+        Private = 8,
+        Move = 16,
+        Delete = 32,
+        Every = ulong.MaxValue,
+    }
+    
     internal enum CFStringEncoding : uint
     {
         // Incomplete enum...
@@ -9,6 +22,13 @@ namespace OpenTK.Platform.Native.macOS
         UTF16BE = 0x1000_0100,
         UTF16LE = 0x1400_0100,
         ASCII = 0x0000_0600,
+    }
+
+    internal enum NSAlertStyle : uint
+    {
+        NSAlertStyleWarning = 0,
+        NSAlertStyleInformational = 1,
+        NSAlertStyleCritical = 2,
     }
 
     internal enum NSStringEncoding : ulong
@@ -222,6 +242,20 @@ namespace OpenTK.Platform.Native.macOS
         Small = 1,
         Medium = 2,
         Large = 3,
+    }
+
+    internal enum NSModalResponse : int
+    {
+        OK = 1,
+        Cancel = 0,
+
+        Stop = (-1000), // Also used as the default response for sheets
+        Abort = (-1001),
+        Continue = (-1002),
+
+        AlertFirstButtonReturn = 1000,
+        AlertSecondButtonReturn = 1001,
+        AlertThirdButtonReturn = 1002,
     }
 
     [Flags]

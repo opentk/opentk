@@ -372,8 +372,8 @@ namespace OpenTK.Platform.Native.Windows
 
             internal struct Union
             {
-                char* lptszActionName;
-                uint uResIdString;
+                public char* lptszActionName;
+                public uint uResIdString;
             }
         }
 

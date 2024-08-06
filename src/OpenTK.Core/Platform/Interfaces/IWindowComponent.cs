@@ -27,23 +27,35 @@ namespace OpenTK.Core.Platform
         // FIXME: Make most Get* functions return their value instead of going through out parameters.
 
         /// <summary>
-        /// True when the driver supports setting the window icon.
+        /// True when the driver supports setting the window icon using <see cref="SetIcon(WindowHandle, IconHandle)"/>.
         /// </summary>
+        /// <seealso cref="SetIcon(WindowHandle, IconHandle)"/>
+        // FIXME: Maybe we can remove this as all backends currently return true.
+        // - Noggin_bops 2024-08-01
         bool CanSetIcon { get; }
 
         /// <summary>
-        /// True when the driver can provide the display the window is in.
+        /// True when the driver can provide the display the window is in using <see cref="GetDisplay(WindowHandle)"/>.
         /// </summary>
+        /// <seealso cref="GetDisplay(WindowHandle)"/>
+        // FIXME: Maybe we can remove this as this is currently possible on all our supported backends.
+        // - Noggin_bops 2024-08-01
         bool CanGetDisplay { get; }
 
         /// <summary>
-        /// True when the driver supports setting the cursor of the window.
+        /// True when the driver supports setting the cursor of the window using <see cref="SetCursor(WindowHandle, CursorHandle?)"/>.
         /// </summary>
+        /// <seealso cref="SetCursor(WindowHandle, CursorHandle?)"/>
+        // FIXME: Maybe we can remove this as all backends currently return true.
+        // - Noggin_bops 2024-08-01
         bool CanSetCursor { get; }
 
         /// <summary>
-        /// True when the driver supports capturing the cursor in a window.
+        /// True when the driver supports capturing the cursor in a window using <see cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>.
         /// </summary>
+        /// <seealso cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/>
+        // FIXME: This returns true on all currently supported platforms, maybe we can remove this.
+        // - Noggin_bops 2024-08-01
         bool CanCaptureCursor { get; }
 
         /// <summary>
@@ -65,7 +77,7 @@ namespace OpenTK.Core.Platform
         /// Processes platform events and sends them to the <see cref="EventQueue"/>.
         /// </summary>
         /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
-        void ProcessEvents(bool waitForEvents = false);
+        void ProcessEvents(bool waitForEvents);
 
         /// <summary>
         /// Create a window object.
@@ -77,7 +89,7 @@ namespace OpenTK.Core.Platform
         WindowHandle Create(GraphicsApiHints hints);
 
         /// <summary>
-        /// Destroy a window object.
+        /// Destroy a window object. After a window has been destroyed the handle should no longer be used in any function other than <see cref="IsWindowDestroyed(WindowHandle)"/>.
         /// </summary>
         /// <param name="handle">Handle to a window object.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
@@ -125,9 +137,8 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <param name="icon">Handle to an icon object, or null to revert to default.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> or <paramref name="icon"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support setting the window icon. See <see cref="CanSetIcon"/>.
-        /// </exception>
+        /// <exception cref="PalNotImplementedException">Backend does not support setting the window icon. See <see cref="CanSetIcon"/>.</exception>
+        /// <seealso cref="CanSetIcon"/>
         void SetIcon(WindowHandle handle, IconHandle icon);
 
         /// <summary>
@@ -243,6 +254,15 @@ namespace OpenTK.Core.Platform
         void SetClientBounds(WindowHandle handle, int x, int y, int width, int height);
 
         /// <summary>
+        /// Get the size of the window framebuffer in pixels.
+        /// Use this value when calls to graphics APIs that want pixels, e.g. GL.Viewport().
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">Width in pixels of the window framebuffer.</param>
+        /// <param name="height">Height in pixels of the window framebuffer.</param>
+        void GetFramebufferSize(WindowHandle handle, out int width, out int height);
+
+        /// <summary>
         /// Gets the maximum size of the client area.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -280,9 +300,8 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <returns>The display handle the window is in.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support finding the window display. <see cref="CanGetDisplay"/>.
-        /// </exception>
+        /// <exception cref="PalNotImplementedException">Backend does not support finding the window display. <see cref="CanGetDisplay"/>.</exception>
+        /// <seealso cref="CanGetDisplay"/>
         DisplayHandle GetDisplay(WindowHandle handle);
 
         /// <summary>
@@ -394,12 +413,9 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="cursor">Handle to a cursor object, or null for hidden cursor.</param>
-        /// <exception cref="ArgumentNullException">
-        ///     <paramref name="handle"/> is null.
-        /// </exception>
-        /// <exception cref="PalNotImplementedException">
-        ///     Driver does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.
-        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        /// <exception cref="PalNotImplementedException">Backend does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.</exception>
+        /// <seealso cref="CanSetCursor"/>
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
 
         /// <summary>
@@ -415,7 +431,15 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="mode">The cursor capture mode.</param>
+        /// <seealso cref="CanCaptureCursor"/>
         void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
+
+        /// <summary>
+        /// Returns true if the given window has input focus.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <returns>If the window has input focus.</returns>
+        bool IsFocused(WindowHandle handle);
 
         /// <summary>
         /// Gives the window input focus.
@@ -450,5 +474,14 @@ namespace OpenTK.Core.Platform
         /// <param name="y">The screen y coordinate.</param>
         /// FIXME: Change to use Vector2i instead of x and y variables.
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
+
+        /// <summary>
+        /// Returns the current scale factor of this window.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="scaleX">The x scale factor of the window.</param>
+        /// <param name="scaleY">The y scale factor of the window.</param>
+        /// <seealso cref="WindowScaleChangeEventArgs"/>
+        void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY);
     }
 }

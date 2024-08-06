@@ -78,7 +78,6 @@ namespace OpenTK.Backends.Tests
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 
             CreateDeviceResources();
-            SetKeyMappings();
 
             SetPerFrameImGuiData(1f / 60f);
         }
@@ -310,10 +309,10 @@ void main()
         {
             ImGuiIOPtr io = ImGui.GetIO();
 
-            io.KeyCtrl = data.KeysPressed[(int)Key.LeftControl] || data.KeysPressed[(int)Key.RightControl];
-            io.KeyAlt = data.KeysPressed[(int)Key.LeftAlt] || data.KeysPressed[(int)Key.RightAlt];
-            io.KeyShift = data.KeysPressed[(int)Key.LeftShift] || data.KeysPressed[(int)Key.RightShift];
-            io.KeySuper = data.KeysPressed[(int)Key.LeftGUI] || data.KeysPressed[(int)Key.RightGUI];
+            //io.KeyCtrl = data.KeysPressed[(int)Key.LeftControl] || data.KeysPressed[(int)Key.RightControl];
+            //io.KeyAlt = data.KeysPressed[(int)Key.LeftAlt] || data.KeysPressed[(int)Key.RightAlt];
+            //io.KeyShift = data.KeysPressed[(int)Key.LeftShift] || data.KeysPressed[(int)Key.RightShift];
+            //io.KeySuper = data.KeysPressed[(int)Key.LeftGUI] || data.KeysPressed[(int)Key.RightGUI];
         }
 
         internal void MouseScroll(Vector2 offset)
@@ -322,32 +321,6 @@ void main()
 
             io.MouseWheel = offset.Y;
             io.MouseWheelH = offset.X;
-        }
-
-        private static void SetKeyMappings()
-        {
-            ImGuiIOPtr io = ImGui.GetIO();
-            io.KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
-            io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)Key.LeftArrow;
-            io.KeyMap[(int)ImGuiKey.RightArrow] = (int)Key.RightArrow;
-            io.KeyMap[(int)ImGuiKey.UpArrow] = (int)Key.UpArrow;
-            io.KeyMap[(int)ImGuiKey.DownArrow] = (int)Key.DownArrow;
-            io.KeyMap[(int)ImGuiKey.PageUp] = (int)Key.PageUp;
-            io.KeyMap[(int)ImGuiKey.PageDown] = (int)Key.PageDown;
-            io.KeyMap[(int)ImGuiKey.Home] = (int)Key.Home;
-            io.KeyMap[(int)ImGuiKey.End] = (int)Key.End;
-            io.KeyMap[(int)ImGuiKey.Delete] = (int)Key.Delete;
-            io.KeyMap[(int)ImGuiKey.Backspace] = (int)Key.Backspace;
-            io.KeyMap[(int)ImGuiKey.Enter] = (int)Key.Return;
-            io.KeyMap[(int)ImGuiKey.Escape] = (int)Key.Escape;
-            io.KeyMap[(int)ImGuiKey.Space] = (int)Key.Space;
-            io.KeyMap[(int)ImGuiKey.A] = (int)Key.A;
-            io.KeyMap[(int)ImGuiKey.C] = (int)Key.C;
-            io.KeyMap[(int)ImGuiKey.V] = (int)Key.V;
-            io.KeyMap[(int)ImGuiKey.X] = (int)Key.X;
-            io.KeyMap[(int)ImGuiKey.Y] = (int)Key.Y;
-            io.KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
-            io.KeyMap[(int)ImGuiKey.P] = (int)Key.P;
         }
 
         private void RenderImDrawData(ImDrawDataPtr draw_data)

@@ -2,6 +2,7 @@
 using OpenTK.Core.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -203,21 +204,21 @@ void main()
         {
             if (args is WindowResizeEventArgs resize)
             {
-                var prevContext = Program.OpenGLComp.GetCurrentContext();
-                Program.OpenGLComp.SetCurrentContext(Context);
+                var prevContext = Toolkit.OpenGL.GetCurrentContext();
+                Toolkit.OpenGL.SetCurrentContext(Context);
 
                 GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
 
                 // Re-render the window to make resize live.
                 Render();
 
-                Program.OpenGLComp.SetCurrentContext(prevContext);
+                Toolkit.OpenGL.SetCurrentContext(prevContext);
             }
         }
 
-        public void Update(float deltaTime)
+        public bool Update(float deltaTime)
         {
-
+            return false;
         }
 
         public void Render()
@@ -229,7 +230,7 @@ void main()
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
-            Program.OpenGLComp.SwapBuffers(Context);
+            Toolkit.OpenGL.SwapBuffers(Context);
         }
 
         public void Deinitialize()

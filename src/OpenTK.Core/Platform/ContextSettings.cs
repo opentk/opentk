@@ -1,71 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK.Core.Utility;
+
+#nullable enable
 
 namespace OpenTK.Core.Platform
 {
-    // FIXME: Some way of relaying the actually chosen values to the user.
-
     /// <summary>
-    /// Settings for creating OpenGL contexts.
+    /// Delegate used to select appropriate context values to use.
     /// </summary>
-    public class ContextSettings
+    /// <param name="options">A list of possible context values.</param>
+    /// <param name="requested">The user requested context values.</param>
+    /// <param name="logger">A logger to use for logging.</param>
+    /// <returns>The index of the context value to use.</returns>
+    public delegate int ContextValueSelector(IReadOnlyList<ContextValues> options, ContextValues requested, ILogger? logger);
+
+    // FIXME: Better name.
+    public struct ContextValues : IEquatable<ContextValues>
     {
-        /// <summary>
-        /// If double buffering should be enabled.
-        /// </summary>
-        public bool DoubleBuffer { get; set; }
+        public ulong ID;
 
-        /// <summary>
-        /// If sRGB default framebuffer should be enabled.
-        /// </summary>
-        public bool sRGBFramebuffer { get; set; }
-
-        /// <summary>
-        /// If the backbuffer should support multisample.
-        /// </summary>
-        public bool Multisample { get; set; }
-
-        /// <summary>
-        /// How many samples the backbuffer should have if it supports multisampling.
-        /// </summary>
-        public int Samples { get; set; }
-
-        /// <summary>
-        /// The number of bits to represent the red channel.
-        /// </summary>
-        public int RedBits { get; set; } = 8;
-
-        /// <summary>
-        /// The number of bits to represent the green channel.
-        /// </summary>
-        public int GreenBits { get; set; } = 8;
-
-        /// <summary>
-        /// The number of bits to represent the blue channel.
-        /// </summary>
-        public int BlueBits { get; set; } = 8;
-
-        /// <summary>
-        /// The number of bits to represent the alpha channel.
-        /// </summary>
-        public int AlphaBits { get; set; } = 8;
-
-        /// <summary>
-        /// The number of bits to represent the depth backbuffer.
-        /// </summary>
-        public ContextDepthBits DepthBits { get; set; } = ContextDepthBits.Depth24;
-
-        /// <summary>
-        /// The number of bits to represent the stencil backbuffer.
-        /// </summary>
-        public ContextStencilBits StencilBits { get; set; } = ContextStencilBits.Stencil8;
-    }
-
-    public struct ContextValues
-    {
         public int RedBits;
         public int GreenBits;
         public int BlueBits;
@@ -74,8 +28,488 @@ namespace OpenTK.Core.Platform
         public int StencilBits;
         public bool DoubleBuffered;
         public bool SRGBFramebuffer;
-        public bool Multisample;
+        public ContextPixelFormat PixelFormat;
+        public ContextSwapMethod SwapMethod;
         public int Samples;
+
+        // FIXME: Add stereo?
+        // FIXME: Add transparency?
+
+        /// <summary>
+        /// Default context values selector. Prioritizes the requested values with a series of "relaxations" to find a close match.<br/>
+        /// The relaxations are done in the following order:
+        /// <list type="number">
+        /// <item><description>If no exact match is found try find a format with a larger number of color, depth, or stencil bits.</description></item>
+        /// <item><description>If <see cref="SRGBFramebuffer"/> == false is requested, <see cref="SRGBFramebuffer"/> == true formats will be accepted.</description></item>
+        /// <item><description>If <see cref="SwapMethod"/> == <see cref="ContextSwapMethod.Undefined"/>, any swap method will be accepted.</description></item>
+        /// <item><description>If <see cref="SRGBFramebuffer"/> == true, accept <see cref="SRGBFramebuffer"/> == false formats.</description></item>
+        /// <item><description>Accept any <see cref="PixelFormat"/>.</description></item>
+        /// <item><description>Decrement <see cref="Samples"/> by one at a time until 0 and see if any alternative sample counts are possible.</description></item>
+        /// <item><description>Accept any <see cref="SwapMethod"/>.</description></item>
+        /// <item><description>Allow one of color bits (<see cref="RedBits"/>, <see cref="GreenBits"/>, <see cref="BlueBits"/>, and <see cref="AlphaBits"/>), <see cref="DepthBits"/>, or <see cref="StencilBits"/> to be lower than requested.</description></item>
+        /// <item><description>Allow two of color bits (<see cref="RedBits"/>, <see cref="GreenBits"/>, <see cref="BlueBits"/>, and <see cref="AlphaBits"/>), <see cref="DepthBits"/>, or <see cref="StencilBits"/> to be lower than requested.</description></item>
+        /// <item><description>Relax all bit requirements.</description></item>
+        /// <item><description>If all relaxations fail, select the first option in the list.</description></item>
+        /// </list>
+        /// </summary>
+        /// <param name="options">The possible context values.</param>
+        /// <param name="requested">The requested context values.</param>
+        /// <param name="logger">A logger to use for logging.</param>
+        /// <returns>The index of the selected "best match" context values.</returns>
+        public static int DefaultValuesSelector(IReadOnlyList<ContextValues> options, ContextValues requested, ILogger? logger)
+        {
+            if (options.Count == 0)
+            {
+                // FIXME: Maybe better exception?
+                throw new InvalidOperationException("There needs to be at least one ContextValues option.");
+            }
+
+            logger?.LogDebug("Default context values matcher:");
+
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (IsEqualExcludingID(options[i], requested))
+                {
+                    logger?.LogDebug("Found exact match!");
+                    return i;
+                }
+            }
+
+            // We have to relax some requirements.
+
+            // See if there are any formats with greater bit depth.
+            logger?.LogDebug("No exact match, looking for context values with greater or equal color depth.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
+                    HasEqualSRGB(options[i], requested) &&
+                    HasEqualPixelFormat(options[i], requested) &&
+                    HasEqualSwapMethod(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format with greater color depth!");
+                    return i;
+                }
+            }
+
+            // Relax requested SRGBFramebuffer == false to match formats with sRGB support.
+            if (requested.SRGBFramebuffer == false)
+            {
+                logger?.LogDebug("No match found, relaxing SRGBFramebuffer == false to match with SRGBFramebuffer == true.");
+                for (int i = 0; i < options.Count; i++)
+                {
+                    if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                        HasGreaterOrEqualDepthBits(options[i], requested) &&
+                        HasGreaterOrEqualStencilBits(options[i], requested) &&
+                        HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
+                        (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
+                        HasEqualPixelFormat(options[i], requested))
+                    {
+                        logger?.LogDebug("Found matching format with SRGBFramebuffer == true!");
+                        return i;
+                    }
+                }
+            }
+
+            // Relax requested ContextSwapMethod.Undefined to match with any swap method.
+            if (requested.SwapMethod == ContextSwapMethod.Undefined)
+            {
+                logger?.LogDebug("No match found, relaxing ContextSwapMethod.Undefined to match with any swap method.");
+                for (int i = 0; i < options.Count; i++)
+                {
+                    if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                        HasGreaterOrEqualDepthBits(options[i], requested) &&
+                        HasGreaterOrEqualStencilBits(options[i], requested) &&
+                        HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
+                        (HasEqualSRGB(options[i], requested) || requested.SRGBFramebuffer == false) &&
+                        HasEqualPixelFormat(options[i], requested))
+                    {
+                        logger?.LogDebug("Found matching format with any swap format!");
+                        return i;
+                    }
+                }
+            }
+
+            // Relax srgb
+            logger?.LogDebug("No match found, relaxing sRGB framebuffer requirement.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
+                    HasEqualPixelFormat(options[i], requested) &&
+                    (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
+                {
+                    logger?.LogDebug("Found matching format without sRGB framebuffer!");
+                    return i;
+                }
+            }
+
+            // Relax pixel format
+            logger?.LogDebug("No match found, relaxing ContextPixelFormat to match with any pixel format.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualMSAA(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested) &&
+                    (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
+                {
+                    logger?.LogDebug("Found matching format after relaxing ContextPixelFormat!");
+                    return i;
+                }
+            }
+
+            // Relax MSAA
+            logger?.LogDebug("No match found, relaxing MSAA samples.");
+            while (requested.Samples > 0)
+            {
+                requested.Samples--;
+                for (int i = 0; i < options.Count; i++)
+                {
+                    if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                        HasGreaterOrEqualDepthBits(options[i], requested) &&
+                        HasGreaterOrEqualStencilBits(options[i], requested) &&
+                        HasEqualMSAA(options[i], requested) &&
+                        HasEqualDoubleBuffer(options[i], requested) &&
+                        (requested.SwapMethod == ContextSwapMethod.Undefined || HasEqualSwapMethod(options[i], requested)))
+                    {
+                        logger?.LogDebug($"Found match with {requested.Samples} MSAA samples.");
+                        return i;
+                    }
+                }
+            }
+
+            // Relax swap method completely
+            logger?.LogDebug("No match found, relaxing swap method completely.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing swap method.");
+                    return i;
+                }
+            }
+
+            // FIXME: When we get here we actually want to get the "closest" format
+            // and not just remove every bit depth test completely.
+
+            // Relax color bits to allow one of color, depth or stencil bits to be lower.
+            logger?.LogDebug("No match found, relaxing one of color, depth, or stencil bits");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing stencil bits.");
+                    return i;
+                }
+
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color bits.");
+                    return i;
+                }
+            }
+
+            // Relax color bits to allow two of color, depth or stencil bits to be lower.
+            logger?.LogDebug("No match found, relaxing two of color, depth, or stencil bits");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasGreaterOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing stencil and depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasLessOrEqualDepthBits(options[i], requested) &&
+                    HasGreaterOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color and depth bits.");
+                    return i;
+                }
+
+                if (HasLessOrEqualColorBits(options[i], requested) &&
+                    HasGreaterOrEqualDepthBits(options[i], requested) &&
+                    HasLessOrEqualStencilBits(options[i], requested) &&
+                    HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing color and stencil bits.");
+                    return i;
+                }
+            }
+
+            // Relax all bits to allow lower bits.
+            logger?.LogDebug("No match found, relaxing all bits.");
+            for (int i = 0; i < options.Count; i++)
+            {
+                if (HasEqualDoubleBuffer(options[i], requested))
+                {
+                    logger?.LogDebug("Found matching format after relaxing all bits.");
+                    return i;
+                }
+            }
+
+            // FIXME: More relaxations.
+
+            // All else has failed, return the first format.
+            logger?.LogDebug("No match found, all relaxations failed. Using the first format in the list...");
+            return 0;
+        }
+
+        public static bool IsEqualExcludingID(ContextValues option, ContextValues requested)
+        {
+            return option.RedBits == requested.RedBits &&
+                option.GreenBits == requested.GreenBits &&
+                option.BlueBits == requested.BlueBits &&
+                option.AlphaBits == requested.AlphaBits &&
+                option.DepthBits == requested.DepthBits &&
+                option.StencilBits == requested.StencilBits &&
+                option.DoubleBuffered == requested.DoubleBuffered &&
+                option.SRGBFramebuffer == requested.SRGBFramebuffer &&
+                option.PixelFormat == requested.PixelFormat &&
+                option.SwapMethod == requested.SwapMethod &&
+                option.Samples == requested.Samples;
+        }
+
+        public static bool HasEqualColorBits(ContextValues option, ContextValues requested)
+        {
+            return option.RedBits == requested.RedBits &&
+                option.GreenBits == requested.GreenBits &&
+                option.BlueBits == requested.BlueBits &&
+                option.AlphaBits == requested.AlphaBits;
+        }
+
+        public static bool HasGreaterOrEqualColorBits(ContextValues option, ContextValues requested)
+        {
+            return option.RedBits >= requested.RedBits &&
+                option.GreenBits >= requested.GreenBits &&
+                option.BlueBits >= requested.BlueBits &&
+                option.AlphaBits >= requested.AlphaBits;
+        }
+
+        public static bool HasLessOrEqualColorBits(ContextValues option, ContextValues requested)
+        {
+            return option.RedBits <= requested.RedBits &&
+                option.GreenBits <= requested.GreenBits &&
+                option.BlueBits <= requested.BlueBits &&
+                option.AlphaBits <= requested.AlphaBits;
+        }
+
+        public static bool HasEqualDepthBits(ContextValues option, ContextValues requested)
+        {
+            return option.DepthBits == requested.DepthBits;
+        }
+
+        public static bool HasGreaterOrEqualDepthBits(ContextValues option, ContextValues requested)
+        {
+            return option.DepthBits >= requested.DepthBits;
+        }
+
+        public static bool HasLessOrEqualDepthBits(ContextValues option, ContextValues requested)
+        {
+            return option.DepthBits <= requested.DepthBits;
+        }
+
+        public static bool HasEqualStencilBits(ContextValues option, ContextValues requested)
+        {
+            return option.StencilBits == requested.StencilBits;
+        }
+
+        public static bool HasGreaterOrEqualStencilBits(ContextValues option, ContextValues requested)
+        {
+            return option.StencilBits >= requested.StencilBits;
+        }
+
+        public static bool HasLessOrEqualStencilBits(ContextValues option, ContextValues requested)
+        {
+            return option.StencilBits <= requested.StencilBits;
+        }
+
+        public static bool HasEqualMSAA(ContextValues option, ContextValues requested)
+        {
+            return option.Samples == requested.Samples;
+        }
+
+        public static bool HasEqualDoubleBuffer(ContextValues option, ContextValues requested)
+        {
+            return option.DoubleBuffered == requested.DoubleBuffered;
+        }
+
+        public static bool HasEqualSRGB(ContextValues option, ContextValues requested)
+        {
+            return option.SRGBFramebuffer == requested.SRGBFramebuffer;
+        }
+
+        public static bool HasEqualPixelFormat(ContextValues option, ContextValues requested)
+        {
+            return option.PixelFormat == requested.PixelFormat;
+        }
+
+        public static bool HasEqualSwapMethod(ContextValues option, ContextValues requested)
+        {
+            return option.SwapMethod == requested.SwapMethod;
+        }
+
+        public ContextValues(ulong id, int redBits, int greenBits, int blueBits, int alphaBits, int depthBits, int stencilBits, bool doubleBuffered, bool sRGBFramebuffer, ContextPixelFormat pixelFormat, ContextSwapMethod swapMethod, int samples)
+        {
+            ID = id;
+            RedBits = redBits;
+            GreenBits = greenBits;
+            BlueBits = blueBits;
+            AlphaBits = alphaBits;
+            DepthBits = depthBits;
+            StencilBits = stencilBits;
+            DoubleBuffered = doubleBuffered;
+            SRGBFramebuffer = sRGBFramebuffer;
+            PixelFormat = pixelFormat;
+            SwapMethod = swapMethod;
+            Samples = samples;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ContextValues values && Equals(values);
+        }
+
+        public bool Equals(ContextValues other)
+        {
+            return // ID == other.ID &&
+                   RedBits == other.RedBits &&
+                   GreenBits == other.GreenBits &&
+                   BlueBits == other.BlueBits &&
+                   AlphaBits == other.AlphaBits &&
+                   DepthBits == other.DepthBits &&
+                   StencilBits == other.StencilBits &&
+                   DoubleBuffered == other.DoubleBuffered &&
+                   SRGBFramebuffer == other.SRGBFramebuffer &&
+                   PixelFormat == other.PixelFormat &&
+                   SwapMethod == other.SwapMethod &&
+                   Samples == other.Samples;
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            // hash.Add(ID);
+            hash.Add(RedBits);
+            hash.Add(GreenBits);
+            hash.Add(BlueBits);
+            hash.Add(AlphaBits);
+            hash.Add(DepthBits);
+            hash.Add(StencilBits);
+            hash.Add(DoubleBuffered);
+            hash.Add(SRGBFramebuffer);
+            hash.Add(PixelFormat);
+            hash.Add(SwapMethod);
+            hash.Add(Samples);
+            return hash.ToHashCode();
+        }
+
+        public static bool operator ==(ContextValues left, ContextValues right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ContextValues left, ContextValues right)
+        {
+            return !(left == right);
+        }
+
+        public override readonly string ToString()
+        {
+            return $"ID: {ID}, " +
+                $"RedBits: {RedBits}, " +
+                $"GreenBits: {GreenBits}, " +
+                $"BlueBits: {BlueBits}, " +
+                $"AlphaBits: {AlphaBits}, " +
+                $"DepthBits: {DepthBits}, " +
+                $"StencilBits: {StencilBits}, " +
+                $"DoubleBuffered: {DoubleBuffered}, " +
+                $"SRGBFramebuffer: {SRGBFramebuffer}, " +
+                $"PixelFormat: {PixelFormat}, " +
+                $"SwapMethod: {SwapMethod}, " +
+                $"Samples: {Samples}";
+        }
+    }
+
+    /// <summary>
+    /// Defined the pixel format type of the context.
+    /// This is used to differentiate between "normal" fixed point LDR formats
+    /// and floating point HDR formats.
+    /// </summary>
+    public enum ContextPixelFormat
+    {
+        /// <summary>
+        /// Normal fixed point RGBA format specified by the color bits.
+        /// </summary>
+        RGBA,
+
+        /// <summary>
+        /// Floating point RGBA pixel format specified by
+        /// <see href="https://registry.khronos.org/OpenGL/extensions/ARB/ARB_color_buffer_float.txt">ARB_color_buffer_float</see>
+        /// or
+        /// <see href="https://registry.khronos.org/OpenGL/extensions/ATI/WGL_ATI_pixel_format_float.txt">WGL_ATI_pixel_format_float</see>.
+        /// </summary>
+        RGBAFloat,
+
+        /// <summary>
+        /// From <see href="https://registry.khronos.org/OpenGL/extensions/EXT/EXT_packed_float.txt">EXT_packed_float</see>.
+        /// Pixel format is unsigned 10F_11F_11F format.
+        /// </summary>
+        RGBAPackedFloat,
+    }
+
+    /// <summary>
+    /// Defines differnet semantics for what happens to the backbuffer after a swap.
+    /// </summary>
+    public enum ContextSwapMethod
+    {
+        /// <summary>
+        /// The contents of the backbuffer after a swap is undefined.
+        /// </summary>
+        Undefined,
+
+        /// <summary>
+        /// The contents of the frontbuffer and backbuffer are exchanged after a swap.
+        /// </summary>
+        Exchange,
+
+        /// <summary>
+        /// The contents of the backbuffer are copied to the frontbuffer during a swap.
+        /// Leaving the contents of the backbuffer unchanged.
+        /// </summary>
+        Copy,
     }
 
     /// <summary>
@@ -89,6 +523,11 @@ namespace OpenTK.Core.Platform
         None = 0,
 
         /// <summary>
+        /// 16-bit depth buffer.
+        /// </summary>
+        Depth16 = 16,
+
+        /// <summary>
         /// 24-bit depth buffer.
         /// </summary>
         Depth24 = 24,
@@ -97,6 +536,8 @@ namespace OpenTK.Core.Platform
         /// 32-bit depth buffer.
         /// </summary>
         Depth32 = 32,
+
+        // FIXME: Floating point depth buffers??
     }
 
     /// <summary>
@@ -118,5 +559,30 @@ namespace OpenTK.Core.Platform
         /// 8-bit stencil buffer.
         /// </summary>
         Stencil8 = 8,
+    }
+
+    /// <summary>
+    /// See <see href="https://registry.khronos.org/OpenGL/extensions/ARB/ARB_robustness.txt">GL_ARB_robustness</see> extension for details.
+    /// </summary>
+    public enum ContextResetNotificationStrategy
+    {
+        NoResetNotification,
+        LoseContextOnReset,
+    }
+
+    /// <summary>
+    /// See <see href="https://registry.khronos.org/OpenGL/extensions/KHR/KHR_context_flush_control.txt">KHR_context_flush_control</see> extension for details.
+    /// </summary>
+    public enum ContextReleaseBehaviour
+    {
+        /// <summary>
+        /// No flush is done when the context is released (made not current).
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// A flush is done when the context is released (made not current).
+        /// </summary>
+        Flush,
     }
 }

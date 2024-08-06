@@ -11,7 +11,7 @@ namespace OpenTK.Core.Platform
         // FIXME: Add API for getting the display orientation!
 
         /// <summary>
-        /// True if the driver can get the virtual position of the display.
+        /// True if the driver can get the virtual position of the display using <see cref="GetVirtualPosition(DisplayHandle, out int, out int)"/>.
         /// </summary>
         bool CanGetVirtualPosition { get; }
 
@@ -41,7 +41,7 @@ namespace OpenTK.Core.Platform
         DisplayHandle OpenPrimary();
 
         /// <summary>
-        /// Destroy a display handle.
+        /// Close a display handle.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>

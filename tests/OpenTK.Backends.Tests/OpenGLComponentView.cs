@@ -14,8 +14,11 @@ namespace OpenTK.Backends.Tests
 {
     public class OpenGLComponentView : View
     {
+        /// <inheritdoc/>
         public override string Title => "OpenGL";
-        public override bool IsVisible => Program.OpenGLComp != null;  // Yes it won't fail, for now :)
+
+        /// <inheritdoc/>
+        public override bool IsVisible => Toolkit.OpenGL != null;  // Yes it won't fail, for now :)
 
         private bool canCreateFromWindow;
         private bool canCreateFromSurface;
@@ -44,9 +47,9 @@ namespace OpenTK.Backends.Tests
 
         public override void Initialize()
         {
-            try { canCreateFromWindow =  Program.OpenGLComp.CanCreateFromWindow; }  catch { canCreateFromWindow = false; }
-            try { canCreateFromSurface = Program.OpenGLComp.CanCreateFromSurface; } catch { canCreateFromSurface = false; }
-            try { canCanShareContexts =  Program.OpenGLComp.CanShareContexts; }     catch { canCanShareContexts = false; }
+            try { canCreateFromWindow =  Toolkit.OpenGL.CanCreateFromWindow; }  catch { canCreateFromWindow = false; }
+            try { canCreateFromSurface = Toolkit.OpenGL.CanCreateFromSurface; } catch { canCreateFromSurface = false; }
+            try { canCanShareContexts =  Toolkit.OpenGL.CanShareContexts; }     catch { canCanShareContexts = false; }
 
             glVersion = GL.GetString(StringName.Version) ?? "";
             glslVersion = GL.GetString(StringName.ShadingLanguageVersion) ?? "";
@@ -59,7 +62,7 @@ namespace OpenTK.Backends.Tests
 
             for(int i = 0; i < numExtensions; i++)
             {
-                // FIXME: odd c# binding???
+                // FIXME: odd c# binding?
                 string? extension = GL.GetStringi(StringName.Extensions, (uint)i);
 
                 // Doubt this will ever hit.
@@ -132,7 +135,7 @@ namespace OpenTK.Backends.Tests
                 else
                 {
                     var appWindow = Program.ApplicationWindows[selectedWindow];
-                    string title = Program.WindowComp.GetTitle(appWindow.Window);
+                    string title = Toolkit.Window.GetTitle(appWindow.Window);
                     windowTitle = $"{title} ({(appWindow.Context == null ? "no context" : "opengl")})";
                 }
                 
@@ -141,7 +144,7 @@ namespace OpenTK.Backends.Tests
                     for (int i = 0; i < Program.ApplicationWindows.Count; i++)
                     {
                         var appWindow = Program.ApplicationWindows[i];
-                        string title = Program.WindowComp.GetTitle(appWindow.Window);
+                        string title = Toolkit.Window.GetTitle(appWindow.Window);
                         string label = $"{title} ({(appWindow.Context == null ? "no context" : "opengl")})";
 
                         if (ImGui.Selectable(label))
@@ -168,16 +171,15 @@ namespace OpenTK.Backends.Tests
                 {
                     if (ImGui.Button("Create"))
                     {
-                        OpenGLContextHandle newContext = Program.OpenGLComp.CreateFromWindow(appWindow.Window);
+                        OpenGLContextHandle newContext = Toolkit.OpenGL.CreateFromWindow(appWindow.Window);
                         appWindow.Context = newContext;
 
                         if (appWindow.Application != null)
                         {
-                            // FIXME: Make it only a single place where we actuall initialize test apps.
-                            Program.OpenGLComp.SetCurrentContext(appWindow.Context);
-                            // FIXME: Proper check for GLES.
-                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
-                            Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                            // FIXME: Make it only a single place where we actually initialize test apps.
+                            Toolkit.OpenGL.SetCurrentContext(appWindow.Context);
+                            appWindow.Application.Initialize(appWindow.Window, appWindow.Context, Program.UsingGLES);
+                            Toolkit.OpenGL.SetCurrentContext(Program.WindowContext);
                         }
                     }
                 }
@@ -188,12 +190,12 @@ namespace OpenTK.Backends.Tests
                         OpenGLContextHandle context = appWindow.Context;
                         if (appWindow.Application != null)
                         {
-                            Program.OpenGLComp.SetCurrentContext(appWindow.Context);
+                            Toolkit.OpenGL.SetCurrentContext(appWindow.Context);
                             appWindow.Application.Deinitialize();
-                            Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                            Toolkit.OpenGL.SetCurrentContext(Program.WindowContext);
                         }
                         appWindow.Context = null;
-                        Program.OpenGLComp.DestroyContext(context);
+                        Toolkit.OpenGL.DestroyContext(context);
                     }
                 }
             }
@@ -211,22 +213,19 @@ namespace OpenTK.Backends.Tests
                 appWindow.Application = TestApps.Create(lastActiveApp);
                 if (appWindow.Context != null)
                 {
-                    Program.OpenGLComp.SetCurrentContext(appWindow.Context);
-                    // FIXME: Proper check for GLES.
-                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, PlatformComponents.PreferANGLE);
-                    Program.OpenGLComp.SetCurrentContext(Program.WindowContext);
+                    Toolkit.OpenGL.SetCurrentContext(appWindow.Context);
+                    appWindow.Application.Initialize(appWindow.Window, appWindow.Context, Program.UsingGLES);
+                    Toolkit.OpenGL.SetCurrentContext(Program.WindowContext);
                 }
             }
 
             ImGui.EndDisabled();
 
             ImGui.SeparatorText("Main Context Information");
-            ImGui.BeginDisabled();
-            ImGui.InputText("OpenGL Version", ref glVersion, 1024);
-            ImGui.InputText("GLSL Version", ref glslVersion, 1024);
-            ImGui.InputText("OpenGL Vendor", ref vendorString, 1024);
-            ImGui.InputText("OpenGL Renderer", ref renderer, 1024);
-            ImGui.EndDisabled();
+            ImGuiUtils.ReadonlyText("OpenGL Version", glVersion);
+            ImGuiUtils.ReadonlyText("GLSL Version", glslVersion);
+            ImGuiUtils.ReadonlyText("OpenGL Vendor", vendorString);
+            ImGuiUtils.ReadonlyText("OpenGL Renderer", renderer);
 
             ImGui.SeparatorText(extensionHeader);
             ImGui.InputText(string.Empty, ref savePath, 4096); ImGui.SameLine();
@@ -235,7 +234,7 @@ namespace OpenTK.Backends.Tests
                 SaveOpenGLDetails(savePath);
             }
 
-            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, ImGuiChildFlags.Border, ImGuiWindowFlags.AlwaysVerticalScrollbar))
             {
                 const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow;
                 const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;

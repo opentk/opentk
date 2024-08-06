@@ -17,10 +17,11 @@ namespace OpenTK.Core.Platform
         Focus,
         WindowMove,
         WindowResize,
+        WindowFramebufferResize,
 
         WindowModeChange,
 
-        WindowDpiChange,
+        WindowScaleChange,
 
         MouseEnter,
 
@@ -28,6 +29,8 @@ namespace OpenTK.Core.Platform
         /// Signifies the event is of type <see cref="MouseMoveEventArgs"/>.
         /// </summary>
         MouseMove,
+
+        RawMouseMove,
 
         // FIXME: Maybe merge up and down events and add a property to the event?
         MouseDown,

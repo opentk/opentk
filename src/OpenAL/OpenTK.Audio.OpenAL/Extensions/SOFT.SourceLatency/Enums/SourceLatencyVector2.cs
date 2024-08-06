@@ -10,7 +10,7 @@ namespace OpenTK.Audio.OpenAL
         /// The playback position, expressed in fixed-point samples,
         /// along with the playback latency, expressed in nanoseconds (1/1000000000ths
         /// of a second). This attribute is read-only.
-        /// AL_SAMPLE_OFFSET_LATENCY_SOFT
+        /// AL_SAMPLE_OFFSET_LATENCY_SOFT.
         /// </summary>
         SampleOffsetLatency = 0x1200,
     }
@@ -22,7 +22,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>
         /// The playback position, along with the playback latency, both
         /// expressed in seconds. This attribute is read-only.
-        /// AL_SEC_OFFSET_LATENCY_SOFT
+        /// AL_SEC_OFFSET_LATENCY_SOFT.
         /// </summary>
         SecOffsetLatency = 0x1201,
     }

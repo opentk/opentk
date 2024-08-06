@@ -4,6 +4,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
 using static OpenTK.Platform.Native.macOS.CG;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -32,50 +33,37 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MiceInput)
-            {
-                throw new PalException(this, "MacOSMouseComponent can only initialize the MiceInput component.");
-            }
         }
 
         internal static void GetPosition(out double x, out double y)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
+            NFloat flippedY = CG.FlipYCoordinate(p.y);
 
-            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
-            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
-            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
-
-            // FIXME: Coordinate system
             x = p.x;
-            y = frame.size.y - p.y;
+            y = flippedY;
         }
 
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
+            NFloat flippedY = CG.FlipYCoordinate(p.y);
 
-            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
-            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
-            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
-
-            // FIXME: Coordinate system
             x = (int)p.x;
-            y = (int)(frame.size.y - p.y);
+            y = (int)flippedY;
         }
 
         /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
-            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
-            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
-            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
-
-            // FIXME: Coordinate system
-            CGWarpMouseCursorPosition(new CGPoint(x, frame.size.y - y));
+            // CGWarpMouseCursorPosition uses top left relative coordinates.
+            CGWarpMouseCursorPosition(new CGPoint(x, y));
         }
 
         // FIXME: This is only a 32-bit float and
@@ -96,16 +84,12 @@ namespace OpenTK.Platform.Native.macOS
         public void GetMouseState(out MouseState state)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
+            NFloat flippedY = CG.FlipYCoordinate(p.y);
 
-            IntPtr screensNSArray = objc_msgSend_IntPtr((IntPtr)NSScreenClass, selScreens);
-            IntPtr screen = objc_msgSend_IntPtr(screensNSArray, selObjectAtIndex, 0);
-            CGRect frame = objc_msgSend_CGRect(screen, selFrame);
-
-            // NSUInteger
+            // FIXME: NSUInteger
             ulong buttons = objc_msgSend_ulong((IntPtr)NSEventClass, selPressedMouseButtons);
 
-            // FIXME: Coordinate system
-            state.Position = new Vector2i((int)p.x, (int)(frame.size.y - p.y));
+            state.Position = new Vector2i((int)p.x, (int)flippedY);
 
             state.Scroll = ScrollPosition;
 
@@ -126,6 +110,18 @@ namespace OpenTK.Platform.Native.macOS
                 state.PressedButtons |= MouseButtonFlags.Button7;
             if ((buttons & 1 << 7) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button8;
+        }
+
+        /// <inheritdoc/>
+        public bool IsRawMouseMotionEnabled(WindowHandle window)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void EnableRawMouseMotion(WindowHandle window, bool enable)
+        {
+            throw new NotImplementedException();
         }
     }
 }

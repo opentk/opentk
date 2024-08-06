@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Platform.Native.macOS
 {
@@ -82,11 +83,27 @@ namespace OpenTK.Platform.Native.macOS
         {
             return !(left == right);
         }
+
+        public static CGPoint operator +(CGPoint left, CGPoint right)
+        {
+            return new CGPoint(left.x + right.x, left.y + right.y);
+        }
+
+        public static explicit operator Vector2(CGPoint p)
+        {
+            return new Vector2((float)p.x, (float)p.y);
+        }
+
+        public static explicit operator Vector2i(CGPoint p)
+        {
+            return new Vector2i((int)p.x, (int)p.y);
+        }
     }
     
     internal struct CGRect
     {
         public CGPoint origin;
+        // FIXME: Change this to a CGSize struct?
         public CGPoint size;
 
         public bool IsZeroRect => origin == CGPoint.Zero && size == CGPoint.Zero;
@@ -146,6 +163,8 @@ namespace OpenTK.Platform.Native.macOS
 
     internal struct NSSize
     {
+        public static NSSize NSZeroSize => new NSSize(0, 0);
+
         public NFloat width;
         public NFloat height;
 
@@ -153,6 +172,11 @@ namespace OpenTK.Platform.Native.macOS
         {
             this.width = width;
             this.height = height;
+        }
+
+        public override string ToString()
+        {
+            return $"({width}, {height})";
         }
     }
 }

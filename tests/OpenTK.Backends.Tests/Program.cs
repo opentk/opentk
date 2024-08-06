@@ -25,17 +25,6 @@ namespace OpenTK.Backends.Tests
 
         public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
 
-        public static IWindowComponent WindowComp;
-        public static IOpenGLComponent OpenGLComp;
-        public static IIconComponent? IconComponent;
-        public static ICursorComponent? CursorComp;
-        public static IDisplayComponent? DisplayComponent;
-        public static IMouseComponent? MouseComponent;
-        public static IKeyboardComponent? KeyboardComponent;
-        public static IClipboardComponent? ClipboardComponent;
-        public static IShellComponent? ShellComponent;
-        public static IJoystickComponent? JoystickComponent;
-
         public class ApplicationWindow
         {
             public WindowHandle Window;
@@ -50,8 +39,12 @@ namespace OpenTK.Backends.Tests
 
         public static List<ApplicationWindow> ApplicationWindows = new List<ApplicationWindow>();
 
+        public static bool UsingGLES = false;
+
         public static WindowHandle Window;
         public static OpenGLContextHandle WindowContext;
+
+        public static bool WaitForEvents = false;
 
         static ImGuiController ImGuiController;
         static InputData InputData = new InputData();
@@ -61,6 +54,7 @@ namespace OpenTK.Backends.Tests
         static bool IsProcessingEvents = false;
 
         static float CurrentImGuiScale = 1;
+        static ImFontPtr CurrentImGuiFont;
 
         static readonly MainTabContainer MainTabContainer = new MainTabContainer()
         {
@@ -75,6 +69,7 @@ namespace OpenTK.Backends.Tests
             new ClipboardComponentView(),
             new ShellComponentView(),
             new CoordinateSpacesView(),
+            new DialogComponentView(),
         };
 
         static void Main(string[] args)
@@ -87,7 +82,7 @@ namespace OpenTK.Backends.Tests
             // when we use Toolkit.Init to actually create the components...
             // - Noggin_bops 2024-03-02
             PlatformComponents.PreferSDL2 = false;
-            PlatformComponents.PreferANGLE = true;
+            PlatformComponents.PreferANGLE = false;
 
             if (PlatformComponents.PreferANGLE)
             {
@@ -127,18 +122,7 @@ namespace OpenTK.Backends.Tests
             }
 
             // Init all of the components.
-            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger });
-
-            WindowComp = Toolkit.Window;
-            OpenGLComp = Toolkit.OpenGL;
-            IconComponent = Toolkit.Icon;
-            CursorComp = Toolkit.Cursor;
-            DisplayComponent = Toolkit.Display;
-            MouseComponent = Toolkit.Mouse;
-            KeyboardComponent = Toolkit.Keyboard;
-            ClipboardComponent = Toolkit.Clipboard;
-            ShellComponent = Toolkit.Shell;
-            JoystickComponent = Toolkit.Joystick;
+            Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, });
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
@@ -146,6 +130,14 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
+                Selector = static (options, requested, logger) => {
+                    for (int i = 0; i < options.Count; i++)
+                    {
+                        logger?.LogInfo(options[i].ToString());
+                    }
+
+                    return ContextValues.DefaultValuesSelector(options, requested, logger);
+                },
             };
 
             // If we are using ANGLE we need to create a OpenGL ES context
@@ -158,10 +150,10 @@ namespace OpenTK.Backends.Tests
                 hints.Profile = OpenGLProfile.None;
             }
 
-            Window = WindowComp.Create(hints);
-            WindowContext = OpenGLComp.CreateFromWindow(Window);
-            OpenGLComp.SetCurrentContext(WindowContext);
-            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(WindowContext));
+            Window = Toolkit.Window.Create(hints);
+            WindowContext = Toolkit.OpenGL.CreateFromWindow(Window);
+            Toolkit.OpenGL.SetCurrentContext(WindowContext);
+            GLLoader.LoadBindings(Toolkit.OpenGL.GetBindingsContext(WindowContext));
 
             static bool IsExtensionSupported(string name)
             {
@@ -186,65 +178,68 @@ namespace OpenTK.Backends.Tests
                 GL.Enable(EnableCap.DebugOutputSynchronous);
             }
 
-            WindowComp.SetTitle(Window, "OpenTK PAL Test Application");
-            WindowComp.SetClientSize(Window, 800, 600);
-            WindowComp.SetMode(Window, WindowMode.Normal);
+            Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
+            Toolkit.Window.SetClientSize(Window, 800, 600);
+            Toolkit.Window.SetMode(Window, WindowMode.Normal);
 
-            WindowComp.SetMinClientSize(Window, 700, null);
-            WindowComp.SetMaxClientSize(Window, 900, null);
+            Toolkit.Window.SetMinClientSize(Window, 700, null);
+            Toolkit.Window.SetMaxClientSize(Window, 900, null);
 
             try
             {
-                if (WindowComp.CanSetIcon)
+                if (Toolkit.Window.CanSetIcon)
                 {
                     IconHandle? handle;
                     if (OperatingSystem.IsWindows())
                     {
                         // Here are three ways to load .ico file on windows, in increasing complexity.
                         // First, just load the .ico as a file.
-                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
+                        handle = (Toolkit.Icon as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
                         // Second, use a resx file and load that. This will result in a ico with a single resolution instead of adaptive.
-                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
+                        //handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
                         // Last, create a .rc file, add an icon to that resource file, add a target to your csproj to compile the .rc file
                         // use <Win32Resource> to include the resulting .res file in the exe.
-                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
+                        //handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
                     }
                     else
                     {
                         ImageResult icon = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
-                        handle = IconComponent?.Create(icon.Width, icon.Height, icon.Data);
+                        handle = Toolkit.Icon?.Create(icon.Width, icon.Height, icon.Data);
                     }
 
                     if (handle != null)
                     {
-                        WindowComp.SetIcon(Window, handle);
-                        (WindowComp as MacOSWindowComponent)?.SetDockIcon(Window, handle);
+                        // FIXME: This doesn't seem to set the taskbar icon on windows?
+                        // Using the icon UI to set the icon does change the taskbar icon...
+                        // - Noggin_bops 2024-04-02
+                        Toolkit.Window.SetIcon(Window, handle);
+                        (Toolkit.Window as MacOSWindowComponent)?.SetDockIcon(Window, handle);
 
                         // FIXME: Should we destroy the icon?
-                        IconComponent?.Destroy(handle);
+                        Toolkit.Icon?.Destroy(handle);
                     }
                 }
             }
             catch
             { }
 
-            // FIXME: Here we want to get the pixel size of the backbuffer.
-            WindowComp.GetClientSize(Window, out int width, out int height);
-            (WindowComp as MacOSWindowComponent)?.GetFramebufferSize(Window, out width, out height);
+            Toolkit.Window.GetFramebufferSize(Window, out int width, out int height);
             GL.Viewport(0, 0, width, height);
 
-            bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
-            ImGuiController = new ImGuiController(width, height, useGLES);
-
+            UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
+            ImGuiController = new ImGuiController(width, height, UsingGLES);
+            
             float fontSize = 13f;
             try
             {
+                CurrentImGuiFont = ImGui.GetFont();
+
                 // FIXME: For now we can't load this font on macos??
-                if (DisplayComponent != null)
+                if (Toolkit.Display != null)
                 {
-                    DisplayHandle handle = WindowComp.GetDisplay(Window);
-                    DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
-                    DisplayComponent.Close(handle);
+                    DisplayHandle handle = Toolkit.Window.GetDisplay(Window);
+                    Toolkit.Display.GetDisplayScale(handle, out float scaleX, out float scaleY);
+                    Toolkit.Display.Close(handle);
 
                     // FIXME: Should we only scale on Y? or something else?
                     float scale = MathF.Max(scaleX, scaleY);
@@ -261,10 +256,11 @@ namespace OpenTK.Backends.Tests
                         config.GlyphMaxAdvanceX = float.PositiveInfinity;
                         config.RasterizerMultiply = 1;
                         config.EllipsisChar = 0xFFFF;
+                        config.RasterizerDensity = 1;
                         unsafe
                         {
                             ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                            ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
+                            CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(fontSize), configPtr);
                             ImGui.GetStyle().ScaleAllSizes(scale);
                             CurrentImGuiScale = scale;
                         }
@@ -314,10 +310,10 @@ namespace OpenTK.Backends.Tests
             // Make it so ImGui can set IME rect.
             ImGui.GetIO().SetPlatformImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
 
-            if (CursorComp != null && CursorComp.CanLoadSystemCursors)
+            if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {
-                CursorHandle defaultCursor = CursorComp.Create(SystemCursorType.Default);
-                WindowComp.SetCursor(Window, defaultCursor);
+                CursorHandle defaultCursor = Toolkit.Cursor.Create(SystemCursorType.Default);
+                Toolkit.Window.SetCursor(Window, defaultCursor);
 
                 ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
             }
@@ -326,6 +322,32 @@ namespace OpenTK.Backends.Tests
 
             Stopwatch watch = Stopwatch.StartNew();
 
+            if (false){
+                WindowHandle handle = Toolkit.Window.Create(new OpenGLGraphicsApiHints()
+                {
+                    Version = new Version(4, 1),
+                    Profile = OpenGLProfile.Core,
+                    ForwardCompatibleFlag = true,
+                    DebugFlag = true,
+                    Multisamples = 16,
+                    sRGBFramebuffer = true,
+                    
+                });
+                Toolkit.Window.SetTitle(handle, $"Bejeweled");
+                Toolkit.Window.SetClientSize(handle, 1200, 1200);
+                (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
+                Toolkit.Window.SetMode(handle, WindowMode.Normal);
+                Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
+                ApplicationWindow bejeweled = new ApplicationWindow(handle);
+                bejeweled.Context = Toolkit.OpenGL.CreateFromWindow(handle);
+                Toolkit.OpenGL.SetSwapInterval(1);
+                bejeweled.Application = new Bejeweled.Bejeweled();
+                Toolkit.OpenGL.SetCurrentContext(bejeweled.Context);
+                bejeweled.Application.Initialize(handle, bejeweled.Context, UsingGLES);
+                Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                Program.ApplicationWindows.Add(bejeweled);
+            }
+
             while (true)
             {
                 float dt = (float)watch.Elapsed.TotalSeconds;
@@ -333,19 +355,21 @@ namespace OpenTK.Backends.Tests
 
                 // FIXME: Wait for events?
                 IsProcessingEvents = true;
-                WindowComp.ProcessEvents();
+                Toolkit.Window.ProcessEvents(WaitForEvents);
                 IsProcessingEvents = false;
 
-                if (WindowComp.IsWindowDestroyed(Window))
+                if (Toolkit.Window.IsWindowDestroyed(Window))
                 {
                     break;
                 }
 
                 Update(dt);
 
-                OpenGLComp.SetCurrentContext(WindowContext);
+                Toolkit.OpenGL.SetCurrentContext(WindowContext);
                 Render();
 
+                // FIXME: Avoid allocating this list every frame.
+                List<WindowHandle> shouldCloseWindows = new List<WindowHandle>();
                 foreach (var applicationWindow in ApplicationWindows)
                 {
                     if (applicationWindow.Context == null)
@@ -353,19 +377,30 @@ namespace OpenTK.Backends.Tests
                     if (applicationWindow.Application == null)
                         continue;
 
-                    OpenGLComp.SetCurrentContext(applicationWindow.Context);
+                    Toolkit.OpenGL.SetCurrentContext(applicationWindow.Context);
+
+                    bool shouldClose = applicationWindow.Application.Update(dt);
+                    if (shouldClose)
+                    {
+                        shouldCloseWindows.Add(applicationWindow.Window);
+                    }
 
                     // FIXME: Send delta time?
                     applicationWindow.Application.Render();
 
-                    OpenGLComp.SetCurrentContext(WindowContext);
+                    Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                }
+
+                foreach (var window in shouldCloseWindows)
+                {
+                    CloseApplicationWindow(window);
                 }
             }
         }
 
         static void Update(float dt)
         {
-            if (CursorComp != null && CursorComp.CanLoadSystemCursors)
+            if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {
                 ImGuiConfigFlags flags = ImGui.GetIO().ConfigFlags;
                 if ((flags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
@@ -380,31 +415,31 @@ namespace OpenTK.Backends.Tests
                                 cursor = null;
                                 break;
                             case ImGuiMouseCursor.Arrow:
-                                cursor = CursorComp.Create(SystemCursorType.Default);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.Default);
                                 break;
                             case ImGuiMouseCursor.TextInput:
-                                cursor = CursorComp.Create(SystemCursorType.TextBeam);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.TextBeam);
                                 break;
                             case ImGuiMouseCursor.ResizeAll:
-                                cursor = CursorComp.Create(SystemCursorType.ArrowFourway);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.ArrowFourway);
                                 break;
                             case ImGuiMouseCursor.ResizeNS:
-                                cursor = CursorComp.Create(SystemCursorType.ArrowNS);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.ArrowNS);
                                 break;
                             case ImGuiMouseCursor.ResizeEW:
-                                cursor = CursorComp.Create(SystemCursorType.ArrowEW);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.ArrowEW);
                                 break;
                             case ImGuiMouseCursor.ResizeNESW:
-                                cursor = CursorComp.Create(SystemCursorType.ArrowNESW);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.ArrowNESW);
                                 break;
                             case ImGuiMouseCursor.ResizeNWSE:
-                                cursor = CursorComp.Create(SystemCursorType.ArrowNWSE);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.ArrowNWSE);
                                 break;
                             case ImGuiMouseCursor.Hand:
-                                cursor = CursorComp.Create(SystemCursorType.Hand);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.Hand);
                                 break;
                             case ImGuiMouseCursor.NotAllowed:
-                                cursor = CursorComp.Create(SystemCursorType.Forbidden);
+                                cursor = Toolkit.Cursor.Create(SystemCursorType.Forbidden);
                                 break;
                             default:
                                 cursor = null;
@@ -412,16 +447,20 @@ namespace OpenTK.Backends.Tests
                         }
                         // FIXME: We are leaking the previous cursor.
                         // Or should the window contain it's own copy?
-                        WindowComp.SetCursor(Window, cursor);
+                        Toolkit.Window.SetCursor(Window, cursor);
                     }
                     prevCursor = imguiCursor;
                 }
             }
 
+            // Calls ImGui.NewFrame
             ImGuiController.Update(InputData, dt);
 
+            ImGui.PushFont(CurrentImGuiFont);
 
             MainTabContainer.Paint(dt);
+
+            ImGui.PopFont();
 
             //ImGui.ShowMetricsWindow();
             //ImGui.ShowDemoWindow();
@@ -434,7 +473,7 @@ namespace OpenTK.Backends.Tests
 
             ImGuiController.Render();
 
-            OpenGLComp.SwapBuffers(WindowContext);
+            Toolkit.OpenGL.SwapBuffers(WindowContext);
         }
 
         static ImGuiKey ToImgui(Key key)
@@ -471,161 +510,99 @@ namespace OpenTK.Backends.Tests
             }
         }
 
+        private static void CloseApplicationWindow(WindowHandle window)
+        {
+            int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == window);
+            ApplicationWindow appWindow = ApplicationWindows[index];
+            if (appWindow != null)
+            {
+                if (appWindow.Context != null)
+                {
+                    if (appWindow.Application != null)
+                    {
+                        // FIXME: Make there only be one place where we actually deinit applications.
+                        Toolkit.OpenGL.SetCurrentContext(appWindow.Context);
+                        appWindow.Application?.Deinitialize();
+                        Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                    }
+
+                    Toolkit.OpenGL.DestroyContext(appWindow.Context);
+                }
+
+                ApplicationWindows.RemoveAt(index);
+            }
+
+            Toolkit.Window.Destroy(window);
+        }
+
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            if (args is WindowEventArgs windowEvent && windowEvent.Window != Window)
+            if (args is WindowEventArgs windowEvent)
             {
-                if (args is CloseEventArgs close2)
+                if (windowEvent.Window != Window)
                 {
-                    Console.WriteLine($"Closing window: '{WindowComp.GetTitle(close2.Window)}'");
-
-                    // If this is one of our other windows we want to gracefully close it before we delete the window.
-                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == close2.Window);
-                    ApplicationWindow appWindow = ApplicationWindows[index];
-                    if (appWindow != null)
+                    if (args is CloseEventArgs close2)
                     {
-                        if (appWindow.Context != null)
+                        Console.WriteLine($"Closing window: '{Toolkit.Window.GetTitle(close2.Window)}'");
+                        CloseApplicationWindow(close2.Window);
+                        return;
+                    }
+                    else
+                    {
+                        // If this is a window event for an application window, send the event to that window.
+                        int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == windowEvent.Window);
+                        if (index != -1)
                         {
-                            if (appWindow.Application != null)
-                            {
-                                // FIXME: Make there only be one place where we actually deinit applications.
-                                OpenGLComp.SetCurrentContext(appWindow.Context);
-                                appWindow.Application?.Deinitialize();
-                                OpenGLComp.SetCurrentContext(WindowContext);
-                            }
-
-                            OpenGLComp.DestroyContext(appWindow.Context);
+                            ApplicationWindows[index].Application?.HandleEvent(windowEvent);
                         }
-                        
-                        ApplicationWindows.RemoveAt(index);
                     }
-                    
-                    WindowComp.Destroy(close2.Window);
-                    return;
                 }
                 else
                 {
-                    // If this is a window event for an application window, send the event to that window.
-                    int index = ApplicationWindows.FindIndex(appWindow => appWindow.Window == windowEvent.Window);
-                    if (index != -1)
+                    // Only update imgui stuff for the main window
+                    if (args is KeyDownEventArgs keyDown)
                     {
-                        ApplicationWindows[index].Application?.HandleEvent(windowEvent);
+                        ImGuiKey ikey = ToImgui(keyDown.Key);
+                        ImGui.GetIO().AddKeyEvent(ikey, true);
                     }
-                }
-            }
-
-            if (args is CloseEventArgs close)
-            {
-                Console.WriteLine("Closing main window!");
-                WindowComp.Destroy(close.Window);
-            }
-            else if (args is FocusEventArgs focus)
-            {
-                string title = WindowComp.GetTitle(focus.Window);
-                if (focus.GotFocus)
-                {
-                    Logger.LogInfo($"Window '{title}' ({focus.Window}) got focus.");
-                }
-                else
-                {
-                    Logger.LogInfo($"Window '{title}' ({focus.Window}) lost focus.");
-                }
-            }
-            else if (args is KeyDownEventArgs keyDown)
-            {
-                ImGuiKey ikey = ToImgui(keyDown.Key);
-
-                ImGui.GetIO().AddKeyEvent(ikey, true);
-
-                // FIXME: Track modifiers!
-
-                InputData.KeysPressed[(int)keyDown.Key] = true;
-
-                Logger.LogDebug($"Key Down: {keyDown.Key}, Scancode: {keyDown.Scancode}, Modifiers: {keyDown.Modifiers}, Repeat: {keyDown.IsRepeat}");
-            }
-            else if (args is KeyUpEventArgs keyUp)
-            {
-                ImGuiKey ikey = ToImgui(keyUp.Key);
-
-                ImGui.GetIO().AddKeyEvent(ikey, false);
-
-                InputData.KeysPressed[(int)keyUp.Key] = false;
-
-                Logger.LogDebug($"Key Up: {keyUp.Key}, Scancode: {keyUp.Scancode}, Modifiers: {keyUp.Modifiers}");
-            }
-            else if (args is TextInputEventArgs textInput)
-            {
-                ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
-            }
-            else if (args is MouseMoveEventArgs mouseMove)
-            {
-                ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
-            }
-            else if (args is ScrollEventArgs scroll)
-            {
-                ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
-            }
-            else if (args is MouseButtonDownEventArgs mouseDown)
-            {
-                int button = ((int)mouseDown.Button);
-                ImGui.GetIO().AddMouseButtonEvent(button, true);
-            }
-            else if (args is MouseButtonUpEventArgs mouseUp)
-            {
-                int button = ((int)mouseUp.Button);
-                ImGui.GetIO().AddMouseButtonEvent(button, false);
-            }
-            else if (args is WindowResizeEventArgs resize)
-            {
-                if (resize.Window == Window)
-                {
-                    Vector2i newSize = resize.NewSize;
-                    var newSize2 = newSize;
-                    // FIXME: Framebuffer size on macos?
-                    (WindowComp as MacOSWindowComponent)?.GetFramebufferSize(resize.Window, out newSize.X, out newSize.Y);
-
-                    GL.Viewport(0, 0, newSize.X, newSize.Y);
-                    ImGuiController?.WindowResized(newSize.X, newSize.Y);
-
-                    // We can get here as a respose to interations made while
-                    // we are in the middle of updating and rendering ImGui.
-                    // So we need to check so that we are in ordinary event processing.
-                    if (ImGuiController != null && IsProcessingEvents)
+                    else if (args is KeyUpEventArgs keyUp)
                     {
-                        Update(0f);
-                        OpenGLComp.SetCurrentContext(WindowContext);
-                        Render();
+                        ImGuiKey ikey = ToImgui(keyUp.Key);
+                        ImGui.GetIO().AddKeyEvent(ikey, false);
                     }
-                }
-            }
-            else if (args is WindowMoveEventArgs move)
-            {
-                if (move.Window == Window)
-                {
-                    //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
-                }
-            }
-            else if (args is WindowModeChangeEventArgs modeChange)
-            {
-                Logger.LogInfo($"New window mode: {modeChange.NewMode}");
-            } 
-            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
-            {
-                Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
-            }
-            else if (args is FileDropEventArgs fileDrop)
-            {
-                Logger.LogInfo($"Dropped files:\n\t{string.Join("\n\t", fileDrop.FilePaths)}");
-            }
-            else if (args is WindowDpiChangeEventArgs dpiChange)
-            {
-                try
-                {
-                    if (DisplayComponent != null)
+                    else if (args is TextInputEventArgs textInput)
                     {
+                        ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
+                    }
+                    else if (args is MouseMoveEventArgs mouseMove)
+                    {
+                        ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
+                    }
+                    else if (args is RawMouseMoveEventArgs rawMouseMove)
+                    {
+                        Logger.LogDebug($"rmm {rawMouseMove.Delta.X} {rawMouseMove.Delta.Y}");
+                    }
+                    else if (args is ScrollEventArgs scroll)
+                    {
+                        ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
+                    }
+                    else if (args is MouseButtonDownEventArgs mouseDown)
+                    {
+                        int button = ((int)mouseDown.Button);
+                        ImGui.GetIO().AddMouseButtonEvent(button, true);
+                    }
+                    else if (args is MouseButtonUpEventArgs mouseUp)
+                    {
+                        int button = ((int)mouseUp.Button);
+                        ImGui.GetIO().AddMouseButtonEvent(button, false);
+                    }
+                    else if (args is WindowScaleChangeEventArgs scaleChange)
+                    {
+                        Logger.LogDebug($"Scale change: (x:{scaleChange.ScaleX}, y:{scaleChange.ScaleY})");
+
                         // FIXME: Should we only scale on Y? or something else?
-                        float scale = MathF.Max(dpiChange.ScaleX, dpiChange.ScaleY);
-                        if (scale != 1)
+                        float scale = MathF.Max(scaleChange.ScaleX, scaleChange.ScaleY);
+                        if (scale != CurrentImGuiScale)
                         {
                             ImFontConfig config = new ImFontConfig();
                             config.FontDataOwnedByAtlas = 1;
@@ -638,25 +615,108 @@ namespace OpenTK.Backends.Tests
                             unsafe
                             {
                                 ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
-                                ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources\\ProggyVector\\ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
+                                CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("Resources/ProggyVector/ProggyVectorDotted.ttf", float.Floor(13 * scale), configPtr);
 
                                 // FIXME: This is not perfect and does introduce some visual artifacts
                                 // if the window dpi changes multiple times.
                                 // We could make a copy of the unscaled style and scale that. (https://github.com/ocornut/imgui/issues/5452)
-                                // Thought that would mean we have to update both styles if we want to change some styling.
+                                // Though that would mean we have to update both styles if we want to change some styling.
                                 ImGui.GetStyle().ScaleAllSizes(1 / CurrentImGuiScale);
                                 ImGui.GetStyle().ScaleAllSizes(scale);
                                 CurrentImGuiScale = scale;
                             }
                         }
+
+                        ImGuiController.RecreateFontDeviceTexture();
                     }
                 }
-                catch (Exception e)
-                {
-                    Logger.LogWarning($"Could not get scale factor, or loading the font file failed:\n{e}");
-                }
+            }
 
-                ImGuiController.RecreateFontDeviceTexture();
+            if (args is CloseEventArgs close)
+            {
+                Console.WriteLine("Closing main window!");
+                Toolkit.Window.Destroy(close.Window);
+            }
+            else if (args is FocusEventArgs focus)
+            {
+                string title = Toolkit.Window.GetTitle(focus.Window);
+                if (focus.GotFocus)
+                {
+                    Logger.LogInfo($"Window '{title}' ({focus.Window}) got focus.");
+                }
+                else
+                {
+                    Logger.LogInfo($"Window '{title}' ({focus.Window}) lost focus.");
+                }
+            }
+            else if (args is KeyDownEventArgs keyDown)
+            {
+                // FIXME: Track modifiers!
+
+                InputData.KeysPressed[(int)keyDown.Key] = true;
+
+                Logger.LogDebug($"Key Down: {keyDown.Key}, Scancode: {keyDown.Scancode}, Modifiers: {keyDown.Modifiers}, Repeat: {keyDown.IsRepeat}");
+            }
+            else if (args is KeyUpEventArgs keyUp)
+            {
+                InputData.KeysPressed[(int)keyUp.Key] = false;
+
+                Logger.LogDebug($"Key Up: {keyUp.Key}, Scancode: {keyUp.Scancode}, Modifiers: {keyUp.Modifiers}");
+            }
+            else if (args is WindowResizeEventArgs resize)
+            {
+                if (resize.Window == Window)
+                {
+                    Logger.LogDebug($"New size: {resize.NewSize}, new client size: {resize.NewClientSize}");
+                }
+            }
+            else if (args is WindowFramebufferResizeEventArgs framebufferResize)
+            {
+                if (framebufferResize.Window == Window)
+                {
+                    Logger.LogDebug($"New framebuffer size: {framebufferResize.NewFramebufferSize}");
+
+                    Vector2i newFramebufferSize = framebufferResize.NewFramebufferSize;
+                    GL.Viewport(0, 0, newFramebufferSize.X, newFramebufferSize.Y);
+                    ImGuiController?.WindowResized(newFramebufferSize.X, newFramebufferSize.Y);
+
+                    // We can get here as a response to interations made while
+                    // we are in the middle of updating and rendering ImGui.
+                    // So we need to check so that we are in ordinary event processing.
+                    if (ImGuiController != null && IsProcessingEvents)
+                    {
+                        Update(0f);
+                        Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                        Render();
+                    }
+                }
+            }
+            else if (args is WindowMoveEventArgs move)
+            {
+                if (move.Window == Window)
+                {
+                    //Logger.LogDebug($"Window moved: Window pos: {move.WindowPosition}, client pos {move.ClientAreaPosition}");
+
+                    if (ImGuiController != null && IsProcessingEvents)
+                    {
+                        Update(0f);
+                        Toolkit.OpenGL.SetCurrentContext(WindowContext);
+                        Render();
+                    }
+                }
+            }
+            else if (args is WindowModeChangeEventArgs modeChange)
+            {
+                Logger.LogInfo($"New window mode: {modeChange.NewMode}");
+            } 
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
+            {
+                Logger.LogInfo($"Clipboard contents changed. New format: {clipboardUpdate.NewFormat}.");
+                ((ClipboardComponentView?)MainTabContainer[typeof(ClipboardComponentView)])?.UpdateClipboardFormat();
+            }
+            else if (args is FileDropEventArgs fileDrop)
+            {
+                Logger.LogInfo($"Dropped files:\n\t{string.Join("\n\t", fileDrop.FilePaths)}");
             }
             else if (args is DisplayConnectionChangedEventArgs displayChanged)
             {
@@ -673,16 +733,17 @@ namespace OpenTK.Backends.Tests
         {
             switch (component)
             {
-                case PalComponents.Window: return WindowComp;
-                case PalComponents.OpenGL: return OpenGLComp;
-                case PalComponents.MouseCursor: return CursorComp;
-                case PalComponents.WindowIcon: return IconComponent;
-                case PalComponents.Display: return DisplayComponent;
-                case PalComponents.MiceInput: return MouseComponent;
-                case PalComponents.KeyboardInput: return KeyboardComponent;
-                case PalComponents.Clipboard: return ClipboardComponent;
-                case PalComponents.Shell: return ShellComponent;
-                case PalComponents.Joystick: return JoystickComponent;
+                case PalComponents.Window:        return Toolkit.Window;
+                case PalComponents.OpenGL:        return Toolkit.OpenGL;
+                case PalComponents.MouseCursor:   return Toolkit.Cursor;
+                case PalComponents.WindowIcon:    return Toolkit.Icon;
+                case PalComponents.Display:       return Toolkit.Display;
+                case PalComponents.MiceInput:     return Toolkit.Mouse;
+                case PalComponents.KeyboardInput: return Toolkit.Keyboard;
+                case PalComponents.Clipboard:     return Toolkit.Clipboard;
+                case PalComponents.Shell:         return Toolkit.Shell;
+                case PalComponents.Joystick:      return Toolkit.Joystick;
+                case PalComponents.Dialog:        return Toolkit.Dialog;
 
                 default: return null;
             }
@@ -743,7 +804,7 @@ namespace OpenTK.Backends.Tests
         {
             if (data.WantVisible)
             {
-                if (KeyboardComponent != null)
+                if (Toolkit.Keyboard != null)
                 {
                     try
                     {
@@ -755,7 +816,7 @@ namespace OpenTK.Backends.Tests
                         int w = 1; // FIXME: What do we actually want to pass here?
                         int h = (int)data.InputLineHeight;
 
-                        KeyboardComponent.SetImeRectangle(window, x, y, w, h);
+                        Toolkit.Keyboard.SetImeRectangle(window, x, y, w, h);
                     }
                     catch
                     {

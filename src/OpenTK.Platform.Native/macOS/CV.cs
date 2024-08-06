@@ -13,12 +13,15 @@ namespace OpenTK.Platform.Native.macOS
         public IntPtr Handle;
     }
 
+#pragma warning disable CS0649
     internal struct CVTime
     {
         public long timeValue;
         public int timeScale;
         public int flags;
     }
+#pragma warning restore CS0649
+
 
     internal static unsafe class CV
     {

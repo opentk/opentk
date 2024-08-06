@@ -23,16 +23,15 @@ namespace OpenTK.Platform.Native.SDL
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(PalComponents which)
+        public void Initialize(ToolkitOptions options)
         {
-            if (which != PalComponents.MiceInput)
-            {
-                throw new PalException(this, "SDLMouseComponent can only initialize the Mouse component.");
-            }
         }
 
         /// <inheritdoc/>
         public bool CanSetMousePosition => true;
+
+        /// <inheritdoc/>
+        public bool SupportsRawMouseMotion => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
@@ -104,6 +103,18 @@ namespace OpenTK.Platform.Native.SDL
                 state.PressedButtons |= MouseButtonFlags.Button4;
             if ((buttons & SDL_BUTTON_X2MASK) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button5;
+        }
+
+        /// <inheritdoc/>
+        public bool IsRawMouseMotionEnabled(WindowHandle window)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void EnableRawMouseMotion(WindowHandle window, bool enable)
+        {
+            throw new NotImplementedException();
         }
     }
 }

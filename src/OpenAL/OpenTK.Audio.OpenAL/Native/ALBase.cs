@@ -42,6 +42,9 @@ namespace OpenTK.Audio.OpenAL
             IntPtr ptr = AL.GetProcAddress(name);
             if (ptr == IntPtr.Zero)
             {
+                // FIXME: We want to have a strategy for AOT and trimming here.
+                // What do we do in contexts where we can't generate functions at runtime...?
+
                 // If we can't load the function for whatever reason we dynamically generate a delegate to
                 // give the user an error message that is actually understandable.
                 MethodInfo invoke = typeof(TDelegate).GetMethod("Invoke");
