@@ -1,10 +1,10 @@
 type file
-id OpenTK.Platform.Native
+id OpenTK.Platform
 description
     Platform support for OpenTK, contains backends for Windows, Linux, and macOS.
 dependencies
     framework: net8.0
 files
-    bin\Release\net8.0\OpenTK.Platform.Native.dll ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Platform.Native.xml ==> lib\net8.0
-    bin\Release\net8.0\OpenTK.Platform.Native.pdb ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Platform.dll ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Platform.xml ==> lib\net8.0
+    bin\Release\net8.0\OpenTK.Platform.pdb ==> lib\net8.0
