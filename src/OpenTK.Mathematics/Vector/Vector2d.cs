@@ -193,7 +193,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+            var scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
         }
