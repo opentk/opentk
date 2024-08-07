@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid 32-bit Float Effect/GetEffect parameters.
+    /// A list of valid 32-bit Float <see cref="ALC.EFX.Effect(int, EffectFloat, float)"/>/<see cref="ALC.EFX.GetEffect(int, EffectFloat)"/> parameters.
     /// </summary>
     public enum EffectFloat
     {

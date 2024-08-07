@@ -143,7 +143,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets a <see cref="bool"/> describing whether the specified button is down in the current frame but was up in the previous frame.
         /// </summary>
         /// <remarks>
-        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/>  (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="index">The index of the button.</param>
         /// <returns>True if the button is down in this frame, but not the last frame.</returns>
@@ -157,7 +157,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets a <see cref="bool"/> describing whether the specified button is up in the current frame but was down in the previous frame.
         /// </summary>
         /// <remarks>
-        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/>  (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="index">The index of the button.</param>
         /// <returns>True if the button is up in this frame, but down the last frame.</returns>

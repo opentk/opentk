@@ -146,7 +146,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Xz
         {
-            get => new Vector2h(X, Z);
+            readonly get => new Vector2h(X, Z);
             set
             {
                 X = value.X;
@@ -160,7 +160,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Yx
         {
-            get => new Vector2h(Y, X);
+            readonly get => new Vector2h(Y, X);
             set
             {
                 Y = value.X;
@@ -174,7 +174,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Yz
         {
-            get => new Vector2h(Y, Z);
+            readonly get => new Vector2h(Y, Z);
             set
             {
                 Y = value.X;
@@ -188,7 +188,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Zx
         {
-            get => new Vector2h(Z, X);
+            readonly get => new Vector2h(Z, X);
             set
             {
                 Z = value.X;
@@ -202,7 +202,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Zy
         {
-            get => new Vector2h(Z, Y);
+            readonly get => new Vector2h(Z, Y);
             set
             {
                 Z = value.X;
@@ -216,7 +216,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Xzy
         {
-            get => new Vector3h(X, Z, Y);
+            readonly get => new Vector3h(X, Z, Y);
             set
             {
                 X = value.X;
@@ -231,7 +231,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Yxz
         {
-            get => new Vector3h(Y, X, Z);
+            readonly get => new Vector3h(Y, X, Z);
             set
             {
                 Y = value.X;
@@ -246,7 +246,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Yzx
         {
-            get => new Vector3h(Y, Z, X);
+            readonly get => new Vector3h(Y, Z, X);
             set
             {
                 Y = value.X;
@@ -261,7 +261,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Zxy
         {
-            get => new Vector3h(Z, X, Y);
+            readonly get => new Vector3h(Z, X, Y);
             set
             {
                 Z = value.X;
@@ -276,7 +276,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3h Zyx
         {
-            get => new Vector3h(Z, Y, X);
+            readonly get => new Vector3h(Z, Y, X);
             set
             {
                 Z = value.X;
@@ -289,7 +289,7 @@ namespace OpenTK.Mathematics
         /// Returns this Half3 instance's contents as Vector3.
         /// </summary>
         /// <returns>The vector.</returns>
-        public Vector3 ToVector3()
+        public readonly Vector3 ToVector3()
         {
             return new Vector3((float)X, (float)Y, (float)Z);
         }
@@ -298,7 +298,7 @@ namespace OpenTK.Mathematics
         /// Returns this Half3 instance's contents as Vector3d.
         /// </summary>
         /// <returns>The vector.</returns>
-        public Vector3d ToVector3d()
+        public readonly Vector3d ToVector3d()
         {
             return new Vector3d((double)X, (double)Y, (double)Z);
         }
@@ -389,7 +389,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public readonly void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", X);
             info.AddValue("Y", Y);
@@ -440,7 +440,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
         }
@@ -452,7 +452,7 @@ namespace OpenTK.Mathematics
         /// <param name="y">The Y component of the vector.</param>
         /// <param name="z">The Z component of the vector.</param>
         [Pure]
-        public void Deconstruct(out Half x, out Half y, out Half z)
+        public readonly void Deconstruct(out Half x, out Half y, out Half z)
         {
             x = X;
             y = Y;

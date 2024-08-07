@@ -143,9 +143,9 @@ module Vector2 =
     module ``Simple Properties`` =
         //
         [<Property>]
-        let ``Vector equality is by component`` (a : Vector2,b : Vector2) =
+        let ``Vector equality is by component`` (a : Vector2, b : Vector2) =
             //
-            Assert.Equal((a.X = b.X && a.Y = b.Y),(a = b))
+            Assert.Equal((a.X = b.X && a.Y = b.Y), (a = b))
 
         [<Property>]
         let ``Vector length is always >= 0`` (a : Vector2) =
@@ -437,6 +437,27 @@ module Vector2 =
 
             let vRes = Vector2.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
+
+        [<Property>]
+        let ``Lerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Lerp(a, b, 0.0f)
+            let d = Vector2.Lerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Slerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Slerp(a, b, 0.0f)
+            let d = Vector2.Slerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Elerp returns enpoints`` (a : Vector2, b : Vector2) = 
+            let c = Vector2.Elerp(Vector2.Abs(a), Vector2.Abs(b), 0.0f)
+            let d = Vector2.Elerp(Vector2.Abs(a), Vector2.Abs(b), 1.0f)
+            Assert.ApproximatelyEquivalent(Vector2.Abs(a), c);
+            Assert.ApproximatelyEquivalent(Vector2.Abs(b), d);
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =

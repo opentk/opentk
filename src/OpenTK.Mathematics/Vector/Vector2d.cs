@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -109,7 +109,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public double this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y));
+        public readonly double Length => Math.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -155,25 +155,25 @@ namespace OpenTK.Mathematics
         /// for comparisons.
         /// </remarks>
         /// <see cref="Length"/>
-        public double LengthSquared => (X * X) + (Y * Y);
+        public readonly double LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2d PerpendicularRight => new Vector2d(Y, -X);
+        public readonly Vector2d PerpendicularRight => new Vector2d(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2d PerpendicularLeft => new Vector2d(-Y, X);
+        public readonly Vector2d PerpendicularLeft => new Vector2d(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2d scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector2d Normalized()
+        public readonly Vector2d Normalized()
         {
-            var v = this;
+            Vector2d v = this;
             v.Normalize();
             return v;
         }
@@ -183,9 +183,31 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0 / Length;
+            double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
+        }
+
+        /// <summary>
+        /// Scales the Vector3d to approximately unit length.
+        /// </summary>
+        public void NormalizeFast()
+        {
+            double scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+            X *= scale;
+            Y *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector2d Abs()
+        {
+            Vector2d result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            return result;
         }
 
         /// <summary>
@@ -469,6 +491,29 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector2d Abs(Vector2d vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector2d vec, out Vector2d result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -524,7 +569,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d Normalize(Vector2d vec)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -537,7 +582,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector2d vec, out Vector2d result)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -550,7 +595,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d NormalizeFast(Vector2d vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -563,7 +608,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2d vec, out Vector2d result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -648,6 +693,80 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector2d Slerp(Vector2d a, Vector2d b, double t)
+        {
+            double cosTheta = Dot(a, b);
+            double theta = Math.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+            double bcoef = Math.Sin(t * theta) / sinTheta;
+            return (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector2d a, in Vector2d b, double t, out Vector2d result)
+        {
+            Dot(in a, in b, out double cosTheta);
+            double theta = Math.Acos(cosTheta);
+            // We use the fact that:
+            // sin(θ) = sqrt(1 - cos(θ)^2)
+            // to avoid doing sin(θ) which is slower than sqrt.
+            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+            double bcoef = Math.Sin(t * theta) / sinTheta;
+            result = (acoef * a) + (bcoef * b);
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static Vector2d Elerp(Vector2d a, Vector2d b, double t)
+        {
+            a.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            a.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static void Elerp(in Vector2d a, in Vector2d b, double t, out Vector2d result)
+        {
+            result.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            result.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
@@ -659,7 +778,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d BaryCentric(Vector2d a, Vector2d b, Vector2d c, double u, double v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector2d result);
             return result;
         }
 
@@ -685,12 +804,12 @@ namespace OpenTK.Mathematics
             out Vector2d result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector2d ab);
+            Multiply(in ab, u, out Vector2d abU);
+            Add(in a, in abU, out Vector2d uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector2d ac);
+            Multiply(in ac, v, out Vector2d acV);
             Add(in uPos, in acV, out result);
         }
 
@@ -781,7 +900,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yx
         {
-            get => new Vector2d(Y, X);
+            readonly get => new Vector2d(Y, X);
             set
             {
                 Y = value.X;
@@ -1025,7 +1144,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{2} {1})",
@@ -1041,14 +1160,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector2d other)
+        public readonly bool Equals(Vector2d other)
         {
             return X == other.X &&
                    Y == other.Y;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -1059,7 +1178,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out double x, out double y)
+        public readonly void Deconstruct(out double x, out double y)
         {
             x = X;
             y = Y;

@@ -41,6 +41,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <remarks>
         /// Only affects macOS; no effect on other platforms.
         /// </remarks>
-        CocoaMenubar = 0x00051002
+        CocoaMenubar = 0x00051002,
+
+        /// <summary>
+        /// Specifies whether to prefer the VK_KHR_xcb_surface extension for creating Vulkan surfaces,
+        /// or whether to use the VK_KHR_xlib_surface extension.
+        /// Possible values are GLFW_TRUE and GLFW_FALSE.
+        /// This is ignored on other platforms.
+        /// </summary>
+        X11XcbVulkanSurface = 0x00052001,
     }
 }

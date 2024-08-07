@@ -96,7 +96,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2h Yx
         {
-            get => new Vector2h(Y, X);
+            readonly get => new Vector2h(Y, X);
             set
             {
                 Y = value.X;
@@ -108,7 +108,7 @@ namespace OpenTK.Mathematics
         /// Returns this Half2 instance's contents as Vector2.
         /// </summary>
         /// <returns>The vector.</returns>
-        public Vector2 ToVector2()
+        public readonly Vector2 ToVector2()
         {
             return new Vector2((float)X, (float)Y);
         }
@@ -117,7 +117,7 @@ namespace OpenTK.Mathematics
         /// Returns this Half2 instance's contents as Vector2d.
         /// </summary>
         /// <returns>The vector.</returns>
-        public Vector2d ToVector2d()
+        public readonly Vector2d ToVector2d()
         {
             return new Vector2d((double)X, (double)Y);
         }
@@ -206,7 +206,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public readonly void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("X", X);
             info.AddValue("Y", Y);
@@ -254,7 +254,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -265,7 +265,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out Half x, out Half y)
+        public readonly void Deconstruct(out Half x, out Half y)
         {
             x = X;
             y = Y;

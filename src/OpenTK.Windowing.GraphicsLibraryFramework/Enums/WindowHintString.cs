@@ -19,5 +19,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Sets the instance name on X11. on any other platform, this does nothing.
         /// </summary>
         X11InstanceName = 0x00024002,
+
+        /// <summary>
+        /// Specifies the Wayland app_id for a window, used by window managers to identify types of windows.
+        /// </summary>
+        WaylandAppID = 0x00026001,
     }
 }

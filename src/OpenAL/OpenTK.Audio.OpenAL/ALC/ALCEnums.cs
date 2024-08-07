@@ -37,7 +37,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines OpenAL context errors.
+    /// Defines OpenAL context errors returned by <see cref="ALC.GetError(ALDevice)"/>.
     /// </summary>
     public enum AlcError : int
     {

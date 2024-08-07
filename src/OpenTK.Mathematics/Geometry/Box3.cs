@@ -29,7 +29,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3 Min
         {
-            get => _min;
+            readonly get => _min;
             set
             {
                 if (value.X > _max.X)
@@ -56,7 +56,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector3 Max
         {
-            get => _max;
+            readonly get => _max;
             set
             {
                 if (value.X < _min.X)
@@ -500,7 +500,7 @@ namespace OpenTK.Mathematics
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
         [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
-        public bool Contains(Vector3 point)
+        public readonly bool Contains(Vector3 point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y &&
@@ -513,7 +513,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
-        public bool ContainsInclusive(Vector3 point)
+        public readonly bool ContainsInclusive(Vector3 point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
                    _min.Y <= point.Y && point.Y <= _max.Y &&
@@ -526,7 +526,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
-        public bool ContainsExclusive(Vector3 point)
+        public readonly bool ContainsExclusive(Vector3 point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y &&
@@ -560,7 +560,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">The box to query.</param>
         /// <returns>Whether this box contains the other box.</returns>
         [Pure]
-        public bool Contains(Box3 other)
+        public readonly bool Contains(Box3 other)
         {
             return _max.X >= other._min.X && _min.X <= other._max.X &&
                    _max.Y >= other._min.Y && _min.Y <= other._max.Y &&
@@ -573,7 +573,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
         [Pure]
-        public float DistanceToNearestEdge(Vector3 point)
+        public readonly float DistanceToNearestEdge(Vector3 point)
         {
             var distX = new Vector3(
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
@@ -598,7 +598,7 @@ namespace OpenTK.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
         [Pure]
-        public Box3 Translated(Vector3 distance)
+        public readonly Box3 Translated(Vector3 distance)
         {
             // create a local copy of this box
             Box3 box = this;
@@ -624,7 +624,7 @@ namespace OpenTK.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
         [Pure]
-        public Box3 Scaled(Vector3 scale, Vector3 anchor)
+        public readonly Box3 Scaled(Vector3 scale, Vector3 anchor)
         {
             // create a local copy of this box
             Box3 box = this;
@@ -653,7 +653,7 @@ namespace OpenTK.Mathematics
         /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box3 Inflated(Vector3 size)
+        public readonly Box3 Inflated(Vector3 size)
         {
             // create a local copy of this box
             Box3 box = this;
@@ -677,7 +677,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to contain.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box3 Extended(Vector3 point)
+        public readonly Box3 Extended(Vector3 point)
         {
             // create a local copy of this box
             Box3 box = this;
@@ -712,14 +712,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Box3 other)
+        public readonly bool Equals(Box3 other)
         {
             return _min.Equals(other._min) &&
                    _max.Equals(other._max);
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(_min, _max);
         }
