@@ -140,7 +140,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt(LengthSquared);
+        public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -150,7 +150,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate(LengthSquared);
+        public double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -190,7 +190,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = Math.ReciprocalSqrtEstimate(LengthSquared);
+            var scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
             X *= scale;
             Y *= scale;
             Z *= scale;

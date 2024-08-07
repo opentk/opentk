@@ -114,7 +114,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt(LengthSquared);
+        public float Length => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -124,7 +124,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
+        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -173,7 +173,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathF.ReciprocalSqrtEstimate(LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
         }
@@ -575,7 +575,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 NormalizeFast(Vector2 vec)
         {
-            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -588,7 +588,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2 vec, out Vector2 result)
         {
-            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }

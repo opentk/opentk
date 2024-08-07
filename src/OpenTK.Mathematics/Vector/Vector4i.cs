@@ -171,7 +171,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the euclidean length of the vector.
         /// </summary>
-        public float EuclideanLength => MathF.Sqrt(EuclideanLengthSquared);
+        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.

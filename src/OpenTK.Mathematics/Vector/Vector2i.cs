@@ -109,7 +109,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the euclidean length of the vector.
         /// </summary>
-        public float EuclideanLength => MathF.Sqrt(EuclideanLengthSquared);
+        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.

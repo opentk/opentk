@@ -221,7 +221,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt(LengthSquared);
+        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -231,7 +231,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
+        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -272,7 +272,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathF.ReciprocalSqrtEstimate(LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -621,7 +621,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 NormalizeFast(Vector4 vec)
         {
-            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -636,7 +636,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized copy.</param>
         public static void NormalizeFast(in Vector4 vec, out Vector4 result)
         {
-            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
+            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
