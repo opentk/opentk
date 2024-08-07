@@ -22,9 +22,9 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -1053,8 +1053,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public bool Equals(Vector2d other)
         {
-            return X == other.X &&
-                   Y == other.Y;
+            Vector128<double> thisVec = Vector128.LoadUnsafe(ref X);
+            Vector128<double> otherVec = Vector128.LoadUnsafe(ref other.X);
+
+            return thisVec == otherVec;
         }
 
         /// <inheritdoc/>
