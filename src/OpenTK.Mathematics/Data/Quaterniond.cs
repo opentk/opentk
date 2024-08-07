@@ -803,8 +803,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Quaterniond other)
         {
-            Vector256<double> thisVec = Vector256.LoadUnsafe(ref Xyz.X);
-            Vector256<double> otherVec = Vector256.LoadUnsafe(ref Xyz.X);
+            Vector256<double> thisVec = Vector256.LoadUnsafe(in Xyz.X);
+            Vector256<double> otherVec = Vector256.LoadUnsafe(in other.Xyz.X);
 
             return thisVec == otherVec;
         }

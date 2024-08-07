@@ -942,8 +942,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix4x2 other)
         {
-            Vector256<float> aRow0123 = Vector256.LoadUnsafe(ref Row0.X);
-            Vector256<float> bRow0123 = Vector256.LoadUnsafe(ref other.Row0.X);
+            Vector256<float> aRow0123 = Vector256.LoadUnsafe(in Row0.X);
+            Vector256<float> bRow0123 = Vector256.LoadUnsafe(in other.Row0.X);
 
             return aRow0123 == bRow0123;
         }

@@ -2212,8 +2212,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector4d other)
         {
-            Vector256<double> thisVec = Vector256.LoadUnsafe(ref X);
-            Vector256<double> otherVec = Vector256.LoadUnsafe(ref other.X);
+            Vector256<double> thisVec = Vector256.LoadUnsafe(in X);
+            Vector256<double> otherVec = Vector256.LoadUnsafe(in other.X);
 
             return thisVec == otherVec;
         }

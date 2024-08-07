@@ -900,8 +900,8 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix2d other)
         {
-            Vector256<double> a = Vector256.LoadUnsafe(ref Row0.X);
-            Vector256<double> b = Vector256.LoadUnsafe(ref other.Row0.X);
+            Vector256<double> a = Vector256.LoadUnsafe(in Row0.X);
+            Vector256<double> b = Vector256.LoadUnsafe(in other.Row0.X);
 
             return a == b;
         }

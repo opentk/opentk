@@ -82,7 +82,7 @@ namespace LocalTest
             Time += (float)args.Time;
             if (Time > CycleTime) Time = 0;
 
-            Color4 color = Color4.FromHsv(new Vector4(Time / CycleTime, 1, 1, 1));
+            Color4<Rgba> color = new Color4<Hsva>(Time / CycleTime, 1, 1, 1).ToRgba();
 
             GL.ClearColor(color);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

@@ -2217,8 +2217,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector4 other)
         {
-            Vector128<float> thisVec = Vector128.LoadUnsafe(ref X);
-            Vector128<float> otherVec = Vector128.LoadUnsafe(ref other.X);
+            Vector128<float> thisVec = Vector128.LoadUnsafe(in X);
+            Vector128<float> otherVec = Vector128.LoadUnsafe(in other.X);
 
             return thisVec == otherVec;
         }
