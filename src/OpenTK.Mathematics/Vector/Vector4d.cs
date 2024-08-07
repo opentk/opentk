@@ -221,18 +221,17 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public double Length => Math.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        /// This property uses an approximation of the square root function to calculate vector magnitude.
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -272,7 +271,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
+            var scale = Math.ReciprocalSqrtEstimate(LengthSquared);
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -617,7 +616,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4d NormalizeFast(Vector4d vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            var scale = Math.ReciprocalSqrtEstimate(vec.LengthSquared);
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -632,7 +631,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector4d vec, out Vector4d result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            var scale = Math.ReciprocalSqrtEstimate(vec.LengthSquared);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;

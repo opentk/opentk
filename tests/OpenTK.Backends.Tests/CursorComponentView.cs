@@ -123,7 +123,7 @@ namespace OpenTK.Backends.Tests
                             // FIXME: Add SmoothStep to MathHelper
                             static float SmoothStep(float edge0, float edge1, float value)
                             {
-                                float x = MathHelper.Clamp((value - edge0) / (edge1 - edge0), 0, 1);
+                                float x = Math.Clamp((value - edge0) / (edge1 - edge0), 0, 1);
 
                                 return x * x * (3.0f - 2.0f * x);
                             }

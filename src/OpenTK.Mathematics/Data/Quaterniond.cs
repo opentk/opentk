@@ -804,7 +804,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Quaterniond other)
         {
             Vector256<double> thisVec = Vector256.LoadUnsafe(ref Xyz.X);
-            Vector256<double> otherVec = Vector256.LoadUnsafe(ref Xyz.X);
+            Vector256<double> otherVec = Vector256.LoadUnsafe(ref other.Xyz.X);
 
             return thisVec == otherVec;
         }

@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         /// Gets the length (magnitude) of the vector.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y));
+        public double Length => Math.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -550,7 +550,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d NormalizeFast(Vector2d vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            var scale = Math.ReciprocalSqrtEstimate(vec.LengthSquared);
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -563,7 +563,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2d vec, out Vector2d result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            var scale = Math.ReciprocalSqrtEstimate(vec.LengthSquared);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }

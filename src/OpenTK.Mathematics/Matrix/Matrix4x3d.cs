@@ -1056,18 +1056,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public bool Equals(Matrix4x3d other)
         {
-            Vector256<double> aRow01x = Vector256.LoadUnsafe(ref Row0.X);
-            Vector256<double> bRow01x = Vector256.LoadUnsafe(ref other.Row0.X);
-
-            // Note that we ref .Y and not .X.
-            Vector256<double> aRow1yz2xy = Vector256.LoadUnsafe(ref Row1.Y);
-            Vector256<double> bRow1yz2xy = Vector256.LoadUnsafe(ref other.Row1.Y);
-
-            // Note that we ref .Z and not .X.
+            Vector512<double> aRow01xy = Vector512.LoadUnsafe(ref Row0.X);
             Vector256<double> aRow2z3 = Vector256.LoadUnsafe(ref Row2.Z);
+
+            Vector512<double> bRow01xy = Vector512.LoadUnsafe(ref other.Row0.X);
             Vector256<double> bRow2z3 = Vector256.LoadUnsafe(ref other.Row2.Z);
 
-            return aRow01x == bRow01x && aRow1yz2xy == bRow1yz2xy && aRow2z3 == bRow2z3;
+            return aRow01xy == bRow01xy && aRow2z3 == bRow2z3;
         }
     }
 }

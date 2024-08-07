@@ -814,7 +814,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Quaternion other)
         {
             Vector128<float> thisVec = Vector128.LoadUnsafe(ref Xyz.X);
-            Vector128<float> otherVec = Vector128.LoadUnsafe(ref Xyz.X);
+            Vector128<float> otherVec = Vector128.LoadUnsafe(ref other.Xyz.X);
 
             return thisVec == otherVec;
         }

@@ -171,7 +171,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets the euclidean length of the vector.
         /// </summary>
-        public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public float EuclideanLength => MathF.Sqrt(EuclideanLengthSquared);
 
         /// <summary>
         /// Defines a unit-length <see cref="Vector4i"/> that points towards the X-axis.
@@ -443,10 +443,10 @@ namespace OpenTK.Mathematics
         public static Vector4i Clamp(Vector4i vec, Vector4i min, Vector4i max)
         {
             Vector4i result;
-            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
-            result.W = MathHelper.Clamp(vec.W, min.W, max.W);
+            result.X = Math.Clamp(vec.X, min.X, max.X);
+            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
+            result.W = Math.Clamp(vec.W, min.W, max.W);
             return result;
         }
 
@@ -459,10 +459,10 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector4i vec, in Vector4i min, in Vector4i max, out Vector4i result)
         {
-            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
-            result.W = MathHelper.Clamp(vec.W, min.W, max.W);
+            result.X = Math.Clamp(vec.X, min.X, max.X);
+            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
+            result.W = Math.Clamp(vec.W, min.W, max.W);
         }
 
         /// <summary>

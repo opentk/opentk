@@ -449,12 +449,12 @@ namespace OpenTK.Mathematics
         public static Box3i Round(Box3 value)
         {
             return new Box3i(
-                (int)MathHelper.Round(value.Min.X),
-                (int)MathHelper.Round(value.Min.Y),
-                (int)MathHelper.Round(value.Min.Z),
-                (int)MathHelper.Round(value.Max.X),
-                (int)MathHelper.Round(value.Max.Y),
-                (int)MathHelper.Round(value.Max.Z));
+                (int)MathF.Round(value.Min.X),
+                (int)MathF.Round(value.Min.Y),
+                (int)MathF.Round(value.Min.Z),
+                (int)MathF.Round(value.Max.X),
+                (int)MathF.Round(value.Max.Y),
+                (int)MathF.Round(value.Max.Z));
         }
 
         /// <summary>
@@ -464,12 +464,12 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded up integers.</returns>
         public static Box3i Ceiling(Box3 value)
         {
-            int x = (int)MathHelper.Ceiling(value._min.X);
-            int y = (int)MathHelper.Ceiling(value._min.Y);
-            int z = (int)MathHelper.Ceiling(value._min.Z);
-            int sizeX = (int)MathHelper.Ceiling(value.Width);
-            int sizeY = (int)MathHelper.Ceiling(value.Height);
-            int sizeZ = (int)MathHelper.Ceiling(value.Depth);
+            int x = (int)MathF.Ceiling(value._min.X);
+            int y = (int)MathF.Ceiling(value._min.Y);
+            int z = (int)MathF.Ceiling(value._min.Z);
+            int sizeX = (int)MathF.Ceiling(value.Width);
+            int sizeY = (int)MathF.Ceiling(value.Height);
+            int sizeZ = (int)MathF.Ceiling(value.Depth);
 
             return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
         }
@@ -481,12 +481,12 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded down integers.</returns>
         public static Box3i Floor(Box3 value)
         {
-            int x = (int)MathHelper.Floor(value._min.X);
-            int y = (int)MathHelper.Floor(value._min.Y);
-            int z = (int)MathHelper.Floor(value._min.Z);
-            int sizeX = (int)MathHelper.Floor(value.Width);
-            int sizeY = (int)MathHelper.Floor(value.Height);
-            int sizeZ = (int)MathHelper.Floor(value.Depth);
+            int x = (int)MathF.Floor(value._min.X);
+            int y = (int)MathF.Floor(value._min.Y);
+            int z = (int)MathF.Floor(value._min.Z);
+            int sizeX = (int)MathF.Floor(value.Width);
+            int sizeY = (int)MathF.Floor(value.Height);
+            int sizeZ = (int)MathF.Floor(value.Depth);
 
             return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
         }

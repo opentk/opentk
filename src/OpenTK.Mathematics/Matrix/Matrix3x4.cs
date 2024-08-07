@@ -53,7 +53,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// The zero matrix.
         /// </summary>
-        public static Matrix3x4 Zero = new Matrix3x4(Vector4.Zero, Vector4.Zero, Vector4.Zero);
+        public static readonly Matrix3x4 Zero = new Matrix3x4(Vector4.Zero, Vector4.Zero, Vector4.Zero);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matrix3x4"/> struct.
@@ -1026,9 +1026,9 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix3x4 other)
         {
             Vector256<float> aRow01 = Vector256.LoadUnsafe(ref Row0.X);
-            Vector256<float> bRow01 = Vector256.LoadUnsafe(ref other.Row0.X);
-
             Vector128<float> aRow2 = Vector128.LoadUnsafe(ref Row2.X);
+
+            Vector256<float> bRow01 = Vector256.LoadUnsafe(ref other.Row0.X);
             Vector128<float> bRow2 = Vector128.LoadUnsafe(ref other.Row2.X);
 
             return aRow01 == bRow01 && aRow2 == bRow2;

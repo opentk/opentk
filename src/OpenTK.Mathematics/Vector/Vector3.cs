@@ -143,18 +143,17 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public float Length => MathF.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        /// This property uses an approximation of the square root function to calculate vector magnitude.
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -194,7 +193,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+            var scale = MathF.ReciprocalSqrtEstimate(LengthSquared);
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -618,7 +617,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -632,7 +631,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector3 vec, out Vector3 result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -1079,7 +1078,7 @@ namespace OpenTK.Mathematics
         public static void CalculateAngle(in Vector3 first, in Vector3 second, out float result)
         {
             Dot(in first, in second, out float temp);
-            result = MathF.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
+            result = MathF.Acos(Math.Clamp(temp / (first.Length * second.Length), -1.0f, 1.0f));
         }
 
         /// <summary>

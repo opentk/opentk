@@ -268,8 +268,8 @@ namespace OpenTK.Platform.Native.Windows
         {
             Joystick joystick = handle.As<Joystick>(this);
 
-            lowFrequenzyIntensity = MathHelper.Clamp(lowFrequenzyIntensity, 0, 1);
-            highFrequenzyIntensity = MathHelper.Clamp(highFrequenzyIntensity, 0, 1);
+            lowFrequenzyIntensity = Math.Clamp(lowFrequenzyIntensity, 0, 1);
+            highFrequenzyIntensity = Math.Clamp(highFrequenzyIntensity, 0, 1);
 
             XINPUT_VIBRATION vibration;
             vibration.wLeftMotorSpeed = (ushort)(lowFrequenzyIntensity * ushort.MaxValue);

@@ -114,18 +114,17 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((X * X) + (Y * Y));
+        public float Length => MathF.Sqrt(LengthSquared);
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        /// This property uses an approximation of the square root function to calculate vector magnitude.
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate(LengthSquared);
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -174,7 +173,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+            var scale = MathF.ReciprocalSqrtEstimate(LengthSquared);
             X *= scale;
             Y *= scale;
         }
@@ -576,7 +575,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 NormalizeFast(Vector2 vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -589,7 +588,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2 vec, out Vector2 result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            var scale = MathF.ReciprocalSqrtEstimate(vec.LengthSquared);
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
