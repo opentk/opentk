@@ -1,6 +1,6 @@
 ﻿using System;
 using OpenTK;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Graphics;
 using OpenTK.Platform.Native;
 using OpenTK.Graphics.OpenGL;
@@ -74,7 +74,7 @@ namespace X11TestProject
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
 
-                windowComp.ProcessEvents();
+                windowComp.ProcessEvents(false);
             }
         }
 

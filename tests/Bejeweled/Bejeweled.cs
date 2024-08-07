@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Mathematics;

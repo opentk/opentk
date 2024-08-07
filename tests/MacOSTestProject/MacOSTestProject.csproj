@@ -5,11 +5,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
-    <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
   </ItemGroup>
 </Project>

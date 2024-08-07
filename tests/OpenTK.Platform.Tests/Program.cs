@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -52,6 +52,15 @@ namespace OpenTK.Platform.Tests
                     logger.Log(str, level, filePath, lineNumber, member);
                 }
             }
+
+            void ILogger.Flush()
+            {
+                // FIXME: Handle if one of the loggers throws an error.
+                foreach (var logger in Loggers)
+                {
+                    logger.Flush();
+                }
+            }
         }
 
         class DebugThing : TraceListener
@@ -86,25 +95,26 @@ namespace OpenTK.Platform.Tests
             clipComp = PlatformComponents.CreateClipboardComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
-            var logger = new ConsoleLogger();
-            windowComp.Logger = logger;
-            glComp.Logger = logger;
-            cursorComp.Logger = logger;
-            mouseComp.Logger = logger;
-            shellComp.Logger = logger;
-            displayComp.Logger = logger;
-            iconComp.Logger = logger;
-            clipComp.Logger = logger;
+            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
+
+            windowComp.Logger = options.Logger;
+            glComp.Logger = options.Logger;
+            cursorComp.Logger = options.Logger;
+            mouseComp.Logger = options.Logger;
+            shellComp.Logger = options.Logger;
+            displayComp.Logger = options.Logger;
+            iconComp.Logger = options.Logger;
+            clipComp.Logger = options.Logger;
             //keyboardComp.Logger = logger;
 
-            windowComp.Initialize(PalComponents.Window);
-            glComp.Initialize(PalComponents.OpenGL);
-            cursorComp.Initialize(PalComponents.MouseCursor);
-            mouseComp.Initialize(PalComponents.MiceInput);
-            shellComp.Initialize(PalComponents.Shell);
-            displayComp.Initialize(PalComponents.Display);
-            iconComp.Initialize(PalComponents.WindowIcon);
-            clipComp.Initialize(PalComponents.Clipboard);
+            windowComp.Initialize(options);
+            glComp.Initialize(options);
+            cursorComp.Initialize(options);
+            mouseComp.Initialize(options);
+            shellComp.Initialize(options);
+            displayComp.Initialize(options);
+            iconComp.Initialize(options);
+            clipComp.Initialize(options);
             //keyboardComp.Initialize(PalComponents.KeyboardInput);
 
             /*
@@ -237,7 +247,7 @@ namespace OpenTK.Platform.Tests
 
             while (windowComp.IsWindowDestroyed(Window) == false)
             {
-                windowComp.ProcessEvents();
+                windowComp.ProcessEvents(false);
 
                 if (windowComp.IsWindowDestroyed(Window))
                     break;

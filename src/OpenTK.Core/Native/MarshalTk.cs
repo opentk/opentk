@@ -144,5 +144,54 @@ namespace OpenTK.Core.Native
 
             Marshal.FreeHGlobal(ptr);
         }
+
+        /// <summary>
+        /// Marshals a <see cref="T:byte**"/> ansi string array into a <see cref="T:string[]"/>.
+        /// </summary>
+        /// <param name="strArrayPtr">The ansi string array pointer.</param>
+        /// <param name="length">The number of strings in the array.</param>
+        /// <returns>The managed string array.</returns>
+        public static unsafe string[] MarshalAnsiStringArrayPtrToStringArray(byte** strArrayPtr, uint length)
+        {
+            string[] arr = new string[length];
+            for (int i = 0; i < length; i++)
+            {
+                byte* strPtr = strArrayPtr[i];
+                arr[i] = Marshal.PtrToStringAnsi((IntPtr)strPtr);
+            }
+            return arr;
+        }
+
+        /// <summary>
+        /// Converts a span of strings into an unmanged ansi string array.
+        /// Use <see cref="FreeAnsiStringArrayPtr(byte**, uint)"/> to free the array.
+        /// </summary>
+        /// <param name="stringArray">The span of strings to marshal.</param>
+        /// <param name="count">The number of strings in the unmanged array. The same as the length of the array.</param>
+        /// <returns>The unmanaged ansi string array.</returns>
+        public static unsafe byte** MarshalStringArrayToAnsiStringArrayPtr(Span<string> stringArray, out uint count)
+        {
+            byte** stringArrayPtr = (byte**)NativeMemory.Alloc((nuint)stringArray.Length, (nuint)sizeof(byte*));
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                stringArrayPtr[i] = (byte*)Marshal.StringToCoTaskMemAnsi(stringArray[i]);
+            }
+            count = (uint)stringArray.Length;
+            return stringArrayPtr;
+        }
+
+        /// <summary>
+        /// Frees unmanaged ansi string arrays allocated by <see cref="MarshalStringArrayToAnsiStringArrayPtr(Span{string}, out uint)"/>.
+        /// </summary>
+        /// <param name="strArrayPtr">The unmanaged ansi string array.</param>
+        /// <param name="count">The number of strings in the array.</param>
+        public static unsafe void FreeAnsiStringArrayPtr(byte** strArrayPtr, uint count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Marshal.FreeCoTaskMem((IntPtr)strArrayPtr[i]);
+            }
+            Marshal.FreeCoTaskMem((IntPtr)strArrayPtr);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.Egl;
@@ -21,12 +21,13 @@ namespace ANGLETestProject
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComp = new ANGLEOpenGLComponent();
 
-            var logger = new ConsoleLogger();
-            WindowComp.Logger = logger;
-            OpenGLComp.Logger = logger;
+            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
+            
+            WindowComp.Logger = options.Logger;
+            OpenGLComp.Logger = options.Logger;
 
-            WindowComp.Initialize(PalComponents.Window);
-            OpenGLComp.Initialize(PalComponents.OpenGL);
+            WindowComp.Initialize(options);
+            OpenGLComp.Initialize(options);
 
             var window = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetSize(window, 800, 600);
@@ -41,7 +42,7 @@ namespace ANGLETestProject
 
             while (true)
             {
-                WindowComp.ProcessEvents();
+                WindowComp.ProcessEvents(false);
 
                 if (WindowComp.IsWindowDestroyed(window))
                 {

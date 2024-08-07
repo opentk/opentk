@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using ImGuiNET;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using StbImageSharp;
 
