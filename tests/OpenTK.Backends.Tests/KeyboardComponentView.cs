@@ -1,5 +1,5 @@
 ﻿using ImGuiNET;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Platform.Native;
 using System;

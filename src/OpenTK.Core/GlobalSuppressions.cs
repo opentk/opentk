@@ -10,22 +10,22 @@ using System.Diagnostics.CodeAnalysis;
     "SA1307:Accessible fields should begin with upper-case letter",
     Justification = "This namespace contains a lot of native interfacing code that is better by using the native API naming convention",
     Scope = "namespaceanddescendants",
-    Target = "OpenTK.Core.Platform.Implementations.Windows")]
+    Target = "OpenTK.Platform.Implementations.Windows")]
 [assembly: SuppressMessage(
     "StyleCop.CSharp.NamingRules",
     "SA1313:Parameter names should begin with lower-case letter",
     Justification = "This namespace contains a lot of native interfacing code that is better by using the native API naming convention",
     Scope = "namespaceanddescendants",
-    Target = "OpenTK.Core.Platform.Implementations.Windows")]
+    Target = "OpenTK.Platform.Implementations.Windows")]
 [assembly: SuppressMessage(
     "StyleCop.CSharp.LayoutRules",
     "SA1503:Braces should not be omitted",
     Justification = "This is a stupid rule?",
     Scope = "namespaceanddescendants",
-    Target = "OpenTK.Core.Platform.Implementations.Windows")]
+    Target = "OpenTK.Platform.Implementations.Windows")]
 [assembly: SuppressMessage(
     "StyleCop.CSharp.SpacingRules",
     "SA1023:Dereference and access of symbols should be spaced correctly",
     Justification = "This rule doesn't work with pointer types inside of function pointers.",
     Scope = "namespaceanddescendants",
-    Target = "OpenTK.Core.Platform.Implementations.Windows")]
+    Target = "OpenTK.Platform.Implementations.Windows")]

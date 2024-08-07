@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -90,28 +90,29 @@ void main()
                 Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
             }
 
-            var logger = new ConsoleLogger();
-            WindowComp.Logger = logger;
-            OpenGLComponent.Logger = logger;
-            DisplayComponent.Logger = logger;
-            MouseComponent.Logger = logger;
-            ClipboardComponent.Logger = logger;
-            IconComponent.Logger = logger;
-            ShellComponent.Logger = logger;
-            KeyboardComponent.Logger = logger;
-            CursorComponent.Logger = logger;
-            JoystickComponent.Logger = logger;
+            ToolkitOptions options = new ToolkitOptions() { Logger = new ConsoleLogger() };
 
-            WindowComp.Initialize(PalComponents.Window);
-            OpenGLComponent.Initialize(PalComponents.OpenGL);
-            DisplayComponent.Initialize(PalComponents.Display);
-            MouseComponent.Initialize(PalComponents.MiceInput);
-            ClipboardComponent.Initialize(PalComponents.Clipboard);
-            IconComponent.Initialize(PalComponents.WindowIcon);
-            ShellComponent.Initialize(PalComponents.Shell);
-            KeyboardComponent.Initialize(PalComponents.KeyboardInput);
-            CursorComponent.Initialize(PalComponents.MouseCursor);
-            JoystickComponent.Initialize(PalComponents.Joystick);
+            WindowComp.Logger = options.Logger;
+            OpenGLComponent.Logger = options.Logger;
+            DisplayComponent.Logger = options.Logger;
+            MouseComponent.Logger = options.Logger;
+            ClipboardComponent.Logger = options.Logger;
+            IconComponent.Logger = options.Logger;
+            ShellComponent.Logger = options.Logger;
+            KeyboardComponent.Logger = options.Logger;
+            CursorComponent.Logger = options.Logger;
+            JoystickComponent.Logger = options.Logger;
+
+            WindowComp.Initialize(options);
+            OpenGLComponent.Initialize(options);
+            DisplayComponent.Initialize(options);
+            MouseComponent.Initialize(options);
+            ClipboardComponent.Initialize(options);
+            IconComponent.Initialize(options);
+            ShellComponent.Initialize(options);
+            KeyboardComponent.Initialize(options);
+            CursorComponent.Initialize(options);
+            JoystickComponent.Initialize(options);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -237,7 +238,7 @@ void main()
                 float dt = (float)watch.Elapsed.TotalSeconds;
                 watch.Restart();
 
-                WindowComp.ProcessEvents();
+                WindowComp.ProcessEvents(false);
 
                 if (WindowComp.IsWindowDestroyed(WindowHandle))
                 {
@@ -351,7 +352,7 @@ void main()
             var buffer = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsage.StaticDraw);
 
             return buffer;
         }
@@ -388,14 +389,14 @@ void main()
             GL.CompileShader(vert);
             GL.CompileShader(frag);
 
-            int success = 0;
-            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, ref success);
+            int success;
+            GL.GetShaderi(vert, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(vert, out string info);
                 Console.WriteLine(info);
             }
-            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, ref success);
+            GL.GetShaderi(frag, ShaderParameterName.CompileStatus, out success);
             if (success == 0)
             {
                 GL.GetShaderInfoLog(frag, out string info);
@@ -409,7 +410,7 @@ void main()
 
             GL.LinkProgram(program);
 
-            GL.GetProgrami(program, ProgramProperty.LinkStatus, ref success);
+            GL.GetProgrami(program, ProgramProperty.LinkStatus, out success);
             if (success == 0)
             {
                 GL.GetProgramInfoLog(program, out string info);

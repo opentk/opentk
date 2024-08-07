@@ -18,7 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
-    <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
   </ItemGroup>
 
   <ItemGroup>

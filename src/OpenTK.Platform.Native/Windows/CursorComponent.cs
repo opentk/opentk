@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -25,8 +25,12 @@ namespace OpenTK.Platform.Native.Windows
         public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
-        public void Initialize(ToolkitOptions options)
+        public void Initialize(PalComponents which)
         {
+            if (which != PalComponents.MouseCursor)
+            {
+                throw new Exception("CursorComponent can only initialize the MouseCursor component.");
+            }
         }
 
         /// <inheritdoc/>
@@ -530,7 +534,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <param name="image">Buffer to copy cursor image into.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         // FIXME: Document the format of the return image!
-        // Maybe we don't care about this function? - Noggin_Bops 2023-09-10
+        // Maybe we don't care about this function? - Noggin_bops 2023-09-10
         public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);

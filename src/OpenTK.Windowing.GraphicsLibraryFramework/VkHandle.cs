@@ -12,7 +12,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <summary>
         /// The actual value of the Vulkan handle.
         /// </summary>
-        public IntPtr Handle;
+        public ulong Handle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VkHandle"/> struct.
@@ -21,7 +21,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// The native Vulkan handle.
         /// This is NOT a pointer to a field containing the handle, this is the actual handle itself.
         /// </param>
-        public VkHandle(IntPtr handle)
+        public VkHandle(ulong handle)
         {
             Handle = handle;
         }

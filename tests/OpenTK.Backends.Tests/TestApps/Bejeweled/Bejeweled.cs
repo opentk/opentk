@@ -1,4 +1,4 @@
-﻿using OpenTK.Core.Platform;
+﻿using OpenTK.Platform;
 using System;
 
 namespace OpenTK.Backends.Tests.Bejeweled

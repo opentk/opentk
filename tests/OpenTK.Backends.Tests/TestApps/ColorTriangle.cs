@@ -1,5 +1,5 @@
 ﻿using ImGuiNET;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
@@ -99,7 +99,7 @@ void main()
             new Vertex(( 0.0f, +0.5f), (0, 0, 1)),
         };
 
-        public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
+        public unsafe void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             Window = window;
             Context = context;
@@ -145,7 +145,7 @@ void main()
             GL.BindBuffer(BufferTarget.ArrayBuffer, VBO);
             if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, (uint)VBO, -1, "VBO: Color Triangle");
 
-            GL.BufferData(BufferTarget.ArrayBuffer, Vertices, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Length * sizeof(Vertex), Vertices, BufferUsage.StaticDraw);
 
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), 0);
@@ -162,7 +162,7 @@ void main()
                 int vertex = GL.CreateShader(ShaderType.VertexShader);
                 GL.ShaderSource(vertex, vertexSource);
                 GL.CompileShader(vertex);
-                GL.GetShaderi(vertex, ShaderParameterName.CompileStatus, ref status);
+                GL.GetShaderi(vertex, ShaderParameterName.CompileStatus, out status);
                 if (status == 0)
                 {
                     GL.GetShaderInfoLog(vertex, out string info);
@@ -172,7 +172,7 @@ void main()
                 int fragment = GL.CreateShader(ShaderType.FragmentShader);
                 GL.ShaderSource(fragment, fragmentSource);
                 GL.CompileShader(fragment);
-                GL.GetShaderi(fragment, ShaderParameterName.CompileStatus, ref status);
+                GL.GetShaderi(fragment, ShaderParameterName.CompileStatus, out status);
                 if (status == 0)
                 {
                     GL.GetShaderInfoLog(fragment, out string info);
@@ -183,7 +183,7 @@ void main()
                 GL.AttachShader(program, fragment);
 
                 GL.LinkProgram(program);
-                GL.GetProgrami(program, ProgramProperty.LinkStatus, ref status);
+                GL.GetProgrami(program, ProgramProperty.LinkStatus, out status);
                 if (status == 0)
                 {
                     GL.GetProgramInfoLog(program, out string info);

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Platform.Native;
 using OpenTK.Core.Utility;
 

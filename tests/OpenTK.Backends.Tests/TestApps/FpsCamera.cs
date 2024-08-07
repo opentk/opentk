@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
@@ -120,7 +120,7 @@ void main() {
 
             env_vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, env_vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, env_data, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, env_data.Length * sizeof(Vertex), env_data, BufferUsage.StaticDraw);
 
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(Vertex), 0*sizeof(Vector3));
@@ -131,7 +131,7 @@ void main() {
 
             env_ebo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, env_ebo);
-            GL.BufferData(BufferTarget.ElementArrayBuffer, env_idx, BufferUsage.StaticDraw);
+            GL.BufferData(BufferTarget.ElementArrayBuffer, env_idx.Length * sizeof(int), env_idx, BufferUsage.StaticDraw);
 
             int vert = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vert, vertex_shader);

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenTK.Core.Platform;
+using OpenTK.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -53,7 +53,7 @@ namespace X11TestProject
 
             while(!A.Done || !B.Done)
             {
-                windowComp.ProcessEvents();
+                windowComp.ProcessEvents(false);
 
                 if (XTasks.TryDequeue(out Task? task))
                 {

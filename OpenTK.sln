@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "tests\OpenALT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Generator\Generator.csproj", "{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VkGenerator", "src\VkGenerator\VkGenerator.csproj", "{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.GraphicsLibraryFramework", "src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj", "{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4}"
@@ -76,7 +78,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\Open
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "X11TestProject", "tests\X11TestProject\X11TestProject.csproj", "{4736086B-634E-459B-BCC4-88BCCDD4B218}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Platform.Native", "src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj", "{0EF16A44-F4CF-40F6-9AA4-296018E8D700}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Platform", "src\OpenTK.Platform\OpenTK.Platform.csproj", "{0EF16A44-F4CF-40F6-9AA4-296018E8D700}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalTestProject", "tests\LocalTestProject\LocalTestProject.csproj", "{54F244EC-343E-4857-A7C2-8C1A703DB4A8}"
 EndProject
@@ -98,7 +100,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bejeweled", "tests\Bejeweled\Bejeweled.csproj", "{C7D52AD4-4D53-4D37-87B5-0864CF94EA45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BejeweledStandalone", "tests\BejeweledStandalone\BejeweledStandalone.csproj", "{35DFEE40-0B3D-4264-B73B-D1868B002B59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BejeweledStandalone", "tests\BejeweledStandalone\BejeweledStandalone.csproj", "{35DFEE40-0B3D-4264-B73B-D1868B002B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulkanTestProject", "VulkanTestProject\VulkanTestProject.csproj", "{32A169B6-865F-425B-BB55-A7F893F5D5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +150,10 @@ Global
 		{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30F1EAD-4B95-4050-A9DC-2C09A8F6CE3A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A0D02D2-0834-42F8-9610-8221CF803708}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -222,6 +230,10 @@ Global
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32A169B6-865F-425B-BB55-A7F893F5D5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32A169B6-865F-425B-BB55-A7F893F5D5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32A169B6-865F-425B-BB55-A7F893F5D5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32A169B6-865F-425B-BB55-A7F893F5D5FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -249,6 +261,7 @@ Global
 		{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94} = {471E0D18-D620-4CBE-A471-F3DB470E6D49}
 		{C7D52AD4-4D53-4D37-87B5-0864CF94EA45} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{35DFEE40-0B3D-4264-B73B-D1868B002B59} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{32A169B6-865F-425B-BB55-A7F893F5D5FA} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
