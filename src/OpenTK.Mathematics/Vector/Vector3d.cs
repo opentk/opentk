@@ -143,6 +143,11 @@ namespace OpenTK.Mathematics
         public readonly double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
+        /// Gets an approximation of 1 over the length (magnitude) of the vector.
+        /// </summary>
+        public readonly double ReciprocalLengthFast => Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+
+        /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
@@ -790,15 +795,22 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d Slerp(Vector3d a, Vector3d b, double t)
         {
-            double cosTheta = Dot(a, b);
-            double theta = Math.Acos(cosTheta);
-            // We use the fact that:
-            // sin(θ) = sqrt(1 - cos(θ)^2)
-            // to avoid doing sin(θ) which is slower than sqrt.
-            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
-            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
-            double bcoef = Math.Sin(t * theta) / sinTheta;
-            return (acoef * a) + (bcoef * b);
+            double cosTheta = Dot(a.Normalized(), b.Normalized());
+            if (cosTheta > 0.99999999)
+            {
+                return Lerp(a, b, t);
+            }
+            else
+            {
+                double theta = Math.Acos(cosTheta);
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+                double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+                double bcoef = Math.Sin(t * theta) / sinTheta;
+                return (acoef * a) + (bcoef * b);
+            }
         }
 
         /// <summary>
@@ -811,15 +823,22 @@ namespace OpenTK.Mathematics
         /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
         public static void Slerp(in Vector3d a, in Vector3d b, double t, out Vector3d result)
         {
-            Dot(in a, in b, out double cosTheta);
-            double theta = Math.Acos(cosTheta);
-            // We use the fact that:
-            // sin(θ) = sqrt(1 - cos(θ)^2)
-            // to avoid doing sin(θ) which is slower than sqrt.
-            double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
-            double acoef = Math.Sin((1 - t) * theta) / sinTheta;
-            double bcoef = Math.Sin(t * theta) / sinTheta;
-            result = (acoef * a) + (bcoef * b);
+            Dot(a.Normalized(), b.Normalized(), out double cosTheta);
+            if (cosTheta > 0.99999999)
+            {
+                Lerp(in a, in b, t, out result);
+            }
+            else
+            {
+                double theta = Math.Acos(cosTheta);
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+                double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+                double bcoef = Math.Sin(t * theta) / sinTheta;
+                result = (acoef * a) + (bcoef * b);
+            }
         }
 
         /// <summary>

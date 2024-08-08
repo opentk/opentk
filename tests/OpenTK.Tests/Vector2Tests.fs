@@ -449,8 +449,13 @@ module Vector2 =
         let ``Slerp returns enpoints`` (a : Vector2, b : Vector2) = 
             let c = Vector2.Slerp(a, b, 0.0f)
             let d = Vector2.Slerp(a, b, 1.0f)
-            Assert.ApproximatelyEquivalent(a, c);
-            Assert.ApproximatelyEquivalent(b, d);
+
+            if a.Length > 0.0f && b.Length > 0.0f then
+                Assert.ApproximatelyEqualEpsilon(a, c, 0.001f);
+                Assert.ApproximatelyEqualEpsilon(b, d, 0.001f);
+            else
+                Assert.AllComponentsNan(c)
+                Assert.AllComponentsNan(d)
 
         [<Property>]
         let ``Elerp returns enpoints`` (a : Vector2, b : Vector2) = 
