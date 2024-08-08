@@ -1,11 +1,8 @@
 namespace OpenTK.Tests
 
 open Xunit
-open FsCheck
 open System
 open FsCheck.Xunit
-open System.Runtime.InteropServices
-open OpenTK
 open OpenTK.Mathematics
 
 module Box2 =

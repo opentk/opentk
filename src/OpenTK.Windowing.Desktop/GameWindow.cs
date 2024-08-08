@@ -369,8 +369,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
-        /// </summary
+        /// Run when the update thread is started. This will never run if you set <see cref="IsMultiThreaded"/> to false.
+        /// </summary>
         [Obsolete("There is no longer a separate render thread.")]
         protected virtual void OnRenderThreadStarted()
         {

@@ -182,7 +182,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets whether the specified mouse button is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="button">The <see cref="MouseButton">mouse button</see> to check.</param>
         /// <returns>True if the mouse button is pressed in this frame, but not the last frame.</returns>
@@ -195,7 +195,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Gets whether the specified mouse button is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/> (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="button">The <see cref="MouseButton">mouse button</see> to check.</param>
         /// <returns>True if the mouse button is released in this frame, but pressed the last frame.</returns>

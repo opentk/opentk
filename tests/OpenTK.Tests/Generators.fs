@@ -1,10 +1,7 @@
 ﻿namespace OpenTK.Tests
 
-open Xunit
 open FsCheck
-open FsCheck.Xunit
 open System
-open OpenTK
 open OpenTK.Mathematics
 
 /// An angle from -89 to +89
@@ -16,7 +13,7 @@ type Color4LDR = Color4LDR of Color4
 
 [<AutoOpen>]
 module private Generators =
-    let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue )
+    let private isValidFloat f = not (Single.IsNaN f || Single.IsInfinity f || Single.IsInfinity (f * f) || f = Single.MinValue || f = Single.MaxValue)
     let private isValidDouble d = not (Double.IsNaN d || Double.IsInfinity d || Double.IsInfinity (d * d)|| d = Double.MinValue || d = Double.MaxValue)
     let singleArb = Arb.Default.Float32() |> Arb.toGen |> Gen.filter isValidFloat
     let single = singleArb |> Arb.fromGen

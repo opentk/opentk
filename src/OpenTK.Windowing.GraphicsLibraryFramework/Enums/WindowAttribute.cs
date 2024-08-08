@@ -44,6 +44,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Specifies whether the window will be given input focus when <see cref="GLFW.ShowWindow"/> is called.
         /// Possible values are <c>true</c> and <c>false</c>.
         /// </summary>
-        FocusOnShow = WindowHintBool.FocusOnShow
+        FocusOnShow = WindowHintBool.FocusOnShow,
+
+        /// <summary>
+        /// Specifies whether the window is transparent to mouse input, letting any mouse events pass through to whatever window is behind it.
+        /// This can be set before creation with the <see cref="WindowHintBool.MousePassthrough"/> window hint or after with <see cref="GLFW.SetWindowAttrib(Window*, WindowAttribute, bool)"/>.
+        /// This is only supported for undecorated windows.
+        /// Decorated windows with this enabled will behave differently between platforms.
+        /// </summary>
+        MousePassthrough = WindowHintBool.MousePassthrough,
     }
 }

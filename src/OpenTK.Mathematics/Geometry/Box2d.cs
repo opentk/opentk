@@ -28,7 +28,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector2d Min
         {
-            get => _min;
+            readonly get => _min;
             set
             {
                 if (value.X > _max.X)
@@ -51,7 +51,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public Vector2d Max
         {
-            get => _max;
+            readonly get => _max;
             set
             {
                 if (value.X < _min.X)
@@ -423,7 +423,7 @@ namespace OpenTK.Mathematics
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
         [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
-        public bool Contains(Vector2d point)
+        public readonly bool Contains(Vector2d point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y;
@@ -435,7 +435,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
-        public bool ContainsInclusive(Vector2d point)
+        public readonly bool ContainsInclusive(Vector2d point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
                    _min.Y <= point.Y && point.Y <= _max.Y;
@@ -447,7 +447,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
-        public bool ContainsExclusive(Vector2d point)
+        public readonly bool ContainsExclusive(Vector2d point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y;
@@ -480,7 +480,7 @@ namespace OpenTK.Mathematics
         /// <param name="other">The box to query.</param>
         /// <returns>Whether this box contains the other box.</returns>
         [Pure]
-        public bool Contains(Box2d other)
+        public readonly bool Contains(Box2d other)
         {
             return _max.X >= other._min.X && _min.X <= other._max.X &&
                    _max.Y >= other._min.Y && _min.Y <= other._max.Y;
@@ -492,7 +492,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to find distance for.</param>
         /// <returns>The distance between the specified point and the nearest edge.</returns>
         [Pure]
-        public double DistanceToNearestEdge(Vector2d point)
+        public readonly double DistanceToNearestEdge(Vector2d point)
         {
             var distX = new Vector2d(
                 Math.Max(0f, Math.Max(_min.X - point.X, point.X - _max.X)),
@@ -516,7 +516,7 @@ namespace OpenTK.Mathematics
         /// <param name="distance">The distance to translate the box.</param>
         /// <returns>The translated box.</returns>
         [Pure]
-        public Box2d Translated(Vector2d distance)
+        public readonly Box2d Translated(Vector2d distance)
         {
             // create a local copy of this box
             Box2d box = this;
@@ -542,7 +542,7 @@ namespace OpenTK.Mathematics
         /// <param name="anchor">The anchor to scale the box from.</param>
         /// <returns>The scaled box.</returns>
         [Pure]
-        public Box2d Scaled(Vector2d scale, Vector2d anchor)
+        public readonly Box2d Scaled(Vector2d scale, Vector2d anchor)
         {
             // create a local copy of this box
             Box2d box = this;
@@ -569,7 +569,7 @@ namespace OpenTK.Mathematics
         /// <param name="size">The size to inflate by.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box2d Inflated(Vector2d size)
+        public readonly Box2d Inflated(Vector2d size)
         {
             // create a local copy of this box
             Box2d box = this;
@@ -593,7 +593,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to contain.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box2d Extended(Vector2d point)
+        public readonly Box2d Extended(Vector2d point)
         {
             // create a local copy of this box
             Box2d box = this;
@@ -635,7 +635,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(_min, _max);
         }

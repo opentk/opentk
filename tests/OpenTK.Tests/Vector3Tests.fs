@@ -1,11 +1,8 @@
 namespace OpenTK.Tests
 
 open Xunit
-open FsCheck
 open FsCheck.Xunit
-open System
 open System.Runtime.InteropServices
-open OpenTK
 open OpenTK.Mathematics
 
 module Vector3 =
@@ -525,6 +522,27 @@ module Vector3 =
 
             let vRes = Vector3.BaryCentric(&a, &b, &c, u, v)
             Assert.Equal(r, vRes)
+
+        [<Property>]
+        let ``Lerp returns enpoints`` (a : Vector3, b : Vector3) = 
+            let c = Vector3.Lerp(a, b, 0.0f)
+            let d = Vector3.Lerp(a, b, 1.0f)
+            Assert.ApproximatelyEquivalent(a, c);
+            Assert.ApproximatelyEquivalent(b, d);
+
+        [<Property>]
+        let ``Slerp returns enpoints`` (a : Vector3, b : Vector3) = 
+            let c = Vector3.Slerp(a, b, 0.0f)
+            let d = Vector3.Slerp(a, b, 1.0f)
+            Assert.ApproximatelyEqualEpsilon(a, c, 0.001f);
+            Assert.ApproximatelyEqualEpsilon(b, d, 0.001f);
+
+        [<Property>]
+        let ``Elerp returns enpoints`` (a : Vector3, b : Vector3) = 
+            let c = Vector3.Elerp(Vector3.Abs(a), Vector3.Abs(b), 0.0f)
+            let d = Vector3.Elerp(Vector3.Abs(a), Vector3.Abs(b), 1.0f)
+            Assert.ApproximatelyEquivalent(Vector3.Abs(a), c);
+            Assert.ApproximatelyEquivalent(Vector3.Abs(b), d);
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Vector products`` =

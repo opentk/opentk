@@ -24,6 +24,7 @@ module GameWindow =
                 st.Restart()
                 run <- (window.ProcessEvents(1.0))
         let openGW() =
+            GLFWProvider.CheckForMainThread <- false
             let gw = new GameWindow(GameWindowSettings.Default, NativeWindowSettings.Default)
             gw
     
@@ -50,12 +51,11 @@ module GameWindow =
             use gw = openGW()
             let signals = System.Collections.Generic.List<string>()
             gw.add_Closing(fun _ -> signals.Add("Closing"))
-            //gw.add_Closed(fun _ -> signals.Add("Closed"))
             
             Assert.Equal([], signals)
             gw.Close()
             TryProcessEvents(gw)
-            Assert.Equal(["Closing"; "Closed"], signals)
+            Assert.Equal(["Closing"], signals)
 
     module Sizes =
         [<Fact>]
@@ -191,7 +191,7 @@ module GameWindow =
                 Assert.True(fuzzyequals(dpix/scalex, defaultDpi(), 1.0f)) // precision is up to discussion.
                 Assert.True(fuzzyequals(dpiy/scaley, defaultDpi(), 1.0f))
 
-// module UpdateFrequency =
+    module UpdateFrequency =
         [<Fact>]
         let ``Does UpdateFrequency limit the timing of UpdateFrame`` () =
             use gw = openGW()

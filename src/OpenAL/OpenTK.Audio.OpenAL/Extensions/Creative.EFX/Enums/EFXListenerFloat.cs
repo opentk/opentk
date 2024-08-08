@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="float"/> Listener/GetListener parameters.
+    /// A list of valid <see cref="float"/> <see cref="ALC.EFX.Listener(int, EFXListenerFloat, float)"/>/<see cref="ALC.EFX.GetListener(int, EFXListenerFloat)"/> parameters.
     /// </summary>
     public enum EFXListenerFloat
     {

@@ -7,6 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
@@ -121,6 +123,67 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// If enabled, situations that would have generated errors instead cause undefined behavior.
         /// </summary>
         ContextNoError = 0x0002200A,
+
+        /// <summary>
+        /// Specifies whether the window content area should be resized based on content scale changes.
+        /// This can be because of a global user settings change or because the window was moved to a monitor with different scale settings.
+        ///
+        /// This hint only has an effect on platforms where screen coordinates and pixels always map 1:1,
+        /// such as Windows and X11.
+        /// On platforms like macOS the resolution of the framebuffer can change independently of the window size.
+        /// </summary>
+        ScaleToMonitor = 0x0002200C,
+
+        /// <summary>
+        /// Specifies whether the framebuffer should be resized based on content scale changes.
+        /// This can be because of a global user settings change or because the window was moved to a monitor with different scale settings.
+        ///
+        /// This hint only has an effect on platforms where screen coordinates can be scaled relative to pixel coordinates,
+        /// such as macOS and Wayland.
+        /// On platforms like Windows and X11 the framebuffer and window content area sizes always map 1:1.
+        ///
+        /// This is the new name, introduced in GLFW 3.4.
+        /// The older <see cref="CocoaRetinaFramebuffer"/> name is also available for compatibility.
+        /// Both names modify the same hint value.
+        /// </summary>
+        ScaleFramebuffer = 0x0002200D,
+
+        /// <summary>
+        /// Specifies whether to use full resolution framebuffers on Retina displays.
+        /// Possible values are GLFW_TRUE and GLFW_FALSE.
+        /// This is ignored on other platforms.
+        /// </summary>
+        [Obsolete("Use " + nameof(ScaleFramebuffer) + " instead.")]
+        CocoaRetinaFramebuffer = 0x00023001,
+
+        /// <summary>
+        /// Specifies whether to in Automatic Graphics Switching, i.e.
+        /// to allow the system to choose the integrated GPU for the OpenGL context and move it between
+        /// GPUs if necessary or whether to force it to always run on the discrete GPU.
+        /// This only affects systems with both integrated and discrete GPUs.
+        /// Possible values are GLFW_TRUE and GLFW_FALSE. This is ignored on other platforms.
+        ///
+        /// Simpler programs and tools may want to enable this to save power, while games and other applications performing advanced rendering will want to leave it disabled.
+        ///
+        /// A bundled application that wishes to participate in Automatic Graphics Switching should also declare this in its Info.plist by setting the NSSupportsAutomaticGraphicsSwitching key to true.
+        /// </summary>
+        CocoaGraphicsSwitching = 0x00023003,
+
+        /// <summary>
+        /// Specifies whether to allow access to the window menu via the Alt+Space and Alt-and-then-Space keyboard shortcuts.
+        /// This is ignored on other platforms.
+        /// </summary>
+        Win32KeyboardMenu = 0x00025001,
+
+        /// <summary>
+        /// Specifies whether to show the window the way specified in the program's STARTUPINFO when it is shown for the first time.
+        /// This is the same information as the Run option in the shortcut properties window.
+        /// If this information was not specified when the program was started,
+        /// GLFW behaves as if this hint was set to GLFW_FALSE.
+        /// Possible values are GLFW_TRUE and GLFW_FALSE.
+        /// This is ignored on other platforms.
+        /// </summary>
+        Win32ShowDefault = 0x00025002,
 
         /// <summary>
         /// Specifies whether to use stereoscopic rendering. This is a hard constraint.

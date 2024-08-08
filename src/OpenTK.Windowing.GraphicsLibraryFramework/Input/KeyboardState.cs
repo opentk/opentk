@@ -128,7 +128,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         ///     Gets whether the specified key is pressed in the current frame but released in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/>  (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is pressed in this frame, but not the last frame.</returns>
@@ -141,7 +141,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         ///     Gets whether the specified key is released in the current frame but pressed in the previous frame.
         /// </summary>
         /// <remarks>
-        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        ///     "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents(double)"/>  (<see cref="NativeWindow.ProcessInputEvents()"/> more precisely) here.
         /// </remarks>
         /// <param name="key">The <see cref="Keys">key</see> to check.</param>
         /// <returns>True if the key is released in this frame, but pressed the last frame.</returns>

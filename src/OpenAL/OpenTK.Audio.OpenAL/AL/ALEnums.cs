@@ -10,14 +10,14 @@
 namespace OpenTK.Audio.OpenAL
 {
 #pragma warning disable SA1402 // File may only contain a single type
-    /// <summary>A list of valid Enable/Disable/IsEnabled parameters.</summary>
+    /// <summary>A list of valid <see cref="AL.Enable(ALCapability)"/>/<see cref="AL.Disable(ALCapability)"/>/<see cref="AL.IsEnabled(ALCapability)"/> parameters.</summary>
     public enum ALCapability : int
     {
         /// <summary>Currently no state toggles exist for vanilla OpenAL and no Extension uses it.</summary>
         Invalid = -1,
     }
 
-    /// <summary>A list of valid 32-bit Float Listener/GetListener parameters.</summary>
+    /// <summary>A list of valid 32-bit Float <see cref="AL.Listener(ALListenerf, float)"/>/<see cref="AL.GetListener(ALListenerf)"/> parameters.</summary>
     public enum ALListenerf : int
     {
         /// <summary>Indicate the gain (Volume amplification) applied. Type: float Range: [0.0f - ? ] A value of 1.0 means un-attenuated/unchanged. Each division by 2 equals an attenuation of -6dB. Each multiplicaton with 2 equals an amplification of +6dB. A value of 0.0f is interpreted as zero volume and the channel is effectively disabled.</summary>
@@ -27,7 +27,7 @@ namespace OpenTK.Audio.OpenAL
         EfxMetersPerUnit = 0x20004,
     }
 
-    /// <summary>A list of valid Math.Vector3 Listener/GetListener parameters.</summary>
+    /// <summary>A list of valid <see cref="Mathematics.Vector3"/> <see cref="AL.Listener(ALListener3f, ref Mathematics.Vector3)"/>/<see cref="AL.GetListener(ALListener3f)"/> parameters.</summary>
     public enum ALListener3f : int
     {
         /// <summary>Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate system, where in a frontal default view X (thumb) points right, Y points up (index finger), and Z points towards the viewer/camera (middle finger). To switch from a left handed coordinate system, flip the sign on the Z coordinate. Listener position is always in the world coordinate system.</summary>
@@ -37,14 +37,14 @@ namespace OpenTK.Audio.OpenAL
         Velocity = 0x1006,
     }
 
-    /// <summary>A list of valid float[] Listener/GetListener parameters.</summary>
+    /// <summary>A list of valid float[] <see cref="AL.Listener(ALListenerfv, float[])"/>/<see cref="AL.GetListener(ALListenerfv, float[])"/> parameters.</summary>
     public enum ALListenerfv : int
     {
         /// <summary>Indicate Listener orientation. Expects two Vector3, At followed by Up.</summary>
         Orientation = 0x100F,
     }
 
-    /// <summary>A list of valid 32-bit Float Source/GetSource parameters.</summary>
+    /// <summary>A list of valid 32-bit Float <see cref="AL.Source(int, ALSourcef, float)"/>/<see cref="AL.GetSource(int, ALSourcef)"/> parameters.</summary>
     public enum ALSourcef : int
     {
         /// <summary>Source specific reference distance. Type: float Range: [0.0f - float.PositiveInfinity] At 0.0f, no distance attenuation occurs. Type: float Default: 1.0f.</summary>
@@ -90,7 +90,7 @@ namespace OpenTK.Audio.OpenAL
         EfxConeOuterGainHighFrequency = 0x20009,
     }
 
-    /// <summary>A list of valid Math.Vector3 Source/GetSource parameters.</summary>
+    /// <summary>A list of valid <see cref="Mathematics.Vector3"/> <see cref="AL.Source(int, ALSource3f, ref Mathematics.Vector3)"/>/<see cref="AL.GetSource(int, ALSource3f)"/> parameters.</summary>
     public enum ALSource3f : int
     {
         /// <summary>Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate system, where in a frontal default view X (thumb) points right, Y points up (index finger), and Z points towards the viewer/camera (middle finger). To switch from a left handed coordinate system, flip the sign on the Z coordinate. Listener position is always in the world coordinate system.</summary>
@@ -103,7 +103,7 @@ namespace OpenTK.Audio.OpenAL
         Direction = 0x1005,
     }
 
-    /// <summary>A list of valid 8-bit boolean Source/GetSource parameters.</summary>
+    /// <summary>A list of valid 8-bit boolean <see cref="AL.Source(int, ALSourceb, bool)"/>/<see cref="AL.GetSource(int, ALSourceb)"/> parameters.</summary>
     public enum ALSourceb : int
     {
         /// <summary>Indicate that the Source has relative coordinates. Type: bool Range: [True, False].</summary>
@@ -122,7 +122,7 @@ namespace OpenTK.Audio.OpenAL
         EfxAuxiliarySendFilterGainHighFrequencyAuto = 0x2000C,
     }
 
-    /// <summary>A list of valid Int32 Source parameters.</summary>
+    /// <summary>A list of valid Int32 <see cref="AL.Source(int, ALSourcei, int)"/> parameters.</summary>
     public enum ALSourcei : int
     {
         /// <summary>The playback position, expressed in bytes.</summary>
@@ -141,7 +141,7 @@ namespace OpenTK.Audio.OpenAL
         EfxDirectFilter = 0x20005,
     }
 
-    /// <summary>A list of valid 3x Int32 Source/GetSource parameters.</summary>
+    /// <summary>A list of valid 3x Int32 <see cref="AL.Source(int, ALSource3i, int, int, int)"/>/<see cref="AL.GetSource(int, ALSource3i)"/> parameters.</summary>
     public enum ALSource3i : int
     {
         /// <summary>Specify the current location in three dimensional space. OpenAL, like OpenGL, uses a right handed coordinate system, where in a frontal default view X (thumb) points right, Y points up (index finger), and Z points towards the viewer/camera (middle finger). To switch from a left handed coordinate system, flip the sign on the Z coordinate. Listener position is always in the world coordinate system.</summary>
@@ -154,7 +154,7 @@ namespace OpenTK.Audio.OpenAL
         Direction = 0x1005,
     }
 
-    /// <summary>A list of valid Int32 GetSource parameters.</summary>
+    /// <summary>A list of valid Int32 <see cref="AL.GetSource(int, ALGetSourcei)"/> parameters.</summary>
     public enum ALGetSourcei : int
     {
         /// <summary>The playback position, expressed in bytes. AL_EXT_OFFSET Extension.</summary>
@@ -187,7 +187,7 @@ namespace OpenTK.Audio.OpenAL
     }
     */
 
-    /// <summary>Source state information, can be retrieved by AL.Source() with ALSourcei.SourceState.</summary>
+    /// <summary>Source state information, can be retrieved by <see cref="AL.GetSource(int, ALGetSourcei)"/> with <see cref="ALGetSourcei.SourceState"/>.</summary>
     public enum ALSourceState : int
     {
         /// <summary>Default State when loaded, can be manually set with AL.SourceRewind().</summary>
@@ -203,7 +203,7 @@ namespace OpenTK.Audio.OpenAL
         Stopped = 0x1014,
     }
 
-    /// <summary>Source type information,  can be retrieved by AL.Source() with ALSourcei.SourceType.</summary>
+    /// <summary>Source type information, can be retrieved by <see cref="AL.GetSource(int, ALGetSourcei)"/> with <see cref="ALGetSourcei.SourceType"/>.</summary>
     public enum ALSourceType : int
     {
         /// <summary>Source is Static if a Buffer has been attached using AL.Source with the parameter Sourcei.Buffer.</summary>
@@ -313,7 +313,7 @@ namespace OpenTK.Audio.OpenAL
         MultiRear8Ext = 0x1207,
     }
 
-    /// <summary>A list of valid Int32 GetBuffer parameters.</summary>
+    /// <summary>A list of valid Int32 <see cref="AL.GetBuffer(int, ALGetBufferi)"/> parameters.</summary>
     public enum ALGetBufferi : int
     {
         /// <summary>Sound sample's frequency, in units of hertz [Hz]. This is the number of samples per second. Half of the sample frequency marks the maximum significant frequency component.</summary>
@@ -344,7 +344,7 @@ namespace OpenTK.Audio.OpenAL
         Processed = 0x2012,
     }
 
-    /// <summary>Returned by AL.GetError.</summary>
+    /// <summary>Returned by <see cref="AL.GetError"/>.</summary>
     public enum ALError : int
     {
         /// <summary>No OpenAL Error.</summary>
@@ -372,7 +372,7 @@ namespace OpenTK.Audio.OpenAL
         OutOfMemory = 0xA005,
     }
 
-    /// <summary>A list of valid string AL.Get() parameters.</summary>
+    /// <summary>A list of valid string <see cref="AL.Get(ALGetString)"/> parameters.</summary>
     public enum ALGetString : int
     {
         /// <summary>Gets the Vendor name.</summary>
@@ -388,7 +388,7 @@ namespace OpenTK.Audio.OpenAL
         Extensions = 0xB004,
     }
 
-    /// <summary>A list of valid 32-bit Float AL.Get() parameters.</summary>
+    /// <summary>A list of valid 32-bit Float <see cref="AL.Get(ALGetFloat)"/> parameters.</summary>
     public enum ALGetFloat : int
     {
         /// <summary>Doppler scale. Default 1.0f.</summary>
@@ -401,14 +401,14 @@ namespace OpenTK.Audio.OpenAL
         SpeedOfSound = 0xC003,
     }
 
-    /// <summary>A list of valid Int32 AL.Get() parameters.</summary>
+    /// <summary>A list of valid Int32 <see cref="AL.Get(ALGetInteger)"/> parameters.</summary>
     public enum ALGetInteger : int
     {
         /// <summary>See enum ALDistanceModel.</summary><see cref="ALDistanceModel"/>
         DistanceModel = 0xD000,
     }
 
-    /// <summary>Used by AL.DistanceModel(), the distance model can be retrieved by AL.Get() with ALGetInteger.DistanceModel.</summary>
+    /// <summary>Used by <see cref="AL.DistanceModel(ALDistanceModel)"/>, the distance model can be retrieved by <see cref="AL.Get(ALGetInteger)"/> with <see cref="ALGetInteger.DistanceModel"/>.</summary>
     public enum ALDistanceModel : int
     {
         /// <summary>Bypasses all distance attenuation calculation for all Sources.</summary>

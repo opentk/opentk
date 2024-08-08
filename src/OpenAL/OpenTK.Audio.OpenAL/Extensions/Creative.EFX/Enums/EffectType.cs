@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// Effect type definitions to be used with EfxEffecti.EffectType.
+    /// Effect type definitions to be used with <see cref="EffectInteger.EffectType"/>.
     /// </summary>
     public enum EffectType
     {

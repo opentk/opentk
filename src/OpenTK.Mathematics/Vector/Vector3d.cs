@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -94,7 +94,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 2.</exception>
         public double this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -140,7 +140,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+        public readonly double Length => Math.Sqrt((X * X) + (Y * Y) + (Z * Z));
+
+        /// <summary>
+        /// Gets an approximation of 1 over the length (magnitude) of the vector.
+        /// </summary>
+        public readonly double ReciprocalLengthFast => Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -150,7 +155,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+        public readonly double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -161,13 +166,13 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public double LengthSquared => (X * X) + (Y * Y) + (Z * Z);
+        public readonly double LengthSquared => (X * X) + (Y * Y) + (Z * Z);
 
         /// <summary>
         /// Returns a copy of the Vector3d scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector3d Normalized()
+        public readonly Vector3d Normalized()
         {
             Vector3d v = this;
             v.Normalize();
@@ -194,6 +199,19 @@ namespace OpenTK.Mathematics
             X *= scale;
             Y *= scale;
             Z *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector3d Abs()
+        {
+            Vector3d result = this;
+            result.X = Math.Abs(result.X);
+            result.Y = Math.Abs(result.Y);
+            result.Z = Math.Abs(result.Z);
+            return result;
         }
 
         /// <summary>
@@ -525,6 +543,31 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector3d Abs(Vector3d vec)
+        {
+            vec.X = Math.Abs(vec.X);
+            vec.Y = Math.Abs(vec.Y);
+            vec.Z = Math.Abs(vec.Z);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector3d vec, out Vector3d result)
+        {
+            result.X = Math.Abs(vec.X);
+            result.Y = Math.Abs(vec.Y);
+            result.Z = Math.Abs(vec.Z);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -737,6 +780,106 @@ namespace OpenTK.Mathematics
             result.X = (blend.X * (b.X - a.X)) + a.X;
             result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
             result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector3d Slerp(Vector3d a, Vector3d b, double t)
+        {
+            double abLength = a.Length * b.Length;
+            double cosTheta;
+            if (abLength == 0 || Math.Abs(cosTheta = Dot(a, b) / abLength) > 0.99999999)
+            {
+                return Lerp(a, b, t);
+            }
+            else
+            {
+                double theta = Math.Acos(Math.Clamp(cosTheta, -1, 1));
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+                double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+                double bcoef = Math.Sin(t * theta) / sinTheta;
+                return (acoef * a) + (bcoef * b);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector3d a, in Vector3d b, double t, out Vector3d result)
+        {
+            double abLength = a.Length * b.Length;
+            if (abLength == 0)
+            {
+                Lerp(in a, in b, t, out result);
+            }
+            else
+            {
+                Dot(in a, in b, out double cosTheta);
+                cosTheta /= abLength;
+                if (Math.Abs(cosTheta) > 0.99999999)
+                {
+                    Lerp(in a, in b, t, out result);
+                }
+                else
+                {
+                    double theta = Math.Acos(cosTheta);
+                    // We use the fact that:
+                    // sin(θ) = sqrt(1 - cos(θ)^2)
+                    // to avoid doing sin(θ) which is slower than sqrt.
+                    double sinTheta = Math.Sqrt(1 - (cosTheta * cosTheta));
+                    double acoef = Math.Sin((1 - t) * theta) / sinTheta;
+                    double bcoef = Math.Sin(t * theta) / sinTheta;
+                    result = (acoef * a) + (bcoef * b);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static Vector3d Elerp(Vector3d a, Vector3d b, double t)
+        {
+            a.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            a.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+            a.Z = Math.Pow(a.Z, 1 - t) * Math.Pow(b.Z, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(double, double, double)"/>
+        public static void Elerp(in Vector3d a, in Vector3d b, double t, out Vector3d result)
+        {
+            result.X = Math.Pow(a.X, 1 - t) * Math.Pow(b.X, t);
+            result.Y = Math.Pow(a.Y, 1 - t) * Math.Pow(b.Y, t);
+            result.Z = Math.Pow(a.Z, 1 - t) * Math.Pow(b.Z, t);
         }
 
         /// <summary>
@@ -1094,7 +1237,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Xz
         {
-            get => new Vector2d(X, Z);
+            readonly get => new Vector2d(X, Z);
             set
             {
                 X = value.X;
@@ -1108,7 +1251,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yx
         {
-            get => new Vector2d(Y, X);
+            readonly get => new Vector2d(Y, X);
             set
             {
                 Y = value.X;
@@ -1122,7 +1265,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Yz
         {
-            get => new Vector2d(Y, Z);
+            readonly get => new Vector2d(Y, Z);
             set
             {
                 Y = value.X;
@@ -1136,7 +1279,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Zx
         {
-            get => new Vector2d(Z, X);
+            readonly get => new Vector2d(Z, X);
             set
             {
                 Z = value.X;
@@ -1150,7 +1293,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2d Zy
         {
-            get => new Vector2d(Z, Y);
+            readonly get => new Vector2d(Z, Y);
             set
             {
                 Z = value.X;
@@ -1164,7 +1307,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Xzy
         {
-            get => new Vector3d(X, Z, Y);
+            readonly get => new Vector3d(X, Z, Y);
             set
             {
                 X = value.X;
@@ -1179,7 +1322,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Yxz
         {
-            get => new Vector3d(Y, X, Z);
+            readonly get => new Vector3d(Y, X, Z);
             set
             {
                 Y = value.X;
@@ -1194,7 +1337,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Yzx
         {
-            get => new Vector3d(Y, Z, X);
+            readonly get => new Vector3d(Y, Z, X);
             set
             {
                 Y = value.X;
@@ -1209,7 +1352,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Zxy
         {
-            get => new Vector3d(Z, X, Y);
+            readonly get => new Vector3d(Z, X, Y);
             set
             {
                 Z = value.X;
@@ -1224,7 +1367,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3d Zyx
         {
-            get => new Vector3d(Z, Y, X);
+            readonly get => new Vector3d(Z, Y, X);
             set
             {
                 Z = value.X;
@@ -1477,7 +1620,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{3} {1}{3} {2})",
@@ -1494,17 +1637,16 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public bool Equals(Vector3d other)
+        public readonly bool Equals(Vector3d other)
         {
-            Vector128<double> thisXy = Vector128.LoadUnsafe(ref X);
-
-            Vector128<double> otherXy = Vector128.LoadUnsafe(ref other.X);
+            Vector128<double> thisXy = Vector128.LoadUnsafe(in X);
+            Vector128<double> otherXy = Vector128.LoadUnsafe(in other.X);
 
             return thisXy == otherXy && Z == other.Z;
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z);
         }
@@ -1516,7 +1658,7 @@ namespace OpenTK.Mathematics
         /// <param name="y">The Y component of the vector.</param>
         /// <param name="z">The Z component of the vector.</param>
         [Pure]
-        public void Deconstruct(out double x, out double y, out double z)
+        public readonly void Deconstruct(out double x, out double y, out double z)
         {
             x = X;
             y = Y;

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -76,7 +76,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 1.</exception>
         public float this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -113,7 +113,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((X * X) + (Y * Y));
+        public readonly float Length => MathF.Sqrt((X * X) + (Y * Y));
+
+        /// <summary>
+        /// Gets an approximation of 1 over the length (magnitude) of the vector.
+        /// </summary>
+        public readonly float ReciprocalLengthFast => MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -123,7 +128,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
+        public readonly float LengthFast => 1.0f / MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -134,23 +139,23 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public float LengthSquared => (X * X) + (Y * Y);
+        public readonly float LengthSquared => (X * X) + (Y * Y);
 
         /// <summary>
         /// Gets the perpendicular vector on the right side of this vector.
         /// </summary>
-        public Vector2 PerpendicularRight => new Vector2(Y, -X);
+        public readonly Vector2 PerpendicularRight => new Vector2(Y, -X);
 
         /// <summary>
         /// Gets the perpendicular vector on the left side of this vector.
         /// </summary>
-        public Vector2 PerpendicularLeft => new Vector2(-Y, X);
+        public readonly Vector2 PerpendicularLeft => new Vector2(-Y, X);
 
         /// <summary>
         /// Returns a copy of the Vector2 scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector2 Normalized()
+        public readonly Vector2 Normalized()
         {
             Vector2 v = this;
             v.Normalize();
@@ -175,6 +180,18 @@ namespace OpenTK.Mathematics
             float scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector2 Abs()
+        {
+            Vector2 result = this;
+            result.X = MathF.Abs(result.X);
+            result.Y = MathF.Abs(result.Y);
+            return result;
         }
 
         /// <summary>
@@ -493,6 +510,29 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector2 Abs(Vector2 vec)
+        {
+            vec.X = MathF.Abs(vec.X);
+            vec.Y = MathF.Abs(vec.Y);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector2 vec, out Vector2 result)
+        {
+            result.X = MathF.Abs(vec.X);
+            result.Y = MathF.Abs(vec.Y);
+        }
+
+        /// <summary>
         /// Compute the euclidean distance between two vectors.
         /// </summary>
         /// <param name="vec1">The first vector.</param>
@@ -695,6 +735,104 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector2 Slerp(Vector2 a, Vector2 b, float t)
+        {
+            float abLength = a.Length * b.Length;
+            float cosTheta;
+            if (abLength == 0 || Math.Abs(cosTheta = Dot(a, b) / abLength) > 0.9999f)
+            {
+                return Lerp(a, b, t);
+            }
+            else
+            {
+                float theta = MathF.Acos(Math.Clamp(cosTheta, -1, 1));
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                float bcoef = MathF.Sin(t * theta) / sinTheta;
+                return (acoef * a) + (bcoef * b);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector2 a, in Vector2 b, float t, out Vector2 result)
+        {
+            float abLength = a.Length * b.Length;
+            if (abLength == 0)
+            {
+                Lerp(in a, in b, t, out result);
+            }
+            else
+            {
+                Dot(in a, in b, out float cosTheta);
+                cosTheta /= abLength;
+                if (Math.Abs(cosTheta) > 0.9999f)
+                {
+                    Lerp(in a, in b, t, out result);
+                }
+                else
+                {
+                    float theta = MathF.Acos(cosTheta);
+                    // We use the fact that:
+                    // sin(θ) = sqrt(1 - cos(θ)^2)
+                    // to avoid doing sin(θ) which is slower than sqrt.
+                    float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                    float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                    float bcoef = MathF.Sin(t * theta) / sinTheta;
+                    result = (acoef * a) + (bcoef * b);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static Vector2 Elerp(Vector2 a, Vector2 b, float t)
+        {
+            a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            a.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static void Elerp(in Vector2 a, in Vector2 b, float t, out Vector2 result)
+        {
+            result.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            result.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
@@ -828,7 +966,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Yx
         {
-            get => new Vector2(Y, X);
+            readonly get => new Vector2(Y, X);
             set
             {
                 Y = value.X;
@@ -1094,7 +1232,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{2} {1})",
@@ -1110,14 +1248,14 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public bool Equals(Vector2 other)
+        public readonly bool Equals(Vector2 other)
         {
             return X == other.X &&
                    Y == other.Y;
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y);
         }
@@ -1128,7 +1266,7 @@ namespace OpenTK.Mathematics
         /// <param name="x">The X component of the vector.</param>
         /// <param name="y">The Y component of the vector.</param>
         [Pure]
-        public void Deconstruct(out float x, out float y)
+        public readonly void Deconstruct(out float x, out float y)
         {
             x = X;
             y = Y;

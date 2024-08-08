@@ -10,8 +10,11 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+
+#nullable enable
 
 namespace OpenTK.Windowing.Desktop
 {
@@ -43,7 +46,7 @@ namespace OpenTK.Windowing.Desktop
         // NOTE: This assumption about "main thread" is flat wrong.
         // We literally can't tell whether this is actually the main thread.
         // We keep it around as a tiny safe guard in case the first window IS done correctly and further ones aren't.
-        private static Thread _mainThread;
+        private static Thread? _mainThread;
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="Thread.CurrentThread"/> is the same as the GLFW main thread.
@@ -55,6 +58,14 @@ namespace OpenTK.Windowing.Desktop
         /// Whether or not to check that GLFW is initialzed on the main thread.
         /// </summary>
         public static bool CheckForMainThread { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not to honor the <c>OPENTK_4_USE_WAYLAND</c> environment variable.
+        /// In OpenTK 4.8 <c>OPENTK_4_USE_WAYLAND=1</c> was used to opt into using wayland when wayland is available.
+        /// In OpenTK 4.9 <c>OPENTK_4_USE_WAYLAND=0</c> is used to opt-out of using wayland when wayland is available.
+        /// Setting <c>OPENTK_4_USE_WAYLAND=1</c> will not have any effect and will use GLFWs default platform resolution.
+        /// </summary>
+        public static bool HonorOpenTK4UseWayland { get; set; } = true;
 
         private static bool Initialized = false;
 
@@ -95,6 +106,29 @@ namespace OpenTK.Windowing.Desktop
 
             if (Initialized == false)
             {
+                // Honor OPENTK_4_USE_WAYLAND environment variable.
+                // As of glfw 3.4 glfw loads wayland if XDG_SESSION_TYPE == wayland
+                // this is different from how 3.3 operated where we needed
+                // to load two separate .so files depending on if x11 or wayland was supposed
+                // to be used.
+                // So instead of detecting when we want to use wayland if it's available
+                // we are now tasked with detecting when we *don't* want to use wayland if it's available.
+                // If OPENTK_4_USE_WAYLAND=0 and XDG_SESSION_TYPE="wayland" we want to try using X11,
+                // if one of these environment variables are undefined we don't want to do anything.
+                // - Noggin_bops 2024-03-05
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    if (HonorOpenTK4UseWayland)
+                    {
+                        string? sessionType = Environment.GetEnvironmentVariable("XDG_SESSION_TYPE");
+                        string? useWayland = Environment.GetEnvironmentVariable("OPENTK_4_USE_WAYLAND");
+                        if (sessionType == "wayland" && useWayland == "0")
+                        {
+                            GLFW.InitHint(InitHintPlatform.Platform, Platform.X11);
+                        }
+                    }
+                }
+
                 GLFW.SetErrorCallback(ErrorCallback);
                 GLFW.Init();
                 Initialized = true;
