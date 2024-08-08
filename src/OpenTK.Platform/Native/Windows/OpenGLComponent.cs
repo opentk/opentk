@@ -729,7 +729,7 @@ namespace OpenTK.Platform.Native.Windows
                     if (settings.DebugFlag) flags |= WGL_CONTEXT_DEBUG_BIT_ARB;
                     if (settings.ForwardCompatibleFlag) flags |= WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB;
                     if (ARB_create_context_robustness && settings.RobustnessFlag) flags |= WGL_CONTEXT_ROBUST_ACCESS_BIT_ARB;
-                    if (ARB_robustness_application_isolation && settings.ResetIsolation) flags |= WGL_CONTEXT_RESET_ISOLATION_BIT_ARB;
+                    if (ARB_robustness_application_isolation && settings.ResetIsolationFlag) flags |= WGL_CONTEXT_RESET_ISOLATION_BIT_ARB;
                     
                     int profile = 0;
                     switch (settings.Profile)
@@ -782,7 +782,7 @@ namespace OpenTK.Platform.Native.Windows
                         }
                     }
 
-                    if (ARB_create_context_no_error && settings.NoError)
+                    if (ARB_create_context_no_error && settings.NoErrorFlag)
                     {
                         attribs.Add((int)WGLContextAttribs.CONTEXT_OPENGL_NO_ERROR_ARB);
                         attribs.Add(1);

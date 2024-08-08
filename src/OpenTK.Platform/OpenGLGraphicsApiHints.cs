@@ -113,14 +113,14 @@ namespace OpenTK.Platform
         /// See <see href="https://registry.khronos.org/OpenGL/extensions/ARB/ARB_robustness_application_isolation.txt">GL_ARB_robustness_isolation</see>.
         /// <see cref="ResetNotificationStrategy"/> needs to be <see cref="ContextResetNotificationStrategy.LoseContextOnReset"/>.
         /// </summary>
-        public bool ResetIsolation { get; set; } = false;
+        public bool ResetIsolationFlag { get; set; } = false;
 
         /// <summary>
         /// If the "no error" flag should be set or not.
         /// See <see href="https://registry.khronos.org/OpenGL/extensions/KHR/KHR_no_error.txt">KHR_no_error</see>.
         /// Cannot be enabled while <see cref="DebugFlag"/> or <see cref="RobustnessFlag"/> is set.
         /// </summary>
-        public bool NoError { get; set; } = false;
+        public bool NoErrorFlag { get; set; } = false;
 
         /// <summary>
         /// Whether to use KHR_context_flush_control (if available) or not.

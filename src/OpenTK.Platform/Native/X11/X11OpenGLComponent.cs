@@ -176,7 +176,7 @@ namespace OpenTK.Platform.Native.X11
                     flags |= GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB;
                 }
 
-                if (ARB_robustness_isolation && hints.ResetIsolation)
+                if (ARB_robustness_isolation && hints.ResetIsolationFlag)
                 {
                     flags |= GLX_CONTEXT_RESET_ISOLATION_BIT_ARB;
                 }
@@ -212,7 +212,7 @@ namespace OpenTK.Platform.Native.X11
                 }
             }
 
-            if (ARB_create_context_no_error && hints.NoError)
+            if (ARB_create_context_no_error && hints.NoErrorFlag)
             {
                 attribs.Add(GLX_CONTEXT_OPENGL_NO_ERROR_ARB);
                 attribs.Add(1);
