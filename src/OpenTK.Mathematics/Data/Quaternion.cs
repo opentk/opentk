@@ -111,7 +111,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public float X
         {
-            get => Xyz.X;
+            readonly get => Xyz.X;
             set => Xyz.X = value;
         }
 
@@ -121,7 +121,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public float Y
         {
-            get => Xyz.Y;
+            readonly get => Xyz.Y;
             set => Xyz.Y = value;
         }
 
@@ -131,7 +131,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public float Z
         {
-            get => Xyz.Z;
+            readonly get => Xyz.Z;
             set => Xyz.Z = value;
         }
 
@@ -183,7 +183,7 @@ namespace OpenTK.Mathematics
         /// Convert the current quaternion to Euler angle representation.
         /// </summary>
         /// <param name="angles">The Euler angles in radians.</param>
-        public void ToEulerAngles(out Vector3 angles)
+        public readonly void ToEulerAngles(out Vector3 angles)
         {
             angles = ToEulerAngles();
         }
@@ -192,7 +192,7 @@ namespace OpenTK.Mathematics
         /// Convert this instance to an Euler angle representation.
         /// </summary>
         /// <returns>The Euler angles in radians.</returns>
-        public Vector3 ToEulerAngles()
+        public readonly Vector3 ToEulerAngles()
         {
             /*
             reference
@@ -240,18 +240,18 @@ namespace OpenTK.Mathematics
         /// Gets the length (magnitude) of the quaternion.
         /// </summary>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((W * W) + Xyz.LengthSquared);
+        public readonly float Length => MathF.Sqrt((W * W) + Xyz.LengthSquared);
 
         /// <summary>
         /// Gets the square of the quaternion length (magnitude).
         /// </summary>
-        public float LengthSquared => (W * W) + Xyz.LengthSquared;
+        public readonly float LengthSquared => (W * W) + Xyz.LengthSquared;
 
         /// <summary>
         /// Returns a copy of the Quaternion scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Quaternion Normalized()
+        public readonly Quaternion Normalized()
         {
             var q = this;
             q.Normalize();
@@ -270,7 +270,7 @@ namespace OpenTK.Mathematics
         /// Returns the inverse of this Quaternion.
         /// </summary>
         /// <returns>The inverted copy.</returns>
-        public Quaternion Inverted()
+        public readonly Quaternion Inverted()
         {
             var q = this;
             q.Invert();
@@ -805,22 +805,22 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Quaternion && Equals((Quaternion)obj);
         }
 
         /// <inheritdoc />
-        public bool Equals(Quaternion other)
+        public readonly bool Equals(Quaternion other)
         {
-            Vector128<float> thisVec = Vector128.LoadUnsafe(ref Xyz.X);
-            Vector128<float> otherVec = Vector128.LoadUnsafe(ref Xyz.X);
+            Vector128<float> thisVec = Vector128.LoadUnsafe(in Xyz.X);
+            Vector128<float> otherVec = Vector128.LoadUnsafe(in other.Xyz.X);
 
             return thisVec == otherVec;
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Xyz, W);
         }
@@ -829,25 +829,25 @@ namespace OpenTK.Mathematics
         /// Returns a System.String that represents the current Quaternion.
         /// </summary>
         /// <returns>A human-readable representation of the quaternion.</returns>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc/>
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             var ls = MathHelper.GetListSeparator(formatProvider);
             var xyz = Xyz.ToString(format, formatProvider);

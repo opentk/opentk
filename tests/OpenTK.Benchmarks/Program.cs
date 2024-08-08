@@ -9,6 +9,7 @@ namespace OpenTK.Benchmarks
     {
         public static void Main()
         {
+            //BenchmarkRunner.Run<SlerpBenchmarks>();
             BenchmarkRunner.Run<MatrixBenchmark>();
         }
     }

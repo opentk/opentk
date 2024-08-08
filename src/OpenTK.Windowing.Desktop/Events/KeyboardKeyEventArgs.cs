@@ -13,7 +13,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Defines the event data for <see cref="INativeWindow.KeyDown"/> and <see cref="INativeWindow.KeyUp"/> events.
+    /// Defines the event data for <see cref="NativeWindow.KeyDown"/> and <see cref="NativeWindow.KeyUp"/> events.
     /// </summary>
     public readonly struct KeyboardKeyEventArgs
     {

@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="float"/> AuxiliaryEffectSlot/GetAuxiliaryEffectSlot parameters.
+    /// A list of valid <see cref="float"/> <see cref="ALC.EFX.AuxiliaryEffectSlot(int, EffectSlotFloat, float)"/>/<see cref="ALC.EFX.GetAuxiliaryEffectSlot(int, EffectSlotFloat)"/> parameters.
     /// </summary>
     public enum EffectSlotFloat
     {

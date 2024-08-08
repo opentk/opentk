@@ -1066,6 +1066,18 @@ namespace OpenTK.Audio.OpenAL
             }
 
             /// <summary>
+            /// Gets the value of a named property on the given effect.
+            /// </summary>
+            /// <param name="effect">The effect.</param>
+            /// <param name="param">The named property.</param>
+            /// <returns>The value.</returns>
+            public static int GetEffect(int effect, EffectInteger param)
+            {
+                GetEffect(effect, param, out int result);
+                return result;
+            }
+
+            /// <summary>
             /// Gets the vector value of a named property on the given effect.
             /// </summary>
             /// <param name="effect">The effect.</param>

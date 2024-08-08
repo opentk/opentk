@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2006 - 2008 The Open Toolkit library.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -166,7 +166,7 @@ namespace OpenTK.Mathematics
         /// <exception cref="IndexOutOfRangeException">Thrown if the index is less than 0 or greater than 3.</exception>
         public float this[int index]
         {
-            get
+            readonly get
             {
                 if (index == 0)
                 {
@@ -221,7 +221,12 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <see cref="LengthFast"/>
         /// <seealso cref="LengthSquared"/>
-        public float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public readonly float Length => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
+
+        /// <summary>
+        /// Gets an approximation of 1 over the length (magnitude) of the vector.
+        /// </summary>
+        public readonly float ReciprocalLengthFast => MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
@@ -232,7 +237,7 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
+        public readonly float LengthFast => 1.0f / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -243,15 +248,15 @@ namespace OpenTK.Mathematics
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthFast"/>
-        public float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
+        public readonly float LengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
 
         /// <summary>
         /// Returns a copy of the Vector4 scaled to unit length.
         /// </summary>
         /// <returns>The normalized copy.</returns>
-        public Vector4 Normalized()
+        public readonly Vector4 Normalized()
         {
-            var v = this;
+            Vector4 v = this;
             v.Normalize();
             return v;
         }
@@ -261,7 +266,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0f / Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -273,11 +278,25 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
+            float scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z) + (W * W));
             X *= scale;
             Y *= scale;
             Z *= scale;
             W *= scale;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise absolute value of the vector.
+        /// </summary>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public readonly Vector4 Abs()
+        {
+            Vector4 result = this;
+            result.X = MathF.Abs(result.X);
+            result.Y = MathF.Abs(result.Y);
+            result.Z = MathF.Abs(result.Z);
+            result.W = MathF.Abs(result.W);
+            return result;
         }
 
         /// <summary>
@@ -585,6 +604,33 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <returns>The component-wise absolute value vector.</returns>
+        public static Vector4 Abs(Vector4 vec)
+        {
+            vec.X = MathF.Abs(vec.X);
+            vec.Y = MathF.Abs(vec.Y);
+            vec.Z = MathF.Abs(vec.Z);
+            vec.W = MathF.Abs(vec.W);
+            return vec;
+        }
+
+        /// <summary>
+        /// Take the component-wise absolute value of a vector.
+        /// </summary>
+        /// <param name="vec">The vector to apply component-wise absolute value to.</param>
+        /// <param name="result">The component-wise absolute value vector.</param>
+        public static void Abs(in Vector4 vec, out Vector4 result)
+        {
+            result.X = MathF.Abs(vec.X);
+            result.Y = MathF.Abs(vec.Y);
+            result.Z = MathF.Abs(vec.Z);
+            result.W = MathF.Abs(vec.W);
+        }
+
+        /// <summary>
         /// Scale a vector to unit length.
         /// </summary>
         /// <param name="vec">The input vector.</param>
@@ -592,7 +638,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Normalize(Vector4 vec)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -607,7 +653,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector4 vec, out Vector4 result)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -622,7 +668,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 NormalizeFast(Vector4 vec)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            float scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -637,7 +683,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized copy.</param>
         public static void NormalizeFast(in Vector4 vec, out Vector4 result)
         {
-            var scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            float scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -732,6 +778,108 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns><paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</returns>
+        [Pure]
+        public static Vector4 Slerp(Vector4 a, Vector4 b, float t)
+        {
+            float abLength = a.Length * b.Length;
+            float cosTheta;
+            if (abLength == 0 || Math.Abs(cosTheta = Dot(a, b) / abLength) > 0.9999f)
+            {
+                return Lerp(a, b, t);
+            }
+            else
+            {
+                float theta = MathF.Acos(Math.Clamp(cosTheta, -1, 1));
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                float bcoef = MathF.Sin(t * theta) / sinTheta;
+                return (acoef * a) + (bcoef * b);
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the spherical interpolation of the two given vectors.
+        /// <paramref name="a"/> and <paramref name="b"/> need to be normalized for this function to work properly.
+        /// </summary>
+        /// <param name="a">Unit vector start point.</param>
+        /// <param name="b">Unit vector end point.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
+        public static void Slerp(in Vector4 a, in Vector4 b, float t, out Vector4 result)
+        {
+            float abLength = a.Length * b.Length;
+            if (abLength == 0)
+            {
+                Lerp(in a, in b, t, out result);
+            }
+            else
+            {
+                Dot(in a, in b, out float cosTheta);
+                cosTheta /= abLength;
+                if (Math.Abs(cosTheta) > 0.9999f)
+                {
+                    Lerp(in a, in b, t, out result);
+                }
+                else
+                {
+                    float theta = MathF.Acos(cosTheta);
+                    // We use the fact that:
+                    // sin(θ) = sqrt(1 - cos(θ)^2)
+                    // to avoid doing sin(θ) which is slower than sqrt.
+                    float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                    float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                    float bcoef = MathF.Sin(t * theta) / sinTheta;
+                    result = (acoef * a) + (bcoef * b);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <returns>The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</returns>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static Vector4 Elerp(Vector4 a, Vector4 b, float t)
+        {
+            a.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            a.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+            a.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
+            a.W = MathF.Pow(a.W, 1 - t) * MathF.Pow(b.W, t);
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the exponential interpolation of the two vectors.
+        /// Equivalent to <c>a * pow(b/a, t)</c>.
+        /// </summary>
+        /// <param name="a">The starting value. Must be non-negative.</param>
+        /// <param name="b">The end value. Must be non-negative.</param>
+        /// <param name="t">The blend factor.</param>
+        /// <param name="result">The exponential interpolation between <paramref name="a"/> and <paramref name="b"/>.</param>
+        /// <seealso cref="MathHelper.Elerp(float, float, float)"/>
+        public static void Elerp(in Vector4 a, in Vector4 b, float t, out Vector4 result)
+        {
+            result.X = MathF.Pow(a.X, 1 - t) * MathF.Pow(b.X, t);
+            result.Y = MathF.Pow(a.Y, 1 - t) * MathF.Pow(b.Y, t);
+            result.Z = MathF.Pow(a.Z, 1 - t) * MathF.Pow(b.Z, t);
+            result.W = MathF.Pow(a.W, 1 - t) * MathF.Pow(b.W, t);
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
@@ -743,7 +891,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector4 result);
             return result;
         }
 
@@ -769,12 +917,12 @@ namespace OpenTK.Mathematics
             out Vector4 result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector4 ab);
+            Multiply(in ab, u, out Vector4 abU);
+            Add(in a, in abU, out Vector4 uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector4 ac);
+            Multiply(in ac, v, out Vector4 acV);
             Add(in uPos, in acV, out result);
         }
 
@@ -886,7 +1034,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Xz
         {
-            get => new Vector2(X, Z);
+            readonly get => new Vector2(X, Z);
             set
             {
                 X = value.X;
@@ -900,7 +1048,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Xw
         {
-            get => new Vector2(X, W);
+            readonly get => new Vector2(X, W);
             set
             {
                 X = value.X;
@@ -914,7 +1062,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Yx
         {
-            get => new Vector2(Y, X);
+            readonly get => new Vector2(Y, X);
             set
             {
                 Y = value.X;
@@ -928,7 +1076,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Yz
         {
-            get => new Vector2(Y, Z);
+            readonly get => new Vector2(Y, Z);
             set
             {
                 Y = value.X;
@@ -942,7 +1090,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Yw
         {
-            get => new Vector2(Y, W);
+            readonly get => new Vector2(Y, W);
             set
             {
                 Y = value.X;
@@ -956,7 +1104,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Zx
         {
-            get => new Vector2(Z, X);
+            readonly get => new Vector2(Z, X);
             set
             {
                 Z = value.X;
@@ -970,7 +1118,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Zy
         {
-            get => new Vector2(Z, Y);
+            readonly get => new Vector2(Z, Y);
             set
             {
                 Z = value.X;
@@ -984,7 +1132,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Zw
         {
-            get => new Vector2(Z, W);
+            readonly get => new Vector2(Z, W);
             set
             {
                 Z = value.X;
@@ -998,7 +1146,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Wx
         {
-            get => new Vector2(W, X);
+            readonly get => new Vector2(W, X);
             set
             {
                 W = value.X;
@@ -1012,7 +1160,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Wy
         {
-            get => new Vector2(W, Y);
+            readonly get => new Vector2(W, Y);
             set
             {
                 W = value.X;
@@ -1026,7 +1174,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector2 Wz
         {
-            get => new Vector2(W, Z);
+            readonly get => new Vector2(W, Z);
             set
             {
                 W = value.X;
@@ -1055,7 +1203,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xyw
         {
-            get => new Vector3(X, Y, W);
+            readonly get => new Vector3(X, Y, W);
             set
             {
                 X = value.X;
@@ -1070,7 +1218,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xzy
         {
-            get => new Vector3(X, Z, Y);
+            readonly get => new Vector3(X, Z, Y);
             set
             {
                 X = value.X;
@@ -1085,7 +1233,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xzw
         {
-            get => new Vector3(X, Z, W);
+            readonly get => new Vector3(X, Z, W);
             set
             {
                 X = value.X;
@@ -1100,7 +1248,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xwy
         {
-            get => new Vector3(X, W, Y);
+            readonly get => new Vector3(X, W, Y);
             set
             {
                 X = value.X;
@@ -1115,7 +1263,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Xwz
         {
-            get => new Vector3(X, W, Z);
+            readonly get => new Vector3(X, W, Z);
             set
             {
                 X = value.X;
@@ -1130,7 +1278,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Yxz
         {
-            get => new Vector3(Y, X, Z);
+            readonly get => new Vector3(Y, X, Z);
             set
             {
                 Y = value.X;
@@ -1145,7 +1293,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Yxw
         {
-            get => new Vector3(Y, X, W);
+            readonly get => new Vector3(Y, X, W);
             set
             {
                 Y = value.X;
@@ -1160,7 +1308,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Yzx
         {
-            get => new Vector3(Y, Z, X);
+            readonly get => new Vector3(Y, Z, X);
             set
             {
                 Y = value.X;
@@ -1175,7 +1323,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Yzw
         {
-            get => new Vector3(Y, Z, W);
+            readonly get => new Vector3(Y, Z, W);
             set
             {
                 Y = value.X;
@@ -1190,7 +1338,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Ywx
         {
-            get => new Vector3(Y, W, X);
+            readonly get => new Vector3(Y, W, X);
             set
             {
                 Y = value.X;
@@ -1205,7 +1353,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Ywz
         {
-            get => new Vector3(Y, W, Z);
+            readonly get => new Vector3(Y, W, Z);
             set
             {
                 Y = value.X;
@@ -1220,7 +1368,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zxy
         {
-            get => new Vector3(Z, X, Y);
+            readonly get => new Vector3(Z, X, Y);
             set
             {
                 Z = value.X;
@@ -1235,7 +1383,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zxw
         {
-            get => new Vector3(Z, X, W);
+            readonly get => new Vector3(Z, X, W);
             set
             {
                 Z = value.X;
@@ -1250,7 +1398,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zyx
         {
-            get => new Vector3(Z, Y, X);
+            readonly get => new Vector3(Z, Y, X);
             set
             {
                 Z = value.X;
@@ -1265,7 +1413,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zyw
         {
-            get => new Vector3(Z, Y, W);
+            readonly get => new Vector3(Z, Y, W);
             set
             {
                 Z = value.X;
@@ -1280,7 +1428,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zwx
         {
-            get => new Vector3(Z, W, X);
+            readonly get => new Vector3(Z, W, X);
             set
             {
                 Z = value.X;
@@ -1295,7 +1443,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Zwy
         {
-            get => new Vector3(Z, W, Y);
+            readonly get => new Vector3(Z, W, Y);
             set
             {
                 Z = value.X;
@@ -1310,7 +1458,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wxy
         {
-            get => new Vector3(W, X, Y);
+            readonly get => new Vector3(W, X, Y);
             set
             {
                 W = value.X;
@@ -1325,7 +1473,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wxz
         {
-            get => new Vector3(W, X, Z);
+            readonly get => new Vector3(W, X, Z);
             set
             {
                 W = value.X;
@@ -1340,7 +1488,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wyx
         {
-            get => new Vector3(W, Y, X);
+            readonly get => new Vector3(W, Y, X);
             set
             {
                 W = value.X;
@@ -1355,7 +1503,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wyz
         {
-            get => new Vector3(W, Y, Z);
+            readonly get => new Vector3(W, Y, Z);
             set
             {
                 W = value.X;
@@ -1370,7 +1518,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wzx
         {
-            get => new Vector3(W, Z, X);
+            readonly get => new Vector3(W, Z, X);
             set
             {
                 W = value.X;
@@ -1385,7 +1533,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector3 Wzy
         {
-            get => new Vector3(W, Z, Y);
+            readonly get => new Vector3(W, Z, Y);
             set
             {
                 W = value.X;
@@ -1400,7 +1548,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Xywz
         {
-            get => new Vector4(X, Y, W, Z);
+            readonly get => new Vector4(X, Y, W, Z);
             set
             {
                 X = value.X;
@@ -1416,7 +1564,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Xzyw
         {
-            get => new Vector4(X, Z, Y, W);
+            readonly get => new Vector4(X, Z, Y, W);
             set
             {
                 X = value.X;
@@ -1432,7 +1580,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Xzwy
         {
-            get => new Vector4(X, Z, W, Y);
+            readonly get => new Vector4(X, Z, W, Y);
             set
             {
                 X = value.X;
@@ -1448,7 +1596,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Xwyz
         {
-            get => new Vector4(X, W, Y, Z);
+            readonly get => new Vector4(X, W, Y, Z);
             set
             {
                 X = value.X;
@@ -1464,7 +1612,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Xwzy
         {
-            get => new Vector4(X, W, Z, Y);
+            readonly get => new Vector4(X, W, Z, Y);
             set
             {
                 X = value.X;
@@ -1480,7 +1628,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yxzw
         {
-            get => new Vector4(Y, X, Z, W);
+            readonly get => new Vector4(Y, X, Z, W);
             set
             {
                 Y = value.X;
@@ -1496,7 +1644,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yxwz
         {
-            get => new Vector4(Y, X, W, Z);
+            readonly get => new Vector4(Y, X, W, Z);
             set
             {
                 Y = value.X;
@@ -1512,7 +1660,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yyzw
         {
-            get => new Vector4(Y, Y, Z, W);
+            readonly get => new Vector4(Y, Y, Z, W);
             set
             {
                 X = value.X;
@@ -1528,7 +1676,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yywz
         {
-            get => new Vector4(Y, Y, W, Z);
+            readonly get => new Vector4(Y, Y, W, Z);
             set
             {
                 X = value.X;
@@ -1544,7 +1692,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yzxw
         {
-            get => new Vector4(Y, Z, X, W);
+            readonly get => new Vector4(Y, Z, X, W);
             set
             {
                 Y = value.X;
@@ -1560,7 +1708,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Yzwx
         {
-            get => new Vector4(Y, Z, W, X);
+            readonly get => new Vector4(Y, Z, W, X);
             set
             {
                 Y = value.X;
@@ -1576,7 +1724,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Ywxz
         {
-            get => new Vector4(Y, W, X, Z);
+            readonly get => new Vector4(Y, W, X, Z);
             set
             {
                 Y = value.X;
@@ -1592,7 +1740,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Ywzx
         {
-            get => new Vector4(Y, W, Z, X);
+            readonly get => new Vector4(Y, W, Z, X);
             set
             {
                 Y = value.X;
@@ -1608,7 +1756,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zxyw
         {
-            get => new Vector4(Z, X, Y, W);
+            readonly get => new Vector4(Z, X, Y, W);
             set
             {
                 Z = value.X;
@@ -1624,7 +1772,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zxwy
         {
-            get => new Vector4(Z, X, W, Y);
+            readonly get => new Vector4(Z, X, W, Y);
             set
             {
                 Z = value.X;
@@ -1640,7 +1788,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zyxw
         {
-            get => new Vector4(Z, Y, X, W);
+            readonly get => new Vector4(Z, Y, X, W);
             set
             {
                 Z = value.X;
@@ -1656,7 +1804,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zywx
         {
-            get => new Vector4(Z, Y, W, X);
+            readonly get => new Vector4(Z, Y, W, X);
             set
             {
                 Z = value.X;
@@ -1672,7 +1820,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zwxy
         {
-            get => new Vector4(Z, W, X, Y);
+            readonly get => new Vector4(Z, W, X, Y);
             set
             {
                 Z = value.X;
@@ -1688,7 +1836,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zwyx
         {
-            get => new Vector4(Z, W, Y, X);
+            readonly get => new Vector4(Z, W, Y, X);
             set
             {
                 Z = value.X;
@@ -1704,7 +1852,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Zwzy
         {
-            get => new Vector4(Z, W, Z, Y);
+            readonly get => new Vector4(Z, W, Z, Y);
             set
             {
                 X = value.X;
@@ -1720,7 +1868,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wxyz
         {
-            get => new Vector4(W, X, Y, Z);
+            readonly get => new Vector4(W, X, Y, Z);
             set
             {
                 W = value.X;
@@ -1736,7 +1884,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wxzy
         {
-            get => new Vector4(W, X, Z, Y);
+            readonly get => new Vector4(W, X, Z, Y);
             set
             {
                 W = value.X;
@@ -1752,7 +1900,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wyxz
         {
-            get => new Vector4(W, Y, X, Z);
+            readonly get => new Vector4(W, Y, X, Z);
             set
             {
                 W = value.X;
@@ -1768,7 +1916,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wyzx
         {
-            get => new Vector4(W, Y, Z, X);
+            readonly get => new Vector4(W, Y, Z, X);
             set
             {
                 W = value.X;
@@ -1784,7 +1932,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wzxy
         {
-            get => new Vector4(W, Z, X, Y);
+            readonly get => new Vector4(W, Z, X, Y);
             set
             {
                 W = value.X;
@@ -1800,7 +1948,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wzyx
         {
-            get => new Vector4(W, Z, Y, X);
+            readonly get => new Vector4(W, Z, Y, X);
             set
             {
                 W = value.X;
@@ -1816,7 +1964,7 @@ namespace OpenTK.Mathematics
         [XmlIgnore]
         public Vector4 Wzyw
         {
-            get => new Vector4(W, Z, Y, W);
+            readonly get => new Vector4(W, Z, Y, W);
             set
             {
                 X = value.X;
@@ -2060,25 +2208,25 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             return ToString(null, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(string format)
+        public readonly string ToString(string format)
         {
             return ToString(format, null);
         }
 
         /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
-        public string ToString(IFormatProvider formatProvider)
+        public readonly string ToString(IFormatProvider formatProvider)
         {
             return ToString(null, formatProvider);
         }
 
         /// <inheritdoc />
-        public string ToString(string format, IFormatProvider formatProvider)
+        public readonly string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(
                 "({0}{4} {1}{4} {2}{4} {3})",
@@ -2090,22 +2238,22 @@ namespace OpenTK.Mathematics
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is Vector4 && Equals((Vector4)obj);
         }
 
         /// <inheritdoc />
-        public bool Equals(Vector4 other)
+        public readonly bool Equals(Vector4 other)
         {
-            Vector128<float> thisVec = Vector128.LoadUnsafe(ref X);
-            Vector128<float> otherVec = Vector128.LoadUnsafe(ref other.X);
+            Vector128<float> thisVec = Vector128.LoadUnsafe(in X);
+            Vector128<float> otherVec = Vector128.LoadUnsafe(in other.X);
 
             return thisVec == otherVec;
         }
 
         /// <inheritdoc />
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(X, Y, Z, W);
         }
@@ -2118,7 +2266,7 @@ namespace OpenTK.Mathematics
         /// <param name="z">The Z component of the vector.</param>
         /// <param name="w">The W component of the vector.</param>
         [Pure]
-        public void Deconstruct(out float x, out float y, out float z, out float w)
+        public readonly void Deconstruct(out float x, out float y, out float z, out float w)
         {
             x = X;
             y = Y;

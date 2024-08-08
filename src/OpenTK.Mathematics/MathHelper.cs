@@ -794,6 +794,8 @@ namespace OpenTK.Mathematics
         /// http://www.beyond3d.com/content/articles/8/.
         /// </remarks>
         [Pure]
+        // FIXME: Use hardware rsqrt instead of this.
+        // This is slower than 1.0f/MathF.Sqrt(x)...
         public static float InverseSqrtFast(float x)
         {
             unsafe
@@ -1137,31 +1139,57 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Linearly interpolates between a and b by t.
+        /// Linearly interpolates between <paramref name="start"/> and <paramref name="end"/> by <paramref name="t"/>.
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
-        /// <returns>The interpolated result between the a and b values.</returns>
+        /// <param name="t">Value of the interpolation between <paramref name="start"/> and <paramref name="end"/>. Not clamped.</param>
+        /// <returns>The interpolated result between the <paramref name="start"/> and <paramref name="end"/> values.</returns>
         [Pure]
         public static float Lerp(float start, float end, float t)
         {
-            t = Math.Clamp(t, 0, 1);
             return start + (t * (end - start));
         }
 
         /// <summary>
-        /// Linearly interpolates between a and b by t.
+        /// Linearly interpolates between <paramref name="start"/> and <paramref name="end"/> by <paramref name="t"/>.
         /// </summary>
         /// <param name="start">Start value.</param>
         /// <param name="end">End value.</param>
-        /// <param name="t">Value of the interpollation between a and b. Clamped to [0, 1].</param>
-        /// <returns>The interpolated result between the a and b values.</returns>
+        /// <param name="t">Value of the interpolation between <paramref name="start"/> and <paramref name="end"/>. Not clamped.</param>
+        /// <returns>The interpolated result between the <paramref name="start"/> and <paramref name="end"/> values.</returns>
         [Pure]
         public static double Lerp(double start, double end, double t)
         {
-            t = Math.Clamp(t, 0, 1);
             return start + (t * (end - start));
+        }
+
+        /// <summary>
+        /// Exponentially interpolates between <paramref name="start"/> and <paramref name="end"/> by <paramref name="t"/>.
+        /// Equivalent to <c>start * pow(end/start, t)</c>.
+        /// Useful for scaling and zooms where constant change in <paramref name="t"/> should result in a multiplicative change in output.
+        /// </summary>
+        /// <param name="start">Start value. Must be non-negative.</param>
+        /// <param name="end">End value. Must be non-negative.</param>
+        /// <param name="t">Value of the interpolation between <paramref name="start"/> and <paramref name="end"/>. Not clamped.</param>
+        /// <returns>The interpolated result between the <paramref name="start"/> and <paramref name="end"/> values.</returns>
+        public static float Elerp(float start, float end, float t)
+        {
+            return start + MathF.Pow(end / start, t);
+        }
+
+        /// <summary>
+        /// Exponentially interpolates between <paramref name="start"/> and <paramref name="end"/> by <paramref name="t"/>.
+        /// Equivalent to <c>start * pow(end/start, t)</c>.
+        /// Useful for scaling and zooms where constant change in <paramref name="t"/> should result in a multiplicative change in output.
+        /// </summary>
+        /// <param name="start">Start value. Must be non-negative.</param>
+        /// <param name="end">End value. Must be non-negative.</param>
+        /// <param name="t">Value of the interpolation between <paramref name="start"/> and <paramref name="end"/>. Not clamped.</param>
+        /// <returns>The interpolated result between the <paramref name="start"/> and <paramref name="end"/> values.</returns>
+        public static double Elerp(double start, double end, double t)
+        {
+            return start + Math.Pow(end / start, t);
         }
 
         /// <summary>

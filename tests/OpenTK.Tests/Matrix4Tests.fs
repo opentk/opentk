@@ -1,10 +1,7 @@
 namespace OpenTK.Tests
 
 open Xunit
-open FsCheck
 open FsCheck.Xunit
-open System
-open OpenTK
 open OpenTK.Mathematics
 
 module Matrix4 =
@@ -347,8 +344,6 @@ module Matrix4 =
         let ``Indexed set operator throws exception for negative indices`` (b : Matrix4, x : float32) =
             let mutable a = b
 
-
-
             (fun() -> a.[-1, 2] <- x) |> Assert.ThrowsIndexExn
             (fun() -> a.[1, -2] <- x) |> Assert.ThrowsIndexExn
             (fun() -> a.[-1, -2] <- x) |> Assert.ThrowsIndexExn
@@ -404,6 +399,34 @@ module Matrix4 =
             Assert.Equal(o, R3.Z)
             Assert.Equal(p, R3.W)
 
+        [<Property>]
+        let ``Matrix4_CreateSwizzle should equal Matrix4_Swizzle Indentity`` () =
+            let checkSwizzle (x : int, y : int, z : int, w : int) = 
+                let m1 = Matrix4.Identity * Matrix4.CreateSwizzle(x, y, z, w);
+                let m2 = Matrix4.Swizzle(Matrix4.Identity, x, y, z, w);
+
+                Assert.Equal(m1[0, 0], m2[0, 0]);
+                Assert.Equal(m1[0, 1], m2[0, 1]);
+                Assert.Equal(m1[0, 2], m2[0, 2]);
+                Assert.Equal(m1[0, 3], m2[0, 3]);
+                Assert.Equal(m1[1, 0], m2[1, 0]);
+                Assert.Equal(m1[1, 1], m2[1, 1]);
+                Assert.Equal(m1[1, 2], m2[1, 2]);
+                Assert.Equal(m1[1, 3], m2[1, 3]);
+                Assert.Equal(m1[2, 0], m2[2, 0]);
+                Assert.Equal(m1[2, 1], m2[2, 1]);
+                Assert.Equal(m1[2, 2], m2[2, 2]);
+                Assert.Equal(m1[2, 3], m2[2, 3]);
+                Assert.Equal(m1[3, 0], m2[3, 0]);
+                Assert.Equal(m1[3, 1], m2[3, 1]);
+                Assert.Equal(m1[3, 2], m2[3, 2]);
+                Assert.Equal(m1[3, 3], m2[3, 3]);
+
+            for x = 0 to 3 do
+                for y = 0 to 3 do
+                    for z = 0 to 3 do
+                        for w = 0 to 3 do
+                            checkSwizzle(x, y, z, w)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module ``Quaternion conversion`` =

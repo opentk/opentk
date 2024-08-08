@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid Math.Vector3 Effect/GetEffect parameters.
+    /// A list of valid <see cref="Mathematics.Vector3"/> <see cref="ALC.EFX.Effect(int, EffectVector3, ref Mathematics.Vector3)"/>/<see cref="ALC.EFX.GetEffect(int, EffectVector3)"/> parameters.
     /// </summary>
     public enum EffectVector3
     {

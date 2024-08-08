@@ -12,7 +12,7 @@ namespace OpenTK.Audio.OpenAL
     /// <summary>
     /// Vocal morpher effect parameters. If both parameters are set to the same phoneme, that determines the filtering
     /// effect that will be heard. If these two parameters are set to different phonemes, the filtering effect will morph
-    /// between the two settings at a rate specified by EfxEffectf.VocalMorpherRate.
+    /// between the two settings at a rate specified by <see cref="EffectFloat.VocalMorpherRate"/>.
     /// </summary>
     public enum FormantFilterSettings
     {

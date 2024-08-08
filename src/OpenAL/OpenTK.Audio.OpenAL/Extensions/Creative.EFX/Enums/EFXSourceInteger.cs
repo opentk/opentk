@@ -10,7 +10,7 @@
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// A list of valid <see cref="int"/> Source/GetSource parameters.
+    /// A list of valid <see cref="int"/> <see cref="ALC.EFX.Source(int, EFXSourceInteger, int)"/>/<see cref="ALC.EFX.GetSource(int, EFXSourceInteger)"/> parameters.
     /// </summary>
     public enum EFXSourceInteger
     {
