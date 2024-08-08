@@ -15,8 +15,8 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
-            Vector2 a = (-5.7224817f, -7.311874f);
-            Vector2 b = (1E-45f, 1E-45f);
+            Vector2 a = (1E-45f, -5.9167414f);
+            Vector2 b = (1E-45f, 13.882292f);
             Vector2 c = Vector2.Slerp(a, b, 0);
             Vector2 d = Vector2.Slerp(a, b, 1);
 
