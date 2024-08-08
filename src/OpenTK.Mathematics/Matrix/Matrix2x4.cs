@@ -826,6 +826,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix2x4 other)
         {
             Vector256<float> aRow01 = Vector256.LoadUnsafe(ref Row0.X);
+
             Vector256<float> bRow01 = Vector256.LoadUnsafe(ref other.Row0.X);
 
             return aRow01 == bRow01;

@@ -826,6 +826,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix2x4d other)
         {
             Vector512<double> aRow01 = Vector512.LoadUnsafe(ref Row0.X);
+
             Vector512<double> bRow01 = Vector512.LoadUnsafe(ref other.Row0.X);
 
             return aRow01 == bRow01;

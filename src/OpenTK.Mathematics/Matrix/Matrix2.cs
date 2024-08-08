@@ -777,6 +777,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix2 other)
         {
             Vector128<float> a = Vector128.LoadUnsafe(ref Row0.X);
+
             Vector128<float> b = Vector128.LoadUnsafe(ref other.Row0.X);
 
             return a == b;

@@ -1054,6 +1054,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Vector2d other)
         {
             Vector128<double> thisVec = Vector128.LoadUnsafe(ref X);
+
             Vector128<double> otherVec = Vector128.LoadUnsafe(ref other.X);
 
             return thisVec == otherVec;

@@ -1962,6 +1962,7 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix4 other)
         {
             Vector512<float> aRow0123 = Vector512.LoadUnsafe(ref Row0.X);
+
             Vector512<float> bRow0123 = Vector512.LoadUnsafe(ref other.Row0.X);
 
             return aRow0123 == bRow0123;
