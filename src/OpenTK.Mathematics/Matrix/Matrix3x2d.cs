@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 
 namespace OpenTK.Mathematics
 {
@@ -853,10 +854,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix3x2d other)
         {
-            return
-                Row0 == other.Row0 &&
-                Row1 == other.Row1 &&
-                Row2 == other.Row2;
+            Vector256<double> aRow01 = Vector256.LoadUnsafe(in Row0.X);
+            Vector128<double> aRow2 = Vector128.LoadUnsafe(in Row2.X);
+
+            Vector256<double> bRow01 = Vector256.LoadUnsafe(in other.Row0.X);
+            Vector128<double> bRow2 = Vector128.LoadUnsafe(in Row2.X);
+
+            return aRow01 == bRow01 && aRow2 == bRow2;
         }
     }
 }

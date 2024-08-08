@@ -22,9 +22,9 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -145,18 +145,17 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets an approximation of 1 over the length (magnitude) of the vector.
         /// </summary>
-        public readonly double ReciprocalLengthFast => MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+        public readonly double ReciprocalLengthFast => Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        /// This property uses an approximation of the square root function to calculate vector magnitude.
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+        public readonly double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -196,7 +195,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            double scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y) + (Z * Z));
+            double scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -640,8 +639,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector3d vec, out Vector3d result)
         {
-            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
-            scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -655,7 +653,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3d NormalizeFast(Vector3d vec)
         {
-            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -669,7 +667,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector3d vec, out Vector3d result)
         {
-            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -1216,7 +1214,7 @@ namespace OpenTK.Mathematics
         public static void CalculateAngle(in Vector3d first, in Vector3d second, out double result)
         {
             Dot(in first, in second, out double temp);
-            result = Math.Acos(MathHelper.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
+            result = Math.Acos(Math.Clamp(temp / (first.Length * second.Length), -1.0, 1.0));
         }
 
         /// <summary>
@@ -1641,9 +1639,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc />
         public readonly bool Equals(Vector3d other)
         {
-            return X == other.X &&
-                   Y == other.Y &&
-                   Z == other.Z;
+            Vector128<double> thisXy = Vector128.LoadUnsafe(in X);
+            Vector128<double> otherXy = Vector128.LoadUnsafe(in other.X);
+
+            return thisXy == otherXy && Z == other.Z;
         }
 
         /// <inheritdoc />

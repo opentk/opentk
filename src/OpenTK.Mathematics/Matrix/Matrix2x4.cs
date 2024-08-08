@@ -306,8 +306,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2x4 instance.</param>
         public static void CreateRotation(float angle, out Matrix2x4 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -863,8 +863,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public readonly string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 
@@ -897,6 +897,7 @@ namespace OpenTK.Mathematics
         public readonly bool Equals(Matrix2x4 other)
         {
             Vector256<float> aRow01 = Vector256.LoadUnsafe(in Row0.X);
+
             Vector256<float> bRow01 = Vector256.LoadUnsafe(in other.Row0.X);
 
             return aRow01 == bRow01;

@@ -9,7 +9,6 @@
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -379,10 +378,10 @@ namespace OpenTK.Mathematics
         public static Box2i Round(Box2 value)
         {
             return new Box2i(
-                (int)MathHelper.Round(value.Min.X),
-                (int)MathHelper.Round(value.Min.Y),
-                (int)MathHelper.Round(value.Max.X),
-                (int)MathHelper.Round(value.Max.Y));
+                (int)MathF.Round(value.Min.X),
+                (int)MathF.Round(value.Min.Y),
+                (int)MathF.Round(value.Max.X),
+                (int)MathF.Round(value.Max.Y));
         }
 
         /// <summary>
@@ -392,10 +391,10 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded up integers.</returns>
         public static Box2i Ceiling(Box2 value)
         {
-            int x = (int)MathHelper.Ceiling(value._min.X);
-            int y = (int)MathHelper.Ceiling(value._min.Y);
-            int sizeX = (int)MathHelper.Ceiling(value.Width);
-            int sizeY = (int)MathHelper.Ceiling(value.Height);
+            int x = (int)MathF.Ceiling(value._min.X);
+            int y = (int)MathF.Ceiling(value._min.Y);
+            int sizeX = (int)MathF.Ceiling(value.Width);
+            int sizeY = (int)MathF.Ceiling(value.Height);
 
             return new Box2i(x, y, x + sizeX, y + sizeY);
         }
@@ -407,10 +406,10 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded down integers.</returns>
         public static Box2i Floor(Box2 value)
         {
-            int x = (int)MathHelper.Floor(value._min.X);
-            int y = (int)MathHelper.Floor(value._min.Y);
-            int sizeX = (int)MathHelper.Floor(value.Width);
-            int sizeY = (int)MathHelper.Floor(value.Height);
+            int x = (int)MathF.Floor(value._min.X);
+            int y = (int)MathF.Floor(value._min.Y);
+            int sizeX = (int)MathF.Floor(value.Width);
+            int sizeY = (int)MathF.Floor(value.Height);
 
             return new Box2i(x, y, x + sizeX, y + sizeY);
         }

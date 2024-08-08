@@ -226,7 +226,7 @@ void main() {
 
                 cameraRotationY += delta.X * cameraRotationSpeed.X * deltaTime;
                 cameraRotationX += delta.Y * cameraRotationSpeed.Y * deltaTime;
-                cameraRotationX = MathHelper.Clamp(cameraRotationX, -80 * D2R, 80 * D2R);
+                cameraRotationX = Math.Clamp(cameraRotationX, -80 * D2R, 80 * D2R);
 
                 cameraRotation = Quaternion.FromAxisAngle(Vector3.UnitY, cameraRotationY) *
                                  Quaternion.FromAxisAngle(Vector3.UnitX, cameraRotationX);

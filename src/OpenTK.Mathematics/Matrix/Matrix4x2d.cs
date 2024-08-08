@@ -324,8 +324,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix3x2 instance.</param>
         public static void CreateRotation(double angle, out Matrix4x2d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -907,10 +907,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public readonly string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
-            var row2 = Row2.ToString(format, formatProvider);
-            var row3 = Row3.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
+            string row2 = Row2.ToString(format, formatProvider);
+            string row3 = Row3.ToString(format, formatProvider);
             return $"{row0}\n{row1}\n{row2}\n{row3}";
         }
 
@@ -942,13 +942,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix4x2d other)
         {
-            Vector256<double> aRow01 = Vector256.LoadUnsafe(in Row0.X);
-            Vector256<double> bRow01 = Vector256.LoadUnsafe(in other.Row0.X);
+            Vector512<double> aRow0123 = Vector512.LoadUnsafe(in Row0.X);
 
-            Vector256<double> aRow23 = Vector256.LoadUnsafe(in Row2.X);
-            Vector256<double> bRow23 = Vector256.LoadUnsafe(in other.Row2.X);
+            Vector512<double> bRow0123 = Vector512.LoadUnsafe(in other.Row0.X);
 
-            return aRow01 == bRow01 && aRow23 == bRow23;
+            return aRow0123 == bRow0123;
         }
     }
 }

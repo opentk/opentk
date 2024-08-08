@@ -22,9 +22,9 @@ SOFTWARE.
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
@@ -79,7 +79,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector2d struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2d>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2d"/> struct.
@@ -150,18 +150,17 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets an approximation of 1 over the length (magnitude) of the vector.
         /// </summary>
-        public readonly double ReciprocalLengthFast => MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+        public readonly double ReciprocalLengthFast => Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
-        /// This property uses an approximation of the square root function to calculate vector magnitude, with
-        /// an upper error bound of 0.001.
+        /// This property uses an approximation of the square root function to calculate vector magnitude.
         /// </remarks>
         /// <see cref="Length"/>
         /// <seealso cref="LengthSquared"/>
-        public readonly double LengthFast => 1.0 / MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+        public readonly double LengthFast => 1.0 / Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
 
         /// <summary>
         /// Gets the square of the vector length (magnitude).
@@ -205,11 +204,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Scales the Vector3d to approximately unit length.
+        /// Scales the Vector2d to approximately unit length.
         /// </summary>
         public void NormalizeFast()
         {
-            double scale = MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+            double scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
         }
@@ -611,7 +610,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d NormalizeFast(Vector2d vec)
         {
-            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -624,7 +623,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2d vec, out Vector2d result)
         {
-            double scale = MathHelper.InverseSqrtFast((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -1202,8 +1201,10 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public readonly bool Equals(Vector2d other)
         {
-            return X == other.X &&
-                   Y == other.Y;
+            Vector128<double> thisVec = Vector128.LoadUnsafe(in X);
+            Vector128<double> otherVec = Vector128.LoadUnsafe(in other.X);
+
+            return thisVec == otherVec;
         }
 
         /// <inheritdoc/>

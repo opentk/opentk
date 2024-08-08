@@ -290,8 +290,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2 instance.</param>
         public static void CreateRotation(float angle, out Matrix2 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -637,19 +637,19 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2 is singular.</exception>
         public static void Invert(in Matrix2 mat, out Matrix2 result)
         {
-            var det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
+            float det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
 
             if (det == 0)
             {
                 throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
-            var invDet = 1f / det;
+            float invDet = 1f / det;
 
             // Because the c# jit assumes alias for byref types we need to
             // save this value as the write to result.Row0.X could change the
             // value of mat.Row0.X.
-            var row0x = mat.Row0.X;
+            float row0x = mat.Row0.X;
 
             result.Row0.X = mat.Row1.Y * invDet;
             result.Row0.Y = -mat.Row0.Y * invDet;
@@ -867,8 +867,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public readonly string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 
@@ -900,10 +900,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix2 other)
         {
-            Vector128<float> a = Vector128.LoadUnsafe(in Row0.X);
-            Vector128<float> b = Vector128.LoadUnsafe(in other.Row0.X);
+            Vector128<float> aRow01 = Vector128.LoadUnsafe(in Row0.X);
 
-            return a == b;
+            Vector128<float> bRow01 = Vector128.LoadUnsafe(in other.Row0.X);
+
+            return aRow01 == bRow01;
         }
     }
 }

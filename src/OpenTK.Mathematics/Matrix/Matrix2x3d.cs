@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 
 namespace OpenTK.Mathematics
 {
@@ -271,8 +272,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2x3d instance.</param>
         public static void CreateRotation(double angle, out Matrix2x3d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -797,8 +798,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 
@@ -830,9 +831,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix2x3d other)
         {
-            return
-                Row0 == other.Row0 &&
-                Row1 == other.Row1;
+            Vector256<double> aRow01x = Vector256.LoadUnsafe(in Row0.X);
+            Vector128<double> aRow1yz = Vector128.LoadUnsafe(in Row1.Y);
+
+            Vector256<double> bRow01x = Vector256.LoadUnsafe(in other.Row0.X);
+            Vector128<double> bRow1yz = Vector128.LoadUnsafe(in other.Row1.Y);
+
+            return aRow01x == bRow01x && aRow1yz == bRow1yz;
         }
     }
 }

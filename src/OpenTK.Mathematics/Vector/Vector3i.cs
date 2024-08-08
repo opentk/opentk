@@ -9,7 +9,6 @@
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
@@ -408,9 +407,9 @@ namespace OpenTK.Mathematics
         public static Vector3i Clamp(Vector3i vec, Vector3i min, Vector3i max)
         {
             Vector3i result;
-            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            result.X = Math.Clamp(vec.X, min.X, max.X);
+            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
             return result;
         }
 
@@ -423,9 +422,9 @@ namespace OpenTK.Mathematics
         /// <param name="result">The clamped vector.</param>
         public static void Clamp(in Vector3i vec, in Vector3i min, in Vector3i max, out Vector3i result)
         {
-            result.X = MathHelper.Clamp(vec.X, min.X, max.X);
-            result.Y = MathHelper.Clamp(vec.Y, min.Y, max.Y);
-            result.Z = MathHelper.Clamp(vec.Z, min.Z, max.Z);
+            result.X = Math.Clamp(vec.X, min.X, max.X);
+            result.Y = Math.Clamp(vec.Y, min.Y, max.Y);
+            result.Z = Math.Clamp(vec.Z, min.Z, max.Z);
         }
 
         /// <summary>

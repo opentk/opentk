@@ -2,6 +2,7 @@ namespace OpenTK.Tests
 
 open Xunit
 open FsCheck.Xunit
+open System
 open System.Runtime.InteropServices
 open OpenTK.Mathematics
 
@@ -89,7 +90,7 @@ module Vector3 =
         [<Property>]
         let ``Fast length method is the same as one divided by the fast inverse square`` (a, b, c) =
             let v = Vector3(a, b, c)
-            let l = 1.0f / MathHelper.InverseSqrtFast(a * a + b * b + c * c)
+            let l = 1.0f / MathF.ReciprocalSqrtEstimate(a * a + b * b + c * c)
 
             Assert.Equal(l, v.LengthFast)
 
@@ -145,7 +146,7 @@ module Vector3 =
             let norm = Vector3(a, b, c)
             norm.NormalizeFast()
 
-            let scale = MathHelper.InverseSqrtFast(a * a + b * b + c * c)
+            let scale = MathF.ReciprocalSqrtEstimate(a * a + b * b + c * c)
 
             Assert.ApproximatelyEquivalent(v.X * scale, norm.X)
             Assert.ApproximatelyEquivalent(v.Y * scale, norm.Y)
@@ -170,7 +171,7 @@ module Vector3 =
 
         [<Property>]
         let ``Fast approximate normalization by reference is the same as multiplication by the fast inverse square`` (a : Vector3) =
-            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
+            let scale = MathF.ReciprocalSqrtEstimate(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
 
             let norm = a * scale
             let vRes = Vector3.NormalizeFast(&a)
@@ -179,7 +180,7 @@ module Vector3 =
 
         [<Property>]
         let ``Fast approximate normalization is the same as multiplication by fast inverse square`` (a : Vector3) =
-            let scale = MathHelper.InverseSqrtFast(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
+            let scale = MathF.ReciprocalSqrtEstimate(a.X * a.X + a.Y * a.Y + a.Z * a.Z)
 
             let norm = a * scale
 

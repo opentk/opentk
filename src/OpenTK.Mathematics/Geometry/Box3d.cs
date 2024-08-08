@@ -9,7 +9,6 @@
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
@@ -449,12 +448,12 @@ namespace OpenTK.Mathematics
         public static Box3i Round(Box3d value)
         {
             return new Box3i(
-                (int)MathHelper.Round(value.Min.X),
-                (int)MathHelper.Round(value.Min.Y),
-                (int)MathHelper.Round(value.Min.Z),
-                (int)MathHelper.Round(value.Max.X),
-                (int)MathHelper.Round(value.Max.Y),
-                (int)MathHelper.Round(value.Max.Z));
+                (int)Math.Round(value.Min.X),
+                (int)Math.Round(value.Min.Y),
+                (int)Math.Round(value.Min.Z),
+                (int)Math.Round(value.Max.X),
+                (int)Math.Round(value.Max.Y),
+                (int)Math.Round(value.Max.Z));
         }
 
         /// <summary>
@@ -464,12 +463,12 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded up integers.</returns>
         public static Box3i Ceiling(Box3d value)
         {
-            int x = (int)MathHelper.Ceiling(value._min.X);
-            int y = (int)MathHelper.Ceiling(value._min.Y);
-            int z = (int)MathHelper.Ceiling(value._min.Z);
-            int sizeX = (int)MathHelper.Ceiling(value.Width);
-            int sizeY = (int)MathHelper.Ceiling(value.Height);
-            int sizeZ = (int)MathHelper.Ceiling(value.Depth);
+            int x = (int)Math.Ceiling(value._min.X);
+            int y = (int)Math.Ceiling(value._min.Y);
+            int z = (int)Math.Ceiling(value._min.Z);
+            int sizeX = (int)Math.Ceiling(value.Width);
+            int sizeY = (int)Math.Ceiling(value.Height);
+            int sizeZ = (int)Math.Ceiling(value.Depth);
 
             return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
         }
@@ -481,12 +480,12 @@ namespace OpenTK.Mathematics
         /// <returns>A Box structure that contains rounded down integers.</returns>
         public static Box3i Floor(Box3d value)
         {
-            int x = (int)MathHelper.Floor(value._min.X);
-            int y = (int)MathHelper.Floor(value._min.Y);
-            int z = (int)MathHelper.Floor(value._min.Z);
-            int sizeX = (int)MathHelper.Floor(value.Width);
-            int sizeY = (int)MathHelper.Floor(value.Height);
-            int sizeZ = (int)MathHelper.Floor(value.Depth);
+            int x = (int)Math.Floor(value._min.X);
+            int y = (int)Math.Floor(value._min.Y);
+            int z = (int)Math.Floor(value._min.Z);
+            int sizeX = (int)Math.Floor(value.Width);
+            int sizeY = (int)Math.Floor(value.Height);
+            int sizeZ = (int)Math.Floor(value.Depth);
 
             return new Box3i(x, y, z, x + sizeX, y + sizeY, z + sizeZ);
         }

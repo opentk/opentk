@@ -24,6 +24,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
 
 namespace OpenTK.Mathematics
 {
@@ -272,8 +273,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2x3 instance.</param>
         public static void CreateRotation(float angle, out Matrix2x3 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -797,8 +798,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public readonly string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 
@@ -830,9 +831,11 @@ namespace OpenTK.Mathematics
         [Pure]
         public readonly bool Equals(Matrix2x3 other)
         {
-            return
-                Row0 == other.Row0 &&
-                Row1 == other.Row1;
+            Vector128<float> aRow01x = Vector128.LoadUnsafe(in Row0.X);
+
+            Vector128<float> bRow01x = Vector128.LoadUnsafe(in other.Row0.X);
+
+            return aRow01x == bRow01x && Row1.Yz == other.Row1.Yz;
         }
     }
 }
