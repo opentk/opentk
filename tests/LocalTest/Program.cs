@@ -15,9 +15,13 @@ namespace LocalTest
     {
         static void Main(string[] args)
         {
+            Vector2 a = (-5.7224817f, -7.311874f);
+            Vector2 b = (1E-45f, 1E-45f);
+            Vector2 c = Vector2.Slerp(a, b, 0);
+            Vector2 d = Vector2.Slerp(a, b, 1);
 
             var res = Vector3.Elerp((1e-45f, 1, 1), (1, 1, 4), 0.3f);
-
+            
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
                 UpdateFrequency = 250,
