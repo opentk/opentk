@@ -1814,10 +1814,10 @@ namespace OpenTK.Mathematics
         public bool Equals(Matrix4d other)
         {
             Vector512<double> aRow01 = Vector512.LoadUnsafe(ref Row0.X);
-            Vector512<double> aRow23 = Vector512.LoadUnsafe(ref Row0.X);
+            Vector512<double> aRow23 = Vector512.LoadUnsafe(ref Row2.X);
 
             Vector512<double> bRow01 = Vector512.LoadUnsafe(ref other.Row0.X);
-            Vector512<double> bRow23 = Vector512.LoadUnsafe(ref other.Row0.X);
+            Vector512<double> bRow23 = Vector512.LoadUnsafe(ref other.Row2.X);
 
             return aRow01 == bRow01 && aRow23 == bRow23;
         }
