@@ -126,16 +126,16 @@ type internal Assert =
 
     static member AllComponentsPositiveOrZero(v : Vector3) =
         if not (v.X >= 0.0f && v.Y >= 0.0f && v.Z >= 0.0f) then
-            raise <| Xunit.Sdk.NotInRangeException(v, Vector3.Zero, null);
+            raise <| Xunit.Sdk.NotInRangeException.ForValueInRange(v, Vector3.Zero, null);
 
     static member AllComponentsNan(v : Vector2) =
         if not (Single.IsNaN(v.X) && Single.IsNaN(v.Y)) then
-            raise <| Xunit.Sdk.EqualException(Vector2(Single.NaN, Single.NaN), v)
+            raise <| Xunit.Sdk.EqualException.ForMismatchedValues(Vector2(Single.NaN, Single.NaN), v)
 
     static member AllComponentsNan(v : Vector3) =
         if not (Single.IsNaN(v.X) && Single.IsNaN(v.Y) && Single.IsNaN(v.Z)) then
-            raise <| Xunit.Sdk.EqualException(Vector3(Single.NaN, Single.NaN, Single.NaN), v)
+            raise <| Xunit.Sdk.EqualException.ForMismatchedValues(Vector3(Single.NaN, Single.NaN, Single.NaN), v)
 
     static member AllComponentsNan(v : Vector4) =
         if not (Single.IsNaN(v.X) && Single.IsNaN(v.Y) && Single.IsNaN(v.Z) && Single.IsNaN(v.W)) then
-            raise <| Xunit.Sdk.EqualException(Vector4(Single.NaN, Single.NaN, Single.NaN, Single.NaN), v)
+            raise <| Xunit.Sdk.EqualException.ForMismatchedValues(Vector4(Single.NaN, Single.NaN, Single.NaN, Single.NaN), v)
