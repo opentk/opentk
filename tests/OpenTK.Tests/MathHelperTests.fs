@@ -1,10 +1,7 @@
 ﻿namespace OpenTK.Tests
 
 open Xunit
-open FsCheck
 open FsCheck.Xunit
-open System
-open OpenTK
 open OpenTK.Mathematics
 open OpenTK.Tests
 

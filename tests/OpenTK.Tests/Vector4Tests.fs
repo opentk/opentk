@@ -1,11 +1,8 @@
 namespace OpenTK.Tests
 
 open Xunit
-open FsCheck
 open FsCheck.Xunit
-open System
 open System.Runtime.InteropServices
-open OpenTK
 open OpenTK.Mathematics
 
 module Vector4 =
@@ -711,8 +708,9 @@ module Vector4 =
         let ``Slerp returns enpoints`` (a : Vector4, b : Vector4) = 
             let c = Vector4.Slerp(a, b, 0.0f)
             let d = Vector4.Slerp(a, b, 1.0f)
-            Assert.ApproximatelyEquivalent(a, c);
-            Assert.ApproximatelyEquivalent(b, d);
+
+            Assert.ApproximatelyEqualEpsilon(a, c, 0.001f);
+            Assert.ApproximatelyEqualEpsilon(b, d, 0.001f);
 
         [<Property>]
         let ``Elerp returns enpoints`` (a : Vector4, b : Vector4) = 

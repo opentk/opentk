@@ -117,6 +117,11 @@ namespace OpenTK.Mathematics
         public readonly float Length => MathF.Sqrt((X * X) + (Y * Y));
 
         /// <summary>
+        /// Gets an approximation of 1 over the length (magnitude) of the vector.
+        /// </summary>
+        public readonly float ReciprocalLengthFast => MathHelper.InverseSqrtFast((X * X) + (Y * Y));
+
+        /// <summary>
         /// Gets an approximation of the vector length (magnitude).
         /// </summary>
         /// <remarks>
@@ -742,15 +747,23 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2 Slerp(Vector2 a, Vector2 b, float t)
         {
-            float cosTheta = Dot(a, b);
-            float theta = MathF.Acos(cosTheta);
-            // We use the fact that:
-            // sin(θ) = sqrt(1 - cos(θ)^2)
-            // to avoid doing sin(θ) which is slower than sqrt.
-            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
-            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
-            float bcoef = MathF.Sin(t * theta) / sinTheta;
-            return (acoef * a) + (bcoef * b);
+            float abLength = a.Length * b.Length;
+            float cosTheta;
+            if (abLength == 0 || Math.Abs(cosTheta = Dot(a, b) / abLength) > 0.9999f)
+            {
+                return Lerp(a, b, t);
+            }
+            else
+            {
+                float theta = MathF.Acos(Math.Clamp(cosTheta, -1, 1));
+                // We use the fact that:
+                // sin(θ) = sqrt(1 - cos(θ)^2)
+                // to avoid doing sin(θ) which is slower than sqrt.
+                float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                float bcoef = MathF.Sin(t * theta) / sinTheta;
+                return (acoef * a) + (bcoef * b);
+            }
         }
 
         /// <summary>
@@ -763,15 +776,31 @@ namespace OpenTK.Mathematics
         /// <param name="result">Is <paramref name="a"/> when <paramref name="t"/>=0, <paramref name="b"/> when <paramref name="t"/>=1, and a spherical interpolation between the vectors otherwise.</param>
         public static void Slerp(in Vector2 a, in Vector2 b, float t, out Vector2 result)
         {
-            Dot(in a, in b, out float cosTheta);
-            float theta = MathF.Acos(cosTheta);
-            // We use the fact that:
-            // sin(θ) = sqrt(1 - cos(θ)^2)
-            // to avoid doing sin(θ) which is slower than sqrt.
-            float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
-            float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
-            float bcoef = MathF.Sin(t * theta) / sinTheta;
-            result = (acoef * a) + (bcoef * b);
+            float abLength = a.Length * b.Length;
+            if (abLength == 0)
+            {
+                Lerp(in a, in b, t, out result);
+            }
+            else
+            {
+                Dot(in a, in b, out float cosTheta);
+                cosTheta /= abLength;
+                if (Math.Abs(cosTheta) > 0.9999f)
+                {
+                    Lerp(in a, in b, t, out result);
+                }
+                else
+                {
+                    float theta = MathF.Acos(cosTheta);
+                    // We use the fact that:
+                    // sin(θ) = sqrt(1 - cos(θ)^2)
+                    // to avoid doing sin(θ) which is slower than sqrt.
+                    float sinTheta = MathF.Sqrt(1 - (cosTheta * cosTheta));
+                    float acoef = MathF.Sin((1 - t) * theta) / sinTheta;
+                    float bcoef = MathF.Sin(t * theta) / sinTheta;
+                    result = (acoef * a) + (bcoef * b);
+                }
+            }
         }
 
         /// <summary>
