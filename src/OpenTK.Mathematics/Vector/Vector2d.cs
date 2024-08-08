@@ -79,7 +79,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Defines the size of the Vector2d struct in bytes.
         /// </summary>
-        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2>();
+        public static readonly int SizeInBytes = Unsafe.SizeOf<Vector2d>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2d"/> struct.
@@ -173,7 +173,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public Vector2d Normalized()
         {
-            var v = this;
+            Vector2d v = this;
             v.Normalize();
             return v;
         }
@@ -183,7 +183,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0 / Length;
+            double scale = 1.0 / Length;
             X *= scale;
             Y *= scale;
         }
@@ -193,7 +193,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
+            double scale = Math.ReciprocalSqrtEstimate((X * X) + (Y * Y));
             X *= scale;
             Y *= scale;
         }
@@ -534,7 +534,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d Normalize(Vector2d vec)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -547,7 +547,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector2d vec, out Vector2d result)
         {
-            var scale = 1.0 / vec.Length;
+            double scale = 1.0 / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -560,7 +560,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d NormalizeFast(Vector2d vec)
         {
-            var scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             vec.X *= scale;
             vec.Y *= scale;
             return vec;
@@ -573,7 +573,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector2d vec, out Vector2d result)
         {
-            var scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
+            double scale = Math.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
         }
@@ -669,7 +669,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector2d BaryCentric(Vector2d a, Vector2d b, Vector2d c, double u, double v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector2d result);
             return result;
         }
 
@@ -695,12 +695,12 @@ namespace OpenTK.Mathematics
             out Vector2d result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector2d ab);
+            Multiply(in ab, u, out Vector2d abU);
+            Add(in a, in abU, out Vector2d uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector2d ac);
+            Multiply(in ac, v, out Vector2d acV);
             Add(in uPos, in acV, out result);
         }
 

@@ -240,8 +240,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2x3 instance.</param>
         public static void CreateRotation(float angle, out Matrix2x3 result)
         {
-            var cos = MathF.Cos(angle);
-            var sin = MathF.Sin(angle);
+            float cos = MathF.Cos(angle);
+            float sin = MathF.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -726,8 +726,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 

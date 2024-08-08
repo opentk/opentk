@@ -249,7 +249,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public Vector4 Normalized()
         {
-            var v = this;
+            Vector4 v = this;
             v.Normalize();
             return v;
         }
@@ -259,7 +259,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0f / Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -271,7 +271,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
+            float scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z) + (W * W));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -590,7 +590,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 Normalize(Vector4 vec)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -605,7 +605,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector4 vec, out Vector4 result)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -620,7 +620,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 NormalizeFast(Vector4 vec)
         {
-            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -635,7 +635,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized copy.</param>
         public static void NormalizeFast(in Vector4 vec, out Vector4 result)
         {
-            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
+            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z) + (vec.W * vec.W));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -741,7 +741,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector4 BaryCentric(Vector4 a, Vector4 b, Vector4 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector4 result);
             return result;
         }
 
@@ -767,12 +767,12 @@ namespace OpenTK.Mathematics
             out Vector4 result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector4 ab);
+            Multiply(in ab, u, out Vector4 abU);
+            Add(in a, in abU, out Vector4 uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector4 ac);
+            Multiply(in ac, v, out Vector4 acV);
             Add(in uPos, in acV, out result);
         }
 

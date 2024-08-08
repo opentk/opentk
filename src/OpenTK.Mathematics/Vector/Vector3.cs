@@ -171,7 +171,7 @@ namespace OpenTK.Mathematics
         /// <returns>The normalized copy.</returns>
         public Vector3 Normalized()
         {
-            var v = this;
+            Vector3 v = this;
             v.Normalize();
             return v;
         }
@@ -181,7 +181,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void Normalize()
         {
-            var scale = 1.0f / Length;
+            float scale = 1.0f / Length;
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -192,7 +192,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         public void NormalizeFast()
         {
-            var scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
+            float scale = MathF.ReciprocalSqrtEstimate((X * X) + (Y * Y) + (Z * Z));
             X *= scale;
             Y *= scale;
             Z *= scale;
@@ -588,7 +588,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 Normalize(Vector3 vec)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -602,7 +602,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void Normalize(in Vector3 vec, out Vector3 result)
         {
-            var scale = 1.0f / vec.Length;
+            float scale = 1.0f / vec.Length;
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -616,7 +616,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 NormalizeFast(Vector3 vec)
         {
-            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             vec.X *= scale;
             vec.Y *= scale;
             vec.Z *= scale;
@@ -630,7 +630,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The normalized vector.</param>
         public static void NormalizeFast(in Vector3 vec, out Vector3 result)
         {
-            var scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
+            float scale = MathF.ReciprocalSqrtEstimate((vec.X * vec.X) + (vec.Y * vec.Y) + (vec.Z * vec.Z));
             result.X = vec.X * scale;
             result.Y = vec.Y * scale;
             result.Z = vec.Z * scale;
@@ -757,7 +757,7 @@ namespace OpenTK.Mathematics
         [Pure]
         public static Vector3 BaryCentric(Vector3 a, Vector3 b, Vector3 c, float u, float v)
         {
-            BaryCentric(in a, in b, in c, u, v, out var result);
+            BaryCentric(in a, in b, in c, u, v, out Vector3 result);
             return result;
         }
 
@@ -784,12 +784,12 @@ namespace OpenTK.Mathematics
             out Vector3 result
         )
         {
-            Subtract(in b, in a, out var ab);
-            Multiply(in ab, u, out var abU);
-            Add(in a, in abU, out var uPos);
+            Subtract(in b, in a, out Vector3 ab);
+            Multiply(in ab, u, out Vector3 abU);
+            Add(in a, in abU, out Vector3 uPos);
 
-            Subtract(in c, in a, out var ac);
-            Multiply(in ac, v, out var acV);
+            Subtract(in c, in a, out Vector3 ac);
+            Multiply(in ac, v, out Vector3 acV);
             Add(in uPos, in acV, out result);
         }
 
@@ -858,7 +858,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed normal.</param>
         public static void TransformNormal(in Vector3 norm, in Matrix4 mat, out Vector3 result)
         {
-            var inverse = Matrix4.Invert(mat);
+            Matrix4 inverse = Matrix4.Invert(mat);
             TransformNormalInverse(in norm, in inverse, out result);
         }
 
@@ -1046,7 +1046,7 @@ namespace OpenTK.Mathematics
         /// <param name="result">The transformed vector.</param>
         public static void TransformPerspective(in Vector3 vec, in Matrix4 mat, out Vector3 result)
         {
-            var v = new Vector4(vec.X, vec.Y, vec.Z, 1);
+            Vector4 v = new Vector4(vec.X, vec.Y, vec.Z, 1);
             Vector4.TransformRow(in v, in mat, out v);
             result.X = v.X / v.W;
             result.Y = v.Y / v.W;

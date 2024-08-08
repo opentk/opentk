@@ -245,8 +245,8 @@ namespace OpenTK.Mathematics
         /// <param name="result">The resulting Matrix2d instance.</param>
         public static void CreateRotation(double angle, out Matrix2d result)
         {
-            var cos = Math.Cos(angle);
-            var sin = Math.Sin(angle);
+            double cos = Math.Cos(angle);
+            double sin = Math.Sin(angle);
 
             result.Row0.X = cos;
             result.Row0.Y = sin;
@@ -552,19 +552,19 @@ namespace OpenTK.Mathematics
         /// <exception cref="InvalidOperationException">Thrown if the Matrix2d is singular.</exception>
         public static void Invert(in Matrix2d mat, out Matrix2d result)
         {
-            var det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
+            double det = (mat.Row0.X * mat.Row1.Y) - (mat.Row0.Y * mat.Row1.X);
 
             if (det == 0)
             {
                 throw new InvalidOperationException("Matrix is singular and cannot be inverted.");
             }
 
-            var invDet = 1f / det;
+            double invDet = 1.0 / det;
 
             // Because the c# jit assumes alias for byref types we need to
             // save this value as the write to result.Row0.X could change the
             // value of mat.Row0.X.
-            var row0x = mat.Row0.X;
+            double row0x = mat.Row0.X;
 
             result.Row0.X = mat.Row1.Y * invDet;
             result.Row0.Y = -mat.Row0.Y * invDet;
@@ -743,8 +743,8 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            var row0 = Row0.ToString(format, formatProvider);
-            var row1 = Row1.ToString(format, formatProvider);
+            string row0 = Row0.ToString(format, formatProvider);
+            string row1 = Row1.ToString(format, formatProvider);
             return $"{row0}\n{row1}";
         }
 
