@@ -1,3 +1,102 @@
+## 5.0-pre.11
+
+* Updated all projects to target .net8.0. (@NogginBops)
+* Removed `MathHelper` functions that just called directly into `Math` and `MathF`. (@BoyBaykiller)
+* Removed old quake inverse sqrt implementation in `MathHelper.InverseSqrtFast` in favour of `Math(F).ReciprocalSqrtEstimate`. (@BoyBaykiller)
+* SIMD optimized all MatrixNxM and VectorN equals checks. (@BoyBayKiller, @NogginBops)
+* Vector2d.SizeInBytes returns 16 instead of 8. (@BoyBayKiller)
+* Merged latest OpenTK 4.8.3 changes onto 5.0-pre.11. (@NogginBops)
+  This means that some changes from the upcoming 4.8.3 are also in this release.
+  See https://github.com/opentk/opentk/pull/1734 for full details.
+  Some of these changes includes: 
+  * Update to GLFW 3.4. (@NogginBops)
+  * Add swizzle matrices and general math fixes. (@NogginBops)
+  * Add `VectorN.Slerp` (spherical interpolation) and `VectorN.Elerp` (exponential interpolation). (@NogginBops)
+  * Unclamp `MathHelper.Lerp` so t outside [0, 1] can be used. (@NogginBops)
+  * [OpenAL fixes.](https://github.com/opentk/opentk/pull/1716) (@NogginBops)
+
+**Vulkan bindings changes:**
+
+* Added Vulkan API bindings in `OpenTK.Graphics.Vulkan`. Feedback welcome! (@NogginBops)
+
+**OpenGL bindings changes:**
+
+* Removed all automatic length calculations from the OpenGL bindings. (@NogginBops)
+* Added `Span<T>` and `T[]` overloads for functions without specified size. (@NogginBops)
+* Switch to using `out` by default, and use automatic and manual marking for `in` and `ref`. (@NogginBops)
+* Only convert `out` parameters to return values if they are the last `out` parameter. This removes some weird overloads. (@NogginBops)
+* Update to latest gl.xml and wgl.xml, resulting in more up to date API definition. (@NogginBops)
+* Don't generate return overloads for functions that return more than one item. (@NogginBops)
+
+**PAL2 changes:**
+
+* Introduced the `Toolkit` static class and `ToolkitOptions` which are the main interface for PAL2. (@NogginBops)
+* [Added Bejeweled PAL2 demo project.](https://github.com/opentk/opentk/tree/opentk5.0/tests/Bejeweled) (@NogginBops)
+* Removed the old `ComponentSet` class. (@NogginBops)
+* Added `IDialogComponent` for opening message boxes and open/save file dialogs. (@NogginBops)
+* Added `OpenGLGraphicsAPIHints.ContextValueSelector` callback which allows users to enumerate available backbuffer formats when creating a context. Defaults to `ContextValues.DefaultValuesSelector`. (@NogginBops)
+* Added `IWindowComponent.GetFramebufferSize` and `WindowFramebufferSize` event. (@NogginBops)
+* Added `IWindowComponent.IsFocused`. (@NogginBops)
+* Added `IWindowComponent.GetScaleFactor` (@NogginBops)
+* Added raw mouse motion API to `IMouseComponent`. (@NogginBops)
+* Added `PixelFormat`, `SwapMethod`, `RobustnessFlag`, `ResetNotificationStrategy`, `ResetIsolationFlag`, `NoErrorFlag`, `UseFlushControl`, and `ReleaseBehaviour` to `OpenGLGraphicsApiHints`. (@NogginBops)
+* Removed `IClipboardComponent.GetClipboardHTML`. (@NogginBops)
+
+win32:
+
+* win32: Implemented `IDialogComponent`. (@NogginBops)
+* win32: Implemented `ContextValueSelector`. (@NogginBops)
+* win32: Add `OpenTK.Platform.Windows.OpenGLComponent.UseDwmFlushIfApplicable()` to control whether OpenTK should call `DwmFlush` to potentially fix Vsync issues. (@NogginBops)
+* win32: Fix issue where `ShellComponent.SetImmersiveDarkMode` wouldn't trigger a redraw of the window frame. (@NogginBops)
+* win32: Added `ShellComponent.SetWindowCornerPreference` to control Windows 11 rounded corners. (@NogginBops)
+* win32: Implemented `WindowComponent.GetScaleFactor`. (@NogginBops)
+* win32: Fixed issue where `WindowBorderStyle.FixedBorder` would still have the maximize button enabled. (@NogginBops)
+* win32: Fixed issue where `ContextStencilBits.None` and `ContextDepthBits.None` would throw an exception. (@NogginBops)
+* win32: Implemented `IWindowComponent.ProcessEvents(waitForEvents: true)`. (@NogginBops)
+* win32: Added `ToolkitOptions.Windows.EnableVisualStyles` (default true) which enables visual styles for message dialogs to work. (@NogginBops)
+* win32: Added `PixelFormat`, `SwapMethod`, `RobustnessFlag`, `ResetNotificationStrategy`, `ResetIsolationFlag`, `NoErrorFlag`, `UseFlushControl`, and `ReleaseBehaviour` in `OpenGLGraphicsApiHints`. (@NogginBops)
+
+macOS:
+
+* macOS: Implemented `WindowMode.WindowedFullscreen`. (@NogginBops)
+* macOS: Implemented `MacOSDialogComponent.OpenFileDialog/SaveFileDialog`. (@NogginBops)
+* macOS: Implemented `MacOSClipboardComponent` except `MacOSClipboardComponent.GetClipboardAudio`. (@NogginBops)
+* macOS: Implemented `ClipboardUpdate` event. (@NogginBops)
+* macOS: Implemented `ContextValuesSelector` with default `OpenGLGraphicsApiHints.UseSelectorOnMacOS = false` due to large overhead enumerating context values on macOS. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.GetFullscreenDisplay/SetFullscreenDisplay`. (@NogginBops)
+* macOS: Add `MacOSWindowComponent.SetFullscreenNoSpace` to set an window as fullscreen without opening a new space for the window. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.SetCursorCaptureMode/GetCursorCaptureMode`. (@NogginBops)
+* macOS: Implemented `MacOSClipboardComponent.SetClipboardBitmap`. (@NogginBops)
+* macOS: Implemented `FileDrop` event. (@NogginBops)
+* macOS: Implemented `WindowScaleChange` event. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.SetClientPosition`. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.SetClientBounds`. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.ScreenToClient/ClientToScreen`. (@NogginBops)
+* macOS: Implemented `MacOSWindowComponent.GetScaleFactor`. (@NogginBops)
+* macOS: Fixed Y flipping issue in `MacOSMouseComponent`. (@NogginBops)
+* macOS: Fixed invisible cursor. (@NogginBops)
+* macOS: Fix bug where `MacOSWindowComponent.SetMaxClientSize` would set the minimum client size. (@NogginBops)
+
+x11:
+
+* x11: Implemented `X11DialogComponent` using Zenity when available. (@NogginBops)
+* x11: Set `WM_CLASS` to get proper window name in app switcher. (@NogginBops)
+* x11: Implemented `ThemeChange` event. (@NogginBops)
+* x11: Detect high contrast mode through `org.gnome.desktop.a11y.interface` when available. (@NogginBops)
+* x11: Detect power saver mode. (@NogginBops)
+* x11: Added `X11WindowComponent.GetIconifiedTitle/SetIconifiedTitle`. (@NogginBops)
+* x11: Fixed XRandR loading the correct .so file. (@NogginBops)
+* x11: Fixed color byte order for `X11CursorComponent.Create()`. (@NogginBops)
+* x11: Fixed issue where `ContextStencilBits.None` and `ContextDepthBits.None` would throw an exception. (@NogginBops)
+* x11: Implemented `FramebufferResize` event. (@NogginBops)
+* x11: Implemented `ContextValuesSelector`. (@NogginBops)
+* x11: Implemented `PixelFormat`, `SwapMethod`, `RobustnessFlag`, `ResetNotificationStrategy`, `ResetIsolationFlag`, `NoErrorFlag`, `UseFlushControl`, and `ReleaseBehaviour` in `OpenGLGraphicsApiHints`. (@NogginBops)
+
+ANGLE:
+
+* ANGLE: Implemented `ContextValuesSelector`. (@NogginBops)
+* ANGLE: Known issue on x11 is that `ANGLEOpenGLComponent` will throw an exception.
+
 ## 5.0-pre.10
 
 * Merged OpenTK 4.8.2 onto 5.0-pre.9. (@NogginBops)
