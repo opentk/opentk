@@ -34,20 +34,25 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly IntPtr NSAppearanceNameAccessibilityHighContrastVibrantLight = GetStringConstant(AppKitLibrary, "NSAppearanceNameAccessibilityHighContrastVibrantLight"u8);
         internal static readonly IntPtr NSAppearanceNameAccessibilityHighContrastVibrantDark = GetStringConstant(AppKitLibrary, "NSAppearanceNameAccessibilityHighContrastVibrantDark"u8);
 
+        /// <inheritdocs/>
         public string Name => nameof(MacOSShellComponent);
 
+        /// <inheritdocs/>
         public PalComponents Provides => PalComponents.Shell;
 
+        /// <inheritdocs/>
         public ILogger? Logger { get; set; }
 
         private int ScreenSaverAssertion = 0;
 
+        /// <inheritdocs/>
         public void Initialize(ToolkitOptions options)
         {
             // Set the initial theme so we can detect changes later
             LastTheme = GetCurrentTheme();
         }
 
+        /// <inheritdocs/>
         public void AllowScreenSaver(bool allow)
         {
             if (allow == false)
@@ -75,6 +80,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdocs/>
         public unsafe BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
         {
             BatteryStatus status;
@@ -228,11 +234,13 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdocs/>
         public ThemeInfo GetPreferredTheme()
         {
             return GetCurrentTheme();
         }
 
+        /// <inheritdocs/>
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
             // Seems like host_statistics64 doesn't like to have a count >15 on my test machine

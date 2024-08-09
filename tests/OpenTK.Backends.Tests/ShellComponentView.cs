@@ -30,8 +30,8 @@ namespace OpenTK.Backends.Tests
 
         int cornerPreferenceIndex = 0;
 
-        readonly static Platform.Native.Windows.ShellComponent.CornerPrefernce[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
-        readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPrefernce>();
+        readonly static Platform.Native.Windows.ShellComponent.CornerPreference[] CornerPreferences = Enum.GetValues<Platform.Native.Windows.ShellComponent.CornerPreference>();
+        readonly static string[] CornerPreferenceNames = Enum.GetNames<Platform.Native.Windows.ShellComponent.CornerPreference>();
         
         public override void Paint(double deltaTime)
         {

@@ -244,7 +244,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// Window corner preference options.
         /// </summary>
-        public enum CornerPrefernce
+        public enum CornerPreference
         {
             /// <summary>
             /// Let windows decide if the window corners are rounded.
@@ -271,7 +271,7 @@ namespace OpenTK.Platform.Native.Windows
         /// Works on Windows 11 only.
         /// Sets if the window should have rounded corners or not.
         /// </summary>
-        public void SetWindowCornerPreference(WindowHandle handle, CornerPrefernce preference)
+        public void SetWindowCornerPreference(WindowHandle handle, CornerPreference preference)
         {
             HWND hwnd = handle.As<HWND>(this);
 
