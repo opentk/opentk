@@ -29,90 +29,91 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Attribution.txt">
+    <Content Include="Assets\Attribution.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Cursor\Gold Orb_crosshair.gif">
+    </Content>
+    <Content Include="Assets\Cursor\Gold Orb_crosshair.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Cursor\Gold Orb_pointer.gif">
+    </Content>
+    <Content Include="Assets\Cursor\Gold Orb_pointer.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Cursor\readme.txt">
+    </Content>
+    <Content Include="Assets\Cursor\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icon\ruby_icon.ico">
+    </Content>
+    <Content Include="Assets\Icon\ruby_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Icon\ruby_icon.png">
+    </Content>
+    <Content Include="Assets\Icon\ruby_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Amethyst.glb">
+    </Content>
+    <Content Include="Assets\Models\Amethyst.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Diamond.glb">
+    </Content>
+    <Content Include="Assets\Models\Diamond.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Emerald.glb">
+    </Content>
+    <Content Include="Assets\Models\Emerald.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Placeholder.glb">
+    </Content>
+    <Content Include="Assets\Models\Placeholder.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Ruby.glb">
+    </Content>
+    <Content Include="Assets\Models\Ruby.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Sapphire.glb">
+    </Content>
+    <Content Include="Assets\Models\Sapphire.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Sphere.glb">
+    </Content>
+    <Content Include="Assets\Models\Sphere.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Topaz.glb">
+    </Content>
+    <Content Include="Assets\Models\Topaz.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Models\Zircon.glb">
+    </Content>
+    <Content Include="Assets\Models\Zircon.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Shaders\Gem.frag">
+    </Content>
+    <Content Include="Assets\Shaders\Gem.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Shaders\Gem.vert">
+    </Content>
+    <Content Include="Assets\Shaders\Gem.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Shaders\Normal.frag">
+    </Content>
+    <Content Include="Assets\Shaders\Normal.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Sounds\Ambience.ogg">
+    </Content>
+    <Content Include="Assets\Sounds\Ambience.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Sounds\Rise01.ogg">
+    </Content>
+    <Content Include="Assets\Sounds\Rise01.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Sounds\Rise02.ogg">
+    </Content>
+    <Content Include="Assets\Sounds\Rise02.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Sounds\Swap.ogg">
+    </Content>
+    <Content Include="Assets\Sounds\Swap.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textures\dancing_hall_4kBrdf.dds">
+    </Content>
+    <Content Include="Assets\Textures\dancing_hall_4kBrdf.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textures\dancing_hall_4kDiffuseHDR.dds">
+    </Content>
+    <Content Include="Assets\Textures\dancing_hall_4kDiffuseHDR.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textures\dancing_hall_4kEnvHDR.dds">
+    </Content>
+    <Content Include="Assets\Textures\dancing_hall_4kEnvHDR.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\Textures\dancing_hall_4kSpecularHDR.dds">
+    </Content>
+    <Content Include="Assets\Textures\dancing_hall_4kSpecularHDR.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64\soft_oal.dll">
+    </Content>
+    <Content Include="win32-x64\soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="alsoft.conf">
+    </Content>
+    <Content Include="alsoft.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+    </Content>
+  
+</ItemGroup>
 
 </Project>
