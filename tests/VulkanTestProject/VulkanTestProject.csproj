@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
-    <ProjectReference Include="..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Platform\OpenTK.Platform.csproj" />
   </ItemGroup>
 
 </Project>

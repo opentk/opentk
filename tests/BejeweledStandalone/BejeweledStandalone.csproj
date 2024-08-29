@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="alsoft.conf">
+    <Content Update="alsoft.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64\soft_oal.dll">
+    </Content>
+    <Content Update="win32-x64\soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>

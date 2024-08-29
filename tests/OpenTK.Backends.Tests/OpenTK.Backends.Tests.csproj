@@ -19,14 +19,18 @@
 
   <ItemGroup>
     <None Remove="ANGLE_LICENCE" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="ANGLE_LICENCE" />
+    <Content Include="ANGLE_LICENCE" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\opentk_logo_small.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Maybe add condition on compiling for macOS? -->
+    <Content Include="info.plist" Condition="'$(_IsPublishing)' == 'true' and '$(Platform)' == 'osx'">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -36,6 +40,7 @@
   <Target Name="RC file" BeforeTargets="PreBuildEvent" Condition="Exists('C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe')">
     <Message Importance="High" Text="Compiling resource file" />
     <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe&quot; icons.rc" />
+    <Message Importance="high" Text="Publishing: '$(_IsPublishing)', Platform: '$(Platform)', OS: '$(OS)'"/>
   </Target>
 
   <ItemGroup>
@@ -67,55 +72,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-    <None Update="win32-x64/d3dcompiler_47.dll">
+    <Content Include="win32-x64/d3dcompiler_47.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64/libEGL.dll">
+    </Content>
+      <Content Include="win32-x64/libEGL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64/libGLESv1_CM.dll">
+    </Content>
+    <Content Include="win32-x64/libGLESv1_CM.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64/libGLESv2.dll">
+    </Content>
+    <Content Include="win32-x64/libGLESv2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="linux-x64/angle-linux-binaries.zip">
+    </Content>
+    <Content Include="linux-x64/angle-linux-binaries.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Cute Light Green Normal Select.cur">
+    </Content>
+    <Content Include="Resources\Cute Light Green Normal Select.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\NotoSans\NotoSansJP-Regular.ttf">
+    </Content>
+      <Content IncludeContent="" Include="Resources\NotoSans\NotoSansJP-Regular.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\NotoSans\OFL.txt">
+    </Content>
+    <Content Include="Resources\NotoSans\OFL.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\ProggyVector\LICENSE.txt">
+    </Content>
+    <Content Include="Resources\ProggyVector\LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\ProggyVector\ProggyVectorDotted.ttf">
+    </Content>
+    <Content Include="Resources\ProggyVector\ProggyVectorDotted.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Wikipedia-Flags-UN-United-Nations-Flag.ico">
+    </Content>
+    <Content Include="Resources\Wikipedia-Flags-UN-United-Nations-Flag.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="SDL2.dll">
+    </Content>
+    <Content Include="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\ProggyVector\ProggyVector-Dotted.ttf">
+    </Content>
+    <Content Include="win32-x64\soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="win32-x64\soft_oal.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+      <!-- The Bejeweled project includes it's own version of this dll, we get a publish error if we include it here too. -->
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\NotoSans\" />
-    <Folder Include="win32-x64/" />
-    <Folder Include="linux-x64/" />
-  </ItemGroup>
-
 </Project>
