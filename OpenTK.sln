@@ -102,7 +102,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bejeweled", "tests\Bejewele
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BejeweledStandalone", "tests\BejeweledStandalone\BejeweledStandalone.csproj", "{35DFEE40-0B3D-4264-B73B-D1868B002B59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulkanTestProject", "VulkanTestProject\VulkanTestProject.csproj", "{32A169B6-865F-425B-BB55-A7F893F5D5FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VulkanTestProject", "tests\VulkanTestProject\VulkanTestProject.csproj", "{32A169B6-865F-425B-BB55-A7F893F5D5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
