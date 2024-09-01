@@ -299,7 +299,7 @@ void main() {
                 {
                     if (Toolkit.Mouse != null)
                     {
-                        Toolkit.Mouse.GetPosition(out int x, out int y);
+                        Toolkit.Mouse.GetGlobalPosition(out int x, out int y);
                         prevPos = (x, y);
                     }
                 }

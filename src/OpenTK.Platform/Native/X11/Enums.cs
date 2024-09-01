@@ -181,8 +181,8 @@ namespace OpenTK.Platform.Native.X11
     internal enum XEventsQueuedMode
     {
         QueuedAlready = 0,
-        QueuedAfterFlush = 1,
-        QueuedAfterReading = 2
+        QueuedAfterReading = 1,
+        QueuedAfterFlush = 2,
     }
 
     [Flags]

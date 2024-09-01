@@ -47,6 +47,9 @@ namespace OpenTK.Platform.Native.X11
         public Vector2 VirtualCursorPosition { get; set; }
         public Vector2i LastMousePosition { get; set; }
 
+        public MouseButtonFlags PressedMouseButtons { get; set; }
+        public Vector2 ScrollPosition { get; set; }
+
         public XIconHandle? Icon { get; set; } = null;
 
 

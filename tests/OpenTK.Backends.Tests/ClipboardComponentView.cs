@@ -282,6 +282,18 @@ namespace OpenTK.Backends.Tests
                         ImGui.EndTabItem();
                     }
                 }
+                else if (Toolkit.Clipboard is Platform.Native.X11.X11ClipboardComponent x11Clipboard)
+                {
+                    if (ImGui.BeginTabItem("X11"))
+                    {
+                        if (ImGui.Button("Paste image"))
+                        {
+                            x11Clipboard.SetClipboardBitmap(CreateExampleBitmap());
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+                }
 
                 ImGui.EndTabBar();
             }

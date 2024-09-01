@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <PackageReference Include="StbImageSharp" Version="2.27.14" />
+    <PackageReference Include="StbImageWriteSharp" Version="1.16.7" />
     <PackageReference Include="ImGui.NET" Version="1.90.8.1" />
     <PackageReference Include="OpenTK.redist.SDL" Version="2.26.5-pre20230414185304" />
   </ItemGroup>

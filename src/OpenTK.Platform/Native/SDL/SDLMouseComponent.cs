@@ -34,9 +34,15 @@ namespace OpenTK.Platform.Native.SDL
         public bool SupportsRawMouseMotion => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out int x, out int y)
         {
             SDL_GetGlobalMouseState(out x, out y);
+        }
+
+        /// <inheritdoc/>
+        public void GetPosition(WindowHandle window, out int x, out int y)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -78,7 +84,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             uint buttons = SDL_GetGlobalMouseState(out int x, out int y);
 
@@ -103,6 +109,12 @@ namespace OpenTK.Platform.Native.SDL
                 state.PressedButtons |= MouseButtonFlags.Button4;
             if ((buttons & SDL_BUTTON_X2MASK) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button5;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

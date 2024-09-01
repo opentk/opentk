@@ -11,7 +11,8 @@ namespace OpenTK.Platform
     public struct MouseState
     {
         /// <summary>
-        /// The mouse position in desktop coordinates.
+        /// The mouse position in either screen coordinates (if received from <see cref="IMouseComponent.GetGlobalMouseState(out MouseState)"/>) 
+        /// or window relative coordinates (if received from <see cref="IMouseComponent.GetMouseState(WindowHandle, out MouseState)"/>).
         /// </summary>
         public Vector2i Position;
 
@@ -47,16 +48,26 @@ namespace OpenTK.Platform
         // - Noggin_bops 2024-07-31
         bool SupportsRawMouseMotion { get; }
 
-        // FIXME: When using CaptureMode.Locked should these return the virtual position?
-        // If not, we need to have a clear distinction between which coordinates get
-        // virtualized and which ones do not.
-
         /// <summary>
         /// Get the mouse cursor position.
+        /// This function may query the mouse position outside of event processing to get the position of the mouse at the time this function is called.
+        /// The mouse position returned is the mouse position as it is on screen, it will not return virtual coordinates when using <see cref="CursorCaptureMode.Locked"/>.
         /// </summary>
-        /// <param name="x">X coordinate of the mouse in desktop space.</param>
-        /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        void GetPosition(out int x, out int y);
+        /// <param name="x">X coordinate of the mouse in screen coordinates.</param>
+        /// <param name="y">Y coordinate of the mouse in screen coordinates.</param>
+        /// <seealso cref="GetPosition(WindowHandle, out int, out int)"/>
+        /// <seealso cref="SetPosition(int, int)"/>
+        void GetGlobalPosition(out int x, out int y);
+
+        /// <summary>
+        /// Gets the mouse position as seen from the specified window.
+        /// This function takes into consideration only the mouse events that the specified window has received and does not represent global state.
+        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalPosition(out int, out int)"/>).
+        /// </summary>
+        /// <param name="window">The window to get the mouse position for.</param>
+        /// <param name="x">X coordinate of the mouse in window relative coordinates.</param>
+        /// <param name="y">Y coordinate of the mouse in window relative coordinates.</param>
+        void GetPosition(WindowHandle window, out int x, out int y);
 
         /// <summary>
         /// Set the mouse cursor position.
@@ -64,14 +75,30 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
+        /// <seealso cref="GetGlobalPosition(out int, out int)"/>
         /// <seealso cref="CanSetMousePosition"/>
         void SetPosition(int x, int y);
 
         /// <summary>
         /// Fills the <paramref name="state"/> struct with the current mouse state.
+        /// This function may query the mouse state outside of event processing to get the position of the mouse at the time this function is called.
+        /// The <see cref="MouseState.Position"/> will be the screen mouse position and not virtual coordinates described by <see cref="CursorCaptureMode.Locked"/>.
+        /// The <see cref="MouseState.Position"/> is in window screen coordinates.
         /// </summary>
         /// <param name="state">The current mouse state.</param>
-        void GetMouseState(out MouseState state);
+        /// <seealso cref="GetMouseState(WindowHandle, out MouseState)"/>
+        void GetGlobalMouseState(out MouseState state);
+
+        /// <summary>
+        /// Fills the <paramref name="state"/> struct with the current mouse state for the specified window.
+        /// This function takes into consideration only the mouse events that the specified window has received and does not represent global state.
+        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalMouseState(out MouseState)"/>).
+        /// The <see cref="MouseState.Position"/> is in window relative coordinates.
+        /// </summary>
+        /// <param name="window">The window to get the mouse state from.</param>
+        /// <param name="state">The current mouse state.</param>
+        /// <seealso cref="GetGlobalMouseState(out MouseState)"/>
+        void GetMouseState(WindowHandle window, out MouseState state);
 
         /// <summary>
         /// Returns whether raw mouse motion is enabled for the given window or not.
@@ -80,6 +107,7 @@ namespace OpenTK.Platform
         /// <param name="window">The window to query.</param>
         /// <returns>If raw mouse motion is enabled.</returns>
         /// <seealso cref="SupportsRawMouseMotion"/>
+        /// <seealso cref="EnableRawMouseMotion(WindowHandle, bool)"/>
         bool IsRawMouseMotionEnabled(WindowHandle window);
 
         /// <summary>
@@ -91,6 +119,7 @@ namespace OpenTK.Platform
         /// <param name="window">The window to enable or disable raw mouse motion for.</param>
         /// <param name="enable">Whether to enable or disable raw mouse motion.</param>
         /// <seealso cref="SupportsRawMouseMotion"/>
+        /// <see cref="IsRawMouseMotionEnabled(WindowHandle)"/>
         void EnableRawMouseMotion(WindowHandle window, bool enable);
     }
 }

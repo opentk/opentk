@@ -22,6 +22,8 @@ namespace OpenTK.Backends.Tests
         private Vector2 setPosition;
         private bool enableRawInput = false;
 
+        private WindowHandle? mouseStateWindow;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -39,14 +41,14 @@ namespace OpenTK.Backends.Tests
             ImGuiUtils.ReadonlyCheckbox("Can Set Mouse Position", canSetMousePosition);
             ImGuiUtils.ReadonlyCheckbox("Supports Raw Mouse Motion", supportsRawMouseMotion);
 
-            ImGui.SeparatorText("Mouse state");
+            ImGui.SeparatorText("Global Mouse state");
 
-            Toolkit.Mouse.GetPosition(out int x, out int y);
+            Toolkit.Mouse.GetGlobalPosition(out int x, out int y);
             ImGui.TextUnformatted($"Mouse position: ({x}, {y})");
 
             try
             {
-                Toolkit.Mouse.GetMouseState(out MouseState state);
+                Toolkit.Mouse.GetGlobalMouseState(out MouseState state);
 
                 ImGui.TextUnformatted($"Mouse state:");
                 ImGui.TextUnformatted($"  Position: {state.Position}");
@@ -57,11 +59,33 @@ namespace OpenTK.Backends.Tests
             }
             catch (NotImplementedException)
             {
+                ImGui.TextUnformatted("GetGlobalMouseState() is not implemented on this backend.");
+            }
+
+            ImGui.SeparatorText("Window Mouse state");
+
+            ImGuiUtils.WindowCombobox("Window", ref mouseStateWindow);
+
+            Toolkit.Mouse.GetPosition(mouseStateWindow, out int wx, out int wy);
+            ImGui.TextUnformatted($"Mouse position: ({wx}, {wy})");
+
+            try
+            {
+                Toolkit.Mouse.GetMouseState(mouseStateWindow, out MouseState wstate);
+
+                ImGui.TextUnformatted($"Mouse state:");
+                ImGui.TextUnformatted($"  Position: {wstate.Position}");
+                ImGui.TextUnformatted($"  Scroll pos: {wstate.Scroll}");
+                ImGui.TextUnformatted($"  Pressed buttons: {wstate.PressedButtons}");
+
+                // FIXME: Calcuate a diff against the last mouse state and display that as well.
+            }
+            catch (NotImplementedException)
+            {
                 ImGui.TextUnformatted("GetMouseState() is not implemented on this backend.");
             }
 
             ImGui.BeginDisabled(canSetMousePosition == false);
-
             ImGui.SeparatorText("Set mouse pos");
 
             // FIXME: Speed?
@@ -71,6 +95,8 @@ namespace OpenTK.Backends.Tests
                 Toolkit.Mouse.SetPosition((int)setPosition.X, (int)setPosition.Y);
             }
 
+            ImGui.EndDisabled();
+
             ImGui.BeginDisabled(supportsRawMouseMotion == false);
 
             ImGui.SeparatorText("Raw mouse input");
@@ -79,8 +105,6 @@ namespace OpenTK.Backends.Tests
             {
                 Toolkit.Mouse.EnableRawMouseMotion(Program.Window, enableRawInput);
             }
-
-            ImGui.EndDisabled();
 
             ImGui.EndDisabled();
         }

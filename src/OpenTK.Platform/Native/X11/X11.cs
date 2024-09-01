@@ -4,6 +4,7 @@ using System.Diagnostics;
 using OpenTK.Core.Utility;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -13,9 +14,7 @@ namespace OpenTK.Platform.Native.X11
     internal static class X11
     {
         // FIXME: Maybe merge this with LibX11?
-
-        public const int Success = 0;
-
+        
         public static XDisplayPtr Display { get; set; }
 
         public static int DefaultScreen { get; set; }
@@ -25,6 +24,18 @@ namespace OpenTK.Platform.Native.X11
         public static XAtomDictionary Atoms { get; set; }
 
         public static HashSet<string> Extensions { get; set; }
+
+        private static XTime _lastTime;
+
+        /// <summary>The latest time reported by the X11 server.</summary>
+        public static XTime LastTime => _lastTime;
+
+        public static unsafe void SetLastTime(XWindow window, XTime time) {
+            // FIXME: Support _NET_WM_USER_TIME_WINDOW..
+            _lastTime = time;
+            //Debug.WriteLine($"Updating latest time: {time.Value}");
+            //XChangeProperty(Display, window, Atoms[KnownAtoms._NET_WM_USER_TIME], Atoms[KnownAtoms.CARDINAL], 32, XPropertyMode.Replace, (IntPtr)(&time), 1);
+        }
 
 
         public static int XRandREventBase { get; set; }

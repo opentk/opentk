@@ -385,7 +385,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XkbDescRec* desc = XkbGetMap(X11.Display, 0, XkbUseCoreKbd);
             int status = XkbGetNames(X11.Display, XkbKeyNamesMask | XkbKeyAliasesMask, desc);
-            if (status != X11.Success)
+            if (status != Success)
             {
                 Logger?.LogError($"XkbGetNames failed with status: {status}");
                 return;

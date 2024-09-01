@@ -16,6 +16,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
+using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Backends.Tests
 {
@@ -74,6 +76,8 @@ namespace OpenTK.Backends.Tests
 
         static void Main(string[] args)
         {
+            Thread.CurrentThread.Name = "Main thread";
+
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             BackendsConfig.Logger = Logger;
@@ -123,6 +127,8 @@ namespace OpenTK.Backends.Tests
 
             // Init all of the components.
             Toolkit.Init(new ToolkitOptions() { ApplicationName = "OpenTK.Backends.Tests", Logger = Logger, });
+
+            (Toolkit.Clipboard as X11ClipboardComponent)?.SetPngCodec(new StbPngCodec());
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {

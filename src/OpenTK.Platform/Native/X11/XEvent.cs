@@ -76,6 +76,9 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(0)]
         public XSelectionEvent Selection;
 
+        [FieldOffset(0)]
+        public XSelectionRequestEvent SelectionRequest;
+
         #region XRandR
 
         [FieldOffset(0)]
@@ -284,7 +287,8 @@ namespace OpenTK.Platform.Native.X11
         public PropertyState state; /* PropertyNewValue or PropertyDelete */
     }
 
-    internal struct XSelectionEvent {
+    internal struct XSelectionEvent
+    {
         public XEventType type;		/* SelectionNotify */
         public ulong serial;	    /* # of last request processed by server */
         public int send_event;	    /* true if this came from a SendEvent request */
@@ -293,6 +297,20 @@ namespace OpenTK.Platform.Native.X11
         public XAtom selection;
         public XAtom target;
         public XAtom property;		/* atom or None */
+        public XTime time;
+    }
+
+    struct XSelectionRequestEvent
+    {
+        public int type;		/* SelectionRequest */
+        public ulong serial;	/* # of last request processed by server */
+        public int send_event;	/* true if this came from a SendEvent request */
+        public XDisplayPtr display;	/* Display the event was read from */
+        public XWindow owner;
+        public XWindow requestor;
+        public XAtom selection;
+        public XAtom target;
+        public XAtom property;
         public XTime time;
     }
 #pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0

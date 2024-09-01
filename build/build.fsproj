@@ -12,16 +12,16 @@
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="8.0.301" />
 
-    <PackageReference Include="Fake.Api.GitHub" Version="6.1.0" />
-    <PackageReference Include="Fake.Core.Environment" Version="6.1.0" />
-    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.1.0" />
-    <PackageReference Include="Fake.Core.Target" Version="6.1.0" />
-    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.0" />
-    <PackageReference Include="Fake.DotNet.Cli" Version="6.1.0" />
-    <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.0" />
-    <PackageReference Include="Fake.DotNet.Paket" Version="6.1.0" />
-    <PackageReference Include="Fake.IO.FileSystem" Version="6.1.0" />
-    <PackageReference Include="Fake.Tools.Git" Version="6.1.0" />
+    <PackageReference Include="Fake.Api.GitHub" Version="6.1.1" />
+    <PackageReference Include="Fake.Core.Environment" Version="6.1.1" />
+    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.1.1" />
+    <PackageReference Include="Fake.Core.Target" Version="6.1.1" />
+    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.1.1" />
+    <PackageReference Include="Fake.DotNet.Cli" Version="6.1.1" />
+    <PackageReference Include="Fake.DotNet.NuGet" Version="6.1.1" />
+    <PackageReference Include="Fake.DotNet.Paket" Version="6.1.1" />
+    <PackageReference Include="Fake.IO.FileSystem" Version="6.1.1" />
+    <PackageReference Include="Fake.Tools.Git" Version="6.1.1" />
     
     <!-- So that Fake.DotNet.Nuget.Nuget command can find nuget.exe, but because the nuget dependencies are -->
     <!-- downloaded into a shared cache of nuget packages we actually don't get a nuget.exe in our project -->

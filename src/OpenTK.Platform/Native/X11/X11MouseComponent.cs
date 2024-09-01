@@ -30,10 +30,10 @@ namespace OpenTK.Platform.Native.X11
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+        public bool SupportsRawMouseMotion => false;
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out int x, out int y)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
 
@@ -42,18 +42,46 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
+        public void GetPosition(WindowHandle window, out int x, out int y)
+        {
+            // FIXME: Client space or desktop space coords?
+            XWindowHandle xwindow = window.As<XWindowHandle>(this);
+            if (xwindow.CaptureMode == CursorCaptureMode.Locked)
+            {
+                x = (int)xwindow.VirtualCursorPosition.X;
+                y = (int)xwindow.VirtualCursorPosition.Y;
+            }
+            else
+            {
+                // FIXME: When the user gets a MouseMoveEventArgs this function
+                // will not return the same position as the event is reporting.
+                // Is this something we want to fix?
+                // - Noggin_bops 2024-09-01
+                x = xwindow.LastMousePosition.X;
+                y = xwindow.LastMousePosition.Y;
+            }
+        }
+
+        /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
             XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, x, y);
         }
 
-
         internal static MouseButtonFlags MouseButtonState = default;
         /// <returns>True if the state of the button changed.</returns>
-        internal static bool RegisterButtonState(MouseButton button, bool pressed)
+        internal static bool RegisterButtonState(XWindowHandle? xwindow, MouseButton button, bool pressed)
         {
             MouseButtonFlags flag = (MouseButtonFlags)(1 << (int)button);
 
+            if (xwindow != null)
+            {
+                // Record window local state
+                if (pressed) xwindow.PressedMouseButtons |= flag;
+                else         xwindow.PressedMouseButtons &= ~flag;
+            }
+
+            // Record global state.
             bool wasPressed = (MouseButtonState & flag) != 0;
             if (pressed) MouseButtonState |= flag;
             else         MouseButtonState &= ~flag;
@@ -69,19 +97,34 @@ namespace OpenTK.Platform.Native.X11
         // not the "global" state of the scroll wheel.
         // Should we fix that? or is this what is expected?
         internal static Vector2 ScrollPosition = (0.0f, 0.0f);
-        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        internal static void RegisterMouseWheelDelta(XWindowHandle? xwindow, Vector2 delta)
         {
+            if (xwindow != null)
+            {
+                xwindow.ScrollPosition += delta;
+            }
+
             ScrollPosition += delta;
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
 
             state.Position = (root_x, root_y);
             state.PressedButtons = MouseButtonState;
             state.Scroll = ScrollPosition;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            XWindowHandle xwindow = window.As<XWindowHandle>(this);
+
+            state.Position = (xwindow.CaptureMode == CursorCaptureMode.Locked) ? (Vector2i)xwindow.VirtualCursorPosition : xwindow.LastMousePosition;
+            state.PressedButtons = xwindow.PressedMouseButtons;
+            state.Scroll = xwindow.ScrollPosition;
         }
 
         /// <inheritdoc/>

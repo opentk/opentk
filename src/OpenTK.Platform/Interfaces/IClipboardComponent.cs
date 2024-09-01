@@ -49,6 +49,10 @@ namespace OpenTK.Platform
         /// Gets the bitmap currently in the clipboard.
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Bitmap"/> format.
         /// </summary>
+        /// <remarks>
+        /// On linux clipboard bitmaps are defacto transferred as PNG data, as such a PNG encoder/decoder is needed to read and write bitmaps from the clipboard.
+        /// To enable this <see cref="Native.X11.X11ClipboardComponent.SetPngCodec(Native.X11.X11ClipboardComponent.IPngCodec?)"/> must be called with an object that implements the <see cref="Native.X11.X11ClipboardComponent.IPngCodec"/> interface.
+        /// </remarks>
         /// <returns>The bitmap currently in the clipboard.</returns>
         // FIXME: What is the orientation of this image? Is it bottom up or top down?
         Bitmap? GetClipboardBitmap();

@@ -15,6 +15,8 @@ namespace Bejeweled
 {
     internal class Program
     {
+        private static ILogger Logger;
+
 #if !LIBRARY
 
         internal static WindowHandle Window;
@@ -27,10 +29,12 @@ namespace Bejeweled
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 #if RELEASE
+            Logger = new DebugFileLogger("Bejeweled_debug.log");
 #else
             Logger = new DebugLogger();
 #endif
-            Logger = new DebugFileLogger("Bejeweled_debug.log");
+
+            //Directory.SetCurrentDirectory(Path.GetDirectoryName(typeof(Program).Assembly.Location)!);
 
             Logger.LogInfo($"Current path: {Directory.GetCurrentDirectory()}");
 
@@ -206,56 +210,5 @@ namespace Bejeweled
             }
         }
 #endif
-
-        private static ILogger Logger;
-
-        public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
-        private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
-        {
-            string message = Marshal.PtrToStringAnsi(messagePtr, length);
-
-            bool showMessage = true;
-
-            switch (source)
-            {
-                case DebugSource.DebugSourceApplication:
-                    showMessage = false;
-                    break;
-                case DebugSource.DontCare:
-                case DebugSource.DebugSourceApi:
-                case DebugSource.DebugSourceWindowSystem:
-                case DebugSource.DebugSourceShaderCompiler:
-                case DebugSource.DebugSourceThirdParty:
-                case DebugSource.DebugSourceOther:
-                default:
-                    showMessage = true;
-                    break;
-            }
-
-            if (showMessage)
-            {
-                switch (severity)
-                {
-                    case DebugSeverity.DontCare:
-                        Logger?.LogInfo($"[DontCare] [{source}] {message}");
-                        break;
-                    case DebugSeverity.DebugSeverityNotification:
-                        //Logger?.LogDebug($"[{source}] {message}");
-                        break;
-                    case DebugSeverity.DebugSeverityHigh:
-                        Logger?.LogError($"[{source}] {message}");
-                        break;
-                    case DebugSeverity.DebugSeverityMedium:
-                        Logger?.LogWarning($"[{source}] {message}");
-                        break;
-                    case DebugSeverity.DebugSeverityLow:
-                        Logger?.LogInfo($"[{source}] {message}");
-                        break;
-                    default:
-                        Logger?.LogInfo($"[default] [{source}] {message}");
-                        break;
-                }
-            }
-        }
     }
 }

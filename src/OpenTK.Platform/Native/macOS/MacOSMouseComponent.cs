@@ -50,13 +50,19 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out int x, out int y)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
             NFloat flippedY = CG.FlipYCoordinate(p.y);
 
             x = (int)p.x;
             y = (int)flippedY;
+        }
+
+        /// <inheritdoc/>
+        public void GetPosition(WindowHandle window, out int x, out int y)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -81,7 +87,7 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
             NFloat flippedY = CG.FlipYCoordinate(p.y);
@@ -110,6 +116,12 @@ namespace OpenTK.Platform.Native.macOS
                 state.PressedButtons |= MouseButtonFlags.Button7;
             if ((buttons & 1 << 7) != 0)
                 state.PressedButtons |= MouseButtonFlags.Button8;
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

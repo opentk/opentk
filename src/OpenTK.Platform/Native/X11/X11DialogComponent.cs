@@ -113,7 +113,7 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr pidPtr);
 
-                if (status == X11.Success && pidPtr != IntPtr.Zero)
+                if (status == Success && pidPtr != IntPtr.Zero)
                 {
                     ulong windowPid = *(ulong*)pidPtr;
                     if (windowPid == (ulong)process.Id)
@@ -254,7 +254,9 @@ namespace OpenTK.Platform.Native.X11
                                 default: throw new Exception("This should never happen.");
                             }
 
-                            X11MouseComponent.RegisterMouseWheelDelta((xdelta, ydelta));
+                            XWindowHandle? xwindow = null;
+                            X11WindowComponent.XWindowDict.TryGetValue(buttonPressed.window, out xwindow);
+                            X11MouseComponent.RegisterMouseWheelDelta(xwindow, (xdelta, ydelta));
                         }
                         else
                         {
@@ -283,16 +285,21 @@ namespace OpenTK.Platform.Native.X11
 
                             KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonPressed.state);
 
-                            X11MouseComponent.RegisterButtonState(button, true);
+                            XWindowHandle? xwindow = null;
+                            X11WindowComponent.XWindowDict.TryGetValue(buttonPressed.window, out xwindow);
+                            X11MouseComponent.RegisterButtonState(xwindow, button, true);
                         }
                     }
                     else if (@event.Type == XEventType.MotionNotify)
                     {
                         // Eat these events so that we don't spam input to the window
                         // when we exit the modal loop.
+
+                        // FIXME: Do we want to update global mouse state here?
+                        // - Noggin_bops 2024-09-01
                     }
                     // FIXME: We want to send the appropriate events 
-                    // when we leave the modal loop so that we for example
+                    // when we leave the modal loop so that we don't
                     // miss a LeaveNotify or EnterNotify when the modal is done.
                     else if (@event.Type == XEventType.EnterNotify ||
                              @event.Type == XEventType.LeaveNotify)

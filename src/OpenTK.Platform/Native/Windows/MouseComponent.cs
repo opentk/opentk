@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Native.Windows
         public bool SupportsRawMouseMotion => true;
 
         /// <inheritdoc/>
-        public void GetPosition(out int x, out int y)
+        public void GetGlobalPosition(out int x, out int y)
         {
             // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
@@ -47,6 +47,13 @@ namespace OpenTK.Platform.Native.Windows
             x = lpPoint.X;
             y = lpPoint.Y;
         }
+
+        /// <inheritdoc/>
+        public void GetPosition(WindowHandle window, out int x, out int y)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <inheritdoc/>
         public void SetPosition(int x, int y)
@@ -73,7 +80,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void GetMouseState(out MouseState state)
+        public void GetGlobalMouseState(out MouseState state)
         {
             Win32.GetCursorPos(out Win32.POINT lpPoint);
             state.Position.X = lpPoint.X;
@@ -106,6 +113,12 @@ namespace OpenTK.Platform.Native.Windows
             {
                 state.PressedButtons |= MouseButtonFlags.Button5;
             }
+        }
+
+        /// <inheritdoc/>
+        public void GetMouseState(WindowHandle window, out MouseState state)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

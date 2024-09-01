@@ -108,6 +108,11 @@ namespace OpenTK.Platform.Native.X11
                     this.Id == 0 :
                     (obj is XAtom atom) && this == atom;
         }
+
+        public override string ToString()
+        {
+            return LibX11.XGetAtomName(X11.Display, this);
+        }
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
@@ -443,7 +448,8 @@ namespace OpenTK.Platform.Native.X11
         /* this structure may be extended in the future */
     }
 
-    internal struct MotifWmHints {
+    internal struct MotifWmHints
+    {
         public long flags;
         public long functions;
         public long decorations;
@@ -494,7 +500,8 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    internal unsafe struct XComposeStatus {
+    internal unsafe struct XComposeStatus
+    {
         public char* compose_ptr;
         public int chars_matched;
     }
@@ -503,7 +510,8 @@ namespace OpenTK.Platform.Native.X11
     /// Part of XFixes 5.0+.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal readonly struct XPointerBarrier {
+    internal readonly struct XPointerBarrier
+    {
         public readonly ulong Id { get; }
 
         public static readonly XPointerBarrier None = new XPointerBarrier(0);

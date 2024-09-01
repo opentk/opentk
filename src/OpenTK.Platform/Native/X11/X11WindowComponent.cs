@@ -33,14 +33,10 @@ namespace OpenTK.Platform.Native.X11
 
         private unsafe int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event)
         {
-            Console.WriteLine($"{error_event->type} error! S: {error_event->serial} Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
-
             StringBuilder errorMessage = new StringBuilder(1024);
             XGetErrorText(X11.Display, (int)error_event->error_code, errorMessage, errorMessage.Capacity);
 
-            byte* data = (byte*)error_event;
-
-            Console.WriteLine($"Error: {errorMessage}");
+            Logger?.LogError($"Error: {errorMessage}, Type: {error_event->type}, S: {error_event->serial}, Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
 
             return (int)error_event->error_code;
         }
@@ -280,7 +276,7 @@ namespace OpenTK.Platform.Native.X11
                                     out long remainingBytes,
                                     out IntPtr contents);
 
-            if (result == 0)
+            if (result == Success)
             {
                 unsafe
                 {
@@ -347,11 +343,53 @@ namespace OpenTK.Platform.Native.X11
             {
                 XNextEvent(X11.Display, out ea);
 
+                // Update the current timestamp.
+                switch (ea.Type)
+                {
+                    case XEventType.KeyPress:
+                        X11.SetLastTime(ea.KeyPressed.window, ea.KeyPressed.time);
+                        break;
+                    case XEventType.KeyRelease:
+                        X11.SetLastTime(ea.KeyReleased.window, ea.KeyReleased.time);
+                        break;
+                    case XEventType.ButtonPress:
+                        X11.SetLastTime(ea.ButtonPressed.window, ea.ButtonPressed.time);
+                        break;
+                    case XEventType.ButtonRelease:
+                        X11.SetLastTime(ea.ButtonReleased.window, ea.ButtonReleased.time);
+                        break;
+                    case XEventType.MotionNotify:
+                        //X11.SetLastTime(ea.Motion.window, ea.Motion.time);
+                        break;
+                    case XEventType.EnterNotify:
+                        //X11.SetLastTime(ea.Enter.window, ea.Enter.time);
+                        break;
+                    case XEventType.LeaveNotify:
+                        //X11.SetLastTime(ea.Leave.window, ea.Leave.time);
+                        break;
+                    // FIXME: This causes an infinite loop with _NET_WM_USER_TIME.
+                    // Maybe filter out this specific property?
+                    //case XEventType.PropertyNotify:
+                    //    X11.SetLastTime(ea.Property.window, ea.Property.time);
+                    //    break;
+                    case XEventType.SelectionNotify:
+                        // FIXME: Should we count this time?
+                        //X11.SetLastTime(ea.Selection.requestor, ea.Selection.time);
+                        break;
+                    default:
+                        if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
+                        {
+                            XFixes.XFixesSelectionNotifyEvent selectionNotify = Unsafe.As<XEvent, XFixes.XFixesSelectionNotifyEvent>(ref ea);
+                            //X11.SetLastTime(selectionNotify.window, selectionNotify.timestamp);
+                        }
+                        break;
+                }
+
                 if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
                 {
                     if (ea.Any.Window == X11.DefaultRootWindow)
                     {
-                        if (ea.Type == (XEventType)(X11.XFixesEventBase + 0))
+                        if (ea.Type == (XEventType)(X11.XFixesEventBase + XFixes.SelectionEvent.SetSelectionOwner))
                         {
                             // XFixesSelectionNotify
                             XFixes.XFixesSelectionNotifyEvent selectionNotify = Unsafe.As<XEvent, XFixes.XFixesSelectionNotifyEvent>(ref ea);
@@ -359,7 +397,7 @@ namespace OpenTK.Platform.Native.X11
                             // Get the format of the selection.
                             if (selectionNotify.selection == X11.Atoms[KnownAtoms.CLIPBOARD])
                             {
-                                ClipboardFormat format = X11ClipboardComponent.GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], X11ClipboardComponent.OpenTKSelection);
+                                ClipboardFormat format = X11ClipboardComponent.GetSelectionFormat(X11.Atoms[KnownAtoms.CLIPBOARD], X11ClipboardComponent.OpenTKSelection, Logger);
 
                                 EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(format));
                             }
@@ -379,6 +417,12 @@ namespace OpenTK.Platform.Native.X11
                             ea.Property.atom == X11ClipboardComponent.OpenTKSelection)
                         {
                             // If some other window takes ownership of the a selection we expect this.
+                        }
+                        else if (ea.Type == XEventType.SelectionClear  ||
+                                 ea.Type == XEventType.SelectionNotify ||
+                                 ea.Type == XEventType.SelectionRequest)
+                        {
+                            X11ClipboardComponent.HandleClipboardEvent(ref ea, Logger);
                         }
                         else 
                         {
@@ -412,6 +456,8 @@ namespace OpenTK.Platform.Native.X11
                                     // Ping events to know that we are still responsive.
                                     XEvent reply = ea;
                                     reply.ClientMessage.Window = X11.DefaultRootWindow;
+
+                                    Logger?.LogDebug("Ping!");
 
                                     XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
                                 }
@@ -519,6 +565,7 @@ namespace OpenTK.Platform.Native.X11
                                             xwindow.XDnDType,
                                             X11.Atoms[KnownAtoms.PRIMARY],
                                             xwindow.Window,
+                                            // FIXME: Maybe return CurrentTime if xdnd version is <1?
                                             new XTime((ulong)clientMessage.l[2]));
 
                                         XEvent notification;
@@ -613,7 +660,7 @@ namespace OpenTK.Platform.Native.X11
                                     default: throw new Exception("This should never happen.");
                                 }
 
-                                X11MouseComponent.RegisterMouseWheelDelta((xdelta, ydelta));
+                                X11MouseComponent.RegisterMouseWheelDelta(xwindow, (xdelta, ydelta));
                                 // FIXME: Scrolling distance? Are there scrolling settings on linux/x11?
                                 EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs(xwindow, (xdelta, ydelta), (xdelta, ydelta)));
                             }
@@ -644,7 +691,7 @@ namespace OpenTK.Platform.Native.X11
 
                                 KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonPressed.state);
 
-                                X11MouseComponent.RegisterButtonState(button, true);
+                                X11MouseComponent.RegisterButtonState(xwindow, button, true);
                                 EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button, modifiers));
                             }
 
@@ -673,7 +720,7 @@ namespace OpenTK.Platform.Native.X11
 
                             KeyModifier modifiers = X11KeyboardComponent.ModifiersFromState(buttonReleased.state);
 
-                            X11MouseComponent.RegisterButtonState(button, false);
+                            X11MouseComponent.RegisterButtonState(xwindow, button, false);
                             EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button, modifiers));
 
                             break;
@@ -923,7 +970,7 @@ namespace OpenTK.Platform.Native.X11
                                     out long remainingBytes,
                                     out IntPtr contents);
 
-                                if (result == 0)
+                                if (result == Success)
                                 {
                                     const int WithdrawnState = 0;
                                     const int NormalState = 1;
@@ -1409,6 +1456,11 @@ namespace OpenTK.Platform.Native.X11
 
             XDestroyWindow(xwindow.Display, xwindow.Window);
 
+            if (CursorCapturingWindow == xwindow)
+            {
+                CursorCapturingWindow = null;
+            }
+
             // If this window was fullscreen we want to restore the video mode.
             if (xwindow.FullscreenDisplay != null)
             {
@@ -1437,7 +1489,7 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle window = handle.As<XWindowHandle>(this);
 
             // Prefer to fetch the freedesktop name.
-            int status = XGetWindowProperty(
+            int result = XGetWindowProperty(
                     window.Display,
                     window.Window,
                     X11.Atoms![KnownAtoms._NET_WM_NAME],
@@ -1455,7 +1507,7 @@ namespace OpenTK.Platform.Native.X11
 
             // If the property is empty or does not exist or an error,
             // fetch the classic name.
-            if (returnedType.IsNone || status != 0)
+            if (result != Success || returnedType.IsNone)
             {
                 XFetchName(window.Display, window.Window, out name);
             }
@@ -1503,7 +1555,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            int status = XGetWindowProperty(
+            int result = XGetWindowProperty(
                 xwindow.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_ICON_NAME],
@@ -1518,7 +1570,7 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Make sure to free name before we reassign it?
 
-            if (returnedType.IsNone || status != 0)
+            if (result != Success || returnedType.IsNone)
             {
                 XGetIconName(xwindow.Display, xwindow.Window, out iconName);
             }
@@ -1622,7 +1674,7 @@ namespace OpenTK.Platform.Native.X11
         private void GetWindowExtents(WindowHandle handle, out int left, out int right, out int top, out int bottom)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
-            int status = XGetWindowProperty(
+            int result = XGetWindowProperty(
                 window.Display,
                 window.Window,
                 X11.Atoms![KnownAtoms._NET_FRAME_EXTENTS],
@@ -1636,7 +1688,7 @@ namespace OpenTK.Platform.Native.X11
                 out _,
                 out IntPtr array);
 
-            if (count < 4)
+            if (result != Success || count < 4)
             {
                 // FIXME: You need to request frame extents for this to work...
                 // This means that you have to wait for the window manager to
@@ -2070,7 +2122,7 @@ namespace OpenTK.Platform.Native.X11
                 out long remainingBytes,
                 out IntPtr contents);
 
-            if (result == 0)
+            if (result == Success)
             {
                 const int WithdrawnState = 0;
                 const int NormalState = 1;
@@ -2714,7 +2766,7 @@ namespace OpenTK.Platform.Native.X11
                 return false;
             }
 
-            int failed = XGetWindowProperty(
+            int result = XGetWindowProperty(
                 X11.Display,
                 xwindow.Window,
                 X11.Atoms[KnownAtoms._NET_WM_STATE],
@@ -2784,6 +2836,8 @@ namespace OpenTK.Platform.Native.X11
                             XUngrabPointer(X11.Display, XTime.CurrentTime);
                         }
 
+                        xwindow.CaptureMode = CursorCaptureMode.Normal;
+
                         break;
                     }
                 case CursorCaptureMode.Confined:
@@ -2803,11 +2857,15 @@ namespace OpenTK.Platform.Native.X11
                             Logger?.LogWarning($"Could not capture cursor. Reason: {result}");
                         }
 
+                        xwindow.CaptureMode = CursorCaptureMode.Confined;
+
                         break;
                     }
                 case CursorCaptureMode.Locked:
                     {
                         CursorCapturingWindow = xwindow;
+
+                        xwindow.CaptureMode = CursorCaptureMode.Locked;
 
                         break;
                     }
@@ -2832,6 +2890,7 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XRaiseWindow(X11.Display, xwindow.Window);
+            // FIXME: Set _NET_ACTIVE_WINDOW?
             XSetInputFocus(X11.Display, xwindow.Window, RevertTo.RevertToPointerRoot, XTime.CurrentTime);
         }
 
@@ -2920,10 +2979,16 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Extents?
         }
 
+        private static bool hasReportedScaleFactorWarning = false;
+
         /// <inheritdoc />
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
-            Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
+            if (hasReportedScaleFactorWarning == false) {
+                Logger?.LogWarning("Scale factor is always 1 on X11 atm.");
+                hasReportedScaleFactorWarning = true;
+            }
+
             scaleX = 1;
             scaleY = 1;
         }

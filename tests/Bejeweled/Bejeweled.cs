@@ -609,8 +609,6 @@ namespace Bejeweled
             }
             GL.TexParameteri(target, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-            // FIXME: Set the texture filtering properties to match mipmap levels!
-
             return new Cubemap(texture);
         }
 
@@ -921,6 +919,11 @@ namespace Bejeweled
         internal Vector2i SelectedGem = (-1, -1);
         internal Vector2 StartPosition;
 
+        internal float HintJiggleTimer = 0;
+        internal float HintJiggleAnimationTimer = 0;
+        internal const float HintTime = 5.0f;
+        internal (Vector2i, Vector2i)? JigglePair;
+
         // Player move state
         internal const float SwapAnimationTime = 0.3f;
         internal Vector2i MovingGem1, MovingGem2;
@@ -1134,6 +1137,28 @@ namespace Bejeweled
             return isValid;
         }
 
+        List<(Vector2i, Vector2i)> GetLegalMoves()
+        {
+            List<(Vector2i, Vector2i)> legalMoves = new List<(Vector2i, Vector2i)>();
+            for (int x = 0; x < Board.GetLength(0) - 1; x++)
+            {
+                for (int y = 0; y < Board.GetLength(1) - 1; y++)
+                {
+                    if (IsValidMove((x, y), (x + 1, y)))
+                    {
+                        legalMoves.Add(((x, y), (x + 1, y)));
+                    }
+
+                    if (IsValidMove((x, y), (x, y + 1)))
+                    {
+                        legalMoves.Add(((x, y), (x, y + 1)));
+                    }
+                }
+            }
+
+            return legalMoves;
+        }
+
         int CountLegalMoves()
         {
             int legalMoves = 0;
@@ -1214,19 +1239,11 @@ namespace Bejeweled
             SwapSoundEffect.Update();
             BreakSoundEffect.Update();
 
-            Toolkit.Mouse.GetMouseState(out MouseState mouseState);
+            Toolkit.Mouse.GetMouseState(Window, out MouseState mouseState);
             Toolkit.Keyboard.GetKeyboardState(KeyboardState);
 
-            if (Toolkit.Window.IsFocused(Window) == false)
-            {
-                // If the window is not focused we don't want to
-                // process any game logic.
-                PrevMouseState = mouseState;
-                return false;
-            }
-
-            Vector2i clientPosition;
-            Toolkit.Window.ScreenToClient(Window, mouseState.Position.X, mouseState.Position.Y, out clientPosition.X, out clientPosition.Y);
+            Vector2i clientPosition = mouseState.Position;
+            //Toolkit.Window.ScreenToClient(Window, mouseState.Position.X, mouseState.Position.Y, out clientPosition.X, out clientPosition.Y);
 
             Toolkit.Window.GetClientSize(Window, out int clientWidth, out int clientHeight);
 
@@ -1256,6 +1273,33 @@ namespace Bejeweled
                     clientPosition.Y >= 0 && clientPosition.Y < clientHeight)
                 {
                     inWindow = true;
+                }
+
+                HintJiggleTimer += deltaTime;
+                if (HintJiggleTimer > HintTime) {
+                    // We want to select a random valid move and jiggle the pieces
+                    if (JigglePair == null)
+                    {
+                        List<(Vector2i, Vector2i)> moves = GetLegalMoves();
+
+                        JigglePair = moves[Random.Shared.Next(moves.Count)];
+                    }
+
+                    Vector2i gemA = JigglePair.Value.Item1;
+                    Vector2i gemB = JigglePair.Value.Item2;
+
+                    bool vertical = (gemA.X, gemA.Y + 1) == (gemB.X, gemB.Y);
+
+                    float t = HintJiggleTimer - HintTime;
+                    const float JiggleExtent = 0.025f;
+                    float jiggle = MathF.Sin(t * 30) * MathF.Pow(MathF.Sin(t * 2.1f), 18.0f) * JiggleExtent;
+                    
+                    Vector2 jiggleOffset = vertical ? (0, jiggle) : (jiggle, 0);
+
+                    // We don't really worry about these positions as the swapping code below will
+                    // overwrite these positions if needed.
+                    BoardPositions[gemA.X, gemA.Y] = GetTileLocation(gemA.X, gemA.Y) + jiggleOffset;
+                    BoardPositions[gemB.X, gemB.Y] = GetTileLocation(gemB.X, gemB.Y) - jiggleOffset;
                 }
 
                 HoveredGem = (clientPosition * 8) / (clientWidth, clientHeight);
@@ -1325,8 +1369,8 @@ namespace Bejeweled
                     }
                 }
 
-                int moves = CountLegalMoves();
-                if (moves == 0 && KeyboardState[(int)Scancode.R] && PrevKeyboardState[(int)Scancode.R] == false)
+                int legalMoves = CountLegalMoves();
+                if (legalMoves == 0 && KeyboardState[(int)Scancode.R] && PrevKeyboardState[(int)Scancode.R] == false)
                 {
                     for (int x = 0; x < Board.GetLength(0); x++)
                     {
@@ -1493,6 +1537,8 @@ namespace Bejeweled
                     if (combo == false)
                     {
                         Logger.LogInfo("Done falling!");
+                        HintJiggleTimer = 0;
+                        JigglePair = null;
                         CurrentState = State.Idle;
                         FallingComboCount = 0;
 

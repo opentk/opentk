@@ -1,7 +1,9 @@
 ﻿using ImGuiNET;
 using OpenTK.Mathematics;
+using OpenTK.Platform;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace OpenTK.Backends.Tests
@@ -83,6 +85,87 @@ namespace OpenTK.Backends.Tests
                 }
             }
             ImGui.EndDisabled();
+        }
+    
+        public static bool WindowCombobox(string title, [NotNull] ref WindowHandle? selected)
+        {
+            bool changed = false;
+            if (selected == null) {
+                selected = Program.Window;
+                changed = true;
+            }
+
+            WindowHandle localSelected = selected;
+            int index = Program.ApplicationWindows.FindIndex(app => app.Window == localSelected) + 1;
+            if (index == 0 && selected != Program.Window)
+            {
+                selected = Program.Window;
+                changed = true;
+            }
+
+            // FIXME: Get the correct index here?
+            string preview = GetWindowName(selected, index);
+
+            if (ImGui.BeginCombo(title, preview))
+            {
+                changed |= ListWindow(Program.Window, 0, ref selected);
+
+                int i = 1;
+                foreach (var appWindow in Program.ApplicationWindows)
+                {
+                    if (ListWindow(appWindow.Window, i++, ref selected))
+                    {
+                        selected = appWindow.Window;
+                        changed = true;
+                    }
+                }
+
+                ImGui.EndCombo();
+            }
+
+            return changed;
+
+            static bool ListWindow(WindowHandle window, int i, ref WindowHandle selected) 
+            {
+                string name = GetWindowName(window, i);
+
+                bool isSelected = window == selected;
+
+                bool wasSelected = false;
+                if (ImGui.Selectable(name, isSelected, ImGuiSelectableFlags.AllowOverlap))
+                {
+                    selected = window;
+                    wasSelected = true;
+                }
+
+                if (isSelected) ImGui.SetItemDefaultFocus();
+
+                return wasSelected;
+            }
+
+            static string GetWindowName(WindowHandle window, int i) 
+            {
+                string name;
+                string displayName;
+                try
+                {
+                    name = Toolkit.Window.GetTitle(window);
+                    displayName = name;
+                }
+                catch (Exception e)
+                {
+                    Program.Logger.LogError($"Unable to get window title of window: {e}");
+                    name = $"Window #{i}";
+                    displayName = $"{name} (unable to get name)";
+                }
+
+                if (window == Program.Window)
+                {
+                    displayName += " (this window)";
+                }
+
+                return displayName;
+            }
         }
     }
 }

@@ -19,6 +19,8 @@ namespace OpenTK.Platform.Native.X11
             DllResolver.InitLoader();
         }
 
+        public const int Success = 0;
+
         public const int False = 0;
         public const int True = 1;
 
@@ -255,9 +257,21 @@ namespace OpenTK.Platform.Native.X11
             bool onlyIfExists,
             ref XAtom atoms);
 
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
-        internal static extern string XGetAtomName(XDisplayPtr display, XAtom atom);
+        
+        internal static unsafe string XGetAtomName(XDisplayPtr display, XAtom atom) {
+
+            byte* namePtr = XGetAtomName(display, atom);
+            string name = Marshal.PtrToStringUTF8((IntPtr)namePtr) ?? "";
+            if (namePtr != null)
+            {
+                XFree(namePtr);
+            }
+            return name;
+
+            // FIXME: Make a managed copy and free the native string?
+            [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+            static extern byte* XGetAtomName(XDisplayPtr display, XAtom atom);
+        }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XGetWindowProperty(
@@ -296,6 +310,18 @@ namespace OpenTK.Platform.Native.X11
             int format,
             XPropertyMode mode,
             long[] data,
+            int elements
+        );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XChangeProperty(
+            XDisplayPtr display,
+            XWindow window,
+            XAtom property,
+            XAtom propertyType,
+            int format,
+            XPropertyMode mode,
+            byte[] data,
             int elements
         );
 
@@ -415,6 +441,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XConvertSelection(XDisplayPtr display, XAtom selection, XAtom target, XAtom property, XWindow requestor, XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XSetSelectionOwner(XDisplayPtr display, XAtom selection, XWindow window, XTime time);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XCheckTypedWindowEvent(XDisplayPtr display, XWindow w, XEventType event_type, out XEvent event_return);
