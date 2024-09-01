@@ -43,6 +43,9 @@ namespace OpenTK.Platform.Native.Windows
         public Vector2i LastMousePosition { get; set; }
         public Vector2 VirtualCursorPosition { get; set; }
 
+        public Vector2 ScrollPosition { get; set; }
+        public MouseButtonFlags PressedMouseButtons { get; set; }
+
         public HMonitor? FullscreenMonitor { get; set; }
         public bool ExclusiveFullscreen { get; set; }
         public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }

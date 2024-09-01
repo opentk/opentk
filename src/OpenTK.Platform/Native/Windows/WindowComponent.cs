@@ -562,6 +562,7 @@ namespace OpenTK.Platform.Native.Windows
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
 
                             HWND h = HWndDict[hWnd];
+                            MouseComponent.RegisterButtonState(h, button.Value, true);
                             EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value, modifiers));
                         }
 
@@ -623,6 +624,7 @@ namespace OpenTK.Platform.Native.Windows
                             KeyModifier modifiers = KeyboardComponent.GetKeyboardModifiersInternal();
 
                             HWND h = HWndDict[hWnd];
+                            MouseComponent.RegisterButtonState(h, button.Value, false);
                             EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value, modifiers));
                         }
 
@@ -640,7 +642,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        MouseComponent.RegisterMouseWheelDelta((0, delta));
+                        MouseComponent.RegisterMouseWheelDelta(h, (0, delta));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -657,7 +659,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        MouseComponent.RegisterMouseWheelDelta((delta, 0));
+                        MouseComponent.RegisterMouseWheelDelta(h, (delta, 0));
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);

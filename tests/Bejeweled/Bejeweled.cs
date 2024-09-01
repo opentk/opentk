@@ -937,7 +937,7 @@ namespace Bejeweled
 
         internal const float FallAnimationTime = 0.2f;
         internal float FallingTime = 0.0f;
-        internal int FallingComboCount = 0;
+        internal int BrokenGemsComboCount = 0;
 
         public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
         {
@@ -1181,20 +1181,22 @@ namespace Bejeweled
             return legalMoves;
         }
 
-        bool HandleMovedGem(Vector2i newPosition)
+        /// <returns>How many gems where broken, if any.</returns>
+        int HandleMovedGem(Vector2i newPosition)
         {
             int upCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, -1));
             int downCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, +1));
             int leftCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (-1, 0));
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
-            bool brokeGems = false;
+            int brokeCount = 0;
 
             int verticalCount = upCount + downCount - 1;
             int horizontalCount = leftCount + rightCount - 1;
             if (verticalCount >= 3)
             {
-                brokeGems = true;
+                brokeCount += verticalCount;
+
                 for (int y = newPosition.Y - upCount + 1; y < newPosition.Y + downCount; y++)
                 {
                     Board[newPosition.X, y] = Gem.Empty;
@@ -1203,14 +1205,21 @@ namespace Bejeweled
 
             if (horizontalCount >= 3)
             {
-                brokeGems = true;
+                brokeCount += horizontalCount;
+
                 for (int x = newPosition.X - leftCount + 1; x < newPosition.X + rightCount; x++)
                 {
                     Board[x, newPosition.Y] = Gem.Empty;
                 }
             }
 
-            return brokeGems;
+            if (verticalCount >= 3 && horizontalCount >= 3)
+            {
+                // Remove the double counted gem.
+                brokeCount -= 1;
+            }
+
+            return brokeCount;
         }
 
         int CountMatchesInDirection(Gem startGem, Vector2i position, Vector2i direction)
@@ -1405,14 +1414,14 @@ namespace Bejeweled
                     BoardPositions[MovingGem2.X, MovingGem2.Y] = GetTileLocation(MovingGem2.X, MovingGem2.Y);
 
                     // Check if any of the moved gems now line up with any other gems
-                    bool brokeGems = false;
-                    brokeGems |= HandleMovedGem(MovingGem1);
-                    brokeGems |= HandleMovedGem(MovingGem2);
+                    BrokenGemsComboCount = 0;
+                    BrokenGemsComboCount += HandleMovedGem(MovingGem1);
+                    BrokenGemsComboCount += HandleMovedGem(MovingGem2);
 
-                    if (brokeGems)
-                    {
-                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, 1.0f);
-                    }
+                    Debug.Assert(BrokenGemsComboCount > 0);
+
+                    // FIXME: Add pitch.
+                    BreakSoundEffect.PlayOneShot(BreakSFXVolume, BreakPitchFromComboCount(BrokenGemsComboCount));
 
                     CurrentState = State.Falling;
                 }
@@ -1524,14 +1533,15 @@ namespace Bejeweled
                             // We should make these functions update a "break mask"
                             // where we mark gems for destructions so we can apply
                             // all of the destruction all at once.
-                            combo |= HandleMovedGem((x, y));
+                            int brokenGems = HandleMovedGem((x, y));
+                            BrokenGemsComboCount += brokenGems;
+                            combo |= (brokenGems > 0);
                         }
                     }
 
                     if (combo)
                     {
-                        FallingComboCount++;
-                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, MathHelper.Lerp(1.0f, 1.2f, float.Clamp(FallingComboCount / (float)10, 0, 1)));
+                        BreakSoundEffect.PlayOneShot(BreakSFXVolume, BreakPitchFromComboCount(BrokenGemsComboCount));
                     }
 
                     if (combo == false)
@@ -1540,7 +1550,7 @@ namespace Bejeweled
                         HintJiggleTimer = 0;
                         JigglePair = null;
                         CurrentState = State.Idle;
-                        FallingComboCount = 0;
+                        BrokenGemsComboCount = 0;
 
                         int moves = CountLegalMoves();
                         Logger.LogDebug($"Legal moves: {moves}!");
@@ -1563,6 +1573,11 @@ namespace Bejeweled
                         }
                     }
                 }
+            }
+
+            static float BreakPitchFromComboCount(int brokenGems)
+            {
+                return float.Lerp(1.0f, 1.2f, float.Clamp((brokenGems - 3) / (float)20, 0, 1));
             }
         }
 

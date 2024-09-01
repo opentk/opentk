@@ -9,6 +9,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK.Platform.Native.X11;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -51,7 +52,18 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void GetPosition(WindowHandle window, out int x, out int y)
         {
-            throw new NotImplementedException();
+            HWND hwnd = window.As<HWND>(this);
+
+            if (hwnd.CaptureMode == CursorCaptureMode.Locked)
+            {
+                x = (int)hwnd.VirtualCursorPosition.X;
+                y = (int)hwnd.VirtualCursorPosition.Y;
+            }
+            else
+            {
+                x = hwnd.LastMousePosition.X;
+                y = hwnd.LastMousePosition.Y;
+            }
         }
 
 
@@ -65,6 +77,18 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        internal static void RegisterButtonState(HWND? hwnd, MouseButton button, bool pressed)
+        {
+            MouseButtonFlags flag = (MouseButtonFlags)(1 << (int)button);
+
+            if (hwnd != null)
+            {
+                // Record window local state
+                if (pressed) hwnd.PressedMouseButtons |= flag;
+                else hwnd.PressedMouseButtons &= ~flag;
+            }
+        }
+
         // FIXME: This is only a 32-bit float and
         // will quite quickly not be able to represent
         // deltas if the user continously scrolls in
@@ -74,8 +98,13 @@ namespace OpenTK.Platform.Native.Windows
         // not the "global" state of the scroll wheel.
         // Should we fix that? or is this what is expected?
         internal static Vector2 ScrollPosition = (0.0f, 0.0f);
-        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        internal static void RegisterMouseWheelDelta(HWND? hwnd, Vector2 delta)
         {
+            if (hwnd != null)
+            {
+                hwnd.ScrollPosition += delta;
+            }
+
             ScrollPosition += delta;
         }
 
@@ -118,7 +147,10 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void GetMouseState(WindowHandle window, out MouseState state)
         {
-            throw new NotImplementedException();
+            HWND hwnd = window.As<HWND>(this);
+            state.Position = (hwnd.CaptureMode == CursorCaptureMode.Locked) ? (Vector2i)hwnd.VirtualCursorPosition : hwnd.LastMousePosition;
+            state.Scroll = hwnd.ScrollPosition;
+            state.PressedButtons = hwnd.PressedMouseButtons;
         }
 
         /// <inheritdoc/>
