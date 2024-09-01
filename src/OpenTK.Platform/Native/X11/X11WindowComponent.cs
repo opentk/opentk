@@ -457,8 +457,6 @@ namespace OpenTK.Platform.Native.X11
                                     XEvent reply = ea;
                                     reply.ClientMessage.Window = X11.DefaultRootWindow;
 
-                                    Logger?.LogDebug("Ping!");
-
                                     XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
                                 }
                                 // FIXME: Should we really check == 32?
