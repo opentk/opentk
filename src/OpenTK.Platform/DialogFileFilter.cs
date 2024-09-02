@@ -20,13 +20,14 @@ namespace OpenTK.Platform
         /// This creates a file filter that will match any files ending in png, jpg, or jpeg.
         /// </example>
         // FIXME: Should we just make this an array?
+        // FIXME: Should we allow wildcards in general and not just extensions? e.g. "test*.png"
         public string Filter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogFileFilter"/> struct.
         /// </summary>
         /// <param name="name">The display name of the filter.</param>
-        /// <param name="filter">The filter string.</param> // FIXME: Document the format of the filter string.
+        /// <param name="filter">The filter string. <see cref="Filter"/> for format details.</param>
         public DialogFileFilter(string name, string filter)
         {
             Name = name;
