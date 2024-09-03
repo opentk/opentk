@@ -2977,6 +2977,18 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Extents?
         }
 
+        /// <inheritdoc/>
+        public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
+        {
+            throw new NotImplementedException();
+        }
+
         private static bool hasReportedScaleFactorWarning = false;
 
         /// <inheritdoc />

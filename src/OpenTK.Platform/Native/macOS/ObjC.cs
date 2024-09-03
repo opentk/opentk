@@ -560,6 +560,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework)]
         internal static extern bool CFBooleanGetValue(IntPtr /* CFBooleanRef */ boolean);
+
+        [DllImport(FoundationFramework)]
+        internal static extern void NSLog(IntPtr /* NSString */ format);
     }
 #pragma warning restore IDE1006 // Naming Styles
 }

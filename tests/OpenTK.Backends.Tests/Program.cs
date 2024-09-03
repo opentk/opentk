@@ -582,7 +582,11 @@ namespace OpenTK.Backends.Tests
                     }
                     else if (args is MouseMoveEventArgs mouseMove)
                     {
-                        ImGui.GetIO().AddMousePosEvent(mouseMove.Position.X, mouseMove.Position.Y);
+                        // FIXME: Add screen, client, and framebuffer coords to mouse move events...
+                        
+                        // Imgui works with framebuffer coordinates.
+                        Toolkit.Window.ClientToFramebuffer(mouseMove.Window, (int)mouseMove.Position.X, (int)mouseMove.Position.Y, out int fx, out int fy);
+                        ImGui.GetIO().AddMousePosEvent(fx, fy);
                     }
                     else if (args is RawMouseMoveEventArgs rawMouseMove)
                     {

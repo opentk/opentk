@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Native.macOS
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public bool SupportsRawMouseMotion => throw new NotImplementedException();
+        public bool SupportsRawMouseMotion => false;
 
         /// <inheritdoc/>
         public void Initialize(ToolkitOptions options)
@@ -62,7 +62,18 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void GetPosition(WindowHandle window, out int x, out int y)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+
+            if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
+            {
+                x = (int)nswindow.VirtualCursorPosition.x;
+                y = (int)nswindow.VirtualCursorPosition.y;
+            }
+            else
+            {
+                x = (int)nswindow.LastMousePosition.x;
+                y = (int)nswindow.LastMousePosition.y;
+            }
         }
 
         /// <inheritdoc/>
@@ -70,6 +81,17 @@ namespace OpenTK.Platform.Native.macOS
         {
             // CGWarpMouseCursorPosition uses top left relative coordinates.
             CGWarpMouseCursorPosition(new CGPoint(x, y));
+        }
+
+        internal static void RegisterButtonState(NSWindowHandle? nswindow, MouseButton button, bool pressed)
+        {
+            MouseButtonFlags flag = (MouseButtonFlags)(1 << (int)button);
+
+            if (nswindow != null)
+            {
+                if (pressed) nswindow.PressedMouseButtons |= flag;
+                else nswindow.PressedMouseButtons &= ~flag;
+            }
         }
 
         // FIXME: This is only a 32-bit float and
@@ -81,8 +103,13 @@ namespace OpenTK.Platform.Native.macOS
         // not the "global" state of the scroll wheel.
         // Should we fix that? or is this what is expected?
         internal static Vector2 ScrollPosition = (0.0f, 0.0f);
-        internal static void RegisterMouseWheelDelta(Vector2 delta)
+        internal static void RegisterMouseWheelDelta(NSWindowHandle? nswindow, Vector2 delta)
         {
+            if (nswindow != null)
+            {
+                nswindow.ScrollPosition += delta;
+            }
+
             ScrollPosition += delta;
         }
 
@@ -121,7 +148,11 @@ namespace OpenTK.Platform.Native.macOS
         /// <inheritdoc/>
         public void GetMouseState(WindowHandle window, out MouseState state)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
+
+            state.Position = (nswindow.CursorCaptureMode == CursorCaptureMode.Locked) ? (Vector2i)nswindow.VirtualCursorPosition : (Vector2i)nswindow.LastMousePosition;
+            state.Scroll = nswindow.ScrollPosition;
+            state.PressedButtons = nswindow.PressedMouseButtons;
         }
 
         /// <inheritdoc/>

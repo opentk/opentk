@@ -476,6 +476,26 @@ namespace OpenTK.Platform
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
 
         /// <summary>
+        /// Converts window relative coordinates to framebuffer coordinates.
+        /// </summary>
+        /// <param name="handle">Handle of the window whose coordinate system to use.</param>
+        /// <param name="clientX">The client x coordinate.</param>
+        /// <param name="clientY">The client y coordinate.</param>
+        /// <param name="framebufferX">The framebuffer x coordinate.</param>
+        /// <param name="framebufferY">The framebuffer y coordinate.</param>
+        void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY);
+
+        /// <summary>
+        /// Converts framebuffer coordinates to framebuffer coordinates.
+        /// </summary>
+        /// <param name="handle">Handle of the window whose coordinate system to use.</param>
+        /// <param name="framebufferX">The framebuffer x coordinate.</param>
+        /// <param name="framebufferY">The framebuffer y coordinate.</param>
+        /// <param name="clientX">The client x coordinate.</param>
+        /// <param name="clientY">The clientt y coordinate.</param>
+        void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY);
+
+        /// <summary>
         /// Returns the current scale factor of this window.
         /// </summary>
         /// <param name="handle">The window handle.</param>

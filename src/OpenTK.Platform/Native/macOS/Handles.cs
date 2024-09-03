@@ -38,6 +38,9 @@ namespace OpenTK.Platform.Native.macOS
         public CGPoint LastMousePosition { get; set; }
         public CGPoint VirtualCursorPosition { get; set; }
 
+        public MouseButtonFlags PressedMouseButtons { get; set; }
+        public Vector2 ScrollPosition { get; set; }
+
         public NSWindowHandle(IntPtr window, IntPtr view, GraphicsApiHints graphicsApiHints) : base(graphicsApiHints)
         {
             Window = window;

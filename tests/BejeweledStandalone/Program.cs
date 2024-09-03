@@ -10,6 +10,7 @@ using System.IO;
 using OpenTK.Mathematics;
 using System.Text;
 using Hardware.Info;
+using OpenTK.Platform.Native.macOS;
 
 namespace Bejeweled
 {
@@ -26,13 +27,27 @@ namespace Bejeweled
 
         static void Main(string[] args)
         {
+            if (OperatingSystem.IsMacOS())
+            {
+                MacOSShellComponent.NSLog($"Hello log! cwd: {Directory.GetCurrentDirectory()}");
+                if (AppDomain.CurrentDomain.SetupInformation.ApplicationBase != null)
+                {
+                    Directory.SetCurrentDirectory(AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+                    MacOSShellComponent.NSLog($"Setting cwd to: {Directory.GetCurrentDirectory()}");
+                }
+                else
+                {
+                    MacOSShellComponent.NSLog($"Could not get the application bundle location. Relative paths will not work.");
+                }
+            }
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
 #if RELEASE
-            Logger = new DebugFileLogger("Bejeweled_debug.log");
 #else
             Logger = new DebugLogger();
 #endif
+            Logger = new DebugFileLogger("Bejeweled_debug.log");
 
             //Directory.SetCurrentDirectory(Path.GetDirectoryName(typeof(Program).Assembly.Location)!);
 
@@ -197,6 +212,17 @@ namespace Bejeweled
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            // On macOS when running as a bundle we don't have stdout or stderr, we also
+            // don't have a reliable cwd so we can't really write to a file as we might not be
+            // able to create the file (if our cwd is e.g. /). The built-in macOS crash
+            // reporter can't read C# stackframes so we get no debug information from that on pure C# exception crashes.
+            // So we use NSLog here to give us a way to actually get any kind of diagnostics.
+            // - Noggin_bops 2024-09-04
+            if (OperatingSystem.IsMacOS())
+            {
+                MacOSShellComponent.NSLog($"Uncaught exception:\n{e.ExceptionObject}");
+            }
+
             Logger.LogError($"Uncaught exception:\n{e.ExceptionObject}");
             Logger.Flush();
         }

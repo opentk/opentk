@@ -1194,6 +1194,18 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public void GetScaleFactor(WindowHandle handle, out float scaleX, out float scaleY)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

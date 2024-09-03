@@ -82,6 +82,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
 
         internal static readonly SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
+        internal static readonly SEL selConvertPointToBacking = sel_registerName("convertPointToBacking:"u8);
+        internal static readonly SEL selConvertPointFromBacking = sel_registerName("convertPointFromBacking:"u8);
         internal static readonly SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
         internal static readonly SEL selConvertPointFromScreen = sel_registerName("convertPointFromScreen:"u8);
         internal static readonly SEL selConvertPointToScreen = sel_registerName("convertPointToScreen:"u8);
@@ -1057,6 +1059,7 @@ namespace OpenTK.Platform.Native.macOS
                             ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                             KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, true);
                             EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton, modifiers));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
@@ -1091,6 +1094,7 @@ namespace OpenTK.Platform.Native.macOS
                             ModifierFlags modifierFlags = (ModifierFlags)((UIntPtr)objc_msgSend_IntPtr(@event, selModifierFlags)).ToUInt64();
                             KeyModifier modifiers = MacOSKeyboardComponent.ToKeyModifiers(modifierFlags);
 
+                            MacOSMouseComponent.RegisterButtonState(nswindow, mouseButton, false);
                             EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton, modifiers));
 
                             // FIXME: If the mouse is outside of the window after a drag we want to send a mouse exit event here
@@ -1111,15 +1115,10 @@ namespace OpenTK.Platform.Native.macOS
 
                             CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
 
-                            CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
-
-                            CGRect backing = objc_msgSend_CGRect(
-                                nswindow.Window,
-                                selConvertRectToBacking,
-                                objc_msgSend_CGRect(nswindow.View, selBounds));
+                            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
 
                             // FIXME: Coordinate space
-                            CGPoint pos = new CGPoint(pointRect.origin.x, backing.size.y - pointRect.origin.y);
+                            CGPoint pos = new CGPoint(point.x, bounds.size.y - point.y);
 
                             if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
                             {
@@ -1161,7 +1160,7 @@ namespace OpenTK.Platform.Native.macOS
                                 delta *= 0.1f;
                             }
 
-                            MacOSMouseComponent.RegisterMouseWheelDelta(delta);
+                            MacOSMouseComponent.RegisterMouseWheelDelta(nswindow, delta);
                             EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
 
                             objc_msgSend(nsApplication, selSendEvent, @event);
@@ -2297,6 +2296,28 @@ namespace OpenTK.Platform.Native.macOS
 
             x = (int)screenPoint.x;
             y = (int)CG.FlipYCoordinate(screenPoint.y);
+        }
+
+        /// <inheritdoc/>
+        public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint backing = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToBacking, new CGPoint(clientX, clientY));
+
+            framebufferX = (int)backing.x;
+            framebufferY = (int)backing.y;
+        }
+
+        /// <inheritdoc/>
+        public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
+        {
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            CGPoint client = objc_msgSend_CGPoint(nswindow.Window, selConvertPointToBacking, new CGPoint(framebufferX, framebufferY));
+
+            clientX = (int)client.x;
+            clientY = (int)client.y;
         }
 
         /// <inheritdoc/>
