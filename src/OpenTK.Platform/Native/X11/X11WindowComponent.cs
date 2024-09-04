@@ -2980,13 +2980,19 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            framebufferX = clientX;
+            framebufferY = clientY;
         }
 
         /// <inheritdoc/>
         public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            clientX = framebufferX;
+            clientY = framebufferY;
         }
 
         private static bool hasReportedScaleFactorWarning = false;

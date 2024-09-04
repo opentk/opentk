@@ -2114,13 +2114,19 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+
+            framebufferX = clientX;
+            framebufferY = clientY;
         }
 
         /// <inheritdoc/>
         public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+
+            clientX = framebufferX;
+            clientY = framebufferY;
         }
 
         /// <inheritdoc/>
@@ -2145,6 +2151,5 @@ namespace OpenTK.Platform.Native.Windows
 
             return hwnd.HWnd;
         }
-
     }
 }
