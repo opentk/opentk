@@ -399,30 +399,32 @@ namespace OpenTK.Platform
         }
     }
 
-    // FIXME: Do we only get these events when the cursor is inside the window??
-
     /// <summary>
     /// This event is triggered when the mouse moves.
     /// </summary>
     public class MouseMoveEventArgs : WindowEventArgs
     {
-        // FIXME: In what coordinate space is the mouse coords?
-
-        // FIXME: Position delta
-
         /// <summary>
-        /// The new position of the mouse cursor.
+        /// The new position of the mouse cursor in client coordinates.
+        /// Use <see cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/> and
+        /// <see cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/> to
+        /// convert to the respective coordinate spaces.
+        /// When using <see cref="CursorCaptureMode.Locked"/> this property will contain a virtual mouse position
+        /// and will not correspond an actual location in client coordinates.
         /// </summary>
-        public Vector2 Position { get; private set; }
+        /// <seealso cref="IWindowComponent.ClientToScreen(WindowHandle, int, int, out int, out int)"/>
+        /// <seealso cref="IWindowComponent.ClientToFramebuffer(WindowHandle, int, int, out int, out int)"/>
+        /// <seealso cref="CursorCaptureMode.Locked"/>
+        public Vector2 ClientPosition { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseMoveEventArgs"/> class.
         /// </summary>
         /// <param name="window">The window in which the mouse moved.</param>
-        /// <param name="position">The mouse position.</param>
-        public MouseMoveEventArgs(WindowHandle window, Vector2 position) : base(window)
+        /// <param name="clientPosition">The mouse position in client coordinates.</param>
+        public MouseMoveEventArgs(WindowHandle window, Vector2 clientPosition) : base(window)
         {
-            Position = position;
+            ClientPosition = clientPosition;
         }
     }
 
@@ -456,6 +458,7 @@ namespace OpenTK.Platform
     /// <summary>
     /// This event is triggered when a mouse button is pressed.
     /// </summary>
+    // FIXME: Position info?
     public class MouseButtonDownEventArgs : WindowEventArgs
     {
         /// <summary>

@@ -44,7 +44,7 @@ namespace VulkanTestProject
             // FIXME: How do we create a window for OpenGL vs Vulkan?
             Window = Toolkit.Window.Create(null);
 
-            Toolkit.Window.SetClientSize(Window, 800, 600);
+            Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetTitle(Window, options.ApplicationName);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
             Toolkit.Window.SetMode(Window, WindowMode.Normal);

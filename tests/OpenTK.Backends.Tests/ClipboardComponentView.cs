@@ -153,6 +153,11 @@ namespace OpenTK.Backends.Tests
                 Toolkit.Clipboard.SetClipboardText(clipboardInputText);
             }
 
+            if (ImGui.Button("Set clipboard image"))
+            {
+                Toolkit.Clipboard.SetClipboardBitmap(CreateExampleBitmap());
+            }
+
             ImGui.SeparatorText("Clipboard contents");
 
             // FIXME: Maybe tabs for each type?
@@ -259,13 +264,7 @@ namespace OpenTK.Backends.Tests
                             winClipboard.CanUploadToCloudClipboard = canUploadToCloudClipboard;
 
                         // FIXME: Add something for
-                        // winClipboard.SetClipboardAudio and
-                        // winClipboard.SetClipboardBitmap
-
-                        if (ImGui.Button("Paste image"))
-                        {
-                            winClipboard.SetClipboardBitmap(CreateExampleBitmap());
-                        }
+                        // winClipboard.SetClipboardAudio
 
                         ImGui.EndTabItem();
                     }
@@ -274,11 +273,6 @@ namespace OpenTK.Backends.Tests
                 {
                     if (ImGui.BeginTabItem("macOS"))
                     {
-                        if (ImGui.Button("Paste image"))
-                        {
-                            macOSClipboard.SetClipboardBitmap(CreateExampleBitmap());
-                        }
-
                         ImGui.EndTabItem();
                     }
                 }
@@ -286,11 +280,6 @@ namespace OpenTK.Backends.Tests
                 {
                     if (ImGui.BeginTabItem("X11"))
                     {
-                        if (ImGui.Button("Paste image"))
-                        {
-                            x11Clipboard.SetClipboardBitmap(CreateExampleBitmap());
-                        }
-
                         ImGui.EndTabItem();
                     }
                 }

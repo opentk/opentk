@@ -43,8 +43,8 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("Global Mouse state");
 
-            Toolkit.Mouse.GetGlobalPosition(out int x, out int y);
-            ImGui.TextUnformatted($"Mouse position: ({x}, {y})");
+            Toolkit.Mouse.GetGlobalPosition(out Vector2 gmPos);
+            ImGui.TextUnformatted($"Mouse position: ({gmPos.X}, {gmPos.Y})");
 
             try
             {
@@ -66,8 +66,8 @@ namespace OpenTK.Backends.Tests
 
             ImGuiUtils.WindowCombobox("Window", ref mouseStateWindow);
 
-            Toolkit.Mouse.GetPosition(mouseStateWindow, out int wx, out int wy);
-            ImGui.TextUnformatted($"Mouse position: ({wx}, {wy})");
+            Toolkit.Mouse.GetPosition(mouseStateWindow, out Vector2 mPosition);
+            ImGui.TextUnformatted($"Mouse position: ({mPosition.X}, {mPosition.Y})");
 
             try
             {
@@ -92,7 +92,7 @@ namespace OpenTK.Backends.Tests
             ImGui.DragFloat2("Position", ref setPosition.AsNumerics(), 10, 0, float.PositiveInfinity); ImGui.SameLine();
             if (ImGui.Button("Set position"))
             {
-                Toolkit.Mouse.SetPosition((int)setPosition.X, (int)setPosition.Y);
+                Toolkit.Mouse.SetGlobalPosition(setPosition);
             }
 
             ImGui.EndDisabled();

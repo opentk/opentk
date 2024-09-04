@@ -34,21 +34,23 @@ namespace OpenTK.Platform.Native.SDL
         public bool SupportsRawMouseMotion => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public void GetGlobalPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
-            SDL_GetGlobalMouseState(out x, out y);
+            SDL_GetGlobalMouseState(out int x, out int y);
+
+            globalPosition = (x, y);
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle window, out int x, out int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
         {
-            int result = SDL_WarpMouseGlobal(x, y);
+            int result = SDL_WarpMouseGlobal((int)newGlobalPosition.X, (int)newGlobalPosition.Y);
             if (result < 0)
             {
                 string error = SDL_GetError();

@@ -149,7 +149,7 @@ namespace Bejeweled
 
             Window = Toolkit.Window.Create(openglSettings);
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
-            Toolkit.Window.SetSize(Window, minWorkDimention, minWorkDimention);
+            Toolkit.Window.SetSize(Window, (minWorkDimention, minWorkDimention));
             (Toolkit.Shell as OpenTK.Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
             Toolkit.Window.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
 

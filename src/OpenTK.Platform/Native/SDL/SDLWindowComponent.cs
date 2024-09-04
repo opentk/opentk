@@ -589,7 +589,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle handle, out int x, out int y)
+        public void GetPosition(WindowHandle handle, out Vector2i position)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -597,12 +597,12 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GetWindowPosition(window.Window, out int clientX, out int clientY);
             SDL_GetWindowBordersSize(window.Window, out int top, out int left, out _, out _);
 
-            x = clientX - left;
-            y = clientY - top;
+            position.X = clientX - left;
+            position.Y = clientY - top;
         }
 
         /// <inheritdoc/>
-        public void SetPosition(WindowHandle handle, int x, int y)
+        public void SetPosition(WindowHandle handle, Vector2i newPosition)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -610,11 +610,11 @@ namespace OpenTK.Platform.Native.SDL
 
             // SDL_SetWindowPosition sets the client position of the window,
             // so we query the insets of the window to compensate.
-            SDL_SetWindowPosition(window.Window, x + left, y + top);
+            SDL_SetWindowPosition(window.Window, newPosition.X + left, newPosition.Y + top);
         }
 
         /// <inheritdoc/>
-        public void GetSize(WindowHandle handle, out int width, out int height)
+        public void GetSize(WindowHandle handle, out Vector2i size)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -622,19 +622,19 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GetWindowSize(window.Window, out int clientWidth, out int clientHeight);
             SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
 
-            width = clientWidth + left + right;
-            height = clientHeight + top + bottom;
+            size.X = clientWidth + left + right;
+            size.Y = clientHeight + top + bottom;
         }
 
         /// <inheritdoc/>
-        public void SetSize(WindowHandle handle, int width, int height)
+        public void SetSize(WindowHandle handle, Vector2i newSize)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
             SDL_GetWindowBordersSize(window.Window, out int top, out int left, out int bottom, out int right);
 
-            int clientWidth = Math.Max(width - left - right, 0);
-            int clientHeight = Math.Max(height - top - bottom, 0);
+            int clientWidth = Math.Max(newSize.X - left - right, 0);
+            int clientHeight = Math.Max(newSize.Y - top - bottom, 0);
 
             SDL_SetWindowSize(window.Window, clientWidth, clientHeight);
         }
@@ -671,35 +671,35 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetClientPosition(WindowHandle handle, out int x, out int y)
+        public void GetClientPosition(WindowHandle handle, out Vector2i clientPosition)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_GetWindowPosition(window.Window, out x, out y);
+            SDL_GetWindowPosition(window.Window, out clientPosition.X, out clientPosition.Y);
         }
 
         /// <inheritdoc/>
-        public void SetClientPosition(WindowHandle handle, int x, int y)
+        public void SetClientPosition(WindowHandle handle, Vector2i newClientPosition)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_SetWindowPosition(window.Window, x, y);
+            SDL_SetWindowPosition(window.Window, newClientPosition.X, newClientPosition.Y);
         }
 
         /// <inheritdoc/>
-        public void GetClientSize(WindowHandle handle, out int width, out int height)
+        public void GetClientSize(WindowHandle handle, out Vector2i clientSize)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_GL_GetDrawableSize(window.Window, out width, out height);
+            SDL_GetWindowSize(window.Window, out clientSize.X, out clientSize.Y);
         }
 
         /// <inheritdoc/>
-        public void SetClientSize(WindowHandle handle, int width, int height)
+        public void SetClientSize(WindowHandle handle, Vector2i newClientSize)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_SetWindowSize(window.Window, width, height);
+            SDL_SetWindowSize(window.Window, newClientSize.X, newClientSize.Y);
         }
 
         /// <inheritdoc/>
@@ -721,11 +721,11 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        public void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_GetWindowSizeInPixels(window.Window, out width, out height);
+            SDL_GetWindowSizeInPixels(window.Window, out framebufferSize.X, out framebufferSize.Y);
         }
 
         /// <inheritdoc/>
@@ -1174,7 +1174,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        public void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -1184,7 +1184,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        public void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -1194,13 +1194,13 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
+        public void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
+        public void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client)
         {
             throw new NotImplementedException();
         }

@@ -135,14 +135,14 @@ void main()
                 Program2 = CreateShader("Context 2", VertexShaderSource, FragmentShaderSource);
             }
 
-            WindowComp.GetClientPosition(WindowHandle1, out int x1, out int y1);
-            WindowComp.SetClientPosition(WindowHandle2, x1 + 800, y1);
+            WindowComp.GetClientPosition(WindowHandle1, out Vector2i p1);
+            WindowComp.SetClientPosition(WindowHandle2, (p1.X + 800, p1.Y));
 
             WindowComp.SetTitle(WindowHandle1, $"{PlatformComponents.GetBackend()} Test Window 1");
-            WindowComp.SetClientSize(WindowHandle1, 800, 600);
+            WindowComp.SetClientSize(WindowHandle1, (800, 600));
             WindowComp.SetMode(WindowHandle1, WindowMode.Normal);
             WindowComp.SetTitle(WindowHandle2, $"{PlatformComponents.GetBackend()} Test Window 2");
-            WindowComp.SetClientSize(WindowHandle2, 800, 600);
+            WindowComp.SetClientSize(WindowHandle2, (800, 600));
             WindowComp.SetMode(WindowHandle2, WindowMode.Normal);
 
             EventQueue.EventRaised += EventQueue_EventRaised;
@@ -188,8 +188,8 @@ void main()
                 GL.ClearColor(Color4.Red);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-                WindowComp.GetClientSize(WindowHandle1, out int width, out int height);
-                GL.Viewport(0, 0, width, height);
+                WindowComp.GetFramebufferSize(WindowHandle1, out Vector2i fbSize);
+                GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.UseProgram(Program1);
                 GL.BindVertexArray(VAO1);
@@ -206,8 +206,8 @@ void main()
                 GL.ClearColor(Color4.Blue);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
-                WindowComp.GetClientSize(WindowHandle2, out int width, out int height);
-                GL.Viewport(0, 0, width, height);
+                WindowComp.GetFramebufferSize(WindowHandle2, out Vector2i fbSize);
+                GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
                 GL.UseProgram(Program2);
                 GL.BindVertexArray(VAO2);

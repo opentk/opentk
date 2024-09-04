@@ -50,37 +50,35 @@ namespace OpenTK.Platform.Native.macOS
         }
 
         /// <inheritdoc/>
-        public void GetGlobalPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
             CGPoint p = objc_msgSend_CGPoint((IntPtr)NSEventClass, selMouseLocation);
             NFloat flippedY = CG.FlipYCoordinate(p.y);
 
-            x = (int)p.x;
-            y = (int)flippedY;
+            globalPosition.X = (float)p.x;
+            globalPosition.Y = (float)flippedY;
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle window, out int x, out int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
             NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
 
             if (nswindow.CursorCaptureMode == CursorCaptureMode.Locked)
             {
-                x = (int)nswindow.VirtualCursorPosition.x;
-                y = (int)nswindow.VirtualCursorPosition.y;
+                position = (Vector2)nswindow.VirtualCursorPosition;
             }
             else
             {
-                x = (int)nswindow.LastMousePosition.x;
-                y = (int)nswindow.LastMousePosition.y;
+                position = (Vector2)nswindow.LastMousePosition;
             }
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
         {
             // CGWarpMouseCursorPosition uses top left relative coordinates.
-            CGWarpMouseCursorPosition(new CGPoint(x, y));
+            CGWarpMouseCursorPosition(new CGPoint(newGlobalPosition.X, newGlobalPosition.Y));
         }
 
         internal static void RegisterButtonState(NSWindowHandle? nswindow, MouseButton button, bool pressed)
@@ -122,7 +120,7 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: NSUInteger
             ulong buttons = objc_msgSend_ulong((IntPtr)NSEventClass, selPressedMouseButtons);
 
-            state.Position = new Vector2i((int)p.x, (int)flippedY);
+            state.Position = new Vector2((float)p.x, (float)flippedY);
 
             state.Scroll = ScrollPosition;
 
@@ -150,7 +148,7 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = window.As<NSWindowHandle>(this);
 
-            state.Position = (nswindow.CursorCaptureMode == CursorCaptureMode.Locked) ? (Vector2i)nswindow.VirtualCursorPosition : (Vector2i)nswindow.LastMousePosition;
+            state.Position = (nswindow.CursorCaptureMode == CursorCaptureMode.Locked) ? (Vector2)nswindow.VirtualCursorPosition : (Vector2)nswindow.LastMousePosition;
             state.Scroll = nswindow.ScrollPosition;
             state.PressedButtons = nswindow.PressedMouseButtons;
         }

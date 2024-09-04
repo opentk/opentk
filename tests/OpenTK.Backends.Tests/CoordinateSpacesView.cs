@@ -44,30 +44,30 @@ namespace OpenTK.Backends.Tests
                 {
                     ImGui.SeparatorText("Window comp");
 
-                    Toolkit.Window.GetPosition(Program.Window, out int px, out int py);
-                    Toolkit.Window.GetClientPosition(Program.Window, out int cpx, out int cpy);
-                    Toolkit.Window.GetSize(Program.Window, out int w, out int h);
-                    Toolkit.Window.GetClientSize(Program.Window, out int cw, out int ch);
+                    Toolkit.Window.GetPosition(Program.Window, out Vector2i p);
+                    Toolkit.Window.GetClientPosition(Program.Window, out Vector2i cp);
+                    Toolkit.Window.GetSize(Program.Window, out Vector2i s);
+                    Toolkit.Window.GetClientSize(Program.Window, out Vector2i cs);
                     Toolkit.Window.GetBounds(Program.Window, out int bpx, out int bpy, out int bw, out int bh);
                     Toolkit.Window.GetClientBounds(Program.Window, out int bcpx, out int bcpy, out int bcw, out int bch);
                     Toolkit.Window.GetScaleFactor(Program.Window, out float scaleX, out float scaleY);
-                    Toolkit.Window.GetFramebufferSize(Program.Window, out int fbw, out int fbh);
-                    Toolkit.Window.ClientToScreen(Program.Window, 0, 0, out int origX, out int origY);
+                    Toolkit.Window.GetFramebufferSize(Program.Window, out Vector2i fbs);
+                    Toolkit.Window.ClientToScreen(Program.Window, (0, 0), out Vector2 orig);
 
-                    int extLeft = cpx - px;
-                    int extTop = cpy - py;
-                    int extRight = (cpx + cw) - (px + w);
-                    int extBottom = (cpy + ch) - (py + h);
+                    int extLeft = cp.X - p.X;
+                    int extTop = cp.Y - p.Y;
+                    int extRight = (cp.X + cs.X) - (p.X + s.X);
+                    int extBottom = (cp.Y + cs.Y) - (p.Y + s.Y);
 
-                    ImGui.Text($"Position: ({px}, {py})");
-                    ImGui.Text($"Client Position: ({cpx}, {cpy})");
-                    ImGui.Text($"(0,0) client to screen: ({origX}, {origY})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This is calculated by plugging (0, 0) into ClientToScreen().");
-                    ImGui.Text($"Size: ({w}, {h})");
-                    ImGui.Text($"Client Size: ({cw}, {ch})");
+                    ImGui.Text($"Position: ({p.X}, {p.Y})");
+                    ImGui.Text($"Client Position: ({cp.X}, {cp.Y})");
+                    ImGui.Text($"(0,0) client to screen: ({orig.X}, {orig.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This is calculated by plugging (0, 0) into ClientToScreen().");
+                    ImGui.Text($"Size: ({s.X}, {s.Y})");
+                    ImGui.Text($"Client Size: ({cs.X}, {cs.Y})");
                     ImGui.Text($"Bounds: (x:{bpx}, y:{bpy}, w:{bw}, h:{bh})");
                     ImGui.Text($"Client Bounds: (x:{bcpx}, y:{bcpy}, w:{bcw}, h:{bch})");
                     ImGui.Text($"Scale factor: (x:{scaleX}, y:{scaleY})");
-                    ImGui.Text($"Framebuffer size: {fbw}x{fbh}");
+                    ImGui.Text($"Framebuffer size: {fbs.X}x{fbs.Y}");
                     ImGui.Text($"Window extents: (l:{extLeft}, t:{extTop}, r:{extRight}, b:{extBottom})");
 
                     // FIXME: Make some way to get out of the locked cursor mode.
@@ -88,36 +88,41 @@ namespace OpenTK.Backends.Tests
                 {
                     ImGui.SeparatorText("Mouse comp");
 
-                    Toolkit.Mouse.GetGlobalPosition(out int x, out int y);
-                    Toolkit.Mouse.GetGlobalMouseState(out MouseState state);
+                    Toolkit.Mouse.GetGlobalPosition(out Vector2 globalPosition);
+                    Toolkit.Mouse.GetGlobalMouseState(out MouseState globalState);
 
-                    System.Numerics.Vector4 positionsMatchColor = state.Position == (x, y) ? GoodColor : BadColor;
+                    System.Numerics.Vector4 positionsMatchColor = globalState.Position == globalPosition ? GoodColor : BadColor;
 
                     // FIXME: Display these in red text if they are not the same!
-                    ImGui.TextColored(positionsMatchColor, $"Global Mouse position: ({x}, {y})");                                     ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalPosition(). Should be the same as mouse state position.");
-                    ImGui.TextColored(positionsMatchColor, $"Global Mouse state position: ({state.Position.X}, {state.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalMouseState(). Should be the same as mouse position.");
+                    ImGui.TextColored(positionsMatchColor, $"Global Mouse position: ({globalPosition.X}, {globalPosition.Y})");                   ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalPosition(). Should be the same as mouse state position.");
+                    ImGui.TextColored(positionsMatchColor, $"Global Mouse state position: ({globalState.Position.X}, {globalState.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetGlobalMouseState(). Should be the same as mouse position.");
 
                     ImGuiUtils.WindowCombobox("Window", ref mouseCoordWindow);
 
-                    Toolkit.Mouse.GetPosition(mouseCoordWindow, out int wx, out int wy);
-                    Toolkit.Mouse.GetMouseState(mouseCoordWindow, out MouseState wstate);
+                    Toolkit.Mouse.GetPosition(mouseCoordWindow, out Vector2 position);
+                    Toolkit.Mouse.GetMouseState(mouseCoordWindow, out MouseState state);
 
-                    System.Numerics.Vector4 windowPositionsMatchColor = wstate.Position == (wx, wy) ? GoodColor : BadColor;
+                    System.Numerics.Vector4 windowPositionsMatchColor = state.Position == position ? GoodColor : BadColor;
 
-                    ImGui.TextColored(positionsMatchColor, $"Window Mouse position: ({wx}, {wy})");                                     ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
-                    ImGui.TextColored(positionsMatchColor, $"Window Mouse state position: ({wstate.Position.X}, {wstate.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetMouseState(). Should be the same as mouse position.");
+                    ImGui.TextColored(positionsMatchColor, $"Window Mouse position: ({position.X}, {position.Y})");                   ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetPosition(). Should be the same as mouse state position.");
+                    ImGui.TextColored(positionsMatchColor, $"Window Mouse state position: ({state.Position.X}, {state.Position.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from GetMouseState(). Should be the same as mouse position.");
 
                     if (Toolkit.Window != null)
                     {
-                        Toolkit.Window.ScreenToClient(mouseCoordWindow, x, y, out int clientX, out int clientY);
-                        Toolkit.Window.ClientToScreen(mouseCoordWindow, wx, wy, out int screenX, out int screenY);
+                        Toolkit.Window.ScreenToClient(mouseCoordWindow, globalPosition, out Vector2 client);
+                        Toolkit.Window.ClientToScreen(mouseCoordWindow, position, out Vector2 screen);
+                        Toolkit.Window.ClientToFramebuffer(mouseCoordWindow, position, out Vector2 framebuffer);
+                        Toolkit.Window.ClientToFramebuffer(mouseCoordWindow, client, out Vector2 framebuffer2);
 
                         // FIXME: Maybe only show BadColor if the positions don't match AND the mouse is inside the window.
-                        System.Numerics.Vector4 screenToClientColor = (clientX, clientY) == (wx, wy) ? GoodColor : BadColor;
-                        System.Numerics.Vector4 clientToScreenColor = (screenX, screenY) == (x, y) ? GoodColor : BadColor;
+                        System.Numerics.Vector4 screenToClientColor = (client == position) ? GoodColor : BadColor;
+                        System.Numerics.Vector4 clientToScreenColor = (screen == globalPosition) ? GoodColor : BadColor;
+                        System.Numerics.Vector4 clientToFramebufferColor = (framebuffer == framebuffer2) ? GoodColor : BadColor;
 
-                        ImGui.TextColored(screenToClientColor, $"Screen to Client position: ({clientX}, {clientY})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ScreenToClient() plugging in GetGlobalPosition().");
-                        ImGui.TextColored(clientToScreenColor, $"Client to Screen position: ({screenX}, {screenY})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ClientToScreen() plugging in GetPosition().");
+                        ImGui.TextColored(screenToClientColor, $"Screen to Client position: ({client.X}, {client.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ScreenToClient() plugging in GetGlobalPosition().");
+                        ImGui.TextColored(clientToScreenColor, $"Client to Screen position: ({screen.X}, {screen.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ClientToScreen() plugging in GetPosition().");
+                        ImGui.TextColored(clientToFramebufferColor, $"Client to Framebuffer position: ({framebuffer.X}, {framebuffer.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ClientToFramebuffer() plugging in GetPosition().");
+                        ImGui.TextColored(clientToFramebufferColor, $"Screen to Client to Framebuffer position: ({framebuffer2.X}, {framebuffer2.Y})"); ImGui.SameLine(); ImGuiUtils.HelpMarker("This info comes from ScreenToClient() followed by ClientToFramebuffer() plugging in GetPosition().");
                     }
                 }
                 catch { }

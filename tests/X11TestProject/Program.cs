@@ -4,6 +4,7 @@ using OpenTK.Platform;
 using OpenTK.Graphics;
 using OpenTK.Platform.Native;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 namespace X11TestProject
 {
@@ -36,7 +37,7 @@ namespace X11TestProject
             context = glComp.CreateFromWindow(window);
             glComp.SetCurrentContext(context);
 
-            windowComp.SetClientSize(window, 800, 600);
+            windowComp.SetClientSize(window, (800, 600));
             windowComp.SetMode(window, WindowMode.Normal);
 
             GLLoader.LoadBindings(glComp.GetBindingsContext(context));
@@ -55,9 +56,9 @@ namespace X11TestProject
             int frames = 0;
             while (windowComp.IsWindowDestroyed(window) == false)
             {
-                windowComp.GetClientSize(window, out int width, out int height);
+                windowComp.GetFramebufferSize(window, out Vector2i fbSize);
 
-                GL.Viewport(0, 0, width, height);
+                GL.Viewport(0, 0, fbSize.X, fbSize.Y);
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
@@ -69,8 +70,8 @@ namespace X11TestProject
 
                 glComp.SwapBuffers(context);
 
-                windowComp.GetSize(window, out int w, out int h);
-                windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
+                windowComp.GetSize(window, out Vector2i size);
+                windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{fbSize.X},{fbSize.Y};{size.X},{size.Y};frame={++frames}]");
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
 

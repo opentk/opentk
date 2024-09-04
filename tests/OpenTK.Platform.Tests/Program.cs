@@ -159,8 +159,8 @@ namespace OpenTK.Platform.Tests
             glComp.SetSwapInterval(1);
             int swap = glComp.GetSwapInterval();
 
-            windowComp.SetPosition(Window, 100, 100);
-            windowComp.SetSize(Window, 400, 400);
+            windowComp.SetPosition(Window, (100, 100));
+            windowComp.SetSize(Window, (400, 400));
             windowComp.SetMinClientSize(Window, 300, 300);
             windowComp.SetMaxClientSize(Window, 500, 500);
             windowComp.SetMode(Window, WindowMode.Normal);
@@ -425,7 +425,7 @@ namespace OpenTK.Platform.Tests
                     {
                         var files = clipComp.GetClipboardFiles();
                         System.Console.WriteLine("Copied files: ");
-                        for (int i = 0; i < files.Count; i++)
+                        for (int i = 0; i < files?.Count; i++)
                         {
                             System.Console.WriteLine($"  {files[i]}");
                         }
@@ -454,11 +454,11 @@ namespace OpenTK.Platform.Tests
             }
             else if (args is MouseMoveEventArgs move)
             {
-                windowComp.SetTitle((WindowHandle)handle, $"Mouse: {move.Position}");
+                windowComp.SetTitle(move.Window, $"Mouse: {move.ClientPosition}");
 
                 //Console.WriteLine($"Delta: {move.Position - lastPos}");
 
-                lastPos = move.Position;
+                lastPos = move.ClientPosition;
             }
             else if (args is FocusEventArgs focus)
             {

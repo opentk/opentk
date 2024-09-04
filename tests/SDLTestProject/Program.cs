@@ -116,7 +116,7 @@ void main()
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
-            WindowComp.SetClientSize(WindowHandle, 800, 600);
+            WindowComp.SetClientSize(WindowHandle, (800, 600));
 
             WindowComp.SetMaxClientSize(WindowHandle, 1000, 1000);
             WindowComp.SetMinClientSize(WindowHandle, 100, 100);

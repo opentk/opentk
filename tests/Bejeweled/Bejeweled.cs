@@ -992,8 +992,8 @@ namespace Bejeweled
             GemShader = GemShader.Init("./Assets/Shaders/Gem.vert", "./Assets/Shaders/Gem.frag", Logger);
             GemNormalShader = GemNormalShader.Init("./Assets/Shaders/Gem.vert", "./Assets/Shaders/Normal.frag", Logger);
 
-            Toolkit.Window.GetFramebufferSize(Window, out int framebufferWidth, out int framebufferHeight);
-            RefractionInfoFramebuffer = Framebuffer.CreateNormalDepthFramebuffer(framebufferWidth, framebufferHeight);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i framebufferSize);
+            RefractionInfoFramebuffer = Framebuffer.CreateNormalDepthFramebuffer(framebufferSize.X, framebufferSize.Y);
 
             //DebugFramebuffer = Framebuffer.CreateDebugFramebufferMS(framebufferWidth, framebufferHeight, 16);
 
@@ -1251,10 +1251,10 @@ namespace Bejeweled
             Toolkit.Mouse.GetMouseState(Window, out MouseState mouseState);
             Toolkit.Keyboard.GetKeyboardState(KeyboardState);
 
-            Vector2i clientPosition = mouseState.Position;
+            Vector2i clientPosition = (Vector2i)mouseState.Position;
             //Toolkit.Window.ScreenToClient(Window, mouseState.Position.X, mouseState.Position.Y, out clientPosition.X, out clientPosition.Y);
 
-            Toolkit.Window.GetClientSize(Window, out int clientWidth, out int clientHeight);
+            Toolkit.Window.GetClientSize(Window, out Vector2i clientSize);
 
             switch (CurrentState)
             {
@@ -1278,8 +1278,8 @@ namespace Bejeweled
             void DoIdle(float deltaTime)
             {
                 bool inWindow = false;
-                if (clientPosition.X >= 0 && clientPosition.X < clientWidth &&
-                    clientPosition.Y >= 0 && clientPosition.Y < clientHeight)
+                if (clientPosition.X >= 0 && clientPosition.X < clientSize.X &&
+                    clientPosition.Y >= 0 && clientPosition.Y < clientSize.Y)
                 {
                     inWindow = true;
                 }
@@ -1311,19 +1311,19 @@ namespace Bejeweled
                     BoardPositions[gemB.X, gemB.Y] = GetTileLocation(gemB.X, gemB.Y) - jiggleOffset;
                 }
 
-                HoveredGem = (clientPosition * 8) / (clientWidth, clientHeight);
+                HoveredGem = (clientPosition * 8) / clientSize;
 
                 if (inWindow && mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) == false)
                 {
                     SelectedGem = HoveredGem;
-                    StartPosition = ((Vector2)clientPosition * 8.0f) / (clientWidth, clientHeight) - new Vector2(4.0f, 4.0f);
+                    StartPosition = ((Vector2)clientPosition * 8.0f) / clientSize - new Vector2(4.0f, 4.0f);
                     StartPosition.Y *= -1;
                 }
                 else if (mouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1) && PrevMouseState.PressedButtons.HasFlag(MouseButtonFlags.Button1))
                 {
                     if (SelectedGem != (-1, -1))
                     {
-                        Vector2 worldPos = ((Vector2)clientPosition * 8.0f) / (clientWidth, clientHeight) - new Vector2(4.0f, 4.0f);
+                        Vector2 worldPos = ((Vector2)clientPosition * 8.0f) / clientSize - new Vector2(4.0f, 4.0f);
                         worldPos.Y *= -1;
                         Vector2 tilePos = GetTileLocation(SelectedGem.X, SelectedGem.Y);
                         Vector2 delta = worldPos - StartPosition;
@@ -1633,7 +1633,7 @@ namespace Bejeweled
                 GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
             }
 
-            Toolkit.Window.GetFramebufferSize(Window, out int fbWidth, out int fbHeight);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
 
             //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
             //GL.BlitFramebuffer(0, 0, fbWidth, fbHeight, 0, 0, fbWidth, fbHeight, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
@@ -1717,7 +1717,7 @@ namespace Bejeweled
                 GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, viewProjection);
                 GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, normalMat);
 
-                GL.Uniform2f(GemShader.UniformLocationScreenSize, fbWidth, fbHeight);
+                GL.Uniform2f(GemShader.UniformLocationScreenSize, fbSize.X, fbSize.Y);
 
                 GL.Uniform3f(GemShader.UniformLocationTint, 1, tint);
                 GL.Uniform3f(GemShader.UniformLocationF0, 1, GemF0s[(int)gem]);

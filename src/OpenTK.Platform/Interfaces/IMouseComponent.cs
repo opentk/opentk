@@ -14,7 +14,7 @@ namespace OpenTK.Platform
         /// The mouse position in either screen coordinates (if received from <see cref="IMouseComponent.GetGlobalMouseState(out MouseState)"/>) 
         /// or window relative coordinates (if received from <see cref="IMouseComponent.GetMouseState(WindowHandle, out MouseState)"/>).
         /// </summary>
-        public Vector2i Position;
+        public Vector2 Position;
 
         /// <summary>
         /// Virtual position of the scroll wheel.
@@ -48,36 +48,35 @@ namespace OpenTK.Platform
         // - Noggin_bops 2024-07-31
         bool SupportsRawMouseMotion { get; }
 
+        // FIXME: Should we report mouse positions using float?
+
         /// <summary>
-        /// Get the mouse cursor position.
+        /// Get the global mouse cursor position.
         /// This function may query the mouse position outside of event processing to get the position of the mouse at the time this function is called.
         /// The mouse position returned is the mouse position as it is on screen, it will not return virtual coordinates when using <see cref="CursorCaptureMode.Locked"/>.
         /// </summary>
-        /// <param name="x">X coordinate of the mouse in screen coordinates.</param>
-        /// <param name="y">Y coordinate of the mouse in screen coordinates.</param>
-        /// <seealso cref="GetPosition(WindowHandle, out int, out int)"/>
-        /// <seealso cref="SetPosition(int, int)"/>
-        void GetGlobalPosition(out int x, out int y);
+        /// <param name="globalPosition">Coordinate of the mouse in screen coordinates.</param>
+        /// <seealso cref="GetPosition(WindowHandle, out Vector2i)"/>
+        /// <seealso cref="SetGlobalPosition(Vector2)"/>
+        void GetGlobalPosition(out Vector2 globalPosition);
 
         /// <summary>
         /// Gets the mouse position as seen from the specified window.
         /// This function takes into consideration only the mouse events that the specified window has received and does not represent global state.
-        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalPosition(out int, out int)"/>).
+        /// If the window has locked the cursor using <see cref="CursorCaptureMode.Locked"/>, this function will return virtual coordinates (unlike <see cref="GetGlobalPosition(out Vector2i)"/>).
         /// </summary>
         /// <param name="window">The window to get the mouse position for.</param>
-        /// <param name="x">X coordinate of the mouse in window relative coordinates.</param>
-        /// <param name="y">Y coordinate of the mouse in window relative coordinates.</param>
-        void GetPosition(WindowHandle window, out int x, out int y);
+        /// <param name="position">Coordinate of the mouse in client coordinates.</param>
+        void GetPosition(WindowHandle window, out Vector2 position);
 
         /// <summary>
-        /// Set the mouse cursor position.
+        /// Set the global mouse cursor position.
         /// Check that <see cref="CanSetMousePosition"/> is <see langword="true"/> before using this.
         /// </summary>
-        /// <param name="x">X coordinate of the mouse in desktop space.</param>
-        /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        /// <seealso cref="GetGlobalPosition(out int, out int)"/>
+        /// <param name="newGlobalPosition">New coordinate of the mouse in screen space.</param>
+        /// <seealso cref="GetGlobalPosition(out Vector2)"/>
         /// <seealso cref="CanSetMousePosition"/>
-        void SetPosition(int x, int y);
+        void SetGlobalPosition(Vector2 newGlobalPosition);
 
         /// <summary>
         /// Fills the <paramref name="state"/> struct with the current mouse state.

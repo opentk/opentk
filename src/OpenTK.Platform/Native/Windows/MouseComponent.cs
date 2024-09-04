@@ -36,7 +36,7 @@ namespace OpenTK.Platform.Native.Windows
         public bool SupportsRawMouseMotion => true;
 
         /// <inheritdoc/>
-        public void GetGlobalPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
             // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
@@ -45,32 +45,29 @@ namespace OpenTK.Platform.Native.Windows
                 //throw new Win32Exception();
             }
 
-            x = lpPoint.X;
-            y = lpPoint.Y;
+            globalPosition.X = lpPoint.X;
+            globalPosition.Y = lpPoint.Y;
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle window, out int x, out int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
             HWND hwnd = window.As<HWND>(this);
 
             if (hwnd.CaptureMode == CursorCaptureMode.Locked)
             {
-                x = (int)hwnd.VirtualCursorPosition.X;
-                y = (int)hwnd.VirtualCursorPosition.Y;
+                position = hwnd.VirtualCursorPosition;
             }
             else
             {
-                x = hwnd.LastMousePosition.X;
-                y = hwnd.LastMousePosition.Y;
+                position = hwnd.LastMousePosition;
             }
         }
 
-
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
         {
-            bool success = Win32.SetCursorPos(x, y);
+            bool success = Win32.SetCursorPos((int)newGlobalPosition.X, (int)newGlobalPosition.Y);
             if (success == false)
             {
                 throw new Win32Exception();
@@ -112,8 +109,7 @@ namespace OpenTK.Platform.Native.Windows
         public void GetGlobalMouseState(out MouseState state)
         {
             Win32.GetCursorPos(out Win32.POINT lpPoint);
-            state.Position.X = lpPoint.X;
-            state.Position.Y = lpPoint.Y;
+            state.Position = (lpPoint.X, lpPoint.Y);
 
             state.Scroll = ScrollPosition;
 
@@ -148,7 +144,7 @@ namespace OpenTK.Platform.Native.Windows
         public void GetMouseState(WindowHandle window, out MouseState state)
         {
             HWND hwnd = window.As<HWND>(this);
-            state.Position = (hwnd.CaptureMode == CursorCaptureMode.Locked) ? (Vector2i)hwnd.VirtualCursorPosition : hwnd.LastMousePosition;
+            state.Position = (hwnd.CaptureMode == CursorCaptureMode.Locked) ? hwnd.VirtualCursorPosition : hwnd.LastMousePosition;
             state.Scroll = hwnd.ScrollPosition;
             state.PressedButtons = hwnd.PressedMouseButtons;
         }

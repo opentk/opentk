@@ -78,6 +78,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
+        public void SetClipboardBitmap(Bitmap bitmap)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public Bitmap? GetClipboardBitmap()
         {
             throw new InvalidOperationException("SDL 2 doesn't support bitmap clipboard data.");
@@ -88,5 +94,6 @@ namespace OpenTK.Platform.Native.SDL
         {
             throw new InvalidOperationException("SDL 2 doesn't support files clipboard data.");
         }
+
     }
 }

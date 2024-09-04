@@ -193,10 +193,7 @@ namespace OpenTK.Platform.Native.macOS
             return null;
         }
 
-        /// <summary>
-        /// Writes a bitmap to the clipboard.
-        /// </summary>
-        /// <param name="bitmap">The bitmap to write to the clipboard.</param>
+        /// <inheritdoc/>
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
             IntPtr pasteboard = objc_msgSend_IntPtr((IntPtr)NSPasteboardClass, selGeneralPasteboard);

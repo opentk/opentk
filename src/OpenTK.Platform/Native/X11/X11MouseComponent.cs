@@ -33,23 +33,22 @@ namespace OpenTK.Platform.Native.X11
         public bool SupportsRawMouseMotion => false;
 
         /// <inheritdoc/>
-        public void GetGlobalPosition(out int x, out int y)
+        public void GetGlobalPosition(out Vector2 globalPosition)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
 
-            x = root_x;
-            y = root_y;
+            globalPosition.X = root_x;
+            globalPosition.Y = root_y;
         }
 
         /// <inheritdoc/>
-        public void GetPosition(WindowHandle window, out int x, out int y)
+        public void GetPosition(WindowHandle window, out Vector2 position)
         {
             // FIXME: Client space or desktop space coords?
             XWindowHandle xwindow = window.As<XWindowHandle>(this);
             if (xwindow.CaptureMode == CursorCaptureMode.Locked)
             {
-                x = (int)xwindow.VirtualCursorPosition.X;
-                y = (int)xwindow.VirtualCursorPosition.Y;
+                position = xwindow.VirtualCursorPosition;
             }
             else
             {
@@ -57,15 +56,14 @@ namespace OpenTK.Platform.Native.X11
                 // will not return the same position as the event is reporting.
                 // Is this something we want to fix?
                 // - Noggin_bops 2024-09-01
-                x = xwindow.LastMousePosition.X;
-                y = xwindow.LastMousePosition.Y;
+                position = xwindow.LastMousePosition;
             }
         }
 
         /// <inheritdoc/>
-        public void SetPosition(int x, int y)
+        public void SetGlobalPosition(Vector2 newGlobalPosition)
         {
-            XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, x, y);
+            XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, (int)newGlobalPosition.X, (int)newGlobalPosition.Y);
         }
 
         internal static MouseButtonFlags MouseButtonState = default;
@@ -122,7 +120,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = window.As<XWindowHandle>(this);
 
-            state.Position = (xwindow.CaptureMode == CursorCaptureMode.Locked) ? (Vector2i)xwindow.VirtualCursorPosition : xwindow.LastMousePosition;
+            state.Position = (xwindow.CaptureMode == CursorCaptureMode.Locked) ? xwindow.VirtualCursorPosition : xwindow.LastMousePosition;
             state.PressedButtons = xwindow.PressedMouseButtons;
             state.Scroll = xwindow.ScrollPosition;
         }

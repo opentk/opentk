@@ -1099,14 +1099,14 @@ namespace OpenTK.Platform.Native.X11
 
             if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
             {
-                GetClientSize(CursorCapturingWindow, out int width, out int height);
-                if (CursorCapturingWindow.LastMousePosition != (width / 2, height / 2))
+                GetClientSize(CursorCapturingWindow, out Vector2i clientSize);
+                if (CursorCapturingWindow.LastMousePosition != (clientSize / 2))
                 {
-                    XWarpPointer(X11.Display, XWindow.None, CursorCapturingWindow.Window, 0, 0, 0, 0, width / 2, height / 2);
+                    XWarpPointer(X11.Display, XWindow.None, CursorCapturingWindow.Window, 0, 0, 0, 0, clientSize.X / 2, clientSize.Y / 2);
 
                     // Set the last mouse position to the position we are moving to
                     // to avoid generating a mouse move event.
-                    CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
+                    CursorCapturingWindow.LastMousePosition = clientSize / 2;
                 }
             }
 
@@ -1706,62 +1706,62 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetPosition(WindowHandle handle, out int x, out int y)
+        public void GetPosition(WindowHandle handle, out Vector2i position)
         {
-            GetClientPosition(handle, out x, out y);
+            GetClientPosition(handle, out position);
 
             if (IsWindowManagerFreedesktop)
             {
                 GetWindowExtents(handle, out int left, out _, out int top, out _);
-                x -= left;
-                y -= top;
+                position.X -= left;
+                position.Y -= top;
             }
         }
 
         /// <inheritdoc />
-        public void SetPosition(WindowHandle handle, int x, int y)
+        public void SetPosition(WindowHandle handle, Vector2i newPosition)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             if (IsWindowManagerFreedesktop)
             {
                 GetWindowExtents(handle, out int left, out _, out int top, out _);
-                x -= left;
-                y -= top;
+                newPosition.X -= left;
+                newPosition.Y -= top;
             }
 
-            XMoveWindow(X11.Display, xwindow.Window, x, y);
+            XMoveWindow(X11.Display, xwindow.Window, newPosition.X, newPosition.Y);
         }
 
         /// <inheritdoc />
-        public void GetSize(WindowHandle handle, out int width, out int height)
+        public void GetSize(WindowHandle handle, out Vector2i size)
         {
-            GetClientSize(handle, out width, out height);
+            GetClientSize(handle, out size);
 
             if (IsWindowManagerFreedesktop)
             {
                 GetWindowExtents(handle, out int left, out int right, out int top, out int bottom);
-                width += left + right;
-                height += top + bottom;
+                size.X += left + right;
+                size.Y += top + bottom;
             }
         }
 
         /// <inheritdoc />
-        public void SetSize(WindowHandle handle, int width, int height)
+        public void SetSize(WindowHandle handle, Vector2i newSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            int innerWidth = width;
-            int innerHeight = height;
+            int innerWidth = newSize.X;
+            int innerHeight = newSize.Y;
 
             if (IsWindowManagerFreedesktop)
             {
                 GetWindowExtents(xwindow, out int left, out int right, out int top, out int bottom);
-                innerWidth = Math.Max(width - left - right, 0);
-                innerHeight = Math.Max(height - top - bottom, 0);
+                innerWidth = Math.Max(newSize.X - left - right, 0);
+                innerHeight = Math.Max(newSize.Y - top - bottom, 0);
             }
 
-            SetClientSize(xwindow, innerWidth, innerHeight);
+            SetClientSize(xwindow, (innerWidth, innerHeight));
         }
 
         /// <inheritdoc/>
@@ -1808,7 +1808,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetClientPosition(WindowHandle handle, out int x, out int y)
+        public void GetClientPosition(WindowHandle handle, out Vector2i clientPosition)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
             XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
@@ -1818,35 +1818,35 @@ namespace OpenTK.Platform.Native.X11
                 X11.DefaultRootWindow,
                 attributes.X,
                 attributes.Y,
-                out x,
-                out y,
+                out clientPosition.X,
+                out clientPosition.Y,
                 out _);
         }
 
         /// <inheritdoc />
-        public void SetClientPosition(WindowHandle handle, int x, int y)
+        public void SetClientPosition(WindowHandle handle, Vector2i newClientPosition)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XMoveWindow(X11.Display, xwindow.Window, x, y);
+            XMoveWindow(X11.Display, xwindow.Window, newClientPosition.X, newClientPosition.Y);
         }
 
         /// <inheritdoc />
-        public void GetClientSize(WindowHandle handle, out int width, out int height)
+        public void GetClientSize(WindowHandle handle, out Vector2i clientSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
             int status = XGetWindowAttributes(xwindow.Display, xwindow.Window, out XWindowAttributes attributes);
 
-            width = attributes.Width;
-            height = attributes.Height;
+            clientSize.X = attributes.Width;
+            clientSize.Y = attributes.Height;
         }
 
         /// <inheritdoc />
-        public void SetClientSize(WindowHandle handle, int width, int height)
+        public void SetClientSize(WindowHandle handle, Vector2i newClientSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XResizeWindow(X11.Display, xwindow.Window, width, height);
+            XResizeWindow(X11.Display, xwindow.Window, newClientSize.X, newClientSize.Y);
 
             XFlush(X11.Display);
         }
@@ -1874,12 +1874,12 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void GetFramebufferSize(WindowHandle handle, out int width, out int height)
+        public void GetFramebufferSize(WindowHandle handle, out Vector2i framebufferSize)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             // The client size on X11 is already in pixels.
-            GetClientSize(xwindow, out width, out height);
+            GetClientSize(xwindow, out framebufferSize);
         }
 
         /// <inheritdoc />
@@ -2610,9 +2610,9 @@ namespace OpenTK.Platform.Native.X11
                     SetDecorations(xwindow, true);
 
                     // Set the max and min height to the same.
-                    GetClientSize(xwindow, out int width, out int height);
-                    SetFixedSize(xwindow, true, width, height);
-                    xwindow.FixedSize = (width, height);
+                    GetClientSize(xwindow, out Vector2i clientSize);
+                    SetFixedSize(xwindow, true, clientSize.X, clientSize.Y);
+                    xwindow.FixedSize = clientSize;
 
                     break;
                 }
@@ -2954,45 +2954,53 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        public void ScreenToClient(WindowHandle handle, Vector2 screen, out Vector2 client)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            // FIXME: This will not work if the coordinates are on another screen.
-            // FIXME: Get the root window that the window is in?
-            XTranslateCoordinates(X11.Display, X11.DefaultRootWindow, xwindow.Window, x, y, out clientX, out clientY, out _);
+            int x = (int)screen.X;
+            int y = (int)screen.Y;
 
             // FIXME: Extents?
+
+            // FIXME: This will not work if the coordinates are on another screen.
+            // FIXME: Get the root window that the window is in?
+            XTranslateCoordinates(X11.Display, X11.DefaultRootWindow, xwindow.Window, x, y, out int clientX, out int clientY, out _);
+
+            client = (clientX, clientY);
         }
 
         /// <inheritdoc />
-        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        public void ClientToScreen(WindowHandle handle, Vector2 client, out Vector2 screen)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            int clientX = (int)client.X;
+            int clientY = (int)client.Y;
+
+            // FIXME: Extents?
 
             // FIXME: This will not work if the coordinates are on another screen.
             // FIXME: Get the root window that the window is in?
-            XTranslateCoordinates(X11.Display, xwindow.Window, X11.DefaultRootWindow, clientX, clientY, out x, out y, out _);
+            XTranslateCoordinates(X11.Display, xwindow.Window, X11.DefaultRootWindow, clientX, clientY, out int x, out int y, out _);
 
-            // FIXME: Extents?
+            screen = (x, y);
         }
 
         /// <inheritdoc/>
-        public void ClientToFramebuffer(WindowHandle handle, int clientX, int clientY, out int framebufferX, out int framebufferY)
+        public void ClientToFramebuffer(WindowHandle handle, Vector2 client, out Vector2 framebuffer)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            framebufferX = clientX;
-            framebufferY = clientY;
+            framebuffer = client;
         }
 
         /// <inheritdoc/>
-        public void FramebufferToClient(WindowHandle handle, int framebufferX, int framebufferY, out int clientX, out int clientY)
+        public void FramebufferToClient(WindowHandle handle, Vector2 framebuffer, out Vector2 client)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            clientX = framebufferX;
-            clientY = framebufferY;
+            client = framebuffer;
         }
 
         private static bool hasReportedScaleFactorWarning = false;

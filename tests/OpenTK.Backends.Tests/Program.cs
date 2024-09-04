@@ -185,7 +185,7 @@ namespace OpenTK.Backends.Tests
             }
 
             Toolkit.Window.SetTitle(Window, "OpenTK PAL Test Application");
-            Toolkit.Window.SetClientSize(Window, 800, 600);
+            Toolkit.Window.SetClientSize(Window, (800, 600));
             Toolkit.Window.SetMode(Window, WindowMode.Normal);
 
             Toolkit.Window.SetMinClientSize(Window, 700, null);
@@ -229,11 +229,11 @@ namespace OpenTK.Backends.Tests
             catch
             { }
 
-            Toolkit.Window.GetFramebufferSize(Window, out int width, out int height);
-            GL.Viewport(0, 0, width, height);
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            GL.Viewport(0, 0, fbSize.X, fbSize.Y);
 
             UsingGLES = Toolkit.OpenGL is ANGLEOpenGLComponent;
-            ImGuiController = new ImGuiController(width, height, UsingGLES);
+            ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, UsingGLES);
             
             float fontSize = 13f;
             try
@@ -340,7 +340,7 @@ namespace OpenTK.Backends.Tests
                     
                 });
                 Toolkit.Window.SetTitle(handle, $"Bejeweled");
-                Toolkit.Window.SetClientSize(handle, 1200, 1200);
+                Toolkit.Window.SetClientSize(handle, (1200, 1200));
                 (Toolkit.Shell as Platform.Native.Windows.ShellComponent)?.SetImmersiveDarkMode(handle, true);
                 Toolkit.Window.SetMode(handle, WindowMode.Normal);
                 Toolkit.Window.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
@@ -585,8 +585,8 @@ namespace OpenTK.Backends.Tests
                         // FIXME: Add screen, client, and framebuffer coords to mouse move events...
                         
                         // Imgui works with framebuffer coordinates.
-                        Toolkit.Window.ClientToFramebuffer(mouseMove.Window, (int)mouseMove.Position.X, (int)mouseMove.Position.Y, out int fx, out int fy);
-                        ImGui.GetIO().AddMousePosEvent(fx, fy);
+                        Toolkit.Window.ClientToFramebuffer(mouseMove.Window, mouseMove.ClientPosition, out Vector2 fbPos);
+                        ImGui.GetIO().AddMousePosEvent(fbPos.X, fbPos.Y);
                     }
                     else if (args is RawMouseMoveEventArgs rawMouseMove)
                     {
