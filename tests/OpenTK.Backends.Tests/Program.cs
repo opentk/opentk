@@ -314,7 +314,7 @@ namespace OpenTK.Backends.Tests
                 viewport.PlatformHandleRaw = (nint)gchandle;
             }
             // Make it so ImGui can set IME rect.
-            ImGui.GetIO().SetPlatformImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
+            ImGui.GetIO().PlatformSetImeDataFn = Marshal.GetFunctionPointerForDelegate(ImGui_SetPlatformImeDataInst);
 
             if (Toolkit.Cursor != null && Toolkit.Cursor.CanLoadSystemCursors)
             {

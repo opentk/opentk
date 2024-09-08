@@ -12,6 +12,7 @@ using StbVorbisSharp;
 using System.Text;
 using System.Runtime.CompilerServices;
 using OpenTK.Core.Utility;
+using ImGuiNET;
 
 namespace Bejeweled
 {
@@ -621,6 +622,7 @@ namespace Bejeweled
     internal class Texture
     {
         public int Handle;
+        public int Width, Height;
 
         public static unsafe Texture LoadTexture(string path)
         {
@@ -681,22 +683,26 @@ namespace Bejeweled
 
             //GL.TextureStorage2D(texture, mipmapLevels, internalFormat, image.Width, image.Height);
 
+            static int MultipleOfRoundingUp(int value, int multiple)
+            {
+                return multiple * ((value + multiple - 1) / multiple);
+            }
+
             int dataOffset = 0;
             int mipWidth = image.Width;
             int mipHeight = image.Height;
             for (int i = 0; i < image.MipmapCount; i++)
             {
-                int dataLength = mipWidth * mipHeight;
+                int dataLength = MultipleOfRoundingUp(mipWidth, 4) * MultipleOfRoundingUp(mipHeight, 4);
                 if (compressed)
                 {
-                    Debug.Assert(false);
-                    //GL.CompressedTextureSubImage2D(texture, i, 0, 0, mipWidth, mipHeight, (PixelFormat)internalFormat, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
+                    GL.CompressedTexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, dataLength, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
                 else
                 {
                     GL.TexImage2D(target, i, (InternalFormat)internalFormat, mipWidth, mipHeight, 0, pixelFormat, pixelType, (nint)Unsafe.AsPointer(ref image.AllData[dataOffset]));
                 }
-                dataOffset += mipWidth * mipHeight;
+                dataOffset += dataLength;
                 mipWidth = Math.Max(1, mipWidth / 2);
                 mipHeight = Math.Max(1, mipHeight / 2);
             }
@@ -713,12 +719,14 @@ namespace Bejeweled
 
             // FIXME: Set the texture filtering properties to match mipmap levels!
 
-            return new Texture(texture);
+            return new Texture(texture, image.Width, image.Height);
         }
 
-        public Texture(int handle)
+        public Texture(int handle, int width, int height)
         {
             Handle = handle;
+            Width = width;
+            Height = height;
         }
     }
 
@@ -839,6 +847,26 @@ namespace Bejeweled
         Falling,
     }
 
+    internal struct BreakEffect
+    {
+        public int Score;
+        public Vector3 Color;
+        public Vector2 Position;
+
+        public float Timer = 0;
+
+        public BreakEffect(int score, Vector3 color, Vector2 position)
+        {
+            Score = score;
+            Color = color;
+            Position = position;
+        }
+
+        // Maybe add particle data?
+
+
+    }
+
     public class Bejeweled
     {
         public string Name => "Bejeweled";
@@ -877,14 +905,24 @@ namespace Bejeweled
             new Vector3(0.076697f, 0.078350f, 0.078350f),
         };
 
+        ImGuiController ImGuiController;
+        ImDrawListPtr CustomDrawlist;
+        ImDrawDataPtr CustomDrawData;
+        ImFontPtr CurrentImGuiFont;
+
         Framebuffer RefractionInfoFramebuffer;
 
         Framebuffer DebugFramebuffer;
+
+        Texture UnmutedTexture;
+        Texture MutedTexture;
 
         Texture BrdfLUT;
         Cubemap EnvironmentMap;
         Cubemap IrradianceMap;
         Cubemap PrefilteredEnvironmentMap;
+
+        List<BreakEffect> BreakEffects = new List<BreakEffect>();
 
         GemShader GemShader;
         GemNormalShader GemNormalShader;
@@ -905,6 +943,8 @@ namespace Bejeweled
 
         SoundEffect BreakSoundEffect;
         SoundEffect SwapSoundEffect;
+
+        SoundEffect ButtonPressEffect;
 
         internal Gem[,] Board = new Gem[8, 8];
         internal Vector2[,] BoardPositions = new Vector2[8, 8];
@@ -939,7 +979,7 @@ namespace Bejeweled
         internal float FallingTime = 0.0f;
         internal int BrokenGemsComboCount = 0;
 
-        public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
+        public unsafe void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES, ILogger logger)
         {
             Debug.Assert(useGLES == false, "We don't support GLES for this demo yet.");
 
@@ -989,6 +1029,34 @@ namespace Bejeweled
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+            ImGuiController = new ImGuiController(fbSize.X, fbSize.Y, useGLES);
+            {
+                float scale = 6;
+                ImFontConfig config = new ImFontConfig();
+                config.FontDataOwnedByAtlas = 1;
+                config.OversampleH = 3;
+                config.OversampleV = 3;
+                config.PixelSnapH = 1;
+                config.GlyphMaxAdvanceX = float.PositiveInfinity;
+                config.RasterizerMultiply = 1;
+                config.EllipsisChar = 0xFFFF;
+                config.RasterizerDensity = 1;
+                unsafe
+                {
+                    ImFontConfigPtr configPtr = new ImFontConfigPtr(&config);
+                    CurrentImGuiFont = ImGui.GetIO().Fonts.AddFontFromFileTTF("./Assets/Fonts/ChivoMono-Regular.ttf", float.Floor(13 * scale), configPtr);
+                }
+            }
+            ImGuiController.RecreateFontDeviceTexture();
+            EventQueue.EventRaised += EventQueue_EventRaised;
+            
+            CustomDrawlist = new ImDrawListPtr((ImDrawList*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawList)));
+            CustomDrawlist._Data = ImGui.GetDrawListSharedData();
+
+            CustomDrawData = new ImDrawDataPtr((ImDrawData*)NativeMemory.AllocZeroed((nuint)sizeof(ImDrawData)));
+            CustomDrawData.Clear();
+
             GemShader = GemShader.Init("./Assets/Shaders/Gem.vert", "./Assets/Shaders/Gem.frag", Logger);
             GemNormalShader = GemNormalShader.Init("./Assets/Shaders/Gem.vert", "./Assets/Shaders/Normal.frag", Logger);
 
@@ -1005,28 +1073,14 @@ namespace Bejeweled
             AmethystVisual = GemVisual.Create(Gem.Amethyst, "./Assets/Models/Amethyst.glb");
             ZirconVisual = GemVisual.Create(Gem.Zircon, "./Assets/Models/Zircon.glb");
 
+            UnmutedTexture = Texture.LoadTexture("./Assets/Textures/unmute.dds");
+            MutedTexture = Texture.LoadTexture("./Assets/Textures/mute.dds");
+
             BrdfLUT = Texture.LoadTexture("./Assets/Textures/dancing_hall_4kBrdf.dds");
 
             EnvironmentMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kEnvHDR.dds");
             IrradianceMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kDiffuseHDR.dds");
             PrefilteredEnvironmentMap = Cubemap.LoadCubemap("./Assets/Textures/dancing_hall_4kSpecularHDR.dds");
-
-            // We don't generate a starting board, instead we go directly into the falling
-            // state and let it populate the board.
-            CurrentState = State.Falling;
-            for (int x = 0; x < Board.GetLength(0); x++)
-            {
-                TopRow[x] = ChooseGems[Random.Shared.Next(ChooseGems.Length)];
-                TopRowPositions[x] = GetTileLocation(x, -1);
-
-                for (int y = 0; y < Board.GetLength(1); y++)
-                {
-                    // FIXME: Make sure we are not generating any collection of gems that is larger than 3 connected.
-                    Board[x, y] = Gem.Empty;
-
-                    BoardPositions[x, y] = GetTileLocation(x, y);
-                }
-            }
 
             Toolkit.Window.SetTitle(Window, $"Bejeweled");
 
@@ -1090,14 +1144,43 @@ namespace Bejeweled
             BreakSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Rise01.ogg"));
             SwapSoundEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/Swap.ogg"));
 
+            ButtonPressEffect = new SoundEffect(SoundClip.LoadSound("./Assets/Sounds/switch8.ogg"));
+
             watch.Stop();
             Logger.LogInfo($"Loading assets took: {watch.Elapsed.TotalMilliseconds}ms");
 
+            TransitionToGame();
+        }
+
+        public void TransitionToGame()
+        {
+            // We don't generate a starting board, instead we go directly into the falling
+            // state and let it populate the board.
+            CurrentState = State.Falling;
+            for (int x = 0; x < Board.GetLength(0); x++)
+            {
+                TopRow[x] = ChooseGems[Random.Shared.Next(ChooseGems.Length)];
+                TopRowPositions[x] = GetTileLocation(x, -1);
+
+                for (int y = 0; y < Board.GetLength(1); y++)
+                {
+                    Board[x, y] = Gem.Empty;
+
+                    BoardPositions[x, y] = GetTileLocation(x, y);
+                }
+            }
+
+            // FIXME: Maybe put a fade-in envelope on this?
             AmbientMusic.SetGain(MusicVolume);
             AmbientMusic.Play();
         }
 
         Vector2 GetTileLocation(int x, int y)
+        {
+            return Vector2.Lerp((-3.5f, 3.5f), (3.5f, -3.5f), (x / (float)(Board.GetLength(1) - 1), y / (float)(Board.GetLength(1) - 1)));
+        }
+
+        Vector2 GetTileLocation(float x, float y)
         {
             return Vector2.Lerp((-3.5f, 3.5f), (3.5f, -3.5f), (x / (float)(Board.GetLength(1) - 1), y / (float)(Board.GetLength(1) - 1)));
         }
@@ -1184,13 +1267,21 @@ namespace Bejeweled
         /// <returns>How many gems where broken, if any.</returns>
         int HandleMovedGem(Vector2i newPosition)
         {
+            Gem gemType = Board[newPosition.X, newPosition.Y];
+            if (gemType == Gem.Empty)
+            {
+                // This position has already been broken, so we don't need to do anything here.
+                return 0;
+            }
+
+
             int upCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, -1));
             int downCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (0, +1));
             int leftCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (-1, 0));
             int rightCount = CountMatchesInDirection(Board[newPosition.X, newPosition.Y], newPosition, (+1, 0));
 
             int brokeCount = 0;
-
+            
             int verticalCount = upCount + downCount - 1;
             int horizontalCount = leftCount + rightCount - 1;
             if (verticalCount >= 3)
@@ -1201,6 +1292,13 @@ namespace Bejeweled
                 {
                     Board[newPosition.X, y] = Gem.Empty;
                 }
+
+                int score = (verticalCount - 2) * 10;
+
+                float horizontalLocation = GetTileLocation(newPosition.X, newPosition.Y).X;
+                float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
+                BreakEffect effect = new BreakEffect(score, GemColors[(int)gemType], new Vector2(horizontalLocation, verticalCenter));
+                BreakEffects.Add(effect);
             }
 
             if (horizontalCount >= 3)
@@ -1211,6 +1309,14 @@ namespace Bejeweled
                 {
                     Board[x, newPosition.Y] = Gem.Empty;
                 }
+
+                int score = (horizontalCount - 2) * 10;
+
+                float verticalLocation = GetTileLocation(newPosition.X, newPosition.Y).Y;
+                float verticalCenter = GetTileLocation(newPosition.X, newPosition.Y + ((downCount - upCount) / 2)).Y;
+                float horizontalCenter = GetTileLocation(newPosition.X + ((rightCount - leftCount) / 2), newPosition.Y).X;
+                BreakEffect effect = new BreakEffect(score, GemColors[(int)gemType], new Vector2(horizontalCenter, verticalLocation));
+                BreakEffects.Add(effect);
             }
 
             if (verticalCount >= 3 && horizontalCount >= 3)
@@ -1248,11 +1354,80 @@ namespace Bejeweled
             SwapSoundEffect.Update();
             BreakSoundEffect.Update();
 
+            ImGuiController.Update(deltaTime);
+            ImGui.PushFont(CurrentImGuiFont);
+
+            CustomDrawlist._ResetForNewFrame();
+            CustomDrawlist.PushClipRectFullScreen();
+            CustomDrawlist.PushTextureID(ImGui.GetIO().Fonts.TexID);
+
+            var UV00 = new System.Numerics.Vector2(0, 0);
+            var UV11 = new System.Numerics.Vector2(1, 1);
+            var ImWhite = ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(1, 1, 1, 1));
+
+            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+
+            // Update all current score effects regardless of gameplay state.
+            {
+                const float Lifetime = 0.7f;
+                float RiseAmount = (fbSize.Y / 8) * 0.4f;
+
+                Span<BreakEffect> effects = CollectionsMarshal.AsSpan(BreakEffects);
+                for (int i = 0; i < effects.Length; i++)
+                {
+                    ref BreakEffect effect = ref effects[i];
+                    effect.Timer += deltaTime;
+                    if (effect.Timer > Lifetime)
+                    {
+                        // This effect will be deleted after this loop.
+                        continue;
+                    }
+
+                    static float EaseInExpo(float x)
+                    {
+                        return x == 0 ? 0 : MathF.Pow(2, 10 * x - 10);
+                    }
+
+                    static float EaseOutQuad(float x)
+                    {
+                        return 1 - (1 - x) * (1 - x);
+                    }
+
+                    float t = (effect.Timer / Lifetime);
+
+                    float alpha = float.Lerp(1.0f, 0.0f, EaseInExpo(t));
+
+                    uint col = ImGui.ColorConvertFloat4ToU32(new System.Numerics.Vector4(effect.Color.X, effect.Color.Y, effect.Color.Z, alpha));
+
+                    Vector2 position = effect.Position / 4;
+                    position += (1, 1);
+                    position *= 0.5f;
+                    position.Y = 1 - position.Y;
+                    position *= fbSize;
+
+                    string text = $"+{effect.Score}";
+
+                    float fontSize = 70;
+
+                    var textSize = CurrentImGuiFont.CalcTextSizeA(fontSize, float.PositiveInfinity, float.PositiveInfinity, text);
+
+                    // Center the text on the position.
+                    position.X -= textSize.X / 2;
+                    position.Y -= textSize.Y / 2;
+
+                    position.Y -= EaseOutQuad(t) * RiseAmount;
+
+                    CustomDrawlist.AddText(CurrentImGuiFont, fontSize, new System.Numerics.Vector2(position.X, position.Y), col, text);
+                }
+
+                // Remove all break effects that have died.
+                BreakEffects.RemoveAll(be => be.Timer > Lifetime);
+            }
+
             Toolkit.Mouse.GetMouseState(Window, out MouseState mouseState);
             Toolkit.Keyboard.GetKeyboardState(KeyboardState);
 
             Vector2i clientPosition = (Vector2i)mouseState.Position;
-            //Toolkit.Window.ScreenToClient(Window, mouseState.Position.X, mouseState.Position.Y, out clientPosition.X, out clientPosition.Y);
 
             Toolkit.Window.GetClientSize(Window, out Vector2i clientSize);
 
@@ -1291,24 +1466,30 @@ namespace Bejeweled
                     {
                         List<(Vector2i, Vector2i)> moves = GetLegalMoves();
 
-                        JigglePair = moves[Random.Shared.Next(moves.Count)];
+                        if (moves.Count > 0)
+                        {
+                            JigglePair = moves[Random.Shared.Next(moves.Count)];
+                        }
                     }
 
-                    Vector2i gemA = JigglePair.Value.Item1;
-                    Vector2i gemB = JigglePair.Value.Item2;
+                    if (JigglePair != null)
+                    {
+                        Vector2i gemA = JigglePair.Value.Item1;
+                        Vector2i gemB = JigglePair.Value.Item2;
 
-                    bool vertical = (gemA.X, gemA.Y + 1) == (gemB.X, gemB.Y);
+                        bool vertical = (gemA.X, gemA.Y + 1) == (gemB.X, gemB.Y);
 
-                    float t = HintJiggleTimer - HintTime;
-                    const float JiggleExtent = 0.025f;
-                    float jiggle = MathF.Sin(t * 30) * MathF.Pow(MathF.Sin(t * 2.1f), 18.0f) * JiggleExtent;
-                    
-                    Vector2 jiggleOffset = vertical ? (0, jiggle) : (jiggle, 0);
+                        float t = HintJiggleTimer - HintTime;
+                        const float JiggleExtent = 0.025f;
+                        float jiggle = MathF.Sin(t * 30) * MathF.Pow(MathF.Sin(t * 2.1f), 18.0f) * JiggleExtent;
 
-                    // We don't really worry about these positions as the swapping code below will
-                    // overwrite these positions if needed.
-                    BoardPositions[gemA.X, gemA.Y] = GetTileLocation(gemA.X, gemA.Y) + jiggleOffset;
-                    BoardPositions[gemB.X, gemB.Y] = GetTileLocation(gemB.X, gemB.Y) - jiggleOffset;
+                        Vector2 jiggleOffset = vertical ? (0, jiggle) : (jiggle, 0);
+
+                        // We don't really worry about these positions as the swapping code below will
+                        // overwrite these positions if needed.
+                        BoardPositions[gemA.X, gemA.Y] = GetTileLocation(gemA.X, gemA.Y) + jiggleOffset;
+                        BoardPositions[gemB.X, gemB.Y] = GetTileLocation(gemB.X, gemB.Y) - jiggleOffset;
+                    }
                 }
 
                 HoveredGem = (clientPosition * 8) / clientSize;
@@ -1419,6 +1600,8 @@ namespace Bejeweled
                     BrokenGemsComboCount += HandleMovedGem(MovingGem2);
 
                     Debug.Assert(BrokenGemsComboCount > 0);
+
+                    Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
 
                     // FIXME: Add pitch.
                     BreakSoundEffect.PlayOneShot(BreakSFXVolume, BreakPitchFromComboCount(BrokenGemsComboCount));
@@ -1583,152 +1766,175 @@ namespace Bejeweled
 
         public void Render()
         {
-            const float NearPlane = 0.1f;
-            const float FarPlane = 10.0f;
-            Matrix4 view = Matrix4.Identity;
-            Matrix4 projection = Matrix4.CreateOrthographic(8, 8, NearPlane, FarPlane);
-            Matrix4 viewProjection = view * projection;
-
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, RefractionInfoFramebuffer.Handle);
-
-            GL.ClearDepth(0);
-            GL.DepthFunc(DepthFunction.Greater);
-
-            GL.ClearColor(Color4.Black);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.UseProgram(GemNormalShader.Program.Handle);
-
-            for (int x = 0; x < Board.GetLength(0); x++)
+            switch (CurrentState)
             {
-                for (int y = 0; y < Board.GetLength(1); y++)
-                {
-                    Gem gem = Board[x, y];
-                    RenderGemNormal(gem, BoardPositions[x, y]);
-                }
-
-                RenderGemNormal(TopRow[x], TopRowPositions[x]);
+                case State.Idle:
+                case State.AnimatingPlayerMove:
+                case State.Falling:
+                    RenderGame();
+                    break;
             }
 
-            void RenderGemNormal(Gem gem, Vector2 position)
-            {
-                if (gem == Gem.Empty)
-                    return;
+            ImGuiController.Render();
 
-                GemVisual visual = GetGemVisual(gem);
-
-                GL.BindVertexArray(visual.VAO);
-
-                Matrix4 model =
-                    Matrix4.CreateScale(0.95f) *
-                    Matrix4.CreateRotationY(MathF.Sin(Time * 1.6f * 0.3f) * MathHelper.DegreesToRadians(15)) *
-                    Matrix4.CreateRotationX(MathF.Cos(Time * 1.1f * 0.3f) * MathHelper.DegreesToRadians(10)) *
-                    Matrix4.CreateTranslation(new Vector3(position, -2));
-                Matrix4 mvp = model * view * projection;
-                Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
-                GL.UniformMatrix4f(GemNormalShader.UniformLocationMVP, 1, true, mvp);
-                GL.UniformMatrix4f(GemNormalShader.UniformLocationModel, 1, true, model);
-                GL.UniformMatrix3f(GemNormalShader.UniformLocationNormalMat, 1, true, normalMat);
-
-                GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
-            }
-
-            Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
-
-            //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
-            //GL.BlitFramebuffer(0, 0, fbWidth, fbHeight, 0, 0, fbWidth, fbHeight, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
-            //GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-
-            GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
-            //GL.BindFramebuffer(FramebufferTarget.Framebuffer, DebugFramebuffer.Handle);
-
-            GL.ClearDepth(1);
-            GL.DepthFunc(DepthFunction.Less);
-
-            GL.ClearColor(Color4.Black);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            GL.UseProgram(GemShader.Program.Handle);
-
-            
-            GL.Uniform1i(GemShader.UniformLocationEnvironmentMap, 0);
-            GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.TextureCubeMap, EnvironmentMap.Handle);
-
-            GL.Uniform1i(GemShader.UniformLocationIrradianceMap, 1);
-            GL.ActiveTexture(TextureUnit.Texture1);
-            GL.BindTexture(TextureTarget.TextureCubeMap, IrradianceMap.Handle);
-
-            GL.Uniform1i(GemShader.UniformLocationPrefilteredEnvironmentMap, 2);
-            GL.ActiveTexture(TextureUnit.Texture2);
-            GL.BindTexture(TextureTarget.TextureCubeMap, PrefilteredEnvironmentMap.Handle);
-            
-            GL.Uniform1i(GemShader.UniformLocationBRDFLUT, 3);
-            GL.ActiveTexture(TextureUnit.Texture3);
-            GL.BindTexture(TextureTarget.Texture2d, BrdfLUT.Handle);
-            
-            GL.Uniform1i(GemShader.UniformLocationBackfaceNormals, 4);
-            GL.ActiveTexture(TextureUnit.Texture4);
-            GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.ColorAttachement0);
-
-            GL.Uniform1i(GemShader.UniformLocationBackfaceDepth, 5);
-            GL.ActiveTexture(TextureUnit.Texture5);
-            GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.DepthAttachement);
-            
-            GL.Uniform1f(GemShader.UniformLocationDepthScale, FarPlane - NearPlane);
-
-            for (int x = 0; x < Board.GetLength(0); x++)
-            {
-                for (int y = 0; y < Board.GetLength(1); y++)
-                {
-                    Gem gem = Board[x, y];
-                    RenderGem(gem, BoardPositions[x, y], (x, y) == HoveredGem, (x, y) == SelectedGem);
-                }
-
-                RenderGem(TopRow[x], TopRowPositions[x], false, false);
-            }
-
-            void RenderGem(Gem gem, Vector2 position, bool hovered, bool selected)
-            {
-                if (gem == Gem.Empty)
-                    return;
-
-                Vector3 tint;
-                if (selected)
-                    tint = GemColors[(int)gem] + (0.4f, 0.4f, 0.4f);
-                else if (hovered)
-                    tint = GemColors[(int)gem] + (0.2f, 0.2f, 0.2f);
-                else
-                    tint = GemColors[(int)gem];
-
-                GemVisual visual = GetGemVisual(gem);
-
-                GL.BindVertexArray(visual.VAO);
-
-                Matrix4 model =
-                    Matrix4.CreateScale(0.95f) *
-                    Matrix4.CreateRotationY(MathF.Sin(Time * 1.6f * 0.3f) * MathHelper.DegreesToRadians(15)) *
-                    Matrix4.CreateRotationX(MathF.Cos(Time * 1.1f * 0.3f) * MathHelper.DegreesToRadians(10)) *
-                    Matrix4.CreateTranslation(new Vector3(position, -2));
-                Matrix4 mvp = model * viewProjection;
-                Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
-                GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, mvp);
-                GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, model);
-                GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, viewProjection);
-                GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, normalMat);
-
-                GL.Uniform2f(GemShader.UniformLocationScreenSize, fbSize.X, fbSize.Y);
-
-                GL.Uniform3f(GemShader.UniformLocationTint, 1, tint);
-                GL.Uniform3f(GemShader.UniformLocationF0, 1, GemF0s[(int)gem]);
-
-                GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
-            }
-
-            //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
-            //GL.BlitFramebuffer(0,0,fbWidth,fbHeight,0,0,fbWidth,fbHeight,ClearBufferMask.ColorBufferBit,BlitFramebufferFilter.Nearest);
+            CustomDrawData.Clear();
+            CustomDrawData.Valid = true;
+            CustomDrawData.DisplayPos = ImGui.GetMainViewport().Pos;
+            CustomDrawData.DisplaySize = ImGui.GetMainViewport().Size;
+            // FIXME: Get the actual framebuffer scale?
+            CustomDrawData.FramebufferScale = new System.Numerics.Vector2(1, 1);
+            CustomDrawData.AddDrawList(CustomDrawlist);
+            ImGuiController.RenderImDrawData(CustomDrawData);
 
             Toolkit.OpenGL.SwapBuffers(Context);
+
+            void RenderGame()
+            {
+                const float NearPlane = 0.1f;
+                const float FarPlane = 10.0f;
+                Matrix4 view = Matrix4.Identity;
+                Matrix4 projection = Matrix4.CreateOrthographic(8, 8, NearPlane, FarPlane);
+                Matrix4 viewProjection = view * projection;
+
+                GL.BindFramebuffer(FramebufferTarget.Framebuffer, RefractionInfoFramebuffer.Handle);
+
+                GL.ClearDepth(0);
+                GL.DepthFunc(DepthFunction.Greater);
+
+                GL.ClearColor(Color4.Black);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                GL.UseProgram(GemNormalShader.Program.Handle);
+
+                for (int x = 0; x < Board.GetLength(0); x++)
+                {
+                    for (int y = 0; y < Board.GetLength(1); y++)
+                    {
+                        Gem gem = Board[x, y];
+                        RenderGemNormal(gem, BoardPositions[x, y]);
+                    }
+
+                    RenderGemNormal(TopRow[x], TopRowPositions[x]);
+                }
+
+                void RenderGemNormal(Gem gem, Vector2 position)
+                {
+                    if (gem == Gem.Empty)
+                        return;
+
+                    GemVisual visual = GetGemVisual(gem);
+
+                    GL.BindVertexArray(visual.VAO);
+
+                    Matrix4 model =
+                        Matrix4.CreateScale(0.95f) *
+                        Matrix4.CreateRotationY(MathF.Sin(Time * 1.6f * 0.3f) * MathHelper.DegreesToRadians(15)) *
+                        Matrix4.CreateRotationX(MathF.Cos(Time * 1.1f * 0.3f) * MathHelper.DegreesToRadians(10)) *
+                        Matrix4.CreateTranslation(new Vector3(position, -2));
+                    Matrix4 mvp = model * view * projection;
+                    Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
+                    GL.UniformMatrix4f(GemNormalShader.UniformLocationMVP, 1, true, mvp);
+                    GL.UniformMatrix4f(GemNormalShader.UniformLocationModel, 1, true, model);
+                    GL.UniformMatrix3f(GemNormalShader.UniformLocationNormalMat, 1, true, normalMat);
+
+                    GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
+                }
+
+                Toolkit.Window.GetFramebufferSize(Window, out Vector2i fbSize);
+
+                //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
+                //GL.BlitFramebuffer(0, 0, fbWidth, fbHeight, 0, 0, fbWidth, fbHeight, ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Nearest);
+                //GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+
+                GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
+                //GL.BindFramebuffer(FramebufferTarget.Framebuffer, DebugFramebuffer.Handle);
+
+                GL.ClearDepth(1);
+                GL.DepthFunc(DepthFunction.Less);
+
+                GL.ClearColor(Color4.Black);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+                GL.UseProgram(GemShader.Program.Handle);
+
+
+                GL.Uniform1i(GemShader.UniformLocationEnvironmentMap, 0);
+                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.BindTexture(TextureTarget.TextureCubeMap, EnvironmentMap.Handle);
+
+                GL.Uniform1i(GemShader.UniformLocationIrradianceMap, 1);
+                GL.ActiveTexture(TextureUnit.Texture1);
+                GL.BindTexture(TextureTarget.TextureCubeMap, IrradianceMap.Handle);
+
+                GL.Uniform1i(GemShader.UniformLocationPrefilteredEnvironmentMap, 2);
+                GL.ActiveTexture(TextureUnit.Texture2);
+                GL.BindTexture(TextureTarget.TextureCubeMap, PrefilteredEnvironmentMap.Handle);
+
+                GL.Uniform1i(GemShader.UniformLocationBRDFLUT, 3);
+                GL.ActiveTexture(TextureUnit.Texture3);
+                GL.BindTexture(TextureTarget.Texture2d, BrdfLUT.Handle);
+
+                GL.Uniform1i(GemShader.UniformLocationBackfaceNormals, 4);
+                GL.ActiveTexture(TextureUnit.Texture4);
+                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.ColorAttachement0);
+
+                GL.Uniform1i(GemShader.UniformLocationBackfaceDepth, 5);
+                GL.ActiveTexture(TextureUnit.Texture5);
+                GL.BindTexture(TextureTarget.Texture2d, RefractionInfoFramebuffer.DepthAttachement);
+
+                GL.Uniform1f(GemShader.UniformLocationDepthScale, FarPlane - NearPlane);
+
+                for (int x = 0; x < Board.GetLength(0); x++)
+                {
+                    for (int y = 0; y < Board.GetLength(1); y++)
+                    {
+                        Gem gem = Board[x, y];
+                        RenderGem(gem, BoardPositions[x, y], (x, y) == HoveredGem, (x, y) == SelectedGem);
+                    }
+
+                    RenderGem(TopRow[x], TopRowPositions[x], false, false);
+                }
+
+                void RenderGem(Gem gem, Vector2 position, bool hovered, bool selected)
+                {
+                    if (gem == Gem.Empty)
+                        return;
+
+                    Vector3 tint;
+                    if (selected)
+                        tint = GemColors[(int)gem] + (0.4f, 0.4f, 0.4f);
+                    else if (hovered)
+                        tint = GemColors[(int)gem] + (0.2f, 0.2f, 0.2f);
+                    else
+                        tint = GemColors[(int)gem];
+
+                    GemVisual visual = GetGemVisual(gem);
+
+                    GL.BindVertexArray(visual.VAO);
+
+                    Matrix4 model =
+                        Matrix4.CreateScale(0.95f) *
+                        Matrix4.CreateRotationY(MathF.Sin(Time * 1.6f * 0.3f) * MathHelper.DegreesToRadians(15)) *
+                        Matrix4.CreateRotationX(MathF.Cos(Time * 1.1f * 0.3f) * MathHelper.DegreesToRadians(10)) *
+                        Matrix4.CreateTranslation(new Vector3(position, -2));
+                    Matrix4 mvp = model * viewProjection;
+                    Matrix3 normalMat = Matrix3.Invert(Matrix3.Transpose(new Matrix3(model)));
+                    GL.UniformMatrix4f(GemShader.UniformLocationMVP, 1, true, mvp);
+                    GL.UniformMatrix4f(GemShader.UniformLocationModel, 1, true, model);
+                    GL.UniformMatrix4f(GemShader.UniformLocationViewProjection, 1, true, viewProjection);
+                    GL.UniformMatrix3f(GemShader.UniformLocationNormalMat, 1, true, normalMat);
+
+                    GL.Uniform2f(GemShader.UniformLocationScreenSize, fbSize.X, fbSize.Y);
+
+                    GL.Uniform3f(GemShader.UniformLocationTint, 1, tint);
+                    GL.Uniform3f(GemShader.UniformLocationF0, 1, GemF0s[(int)gem]);
+
+                    GL.DrawElements(PrimitiveType.Triangles, visual.Elements, DrawElementsType.UnsignedShort, 0);
+                }
+
+                //GL.BindFramebuffer(FramebufferTarget.DrawFramebuffer, 0);
+                //GL.BlitFramebuffer(0,0,fbWidth,fbHeight,0,0,fbWidth,fbHeight,ClearBufferMask.ColorBufferBit,BlitFramebufferFilter.Nearest);
+            }
         }
 
         private GemVisual GetGemVisual(Gem gem)
@@ -1769,6 +1975,91 @@ namespace Bejeweled
             ALC.MakeContextCurrent(ALContext.Null);
             ALC.DestroyContext(ALContext);
             ALC.CloseDevice(ALDevice);
+        }
+
+        static ImGuiKey ToImgui(Key key)
+        {
+            // FIXME: Rest of the keycodes.
+            switch (key)
+            {
+                case Key.Return: return ImGuiKey.Enter;
+                case Key.Escape: return ImGuiKey.Escape;
+                case Key.Tab: return ImGuiKey.Tab;
+                case Key.Backspace: return ImGuiKey.Backspace;
+
+                case Key.PageUp: return ImGuiKey.PageUp;
+                case Key.PageDown: return ImGuiKey.PageDown;
+
+                case Key.LeftArrow: return ImGuiKey.LeftArrow;
+                case Key.RightArrow: return ImGuiKey.RightArrow;
+                case Key.UpArrow: return ImGuiKey.UpArrow;
+                case Key.DownArrow: return ImGuiKey.DownArrow;
+
+                case Key.LeftShift: return ImGuiKey.LeftShift;
+                case Key.RightShift: return ImGuiKey.RightShift;
+
+                case Key.LeftControl: return ImGuiKey.LeftCtrl;
+                case Key.RightControl: return ImGuiKey.RightCtrl;
+
+                case Key.LeftAlt: return ImGuiKey.LeftAlt;
+                case Key.RightAlt: return ImGuiKey.RightAlt;
+
+                case Key.LeftGUI: return ImGuiKey.LeftSuper;
+                case Key.RightGUI: return ImGuiKey.RightSuper;
+
+                default: return ImGuiKey.None;
+            }
+        }
+
+        private void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        {
+            // Only update imgui stuff for the main window
+            if (args is KeyDownEventArgs keyDown)
+            {
+                ImGuiKey ikey = ToImgui(keyDown.Key);
+                ImGui.GetIO().AddKeyEvent(ikey, true);
+            }
+            else if (args is KeyUpEventArgs keyUp)
+            {
+                ImGuiKey ikey = ToImgui(keyUp.Key);
+                ImGui.GetIO().AddKeyEvent(ikey, false);
+            }
+            else if (args is TextInputEventArgs textInput)
+            {
+                ImGui.GetIO().AddInputCharactersUTF8(textInput.Text);
+            }
+            else if (args is MouseMoveEventArgs mouseMove)
+            {
+                // FIXME: Add screen, client, and framebuffer coords to mouse move events...
+
+                // Imgui works with framebuffer coordinates.
+                Toolkit.Window.ClientToFramebuffer(mouseMove.Window, mouseMove.ClientPosition, out Vector2 fbPos);
+                ImGui.GetIO().AddMousePosEvent(fbPos.X, fbPos.Y);
+            }
+            else if (args is RawMouseMoveEventArgs rawMouseMove)
+            {
+                Logger.LogDebug($"rmm {rawMouseMove.Delta.X} {rawMouseMove.Delta.Y}");
+            }
+            else if (args is ScrollEventArgs scroll)
+            {
+                ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
+            }
+            else if (args is MouseButtonDownEventArgs mouseDown)
+            {
+                int button = ((int)mouseDown.Button);
+                ImGui.GetIO().AddMouseButtonEvent(button, true);
+            }
+            else if (args is MouseButtonUpEventArgs mouseUp)
+            {
+                int button = ((int)mouseUp.Button);
+                ImGui.GetIO().AddMouseButtonEvent(button, false);
+            }
+            else if (args is WindowScaleChangeEventArgs scaleChange)
+            {
+                Logger.LogDebug($"Scale change: (x:{scaleChange.ScaleX}, y:{scaleChange.ScaleY})");
+                // FIXME: scale the ImGui text!
+                // ImGuiController.RecreateFontDeviceTexture();
+            }
         }
 
         public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;

@@ -22,10 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpGLTF.Core" Version="1.0.0" />
+    <PackageReference Include="SharpGLTF.Core" Version="1.0.2" />
     <PackageReference Include="StbImageSharp" Version="2.27.14" />
     <PackageReference Include="StbVorbisSharp" Version="1.22.4" />
-    <PackageReference Include="Hardware.Info" Version="100.1.0.0" />
+    <PackageReference Include="Hardware.Info" Version="100.1.1" />
+    <PackageReference Include="ImGui.NET" Version="1.91.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +42,9 @@
     <Content Include="Assets\Cursor\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Fonts\ChivoMono-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Icon\ruby_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -54,9 +58,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Models\Emerald.glb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Models\Placeholder.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Models\Ruby.glb">
@@ -95,6 +96,9 @@
     <Content Include="Assets\Sounds\Swap.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Sounds\switch8.ogg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Textures\dancing_hall_4kBrdf.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -107,13 +111,18 @@
     <Content Include="Assets\Textures\dancing_hall_4kSpecularHDR.dds">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Textures\mute.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Textures\unmute.dds">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="win32-x64\soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="alsoft.conf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  
 </ItemGroup>
 
 </Project>

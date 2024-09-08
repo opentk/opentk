@@ -291,9 +291,14 @@ namespace Bejeweled
 
             static int CalculateSizeBlockCompressed(int width, int height, int mipmapCount, int blockSize)
             {
+                static int MultipleOfRoundingUp(int value, int multiple)
+                {
+                    return multiple * ((value + multiple - 1) / multiple);
+                }
+
                 int dataSize = 0;
-                int mipWidth = width;
-                int mipHeight = height;
+                int mipWidth = MultipleOfRoundingUp(width, 4);
+                int mipHeight = MultipleOfRoundingUp(height, 4);
                 for (int i = 0; i < mipmapCount; i++)
                 {
                     // A block is at minium blockSize bytes.
