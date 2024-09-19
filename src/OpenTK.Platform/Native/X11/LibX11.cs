@@ -43,6 +43,9 @@ namespace OpenTK.Platform.Native.X11
         internal static unsafe extern XVisual* XDefaultVisual(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XVisualId XVisualIDFromVisual(XVisual* visual);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XScreenCount(XDisplayPtr dispay);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

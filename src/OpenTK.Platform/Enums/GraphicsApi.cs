@@ -23,6 +23,6 @@ namespace OpenTK.Platform
         /// <summary>
         /// Vulkan API.
         /// </summary>
-        Vulkan
+        Vulkan,
     }
 }

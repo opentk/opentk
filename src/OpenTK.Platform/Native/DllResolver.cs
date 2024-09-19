@@ -29,6 +29,8 @@ namespace OpenTK.Platform.Native
                     if (NativeLibrary.TryLoad(name, assembly, searchPath, out IntPtr lib))
                         return lib;
                 }
+
+                throw new DllNotFoundException($"Could not find any of these libraries '{string.Join(", ", names)}' (this load is intercepted, specified in DllImport as '{libraryName}').");
             }
 
             return IntPtr.Zero;
@@ -68,6 +70,18 @@ namespace OpenTK.Platform.Native
                 "libX11.so.2",
                 "libX11.so.1",
                 "libX11.so.0",
+            },
+
+            ["X11XCB"] = new string[]
+            {
+                "libX11-xcb.so",
+                "libX11-xcb.so.1",
+            },
+
+            ["XCB"] = new string[]
+            {
+                "libxcb.so",
+                "libxcb.so.1",
             },
 
             ["Xrandr"] = new string[]

@@ -1337,6 +1337,29 @@ namespace OpenTK.Platform.Native.X11
                     XFree((IntPtr)vi);
                 }
             }
+            else if (hints.Api == GraphicsApi.Vulkan)
+            {
+                XSetWindowAttributes attributes = default;
+                attributes.BorderPixel = XBlackPixel(X11.Display, X11.DefaultScreen);
+                attributes.BackgroundPixel = XWhitePixel(X11.Display, X11.DefaultScreen);
+                attributes.OverrideRedirect = 0;
+                attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
+                attributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
+
+                unsafe
+                {
+                    XVisual* visual = XDefaultVisual(X11.Display, X11.DefaultScreen);
+
+                    window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                        0, 0, 600, 800, 0, 0, 
+                        WindowClass.InputOutput,
+                        // FIXME: Do we want a visual here?
+                        ref Unsafe.AsRef<XVisual>(visual),
+                        XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
+                        XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                        ref attributes);
+                }
+            }
             else
             {
                 XSetWindowAttributes attributes = default;
@@ -1344,7 +1367,7 @@ namespace OpenTK.Platform.Native.X11
                 attributes.BackgroundPixel = XWhitePixel(X11.Display, X11.DefaultScreen);
                 attributes.OverrideRedirect = 0;
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
-                attributes.EventMask = XEventMask.Exposure;
+                attributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
 
                 window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
                     0, 0, 600, 800, 0, 0, 

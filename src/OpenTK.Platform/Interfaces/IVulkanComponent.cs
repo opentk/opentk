@@ -39,5 +39,7 @@ namespace OpenTK.Platform
         /// <param name="surface">The created surface.</param>
         /// <returns>The Vulkan result code of this operation.</returns>
         public unsafe VkResult CreateWindowSurface(VkInstance instance, WindowHandle window, VkAllocationCallbacks* allocator, out VkSurfaceKHR surface);
+
+        // FIXME: Vulkan error to readable string function.
     }
 }
