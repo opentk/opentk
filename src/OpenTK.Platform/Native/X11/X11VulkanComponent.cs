@@ -22,7 +22,10 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public unsafe void Initialize(ToolkitOptions options)
         {
-            // FIXME: Make sure VKLoader.Init has been called!
+            // FIXME: We want some way to avoid calling this if we are not going to be using vulkan...
+            // Maybe we make the initialization of the vulkan component separate?
+            // Or we could make it a toolkit setting...
+            VKLoader.Init();
 
             VkPointers._vkEnumerateInstanceExtensionProperties_fnptr = 
                 (delegate* unmanaged<byte*, uint*, VkExtensionProperties*, VkResult>)VKLoader.GetInstanceProcAddress(VkInstance.Zero, "vkEnumerateInstanceExtensionProperties");

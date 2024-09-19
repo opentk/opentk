@@ -531,18 +531,35 @@ namespace OpenTK.Platform.Native.X11
 
             RunModalLoop(process, xwindow);
 
-            List<string> outputList;
-
-            string output = process.StandardOutput.ReadToEnd();
-            if (output.Contains('|'))
+            int exitCode = process.ExitCode;
+            Logger?.LogInfo($"Zenity exit code: {exitCode}");
+            string stderr = process.StandardError.ReadToEnd();
+            if (exitCode > 5 || string.IsNullOrWhiteSpace(stderr) == false)
             {
-                outputList = new List<string>(output.Split('|', StringSplitOptions.RemoveEmptyEntries));
+                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
+            }
+            
+            Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
+
+            List<string>? outputList;
+            if (exitCode == 0)
+            {
+                string output = process.StandardOutput.ReadToEnd();
+                if (output.Contains('|'))
+                {
+                    outputList = new List<string>(output.Split('|', StringSplitOptions.RemoveEmptyEntries));
+                }
+                else
+                {
+                    outputList = new List<string>{ output };
+                }
             }
             else
             {
-                outputList = new List<string>{ output };
+                // The user pressed cancel.
+                outputList = null;
             }
-
+            
             process.Dispose();
             return outputList;
         }
@@ -593,7 +610,27 @@ namespace OpenTK.Platform.Native.X11
 
             RunModalLoop(process, xwindow);
 
-            string output = process.StandardOutput.ReadToEnd();
+            int exitCode = process.ExitCode;
+            Logger?.LogInfo($"Zenity exit code: {exitCode}");
+            string stderr = process.StandardError.ReadToEnd();
+            if (exitCode > 5 || string.IsNullOrWhiteSpace(stderr) == false)
+            {
+                Logger?.LogWarning($"Zenity exited with exit code {exitCode}. stderr: {process.StandardError.ReadToEnd()}");
+            }
+            
+            Logger?.LogInfo($"Zenity exited with exit code {exitCode}.");
+
+            string? output;
+            if (exitCode == 0)
+            {
+                output = process.StandardOutput.ReadToEnd();
+            }
+            else
+            {
+                // The user pressed cancel.
+                output = null;
+            }
+
             process.Dispose();
             return output;
         }

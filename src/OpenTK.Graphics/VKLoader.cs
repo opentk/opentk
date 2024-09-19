@@ -16,6 +16,11 @@ namespace OpenTK.Graphics
 
         public static void Init()
         {
+            if (VulkanHandle != IntPtr.Zero)
+            {
+                return;
+            }
+
             if (OperatingSystem.IsWindows())
             {
                 VulkanHandle = NativeLibrary.Load("vulkan-1.dll");
