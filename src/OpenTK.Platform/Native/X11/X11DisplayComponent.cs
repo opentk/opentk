@@ -702,7 +702,7 @@ namespace OpenTK.Platform.Native.X11
             if (X11.Atoms[KnownAtoms._NET_WORKAREA] != XAtom.None &&
                 X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP] != XAtom.None)
             {
-                XGetWindowProperty(
+                int result = XGetWindowProperty(
                     X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_WORKAREA],
@@ -715,7 +715,18 @@ namespace OpenTK.Platform.Native.X11
                     out long _,
                     out IntPtr workAreasPtr);
 
-                XGetWindowProperty(X11.Display, 
+                if (result != Success)
+                {
+                    Logger?.LogWarning($"Could not get property _NET_WORKAREA. Reporting display area as work area. DisplayHandle: {xdisplay}");
+                    if (workAreasPtr != IntPtr.Zero)
+                    {
+                        XFree(workAreasPtr);
+                    }
+                    return;
+                }
+
+                result = XGetWindowProperty(
+                    X11.Display, 
                     X11.DefaultRootWindow,
                     X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
                     0, long.MaxValue,
@@ -726,9 +737,19 @@ namespace OpenTK.Platform.Native.X11
                     out long items,
                     out _,
                     out IntPtr desktopPtr);
+
+                if (result != Success)
+                {
+                    Logger?.LogWarning($"Could not get property _NET_CURRENT_DESKTOP. Reporting display area as work area. DisplayHandle: {xdisplay}");
+                    if (desktopPtr != IntPtr.Zero)
+                    {
+                        XFree(desktopPtr);
+                    }
+                    return;
+                }
                 
                 if (items > 0)
-                unsafe 
+                unsafe
                 {
                     int desktop = *(int*)desktopPtr;
 
@@ -817,7 +838,6 @@ namespace OpenTK.Platform.Native.X11
             // But the question is how do we get the scale factor from just the DPI?
             scaleX = 1;
             scaleY = 1;
-            //throw new NotImplementedException();
         }
 
         /// <summary>

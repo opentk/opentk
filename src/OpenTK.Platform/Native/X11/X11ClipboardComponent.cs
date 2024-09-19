@@ -78,7 +78,8 @@ namespace OpenTK.Platform.Native.X11
                     X11.WaitForXEvents();
                 }
 
-                XGetWindowProperty(X11.Display,
+                XGetWindowProperty(
+                    X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
                     0, long.MaxValue, true,
@@ -162,7 +163,8 @@ namespace OpenTK.Platform.Native.X11
                 return ClipboardFormat.None;
             }
 
-            int result = XGetWindowProperty(X11.Display,
+            int result = XGetWindowProperty(
+                X11.Display,
                 notification.Selection.requestor,
                 notification.Selection.property,
                 0, long.MaxValue, true,
@@ -175,12 +177,17 @@ namespace OpenTK.Platform.Native.X11
                 out IntPtr data);
 
             if (result != Success) {
-                logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event when reading clipboard format. (property: {property})");
+                logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event when reading clipboard format. (selection: {selection}, property: {property})");
+                if (data != IntPtr.Zero) 
+                {
+                    XFree(data);
+                }
                 return ClipboardFormat.None;
             }
 
             if (actualType == X11.Atoms[KnownAtoms.INCR])
             {
+                XFree(data);
                 throw new NotImplementedException("We don't support INCR here yet.");
             }
             else
@@ -199,6 +206,7 @@ namespace OpenTK.Platform.Native.X11
                 {
                     if (atoms[i] == text_urilist)
                     {
+                        XFree(data);
                         return ClipboardFormat.Files;
                     }
                 }
@@ -209,11 +217,13 @@ namespace OpenTK.Platform.Native.X11
                     if (atom == X11.Atoms[KnownAtoms.UTF8_STRING] ||
                         atom == X11.Atoms[KnownAtoms.STRING])
                     {
+                        XFree(data);
                         return ClipboardFormat.Text;
                     }
                     else if (atom == image_png || 
-                             atom == image_bmp)
+                            atom == image_bmp)
                     {
+                        XFree(data);
                         return ClipboardFormat.Bitmap;
                     }
                     //else if (atom = audioau)?
@@ -222,6 +232,7 @@ namespace OpenTK.Platform.Native.X11
                     //}
                 }
 
+                XFree(data);
                 return ClipboardFormat.None;
             }
         }
@@ -420,7 +431,8 @@ namespace OpenTK.Platform.Native.X11
                     continue;
                 }
 
-                int result = XGetWindowProperty(X11.Display,
+                int result = XGetWindowProperty(
+                    X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
                     0, long.MaxValue, true,
@@ -435,6 +447,10 @@ namespace OpenTK.Platform.Native.X11
                 if (result != Success)
                 {
                     Logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event. (property: {notification.Selection.property})");
+                    if (data != IntPtr.Zero)
+                    {
+                        XFree(data);
+                    }
                     return null;
                 }
 
@@ -558,7 +574,8 @@ namespace OpenTK.Platform.Native.X11
                     continue;
                 }
 
-                int result = XGetWindowProperty(X11.Display,
+                int result = XGetWindowProperty(
+                    X11.Display,
                     notification.Selection.requestor,
                     notification.Selection.property,
                     0, long.MaxValue, true,
@@ -573,6 +590,10 @@ namespace OpenTK.Platform.Native.X11
                 if (result != Success)
                 {
                     Logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event. (property: {notification.Selection.property})");
+                    if (data != IntPtr.Zero)
+                    {
+                        XFree(data);
+                    }
                     return null;
                 }
 
@@ -622,7 +643,8 @@ namespace OpenTK.Platform.Native.X11
                 return null;
             }
 
-            int result = XGetWindowProperty(X11.Display,
+            int result = XGetWindowProperty(
+                X11.Display,
                 notification.Selection.requestor,
                 notification.Selection.property,
                 0, long.MaxValue, true,
@@ -637,11 +659,16 @@ namespace OpenTK.Platform.Native.X11
             if (result != Success)
             {
                 Logger?.LogWarning($"Could not get the selection property data from the SelectionNotify event. (property: {notification.Selection.property})");
+                if (data != IntPtr.Zero)
+                {
+                    XFree(data);
+                }
                 return null;
             }
 
             if (actualType == X11.Atoms[KnownAtoms.INCR])
             {
+                XFree(data);
                 throw new NotImplementedException("We don't support INCR here yet.");
             }
             else
@@ -658,11 +685,7 @@ namespace OpenTK.Platform.Native.X11
                     else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
                 }
 
-                if (data != IntPtr.Zero)
-                {
-                    XFree(data);
-                }
-
+                XFree(data);
                 return files;
             }
         }

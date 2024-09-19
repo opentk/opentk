@@ -183,8 +183,6 @@ namespace OpenTK.Platform
         }
     }
 
-    // FIXME: Are KeyDown and KeyUp window events??
-
     /// <summary>
     /// This event is triggered when a keyboard key is pressed.
     /// </summary>
@@ -556,6 +554,11 @@ namespace OpenTK.Platform
         {
         }
     }
+
+    // FIXME: Add events for drag and drop enter and exit
+    // as well as position updates so applications can show
+    // proper UI updates for drag and drop areas.
+    // - Noggin_bops 2024-09-19 
 
     /// <summary>
     /// This event is triggered when a user drags files into a window.

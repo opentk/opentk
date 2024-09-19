@@ -111,7 +111,7 @@ namespace VulkanTestProject
 
             // FIXME: Do propery physical device selection that takes into account
             // presentation support and stuff like discrete gpu preference.
-            PhysicalDevice = physicalDevices[0];
+            PhysicalDevice = physicalDevices[1];
 
             uint deviceExtensionCount = 0;
             result = Vk.EnumerateDeviceExtensionProperties(PhysicalDevice, null, &deviceExtensionCount, null);

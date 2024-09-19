@@ -15,6 +15,7 @@ using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XI2.XI2;
 using OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Platform.Native.X11.XI2;
+using System.Reflection.Metadata.Ecma335;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -91,83 +92,147 @@ namespace OpenTK.Platform.Native.X11
             // name of the Window Manager.
 
             XWindow wm_window;
-            XAtom _net_supported = X11.Atoms![KnownAtoms._NET_SUPPORTED];
-            XAtom _net_supporting_wm_check = X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK];
-            XAtom _net_wm_name = X11.Atoms[KnownAtoms._NET_WM_NAME];
-            XAtom atom = X11.Atoms[KnownAtoms.ATOM];
-            XAtom utf8_string = X11.Atoms[KnownAtoms.UTF8_STRING];
-            XAtom window = X11.Atoms[KnownAtoms.WINDOW];
-
-            XGetWindowProperty(
+            
+            int result = XGetWindowProperty(
                 X11.Display,
                 X11.DefaultRootWindow,
-                _net_supporting_wm_check,
+                X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK],
                 0, 8,
                 false,
-                window,
+                X11.Atoms[KnownAtoms.WINDOW],
                 out _,
                 out _,
                 out long count,
                 out _,
                 out IntPtr array);
 
-            if (count > 0)
+            if (result != Success || count == 0)
             {
-                wm_window = Marshal.PtrToStructure<XWindow>(array);
-                XFree(array);
-
-                XGetWindowProperty(X11.Display, wm_window, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
-                if (count > 0 && wm_window.Id == Marshal.PtrToStructure<XWindow>(array).Id)
-                {
-                    IsWindowManagerFreedesktop = true;
-                    XFree(array);
-                    XGetWindowProperty(
-                        X11.Display,
-                        wm_window,
-                        _net_wm_name,
-                        0,
-                        long.MaxValue,   // FIXME: Is this worth two rountrips to measure name size and then read?
-                        false,
-                        utf8_string,
-                        out _,
-                        out _,
-                        out count,
-                        out _,
-                        out array);
-
-                    if (count > 0)
-                    {
-                        FreedesktopWindowManagerName = Marshal.PtrToStringUTF8(array);
-                    }
-
-                    XFree(array);
-                }
-                else
+                Logger?.LogInfo("Root window did not have the _NET_SUPPORTING_WM_CHECK property. WM is not freedesktop compliant.");
+                if (array != IntPtr.Zero)
                 {
                     XFree(array);
                 }
             }
             else
             {
-                XFree(array);
+                unsafe
+                {
+                    wm_window = *(XWindow*)array;
+                    XFree(array);
+                }
+
+                result = XGetWindowProperty(
+                    X11.Display,
+                    wm_window,
+                    X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK], 
+                    0, 8,
+                    false,
+                    X11.Atoms[KnownAtoms.WINDOW],
+                    out _,
+                    out _,
+                    out count,
+                    out _,
+                    out array);
+
+                if (result != Success || count == 0)
+                {
+                    Logger?.LogInfo($"Window pointed to by the root windows' _NET_SUPPORTING_WM_CHECK property didn't have a _NET_SUPPORTING_WM_CHECK property. WM is not freedesktop compliant.");
+                    if (array != IntPtr.Zero)
+                    {
+                        XFree(array);
+                    }
+                }
+                else
+                {
+                    XWindow wm_window2;
+                    unsafe
+                    {
+                        wm_window2 = *(XWindow*)array;
+                        XFree(array);
+                    }
+
+                    if (wm_window != wm_window2)
+                    {
+                        Logger?.LogInfo("Window pointed to by the root windows' _NET_SUPPORTING_WM_CHECK property didn't have itself set in it's _NET_SUPPORTING_WM_CHECK property . WM is not freedesktop compliant.");
+                    }
+                    else
+                    {
+                        IsWindowManagerFreedesktop = true;
+
+                        result = XGetWindowProperty(
+                            X11.Display,
+                            wm_window,
+                            X11.Atoms[KnownAtoms._NET_WM_NAME],
+                            0,
+                            long.MaxValue,   // FIXME: Is this worth two rountrips to measure name size and then read?
+                            false,
+                            X11.Atoms[KnownAtoms.UTF8_STRING],
+                            out _,
+                            out _,
+                            out count,
+                            out _,
+                            out array);
+
+                        if (result != Success || count == 0)
+                        {
+                            Logger?.LogWarning("Wasn't able to get _NET_WM_NAME.");
+                            if (array != IntPtr.Zero)
+                            {
+                                XFree(array);
+                            }
+                        }
+                        else
+                        {
+                            FreedesktopWindowManagerName = Marshal.PtrToStringUTF8(array);
+                            XFree(array);
+                        }
+                    }
+                }
             }
 
             if (IsWindowManagerFreedesktop)
             {
-                Logger?.LogInfo($"Found Freedesktop Compliant Window Manager {FreedesktopWindowManagerName}.");
+                Logger?.LogInfo($"Found Freedesktop Compliant Window Manager '{FreedesktopWindowManagerName}'.");
 
-                // Find which window styles and modes are supported.
-                HashSet<XAtom> supportedAtoms = new HashSet<XAtom>();
+                result = XGetWindowProperty(
+                    X11.Display, 
+                    X11.DefaultRootWindow, 
+                    X11.Atoms![KnownAtoms._NET_SUPPORTED], 
+                    0, long.MaxValue,
+                    false,
+                    X11.Atoms[KnownAtoms.ATOM],
+                    out _,
+                    out _,
+                    out count,
+                    out _,
+                    out array);
 
-                XGetWindowProperty(X11.Display, X11.DefaultRootWindow, _net_supported, 0, long.MaxValue, false, atom, out _, out _, out count, out _, out array);
-                for (int i = 0; i < count; i++)
+                if (result != Success)
                 {
-                    supportedAtoms.Add(Marshal.PtrToStructure<XAtom>(array + Unsafe.SizeOf<XAtom>() * i));
+                    Logger?.LogWarning("Could not read _NET_SUPPORTED.");
+                    if (array != IntPtr.Zero)
+                    {
+                        XFree(array);
+                    }
                 }
-
-                // TODO: Figure how to extract win32 like window types and modes from the supported atoms list.
-
-                XFree(array);
+                else
+                {
+                    unsafe
+                    {
+                        Span<XAtom> atoms = new Span<XAtom>((void*)array, (int)count);
+                        // TODO: Figure how to extract win32 like window types and modes from the supported atoms list.
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < atoms.Length; i++)
+                        {
+                            sb.Append(atoms[i]);
+                            sb.Append(", ");
+                        }
+                        sb.Length -= ", ".Length;
+                        Logger?.LogInfo($"_NET_SUPPORTED: {sb}");
+                        XFree(array);
+                    }
+                }
             }
 
             // Create a helper window to help with clipboard stuff.
@@ -192,6 +257,10 @@ namespace OpenTK.Platform.Native.X11
 
                 // Register for clipboard updates.
                 XFixes.XFixesSelectSelectionInput(X11.Display, X11.DefaultRootWindow, X11.Atoms[KnownAtoms.CLIPBOARD], XFixes.SelectionEventMask.SetSelectionOwnerNotifyMask);
+            }
+            else
+            {
+                Logger?.LogWarning("XFIXES extension not supported. Clipboard update events will not be supported.");
             }
 
             // FIXME: Don't throw?
@@ -576,7 +645,8 @@ namespace OpenTK.Platform.Native.X11
                                         // Find the event and remove it from the queue
                                         XCheckIfEvent(X11.Display, out _, X11.IsSelectionPropertyNewValueNotify, new IntPtr(&notification));
 
-                                        int result = XGetWindowProperty(X11.Display,
+                                        int result = XGetWindowProperty(
+                                            X11.Display,
                                             notification.Selection.requestor,
                                             X11.Atoms[KnownAtoms.PRIMARY],
                                             0, long.MaxValue, true,
@@ -588,27 +658,43 @@ namespace OpenTK.Platform.Native.X11
                                             out long remainingBytes,
                                             out IntPtr data);
 
-                                        if (actualType == X11.Atoms[KnownAtoms.INCR])
+                                        if (result == Success)
                                         {
-                                            throw new NotImplementedException("We don't support INCR here yet.");
+                                            if (actualType == X11.Atoms[KnownAtoms.INCR])
+                                            {
+                                                if (data != IntPtr.Zero)
+                                                {
+                                                    XFree(data);
+                                                }
+                                                throw new NotImplementedException("We don't support INCR here yet.");
+                                            }
+                                            else
+                                            {
+                                                string fullString = Marshal.PtrToStringUTF8(data)!;
+
+                                                // FIXME: Handle the different formats!
+                                                List<string> files = new List<string>();
+                                                string[] lines = fullString.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+                                                for (int i = 0; i < lines.Length; i++)
+                                                {
+                                                    if (lines[i].StartsWith("#")) continue;
+                                                    else if (lines[i].StartsWith("file://"))
+                                                        files.Add(lines[i]["file://".Length..]);
+                                                    else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
+                                                }
+
+                                                // FIXME: Get the last XdndPosition location!
+                                                EventQueue.Raise(xwindow, PlatformEventType.FileDrop, new FileDropEventArgs(xwindow, files, (0, 0)));
+                                            }
                                         }
                                         else
                                         {
-                                            string fullString = Marshal.PtrToStringUTF8(data)!;
+                                            Logger?.LogWarning($"Could not read XdndDrop file list.");
+                                        }
 
-                                            // FIXME: Handle the different formats!
-                                            List<string> files = new List<string>();
-                                            string[] lines = fullString.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-                                            for (int i = 0; i < lines.Length; i++)
-                                            {
-                                                if (lines[i].StartsWith("#")) continue;
-                                                else if (lines[i].StartsWith("file://"))
-                                                    files.Add(lines[i]["file://".Length..]);
-                                                else Logger?.LogDebug($"Got unknown file uri: {lines[i]}");
-                                            }
-
-                                            // FIXME: Get the last XdndPosition location!
-                                            EventQueue.Raise(xwindow, PlatformEventType.FileDrop, new FileDropEventArgs(xwindow, files, (0, 0)));
+                                        if (data != IntPtr.Zero)
+                                        {
+                                            XFree(data);
                                         }
                                     }
 
@@ -1524,18 +1610,25 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr name);
 
-            // FIXME: Make sure to free name before we reassign it?
-
             // If the property is empty or does not exist or an error,
             // fetch the classic name.
             if (result != Success || returnedType.IsNone)
             {
+                if (name != IntPtr.Zero)
+                {
+                    XFree(name);
+                }
                 XFetchName(window.Display, window.Window, out name);
+                string str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
+                XFree(name);
+                return str;
             }
-
-            string str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
-            XFree(name);
-            return str;
+            else
+            {
+                string str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
+                XFree(name);
+                return str;
+            }
         }
 
         /// <inheritdoc />
@@ -1589,16 +1682,23 @@ namespace OpenTK.Platform.Native.X11
                 out _,
                 out IntPtr iconName);
 
-            // FIXME: Make sure to free name before we reassign it?
-
             if (result != Success || returnedType.IsNone)
             {
+                if (iconName != IntPtr.Zero)
+                {
+                    XFree(iconName);
+                }
                 XGetIconName(xwindow.Display, xwindow.Window, out iconName);
+                string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
+                XFree(iconName);
+                return str;    
             }
-
-            string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
-            XFree(iconName);
-            return str;
+            else
+            {
+                string str = Marshal.PtrToStringUTF8(iconName) ?? string.Empty;
+                XFree(iconName);
+                return str;
+            }
         }
 
         /// <summary>
@@ -1725,7 +1825,10 @@ namespace OpenTK.Platform.Native.X11
                 bottom = (int)Marshal.PtrToStructure<long>(array + 24);
             }
 
-            XFree(array);
+            if (array != IntPtr.Zero)
+            {
+                XFree(array);
+            }
         }
 
         /// <inheritdoc />
@@ -2152,6 +2255,7 @@ namespace OpenTK.Platform.Native.X11
                 unsafe
                 {
                     int state = *(int*)contents;
+                    XFree(contents);
                     if (state == IconicState)
                     {
                         return WindowMode.Minimized;
@@ -2539,7 +2643,7 @@ namespace OpenTK.Platform.Native.X11
 
             // Check for ToolBox
             {
-                XGetWindowProperty(
+                int result = XGetWindowProperty(
                     X11.Display, 
                     xwindow.Window, 
                     X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE], 
@@ -2551,21 +2655,30 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr content);
 
-                // If window type is UTILITY, assume toolbox.
-                unsafe {
-                    XAtom windowType = *(XAtom*)content;
-                    if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                if (result != Success)
+                {
+                    if (content != IntPtr.Zero)
                     {
-                        return WindowBorderStyle.ToolBox;
+                        XFree(content);
                     }
                 }
-
-                XFree(content);
+                else
+                {
+                    // If window type is UTILITY, assume toolbox.
+                    unsafe {
+                        XAtom windowType = *(XAtom*)content;
+                        XFree(content);
+                        if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                        {
+                            return WindowBorderStyle.ToolBox;
+                        }
+                    }
+                }
             }
 
             // Check for borderless
             {
-                XGetWindowProperty(
+                int result = XGetWindowProperty(
                     X11.Display, 
                     xwindow.Window, 
                     X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
@@ -2577,16 +2690,25 @@ namespace OpenTK.Platform.Native.X11
                     out _,
                     out IntPtr content);
 
-                // If decorations are turned off, assume borderless.
-                unsafe {
-                    MotifWmHints* motifWmHints = (MotifWmHints*)content;
-                    if (motifWmHints->decorations == 0)
+                if (result != Success)
+                {
+                    if (content != IntPtr.Zero)
                     {
-                        return WindowBorderStyle.Borderless;
+                        XFree(content);
                     }
                 }
-
-                XFree(content);
+                else
+                {
+                    // If decorations are turned off, assume borderless.
+                    unsafe {
+                        MotifWmHints* motifWmHints = (MotifWmHints*)content;
+                        XFree(content);
+                        if (motifWmHints->decorations == 0)
+                        {
+                            return WindowBorderStyle.Borderless;
+                        }
+                    }
+                }
             }
 
             // If FixedSize is set, assume FixedBorder.
@@ -2801,19 +2923,31 @@ namespace OpenTK.Platform.Native.X11
                 out long remainingBytes,
                 out IntPtr contents);
 
-            bool above = false;
-            unsafe {
-                XAtom* atoms = (XAtom*)contents;
-                for (int i = 0; i < numberOfItems; i++)
+            if (result != Success)
+            {
+                Logger?.LogWarning("Couldn't get _NET_WM_STATE. Can't check always on top status.");
+                if (contents != IntPtr.Zero)
                 {
-                    if (atoms[i] == X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE])
+                    XFree(contents);
+                }
+                return false;
+            }
+            else
+            {
+                bool above = false;
+                unsafe {
+                    XAtom* atoms = (XAtom*)contents;
+                    for (int i = 0; i < numberOfItems; i++)
                     {
-                        above = true;
+                        if (atoms[i] == X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE])
+                        {
+                            above = true;
+                        }
                     }
                 }
+                XFree(contents);
+                return above;
             }
-
-            return above;
         }
 
         /// <inheritdoc />
