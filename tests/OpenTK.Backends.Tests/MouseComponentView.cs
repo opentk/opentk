@@ -51,9 +51,16 @@ namespace OpenTK.Backends.Tests
         Vector2[] HitTypeAreaPosition = new Vector2[HitTypeValues.Length];
         Vector2[] HitTypeAreaSize = new Vector2[HitTypeValues.Length];
 
+        bool IsActive = false;
+
         // FIXME: Actually make this usable.
         private HitType HitTest(WindowHandle window, Vector2 point)
         {
+            if (IsActive == false)
+            {
+                return HitType.Default;
+            }
+
             for (int i = 0; i < HitTypeValues.Length; i++)
             {
                 Box2 grabArea = new Box2(HitTypeAreaPosition[i], HitTypeAreaPosition[i] + HitTypeAreaSize[i]);
@@ -64,6 +71,20 @@ namespace OpenTK.Backends.Tests
             }
 
             return HitType.Default;
+        }
+
+        public override void NotifyEnter()
+        {
+            base.NotifyEnter();
+
+            IsActive = true;
+        }
+
+        public override void NotifyLeave()
+        {
+            base.NotifyLeave();
+
+            IsActive = false;
         }
 
         public override void Paint(double deltaTime)

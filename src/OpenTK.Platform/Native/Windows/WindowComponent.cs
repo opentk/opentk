@@ -724,9 +724,7 @@ namespace OpenTK.Platform.Native.Windows
                             switch (type)
                             {
                                 case HitType.Default:
-                                    IntPtr ret = Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                                    Console.WriteLine($"Hit: {(HT)(int)ret}");
-                                    return ret;
+                                    return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                                 case HitType.Normal:
                                     return (IntPtr)HT.Client;
                                 case HitType.Draggable:
@@ -748,7 +746,8 @@ namespace OpenTK.Platform.Native.Windows
                                 case HitType.ResizeLeft:
                                     return (IntPtr)HT.Left;
                                 default:
-                                    throw new InvalidEnumArgumentException("hit test return", (int)type, typeof(HitType));
+                                    // FIXME: Better exception message?
+                                    throw new InvalidEnumArgumentException("Hit test return", (int)type, typeof(HitType));
                             }
                         }
                         else
