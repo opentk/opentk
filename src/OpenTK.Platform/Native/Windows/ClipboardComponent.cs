@@ -548,17 +548,17 @@ namespace OpenTK.Platform.Native.Windows
 
             wav_header header = MemoryMarshal.Cast<byte, wav_header>(span)[0];
 
-            Console.WriteLine($"wav_size: {header.wav_size}");
+            Logger?.LogDebug($"wav_size: {header.wav_size}");
 
 
-            Console.WriteLine($"fmt_chunk_size: {header.fmt_chunk_size}");
-            Console.WriteLine($"audio_format: {header.audio_format}");
-            Console.WriteLine($"num_channels: {header.num_channels}");
-            Console.WriteLine($"sample_rate: {header.sample_rate}");
-            Console.WriteLine($"byte_rate: {header.byte_rate}");
-            Console.WriteLine($"sample_alignment: {header.sample_alignment}");
-            Console.WriteLine($"bit_depth: {header.bit_depth}");
-            Console.WriteLine($"data_bytes: {header.data_bytes}");
+            Logger?.LogDebug($"fmt_chunk_size: {header.fmt_chunk_size}");
+            Logger?.LogDebug($"audio_format: {header.audio_format}");
+            Logger?.LogDebug($"num_channels: {header.num_channels}");
+            Logger?.LogDebug($"sample_rate: {header.sample_rate}");
+            Logger?.LogDebug($"byte_rate: {header.byte_rate}");
+            Logger?.LogDebug($"sample_alignment: {header.sample_alignment}");
+            Logger?.LogDebug($"bit_depth: {header.bit_depth}");
+            Logger?.LogDebug($"data_bytes: {header.data_bytes}");
 
             AudioData data = new AudioData();
 

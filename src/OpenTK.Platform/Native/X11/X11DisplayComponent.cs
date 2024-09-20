@@ -369,7 +369,7 @@ namespace OpenTK.Platform.Native.X11
             switch ((RREventType)(@event.Type - X11.XRandREventBase))
             {
                 case RREventType.RRScreenChangeNotify:
-                    Console.WriteLine("RR Screen change notify.");
+                    logger?.LogInfo("RR Screen change notify.");
                     break;
                 case RREventType.RRNotify:
                 {

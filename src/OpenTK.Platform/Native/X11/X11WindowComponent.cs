@@ -1188,7 +1188,7 @@ namespace OpenTK.Platform.Native.X11
                                 WMState changed = xwindow.WMState ^ state;
 
                                 // FIXME: Remove or make debug print.
-                                Console.WriteLine($"State: {state}, Changed: {changed}, Before: {xwindow.WMState}");
+                                Logger?.LogInfo($"State: {state}, Changed: {changed}, Before: {xwindow.WMState}");
 
                                 xwindow.WMState = state;
 
@@ -1235,7 +1235,7 @@ namespace OpenTK.Platform.Native.X11
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
                                     property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
                                 {
-                                    Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                    Logger?.LogInfo($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
                             }
                             break;

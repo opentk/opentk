@@ -210,7 +210,7 @@ namespace OpenTK.Platform.Native.macOS
                 Debug.Assert(allowedExtensions[i].Filter.Contains(';') == false, "We don't support multiple extension filters in one filter on macOS atm.");
                 IntPtr ext = ToNSString(allowedExtensions[i].Filter);
                 IntPtr type = objc_msgSend_IntPtr((IntPtr)UTTypeClass, selTypeWithFilenameExtension, ext);
-                Console.WriteLine(FromNSString(objc_msgSend_IntPtr(type, sel_registerName("identifier"u8))));
+                //Console.WriteLine(FromNSString(objc_msgSend_IntPtr(type, sel_registerName("identifier"u8))));
                 objc_msgSend(array, selAddObject, type);
                 objc_msgSend(type, Release);
                 objc_msgSend(ext, Release);

@@ -30,7 +30,7 @@ namespace OpenTK.Backends.Tests
                 {
                     // FIXME: Should we flip here?
                     StbImage.stbi_set_flip_vertically_on_load(1);
-                    result = ImageResult.FromStream(imageStream);
+                    result = ImageResult.FromStream(imageStream, StbImageSharp.ColorComponents.RedGreenBlueAlpha);
                 }
                 catch (InvalidOperationException ex)
                 {
