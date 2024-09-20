@@ -35,20 +35,6 @@ namespace OpenTK.Backends.Tests
             {
                 openglSettings.Version = new Version(3, 1);
             }
-
-            // FIXME: Make a useful hit test callback as part of this view.
-            //WindowComponent.SetHitTestCallback(Program.Window, HitTest);
-        }
-
-        // FIXME: Actually make this usable.
-        private HitType HitTest(WindowHandle window, Vector2 point)
-        {
-            if (point.X < 300 && point.Y < 300)
-            {
-                return HitType.Draggable;
-            }
-
-            return HitType.Default;
         }
 
         int selectedWindow = -1;

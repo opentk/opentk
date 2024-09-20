@@ -30,6 +30,40 @@ namespace OpenTK.Backends.Tests
 
             try { canSetMousePosition = Toolkit.Mouse.CanSetMousePosition; } catch { canSetMousePosition = false; }
             try { supportsRawMouseMotion = Toolkit.Mouse.SupportsRawMouseMotion; } catch { supportsRawMouseMotion = false; }
+
+            // FIXME: Make a useful hit test callback as part of this view.
+            Toolkit.Window.SetHitTestCallback(Program.Window, HitTest);
+        }
+
+        static readonly HitType[] HitTypeValues = 
+        [
+            HitType.Draggable, 
+            HitType.ResizeTopLeft,
+            HitType.ResizeTop,
+            HitType.ResizeTopRight,
+            HitType.ResizeRight,
+            HitType.ResizeBottomRight,
+            HitType.ResizeBottom,
+            HitType.ResizeBottomLeft,
+            HitType.ResizeLeft 
+        ];
+        
+        Vector2[] HitTypeAreaPosition = new Vector2[HitTypeValues.Length];
+        Vector2[] HitTypeAreaSize = new Vector2[HitTypeValues.Length];
+
+        // FIXME: Actually make this usable.
+        private HitType HitTest(WindowHandle window, Vector2 point)
+        {
+            for (int i = 0; i < HitTypeValues.Length; i++)
+            {
+                Box2 grabArea = new Box2(HitTypeAreaPosition[i], HitTypeAreaPosition[i] + HitTypeAreaSize[i]);
+                if (grabArea.ContainsInclusive(point))
+                {
+                    return HitTypeValues[i];
+                }
+            }
+
+            return HitType.Default;
         }
 
         public override void Paint(double deltaTime)
@@ -106,6 +140,23 @@ namespace OpenTK.Backends.Tests
                 Toolkit.Mouse.EnableRawMouseMotion(Program.Window, enableRawInput);
             }
 
+            ImGui.EndDisabled();
+
+            ImGui.SeparatorText("Hit tests");
+
+            ImGui.BeginDisabled(true);
+            // FIXME: Better layout for this!
+            for (int i = 0; i < HitTypeValues.Length; i++)
+            {
+                HitTypeAreaPosition[i] = ImGui.GetCursorScreenPos().ToOpenTK();
+                // FIXME: Fit text!
+                HitTypeAreaSize[i] = (100, 50);
+                ImGui.Button(HitTypeValues[i].ToString(), HitTypeAreaSize[i].AsNumerics());
+                ImGui.SameLine();
+                if ((i + 1) % 4 == 0)
+                    ImGui.NewLine();
+            }
+            ImGui.NewLine();
             ImGui.EndDisabled();
         }
     }

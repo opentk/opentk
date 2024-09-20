@@ -750,15 +750,103 @@ namespace OpenTK.Platform.Native.X11
                             }
                             else
                             {
+                                // FIXME: Maybe we should be able to have hittests for more than button 1?
                                 if (buttonPressed.button == 1 && xwindow.HitTest != null)
                                 {
                                     // We do a hit test here to see if we should do something.
                                     HitType type = xwindow.HitTest(xwindow, new Vector2(buttonPressed.x, buttonPressed.y));
-                                    if (type != HitType.Default)
+                                    switch (type)
                                     {
-                                        // FIXME: Handle the hit type!
-                                        Logger?.LogWarning("Hit testing is not supported in x11 yet.");
-                                        continue;
+                                        case HitType.Draggable:
+                                        {
+                                            const long _NET_WM_MOVERESIZE_MOVE = 8;
+
+                                            // FIXME: Do we need to regrab the pointer when the move is done?
+                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                            XFlush(X11.Display);
+
+                                            XEvent e = new XEvent();
+                                            ref XClientMessageEvent client = ref e.ClientMessage;
+                                            client.Type = XEventType.ClientMessage;
+                                            client.Window = xwindow.Window;
+                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                            client.Format = 32;
+                                            unsafe
+                                            {
+                                                client.l[0] = buttonPressed.x_root;
+                                                client.l[1] = buttonPressed.y_root;
+                                                client.l[2] = _NET_WM_MOVERESIZE_MOVE;
+                                                client.l[3] = buttonPressed.button;
+                                                client.l[4] = 0;
+                                            }
+
+                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                            XSync(X11.Display, 0);
+                                            continue;
+                                        }
+                                        case HitType.ResizeBottom:
+                                        case HitType.ResizeBottomLeft:
+                                        case HitType.ResizeBottomRight:
+                                        case HitType.ResizeLeft:
+                                        case HitType.ResizeRight:
+                                        case HitType.ResizeTop:
+                                        case HitType.ResizeTopLeft:
+                                        case HitType.ResizeTopRight:
+                                        {
+                                            const long _NET_WM_MOVERESIZE_SIZE_TOPLEFT     = 0;
+                                            const long _NET_WM_MOVERESIZE_SIZE_TOP         = 1;
+                                            const long _NET_WM_MOVERESIZE_SIZE_TOPRIGHT    = 2;
+                                            const long _NET_WM_MOVERESIZE_SIZE_RIGHT       = 3;
+                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT = 4;
+                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOM      = 5;
+                                            const long _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT  = 6;
+                                            const long _NET_WM_MOVERESIZE_SIZE_LEFT        = 7;
+
+                                            long direction;
+                                            switch (type)
+                                            {
+                                                case HitType.ResizeBottom:      direction = _NET_WM_MOVERESIZE_SIZE_BOTTOM;      break;
+                                                case HitType.ResizeBottomLeft:  direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMLEFT;  break;
+                                                case HitType.ResizeBottomRight: direction = _NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT; break;
+                                                case HitType.ResizeLeft:        direction = _NET_WM_MOVERESIZE_SIZE_LEFT;        break;
+                                                case HitType.ResizeRight:       direction = _NET_WM_MOVERESIZE_SIZE_RIGHT;       break;
+                                                case HitType.ResizeTop:         direction = _NET_WM_MOVERESIZE_SIZE_TOP;         break;
+                                                case HitType.ResizeTopLeft:     direction = _NET_WM_MOVERESIZE_SIZE_TOPLEFT;     break;
+                                                case HitType.ResizeTopRight:    direction = _NET_WM_MOVERESIZE_SIZE_TOPRIGHT;    break;
+                                                default:
+                                                    throw new UnreachableException($"Unknown resize hit type: {type}");
+                                            }
+
+                                            // FIXME: Do we need to regrab the pointer when the move is done?
+                                            XUngrabPointer(X11.Display, XTime.CurrentTime);
+                                            XFlush(X11.Display);
+
+                                            XEvent e = new XEvent();
+                                            ref XClientMessageEvent client = ref e.ClientMessage;
+                                            client.Type = XEventType.ClientMessage;
+                                            client.Window = xwindow.Window;
+                                            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_MOVERESIZE];
+                                            client.Format = 32;
+                                            unsafe
+                                            {
+                                                client.l[0] = buttonPressed.x_root;
+                                                client.l[1] = buttonPressed.y_root;
+                                                client.l[2] = direction;
+                                                client.l[3] = buttonPressed.button;
+                                                client.l[4] = 0;
+                                            }
+
+                                            int status = XSendEvent(X11.Display, XDefaultRootWindow(X11.Display), 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, in e);
+                                            XSync(X11.Display, 0);
+
+                                            // FIXME: Handle the resize!
+                                            Logger?.LogWarning("Hit test resizing is not supported in x11 yet.");
+                                            continue;
+                                        }
+                                        case HitType.Normal:
+                                        case HitType.Default:
+                                        default:
+                                            break;
                                     }
                                 }
 
@@ -917,6 +1005,18 @@ namespace OpenTK.Platform.Native.X11
                             XCrossingEvent enter = ea.Enter;
 
                             EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, true));
+
+                            // If we are supposed to confine the cursor to the window
+                            // we reapply the cursor grab here. 
+                            // This is necessary for hit tests where we have to intentionally
+                            // drop all of our grabs for it to work properly.
+                            // But the good thing is we get a EnterNotify after the
+                            // drag/resize is complete, so we can reapply the grab here.
+                            // - Noggin_bops 2024-09-20
+                            if (xwindow.CaptureMode == CursorCaptureMode.Confined)
+                            {
+                                SetCursorCaptureMode(xwindow, CursorCaptureMode.Confined);
+                            }
 
                             break;
                         }
