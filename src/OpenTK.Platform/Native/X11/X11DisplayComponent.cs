@@ -296,6 +296,8 @@ namespace OpenTK.Platform.Native.X11
                     }
 
                     unsafe {
+                        // We are initializing, so doing a hardware poll is reasonable.
+                        // - Noggin_bops 2024-09-23
                         XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
 
                         RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
@@ -395,6 +397,9 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 unsafe
                                 {
+                                    // FIXME: Do we want to use XRRGetScreenResources or XRRGetScreenResourcesCurrent here?
+                                    // SDL seems to do a simple check to see if the information needs to be updated.
+                                    // - Noggin_bops 2024-09-23
                                     XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                                     RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
 
@@ -502,7 +507,7 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -538,7 +543,7 @@ namespace OpenTK.Platform.Native.X11
         {
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
 
                 if (crtcInfo != null)
@@ -577,7 +582,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, xdisplay.Output);
                 if (outputInfo == null)
                 {
@@ -611,7 +616,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -641,7 +646,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -671,7 +676,7 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)
@@ -785,7 +790,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRScreenResources* resources = XRRGetScreenResourcesCurrent(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 if (crtcInfo != null)

@@ -43,6 +43,9 @@ namespace OpenTK.Platform.Native.X11.XRandR
         internal static extern unsafe XRRScreenResources* XRRGetScreenResources(XDisplayPtr display, XWindow window);
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe XRRScreenResources* XRRGetScreenResourcesCurrent(XDisplayPtr display, XWindow window);
+
+        [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
         internal static extern unsafe void XRRFreeScreenResources(XRRScreenResources* resources);
 
         internal static unsafe Span<XAtom> XRRListOutputProperties(XDisplayPtr display, RROutput output, out int nprop)
