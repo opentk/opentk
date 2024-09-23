@@ -1883,8 +1883,6 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceVertexAttributeDivisorPropertiesExt = 1000190000,
         /// <summary>[requires: <b>VK_GGP_frame_token</b>]</summary>
         StructureTypePresentFrameTokenGgp = 1000191000,
-        /// <summary>[requires: <b>VK_NV_compute_shader_derivatives</b>]</summary>
-        StructureTypePhysicalDeviceComputeShaderDerivativesFeaturesNv = 1000201000,
         /// <summary>[requires: <b>VK_NV_mesh_shader</b>]</summary>
         StructureTypePhysicalDeviceMeshShaderFeaturesNv = 1000202000,
         /// <summary>[requires: <b>VK_NV_mesh_shader</b>]</summary>
@@ -2585,6 +2583,12 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePipelineCreateFlags2CreateInfoKhr = 1000470005,
         /// <summary>[requires: <b>VK_KHR_maintenance5</b>]</summary>
         StructureTypeBufferUsageFlags2CreateInfoKhr = 1000470006,
+        /// <summary>[requires: <b>VK_AMD_anti_lag</b>]</summary>
+        StructureTypePhysicalDeviceAntiLagFeaturesAmd = 1000476000,
+        /// <summary>[requires: <b>VK_AMD_anti_lag</b>]</summary>
+        StructureTypeAntiLagDataAmd = 1000476001,
+        /// <summary>[requires: <b>VK_AMD_anti_lag</b>]</summary>
+        StructureTypeAntiLagPresentationInfoAmd = 1000476002,
         /// <summary>[requires: <b>VK_KHR_ray_tracing_position_fetch</b>]</summary>
         StructureTypePhysicalDeviceRayTracingPositionFetchFeaturesKhr = 1000481000,
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
@@ -2593,6 +2597,26 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceShaderObjectPropertiesExt = 1000482001,
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         StructureTypeShaderCreateInfoExt = 1000482002,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePhysicalDevicePipelineBinaryFeaturesKhr = 1000483000,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineBinaryCreateInfoKhr = 1000483001,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineBinaryInfoKhr = 1000483002,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineBinaryKeyKhr = 1000483003,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePhysicalDevicePipelineBinaryPropertiesKhr = 1000483004,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypeReleaseCapturedPipelineDataInfoKhr = 1000483005,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineBinaryDataInfoKhr = 1000483006,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineCreateInfoKhr = 1000483007,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypeDevicePipelineBinaryInternalCacheControlKhr = 1000483008,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        StructureTypePipelineBinaryHandlesInfoKhr = 1000483009,
         /// <summary>[requires: <b>VK_QCOM_tile_properties</b>]</summary>
         StructureTypePhysicalDeviceTilePropertiesFeaturesQcom = 1000484000,
         /// <summary>[requires: <b>VK_QCOM_tile_properties</b>]</summary>
@@ -2663,6 +2687,10 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceMultiviewPerViewRenderAreasFeaturesQcom = 1000510000,
         /// <summary>[requires: <b>VK_QCOM_multiview_per_view_render_areas</b>]</summary>
         StructureTypeMultiviewPerViewRenderAreasRenderPassBeginInfoQcom = 1000510001,
+        /// <summary>[requires: <b>VK_KHR_compute_shader_derivatives</b>]</summary>
+        StructureTypePhysicalDeviceComputeShaderDerivativesFeaturesKhr = 1000201000,
+        /// <summary>[requires: <b>VK_KHR_compute_shader_derivatives</b>]</summary>
+        StructureTypePhysicalDeviceComputeShaderDerivativesPropertiesKhr = 1000511000,
         /// <summary>[requires: <b>VK_KHR_video_decode_av1</b>]</summary>
         StructureTypeVideoDecodeAv1CapabilitiesKhr = 1000512000,
         /// <summary>[requires: <b>VK_KHR_video_decode_av1</b>]</summary>
@@ -2755,6 +2783,8 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceRawAccessChainsFeaturesNv = 1000555000,
         /// <summary>[requires: <b>VK_KHR_shader_relaxed_extended_instruction</b>]</summary>
         StructureTypePhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKhr = 1000558000,
+        /// <summary>[requires: <b>VK_NV_command_buffer_inheritance</b>]</summary>
+        StructureTypePhysicalDeviceCommandBufferInheritanceFeaturesNv = 1000559000,
         /// <summary>[requires: <b>VK_KHR_maintenance7</b>]</summary>
         StructureTypePhysicalDeviceMaintenance7FeaturesKhr = 1000562000,
         /// <summary>[requires: <b>VK_KHR_maintenance7</b>]</summary>
@@ -2987,6 +3017,8 @@ namespace OpenTK.Graphics.Vulkan
         StructureTypePhysicalDeviceDepthStencilResolvePropertiesKhr = 1000199000,
         /// <summary>[requires: <b>VK_KHR_depth_stencil_resolve</b>]</summary>
         StructureTypeSubpassDescriptionDepthStencilResolveKhr = 1000199001,
+        /// <summary>[requires: <b>VK_NV_compute_shader_derivatives</b>]</summary>
+        StructureTypePhysicalDeviceComputeShaderDerivativesFeaturesNv = 1000201000,
         /// <summary>[requires: <b>VK_NV_fragment_shader_barycentric</b>]</summary>
         StructureTypePhysicalDeviceFragmentShaderBarycentricFeaturesNv = 1000203000,
         /// <summary>[requires: <b>VK_KHR_timeline_semaphore</b>]</summary>
@@ -3247,6 +3279,10 @@ namespace OpenTK.Graphics.Vulkan
         ErrorCompressionExhaustedExt = -1000338000,
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         IncompatibleShaderBinaryExt = 1000482000,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        PipelineBinaryMissingKhr = 1000483000,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        ErrorNotEnoughSpaceKhr = -1000483000,
         /// <summary>[requires: <b>VK_KHR_maintenance1</b>]</summary>
         ErrorOutOfPoolMemoryKhr = -1000069000,
         /// <summary>[requires: <b>VK_KHR_external_memory</b>]</summary>
@@ -3526,6 +3562,8 @@ namespace OpenTK.Graphics.Vulkan
         ObjectTypeOpticalFlowSessionNv = 1000464000,
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         ObjectTypeShaderExt = 1000482000,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        ObjectTypePipelineBinaryKhr = 1000483000,
         /// <summary>[requires: <b>VK_NV_external_sci_sync2</b>]VkSemaphoreSciSyncPoolNV</summary>
         ObjectTypeSemaphoreSciSyncPoolNv = 1000489000,
         /// <summary>[requires: <b>VK_KHR_descriptor_update_template</b>]</summary>
@@ -3546,6 +3584,19 @@ namespace OpenTK.Graphics.Vulkan
     {
         DirectDriverLoadingModeExclusiveLunarg = 0,
         DirectDriverLoadingModeInclusiveLunarg = 1,
+    }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagModeAMD.html" /></remarks>
+    public enum VkAntiLagModeAMD : int
+    {
+        AntiLagModeDriverControlAmd = 0,
+        AntiLagModeOnAmd = 1,
+        AntiLagModeOffAmd = 2,
+    }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAntiLagStageAMD.html" /></remarks>
+    public enum VkAntiLagStageAMD : int
+    {
+        AntiLagStageInputAmd = 0,
+        AntiLagStagePresentAmd = 1,
     }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueFlagBits.html" /></remarks>
     [Flags]
@@ -4156,6 +4207,8 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreate2RayTracingDisplacementMicromapBitNv = 268435456,
         /// <summary>[requires: <b>VK_KHR_maintenance5</b>]</summary>
         PipelineCreate2DescriptorBufferBitExt = 536870912,
+        /// <summary>[requires: <b>VK_KHR_pipeline_binary</b>]</summary>
+        PipelineCreate2CaptureDataBitKhr = 18446744071562067968,
     }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageCreateFlagBits.html" /></remarks>
     [Flags]
@@ -6375,7 +6428,7 @@ namespace OpenTK.Graphics.Vulkan
     }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeFlagBitsKHR.html" /></remarks>
     [Flags]
-    public enum VkVideoEncodeFlagBitsKHR : uint
+    public enum VkVideoEncodeFlagBitsKHR : int
     {
     }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeUsageFlagBitsKHR.html" /></remarks>
@@ -7021,6 +7074,11 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_map_memory_placed</b>]</summary>
         MemoryUnmapReserveBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWaylandSurfaceCreateFlagBitsKHR.html" /></remarks>
+    [Flags]
+    public enum VkWaylandSurfaceCreateFlagBitsKHR : int
+    {
+    }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolCreateFlags.html" /></remarks>
     [Flags]
     public enum VkQueryPoolCreateFlags : uint
@@ -7409,6 +7467,11 @@ namespace OpenTK.Graphics.Vulkan
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoDecodeFlagsKHR : uint
+    {
+    }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeFlagsKHR.html" /></remarks>
+    [Flags]
+    public enum VkVideoEncodeFlagsKHR : uint
     {
     }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlFlagsKHR.html" /></remarks>

@@ -487,6 +487,41 @@ namespace OpenTK.Graphics.Vulkan
             _vkMergePipelineCaches_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkPipelineCache*, VkResult>)VKLoader.GetInstanceProcAddress("vkMergePipelineCaches");
             return _vkMergePipelineCaches_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
+        public static delegate* unmanaged<VkDevice, VkPipelineBinaryCreateInfoKHR*, VkAllocationCallbacks*, VkPipelineBinaryHandlesInfoKHR*, VkResult> _vkCreatePipelineBinariesKHR_fnptr = &vkCreatePipelineBinariesKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkCreatePipelineBinariesKHR_Lazy(VkDevice device, VkPipelineBinaryCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineBinaryHandlesInfoKHR* pBinaries)
+        {
+            _vkCreatePipelineBinariesKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineBinaryCreateInfoKHR*, VkAllocationCallbacks*, VkPipelineBinaryHandlesInfoKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkCreatePipelineBinariesKHR");
+            return _vkCreatePipelineBinariesKHR_fnptr(device, pCreateInfo, pAllocator, pBinaries);
+        }
+        public static delegate* unmanaged<VkDevice, VkPipelineBinaryKHR, VkAllocationCallbacks*, void> _vkDestroyPipelineBinaryKHR_fnptr = &vkDestroyPipelineBinaryKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkDestroyPipelineBinaryKHR_Lazy(VkDevice device, VkPipelineBinaryKHR pipelineBinary, VkAllocationCallbacks* pAllocator)
+        {
+            _vkDestroyPipelineBinaryKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineBinaryKHR, VkAllocationCallbacks*, void>)VKLoader.GetInstanceProcAddress("vkDestroyPipelineBinaryKHR");
+            _vkDestroyPipelineBinaryKHR_fnptr(device, pipelineBinary, pAllocator);
+        }
+        public static delegate* unmanaged<VkDevice, VkPipelineCreateInfoKHR*, VkPipelineBinaryKeyKHR*, VkResult> _vkGetPipelineKeyKHR_fnptr = &vkGetPipelineKeyKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetPipelineKeyKHR_Lazy(VkDevice device, VkPipelineCreateInfoKHR* pPipelineCreateInfo, VkPipelineBinaryKeyKHR* pPipelineKey)
+        {
+            _vkGetPipelineKeyKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineCreateInfoKHR*, VkPipelineBinaryKeyKHR*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineKeyKHR");
+            return _vkGetPipelineKeyKHR_fnptr(device, pPipelineCreateInfo, pPipelineKey);
+        }
+        public static delegate* unmanaged<VkDevice, VkPipelineBinaryDataInfoKHR*, VkPipelineBinaryKeyKHR*, nuint*, void*, VkResult> _vkGetPipelineBinaryDataKHR_fnptr = &vkGetPipelineBinaryDataKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkGetPipelineBinaryDataKHR_Lazy(VkDevice device, VkPipelineBinaryDataInfoKHR* pInfo, VkPipelineBinaryKeyKHR* pPipelineBinaryKey, nuint* pPipelineBinaryDataSize, void* pPipelineBinaryData)
+        {
+            _vkGetPipelineBinaryDataKHR_fnptr = (delegate* unmanaged<VkDevice, VkPipelineBinaryDataInfoKHR*, VkPipelineBinaryKeyKHR*, nuint*, void*, VkResult>)VKLoader.GetInstanceProcAddress("vkGetPipelineBinaryDataKHR");
+            return _vkGetPipelineBinaryDataKHR_fnptr(device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
+        }
+        public static delegate* unmanaged<VkDevice, VkReleaseCapturedPipelineDataInfoKHR*, VkAllocationCallbacks*, VkResult> _vkReleaseCapturedPipelineDataKHR_fnptr = &vkReleaseCapturedPipelineDataKHR_Lazy;
+        [UnmanagedCallersOnly]
+        private static VkResult vkReleaseCapturedPipelineDataKHR_Lazy(VkDevice device, VkReleaseCapturedPipelineDataInfoKHR* pInfo, VkAllocationCallbacks* pAllocator)
+        {
+            _vkReleaseCapturedPipelineDataKHR_fnptr = (delegate* unmanaged<VkDevice, VkReleaseCapturedPipelineDataInfoKHR*, VkAllocationCallbacks*, VkResult>)VKLoader.GetInstanceProcAddress("vkReleaseCapturedPipelineDataKHR");
+            return _vkReleaseCapturedPipelineDataKHR_fnptr(device, pInfo, pAllocator);
+        }
         public static delegate* unmanaged<VkDevice, VkPipelineCache, uint, VkGraphicsPipelineCreateInfo*, VkAllocationCallbacks*, VkPipeline*, VkResult> _vkCreateGraphicsPipelines_fnptr = &vkCreateGraphicsPipelines_Lazy;
         [UnmanagedCallersOnly]
         private static VkResult vkCreateGraphicsPipelines_Lazy(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
@@ -2992,6 +3027,13 @@ namespace OpenTK.Graphics.Vulkan
         {
             _vkGetPipelineIndirectDeviceAddressNV_fnptr = (delegate* unmanaged<VkDevice, VkPipelineIndirectDeviceAddressInfoNV*, ulong>)VKLoader.GetInstanceProcAddress("vkGetPipelineIndirectDeviceAddressNV");
             return _vkGetPipelineIndirectDeviceAddressNV_fnptr(device, pInfo);
+        }
+        public static delegate* unmanaged<VkDevice, VkAntiLagDataAMD*, void> _vkAntiLagUpdateAMD_fnptr = &vkAntiLagUpdateAMD_Lazy;
+        [UnmanagedCallersOnly]
+        private static void vkAntiLagUpdateAMD_Lazy(VkDevice device, VkAntiLagDataAMD* pData)
+        {
+            _vkAntiLagUpdateAMD_fnptr = (delegate* unmanaged<VkDevice, VkAntiLagDataAMD*, void>)VKLoader.GetInstanceProcAddress("vkAntiLagUpdateAMD");
+            _vkAntiLagUpdateAMD_fnptr(device, pData);
         }
         public static delegate* unmanaged<VkCommandBuffer, VkCullModeFlagBits, void> _vkCmdSetCullMode_fnptr = &vkCmdSetCullMode_Lazy;
         [UnmanagedCallersOnly]

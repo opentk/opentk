@@ -406,6 +406,22 @@ namespace OpenTK.Graphics.Vulkan
         public static explicit operator ulong(VkPipelineCache handle) => handle.Handle;
         public static explicit operator VkPipelineCache(ulong handle) => new VkPipelineCache(handle);
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBinaryKHR.html" /></remarks>
+    [DebuggerDisplay("VkPipelineBinaryKHR\\{{Handle}\\}")]
+    public unsafe struct VkPipelineBinaryKHR : IEquatable<VkPipelineBinaryKHR>
+    {
+        public static VkPipelineBinaryKHR Zero => new VkPipelineBinaryKHR(0);
+        public ulong Handle;
+        public VkPipelineBinaryKHR(ulong handle) => Handle = handle;
+        public override bool Equals(object? obj) => obj is VkPipelineBinaryKHR instance && Equals(instance);
+        public bool Equals(VkPipelineBinaryKHR other) => Handle.Equals(other.Handle);
+        public override int GetHashCode() => HashCode.Combine(Handle);
+        public override string? ToString() => Handle.ToString();
+        public static bool operator ==(VkPipelineBinaryKHR left, VkPipelineBinaryKHR right) => left.Equals(right);
+        public static bool operator !=(VkPipelineBinaryKHR left, VkPipelineBinaryKHR right) => !(left == right);
+        public static explicit operator ulong(VkPipelineBinaryKHR handle) => handle.Handle;
+        public static explicit operator VkPipelineBinaryKHR(ulong handle) => new VkPipelineBinaryKHR(handle);
+    }
     /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutNV.html" /></remarks>
     [DebuggerDisplay("VkIndirectCommandsLayoutNV\\{{Handle}\\}")]
     public unsafe struct VkIndirectCommandsLayoutNV : IEquatable<VkIndirectCommandsLayoutNV>

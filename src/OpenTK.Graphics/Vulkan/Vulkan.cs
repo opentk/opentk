@@ -352,6 +352,31 @@ namespace OpenTK.Graphics.Vulkan
         {
             return VkPointers._vkMergePipelineCaches_fnptr(device, dstCache, srcCacheCount, pSrcCaches);
         }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreatePipelineBinariesKHR.html" /></remarks>
+        public static VkResult CreatePipelineBinariesKHR(VkDevice device, VkPipelineBinaryCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineBinaryHandlesInfoKHR* pBinaries)
+        {
+            return VkPointers._vkCreatePipelineBinariesKHR_fnptr(device, pCreateInfo, pAllocator, pBinaries);
+        }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkDestroyPipelineBinaryKHR.html" /></remarks>
+        public static void DestroyPipelineBinaryKHR(VkDevice device, VkPipelineBinaryKHR pipelineBinary, VkAllocationCallbacks* pAllocator)
+        {
+            VkPointers._vkDestroyPipelineBinaryKHR_fnptr(device, pipelineBinary, pAllocator);
+        }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineKeyKHR.html" /></remarks>
+        public static VkResult GetPipelineKeyKHR(VkDevice device, VkPipelineCreateInfoKHR* pPipelineCreateInfo, VkPipelineBinaryKeyKHR* pPipelineKey)
+        {
+            return VkPointers._vkGetPipelineKeyKHR_fnptr(device, pPipelineCreateInfo, pPipelineKey);
+        }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkGetPipelineBinaryDataKHR.html" /></remarks>
+        public static VkResult GetPipelineBinaryDataKHR(VkDevice device, VkPipelineBinaryDataInfoKHR* pInfo, VkPipelineBinaryKeyKHR* pPipelineBinaryKey, nuint* pPipelineBinaryDataSize, void* pPipelineBinaryData)
+        {
+            return VkPointers._vkGetPipelineBinaryDataKHR_fnptr(device, pInfo, pPipelineBinaryKey, pPipelineBinaryDataSize, pPipelineBinaryData);
+        }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkReleaseCapturedPipelineDataKHR.html" /></remarks>
+        public static VkResult ReleaseCapturedPipelineDataKHR(VkDevice device, VkReleaseCapturedPipelineDataInfoKHR* pInfo, VkAllocationCallbacks* pAllocator)
+        {
+            return VkPointers._vkReleaseCapturedPipelineDataKHR_fnptr(device, pInfo, pAllocator);
+        }
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCreateGraphicsPipelines.html" /></remarks>
         public static VkResult CreateGraphicsPipelines(VkDevice device, VkPipelineCache pipelineCache, uint createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines)
         {
@@ -2141,6 +2166,11 @@ namespace OpenTK.Graphics.Vulkan
         public static ulong GetPipelineIndirectDeviceAddressNV(VkDevice device, VkPipelineIndirectDeviceAddressInfoNV* pInfo)
         {
             return VkPointers._vkGetPipelineIndirectDeviceAddressNV_fnptr(device, pInfo);
+        }
+        /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkAntiLagUpdateAMD.html" /></remarks>
+        public static void AntiLagUpdateAMD(VkDevice device, VkAntiLagDataAMD* pData)
+        {
+            VkPointers._vkAntiLagUpdateAMD_fnptr(device, pData);
         }
         /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullMode.html" /></remarks>
         public static void CmdSetCullMode(VkCommandBuffer commandBuffer, VkCullModeFlagBits cullMode)
