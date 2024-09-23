@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:38 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -39,7 +39,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return returnValue;
         }
         /// <inheritdoc cref="AreTexturesResident(int, int*, bool*)"/>
-        public static unsafe bool AreTexturesResident(int n, in int textures, ref bool residences)
+        public static unsafe bool AreTexturesResident(int n, ref readonly int textures, ref bool residences)
         {
             bool returnValue;
             fixed (int* textures_ptr = &textures)
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindBuffersBase(BufferTarget, uint, int, int*)"/>
-        public static unsafe void BindBuffersBase(BufferTarget target, uint first, int count, in int buffers)
+        public static unsafe void BindBuffersBase(BufferTarget target, uint first, int count, ref readonly int buffers)
         {
             fixed (int* buffers_ptr = &buffers)
             {
@@ -109,7 +109,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindBuffersRange(BufferTarget, uint, int, int*, IntPtr*, nint*)"/>
-        public static unsafe void BindBuffersRange(BufferTarget target, uint first, int count, in int buffers, in IntPtr offsets, in nint sizes)
+        public static unsafe void BindBuffersRange(BufferTarget target, uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly nint sizes)
         {
             fixed (int* buffers_ptr = &buffers)
             fixed (IntPtr* offsets_ptr = &offsets)
@@ -149,7 +149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindImageTextures(uint, int, int*)"/>
-        public static unsafe void BindImageTextures(uint first, int count, in int textures)
+        public static unsafe void BindImageTextures(uint first, int count, ref readonly int textures)
         {
             fixed (int* textures_ptr = &textures)
             {
@@ -173,7 +173,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindSamplers(uint, int, int*)"/>
-        public static unsafe void BindSamplers(uint first, int count, in int samplers)
+        public static unsafe void BindSamplers(uint first, int count, ref readonly int samplers)
         {
             fixed (int* samplers_ptr = &samplers)
             {
@@ -197,7 +197,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindTextures(uint, int, int*)"/>
-        public static unsafe void BindTextures(uint first, int count, in int textures)
+        public static unsafe void BindTextures(uint first, int count, ref readonly int textures)
         {
             fixed (int* textures_ptr = &textures)
             {
@@ -233,7 +233,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BindVertexBuffers(uint, int, int*, IntPtr*, int*)"/>
-        public static unsafe void BindVertexBuffers(uint first, int count, in int buffers, in IntPtr offsets, in int strides)
+        public static unsafe void BindVertexBuffers(uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly int strides)
         {
             fixed (int* buffers_ptr = &buffers)
             fixed (IntPtr* offsets_ptr = &offsets)
@@ -259,7 +259,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Bitmap(int, int, float, float, float, float, byte*)"/>
-        public static unsafe void Bitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, in byte bitmap)
+        public static unsafe void Bitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, ref readonly byte bitmap)
         {
             fixed (byte* bitmap_ptr = &bitmap)
             {
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BufferData(BufferTarget, nint, void*, BufferUsage)"/>
-        public static unsafe void BufferData<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
+        public static unsafe void BufferData<T1>(BufferTarget target, nint size, ref readonly T1 data, BufferUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -324,7 +324,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BufferStorage(BufferStorageTarget, nint, void*, BufferStorageMask)"/>
-        public static unsafe void BufferStorage<T1>(BufferStorageTarget target, nint size, in T1 data, BufferStorageMask flags)
+        public static unsafe void BufferStorage<T1>(BufferStorageTarget target, nint size, ref readonly T1 data, BufferStorageMask flags)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -357,7 +357,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="BufferSubData(BufferTarget, IntPtr, nint, void*)"/>
-        public static unsafe void BufferSubData<T1>(BufferTarget target, IntPtr offset, nint size, in T1 data)
+        public static unsafe void BufferSubData<T1>(BufferTarget target, IntPtr offset, nint size, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -390,7 +390,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CallLists(int, ListNameType, void*)"/>
-        public static unsafe void CallLists<T1>(int n, ListNameType type, in T1 lists)
+        public static unsafe void CallLists<T1>(int n, ListNameType type, ref readonly T1 lists)
             where T1 : unmanaged
         {
             fixed (void* lists_ptr = &lists)
@@ -423,7 +423,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearBufferData(BufferStorageTarget, SizedInternalFormat, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearBufferData<T1>(BufferStorageTarget target, SizedInternalFormat internalformat, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearBufferData<T1>(BufferStorageTarget target, SizedInternalFormat internalformat, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -453,7 +453,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearBufferfv(Buffer, int, float*)"/>
-        public static unsafe void ClearBufferf(Buffer buffer, int drawbuffer, in float value)
+        public static unsafe void ClearBufferf(Buffer buffer, int drawbuffer, ref readonly float value)
         {
             fixed (float* value_ptr = &value)
             {
@@ -477,7 +477,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearBufferiv(Buffer, int, int*)"/>
-        public static unsafe void ClearBufferi(Buffer buffer, int drawbuffer, in int value)
+        public static unsafe void ClearBufferi(Buffer buffer, int drawbuffer, ref readonly int value)
         {
             fixed (int* value_ptr = &value)
             {
@@ -509,7 +509,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearBufferSubData(BufferTarget, SizedInternalFormat, IntPtr, nint, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearBufferSubData<T1>(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearBufferSubData<T1>(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -534,7 +534,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearBufferuiv(Buffer, int, uint*)"/>
-        public static unsafe void ClearBufferui(Buffer buffer, int drawbuffer, in uint value)
+        public static unsafe void ClearBufferui(Buffer buffer, int drawbuffer, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -566,7 +566,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearNamedBufferData(int, SizedInternalFormat, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearNamedBufferData<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearNamedBufferData<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -599,7 +599,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearNamedBufferSubData(int, SizedInternalFormat, IntPtr, nint, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearNamedBufferSubData<T1>(int buffer, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearNamedBufferSubData<T1>(int buffer, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -629,7 +629,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearNamedFramebufferfv(int, Buffer, int, float*)"/>
-        public static unsafe void ClearNamedFramebufferf(int framebuffer, Buffer buffer, int drawbuffer, in float value)
+        public static unsafe void ClearNamedFramebufferf(int framebuffer, Buffer buffer, int drawbuffer, ref readonly float value)
         {
             fixed (float* value_ptr = &value)
             {
@@ -653,7 +653,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearNamedFramebufferiv(int, Buffer, int, int*)"/>
-        public static unsafe void ClearNamedFramebufferi(int framebuffer, Buffer buffer, int drawbuffer, in int value)
+        public static unsafe void ClearNamedFramebufferi(int framebuffer, Buffer buffer, int drawbuffer, ref readonly int value)
         {
             fixed (int* value_ptr = &value)
             {
@@ -677,7 +677,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearNamedFramebufferuiv(int, Buffer, int, uint*)"/>
-        public static unsafe void ClearNamedFramebufferui(int framebuffer, Buffer buffer, int drawbuffer, in uint value)
+        public static unsafe void ClearNamedFramebufferui(int framebuffer, Buffer buffer, int drawbuffer, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -709,7 +709,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearTexImage(int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearTexImage<T1>(int texture, int level, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearTexImage<T1>(int texture, int level, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -742,7 +742,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClearTexSubImage(int, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void ClearTexSubImage<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 data)
+        public static unsafe void ClearTexSubImage<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -767,7 +767,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ClipPlane(ClipPlaneName, double*)"/>
-        public static unsafe void ClipPlane(ClipPlaneName plane, in double equation)
+        public static unsafe void ClipPlane(ClipPlaneName plane, ref readonly double equation)
         {
             fixed (double* equation_ptr = &equation)
             {
@@ -796,7 +796,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3bv(sbyte*)"/>
-        public static unsafe void Color3(in sbyte v)
+        public static unsafe void Color3(ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -804,7 +804,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3dv(double*)"/>
-        public static unsafe void Color3d(in Vector3d v)
+        public static unsafe void Color3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -813,7 +813,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3fv(float*)"/>
-        public static unsafe void Color3f(in Color3<Rgb> v)
+        public static unsafe void Color3f(ref readonly Color3<Rgb> v)
         {
             fixed (Color3<Rgb>* tmp_v = &v)
             {
@@ -822,7 +822,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3iv(int*)"/>
-        public static unsafe void Color3i(in Vector3i v)
+        public static unsafe void Color3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -852,7 +852,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3sv(short*)"/>
-        public static unsafe void Color3(in short v)
+        public static unsafe void Color3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -881,7 +881,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3ubv(byte*)"/>
-        public static unsafe void Color3(in byte v)
+        public static unsafe void Color3(ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -905,7 +905,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3uiv(uint*)"/>
-        public static unsafe void Color3ui(in uint v)
+        public static unsafe void Color3ui(ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -934,7 +934,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3usv(ushort*)"/>
-        public static unsafe void Color3(in ushort v)
+        public static unsafe void Color3(ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -963,7 +963,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4bv(sbyte*)"/>
-        public static unsafe void Color4(in sbyte v)
+        public static unsafe void Color4(ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -971,7 +971,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4dv(double*)"/>
-        public static unsafe void Color4d(in Vector4d v)
+        public static unsafe void Color4d(ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -980,7 +980,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4fv(float*)"/>
-        public static unsafe void Color4f(in Color4<Rgba> v)
+        public static unsafe void Color4f(ref readonly Color4<Rgba> v)
         {
             fixed (Color4<Rgba>* tmp_v = &v)
             {
@@ -989,7 +989,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4iv(int*)"/>
-        public static unsafe void Color4i(in Vector4i v)
+        public static unsafe void Color4i(ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -1019,7 +1019,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4sv(short*)"/>
-        public static unsafe void Color4(in short v)
+        public static unsafe void Color4(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -1048,7 +1048,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4ubv(byte*)"/>
-        public static unsafe void Color4(in byte v)
+        public static unsafe void Color4(ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -1072,7 +1072,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4uiv(uint*)"/>
-        public static unsafe void Color4ui(in uint v)
+        public static unsafe void Color4ui(ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -1101,7 +1101,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4usv(ushort*)"/>
-        public static unsafe void Color4(in ushort v)
+        public static unsafe void Color4(ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -1109,7 +1109,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ColorP3uiv(ColorPointerType, uint*)"/>
-        public static unsafe void ColorP3ui(ColorPointerType type, in uint color)
+        public static unsafe void ColorP3ui(ColorPointerType type, ref readonly uint color)
         {
             fixed (uint* color_ptr = &color)
             {
@@ -1117,7 +1117,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ColorP4uiv(ColorPointerType, uint*)"/>
-        public static unsafe void ColorP4ui(ColorPointerType type, in uint color)
+        public static unsafe void ColorP4ui(ColorPointerType type, ref readonly uint color)
         {
             fixed (uint* color_ptr = &color)
             {
@@ -1149,7 +1149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ColorPointer(int, ColorPointerType, int, void*)"/>
-        public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, in T1 pointer)
+        public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -1182,7 +1182,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexImage1D(TextureTarget, int, InternalFormat, int, int, int, void*)"/>
-        public static unsafe void CompressedTexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, in T1 data)
+        public static unsafe void CompressedTexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1215,7 +1215,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexImage2D(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
-        public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 data)
+        public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1248,7 +1248,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, int, void*)"/>
-        public static unsafe void CompressedTexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, in T1 data)
+        public static unsafe void CompressedTexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1281,7 +1281,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage1D(TextureTarget, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1314,7 +1314,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1347,7 +1347,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D(TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1380,7 +1380,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage1D(int, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTextureSubImage1D<T1>(int texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage1D<T1>(int texture, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1413,7 +1413,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage2D(int, int, int, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1446,7 +1446,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage3D(int, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-        public static unsafe void CompressedTextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -1885,7 +1885,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-        public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, in T1 userParam)
+        public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, ref readonly T1 userParam)
             where T1 : unmanaged
         {
             fixed (void* userParam_ptr = &userParam)
@@ -1911,7 +1911,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-        public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
+        public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
         {
             fixed (uint* ids_ptr = &ids)
             {
@@ -1926,7 +1926,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
-        public static unsafe void DeleteBuffer(in int buffer)
+        public static unsafe void DeleteBuffer(ref readonly int buffer)
         {
             int n = 1;
             fixed(int* buffers_handle = &buffer)
@@ -1951,7 +1951,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
-        public static unsafe void DeleteBuffers(int n, in int buffers)
+        public static unsafe void DeleteBuffers(int n, ref readonly int buffers)
         {
             fixed (int* buffers_ptr = &buffers)
             {
@@ -1959,7 +1959,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-        public static unsafe void DeleteFramebuffer(in int framebuffer)
+        public static unsafe void DeleteFramebuffer(ref readonly int framebuffer)
         {
             int n = 1;
             fixed(int* framebuffers_handle = &framebuffer)
@@ -1984,7 +1984,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-        public static unsafe void DeleteFramebuffers(int n, in int framebuffers)
+        public static unsafe void DeleteFramebuffers(int n, ref readonly int framebuffers)
         {
             fixed (int* framebuffers_ptr = &framebuffers)
             {
@@ -1992,7 +1992,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-        public static unsafe void DeleteProgramPipeline(in int pipeline)
+        public static unsafe void DeleteProgramPipeline(ref readonly int pipeline)
         {
             int n = 1;
             fixed(int* pipelines_handle = &pipeline)
@@ -2017,7 +2017,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-        public static unsafe void DeleteProgramPipelines(int n, in int pipelines)
+        public static unsafe void DeleteProgramPipelines(int n, ref readonly int pipelines)
         {
             fixed (int* pipelines_ptr = &pipelines)
             {
@@ -2025,7 +2025,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteQueries(int, int*)"/>
-        public static unsafe void DeleteQuery(in int id)
+        public static unsafe void DeleteQuery(ref readonly int id)
         {
             int n = 1;
             fixed(int* ids_handle = &id)
@@ -2050,7 +2050,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteQueries(int, int*)"/>
-        public static unsafe void DeleteQueries(int n, in int ids)
+        public static unsafe void DeleteQueries(int n, ref readonly int ids)
         {
             fixed (int* ids_ptr = &ids)
             {
@@ -2058,7 +2058,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-        public static unsafe void DeleteRenderbuffer(in int renderbuffer)
+        public static unsafe void DeleteRenderbuffer(ref readonly int renderbuffer)
         {
             int n = 1;
             fixed(int* renderbuffers_handle = &renderbuffer)
@@ -2083,7 +2083,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-        public static unsafe void DeleteRenderbuffers(int n, in int renderbuffers)
+        public static unsafe void DeleteRenderbuffers(int n, ref readonly int renderbuffers)
         {
             fixed (int* renderbuffers_ptr = &renderbuffers)
             {
@@ -2091,7 +2091,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-        public static unsafe void DeleteSampler(in int sampler)
+        public static unsafe void DeleteSampler(ref readonly int sampler)
         {
             int count = 1;
             fixed(int* samplers_handle = &sampler)
@@ -2116,7 +2116,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-        public static unsafe void DeleteSamplers(int count, in int samplers)
+        public static unsafe void DeleteSamplers(int count, ref readonly int samplers)
         {
             fixed (int* samplers_ptr = &samplers)
             {
@@ -2124,7 +2124,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
-        public static unsafe void DeleteTexture(in int texture)
+        public static unsafe void DeleteTexture(ref readonly int texture)
         {
             int n = 1;
             fixed(int* textures_handle = &texture)
@@ -2149,7 +2149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTextures(int, int*)"/>
-        public static unsafe void DeleteTextures(int n, in int textures)
+        public static unsafe void DeleteTextures(int n, ref readonly int textures)
         {
             fixed (int* textures_ptr = &textures)
             {
@@ -2157,7 +2157,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-        public static unsafe void DeleteTransformFeedback(in int id)
+        public static unsafe void DeleteTransformFeedback(ref readonly int id)
         {
             int n = 1;
             fixed(int* ids_handle = &id)
@@ -2182,7 +2182,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-        public static unsafe void DeleteTransformFeedbacks(int n, in int ids)
+        public static unsafe void DeleteTransformFeedbacks(int n, ref readonly int ids)
         {
             fixed (int* ids_ptr = &ids)
             {
@@ -2190,7 +2190,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-        public static unsafe void DeleteVertexArray(in int array)
+        public static unsafe void DeleteVertexArray(ref readonly int array)
         {
             int n = 1;
             fixed(int* arrays_handle = &array)
@@ -2215,7 +2215,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-        public static unsafe void DeleteVertexArrays(int n, in int arrays)
+        public static unsafe void DeleteVertexArrays(int n, ref readonly int arrays)
         {
             fixed (int* arrays_ptr = &arrays)
             {
@@ -2239,7 +2239,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DepthRangeArrayv(uint, int, double*)"/>
-        public static unsafe void DepthRangeArray(uint first, int count, in double v)
+        public static unsafe void DepthRangeArray(uint first, int count, ref readonly double v)
         {
             fixed (double* v_ptr = &v)
             {
@@ -2271,7 +2271,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DrawArraysIndirect(PrimitiveType, void*)"/>
-        public static unsafe void DrawArraysIndirect<T1>(PrimitiveType mode, in T1 indirect)
+        public static unsafe void DrawArraysIndirect<T1>(PrimitiveType mode, ref readonly T1 indirect)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -2296,7 +2296,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DrawBuffers(int, DrawBufferMode*)"/>
-        public static unsafe void DrawBuffers(int n, in DrawBufferMode bufs)
+        public static unsafe void DrawBuffers(int n, ref readonly DrawBufferMode bufs)
         {
             fixed (DrawBufferMode* bufs_ptr = &bufs)
             {
@@ -2340,7 +2340,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DrawElementsIndirect(PrimitiveType, DrawElementsType, void*)"/>
-        public static unsafe void DrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect)
+        public static unsafe void DrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -2397,7 +2397,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DrawPixels(int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void DrawPixels<T1>(int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void DrawPixels<T1>(int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -2442,7 +2442,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EdgeFlagPointer(int, void*)"/>
-        public static unsafe void EdgeFlagPointer<T1>(int stride, in T1 pointer)
+        public static unsafe void EdgeFlagPointer<T1>(int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -2451,7 +2451,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EdgeFlagv(bool*)"/>
-        public static unsafe void EdgeFlag(in bool flag)
+        public static unsafe void EdgeFlag(ref readonly bool flag)
         {
             fixed (bool* flag_ptr = &flag)
             {
@@ -2459,7 +2459,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EvalCoord1dv(double*)"/>
-        public static unsafe void EvalCoord1d(in double u)
+        public static unsafe void EvalCoord1d(ref readonly double u)
         {
             fixed (double* tmp_u = &u)
             {
@@ -2468,7 +2468,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EvalCoord1fv(float*)"/>
-        public static unsafe void EvalCoord1f(in float u)
+        public static unsafe void EvalCoord1f(ref readonly float u)
         {
             fixed (float* tmp_u = &u)
             {
@@ -2477,7 +2477,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EvalCoord2dv(double*)"/>
-        public static unsafe void EvalCoord2d(in Vector2d u)
+        public static unsafe void EvalCoord2d(ref readonly Vector2d u)
         {
             fixed (Vector2d* tmp_u = &u)
             {
@@ -2486,7 +2486,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EvalCoord2fv(float*)"/>
-        public static unsafe void EvalCoord2f(in Vector2 u)
+        public static unsafe void EvalCoord2f(ref readonly Vector2 u)
         {
             fixed (Vector2* tmp_u = &u)
             {
@@ -2495,7 +2495,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="EvalCoord2fv(float*)"/>
-        public static unsafe void EvalCoord2f(in System.Numerics.Vector2 u)
+        public static unsafe void EvalCoord2f(ref readonly System.Numerics.Vector2 u)
         {
             fixed (System.Numerics.Vector2* tmp_u = &u)
             {
@@ -2546,7 +2546,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="FogCoorddv(double*)"/>
-        public static unsafe void FogCoordd(in double coord)
+        public static unsafe void FogCoordd(ref readonly double coord)
         {
             fixed (double* coord_ptr = &coord)
             {
@@ -2554,7 +2554,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="FogCoordfv(float*)"/>
-        public static unsafe void FogCoordf(in float coord)
+        public static unsafe void FogCoordf(ref readonly float coord)
         {
             fixed (float* coord_ptr = &coord)
             {
@@ -2586,7 +2586,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="FogCoordPointer(FogPointerTypeEXT, int, void*)"/>
-        public static unsafe void FogCoordPointer<T1>(FogPointerTypeEXT type, int stride, in T1 pointer)
+        public static unsafe void FogCoordPointer<T1>(FogPointerTypeEXT type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -2611,7 +2611,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
-        public static unsafe void Fogf(FogParameter pname, in float parameters)
+        public static unsafe void Fogf(FogParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -2635,7 +2635,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Fogiv(FogParameter, int*)"/>
-        public static unsafe void Fogi(FogParameter pname, in int parameters)
+        public static unsafe void Fogi(FogParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -3315,7 +3315,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
+        public static unsafe int GetActiveUniformsi(int program, int uniformCount, ref readonly uint uniformIndices, UniformPName pname)
         {
             int parameters;
             int* parameters_ptr = &parameters;
@@ -3326,7 +3326,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return parameters;
         }
         /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-        public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, out int parameters)
+        public static unsafe void GetActiveUniformsi(int program, int uniformCount, ref readonly uint uniformIndices, UniformPName pname, out int parameters)
         {
             fixed (uint* uniformIndices_ptr = &uniformIndices)
             fixed (int* parameters_ptr = &parameters)
@@ -5237,7 +5237,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length)
+        public static unsafe string GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length)
             where T1 : unmanaged
         {
             string label;
@@ -5252,7 +5252,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return label;
         }
         /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-        public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length, out string label)
+        public static unsafe void GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length, out string label)
             where T1 : unmanaged
         {
             fixed (void* ptr_ptr = &ptr)
@@ -5640,7 +5640,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, out int length, ref int parameters)
+        public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ref readonly ProgramResourceProperty props, int count, out int length, ref int parameters)
         {
             fixed (ProgramResourceProperty* props_ptr = &props)
             fixed (int* length_ptr = &length)
@@ -7474,7 +7474,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             GetVertexAttribPointerv(index, pname, pointer);
         }
         /// <inheritdoc cref="Indexdv(double*)"/>
-        public static unsafe void Indexd(in double c)
+        public static unsafe void Indexd(ref readonly double c)
         {
             fixed (double* c_ptr = &c)
             {
@@ -7482,7 +7482,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Indexfv(float*)"/>
-        public static unsafe void Indexf(in float c)
+        public static unsafe void Indexf(ref readonly float c)
         {
             fixed (float* c_ptr = &c)
             {
@@ -7490,7 +7490,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Indexiv(int*)"/>
-        public static unsafe void Indexi(in int c)
+        public static unsafe void Indexi(ref readonly int c)
         {
             fixed (int* c_ptr = &c)
             {
@@ -7522,7 +7522,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="IndexPointer(IndexPointerType, int, void*)"/>
-        public static unsafe void IndexPointer<T1>(IndexPointerType type, int stride, in T1 pointer)
+        public static unsafe void IndexPointer<T1>(IndexPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -7536,7 +7536,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Indexs(c);
         }
         /// <inheritdoc cref="Indexsv(short*)"/>
-        public static unsafe void Index(in short c)
+        public static unsafe void Index(ref readonly short c)
         {
             fixed (short* c_ptr = &c)
             {
@@ -7549,7 +7549,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Indexub(c);
         }
         /// <inheritdoc cref="Indexubv(byte*)"/>
-        public static unsafe void Index(in byte c)
+        public static unsafe void Index(ref readonly byte c)
         {
             fixed (byte* c_ptr = &c)
             {
@@ -7581,7 +7581,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="InterleavedArrays(InterleavedArrayFormat, int, void*)"/>
-        public static unsafe void InterleavedArrays<T1>(InterleavedArrayFormat format, int stride, in T1 pointer)
+        public static unsafe void InterleavedArrays<T1>(InterleavedArrayFormat format, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -7606,7 +7606,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="InvalidateFramebuffer(FramebufferTarget, int, InvalidateFramebufferAttachment*)"/>
-        public static unsafe void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, in InvalidateFramebufferAttachment attachments)
+        public static unsafe void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, ref readonly InvalidateFramebufferAttachment attachments)
         {
             fixed (InvalidateFramebufferAttachment* attachments_ptr = &attachments)
             {
@@ -7630,7 +7630,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="InvalidateNamedFramebufferData(int, int, FramebufferAttachment*)"/>
-        public static unsafe void InvalidateNamedFramebufferData(int framebuffer, int numAttachments, in FramebufferAttachment attachments)
+        public static unsafe void InvalidateNamedFramebufferData(int framebuffer, int numAttachments, ref readonly FramebufferAttachment attachments)
         {
             fixed (FramebufferAttachment* attachments_ptr = &attachments)
             {
@@ -7654,7 +7654,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="InvalidateNamedFramebufferSubData(int, int, FramebufferAttachment*, int, int, int, int)"/>
-        public static unsafe void InvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, in FramebufferAttachment attachments, int x, int y, int width, int height)
+        public static unsafe void InvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, ref readonly FramebufferAttachment attachments, int x, int y, int width, int height)
         {
             fixed (FramebufferAttachment* attachments_ptr = &attachments)
             {
@@ -7678,7 +7678,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="InvalidateSubFramebuffer(FramebufferTarget, int, InvalidateFramebufferAttachment*, int, int, int, int)"/>
-        public static unsafe void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, in InvalidateFramebufferAttachment attachments, int x, int y, int width, int height)
+        public static unsafe void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, ref readonly InvalidateFramebufferAttachment attachments, int x, int y, int width, int height)
         {
             fixed (InvalidateFramebufferAttachment* attachments_ptr = &attachments)
             {
@@ -7702,7 +7702,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
-        public static unsafe void Lightf(LightName light, LightParameter pname, in float parameters)
+        public static unsafe void Lightf(LightName light, LightParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -7726,7 +7726,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Lightiv(LightName, LightParameter, int*)"/>
-        public static unsafe void Lighti(LightName light, LightParameter pname, in int parameters)
+        public static unsafe void Lighti(LightName light, LightParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -7750,7 +7750,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
-        public static unsafe void LightModelf(LightModelParameter pname, in float parameters)
+        public static unsafe void LightModelf(LightModelParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -7774,7 +7774,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LightModeliv(LightModelParameter, int*)"/>
-        public static unsafe void LightModeli(LightModelParameter pname, in int parameters)
+        public static unsafe void LightModeli(LightModelParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -7798,7 +7798,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LoadMatrixd(double*)"/>
-        public static unsafe void LoadMatrixd(in double m)
+        public static unsafe void LoadMatrixd(ref readonly double m)
         {
             fixed (double* m_ptr = &m)
             {
@@ -7822,7 +7822,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LoadMatrixf(float*)"/>
-        public static unsafe void LoadMatrixf(in float m)
+        public static unsafe void LoadMatrixf(ref readonly float m)
         {
             fixed (float* m_ptr = &m)
             {
@@ -7846,7 +7846,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LoadTransposeMatrixd(double*)"/>
-        public static unsafe void LoadTransposeMatrixd(in double m)
+        public static unsafe void LoadTransposeMatrixd(ref readonly double m)
         {
             fixed (double* m_ptr = &m)
             {
@@ -7870,7 +7870,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="LoadTransposeMatrixf(float*)"/>
-        public static unsafe void LoadTransposeMatrixf(in float m)
+        public static unsafe void LoadTransposeMatrixf(ref readonly float m)
         {
             fixed (float* m_ptr = &m)
             {
@@ -7894,7 +7894,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Map1d(MapTarget, double, double, int, int, double*)"/>
-        public static unsafe void Map1d(MapTarget target, double u1, double u2, int stride, int order, in double points)
+        public static unsafe void Map1d(MapTarget target, double u1, double u2, int stride, int order, ref readonly double points)
         {
             fixed (double* points_ptr = &points)
             {
@@ -7918,7 +7918,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Map1f(MapTarget, float, float, int, int, float*)"/>
-        public static unsafe void Map1f(MapTarget target, float u1, float u2, int stride, int order, in float points)
+        public static unsafe void Map1f(MapTarget target, float u1, float u2, int stride, int order, ref readonly float points)
         {
             fixed (float* points_ptr = &points)
             {
@@ -7942,7 +7942,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Map2d(MapTarget, double, double, int, int, double, double, int, int, double*)"/>
-        public static unsafe void Map2d(MapTarget target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, in double points)
+        public static unsafe void Map2d(MapTarget target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, ref readonly double points)
         {
             fixed (double* points_ptr = &points)
             {
@@ -7966,7 +7966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Map2f(MapTarget, float, float, int, int, float, float, int, int, float*)"/>
-        public static unsafe void Map2f(MapTarget target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, in float points)
+        public static unsafe void Map2f(MapTarget target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, ref readonly float points)
         {
             fixed (float* points_ptr = &points)
             {
@@ -7990,7 +7990,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
-        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, in float parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -8014,7 +8014,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Materialiv(TriangleFace, MaterialParameter, int*)"/>
-        public static unsafe void Materiali(TriangleFace face, MaterialParameter pname, in int parameters)
+        public static unsafe void Materiali(TriangleFace face, MaterialParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -8044,7 +8044,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawArrays(PrimitiveType, int*, int*, int)"/>
-        public static unsafe void MultiDrawArrays(PrimitiveType mode, in int first, in int count, int drawcount)
+        public static unsafe void MultiDrawArrays(PrimitiveType mode, ref readonly int first, ref readonly int count, int drawcount)
         {
             fixed (int* first_ptr = &first)
             fixed (int* count_ptr = &count)
@@ -8077,7 +8077,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawArraysIndirect(PrimitiveType, void*, int, int)"/>
-        public static unsafe void MultiDrawArraysIndirect<T1>(PrimitiveType mode, in T1 indirect, int drawcount, int stride)
+        public static unsafe void MultiDrawArraysIndirect<T1>(PrimitiveType mode, ref readonly T1 indirect, int drawcount, int stride)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -8110,7 +8110,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawArraysIndirectCount(PrimitiveType, void*, IntPtr, int, int)"/>
-        public static unsafe void MultiDrawArraysIndirectCount<T1>(PrimitiveType mode, in T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
+        public static unsafe void MultiDrawArraysIndirectCount<T1>(PrimitiveType mode, ref readonly T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -8135,7 +8135,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawElements(PrimitiveType, int*, DrawElementsType, void**, int)"/>
-        public static unsafe void MultiDrawElements(PrimitiveType mode, in int count, DrawElementsType type, void** indices, int drawcount)
+        public static unsafe void MultiDrawElements(PrimitiveType mode, ref readonly int count, DrawElementsType type, void** indices, int drawcount)
         {
             fixed (int* count_ptr = &count)
             {
@@ -8165,7 +8165,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawElementsBaseVertex(PrimitiveType, int*, DrawElementsType, void**, int, int*)"/>
-        public static unsafe void MultiDrawElementsBaseVertex(PrimitiveType mode, in int count, DrawElementsType type, void** indices, int drawcount, in int basevertex)
+        public static unsafe void MultiDrawElementsBaseVertex(PrimitiveType mode, ref readonly int count, DrawElementsType type, void** indices, int drawcount, ref readonly int basevertex)
         {
             fixed (int* count_ptr = &count)
             fixed (int* basevertex_ptr = &basevertex)
@@ -8198,7 +8198,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawElementsIndirect(PrimitiveType, DrawElementsType, void*, int, int)"/>
-        public static unsafe void MultiDrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int drawcount, int stride)
+        public static unsafe void MultiDrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, int drawcount, int stride)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -8231,7 +8231,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiDrawElementsIndirectCount(PrimitiveType, DrawElementsType, void*, IntPtr, int, int)"/>
-        public static unsafe void MultiDrawElementsIndirectCount<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
+        public static unsafe void MultiDrawElementsIndirectCount<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
             where T1 : unmanaged
         {
             fixed (void* indirect_ptr = &indirect)
@@ -8240,7 +8240,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord1dv(TextureUnit, double*)"/>
-        public static unsafe void MultiTexCoord1d(TextureUnit target, in double v)
+        public static unsafe void MultiTexCoord1d(TextureUnit target, ref readonly double v)
         {
             fixed (double* tmp_v = &v)
             {
@@ -8249,7 +8249,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord1fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord1f(TextureUnit target, in float v)
+        public static unsafe void MultiTexCoord1f(TextureUnit target, ref readonly float v)
         {
             fixed (float* tmp_v = &v)
             {
@@ -8258,7 +8258,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord1iv(TextureUnit, int*)"/>
-        public static unsafe void MultiTexCoord1i(TextureUnit target, in int v)
+        public static unsafe void MultiTexCoord1i(TextureUnit target, ref readonly int v)
         {
             fixed (int* tmp_v = &v)
             {
@@ -8272,7 +8272,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             MultiTexCoord1s(target, s);
         }
         /// <inheritdoc cref="MultiTexCoord1sv(TextureUnit, short*)"/>
-        public static unsafe void MultiTexCoord1(TextureUnit target, in short v)
+        public static unsafe void MultiTexCoord1(TextureUnit target, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -8280,7 +8280,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord2dv(TextureUnit, double*)"/>
-        public static unsafe void MultiTexCoord2d(TextureUnit target, in Vector2d v)
+        public static unsafe void MultiTexCoord2d(TextureUnit target, ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -8289,7 +8289,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord2fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord2f(TextureUnit target, in Vector2 v)
+        public static unsafe void MultiTexCoord2f(TextureUnit target, ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -8298,7 +8298,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord2fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord2f(TextureUnit target, in System.Numerics.Vector2 v)
+        public static unsafe void MultiTexCoord2f(TextureUnit target, ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -8325,7 +8325,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord2iv(TextureUnit, int*)"/>
-        public static unsafe void MultiTexCoord2i(TextureUnit target, in Vector2i v)
+        public static unsafe void MultiTexCoord2i(TextureUnit target, ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -8355,7 +8355,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord2sv(TextureUnit, short*)"/>
-        public static unsafe void MultiTexCoord2(TextureUnit target, in short v)
+        public static unsafe void MultiTexCoord2(TextureUnit target, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -8363,7 +8363,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord3dv(TextureUnit, double*)"/>
-        public static unsafe void MultiTexCoord3d(TextureUnit target, in Vector3d v)
+        public static unsafe void MultiTexCoord3d(TextureUnit target, ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -8372,7 +8372,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord3fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord3f(TextureUnit target, in Vector3 v)
+        public static unsafe void MultiTexCoord3f(TextureUnit target, ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -8381,7 +8381,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord3fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord3f(TextureUnit target, in System.Numerics.Vector3 v)
+        public static unsafe void MultiTexCoord3f(TextureUnit target, ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -8408,7 +8408,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord3iv(TextureUnit, int*)"/>
-        public static unsafe void MultiTexCoord3i(TextureUnit target, in Vector3i v)
+        public static unsafe void MultiTexCoord3i(TextureUnit target, ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -8438,7 +8438,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord3sv(TextureUnit, short*)"/>
-        public static unsafe void MultiTexCoord3(TextureUnit target, in short v)
+        public static unsafe void MultiTexCoord3(TextureUnit target, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -8446,7 +8446,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord4dv(TextureUnit, double*)"/>
-        public static unsafe void MultiTexCoord4d(TextureUnit target, in Vector4d v)
+        public static unsafe void MultiTexCoord4d(TextureUnit target, ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -8455,7 +8455,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord4fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord4f(TextureUnit target, in Vector4 v)
+        public static unsafe void MultiTexCoord4f(TextureUnit target, ref readonly Vector4 v)
         {
             fixed (Vector4* tmp_v = &v)
             {
@@ -8464,7 +8464,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord4fv(TextureUnit, float*)"/>
-        public static unsafe void MultiTexCoord4f(TextureUnit target, in System.Numerics.Vector4 v)
+        public static unsafe void MultiTexCoord4f(TextureUnit target, ref readonly System.Numerics.Vector4 v)
         {
             fixed (System.Numerics.Vector4* tmp_v = &v)
             {
@@ -8491,7 +8491,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord4iv(TextureUnit, int*)"/>
-        public static unsafe void MultiTexCoord4i(TextureUnit target, in Vector4i v)
+        public static unsafe void MultiTexCoord4i(TextureUnit target, ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -8521,7 +8521,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoord4sv(TextureUnit, short*)"/>
-        public static unsafe void MultiTexCoord4(TextureUnit target, in short v)
+        public static unsafe void MultiTexCoord4(TextureUnit target, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -8529,7 +8529,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoordP1uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-        public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+        public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -8537,7 +8537,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoordP2uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-        public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+        public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -8545,7 +8545,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoordP3uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-        public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+        public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -8553,7 +8553,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultiTexCoordP4uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-        public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+        public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -8577,7 +8577,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultMatrixd(double*)"/>
-        public static unsafe void MultMatrixd(in double m)
+        public static unsafe void MultMatrixd(ref readonly double m)
         {
             fixed (double* m_ptr = &m)
             {
@@ -8601,7 +8601,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultMatrixf(float*)"/>
-        public static unsafe void MultMatrixf(in float m)
+        public static unsafe void MultMatrixf(ref readonly float m)
         {
             fixed (float* m_ptr = &m)
             {
@@ -8625,7 +8625,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultTransposeMatrixd(double*)"/>
-        public static unsafe void MultTransposeMatrixd(in double m)
+        public static unsafe void MultTransposeMatrixd(ref readonly double m)
         {
             fixed (double* m_ptr = &m)
             {
@@ -8649,7 +8649,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="MultTransposeMatrixf(float*)"/>
-        public static unsafe void MultTransposeMatrixf(in float m)
+        public static unsafe void MultTransposeMatrixf(ref readonly float m)
         {
             fixed (float* m_ptr = &m)
             {
@@ -8681,7 +8681,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-        public static unsafe void NamedBufferData<T1>(int buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
+        public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -8714,7 +8714,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NamedBufferStorage(int, nint, void*, BufferStorageMask)"/>
-        public static unsafe void NamedBufferStorage<T1>(int buffer, nint size, in T1 data, BufferStorageMask flags)
+        public static unsafe void NamedBufferStorage<T1>(int buffer, nint size, ref readonly T1 data, BufferStorageMask flags)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -8747,7 +8747,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NamedBufferSubData(int, IntPtr, nint, void*)"/>
-        public static unsafe void NamedBufferSubData<T1>(int buffer, IntPtr offset, nint size, in T1 data)
+        public static unsafe void NamedBufferSubData<T1>(int buffer, IntPtr offset, nint size, ref readonly T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -8772,7 +8772,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NamedFramebufferDrawBuffers(int, int, ColorBuffer*)"/>
-        public static unsafe void NamedFramebufferDrawBuffers(int framebuffer, int n, in ColorBuffer bufs)
+        public static unsafe void NamedFramebufferDrawBuffers(int framebuffer, int n, ref readonly ColorBuffer bufs)
         {
             fixed (ColorBuffer* bufs_ptr = &bufs)
             {
@@ -8801,7 +8801,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3bv(sbyte*)"/>
-        public static unsafe void Normal3(in sbyte v)
+        public static unsafe void Normal3(ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -8809,7 +8809,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3dv(double*)"/>
-        public static unsafe void Normal3d(in Vector3d v)
+        public static unsafe void Normal3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -8818,7 +8818,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3fv(float*)"/>
-        public static unsafe void Normal3f(in Vector3 v)
+        public static unsafe void Normal3f(ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -8827,7 +8827,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3fv(float*)"/>
-        public static unsafe void Normal3f(in System.Numerics.Vector3 v)
+        public static unsafe void Normal3f(ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -8854,7 +8854,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3iv(int*)"/>
-        public static unsafe void Normal3i(in Vector3i v)
+        public static unsafe void Normal3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -8884,7 +8884,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Normal3sv(short*)"/>
-        public static unsafe void Normal3(in short v)
+        public static unsafe void Normal3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -8892,7 +8892,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NormalP3uiv(NormalPointerType, uint*)"/>
-        public static unsafe void NormalP3ui(NormalPointerType type, in uint coords)
+        public static unsafe void NormalP3ui(NormalPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -8924,7 +8924,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="NormalPointer(NormalPointerType, int, void*)"/>
-        public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, in T1 pointer)
+        public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -8970,7 +8970,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-        public static unsafe void ObjectPtrLabel<T1>(in T1 ptr, int length, string label)
+        public static unsafe void ObjectPtrLabel<T1>(ref readonly T1 ptr, int length, string label)
             where T1 : unmanaged
         {
             fixed (void* ptr_ptr = &ptr)
@@ -8997,7 +8997,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PatchParameterfv(PatchParameterName, float*)"/>
-        public static unsafe void PatchParameterf(PatchParameterName pname, in float values)
+        public static unsafe void PatchParameterf(PatchParameterName pname, ref readonly float values)
         {
             fixed (float* values_ptr = &values)
             {
@@ -9021,7 +9021,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PixelMapfv(PixelMap, int, float*)"/>
-        public static unsafe void PixelMapf(PixelMap map, int mapsize, in float values)
+        public static unsafe void PixelMapf(PixelMap map, int mapsize, ref readonly float values)
         {
             fixed (float* values_ptr = &values)
             {
@@ -9045,7 +9045,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PixelMapuiv(PixelMap, int, uint*)"/>
-        public static unsafe void PixelMapui(PixelMap map, int mapsize, in uint values)
+        public static unsafe void PixelMapui(PixelMap map, int mapsize, ref readonly uint values)
         {
             fixed (uint* values_ptr = &values)
             {
@@ -9069,7 +9069,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PixelMapusv(PixelMap, int, ushort*)"/>
-        public static unsafe void PixelMap(PixelMap map, int mapsize, in ushort values)
+        public static unsafe void PixelMap(PixelMap map, int mapsize, ref readonly ushort values)
         {
             fixed (ushort* values_ptr = &values)
             {
@@ -9093,7 +9093,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
-        public static unsafe void PointParameterf(PointParameterNameARB pname, in float parameters)
+        public static unsafe void PointParameterf(PointParameterNameARB pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -9117,7 +9117,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PointParameteriv(PointParameterNameARB, int*)"/>
-        public static unsafe void PointParameteri(PointParameterNameARB pname, in int parameters)
+        public static unsafe void PointParameteri(PointParameterNameARB pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -9141,7 +9141,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PolygonStipple(byte*)"/>
-        public static unsafe void PolygonStipple(in byte mask)
+        public static unsafe void PolygonStipple(ref readonly byte mask)
         {
             fixed (byte* mask_ptr = &mask)
             {
@@ -9171,7 +9171,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="PrioritizeTextures(int, int*, float*)"/>
-        public static unsafe void PrioritizeTextures(int n, in int textures, in float priorities)
+        public static unsafe void PrioritizeTextures(int n, ref readonly int textures, ref readonly float priorities)
         {
             fixed (int* textures_ptr = &textures)
             fixed (float* priorities_ptr = &priorities)
@@ -9204,7 +9204,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramBinary(int, All, void*, int)"/>
-        public static unsafe void ProgramBinary<T1>(int program, All binaryFormat, in T1 binary, int length)
+        public static unsafe void ProgramBinary<T1>(int program, All binaryFormat, ref readonly T1 binary, int length)
             where T1 : unmanaged
         {
             fixed (void* binary_ptr = &binary)
@@ -9213,7 +9213,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform1d(int program, int location, int count, in double value)
+        public static unsafe void ProgramUniform1d(int program, int location, int count, ref readonly double value)
         {
             fixed (double* tmp_value = &value)
             {
@@ -9222,7 +9222,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform1f(int program, int location, int count, in float value)
+        public static unsafe void ProgramUniform1f(int program, int location, int count, ref readonly float value)
         {
             fixed (float* tmp_value = &value)
             {
@@ -9231,7 +9231,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform1i(int program, int location, int count, in int value)
+        public static unsafe void ProgramUniform1i(int program, int location, int count, ref readonly int value)
         {
             fixed (int* tmp_value = &value)
             {
@@ -9240,7 +9240,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform1ui(int program, int location, int count, in uint value)
+        public static unsafe void ProgramUniform1ui(int program, int location, int count, ref readonly uint value)
         {
             fixed (uint* tmp_value = &value)
             {
@@ -9249,7 +9249,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform2d(int program, int location, int count, in Vector2d value)
+        public static unsafe void ProgramUniform2d(int program, int location, int count, ref readonly Vector2d value)
         {
             fixed (Vector2d* tmp_value = &value)
             {
@@ -9276,7 +9276,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform2f(int program, int location, int count, in Vector2 value)
+        public static unsafe void ProgramUniform2f(int program, int location, int count, ref readonly Vector2 value)
         {
             fixed (Vector2* tmp_value = &value)
             {
@@ -9303,7 +9303,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform2f(int program, int location, int count, in System.Numerics.Vector2 value)
+        public static unsafe void ProgramUniform2f(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
         {
             fixed (System.Numerics.Vector2* tmp_value = &value)
             {
@@ -9330,7 +9330,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform2i(int program, int location, int count, in Vector2i value)
+        public static unsafe void ProgramUniform2i(int program, int location, int count, ref readonly Vector2i value)
         {
             fixed (Vector2i* tmp_value = &value)
             {
@@ -9357,7 +9357,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform2ui(int program, int location, int count, in Vector2i value)
+        public static unsafe void ProgramUniform2ui(int program, int location, int count, ref readonly Vector2i value)
         {
             fixed (Vector2i* tmp_value = &value)
             {
@@ -9384,7 +9384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform3d(int program, int location, int count, in Vector3d value)
+        public static unsafe void ProgramUniform3d(int program, int location, int count, ref readonly Vector3d value)
         {
             fixed (Vector3d* tmp_value = &value)
             {
@@ -9411,7 +9411,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform3f(int program, int location, int count, in Vector3 value)
+        public static unsafe void ProgramUniform3f(int program, int location, int count, ref readonly Vector3 value)
         {
             fixed (Vector3* tmp_value = &value)
             {
@@ -9438,7 +9438,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform3f(int program, int location, int count, in System.Numerics.Vector3 value)
+        public static unsafe void ProgramUniform3f(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
         {
             fixed (System.Numerics.Vector3* tmp_value = &value)
             {
@@ -9465,7 +9465,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform3i(int program, int location, int count, in Vector3i value)
+        public static unsafe void ProgramUniform3i(int program, int location, int count, ref readonly Vector3i value)
         {
             fixed (Vector3i* tmp_value = &value)
             {
@@ -9492,7 +9492,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform3ui(int program, int location, int count, in Vector3i value)
+        public static unsafe void ProgramUniform3ui(int program, int location, int count, ref readonly Vector3i value)
         {
             fixed (Vector3i* tmp_value = &value)
             {
@@ -9519,7 +9519,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform4d(int program, int location, int count, in Vector4d value)
+        public static unsafe void ProgramUniform4d(int program, int location, int count, ref readonly Vector4d value)
         {
             fixed (Vector4d* tmp_value = &value)
             {
@@ -9546,7 +9546,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform4f(int program, int location, int count, in Vector4 value)
+        public static unsafe void ProgramUniform4f(int program, int location, int count, ref readonly Vector4 value)
         {
             fixed (Vector4* tmp_value = &value)
             {
@@ -9573,7 +9573,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform4f(int program, int location, int count, in System.Numerics.Vector4 value)
+        public static unsafe void ProgramUniform4f(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
         {
             fixed (System.Numerics.Vector4* tmp_value = &value)
             {
@@ -9600,7 +9600,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform4i(int program, int location, int count, in Vector4i value)
+        public static unsafe void ProgramUniform4i(int program, int location, int count, ref readonly Vector4i value)
         {
             fixed (Vector4i* tmp_value = &value)
             {
@@ -9627,7 +9627,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform4ui(int program, int location, int count, in Vector4i value)
+        public static unsafe void ProgramUniform4ui(int program, int location, int count, ref readonly Vector4i value)
         {
             fixed (Vector4i* tmp_value = &value)
             {
@@ -9654,7 +9654,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, in Matrix2d value)
+        public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, ref readonly Matrix2d value)
         {
             fixed (Matrix2d* tmp_value = &value)
             {
@@ -9681,7 +9681,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, in Matrix2 value)
+        public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, ref readonly Matrix2 value)
         {
             fixed (Matrix2* tmp_value = &value)
             {
@@ -9708,7 +9708,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, in Matrix2x3d value)
+        public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, ref readonly Matrix2x3d value)
         {
             fixed (Matrix2x3d* tmp_value = &value)
             {
@@ -9735,7 +9735,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, in Matrix2x3 value)
+        public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, ref readonly Matrix2x3 value)
         {
             fixed (Matrix2x3* tmp_value = &value)
             {
@@ -9762,7 +9762,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, in Matrix2x4d value)
+        public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, ref readonly Matrix2x4d value)
         {
             fixed (Matrix2x4d* tmp_value = &value)
             {
@@ -9789,7 +9789,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, in Matrix2x4 value)
+        public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, ref readonly Matrix2x4 value)
         {
             fixed (Matrix2x4* tmp_value = &value)
             {
@@ -9816,7 +9816,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, in Matrix3d value)
+        public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, ref readonly Matrix3d value)
         {
             fixed (Matrix3d* tmp_value = &value)
             {
@@ -9843,7 +9843,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, in Matrix3 value)
+        public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, ref readonly Matrix3 value)
         {
             fixed (Matrix3* tmp_value = &value)
             {
@@ -9870,7 +9870,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, in Matrix3x2d value)
+        public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, ref readonly Matrix3x2d value)
         {
             fixed (Matrix3x2d* tmp_value = &value)
             {
@@ -9897,7 +9897,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in Matrix3x2 value)
+        public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ref readonly Matrix3x2 value)
         {
             fixed (Matrix3x2* tmp_value = &value)
             {
@@ -9924,7 +9924,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
+        public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix3x2 value)
         {
             fixed (System.Numerics.Matrix3x2* tmp_value = &value)
             {
@@ -9951,7 +9951,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, in Matrix3x4d value)
+        public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, ref readonly Matrix3x4d value)
         {
             fixed (Matrix3x4d* tmp_value = &value)
             {
@@ -9978,7 +9978,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, in Matrix3x4 value)
+        public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, ref readonly Matrix3x4 value)
         {
             fixed (Matrix3x4* tmp_value = &value)
             {
@@ -10005,7 +10005,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, in Matrix4d value)
+        public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, ref readonly Matrix4d value)
         {
             fixed (Matrix4d* tmp_value = &value)
             {
@@ -10032,7 +10032,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in Matrix4 value)
+        public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ref readonly Matrix4 value)
         {
             fixed (Matrix4* tmp_value = &value)
             {
@@ -10059,7 +10059,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+        public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix4x4 value)
         {
             fixed (System.Numerics.Matrix4x4* tmp_value = &value)
             {
@@ -10086,7 +10086,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, in Matrix4x2d value)
+        public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, ref readonly Matrix4x2d value)
         {
             fixed (Matrix4x2d* tmp_value = &value)
             {
@@ -10113,7 +10113,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, in Matrix4x2 value)
+        public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, ref readonly Matrix4x2 value)
         {
             fixed (Matrix4x2* tmp_value = &value)
             {
@@ -10140,7 +10140,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
-        public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, in Matrix4x3d value)
+        public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, ref readonly Matrix4x3d value)
         {
             fixed (Matrix4x3d* tmp_value = &value)
             {
@@ -10167,7 +10167,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
-        public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, in Matrix4x3 value)
+        public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, ref readonly Matrix4x3 value)
         {
             fixed (Matrix4x3* tmp_value = &value)
             {
@@ -10201,7 +10201,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem((IntPtr)message_ptr);
         }
         /// <inheritdoc cref="RasterPos2dv(double*)"/>
-        public static unsafe void RasterPos2d(in Vector2d v)
+        public static unsafe void RasterPos2d(ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -10210,7 +10210,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos2fv(float*)"/>
-        public static unsafe void RasterPos2f(in Vector2 v)
+        public static unsafe void RasterPos2f(ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -10219,7 +10219,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos2fv(float*)"/>
-        public static unsafe void RasterPos2f(in System.Numerics.Vector2 v)
+        public static unsafe void RasterPos2f(ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -10246,7 +10246,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos2iv(int*)"/>
-        public static unsafe void RasterPos2i(in Vector2i v)
+        public static unsafe void RasterPos2i(ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -10276,7 +10276,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos2sv(short*)"/>
-        public static unsafe void RasterPos2(in short v)
+        public static unsafe void RasterPos2(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -10284,7 +10284,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos3dv(double*)"/>
-        public static unsafe void RasterPos3d(in Vector3d v)
+        public static unsafe void RasterPos3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -10293,7 +10293,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos3fv(float*)"/>
-        public static unsafe void RasterPos3f(in Vector3 v)
+        public static unsafe void RasterPos3f(ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -10302,7 +10302,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos3fv(float*)"/>
-        public static unsafe void RasterPos3f(in System.Numerics.Vector3 v)
+        public static unsafe void RasterPos3f(ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -10329,7 +10329,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos3iv(int*)"/>
-        public static unsafe void RasterPos3i(in Vector3i v)
+        public static unsafe void RasterPos3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -10359,7 +10359,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos3sv(short*)"/>
-        public static unsafe void RasterPos3(in short v)
+        public static unsafe void RasterPos3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -10367,7 +10367,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos4dv(double*)"/>
-        public static unsafe void RasterPos4d(in Vector4d v)
+        public static unsafe void RasterPos4d(ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -10376,7 +10376,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos4fv(float*)"/>
-        public static unsafe void RasterPos4f(in Vector4 v)
+        public static unsafe void RasterPos4f(ref readonly Vector4 v)
         {
             fixed (Vector4* tmp_v = &v)
             {
@@ -10385,7 +10385,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos4fv(float*)"/>
-        public static unsafe void RasterPos4f(in System.Numerics.Vector4 v)
+        public static unsafe void RasterPos4f(ref readonly System.Numerics.Vector4 v)
         {
             fixed (System.Numerics.Vector4* tmp_v = &v)
             {
@@ -10412,7 +10412,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos4iv(int*)"/>
-        public static unsafe void RasterPos4i(in Vector4i v)
+        public static unsafe void RasterPos4i(ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -10442,7 +10442,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="RasterPos4sv(short*)"/>
-        public static unsafe void RasterPos4(in short v)
+        public static unsafe void RasterPos4(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -10538,7 +10538,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Rectdv(double*, double*)"/>
-        public static unsafe void Rectd(in double v1, in double v2)
+        public static unsafe void Rectd(ref readonly double v1, ref readonly double v2)
         {
             fixed (double* v1_ptr = &v1)
             fixed (double* v2_ptr = &v2)
@@ -10569,7 +10569,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Rectfv(float*, float*)"/>
-        public static unsafe void Rectf(in float v1, in float v2)
+        public static unsafe void Rectf(ref readonly float v1, ref readonly float v2)
         {
             fixed (float* v1_ptr = &v1)
             fixed (float* v2_ptr = &v2)
@@ -10600,7 +10600,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Rectiv(int*, int*)"/>
-        public static unsafe void Recti(in int v1, in int v2)
+        public static unsafe void Recti(ref readonly int v1, ref readonly int v2)
         {
             fixed (int* v1_ptr = &v1)
             fixed (int* v2_ptr = &v2)
@@ -10631,7 +10631,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Rectsv(short*, short*)"/>
-        public static unsafe void Rect(in short v1, in short v2)
+        public static unsafe void Rect(ref readonly short v1, ref readonly short v2)
         {
             fixed (short* v1_ptr = &v1)
             fixed (short* v2_ptr = &v2)
@@ -10656,7 +10656,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SamplerParameterfv(int, SamplerParameterF, float*)"/>
-        public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, in float param)
+        public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, ref readonly float param)
         {
             fixed (float* param_ptr = &param)
             {
@@ -10680,7 +10680,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SamplerParameterIiv(int, SamplerParameterI, int*)"/>
-        public static unsafe void SamplerParameterIi(int sampler, SamplerParameterI pname, in int param)
+        public static unsafe void SamplerParameterIi(int sampler, SamplerParameterI pname, ref readonly int param)
         {
             fixed (int* param_ptr = &param)
             {
@@ -10704,7 +10704,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-        public static unsafe void SamplerParameterIui(int sampler, SamplerParameterI pname, in uint param)
+        public static unsafe void SamplerParameterIui(int sampler, SamplerParameterI pname, ref readonly uint param)
         {
             fixed (uint* param_ptr = &param)
             {
@@ -10728,7 +10728,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SamplerParameteriv(int, SamplerParameterI, int*)"/>
-        public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, in int param)
+        public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, ref readonly int param)
         {
             fixed (int* param_ptr = &param)
             {
@@ -10752,7 +10752,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ScissorArrayv(uint, int, int*)"/>
-        public static unsafe void ScissorArray(uint first, int count, in int v)
+        public static unsafe void ScissorArray(uint first, int count, ref readonly int v)
         {
             fixed (int* v_ptr = &v)
             {
@@ -10776,7 +10776,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ScissorIndexedv(uint, int*)"/>
-        public static unsafe void ScissorIndexed(uint index, in int v)
+        public static unsafe void ScissorIndexed(uint index, ref readonly int v)
         {
             fixed (int* v_ptr = &v)
             {
@@ -10805,7 +10805,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3bv(sbyte*)"/>
-        public static unsafe void SecondaryColor3(in sbyte v)
+        public static unsafe void SecondaryColor3(ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -10813,7 +10813,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3dv(double*)"/>
-        public static unsafe void SecondaryColor3d(in Vector3d v)
+        public static unsafe void SecondaryColor3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -10822,7 +10822,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3fv(float*)"/>
-        public static unsafe void SecondaryColor3f(in Color3<Rgb> v)
+        public static unsafe void SecondaryColor3f(ref readonly Color3<Rgb> v)
         {
             fixed (Color3<Rgb>* tmp_v = &v)
             {
@@ -10831,7 +10831,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3iv(int*)"/>
-        public static unsafe void SecondaryColor3i(in Vector3i v)
+        public static unsafe void SecondaryColor3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -10861,7 +10861,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3sv(short*)"/>
-        public static unsafe void SecondaryColor3(in short v)
+        public static unsafe void SecondaryColor3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -10890,7 +10890,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3ubv(byte*)"/>
-        public static unsafe void SecondaryColor3(in byte v)
+        public static unsafe void SecondaryColor3(ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -10914,7 +10914,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3uiv(uint*)"/>
-        public static unsafe void SecondaryColor3ui(in uint v)
+        public static unsafe void SecondaryColor3ui(ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -10943,7 +10943,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3usv(ushort*)"/>
-        public static unsafe void SecondaryColor3(in ushort v)
+        public static unsafe void SecondaryColor3(ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -10951,7 +10951,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColorP3uiv(ColorPointerType, uint*)"/>
-        public static unsafe void SecondaryColorP3ui(ColorPointerType type, in uint color)
+        public static unsafe void SecondaryColorP3ui(ColorPointerType type, ref readonly uint color)
         {
             fixed (uint* color_ptr = &color)
             {
@@ -10983,7 +10983,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColorPointer(int, ColorPointerType, int, void*)"/>
-        public static unsafe void SecondaryColorPointer<T1>(int size, ColorPointerType type, int stride, in T1 pointer)
+        public static unsafe void SecondaryColorPointer<T1>(int size, ColorPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -11034,7 +11034,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ShaderBinary(int, int*, ShaderBinaryFormat, void*, int)"/>
-        public static unsafe void ShaderBinary(int count, in int shaders, ShaderBinaryFormat binaryFormat, IntPtr binary, int length)
+        public static unsafe void ShaderBinary(int count, ref readonly int shaders, ShaderBinaryFormat binaryFormat, IntPtr binary, int length)
         {
             fixed (int* shaders_ptr = &shaders)
             {
@@ -11067,7 +11067,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ShaderBinary(int, int*, ShaderBinaryFormat, void*, int)"/>
-        public static unsafe void ShaderBinary<T1>(int count, in int shaders, ShaderBinaryFormat binaryFormat, in T1 binary, int length)
+        public static unsafe void ShaderBinary<T1>(int count, ref readonly int shaders, ShaderBinaryFormat binaryFormat, ref readonly T1 binary, int length)
             where T1 : unmanaged
         {
             fixed (int* shaders_ptr = &shaders)
@@ -11093,7 +11093,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ShaderSource(int, int, byte**, int*)"/>
-        public static unsafe void ShaderSource(int shader, int count, byte** str, in int length)
+        public static unsafe void ShaderSource(int shader, int count, byte** str, ref readonly int length)
         {
             fixed (int* length_ptr = &length)
             {
@@ -11127,7 +11127,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SpecializeShader(int, byte*, uint, uint*, uint*)"/>
-        public static unsafe void SpecializeShader(int shader, string pEntryPoint, uint numSpecializationConstants, in uint pConstantIndex, in uint pConstantValue)
+        public static unsafe void SpecializeShader(int shader, string pEntryPoint, uint numSpecializationConstants, ref readonly uint pConstantIndex, ref readonly uint pConstantValue)
         {
             fixed (uint* pConstantIndex_ptr = &pConstantIndex)
             fixed (uint* pConstantValue_ptr = &pConstantValue)
@@ -11138,7 +11138,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord1dv(double*)"/>
-        public static unsafe void TexCoord1d(in double v)
+        public static unsafe void TexCoord1d(ref readonly double v)
         {
             fixed (double* tmp_v = &v)
             {
@@ -11147,7 +11147,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord1fv(float*)"/>
-        public static unsafe void TexCoord1f(in float v)
+        public static unsafe void TexCoord1f(ref readonly float v)
         {
             fixed (float* tmp_v = &v)
             {
@@ -11156,7 +11156,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord1iv(int*)"/>
-        public static unsafe void TexCoord1i(in int v)
+        public static unsafe void TexCoord1i(ref readonly int v)
         {
             fixed (int* tmp_v = &v)
             {
@@ -11170,7 +11170,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             TexCoord1s(s);
         }
         /// <inheritdoc cref="TexCoord1sv(short*)"/>
-        public static unsafe void TexCoord1(in short v)
+        public static unsafe void TexCoord1(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -11178,7 +11178,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord2dv(double*)"/>
-        public static unsafe void TexCoord2d(in Vector2d v)
+        public static unsafe void TexCoord2d(ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -11187,7 +11187,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord2fv(float*)"/>
-        public static unsafe void TexCoord2f(in Vector2 v)
+        public static unsafe void TexCoord2f(ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -11196,7 +11196,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord2fv(float*)"/>
-        public static unsafe void TexCoord2f(in System.Numerics.Vector2 v)
+        public static unsafe void TexCoord2f(ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -11223,7 +11223,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord2iv(int*)"/>
-        public static unsafe void TexCoord2i(in Vector2i v)
+        public static unsafe void TexCoord2i(ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -11253,7 +11253,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord2sv(short*)"/>
-        public static unsafe void TexCoord2(in short v)
+        public static unsafe void TexCoord2(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -11261,7 +11261,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord3dv(double*)"/>
-        public static unsafe void TexCoord3d(in Vector3d v)
+        public static unsafe void TexCoord3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -11270,7 +11270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord3fv(float*)"/>
-        public static unsafe void TexCoord3f(in Vector3 v)
+        public static unsafe void TexCoord3f(ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -11279,7 +11279,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord3fv(float*)"/>
-        public static unsafe void TexCoord3f(in System.Numerics.Vector3 v)
+        public static unsafe void TexCoord3f(ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -11306,7 +11306,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord3iv(int*)"/>
-        public static unsafe void TexCoord3i(in Vector3i v)
+        public static unsafe void TexCoord3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -11336,7 +11336,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord3sv(short*)"/>
-        public static unsafe void TexCoord3(in short v)
+        public static unsafe void TexCoord3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -11344,7 +11344,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord4dv(double*)"/>
-        public static unsafe void TexCoord4d(in Vector4d v)
+        public static unsafe void TexCoord4d(ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -11353,7 +11353,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord4fv(float*)"/>
-        public static unsafe void TexCoord4f(in Vector4 v)
+        public static unsafe void TexCoord4f(ref readonly Vector4 v)
         {
             fixed (Vector4* tmp_v = &v)
             {
@@ -11362,7 +11362,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord4fv(float*)"/>
-        public static unsafe void TexCoord4f(in System.Numerics.Vector4 v)
+        public static unsafe void TexCoord4f(ref readonly System.Numerics.Vector4 v)
         {
             fixed (System.Numerics.Vector4* tmp_v = &v)
             {
@@ -11389,7 +11389,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord4iv(int*)"/>
-        public static unsafe void TexCoord4i(in Vector4i v)
+        public static unsafe void TexCoord4i(ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -11419,7 +11419,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoord4sv(short*)"/>
-        public static unsafe void TexCoord4(in short v)
+        public static unsafe void TexCoord4(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -11427,7 +11427,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoordP1uiv(TexCoordPointerType, uint*)"/>
-        public static unsafe void TexCoordP1ui(TexCoordPointerType type, in uint coords)
+        public static unsafe void TexCoordP1ui(TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -11435,7 +11435,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoordP2uiv(TexCoordPointerType, uint*)"/>
-        public static unsafe void TexCoordP2ui(TexCoordPointerType type, in uint coords)
+        public static unsafe void TexCoordP2ui(TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -11443,7 +11443,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoordP3uiv(TexCoordPointerType, uint*)"/>
-        public static unsafe void TexCoordP3ui(TexCoordPointerType type, in uint coords)
+        public static unsafe void TexCoordP3ui(TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -11451,7 +11451,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoordP4uiv(TexCoordPointerType, uint*)"/>
-        public static unsafe void TexCoordP4ui(TexCoordPointerType type, in uint coords)
+        public static unsafe void TexCoordP4ui(TexCoordPointerType type, ref readonly uint coords)
         {
             fixed (uint* coords_ptr = &coords)
             {
@@ -11483,7 +11483,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexCoordPointer(int, TexCoordPointerType, int, void*)"/>
-        public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, in T1 pointer)
+        public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -11508,7 +11508,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
-        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, in float parameters)
+        public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -11532,7 +11532,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
-        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
+        public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -11556,7 +11556,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexGendv(TextureCoordName, TextureGenParameter, double*)"/>
-        public static unsafe void TexGend(TextureCoordName coord, TextureGenParameter pname, in double parameters)
+        public static unsafe void TexGend(TextureCoordName coord, TextureGenParameter pname, ref readonly double parameters)
         {
             fixed (double* parameters_ptr = &parameters)
             {
@@ -11580,7 +11580,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexGenfv(TextureCoordName, TextureGenParameter, float*)"/>
-        public static unsafe void TexGenf(TextureCoordName coord, TextureGenParameter pname, in float parameters)
+        public static unsafe void TexGenf(TextureCoordName coord, TextureGenParameter pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -11604,7 +11604,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexGeniv(TextureCoordName, TextureGenParameter, int*)"/>
-        public static unsafe void TexGeni(TextureCoordName coord, TextureGenParameter pname, in int parameters)
+        public static unsafe void TexGeni(TextureCoordName coord, TextureGenParameter pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -11636,7 +11636,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexImage1D(TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11669,7 +11669,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11702,7 +11702,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11727,7 +11727,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
-        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, in float parameters)
+        public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ref readonly float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -11751,7 +11751,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexParameterIiv(TextureTarget, TextureParameterName, int*)"/>
-        public static unsafe void TexParameterIi(TextureTarget target, TextureParameterName pname, in int parameters)
+        public static unsafe void TexParameterIi(TextureTarget target, TextureParameterName pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -11775,7 +11775,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexParameterIuiv(TextureTarget, TextureParameterName, uint*)"/>
-        public static unsafe void TexParameterIui(TextureTarget target, TextureParameterName pname, in uint parameters)
+        public static unsafe void TexParameterIui(TextureTarget target, TextureParameterName pname, ref readonly uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
@@ -11799,7 +11799,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
-        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, in int parameters)
+        public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -11831,7 +11831,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexSubImage1D(TextureTarget, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11864,7 +11864,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11897,7 +11897,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TexSubImage3D(TextureTarget, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -11922,7 +11922,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureParameterfv(int, TextureParameterName, float*)"/>
-        public static unsafe void TextureParameterf(int texture, TextureParameterName pname, in float param)
+        public static unsafe void TextureParameterf(int texture, TextureParameterName pname, ref readonly float param)
         {
             fixed (float* param_ptr = &param)
             {
@@ -11946,7 +11946,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureParameterIiv(int, TextureParameterName, int*)"/>
-        public static unsafe void TextureParameterIi(int texture, TextureParameterName pname, in int parameters)
+        public static unsafe void TextureParameterIi(int texture, TextureParameterName pname, ref readonly int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -11970,7 +11970,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureParameterIuiv(int, TextureParameterName, uint*)"/>
-        public static unsafe void TextureParameterIui(int texture, TextureParameterName pname, in uint parameters)
+        public static unsafe void TextureParameterIui(int texture, TextureParameterName pname, ref readonly uint parameters)
         {
             fixed (uint* parameters_ptr = &parameters)
             {
@@ -11994,7 +11994,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureParameteriv(int, TextureParameterName, int*)"/>
-        public static unsafe void TextureParameteri(int texture, TextureParameterName pname, in int param)
+        public static unsafe void TextureParameteri(int texture, TextureParameterName pname, ref readonly int param)
         {
             fixed (int* param_ptr = &param)
             {
@@ -12026,7 +12026,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureSubImage1D(int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TextureSubImage1D<T1>(int texture, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TextureSubImage1D<T1>(int texture, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -12059,7 +12059,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureSubImage2D(int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -12092,7 +12092,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="TextureSubImage3D(int, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -12101,7 +12101,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
-        public static unsafe void Uniform1d(int location, int count, in double value)
+        public static unsafe void Uniform1d(int location, int count, ref readonly double value)
         {
             fixed (double* tmp_value = &value)
             {
@@ -12128,7 +12128,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
-        public static unsafe void Uniform1f(int location, int count, in float value)
+        public static unsafe void Uniform1f(int location, int count, ref readonly float value)
         {
             fixed (float* tmp_value = &value)
             {
@@ -12155,7 +12155,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
-        public static unsafe void Uniform1i(int location, int count, in int value)
+        public static unsafe void Uniform1i(int location, int count, ref readonly int value)
         {
             fixed (int* tmp_value = &value)
             {
@@ -12182,7 +12182,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
-        public static unsafe void Uniform1ui(int location, int count, in uint value)
+        public static unsafe void Uniform1ui(int location, int count, ref readonly uint value)
         {
             fixed (uint* tmp_value = &value)
             {
@@ -12209,7 +12209,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
-        public static unsafe void Uniform2d(int location, int count, in Vector2d value)
+        public static unsafe void Uniform2d(int location, int count, ref readonly Vector2d value)
         {
             fixed (Vector2d* tmp_value = &value)
             {
@@ -12236,7 +12236,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
-        public static unsafe void Uniform2f(int location, int count, in Vector2 value)
+        public static unsafe void Uniform2f(int location, int count, ref readonly Vector2 value)
         {
             fixed (Vector2* tmp_value = &value)
             {
@@ -12263,7 +12263,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
-        public static unsafe void Uniform2f(int location, int count, in System.Numerics.Vector2 value)
+        public static unsafe void Uniform2f(int location, int count, ref readonly System.Numerics.Vector2 value)
         {
             fixed (System.Numerics.Vector2* tmp_value = &value)
             {
@@ -12290,7 +12290,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
-        public static unsafe void Uniform2i(int location, int count, in Vector2i value)
+        public static unsafe void Uniform2i(int location, int count, ref readonly Vector2i value)
         {
             fixed (Vector2i* tmp_value = &value)
             {
@@ -12317,7 +12317,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-        public static unsafe void Uniform2ui(int location, int count, in Vector2i value)
+        public static unsafe void Uniform2ui(int location, int count, ref readonly Vector2i value)
         {
             fixed (Vector2i* tmp_value = &value)
             {
@@ -12344,7 +12344,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
-        public static unsafe void Uniform3d(int location, int count, in Vector3d value)
+        public static unsafe void Uniform3d(int location, int count, ref readonly Vector3d value)
         {
             fixed (Vector3d* tmp_value = &value)
             {
@@ -12371,7 +12371,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
-        public static unsafe void Uniform3f(int location, int count, in Vector3 value)
+        public static unsafe void Uniform3f(int location, int count, ref readonly Vector3 value)
         {
             fixed (Vector3* tmp_value = &value)
             {
@@ -12398,7 +12398,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
-        public static unsafe void Uniform3f(int location, int count, in System.Numerics.Vector3 value)
+        public static unsafe void Uniform3f(int location, int count, ref readonly System.Numerics.Vector3 value)
         {
             fixed (System.Numerics.Vector3* tmp_value = &value)
             {
@@ -12425,7 +12425,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
-        public static unsafe void Uniform3i(int location, int count, in Vector3i value)
+        public static unsafe void Uniform3i(int location, int count, ref readonly Vector3i value)
         {
             fixed (Vector3i* tmp_value = &value)
             {
@@ -12452,7 +12452,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-        public static unsafe void Uniform3ui(int location, int count, in Vector3i value)
+        public static unsafe void Uniform3ui(int location, int count, ref readonly Vector3i value)
         {
             fixed (Vector3i* tmp_value = &value)
             {
@@ -12479,7 +12479,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
-        public static unsafe void Uniform4d(int location, int count, in Vector4d value)
+        public static unsafe void Uniform4d(int location, int count, ref readonly Vector4d value)
         {
             fixed (Vector4d* tmp_value = &value)
             {
@@ -12506,7 +12506,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
-        public static unsafe void Uniform4f(int location, int count, in Vector4 value)
+        public static unsafe void Uniform4f(int location, int count, ref readonly Vector4 value)
         {
             fixed (Vector4* tmp_value = &value)
             {
@@ -12533,7 +12533,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
-        public static unsafe void Uniform4f(int location, int count, in System.Numerics.Vector4 value)
+        public static unsafe void Uniform4f(int location, int count, ref readonly System.Numerics.Vector4 value)
         {
             fixed (System.Numerics.Vector4* tmp_value = &value)
             {
@@ -12560,7 +12560,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
-        public static unsafe void Uniform4i(int location, int count, in Vector4i value)
+        public static unsafe void Uniform4i(int location, int count, ref readonly Vector4i value)
         {
             fixed (Vector4i* tmp_value = &value)
             {
@@ -12587,7 +12587,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-        public static unsafe void Uniform4ui(int location, int count, in Vector4i value)
+        public static unsafe void Uniform4ui(int location, int count, ref readonly Vector4i value)
         {
             fixed (Vector4i* tmp_value = &value)
             {
@@ -12614,7 +12614,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix2d(int location, int count, bool transpose, in Matrix2d value)
+        public static unsafe void UniformMatrix2d(int location, int count, bool transpose, ref readonly Matrix2d value)
         {
             fixed (Matrix2d* tmp_value = &value)
             {
@@ -12641,7 +12641,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, in Matrix2 value)
+        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, ref readonly Matrix2 value)
         {
             fixed (Matrix2* tmp_value = &value)
             {
@@ -12668,7 +12668,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, in Matrix2x3d value)
+        public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, ref readonly Matrix2x3d value)
         {
             fixed (Matrix2x3d* tmp_value = &value)
             {
@@ -12695,7 +12695,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, in Matrix2x3 value)
+        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, ref readonly Matrix2x3 value)
         {
             fixed (Matrix2x3* tmp_value = &value)
             {
@@ -12722,7 +12722,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, in Matrix2x4d value)
+        public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, ref readonly Matrix2x4d value)
         {
             fixed (Matrix2x4d* tmp_value = &value)
             {
@@ -12749,7 +12749,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, in Matrix2x4 value)
+        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, ref readonly Matrix2x4 value)
         {
             fixed (Matrix2x4* tmp_value = &value)
             {
@@ -12776,7 +12776,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix3d(int location, int count, bool transpose, in Matrix3d value)
+        public static unsafe void UniformMatrix3d(int location, int count, bool transpose, ref readonly Matrix3d value)
         {
             fixed (Matrix3d* tmp_value = &value)
             {
@@ -12803,7 +12803,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, in Matrix3 value)
+        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, ref readonly Matrix3 value)
         {
             fixed (Matrix3* tmp_value = &value)
             {
@@ -12830,7 +12830,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, in Matrix3x2d value)
+        public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, ref readonly Matrix3x2d value)
         {
             fixed (Matrix3x2d* tmp_value = &value)
             {
@@ -12857,7 +12857,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in Matrix3x2 value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ref readonly Matrix3x2 value)
         {
             fixed (Matrix3x2* tmp_value = &value)
             {
@@ -12884,7 +12884,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ref readonly System.Numerics.Matrix3x2 value)
         {
             fixed (System.Numerics.Matrix3x2* tmp_value = &value)
             {
@@ -12911,7 +12911,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, in Matrix3x4d value)
+        public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, ref readonly Matrix3x4d value)
         {
             fixed (Matrix3x4d* tmp_value = &value)
             {
@@ -12938,7 +12938,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, in Matrix3x4 value)
+        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, ref readonly Matrix3x4 value)
         {
             fixed (Matrix3x4* tmp_value = &value)
             {
@@ -12965,7 +12965,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix4d(int location, int count, bool transpose, in Matrix4d value)
+        public static unsafe void UniformMatrix4d(int location, int count, bool transpose, ref readonly Matrix4d value)
         {
             fixed (Matrix4d* tmp_value = &value)
             {
@@ -12992,7 +12992,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in Matrix4 value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ref readonly Matrix4 value)
         {
             fixed (Matrix4* tmp_value = &value)
             {
@@ -13019,7 +13019,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ref readonly System.Numerics.Matrix4x4 value)
         {
             fixed (System.Numerics.Matrix4x4* tmp_value = &value)
             {
@@ -13046,7 +13046,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, in Matrix4x2d value)
+        public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, ref readonly Matrix4x2d value)
         {
             fixed (Matrix4x2d* tmp_value = &value)
             {
@@ -13073,7 +13073,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, in Matrix4x2 value)
+        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, ref readonly Matrix4x2 value)
         {
             fixed (Matrix4x2* tmp_value = &value)
             {
@@ -13100,7 +13100,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
-        public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, in Matrix4x3d value)
+        public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, ref readonly Matrix4x3d value)
         {
             fixed (Matrix4x3d* tmp_value = &value)
             {
@@ -13127,7 +13127,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv(int, int, bool, float*)"/>
-        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, in Matrix4x3 value)
+        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, ref readonly Matrix4x3 value)
         {
             fixed (Matrix4x3* tmp_value = &value)
             {
@@ -13170,7 +13170,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="UniformSubroutinesuiv(ShaderType, int, uint*)"/>
-        public static unsafe void UniformSubroutinesui(ShaderType shadertype, int count, in uint indices)
+        public static unsafe void UniformSubroutinesui(ShaderType shadertype, int count, ref readonly uint indices)
         {
             fixed (uint* indices_ptr = &indices)
             {
@@ -13178,7 +13178,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex2dv(double*)"/>
-        public static unsafe void Vertex2d(in Vector2d v)
+        public static unsafe void Vertex2d(ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -13187,7 +13187,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex2fv(float*)"/>
-        public static unsafe void Vertex2f(in Vector2 v)
+        public static unsafe void Vertex2f(ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -13196,7 +13196,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex2fv(float*)"/>
-        public static unsafe void Vertex2f(in System.Numerics.Vector2 v)
+        public static unsafe void Vertex2f(ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -13223,7 +13223,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex2iv(int*)"/>
-        public static unsafe void Vertex2i(in Vector2i v)
+        public static unsafe void Vertex2i(ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -13253,7 +13253,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex2sv(short*)"/>
-        public static unsafe void Vertex2(in short v)
+        public static unsafe void Vertex2(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13261,7 +13261,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex3dv(double*)"/>
-        public static unsafe void Vertex3d(in Vector3d v)
+        public static unsafe void Vertex3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -13270,7 +13270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex3fv(float*)"/>
-        public static unsafe void Vertex3f(in Vector3 v)
+        public static unsafe void Vertex3f(ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -13279,7 +13279,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex3fv(float*)"/>
-        public static unsafe void Vertex3f(in System.Numerics.Vector3 v)
+        public static unsafe void Vertex3f(ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -13306,7 +13306,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex3iv(int*)"/>
-        public static unsafe void Vertex3i(in Vector3i v)
+        public static unsafe void Vertex3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -13336,7 +13336,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex3sv(short*)"/>
-        public static unsafe void Vertex3(in short v)
+        public static unsafe void Vertex3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13344,7 +13344,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex4dv(double*)"/>
-        public static unsafe void Vertex4d(in Vector4d v)
+        public static unsafe void Vertex4d(ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -13353,7 +13353,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex4fv(float*)"/>
-        public static unsafe void Vertex4f(in Vector4 v)
+        public static unsafe void Vertex4f(ref readonly Vector4 v)
         {
             fixed (Vector4* tmp_v = &v)
             {
@@ -13362,7 +13362,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex4fv(float*)"/>
-        public static unsafe void Vertex4f(in System.Numerics.Vector4 v)
+        public static unsafe void Vertex4f(ref readonly System.Numerics.Vector4 v)
         {
             fixed (System.Numerics.Vector4* tmp_v = &v)
             {
@@ -13389,7 +13389,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex4iv(int*)"/>
-        public static unsafe void Vertex4i(in Vector4i v)
+        public static unsafe void Vertex4i(ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -13419,7 +13419,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Vertex4sv(short*)"/>
-        public static unsafe void Vertex4(in short v)
+        public static unsafe void Vertex4(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13455,7 +13455,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexArrayVertexBuffers(int, uint, int, int*, IntPtr*, int*)"/>
-        public static unsafe void VertexArrayVertexBuffers(int vaobj, uint first, int count, in int buffers, in IntPtr offsets, in int strides)
+        public static unsafe void VertexArrayVertexBuffers(int vaobj, uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly int strides)
         {
             fixed (int* buffers_ptr = &buffers)
             fixed (IntPtr* offsets_ptr = &offsets)
@@ -13465,7 +13465,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib1dv(uint, double*)"/>
-        public static unsafe void VertexAttrib1d(uint index, in double v)
+        public static unsafe void VertexAttrib1d(uint index, ref readonly double v)
         {
             fixed (double* tmp_v = &v)
             {
@@ -13474,7 +13474,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib1fv(uint, float*)"/>
-        public static unsafe void VertexAttrib1f(uint index, in float v)
+        public static unsafe void VertexAttrib1f(uint index, ref readonly float v)
         {
             fixed (float* tmp_v = &v)
             {
@@ -13488,7 +13488,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             VertexAttrib1s(index, x);
         }
         /// <inheritdoc cref="VertexAttrib1sv(uint, short*)"/>
-        public static unsafe void VertexAttrib1(uint index, in short v)
+        public static unsafe void VertexAttrib1(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13496,7 +13496,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib2dv(uint, double*)"/>
-        public static unsafe void VertexAttrib2d(uint index, in Vector2d v)
+        public static unsafe void VertexAttrib2d(uint index, ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -13505,7 +13505,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
-        public static unsafe void VertexAttrib2f(uint index, in Vector2 v)
+        public static unsafe void VertexAttrib2f(uint index, ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -13514,7 +13514,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
-        public static unsafe void VertexAttrib2f(uint index, in System.Numerics.Vector2 v)
+        public static unsafe void VertexAttrib2f(uint index, ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -13562,7 +13562,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib2sv(uint, short*)"/>
-        public static unsafe void VertexAttrib2(uint index, in short v)
+        public static unsafe void VertexAttrib2(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13570,7 +13570,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib3dv(uint, double*)"/>
-        public static unsafe void VertexAttrib3d(uint index, in Vector3d v)
+        public static unsafe void VertexAttrib3d(uint index, ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -13579,7 +13579,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
-        public static unsafe void VertexAttrib3f(uint index, in Vector3 v)
+        public static unsafe void VertexAttrib3f(uint index, ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -13588,7 +13588,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
-        public static unsafe void VertexAttrib3f(uint index, in System.Numerics.Vector3 v)
+        public static unsafe void VertexAttrib3f(uint index, ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -13636,7 +13636,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib3sv(uint, short*)"/>
-        public static unsafe void VertexAttrib3(uint index, in short v)
+        public static unsafe void VertexAttrib3(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13660,7 +13660,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4bv(uint, sbyte*)"/>
-        public static unsafe void VertexAttrib4(uint index, in sbyte v)
+        public static unsafe void VertexAttrib4(uint index, ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -13668,7 +13668,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4dv(uint, double*)"/>
-        public static unsafe void VertexAttrib4d(uint index, in Vector4d v)
+        public static unsafe void VertexAttrib4d(uint index, ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -13677,7 +13677,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
-        public static unsafe void VertexAttrib4f(uint index, in Vector4 v)
+        public static unsafe void VertexAttrib4f(uint index, ref readonly Vector4 v)
         {
             fixed (Vector4* tmp_v = &v)
             {
@@ -13686,7 +13686,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
-        public static unsafe void VertexAttrib4f(uint index, in System.Numerics.Vector4 v)
+        public static unsafe void VertexAttrib4f(uint index, ref readonly System.Numerics.Vector4 v)
         {
             fixed (System.Numerics.Vector4* tmp_v = &v)
             {
@@ -13713,7 +13713,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4iv(uint, int*)"/>
-        public static unsafe void VertexAttrib4i(uint index, in Vector4i v)
+        public static unsafe void VertexAttrib4i(uint index, ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -13738,7 +13738,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Nbv(uint, sbyte*)"/>
-        public static unsafe void VertexAttrib4N(uint index, in sbyte v)
+        public static unsafe void VertexAttrib4N(uint index, ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -13762,7 +13762,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Niv(uint, int*)"/>
-        public static unsafe void VertexAttrib4Ni(uint index, in int v)
+        public static unsafe void VertexAttrib4Ni(uint index, ref readonly int v)
         {
             fixed (int* v_ptr = &v)
             {
@@ -13786,7 +13786,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Nsv(uint, short*)"/>
-        public static unsafe void VertexAttrib4N(uint index, in short v)
+        public static unsafe void VertexAttrib4N(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13815,7 +13815,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Nubv(uint, byte*)"/>
-        public static unsafe void VertexAttrib4N(uint index, in byte v)
+        public static unsafe void VertexAttrib4N(uint index, ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -13839,7 +13839,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Nuiv(uint, uint*)"/>
-        public static unsafe void VertexAttrib4Nui(uint index, in uint v)
+        public static unsafe void VertexAttrib4Nui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -13863,7 +13863,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4Nusv(uint, ushort*)"/>
-        public static unsafe void VertexAttrib4N(uint index, in ushort v)
+        public static unsafe void VertexAttrib4N(uint index, ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -13892,7 +13892,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4sv(uint, short*)"/>
-        public static unsafe void VertexAttrib4(uint index, in short v)
+        public static unsafe void VertexAttrib4(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -13916,7 +13916,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4ubv(uint, byte*)"/>
-        public static unsafe void VertexAttrib4(uint index, in byte v)
+        public static unsafe void VertexAttrib4(uint index, ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -13940,7 +13940,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4uiv(uint, uint*)"/>
-        public static unsafe void VertexAttrib4ui(uint index, in uint v)
+        public static unsafe void VertexAttrib4ui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -13964,7 +13964,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttrib4usv(uint, ushort*)"/>
-        public static unsafe void VertexAttrib4(uint index, in ushort v)
+        public static unsafe void VertexAttrib4(uint index, ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -13972,7 +13972,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI1iv(uint, int*)"/>
-        public static unsafe void VertexAttribI1i(uint index, in int v)
+        public static unsafe void VertexAttribI1i(uint index, ref readonly int v)
         {
             fixed (int* tmp_v = &v)
             {
@@ -13981,7 +13981,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI1uiv(uint, uint*)"/>
-        public static unsafe void VertexAttribI1ui(uint index, in uint v)
+        public static unsafe void VertexAttribI1ui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -13989,7 +13989,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI2iv(uint, int*)"/>
-        public static unsafe void VertexAttribI2i(uint index, in Vector2i v)
+        public static unsafe void VertexAttribI2i(uint index, ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -14014,7 +14014,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI2uiv(uint, uint*)"/>
-        public static unsafe void VertexAttribI2ui(uint index, in uint v)
+        public static unsafe void VertexAttribI2ui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -14022,7 +14022,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI3iv(uint, int*)"/>
-        public static unsafe void VertexAttribI3i(uint index, in Vector3i v)
+        public static unsafe void VertexAttribI3i(uint index, ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -14047,7 +14047,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI3uiv(uint, uint*)"/>
-        public static unsafe void VertexAttribI3ui(uint index, in uint v)
+        public static unsafe void VertexAttribI3ui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -14071,7 +14071,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4bv(uint, sbyte*)"/>
-        public static unsafe void VertexAttribI4(uint index, in sbyte v)
+        public static unsafe void VertexAttribI4(uint index, ref readonly sbyte v)
         {
             fixed (sbyte* v_ptr = &v)
             {
@@ -14079,7 +14079,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4iv(uint, int*)"/>
-        public static unsafe void VertexAttribI4i(uint index, in Vector4i v)
+        public static unsafe void VertexAttribI4i(uint index, ref readonly Vector4i v)
         {
             fixed (Vector4i* tmp_v = &v)
             {
@@ -14104,7 +14104,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4sv(uint, short*)"/>
-        public static unsafe void VertexAttribI4(uint index, in short v)
+        public static unsafe void VertexAttribI4(uint index, ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -14128,7 +14128,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4ubv(uint, byte*)"/>
-        public static unsafe void VertexAttribI4(uint index, in byte v)
+        public static unsafe void VertexAttribI4(uint index, ref readonly byte v)
         {
             fixed (byte* v_ptr = &v)
             {
@@ -14152,7 +14152,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4uiv(uint, uint*)"/>
-        public static unsafe void VertexAttribI4ui(uint index, in uint v)
+        public static unsafe void VertexAttribI4ui(uint index, ref readonly uint v)
         {
             fixed (uint* v_ptr = &v)
             {
@@ -14176,7 +14176,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribI4usv(uint, ushort*)"/>
-        public static unsafe void VertexAttribI4(uint index, in ushort v)
+        public static unsafe void VertexAttribI4(uint index, ref readonly ushort v)
         {
             fixed (ushort* v_ptr = &v)
             {
@@ -14190,7 +14190,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             VertexAttribIPointer(index, size, type, stride, pointer);
         }
         /// <inheritdoc cref="VertexAttribL1dv(uint, double*)"/>
-        public static unsafe void VertexAttribL1d(uint index, in double v)
+        public static unsafe void VertexAttribL1d(uint index, ref readonly double v)
         {
             fixed (double* tmp_v = &v)
             {
@@ -14199,7 +14199,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribL2dv(uint, double*)"/>
-        public static unsafe void VertexAttribL2d(uint index, in Vector2d v)
+        public static unsafe void VertexAttribL2d(uint index, ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -14208,7 +14208,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribL3dv(uint, double*)"/>
-        public static unsafe void VertexAttribL3d(uint index, in Vector3d v)
+        public static unsafe void VertexAttribL3d(uint index, ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -14217,7 +14217,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribL4dv(uint, double*)"/>
-        public static unsafe void VertexAttribL4d(uint index, in Vector4d v)
+        public static unsafe void VertexAttribL4d(uint index, ref readonly Vector4d v)
         {
             fixed (Vector4d* tmp_v = &v)
             {
@@ -14232,7 +14232,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             VertexAttribLPointer(index, size, type, stride, pointer);
         }
         /// <inheritdoc cref="VertexAttribP1uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-        public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+        public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14240,7 +14240,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribP2uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-        public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+        public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14248,7 +14248,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribP3uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-        public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+        public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14256,7 +14256,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexAttribP4uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-        public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+        public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14270,7 +14270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             VertexAttribPointer(index, size, type, normalized, stride, pointer);
         }
         /// <inheritdoc cref="VertexP2uiv(VertexPointerType, uint*)"/>
-        public static unsafe void VertexP2ui(VertexPointerType type, in uint value)
+        public static unsafe void VertexP2ui(VertexPointerType type, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14278,7 +14278,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexP3uiv(VertexPointerType, uint*)"/>
-        public static unsafe void VertexP3ui(VertexPointerType type, in uint value)
+        public static unsafe void VertexP3ui(VertexPointerType type, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14286,7 +14286,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexP4uiv(VertexPointerType, uint*)"/>
-        public static unsafe void VertexP4ui(VertexPointerType type, in uint value)
+        public static unsafe void VertexP4ui(VertexPointerType type, ref readonly uint value)
         {
             fixed (uint* value_ptr = &value)
             {
@@ -14318,7 +14318,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="VertexPointer(int, VertexPointerType, int, void*)"/>
-        public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, in T1 pointer)
+        public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, ref readonly T1 pointer)
             where T1 : unmanaged
         {
             fixed (void* pointer_ptr = &pointer)
@@ -14343,7 +14343,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ViewportArrayv(uint, int, float*)"/>
-        public static unsafe void ViewportArray(uint first, int count, in float v)
+        public static unsafe void ViewportArray(uint first, int count, ref readonly float v)
         {
             fixed (float* v_ptr = &v)
             {
@@ -14367,7 +14367,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ViewportIndexedfv(uint, float*)"/>
-        public static unsafe void ViewportIndexedf(uint index, in float v)
+        public static unsafe void ViewportIndexedf(uint index, ref readonly float v)
         {
             fixed (float* v_ptr = &v)
             {
@@ -14375,7 +14375,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos2dv(double*)"/>
-        public static unsafe void WindowPos2d(in Vector2d v)
+        public static unsafe void WindowPos2d(ref readonly Vector2d v)
         {
             fixed (Vector2d* tmp_v = &v)
             {
@@ -14384,7 +14384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos2fv(float*)"/>
-        public static unsafe void WindowPos2f(in Vector2 v)
+        public static unsafe void WindowPos2f(ref readonly Vector2 v)
         {
             fixed (Vector2* tmp_v = &v)
             {
@@ -14393,7 +14393,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos2fv(float*)"/>
-        public static unsafe void WindowPos2f(in System.Numerics.Vector2 v)
+        public static unsafe void WindowPos2f(ref readonly System.Numerics.Vector2 v)
         {
             fixed (System.Numerics.Vector2* tmp_v = &v)
             {
@@ -14420,7 +14420,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos2iv(int*)"/>
-        public static unsafe void WindowPos2i(in Vector2i v)
+        public static unsafe void WindowPos2i(ref readonly Vector2i v)
         {
             fixed (Vector2i* tmp_v = &v)
             {
@@ -14450,7 +14450,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos2sv(short*)"/>
-        public static unsafe void WindowPos2(in short v)
+        public static unsafe void WindowPos2(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -14458,7 +14458,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos3dv(double*)"/>
-        public static unsafe void WindowPos3d(in Vector3d v)
+        public static unsafe void WindowPos3d(ref readonly Vector3d v)
         {
             fixed (Vector3d* tmp_v = &v)
             {
@@ -14467,7 +14467,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos3fv(float*)"/>
-        public static unsafe void WindowPos3f(in Vector3 v)
+        public static unsafe void WindowPos3f(ref readonly Vector3 v)
         {
             fixed (Vector3* tmp_v = &v)
             {
@@ -14476,7 +14476,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos3fv(float*)"/>
-        public static unsafe void WindowPos3f(in System.Numerics.Vector3 v)
+        public static unsafe void WindowPos3f(ref readonly System.Numerics.Vector3 v)
         {
             fixed (System.Numerics.Vector3* tmp_v = &v)
             {
@@ -14503,7 +14503,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos3iv(int*)"/>
-        public static unsafe void WindowPos3i(in Vector3i v)
+        public static unsafe void WindowPos3i(ref readonly Vector3i v)
         {
             fixed (Vector3i* tmp_v = &v)
             {
@@ -14533,7 +14533,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="WindowPos3sv(short*)"/>
-        public static unsafe void WindowPos3(in short v)
+        public static unsafe void WindowPos3(ref readonly short v)
         {
             fixed (short* v_ptr = &v)
             {
@@ -14599,7 +14599,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageEnableAMD(All, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageEnableAMD(All category, DebugSeverity severity, int count, in uint ids, bool enabled)
+            public static unsafe void DebugMessageEnableAMD(All category, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
                 {
@@ -14630,7 +14630,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteNamesAMD(All, uint, uint*)"/>
-            public static unsafe void DeleteNamesAMD(All identifier, uint num, in uint names)
+            public static unsafe void DeleteNamesAMD(All identifier, uint num, ref readonly uint names)
             {
                 fixed (uint* names_ptr = &names)
                 {
@@ -14654,7 +14654,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeletePerfMonitorsAMD(int, uint*)"/>
-            public static unsafe void DeletePerfMonitorsAMD(int n, in uint monitors)
+            public static unsafe void DeletePerfMonitorsAMD(int n, ref readonly uint monitors)
             {
                 fixed (uint* monitors_ptr = &monitors)
                 {
@@ -14678,7 +14678,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FramebufferSamplePositionsfvAMD(FramebufferTarget, uint, uint, float*)"/>
-            public static unsafe void FramebufferSamplePositionsfvAMD(FramebufferTarget target, uint numsamples, uint pixelindex, in float values)
+            public static unsafe void FramebufferSamplePositionsfvAMD(FramebufferTarget target, uint numsamples, uint pixelindex, ref readonly float values)
             {
                 fixed (float* values_ptr = &values)
                 {
@@ -15159,7 +15159,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysIndirectAMD(PrimitiveType, void*, int, int)"/>
-            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, in T1 indirect, int primcount, int stride)
+            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, ref readonly T1 indirect, int primcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -15192,7 +15192,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirectAMD(PrimitiveType, DrawElementsType, void*, int, int)"/>
-            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int primcount, int stride)
+            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, int primcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -15217,7 +15217,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedFramebufferSamplePositionsfvAMD(int, uint, uint, float*)"/>
-            public static unsafe void NamedFramebufferSamplePositionsfvAMD(int framebuffer, uint numsamples, uint pixelindex, in float values)
+            public static unsafe void NamedFramebufferSamplePositionsfvAMD(int framebuffer, uint numsamples, uint pixelindex, ref readonly float values)
             {
                 fixed (float* values_ptr = &values)
                 {
@@ -15225,7 +15225,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64vNV(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform1i64vNV(int program, int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -15234,7 +15234,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform1ui64vNV(int program, int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -15243,7 +15243,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -15270,7 +15270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -15297,7 +15297,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -15324,7 +15324,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -15351,7 +15351,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -15378,7 +15378,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -15405,7 +15405,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -15432,7 +15432,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -15459,7 +15459,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -15486,7 +15486,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -15513,7 +15513,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -15540,7 +15540,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -15583,7 +15583,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD(uint, bool, uint, int, uint*)"/>
-            public static unsafe void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, in uint counterList)
+            public static unsafe void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, ref readonly uint counterList)
             {
                 fixed (uint* counterList_ptr = &counterList)
                 {
@@ -15607,7 +15607,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SetMultisamplefvAMD(All, uint, float*)"/>
-            public static unsafe void SetMultisamplefvAMD(All pname, uint index, in float val)
+            public static unsafe void SetMultisamplefvAMD(All pname, uint index, ref readonly float val)
             {
                 fixed (float* val_ptr = &val)
                 {
@@ -15615,7 +15615,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform1i64vNV(int location, int count, in long value)
+            public static unsafe void Uniform1i64vNV(int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -15642,7 +15642,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniform1ui64vNV(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -15669,7 +15669,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2i64vNV(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -15696,7 +15696,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2i64vNV(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -15723,7 +15723,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -15750,7 +15750,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -15777,7 +15777,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3i64vNV(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -15804,7 +15804,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3i64vNV(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -15831,7 +15831,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -15858,7 +15858,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -15885,7 +15885,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4i64vNV(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -15912,7 +15912,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4i64vNV(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -15939,7 +15939,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -15966,7 +15966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -16012,7 +16012,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFencesAPPLE(int, uint*)"/>
-            public static unsafe void DeleteFencesAPPLE(int n, in uint fences)
+            public static unsafe void DeleteFencesAPPLE(int n, ref readonly uint fences)
             {
                 fixed (uint* fences_ptr = &fences)
                 {
@@ -16036,7 +16036,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteVertexArraysAPPLE(int, int*)"/>
-            public static unsafe void DeleteVertexArraysAPPLE(int n, in int arrays)
+            public static unsafe void DeleteVertexArraysAPPLE(int n, ref readonly int arrays)
             {
                 fixed (int* arrays_ptr = &arrays)
                 {
@@ -16068,7 +16068,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ElementPointerAPPLE(ElementPointerTypeATI, void*)"/>
-            public static unsafe void ElementPointerAPPLE<T1>(ElementPointerTypeATI type, in T1 pointer)
+            public static unsafe void ElementPointerAPPLE<T1>(ElementPointerTypeATI type, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -16101,7 +16101,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FlushVertexArrayRangeAPPLE(int, void*)"/>
-            public static unsafe void FlushVertexArrayRangeAPPLE<T1>(int length, in T1 pointer)
+            public static unsafe void FlushVertexArrayRangeAPPLE<T1>(int length, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -16208,7 +16208,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapVertexAttrib1dAPPLE(uint, uint, double, double, int, int, double*)"/>
-            public static unsafe void MapVertexAttrib1dAPPLE(uint index, uint size, double u1, double u2, int stride, int order, in double points)
+            public static unsafe void MapVertexAttrib1dAPPLE(uint index, uint size, double u1, double u2, int stride, int order, ref readonly double points)
             {
                 fixed (double* points_ptr = &points)
                 {
@@ -16232,7 +16232,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapVertexAttrib1fAPPLE(uint, uint, float, float, int, int, float*)"/>
-            public static unsafe void MapVertexAttrib1fAPPLE(uint index, uint size, float u1, float u2, int stride, int order, in float points)
+            public static unsafe void MapVertexAttrib1fAPPLE(uint index, uint size, float u1, float u2, int stride, int order, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -16256,7 +16256,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapVertexAttrib2dAPPLE(uint, uint, double, double, int, int, double, double, int, int, double*)"/>
-            public static unsafe void MapVertexAttrib2dAPPLE(uint index, uint size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, in double points)
+            public static unsafe void MapVertexAttrib2dAPPLE(uint index, uint size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, ref readonly double points)
             {
                 fixed (double* points_ptr = &points)
                 {
@@ -16280,7 +16280,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapVertexAttrib2fAPPLE(uint, uint, float, float, int, int, float, float, int, int, float*)"/>
-            public static unsafe void MapVertexAttrib2fAPPLE(uint index, uint size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, in float points)
+            public static unsafe void MapVertexAttrib2fAPPLE(uint index, uint size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -16310,7 +16310,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementArrayAPPLE(PrimitiveType, int*, int*, int)"/>
-            public static unsafe void MultiDrawElementArrayAPPLE(PrimitiveType mode, in int first, in int count, int primcount)
+            public static unsafe void MultiDrawElementArrayAPPLE(PrimitiveType mode, ref readonly int first, ref readonly int count, int primcount)
             {
                 fixed (int* first_ptr = &first)
                 fixed (int* count_ptr = &count)
@@ -16341,7 +16341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawRangeElementArrayAPPLE(PrimitiveType, uint, uint, int*, int*, int)"/>
-            public static unsafe void MultiDrawRangeElementArrayAPPLE(PrimitiveType mode, uint start, uint end, in int first, in int count, int primcount)
+            public static unsafe void MultiDrawRangeElementArrayAPPLE(PrimitiveType mode, uint start, uint end, ref readonly int first, ref readonly int count, int primcount)
             {
                 fixed (int* first_ptr = &first)
                 fixed (int* count_ptr = &count)
@@ -16374,7 +16374,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureRangeAPPLE(All, int, void*)"/>
-            public static unsafe void TextureRangeAPPLE<T1>(All target, int length, in T1 pointer)
+            public static unsafe void TextureRangeAPPLE<T1>(All target, int length, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -16407,7 +16407,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexArrayRangeAPPLE(int, void*)"/>
-            public static unsafe void VertexArrayRangeAPPLE<T1>(int length, in T1 pointer)
+            public static unsafe void VertexArrayRangeAPPLE<T1>(int length, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -16442,7 +16442,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindBuffersBase(BufferTarget, uint, int, int*)"/>
-            public static unsafe void BindBuffersBase(BufferTarget target, uint first, int count, in int buffers)
+            public static unsafe void BindBuffersBase(BufferTarget target, uint first, int count, ref readonly int buffers)
             {
                 fixed (int* buffers_ptr = &buffers)
                 {
@@ -16478,7 +16478,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindBuffersRange(BufferTarget, uint, int, int*, IntPtr*, nint*)"/>
-            public static unsafe void BindBuffersRange(BufferTarget target, uint first, int count, in int buffers, in IntPtr offsets, in nint sizes)
+            public static unsafe void BindBuffersRange(BufferTarget target, uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly nint sizes)
             {
                 fixed (int* buffers_ptr = &buffers)
                 fixed (IntPtr* offsets_ptr = &offsets)
@@ -16511,7 +16511,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindImageTextures(uint, int, int*)"/>
-            public static unsafe void BindImageTextures(uint first, int count, in int textures)
+            public static unsafe void BindImageTextures(uint first, int count, ref readonly int textures)
             {
                 fixed (int* textures_ptr = &textures)
                 {
@@ -16535,7 +16535,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindSamplers(uint, int, int*)"/>
-            public static unsafe void BindSamplers(uint first, int count, in int samplers)
+            public static unsafe void BindSamplers(uint first, int count, ref readonly int samplers)
             {
                 fixed (int* samplers_ptr = &samplers)
                 {
@@ -16559,7 +16559,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindTextures(uint, int, int*)"/>
-            public static unsafe void BindTextures(uint first, int count, in int textures)
+            public static unsafe void BindTextures(uint first, int count, ref readonly int textures)
             {
                 fixed (int* textures_ptr = &textures)
                 {
@@ -16595,7 +16595,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BindVertexBuffers(uint, int, int*, IntPtr*, int*)"/>
-            public static unsafe void BindVertexBuffers(uint first, int count, in int buffers, in IntPtr offsets, in int strides)
+            public static unsafe void BindVertexBuffers(uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly int strides)
             {
                 fixed (int* buffers_ptr = &buffers)
                 fixed (IntPtr* offsets_ptr = &offsets)
@@ -16629,7 +16629,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BufferDataARB(BufferTarget, nint, void*, BufferUsage)"/>
-            public static unsafe void BufferDataARB<T1>(BufferTarget target, nint size, in T1 data, BufferUsage usage)
+            public static unsafe void BufferDataARB<T1>(BufferTarget target, nint size, ref readonly T1 data, BufferUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16662,7 +16662,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BufferStorage(BufferStorageTarget, nint, void*, BufferStorageMask)"/>
-            public static unsafe void BufferStorage<T1>(BufferStorageTarget target, nint size, in T1 data, BufferStorageMask flags)
+            public static unsafe void BufferStorage<T1>(BufferStorageTarget target, nint size, ref readonly T1 data, BufferStorageMask flags)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16695,7 +16695,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BufferSubDataARB(BufferTarget, IntPtr, nint, void*)"/>
-            public static unsafe void BufferSubDataARB<T1>(BufferTarget target, IntPtr offset, nint size, in T1 data)
+            public static unsafe void BufferSubDataARB<T1>(BufferTarget target, IntPtr offset, nint size, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16728,7 +16728,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearBufferData(BufferStorageTarget, SizedInternalFormat, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearBufferData<T1>(BufferStorageTarget target, SizedInternalFormat internalformat, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearBufferData<T1>(BufferStorageTarget target, SizedInternalFormat internalformat, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16761,7 +16761,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearBufferSubData(BufferTarget, SizedInternalFormat, IntPtr, nint, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearBufferSubData<T1>(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearBufferSubData<T1>(BufferTarget target, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16794,7 +16794,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedBufferData(int, SizedInternalFormat, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearNamedBufferData<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearNamedBufferData<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16827,7 +16827,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedBufferSubData(int, SizedInternalFormat, IntPtr, nint, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearNamedBufferSubData<T1>(int buffer, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearNamedBufferSubData<T1>(int buffer, SizedInternalFormat internalformat, IntPtr offset, nint size, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16857,7 +16857,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedFramebufferfv(int, Buffer, int, float*)"/>
-            public static unsafe void ClearNamedFramebufferf(int framebuffer, Buffer buffer, int drawbuffer, in float value)
+            public static unsafe void ClearNamedFramebufferf(int framebuffer, Buffer buffer, int drawbuffer, ref readonly float value)
             {
                 fixed (float* value_ptr = &value)
                 {
@@ -16881,7 +16881,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedFramebufferiv(int, Buffer, int, int*)"/>
-            public static unsafe void ClearNamedFramebufferi(int framebuffer, Buffer buffer, int drawbuffer, in int value)
+            public static unsafe void ClearNamedFramebufferi(int framebuffer, Buffer buffer, int drawbuffer, ref readonly int value)
             {
                 fixed (int* value_ptr = &value)
                 {
@@ -16905,7 +16905,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedFramebufferuiv(int, Buffer, int, uint*)"/>
-            public static unsafe void ClearNamedFramebufferui(int framebuffer, Buffer buffer, int drawbuffer, in uint value)
+            public static unsafe void ClearNamedFramebufferui(int framebuffer, Buffer buffer, int drawbuffer, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -16937,7 +16937,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearTexImage(int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearTexImage<T1>(int texture, int level, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearTexImage<T1>(int texture, int level, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16970,7 +16970,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearTexSubImage(int, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearTexSubImage<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearTexSubImage<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -16979,7 +16979,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorP3uiv(ColorPointerType, uint*)"/>
-            public static unsafe void ColorP3ui(ColorPointerType type, in uint color)
+            public static unsafe void ColorP3ui(ColorPointerType type, ref readonly uint color)
             {
                 fixed (uint* color_ptr = &color)
                 {
@@ -16987,7 +16987,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorP4uiv(ColorPointerType, uint*)"/>
-            public static unsafe void ColorP4ui(ColorPointerType type, in uint color)
+            public static unsafe void ColorP4ui(ColorPointerType type, ref readonly uint color)
             {
                 fixed (uint* color_ptr = &color)
                 {
@@ -17019,7 +17019,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorSubTable(ColorTableTarget, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ColorSubTable<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ColorSubTable<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17052,7 +17052,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTable(ColorTableTarget, InternalFormat, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ColorTable<T1>(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 table)
+            public static unsafe void ColorTable<T1>(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ref readonly T1 table)
                 where T1 : unmanaged
             {
                 fixed (void* table_ptr = &table)
@@ -17061,7 +17061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableParameterfv(ColorTableTarget, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, in Color4<Rgba> parameters)
+            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPName pname, ref readonly Color4<Rgba> parameters)
             {
                 fixed (Color4<Rgba>* tmp_parameters = &parameters)
                 {
@@ -17086,7 +17086,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableParameteriv(ColorTableTarget, ColorTableParameterPName, int*)"/>
-            public static unsafe void ColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname, in int parameters)
+            public static unsafe void ColorTableParameteri(ColorTableTarget target, ColorTableParameterPName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -17110,7 +17110,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompileShaderIncludeARB(int, int, byte**, int*)"/>
-            public static unsafe void CompileShaderIncludeARB(int shader, int count, byte** path, in int length)
+            public static unsafe void CompileShaderIncludeARB(int shader, int count, byte** path, ref readonly int length)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -17142,7 +17142,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexImage1DARB(TextureTarget, int, InternalFormat, int, int, int, void*)"/>
-            public static unsafe void CompressedTexImage1DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, in T1 data)
+            public static unsafe void CompressedTexImage1DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17175,7 +17175,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexImage2DARB(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
-            public static unsafe void CompressedTexImage2DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 data)
+            public static unsafe void CompressedTexImage2DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17208,7 +17208,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexImage3DARB(TextureTarget, int, InternalFormat, int, int, int, int, int, void*)"/>
-            public static unsafe void CompressedTexImage3DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, in T1 data)
+            public static unsafe void CompressedTexImage3DARB<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17241,7 +17241,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage1DARB(TextureTarget, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17274,7 +17274,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage2DARB(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17307,7 +17307,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DARB(TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17340,7 +17340,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1D(int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage1D<T1>(int texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage1D<T1>(int texture, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17373,7 +17373,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2D(int, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17406,7 +17406,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3D(int, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -17439,7 +17439,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionFilter1D(ConvolutionTarget, InternalFormat, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ConvolutionFilter1D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 image)
+            public static unsafe void ConvolutionFilter1D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ref readonly T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -17472,7 +17472,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionFilter2D(ConvolutionTarget, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ConvolutionFilter2D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 image)
+            public static unsafe void ConvolutionFilter2D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ref readonly T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -17497,7 +17497,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterfv(ConvolutionTarget, ConvolutionParameter, float*)"/>
-            public static unsafe void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname, in float parameters)
+            public static unsafe void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -17521,7 +17521,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionParameteriv(ConvolutionTarget, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, in int parameters)
+            public static unsafe void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -17996,7 +17996,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageCallbackARB(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackARB<T1>(GLDebugProcARB callback, in T1 userParam)
+            public static unsafe void DebugMessageCallbackARB<T1>(GLDebugProcARB callback, ref readonly T1 userParam)
                 where T1 : unmanaged
             {
                 fixed (void* userParam_ptr = &userParam)
@@ -18022,7 +18022,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageControlARB(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControlARB(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
+            public static unsafe void DebugMessageControlARB(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
                 {
@@ -18053,7 +18053,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteBuffersARB(int, int*)"/>
-            public static unsafe void DeleteBuffersARB(int n, in int buffers)
+            public static unsafe void DeleteBuffersARB(int n, ref readonly int buffers)
             {
                 fixed (int* buffers_ptr = &buffers)
                 {
@@ -18061,7 +18061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-            public static unsafe void DeleteFramebuffer(in int framebuffer)
+            public static unsafe void DeleteFramebuffer(ref readonly int framebuffer)
             {
                 int n = 1;
                 fixed(int* framebuffers_handle = &framebuffer)
@@ -18086,7 +18086,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffers(int, int*)"/>
-            public static unsafe void DeleteFramebuffers(int n, in int framebuffers)
+            public static unsafe void DeleteFramebuffers(int n, ref readonly int framebuffers)
             {
                 fixed (int* framebuffers_ptr = &framebuffers)
                 {
@@ -18101,7 +18101,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
             }
             /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-            public static unsafe void DeleteProgramPipeline(in int pipeline)
+            public static unsafe void DeleteProgramPipeline(ref readonly int pipeline)
             {
                 int n = 1;
                 fixed(int* pipelines_handle = &pipeline)
@@ -18126,7 +18126,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteProgramPipelines(int, int*)"/>
-            public static unsafe void DeleteProgramPipelines(int n, in int pipelines)
+            public static unsafe void DeleteProgramPipelines(int n, ref readonly int pipelines)
             {
                 fixed (int* pipelines_ptr = &pipelines)
                 {
@@ -18150,7 +18150,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteProgramsARB(int, int*)"/>
-            public static unsafe void DeleteProgramsARB(int n, in int programs)
+            public static unsafe void DeleteProgramsARB(int n, ref readonly int programs)
             {
                 fixed (int* programs_ptr = &programs)
                 {
@@ -18174,7 +18174,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteQueriesARB(int, int*)"/>
-            public static unsafe void DeleteQueriesARB(int n, in int ids)
+            public static unsafe void DeleteQueriesARB(int n, ref readonly int ids)
             {
                 fixed (int* ids_ptr = &ids)
                 {
@@ -18182,7 +18182,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-            public static unsafe void DeleteRenderbuffer(in int renderbuffer)
+            public static unsafe void DeleteRenderbuffer(ref readonly int renderbuffer)
             {
                 int n = 1;
                 fixed(int* renderbuffers_handle = &renderbuffer)
@@ -18207,7 +18207,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffers(int, int*)"/>
-            public static unsafe void DeleteRenderbuffers(int n, in int renderbuffers)
+            public static unsafe void DeleteRenderbuffers(int n, ref readonly int renderbuffers)
             {
                 fixed (int* renderbuffers_ptr = &renderbuffers)
                 {
@@ -18215,7 +18215,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-            public static unsafe void DeleteSampler(in int sampler)
+            public static unsafe void DeleteSampler(ref readonly int sampler)
             {
                 int count = 1;
                 fixed(int* samplers_handle = &sampler)
@@ -18240,7 +18240,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteSamplers(int, int*)"/>
-            public static unsafe void DeleteSamplers(int count, in int samplers)
+            public static unsafe void DeleteSamplers(int count, ref readonly int samplers)
             {
                 fixed (int* samplers_ptr = &samplers)
                 {
@@ -18248,7 +18248,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-            public static unsafe void DeleteTransformFeedback(in int id)
+            public static unsafe void DeleteTransformFeedback(ref readonly int id)
             {
                 int n = 1;
                 fixed(int* ids_handle = &id)
@@ -18273,7 +18273,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks(int, int*)"/>
-            public static unsafe void DeleteTransformFeedbacks(int n, in int ids)
+            public static unsafe void DeleteTransformFeedbacks(int n, ref readonly int ids)
             {
                 fixed (int* ids_ptr = &ids)
                 {
@@ -18281,7 +18281,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-            public static unsafe void DeleteVertexArray(in int array)
+            public static unsafe void DeleteVertexArray(ref readonly int array)
             {
                 int n = 1;
                 fixed(int* arrays_handle = &array)
@@ -18306,7 +18306,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteVertexArrays(int, int*)"/>
-            public static unsafe void DeleteVertexArrays(int n, in int arrays)
+            public static unsafe void DeleteVertexArrays(int n, ref readonly int arrays)
             {
                 fixed (int* arrays_ptr = &arrays)
                 {
@@ -18330,7 +18330,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DepthRangeArraydvNV(uint, int, double*)"/>
-            public static unsafe void DepthRangeArraydvNV(uint first, int count, in double v)
+            public static unsafe void DepthRangeArraydvNV(uint first, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -18354,7 +18354,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DepthRangeArrayv(uint, int, double*)"/>
-            public static unsafe void DepthRangeArray(uint first, int count, in double v)
+            public static unsafe void DepthRangeArray(uint first, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -18386,7 +18386,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawArraysIndirect(PrimitiveType, void*)"/>
-            public static unsafe void DrawArraysIndirect<T1>(PrimitiveType mode, in T1 indirect)
+            public static unsafe void DrawArraysIndirect<T1>(PrimitiveType mode, ref readonly T1 indirect)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -18411,7 +18411,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawBuffersARB(int, DrawBufferMode*)"/>
-            public static unsafe void DrawBuffersARB(int n, in DrawBufferMode bufs)
+            public static unsafe void DrawBuffersARB(int n, ref readonly DrawBufferMode bufs)
             {
                 fixed (DrawBufferMode* bufs_ptr = &bufs)
                 {
@@ -18449,7 +18449,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawElementsIndirect(PrimitiveType, DrawElementsType, void*)"/>
-            public static unsafe void DrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect)
+            public static unsafe void DrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -18504,7 +18504,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FramebufferSampleLocationsfvARB(FramebufferTarget, uint, int, float*)"/>
-            public static unsafe void FramebufferSampleLocationsfvARB(FramebufferTarget target, uint start, int count, in float v)
+            public static unsafe void FramebufferSampleLocationsfvARB(FramebufferTarget target, uint start, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -19124,7 +19124,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe int GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname)
+            public static unsafe int GetActiveUniformsi(int program, int uniformCount, ref readonly uint uniformIndices, UniformPName pname)
             {
                 int parameters;
                 int* parameters_ptr = &parameters;
@@ -19135,7 +19135,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return parameters;
             }
             /// <inheritdoc cref="GetActiveUniformsiv(int, int, uint*, UniformPName, int*)"/>
-            public static unsafe void GetActiveUniformsi(int program, int uniformCount, in uint uniformIndices, UniformPName pname, out int parameters)
+            public static unsafe void GetActiveUniformsi(int program, int uniformCount, ref readonly uint uniformIndices, UniformPName pname, out int parameters)
             {
                 fixed (uint* uniformIndices_ptr = &uniformIndices)
                 fixed (int* parameters_ptr = &parameters)
@@ -21346,7 +21346,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramResourceiv(int, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*)"/>
-            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, in ProgramResourceProperty props, int count, out int length, ref int parameters)
+            public static unsafe void GetProgramResourcei(int program, ProgramInterface programInterface, uint index, int propCount, ref readonly ProgramResourceProperty props, int count, out int length, ref int parameters)
             {
                 fixed (ProgramResourceProperty* props_ptr = &props)
                 fixed (int* length_ptr = &length)
@@ -22805,7 +22805,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="InvalidateFramebuffer(FramebufferTarget, int, InvalidateFramebufferAttachment*)"/>
-            public static unsafe void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, in InvalidateFramebufferAttachment attachments)
+            public static unsafe void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, ref readonly InvalidateFramebufferAttachment attachments)
             {
                 fixed (InvalidateFramebufferAttachment* attachments_ptr = &attachments)
                 {
@@ -22829,7 +22829,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="InvalidateNamedFramebufferData(int, int, FramebufferAttachment*)"/>
-            public static unsafe void InvalidateNamedFramebufferData(int framebuffer, int numAttachments, in FramebufferAttachment attachments)
+            public static unsafe void InvalidateNamedFramebufferData(int framebuffer, int numAttachments, ref readonly FramebufferAttachment attachments)
             {
                 fixed (FramebufferAttachment* attachments_ptr = &attachments)
                 {
@@ -22853,7 +22853,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="InvalidateNamedFramebufferSubData(int, int, FramebufferAttachment*, int, int, int, int)"/>
-            public static unsafe void InvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, in FramebufferAttachment attachments, int x, int y, int width, int height)
+            public static unsafe void InvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, ref readonly FramebufferAttachment attachments, int x, int y, int width, int height)
             {
                 fixed (FramebufferAttachment* attachments_ptr = &attachments)
                 {
@@ -22877,7 +22877,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="InvalidateSubFramebuffer(FramebufferTarget, int, InvalidateFramebufferAttachment*, int, int, int, int)"/>
-            public static unsafe void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, in InvalidateFramebufferAttachment attachments, int x, int y, int width, int height)
+            public static unsafe void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, ref readonly InvalidateFramebufferAttachment attachments, int x, int y, int width, int height)
             {
                 fixed (InvalidateFramebufferAttachment* attachments_ptr = &attachments)
                 {
@@ -22910,7 +22910,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LoadTransposeMatrixdARB(double*)"/>
-            public static unsafe void LoadTransposeMatrixdARB(in double m)
+            public static unsafe void LoadTransposeMatrixdARB(ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -22934,7 +22934,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LoadTransposeMatrixfARB(float*)"/>
-            public static unsafe void LoadTransposeMatrixfARB(in float m)
+            public static unsafe void LoadTransposeMatrixfARB(ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -22966,7 +22966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixIndexPointerARB(int, MatrixIndexPointerTypeARB, int, void*)"/>
-            public static unsafe void MatrixIndexPointerARB<T1>(int size, MatrixIndexPointerTypeARB type, int stride, in T1 pointer)
+            public static unsafe void MatrixIndexPointerARB<T1>(int size, MatrixIndexPointerTypeARB type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -22991,7 +22991,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixIndexubvARB(int, byte*)"/>
-            public static unsafe void MatrixIndexubvARB(int size, in byte indices)
+            public static unsafe void MatrixIndexubvARB(int size, ref readonly byte indices)
             {
                 fixed (byte* indices_ptr = &indices)
                 {
@@ -23015,7 +23015,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixIndexuivARB(int, uint*)"/>
-            public static unsafe void MatrixIndexuivARB(int size, in uint indices)
+            public static unsafe void MatrixIndexuivARB(int size, ref readonly uint indices)
             {
                 fixed (uint* indices_ptr = &indices)
                 {
@@ -23039,7 +23039,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixIndexusvARB(int, ushort*)"/>
-            public static unsafe void MatrixIndexusvARB(int size, in ushort indices)
+            public static unsafe void MatrixIndexusvARB(int size, ref readonly ushort indices)
             {
                 fixed (ushort* indices_ptr = &indices)
                 {
@@ -23071,7 +23071,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysIndirect(PrimitiveType, void*, int, int)"/>
-            public static unsafe void MultiDrawArraysIndirect<T1>(PrimitiveType mode, in T1 indirect, int drawcount, int stride)
+            public static unsafe void MultiDrawArraysIndirect<T1>(PrimitiveType mode, ref readonly T1 indirect, int drawcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -23104,7 +23104,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysIndirectCountARB(PrimitiveType, void*, IntPtr, int, int)"/>
-            public static unsafe void MultiDrawArraysIndirectCountARB<T1>(PrimitiveType mode, in T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
+            public static unsafe void MultiDrawArraysIndirectCountARB<T1>(PrimitiveType mode, ref readonly T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -23135,7 +23135,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsBaseVertex(PrimitiveType, int*, DrawElementsType, void**, int, int*)"/>
-            public static unsafe void MultiDrawElementsBaseVertex(PrimitiveType mode, in int count, DrawElementsType type, void** indices, int drawcount, in int basevertex)
+            public static unsafe void MultiDrawElementsBaseVertex(PrimitiveType mode, ref readonly int count, DrawElementsType type, void** indices, int drawcount, ref readonly int basevertex)
             {
                 fixed (int* count_ptr = &count)
                 fixed (int* basevertex_ptr = &basevertex)
@@ -23168,7 +23168,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirect(PrimitiveType, DrawElementsType, void*, int, int)"/>
-            public static unsafe void MultiDrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int drawcount, int stride)
+            public static unsafe void MultiDrawElementsIndirect<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, int drawcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -23201,7 +23201,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirectCountARB(PrimitiveType, DrawElementsType, void*, IntPtr, int, int)"/>
-            public static unsafe void MultiDrawElementsIndirectCountARB<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
+            public static unsafe void MultiDrawElementsIndirectCountARB<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, IntPtr drawcount, int maxdrawcount, int stride)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -23210,7 +23210,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1dvARB(TextureUnit, double*)"/>
-            public static unsafe void MultiTexCoord1dvARB(TextureUnit target, in double v)
+            public static unsafe void MultiTexCoord1dvARB(TextureUnit target, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -23218,7 +23218,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1fvARB(TextureUnit, float*)"/>
-            public static unsafe void MultiTexCoord1fvARB(TextureUnit target, in float v)
+            public static unsafe void MultiTexCoord1fvARB(TextureUnit target, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -23226,7 +23226,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1ivARB(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord1ivARB(TextureUnit target, in int v)
+            public static unsafe void MultiTexCoord1ivARB(TextureUnit target, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -23234,7 +23234,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1svARB(TextureUnit, short*)"/>
-            public static unsafe void MultiTexCoord1svARB(TextureUnit target, in short v)
+            public static unsafe void MultiTexCoord1svARB(TextureUnit target, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -23258,7 +23258,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2dvARB(TextureUnit, double*)"/>
-            public static unsafe void MultiTexCoord2dvARB(TextureUnit target, in double v)
+            public static unsafe void MultiTexCoord2dvARB(TextureUnit target, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -23282,7 +23282,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2fvARB(TextureUnit, float*)"/>
-            public static unsafe void MultiTexCoord2fvARB(TextureUnit target, in float v)
+            public static unsafe void MultiTexCoord2fvARB(TextureUnit target, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -23306,7 +23306,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2ivARB(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord2ivARB(TextureUnit target, in int v)
+            public static unsafe void MultiTexCoord2ivARB(TextureUnit target, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -23330,7 +23330,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2svARB(TextureUnit, short*)"/>
-            public static unsafe void MultiTexCoord2svARB(TextureUnit target, in short v)
+            public static unsafe void MultiTexCoord2svARB(TextureUnit target, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -23354,7 +23354,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3dvARB(TextureUnit, double*)"/>
-            public static unsafe void MultiTexCoord3dvARB(TextureUnit target, in double v)
+            public static unsafe void MultiTexCoord3dvARB(TextureUnit target, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -23378,7 +23378,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3fvARB(TextureUnit, float*)"/>
-            public static unsafe void MultiTexCoord3fvARB(TextureUnit target, in float v)
+            public static unsafe void MultiTexCoord3fvARB(TextureUnit target, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -23402,7 +23402,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3ivARB(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord3ivARB(TextureUnit target, in int v)
+            public static unsafe void MultiTexCoord3ivARB(TextureUnit target, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -23426,7 +23426,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3svARB(TextureUnit, short*)"/>
-            public static unsafe void MultiTexCoord3svARB(TextureUnit target, in short v)
+            public static unsafe void MultiTexCoord3svARB(TextureUnit target, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -23450,7 +23450,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4dvARB(TextureUnit, double*)"/>
-            public static unsafe void MultiTexCoord4dvARB(TextureUnit target, in double v)
+            public static unsafe void MultiTexCoord4dvARB(TextureUnit target, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -23474,7 +23474,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4fvARB(TextureUnit, float*)"/>
-            public static unsafe void MultiTexCoord4fvARB(TextureUnit target, in float v)
+            public static unsafe void MultiTexCoord4fvARB(TextureUnit target, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -23498,7 +23498,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4ivARB(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord4ivARB(TextureUnit target, in int v)
+            public static unsafe void MultiTexCoord4ivARB(TextureUnit target, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -23522,7 +23522,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4svARB(TextureUnit, short*)"/>
-            public static unsafe void MultiTexCoord4svARB(TextureUnit target, in short v)
+            public static unsafe void MultiTexCoord4svARB(TextureUnit target, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -23530,7 +23530,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoordP1uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-            public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+            public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -23538,7 +23538,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoordP2uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-            public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+            public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -23546,7 +23546,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoordP3uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-            public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+            public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -23554,7 +23554,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoordP4uiv(TextureUnit, TexCoordPointerType, uint*)"/>
-            public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
+            public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -23578,7 +23578,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultTransposeMatrixdARB(double*)"/>
-            public static unsafe void MultTransposeMatrixdARB(in double m)
+            public static unsafe void MultTransposeMatrixdARB(ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -23602,7 +23602,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultTransposeMatrixfARB(float*)"/>
-            public static unsafe void MultTransposeMatrixfARB(in float m)
+            public static unsafe void MultTransposeMatrixfARB(ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -23634,7 +23634,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferData(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferData<T1>(int buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferData<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -23667,7 +23667,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferStorage(int, nint, void*, BufferStorageMask)"/>
-            public static unsafe void NamedBufferStorage<T1>(int buffer, nint size, in T1 data, BufferStorageMask flags)
+            public static unsafe void NamedBufferStorage<T1>(int buffer, nint size, ref readonly T1 data, BufferStorageMask flags)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -23700,7 +23700,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferSubData(int, IntPtr, nint, void*)"/>
-            public static unsafe void NamedBufferSubData<T1>(int buffer, IntPtr offset, nint size, in T1 data)
+            public static unsafe void NamedBufferSubData<T1>(int buffer, IntPtr offset, nint size, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -23725,7 +23725,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedFramebufferDrawBuffers(int, int, ColorBuffer*)"/>
-            public static unsafe void NamedFramebufferDrawBuffers(int framebuffer, int n, in ColorBuffer bufs)
+            public static unsafe void NamedFramebufferDrawBuffers(int framebuffer, int n, ref readonly ColorBuffer bufs)
             {
                 fixed (ColorBuffer* bufs_ptr = &bufs)
                 {
@@ -23749,7 +23749,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedFramebufferSampleLocationsfvARB(int, uint, int, float*)"/>
-            public static unsafe void NamedFramebufferSampleLocationsfvARB(int framebuffer, uint start, int count, in float v)
+            public static unsafe void NamedFramebufferSampleLocationsfvARB(int framebuffer, uint start, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -23766,7 +23766,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
             }
             /// <inheritdoc cref="NormalP3uiv(NormalPointerType, uint*)"/>
-            public static unsafe void NormalP3ui(NormalPointerType type, in uint coords)
+            public static unsafe void NormalP3ui(NormalPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -23790,7 +23790,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PatchParameterfv(PatchParameterName, float*)"/>
-            public static unsafe void PatchParameterf(PatchParameterName pname, in float values)
+            public static unsafe void PatchParameterf(PatchParameterName pname, ref readonly float values)
             {
                 fixed (float* values_ptr = &values)
                 {
@@ -23814,7 +23814,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointParameterfvARB(PointParameterNameARB, float*)"/>
-            public static unsafe void PointParameterfvARB(PointParameterNameARB pname, in float parameters)
+            public static unsafe void PointParameterfvARB(PointParameterNameARB pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -23846,7 +23846,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramBinary(int, All, void*, int)"/>
-            public static unsafe void ProgramBinary<T1>(int program, All binaryFormat, in T1 binary, int length)
+            public static unsafe void ProgramBinary<T1>(int program, All binaryFormat, ref readonly T1 binary, int length)
                 where T1 : unmanaged
             {
                 fixed (void* binary_ptr = &binary)
@@ -23871,7 +23871,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParameter4dvARB(ProgramTarget, uint, double*)"/>
-            public static unsafe void ProgramEnvParameter4dvARB(ProgramTarget target, uint index, in double parameters)
+            public static unsafe void ProgramEnvParameter4dvARB(ProgramTarget target, uint index, ref readonly double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -23895,7 +23895,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParameter4fvARB(ProgramTarget, uint, float*)"/>
-            public static unsafe void ProgramEnvParameter4fvARB(ProgramTarget target, uint index, in float parameters)
+            public static unsafe void ProgramEnvParameter4fvARB(ProgramTarget target, uint index, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -23919,7 +23919,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParameter4dvARB(ProgramTarget, uint, double*)"/>
-            public static unsafe void ProgramLocalParameter4dvARB(ProgramTarget target, uint index, in double parameters)
+            public static unsafe void ProgramLocalParameter4dvARB(ProgramTarget target, uint index, ref readonly double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -23943,7 +23943,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParameter4fvARB(ProgramTarget, uint, float*)"/>
-            public static unsafe void ProgramLocalParameter4fvARB(ProgramTarget target, uint index, in float parameters)
+            public static unsafe void ProgramLocalParameter4fvARB(ProgramTarget target, uint index, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -23975,7 +23975,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramStringARB(ProgramTarget, ProgramFormat, int, void*)"/>
-            public static unsafe void ProgramStringARB<T1>(ProgramTarget target, ProgramFormat format, int len, in T1 str)
+            public static unsafe void ProgramStringARB<T1>(ProgramTarget target, ProgramFormat format, int len, ref readonly T1 str)
                 where T1 : unmanaged
             {
                 fixed (void* str_ptr = &str)
@@ -23984,7 +23984,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1d(int program, int location, int count, in double value)
+            public static unsafe void ProgramUniform1d(int program, int location, int count, ref readonly double value)
             {
                 fixed (double* tmp_value = &value)
                 {
@@ -23993,7 +23993,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1f(int program, int location, int count, in float value)
+            public static unsafe void ProgramUniform1f(int program, int location, int count, ref readonly float value)
             {
                 fixed (float* tmp_value = &value)
                 {
@@ -24002,7 +24002,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64vARB(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform1i64vARB(int program, int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -24011,7 +24011,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1i(int program, int location, int count, in int value)
+            public static unsafe void ProgramUniform1i(int program, int location, int count, ref readonly int value)
             {
                 fixed (int* tmp_value = &value)
                 {
@@ -24020,7 +24020,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64vARB(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform1ui64vARB(int program, int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -24029,7 +24029,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1ui(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform1ui(int program, int location, int count, ref readonly uint value)
             {
                 fixed (uint* tmp_value = &value)
                 {
@@ -24038,7 +24038,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform2d(int program, int location, int count, in Vector2d value)
+            public static unsafe void ProgramUniform2d(int program, int location, int count, ref readonly Vector2d value)
             {
                 fixed (Vector2d* tmp_value = &value)
                 {
@@ -24065,7 +24065,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform2f(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2f(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -24092,7 +24092,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform2f(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2f(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -24119,7 +24119,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vARB(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2i64vARB(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -24146,7 +24146,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vARB(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2i64vARB(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -24173,7 +24173,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform2i(int program, int location, int count, in Vector2i value)
+            public static unsafe void ProgramUniform2i(int program, int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -24200,7 +24200,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vARB(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2ui64vARB(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -24227,7 +24227,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vARB(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2ui64vARB(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -24254,7 +24254,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2ui(int program, int location, int count, in Vector2i value)
+            public static unsafe void ProgramUniform2ui(int program, int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -24281,7 +24281,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform3d(int program, int location, int count, in Vector3d value)
+            public static unsafe void ProgramUniform3d(int program, int location, int count, ref readonly Vector3d value)
             {
                 fixed (Vector3d* tmp_value = &value)
                 {
@@ -24308,7 +24308,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform3f(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3f(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -24335,7 +24335,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform3f(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3f(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -24362,7 +24362,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vARB(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3i64vARB(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -24389,7 +24389,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vARB(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3i64vARB(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -24416,7 +24416,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform3i(int program, int location, int count, in Vector3i value)
+            public static unsafe void ProgramUniform3i(int program, int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -24443,7 +24443,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vARB(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3ui64vARB(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -24470,7 +24470,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vARB(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3ui64vARB(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -24497,7 +24497,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3ui(int program, int location, int count, in Vector3i value)
+            public static unsafe void ProgramUniform3ui(int program, int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -24524,7 +24524,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform4d(int program, int location, int count, in Vector4d value)
+            public static unsafe void ProgramUniform4d(int program, int location, int count, ref readonly Vector4d value)
             {
                 fixed (Vector4d* tmp_value = &value)
                 {
@@ -24551,7 +24551,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform4f(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4f(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -24578,7 +24578,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform4f(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4f(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -24605,7 +24605,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vARB(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4i64vARB(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -24632,7 +24632,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vARB(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vARB(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4i64vARB(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -24659,7 +24659,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform4i(int program, int location, int count, in Vector4i value)
+            public static unsafe void ProgramUniform4i(int program, int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -24686,7 +24686,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vARB(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4ui64vARB(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -24713,7 +24713,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vARB(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4ui64vARB(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -24740,7 +24740,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4ui(int program, int location, int count, in Vector4i value)
+            public static unsafe void ProgramUniform4ui(int program, int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -24783,7 +24783,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformHandleui64vARB(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniformHandleui64vARB(int program, int location, int count, in ulong values)
+            public static unsafe void ProgramUniformHandleui64vARB(int program, int location, int count, ref readonly ulong values)
             {
                 fixed (ulong* values_ptr = &values)
                 {
@@ -24791,7 +24791,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, in Matrix2d value)
+            public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, ref readonly Matrix2d value)
             {
                 fixed (Matrix2d* tmp_value = &value)
                 {
@@ -24818,7 +24818,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, in Matrix2 value)
+            public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, ref readonly Matrix2 value)
             {
                 fixed (Matrix2* tmp_value = &value)
                 {
@@ -24845,7 +24845,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, in Matrix2x3d value)
+            public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, ref readonly Matrix2x3d value)
             {
                 fixed (Matrix2x3d* tmp_value = &value)
                 {
@@ -24872,7 +24872,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, in Matrix2x3 value)
+            public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, ref readonly Matrix2x3 value)
             {
                 fixed (Matrix2x3* tmp_value = &value)
                 {
@@ -24899,7 +24899,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, in Matrix2x4d value)
+            public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, ref readonly Matrix2x4d value)
             {
                 fixed (Matrix2x4d* tmp_value = &value)
                 {
@@ -24926,7 +24926,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, in Matrix2x4 value)
+            public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, ref readonly Matrix2x4 value)
             {
                 fixed (Matrix2x4* tmp_value = &value)
                 {
@@ -24953,7 +24953,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, in Matrix3d value)
+            public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, ref readonly Matrix3d value)
             {
                 fixed (Matrix3d* tmp_value = &value)
                 {
@@ -24980,7 +24980,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, in Matrix3 value)
+            public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, ref readonly Matrix3 value)
             {
                 fixed (Matrix3* tmp_value = &value)
                 {
@@ -25007,7 +25007,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, in Matrix3x2d value)
+            public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, ref readonly Matrix3x2d value)
             {
                 fixed (Matrix3x2d* tmp_value = &value)
                 {
@@ -25034,7 +25034,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in Matrix3x2 value)
+            public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ref readonly Matrix3x2 value)
             {
                 fixed (Matrix3x2* tmp_value = &value)
                 {
@@ -25061,7 +25061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
+            public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix3x2 value)
             {
                 fixed (System.Numerics.Matrix3x2* tmp_value = &value)
                 {
@@ -25088,7 +25088,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, in Matrix3x4d value)
+            public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, ref readonly Matrix3x4d value)
             {
                 fixed (Matrix3x4d* tmp_value = &value)
                 {
@@ -25115,7 +25115,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, in Matrix3x4 value)
+            public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, ref readonly Matrix3x4 value)
             {
                 fixed (Matrix3x4* tmp_value = &value)
                 {
@@ -25142,7 +25142,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, in Matrix4d value)
+            public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, ref readonly Matrix4d value)
             {
                 fixed (Matrix4d* tmp_value = &value)
                 {
@@ -25169,7 +25169,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in Matrix4 value)
+            public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ref readonly Matrix4 value)
             {
                 fixed (Matrix4* tmp_value = &value)
                 {
@@ -25196,7 +25196,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+            public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix4x4 value)
             {
                 fixed (System.Numerics.Matrix4x4* tmp_value = &value)
                 {
@@ -25223,7 +25223,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, in Matrix4x2d value)
+            public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, ref readonly Matrix4x2d value)
             {
                 fixed (Matrix4x2d* tmp_value = &value)
                 {
@@ -25250,7 +25250,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, in Matrix4x2 value)
+            public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, ref readonly Matrix4x2 value)
             {
                 fixed (Matrix4x2* tmp_value = &value)
                 {
@@ -25277,7 +25277,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, in Matrix4x3d value)
+            public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, ref readonly Matrix4x3d value)
             {
                 fixed (Matrix4x3d* tmp_value = &value)
                 {
@@ -25304,7 +25304,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, in Matrix4x3 value)
+            public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, ref readonly Matrix4x3 value)
             {
                 fixed (Matrix4x3* tmp_value = &value)
                 {
@@ -25380,7 +25380,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SamplerParameterfv(int, SamplerParameterF, float*)"/>
-            public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, in float param)
+            public static unsafe void SamplerParameterf(int sampler, SamplerParameterF pname, ref readonly float param)
             {
                 fixed (float* param_ptr = &param)
                 {
@@ -25404,7 +25404,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SamplerParameterIiv(int, SamplerParameterI, int*)"/>
-            public static unsafe void SamplerParameterIi(int sampler, SamplerParameterI pname, in int param)
+            public static unsafe void SamplerParameterIi(int sampler, SamplerParameterI pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -25428,7 +25428,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SamplerParameterIuiv(int, SamplerParameterI, uint*)"/>
-            public static unsafe void SamplerParameterIui(int sampler, SamplerParameterI pname, in uint param)
+            public static unsafe void SamplerParameterIui(int sampler, SamplerParameterI pname, ref readonly uint param)
             {
                 fixed (uint* param_ptr = &param)
                 {
@@ -25452,7 +25452,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SamplerParameteriv(int, SamplerParameterI, int*)"/>
-            public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, in int param)
+            public static unsafe void SamplerParameteri(int sampler, SamplerParameterI pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -25476,7 +25476,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ScissorArrayv(uint, int, int*)"/>
-            public static unsafe void ScissorArray(uint first, int count, in int v)
+            public static unsafe void ScissorArray(uint first, int count, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -25500,7 +25500,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ScissorIndexedv(uint, int*)"/>
-            public static unsafe void ScissorIndexed(uint index, in int v)
+            public static unsafe void ScissorIndexed(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -25508,7 +25508,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColorP3uiv(ColorPointerType, uint*)"/>
-            public static unsafe void SecondaryColorP3ui(ColorPointerType type, in uint color)
+            public static unsafe void SecondaryColorP3ui(ColorPointerType type, ref readonly uint color)
             {
                 fixed (uint* color_ptr = &color)
                 {
@@ -25549,7 +25549,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SeparableFilter2D(SeparableTargetEXT, InternalFormat, int, int, PixelFormat, PixelType, void*, void*)"/>
-            public static unsafe void SeparableFilter2D<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 row, in T2 column)
+            public static unsafe void SeparableFilter2D<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ref readonly T1 row, ref readonly T2 column)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -25578,7 +25578,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ShaderBinary(int, int*, ShaderBinaryFormat, void*, int)"/>
-            public static unsafe void ShaderBinary(int count, in int shaders, ShaderBinaryFormat binaryFormat, IntPtr binary, int length)
+            public static unsafe void ShaderBinary(int count, ref readonly int shaders, ShaderBinaryFormat binaryFormat, IntPtr binary, int length)
             {
                 fixed (int* shaders_ptr = &shaders)
                 {
@@ -25611,7 +25611,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ShaderBinary(int, int*, ShaderBinaryFormat, void*, int)"/>
-            public static unsafe void ShaderBinary<T1>(int count, in int shaders, ShaderBinaryFormat binaryFormat, in T1 binary, int length)
+            public static unsafe void ShaderBinary<T1>(int count, ref readonly int shaders, ShaderBinaryFormat binaryFormat, ref readonly T1 binary, int length)
                 where T1 : unmanaged
             {
                 fixed (int* shaders_ptr = &shaders)
@@ -25637,7 +25637,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ShaderSourceARB(GLHandleARB, int, byte**, int*)"/>
-            public static unsafe void ShaderSourceARB(GLHandleARB shaderObj, int count, byte** str, in int length)
+            public static unsafe void ShaderSourceARB(GLHandleARB shaderObj, int count, byte** str, ref readonly int length)
             {
                 fixed (int* length_ptr = &length)
                 {
@@ -25671,7 +25671,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SpecializeShaderARB(int, byte*, uint, uint*, uint*)"/>
-            public static unsafe void SpecializeShaderARB(int shader, string pEntryPoint, uint numSpecializationConstants, in uint pConstantIndex, in uint pConstantValue)
+            public static unsafe void SpecializeShaderARB(int shader, string pEntryPoint, uint numSpecializationConstants, ref readonly uint pConstantIndex, ref readonly uint pConstantValue)
             {
                 fixed (uint* pConstantIndex_ptr = &pConstantIndex)
                 fixed (uint* pConstantValue_ptr = &pConstantValue)
@@ -25682,7 +25682,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoordP1uiv(TexCoordPointerType, uint*)"/>
-            public static unsafe void TexCoordP1ui(TexCoordPointerType type, in uint coords)
+            public static unsafe void TexCoordP1ui(TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -25690,7 +25690,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoordP2uiv(TexCoordPointerType, uint*)"/>
-            public static unsafe void TexCoordP2ui(TexCoordPointerType type, in uint coords)
+            public static unsafe void TexCoordP2ui(TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -25698,7 +25698,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoordP3uiv(TexCoordPointerType, uint*)"/>
-            public static unsafe void TexCoordP3ui(TexCoordPointerType type, in uint coords)
+            public static unsafe void TexCoordP3ui(TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -25706,7 +25706,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoordP4uiv(TexCoordPointerType, uint*)"/>
-            public static unsafe void TexCoordP4ui(TexCoordPointerType type, in uint coords)
+            public static unsafe void TexCoordP4ui(TexCoordPointerType type, ref readonly uint coords)
             {
                 fixed (uint* coords_ptr = &coords)
                 {
@@ -25730,7 +25730,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterfv(int, TextureParameterName, float*)"/>
-            public static unsafe void TextureParameterf(int texture, TextureParameterName pname, in float param)
+            public static unsafe void TextureParameterf(int texture, TextureParameterName pname, ref readonly float param)
             {
                 fixed (float* param_ptr = &param)
                 {
@@ -25754,7 +25754,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterIiv(int, TextureParameterName, int*)"/>
-            public static unsafe void TextureParameterIi(int texture, TextureParameterName pname, in int parameters)
+            public static unsafe void TextureParameterIi(int texture, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -25778,7 +25778,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterIuiv(int, TextureParameterName, uint*)"/>
-            public static unsafe void TextureParameterIui(int texture, TextureParameterName pname, in uint parameters)
+            public static unsafe void TextureParameterIui(int texture, TextureParameterName pname, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -25802,7 +25802,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameteriv(int, TextureParameterName, int*)"/>
-            public static unsafe void TextureParameteri(int texture, TextureParameterName pname, in int param)
+            public static unsafe void TextureParameteri(int texture, TextureParameterName pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -25834,7 +25834,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage1D(int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage1D<T1>(int texture, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage1D<T1>(int texture, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -25867,7 +25867,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage2D(int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage2D<T1>(int texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -25900,7 +25900,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage3D(int, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage3D<T1>(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -25909,7 +25909,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
-            public static unsafe void Uniform1d(int location, int count, in double value)
+            public static unsafe void Uniform1d(int location, int count, ref readonly double value)
             {
                 fixed (double* tmp_value = &value)
                 {
@@ -25936,7 +25936,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1fvARB(int, int, float*)"/>
-            public static unsafe void Uniform1fvARB(int location, int count, in float value)
+            public static unsafe void Uniform1fvARB(int location, int count, ref readonly float value)
             {
                 fixed (float* tmp_value = &value)
                 {
@@ -25963,7 +25963,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform1i64vARB(int location, int count, in long value)
+            public static unsafe void Uniform1i64vARB(int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -25990,7 +25990,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1ivARB(int, int, int*)"/>
-            public static unsafe void Uniform1ivARB(int location, int count, in int value)
+            public static unsafe void Uniform1ivARB(int location, int count, ref readonly int value)
             {
                 fixed (int* tmp_value = &value)
                 {
@@ -26017,7 +26017,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64vARB(int location, int count, in ulong value)
+            public static unsafe void Uniform1ui64vARB(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -26044,7 +26044,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
-            public static unsafe void Uniform2d(int location, int count, in Vector2d value)
+            public static unsafe void Uniform2d(int location, int count, ref readonly Vector2d value)
             {
                 fixed (Vector2d* tmp_value = &value)
                 {
@@ -26071,7 +26071,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2fvARB(int, int, float*)"/>
-            public static unsafe void Uniform2fvARB(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2fvARB(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -26098,7 +26098,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2fvARB(int, int, float*)"/>
-            public static unsafe void Uniform2fvARB(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2fvARB(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -26125,7 +26125,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform2i64vARB(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2i64vARB(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -26152,7 +26152,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform2i64vARB(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2i64vARB(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -26179,7 +26179,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ivARB(int, int, int*)"/>
-            public static unsafe void Uniform2ivARB(int location, int count, in Vector2i value)
+            public static unsafe void Uniform2ivARB(int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -26206,7 +26206,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vARB(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2ui64vARB(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -26233,7 +26233,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vARB(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2ui64vARB(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -26260,7 +26260,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
-            public static unsafe void Uniform3d(int location, int count, in Vector3d value)
+            public static unsafe void Uniform3d(int location, int count, ref readonly Vector3d value)
             {
                 fixed (Vector3d* tmp_value = &value)
                 {
@@ -26287,7 +26287,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3fvARB(int, int, float*)"/>
-            public static unsafe void Uniform3fvARB(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3fvARB(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -26314,7 +26314,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3fvARB(int, int, float*)"/>
-            public static unsafe void Uniform3fvARB(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3fvARB(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -26341,7 +26341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform3i64vARB(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3i64vARB(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -26368,7 +26368,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform3i64vARB(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3i64vARB(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -26395,7 +26395,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ivARB(int, int, int*)"/>
-            public static unsafe void Uniform3ivARB(int location, int count, in Vector3i value)
+            public static unsafe void Uniform3ivARB(int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -26422,7 +26422,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vARB(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3ui64vARB(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -26449,7 +26449,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vARB(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3ui64vARB(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -26476,7 +26476,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
-            public static unsafe void Uniform4d(int location, int count, in Vector4d value)
+            public static unsafe void Uniform4d(int location, int count, ref readonly Vector4d value)
             {
                 fixed (Vector4d* tmp_value = &value)
                 {
@@ -26503,7 +26503,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4fvARB(int, int, float*)"/>
-            public static unsafe void Uniform4fvARB(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4fvARB(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -26530,7 +26530,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4fvARB(int, int, float*)"/>
-            public static unsafe void Uniform4fvARB(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4fvARB(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -26557,7 +26557,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform4i64vARB(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4i64vARB(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -26584,7 +26584,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vARB(int, int, long*)"/>
-            public static unsafe void Uniform4i64vARB(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4i64vARB(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -26611,7 +26611,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ivARB(int, int, int*)"/>
-            public static unsafe void Uniform4ivARB(int location, int count, in Vector4i value)
+            public static unsafe void Uniform4ivARB(int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -26638,7 +26638,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vARB(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4ui64vARB(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -26665,7 +26665,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vARB(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vARB(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4ui64vARB(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -26708,7 +26708,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformHandleui64vARB(int, int, ulong*)"/>
-            public static unsafe void UniformHandleui64vARB(int location, int count, in ulong value)
+            public static unsafe void UniformHandleui64vARB(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* value_ptr = &value)
                 {
@@ -26716,7 +26716,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix2d(int location, int count, bool transpose, in Matrix2d value)
+            public static unsafe void UniformMatrix2d(int location, int count, bool transpose, ref readonly Matrix2d value)
             {
                 fixed (Matrix2d* tmp_value = &value)
                 {
@@ -26743,7 +26743,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fvARB(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix2fvARB(int location, int count, bool transpose, in Matrix2 value)
+            public static unsafe void UniformMatrix2fvARB(int location, int count, bool transpose, ref readonly Matrix2 value)
             {
                 fixed (Matrix2* tmp_value = &value)
                 {
@@ -26770,7 +26770,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, in Matrix2x3d value)
+            public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, ref readonly Matrix2x3d value)
             {
                 fixed (Matrix2x3d* tmp_value = &value)
                 {
@@ -26797,7 +26797,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, in Matrix2x4d value)
+            public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, ref readonly Matrix2x4d value)
             {
                 fixed (Matrix2x4d* tmp_value = &value)
                 {
@@ -26824,7 +26824,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix3d(int location, int count, bool transpose, in Matrix3d value)
+            public static unsafe void UniformMatrix3d(int location, int count, bool transpose, ref readonly Matrix3d value)
             {
                 fixed (Matrix3d* tmp_value = &value)
                 {
@@ -26851,7 +26851,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fvARB(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix3fvARB(int location, int count, bool transpose, in Matrix3 value)
+            public static unsafe void UniformMatrix3fvARB(int location, int count, bool transpose, ref readonly Matrix3 value)
             {
                 fixed (Matrix3* tmp_value = &value)
                 {
@@ -26878,7 +26878,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, in Matrix3x2d value)
+            public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, ref readonly Matrix3x2d value)
             {
                 fixed (Matrix3x2d* tmp_value = &value)
                 {
@@ -26905,7 +26905,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, in Matrix3x4d value)
+            public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, ref readonly Matrix3x4d value)
             {
                 fixed (Matrix3x4d* tmp_value = &value)
                 {
@@ -26932,7 +26932,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix4d(int location, int count, bool transpose, in Matrix4d value)
+            public static unsafe void UniformMatrix4d(int location, int count, bool transpose, ref readonly Matrix4d value)
             {
                 fixed (Matrix4d* tmp_value = &value)
                 {
@@ -26959,7 +26959,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fvARB(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix4fvARB(int location, int count, bool transpose, in Matrix4 value)
+            public static unsafe void UniformMatrix4fvARB(int location, int count, bool transpose, ref readonly Matrix4 value)
             {
                 fixed (Matrix4* tmp_value = &value)
                 {
@@ -26986,7 +26986,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fvARB(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix4fvARB(int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+            public static unsafe void UniformMatrix4fvARB(int location, int count, bool transpose, ref readonly System.Numerics.Matrix4x4 value)
             {
                 fixed (System.Numerics.Matrix4x4* tmp_value = &value)
                 {
@@ -27013,7 +27013,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, in Matrix4x2d value)
+            public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, ref readonly Matrix4x2d value)
             {
                 fixed (Matrix4x2d* tmp_value = &value)
                 {
@@ -27040,7 +27040,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
-            public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, in Matrix4x3d value)
+            public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, ref readonly Matrix4x3d value)
             {
                 fixed (Matrix4x3d* tmp_value = &value)
                 {
@@ -27083,7 +27083,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformSubroutinesuiv(ShaderType, int, uint*)"/>
-            public static unsafe void UniformSubroutinesui(ShaderType shadertype, int count, in uint indices)
+            public static unsafe void UniformSubroutinesui(ShaderType shadertype, int count, ref readonly uint indices)
             {
                 fixed (uint* indices_ptr = &indices)
                 {
@@ -27119,7 +27119,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexArrayVertexBuffers(int, uint, int, int*, IntPtr*, int*)"/>
-            public static unsafe void VertexArrayVertexBuffers(int vaobj, uint first, int count, in int buffers, in IntPtr offsets, in int strides)
+            public static unsafe void VertexArrayVertexBuffers(int vaobj, uint first, int count, ref readonly int buffers, ref readonly IntPtr offsets, ref readonly int strides)
             {
                 fixed (int* buffers_ptr = &buffers)
                 fixed (IntPtr* offsets_ptr = &offsets)
@@ -27129,7 +27129,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1dvARB(uint, double*)"/>
-            public static unsafe void VertexAttrib1dvARB(uint index, in double v)
+            public static unsafe void VertexAttrib1dvARB(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -27137,7 +27137,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1fvARB(uint, float*)"/>
-            public static unsafe void VertexAttrib1fvARB(uint index, in float v)
+            public static unsafe void VertexAttrib1fvARB(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27145,7 +27145,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1svARB(uint, short*)"/>
-            public static unsafe void VertexAttrib1svARB(uint index, in short v)
+            public static unsafe void VertexAttrib1svARB(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -27169,7 +27169,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2dvARB(uint, double*)"/>
-            public static unsafe void VertexAttrib2dvARB(uint index, in double v)
+            public static unsafe void VertexAttrib2dvARB(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -27193,7 +27193,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2fvARB(uint, float*)"/>
-            public static unsafe void VertexAttrib2fvARB(uint index, in float v)
+            public static unsafe void VertexAttrib2fvARB(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27217,7 +27217,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2svARB(uint, short*)"/>
-            public static unsafe void VertexAttrib2svARB(uint index, in short v)
+            public static unsafe void VertexAttrib2svARB(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -27241,7 +27241,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3dvARB(uint, double*)"/>
-            public static unsafe void VertexAttrib3dvARB(uint index, in double v)
+            public static unsafe void VertexAttrib3dvARB(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -27265,7 +27265,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3fvARB(uint, float*)"/>
-            public static unsafe void VertexAttrib3fvARB(uint index, in float v)
+            public static unsafe void VertexAttrib3fvARB(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27289,7 +27289,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3svARB(uint, short*)"/>
-            public static unsafe void VertexAttrib3svARB(uint index, in short v)
+            public static unsafe void VertexAttrib3svARB(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -27313,7 +27313,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4bvARB(uint, sbyte*)"/>
-            public static unsafe void VertexAttrib4bvARB(uint index, in sbyte v)
+            public static unsafe void VertexAttrib4bvARB(uint index, ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -27337,7 +27337,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4dvARB(uint, double*)"/>
-            public static unsafe void VertexAttrib4dvARB(uint index, in double v)
+            public static unsafe void VertexAttrib4dvARB(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -27361,7 +27361,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4fvARB(uint, float*)"/>
-            public static unsafe void VertexAttrib4fvARB(uint index, in float v)
+            public static unsafe void VertexAttrib4fvARB(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27385,7 +27385,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4ivARB(uint, int*)"/>
-            public static unsafe void VertexAttrib4ivARB(uint index, in int v)
+            public static unsafe void VertexAttrib4ivARB(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -27409,7 +27409,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NbvARB(uint, sbyte*)"/>
-            public static unsafe void VertexAttrib4NbvARB(uint index, in sbyte v)
+            public static unsafe void VertexAttrib4NbvARB(uint index, ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -27433,7 +27433,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NivARB(uint, int*)"/>
-            public static unsafe void VertexAttrib4NivARB(uint index, in int v)
+            public static unsafe void VertexAttrib4NivARB(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -27457,7 +27457,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NsvARB(uint, short*)"/>
-            public static unsafe void VertexAttrib4NsvARB(uint index, in short v)
+            public static unsafe void VertexAttrib4NsvARB(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -27481,7 +27481,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NubvARB(uint, byte*)"/>
-            public static unsafe void VertexAttrib4NubvARB(uint index, in byte v)
+            public static unsafe void VertexAttrib4NubvARB(uint index, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -27505,7 +27505,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NuivARB(uint, uint*)"/>
-            public static unsafe void VertexAttrib4NuivARB(uint index, in uint v)
+            public static unsafe void VertexAttrib4NuivARB(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -27529,7 +27529,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4NusvARB(uint, ushort*)"/>
-            public static unsafe void VertexAttrib4NusvARB(uint index, in ushort v)
+            public static unsafe void VertexAttrib4NusvARB(uint index, ref readonly ushort v)
             {
                 fixed (ushort* v_ptr = &v)
                 {
@@ -27553,7 +27553,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4svARB(uint, short*)"/>
-            public static unsafe void VertexAttrib4svARB(uint index, in short v)
+            public static unsafe void VertexAttrib4svARB(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -27577,7 +27577,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4ubvARB(uint, byte*)"/>
-            public static unsafe void VertexAttrib4ubvARB(uint index, in byte v)
+            public static unsafe void VertexAttrib4ubvARB(uint index, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -27601,7 +27601,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4uivARB(uint, uint*)"/>
-            public static unsafe void VertexAttrib4uivARB(uint index, in uint v)
+            public static unsafe void VertexAttrib4uivARB(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -27625,7 +27625,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4usvARB(uint, ushort*)"/>
-            public static unsafe void VertexAttrib4usvARB(uint index, in ushort v)
+            public static unsafe void VertexAttrib4usvARB(uint index, ref readonly ushort v)
             {
                 fixed (ushort* v_ptr = &v)
                 {
@@ -27633,7 +27633,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL1dv(uint, double*)"/>
-            public static unsafe void VertexAttribL1d(uint index, in double v)
+            public static unsafe void VertexAttribL1d(uint index, ref readonly double v)
             {
                 fixed (double* tmp_v = &v)
                 {
@@ -27658,7 +27658,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL1ui64vARB(uint, ulong*)"/>
-            public static unsafe void VertexAttribL1ui64vARB(uint index, in ulong v)
+            public static unsafe void VertexAttribL1ui64vARB(uint index, ref readonly ulong v)
             {
                 fixed (ulong* v_ptr = &v)
                 {
@@ -27666,7 +27666,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL2dv(uint, double*)"/>
-            public static unsafe void VertexAttribL2d(uint index, in Vector2d v)
+            public static unsafe void VertexAttribL2d(uint index, ref readonly Vector2d v)
             {
                 fixed (Vector2d* tmp_v = &v)
                 {
@@ -27675,7 +27675,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL3dv(uint, double*)"/>
-            public static unsafe void VertexAttribL3d(uint index, in Vector3d v)
+            public static unsafe void VertexAttribL3d(uint index, ref readonly Vector3d v)
             {
                 fixed (Vector3d* tmp_v = &v)
                 {
@@ -27684,7 +27684,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL4dv(uint, double*)"/>
-            public static unsafe void VertexAttribL4d(uint index, in Vector4d v)
+            public static unsafe void VertexAttribL4d(uint index, ref readonly Vector4d v)
             {
                 fixed (Vector4d* tmp_v = &v)
                 {
@@ -27699,7 +27699,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 VertexAttribLPointer(index, size, type, stride, pointer);
             }
             /// <inheritdoc cref="VertexAttribP1uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-            public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+            public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27707,7 +27707,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribP2uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-            public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+            public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27715,7 +27715,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribP3uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-            public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+            public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27723,7 +27723,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribP4uiv(uint, VertexAttribPointerType, bool, uint*)"/>
-            public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, in uint value)
+            public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27755,7 +27755,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribPointerARB(uint, int, VertexAttribPointerType, bool, int, void*)"/>
-            public static unsafe void VertexAttribPointerARB<T1>(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, in T1 pointer)
+            public static unsafe void VertexAttribPointerARB<T1>(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -27764,7 +27764,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexP2uiv(VertexPointerType, uint*)"/>
-            public static unsafe void VertexP2ui(VertexPointerType type, in uint value)
+            public static unsafe void VertexP2ui(VertexPointerType type, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27772,7 +27772,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexP3uiv(VertexPointerType, uint*)"/>
-            public static unsafe void VertexP3ui(VertexPointerType type, in uint value)
+            public static unsafe void VertexP3ui(VertexPointerType type, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27780,7 +27780,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexP4uiv(VertexPointerType, uint*)"/>
-            public static unsafe void VertexP4ui(VertexPointerType type, in uint value)
+            public static unsafe void VertexP4ui(VertexPointerType type, ref readonly uint value)
             {
                 fixed (uint* value_ptr = &value)
                 {
@@ -27804,7 +27804,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ViewportArrayv(uint, int, float*)"/>
-            public static unsafe void ViewportArray(uint first, int count, in float v)
+            public static unsafe void ViewportArray(uint first, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27828,7 +27828,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ViewportIndexedfv(uint, float*)"/>
-            public static unsafe void ViewportIndexedf(uint index, in float v)
+            public static unsafe void ViewportIndexedf(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -27852,7 +27852,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightbvARB(int, sbyte*)"/>
-            public static unsafe void WeightbvARB(int size, in sbyte weights)
+            public static unsafe void WeightbvARB(int size, ref readonly sbyte weights)
             {
                 fixed (sbyte* weights_ptr = &weights)
                 {
@@ -27876,7 +27876,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightdvARB(int, double*)"/>
-            public static unsafe void WeightdvARB(int size, in double weights)
+            public static unsafe void WeightdvARB(int size, ref readonly double weights)
             {
                 fixed (double* weights_ptr = &weights)
                 {
@@ -27900,7 +27900,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightfvARB(int, float*)"/>
-            public static unsafe void WeightfvARB(int size, in float weights)
+            public static unsafe void WeightfvARB(int size, ref readonly float weights)
             {
                 fixed (float* weights_ptr = &weights)
                 {
@@ -27924,7 +27924,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightivARB(int, int*)"/>
-            public static unsafe void WeightivARB(int size, in int weights)
+            public static unsafe void WeightivARB(int size, ref readonly int weights)
             {
                 fixed (int* weights_ptr = &weights)
                 {
@@ -27956,7 +27956,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightPointerARB(int, WeightPointerTypeARB, int, void*)"/>
-            public static unsafe void WeightPointerARB<T1>(int size, WeightPointerTypeARB type, int stride, in T1 pointer)
+            public static unsafe void WeightPointerARB<T1>(int size, WeightPointerTypeARB type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -27981,7 +27981,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightsvARB(int, short*)"/>
-            public static unsafe void WeightsvARB(int size, in short weights)
+            public static unsafe void WeightsvARB(int size, ref readonly short weights)
             {
                 fixed (short* weights_ptr = &weights)
                 {
@@ -28005,7 +28005,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightubvARB(int, byte*)"/>
-            public static unsafe void WeightubvARB(int size, in byte weights)
+            public static unsafe void WeightubvARB(int size, ref readonly byte weights)
             {
                 fixed (byte* weights_ptr = &weights)
                 {
@@ -28029,7 +28029,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightuivARB(int, uint*)"/>
-            public static unsafe void WeightuivARB(int size, in uint weights)
+            public static unsafe void WeightuivARB(int size, ref readonly uint weights)
             {
                 fixed (uint* weights_ptr = &weights)
                 {
@@ -28053,7 +28053,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightusvARB(int, ushort*)"/>
-            public static unsafe void WeightusvARB(int size, in ushort weights)
+            public static unsafe void WeightusvARB(int size, ref readonly ushort weights)
             {
                 fixed (ushort* weights_ptr = &weights)
                 {
@@ -28077,7 +28077,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2dvARB(double*)"/>
-            public static unsafe void WindowPos2dvARB(in double v)
+            public static unsafe void WindowPos2dvARB(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -28101,7 +28101,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2fvARB(float*)"/>
-            public static unsafe void WindowPos2fvARB(in float v)
+            public static unsafe void WindowPos2fvARB(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -28125,7 +28125,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2ivARB(int*)"/>
-            public static unsafe void WindowPos2ivARB(in int v)
+            public static unsafe void WindowPos2ivARB(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -28149,7 +28149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2svARB(short*)"/>
-            public static unsafe void WindowPos2svARB(in short v)
+            public static unsafe void WindowPos2svARB(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -28173,7 +28173,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3dvARB(double*)"/>
-            public static unsafe void WindowPos3dvARB(in double v)
+            public static unsafe void WindowPos3dvARB(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -28197,7 +28197,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3fvARB(float*)"/>
-            public static unsafe void WindowPos3fvARB(in float v)
+            public static unsafe void WindowPos3fvARB(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -28221,7 +28221,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3ivARB(int*)"/>
-            public static unsafe void WindowPos3ivARB(in int v)
+            public static unsafe void WindowPos3ivARB(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -28245,7 +28245,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3svARB(short*)"/>
-            public static unsafe void WindowPos3svARB(in short v)
+            public static unsafe void WindowPos3svARB(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -28272,7 +28272,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawBuffersATI(int, DrawBufferMode*)"/>
-            public static unsafe void DrawBuffersATI(int n, in DrawBufferMode bufs)
+            public static unsafe void DrawBuffersATI(int n, ref readonly DrawBufferMode bufs)
             {
                 fixed (DrawBufferMode* bufs_ptr = &bufs)
                 {
@@ -28304,7 +28304,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ElementPointerATI(ElementPointerTypeATI, void*)"/>
-            public static unsafe void ElementPointerATI<T1>(ElementPointerTypeATI type, in T1 pointer)
+            public static unsafe void ElementPointerATI<T1>(ElementPointerTypeATI type, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -28587,7 +28587,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="NewObjectBufferATI(int, void*, ArrayObjectUsageATI)"/>
-            public static unsafe uint NewObjectBufferATI<T1>(int size, in T1 pointer, ArrayObjectUsageATI usage)
+            public static unsafe uint NewObjectBufferATI<T1>(int size, ref readonly T1 pointer, ArrayObjectUsageATI usage)
                 where T1 : unmanaged
             {
                 uint returnValue;
@@ -28614,7 +28614,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalStream3bvATI(VertexStreamATI, sbyte*)"/>
-            public static unsafe void NormalStream3bvATI(VertexStreamATI stream, in sbyte coords)
+            public static unsafe void NormalStream3bvATI(VertexStreamATI stream, ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -28638,7 +28638,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalStream3dvATI(VertexStreamATI, double*)"/>
-            public static unsafe void NormalStream3dvATI(VertexStreamATI stream, in double coords)
+            public static unsafe void NormalStream3dvATI(VertexStreamATI stream, ref readonly double coords)
             {
                 fixed (double* coords_ptr = &coords)
                 {
@@ -28662,7 +28662,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalStream3fvATI(VertexStreamATI, float*)"/>
-            public static unsafe void NormalStream3fvATI(VertexStreamATI stream, in float coords)
+            public static unsafe void NormalStream3fvATI(VertexStreamATI stream, ref readonly float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
@@ -28686,7 +28686,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalStream3ivATI(VertexStreamATI, int*)"/>
-            public static unsafe void NormalStream3ivATI(VertexStreamATI stream, in int coords)
+            public static unsafe void NormalStream3ivATI(VertexStreamATI stream, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -28710,7 +28710,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalStream3svATI(VertexStreamATI, short*)"/>
-            public static unsafe void NormalStream3svATI(VertexStreamATI stream, in short coords)
+            public static unsafe void NormalStream3svATI(VertexStreamATI stream, ref readonly short coords)
             {
                 fixed (short* coords_ptr = &coords)
                 {
@@ -28734,7 +28734,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SetFragmentShaderConstantATI(FragmentShaderConATI, float*)"/>
-            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, in float value)
+            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, ref readonly float value)
             {
                 fixed (float* value_ptr = &value)
                 {
@@ -28758,7 +28758,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexBumpParameterfvATI(TexBumpParameterATI, float*)"/>
-            public static unsafe void TexBumpParameterfvATI(TexBumpParameterATI pname, in float param)
+            public static unsafe void TexBumpParameterfvATI(TexBumpParameterATI pname, ref readonly float param)
             {
                 fixed (float* param_ptr = &param)
                 {
@@ -28782,7 +28782,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexBumpParameterivATI(TexBumpParameterATI, int*)"/>
-            public static unsafe void TexBumpParameterivATI(TexBumpParameterATI pname, in int param)
+            public static unsafe void TexBumpParameterivATI(TexBumpParameterATI pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -28814,7 +28814,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UpdateObjectBufferATI(int, uint, int, void*, PreserveModeATI)"/>
-            public static unsafe void UpdateObjectBufferATI<T1>(int buffer, uint offset, int size, in T1 pointer, PreserveModeATI preserve)
+            public static unsafe void UpdateObjectBufferATI<T1>(int buffer, uint offset, int size, ref readonly T1 pointer, PreserveModeATI preserve)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -28823,7 +28823,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream1dvATI(VertexStreamATI, double*)"/>
-            public static unsafe void VertexStream1dvATI(VertexStreamATI stream, in double coords)
+            public static unsafe void VertexStream1dvATI(VertexStreamATI stream, ref readonly double coords)
             {
                 fixed (double* coords_ptr = &coords)
                 {
@@ -28831,7 +28831,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream1fvATI(VertexStreamATI, float*)"/>
-            public static unsafe void VertexStream1fvATI(VertexStreamATI stream, in float coords)
+            public static unsafe void VertexStream1fvATI(VertexStreamATI stream, ref readonly float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
@@ -28839,7 +28839,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream1ivATI(VertexStreamATI, int*)"/>
-            public static unsafe void VertexStream1ivATI(VertexStreamATI stream, in int coords)
+            public static unsafe void VertexStream1ivATI(VertexStreamATI stream, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -28847,7 +28847,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream1svATI(VertexStreamATI, short*)"/>
-            public static unsafe void VertexStream1svATI(VertexStreamATI stream, in short coords)
+            public static unsafe void VertexStream1svATI(VertexStreamATI stream, ref readonly short coords)
             {
                 fixed (short* coords_ptr = &coords)
                 {
@@ -28871,7 +28871,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream2dvATI(VertexStreamATI, double*)"/>
-            public static unsafe void VertexStream2dvATI(VertexStreamATI stream, in double coords)
+            public static unsafe void VertexStream2dvATI(VertexStreamATI stream, ref readonly double coords)
             {
                 fixed (double* coords_ptr = &coords)
                 {
@@ -28895,7 +28895,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream2fvATI(VertexStreamATI, float*)"/>
-            public static unsafe void VertexStream2fvATI(VertexStreamATI stream, in float coords)
+            public static unsafe void VertexStream2fvATI(VertexStreamATI stream, ref readonly float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
@@ -28919,7 +28919,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream2ivATI(VertexStreamATI, int*)"/>
-            public static unsafe void VertexStream2ivATI(VertexStreamATI stream, in int coords)
+            public static unsafe void VertexStream2ivATI(VertexStreamATI stream, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -28943,7 +28943,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream2svATI(VertexStreamATI, short*)"/>
-            public static unsafe void VertexStream2svATI(VertexStreamATI stream, in short coords)
+            public static unsafe void VertexStream2svATI(VertexStreamATI stream, ref readonly short coords)
             {
                 fixed (short* coords_ptr = &coords)
                 {
@@ -28967,7 +28967,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream3dvATI(VertexStreamATI, double*)"/>
-            public static unsafe void VertexStream3dvATI(VertexStreamATI stream, in double coords)
+            public static unsafe void VertexStream3dvATI(VertexStreamATI stream, ref readonly double coords)
             {
                 fixed (double* coords_ptr = &coords)
                 {
@@ -28991,7 +28991,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream3fvATI(VertexStreamATI, float*)"/>
-            public static unsafe void VertexStream3fvATI(VertexStreamATI stream, in float coords)
+            public static unsafe void VertexStream3fvATI(VertexStreamATI stream, ref readonly float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
@@ -29015,7 +29015,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream3ivATI(VertexStreamATI, int*)"/>
-            public static unsafe void VertexStream3ivATI(VertexStreamATI stream, in int coords)
+            public static unsafe void VertexStream3ivATI(VertexStreamATI stream, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -29039,7 +29039,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream3svATI(VertexStreamATI, short*)"/>
-            public static unsafe void VertexStream3svATI(VertexStreamATI stream, in short coords)
+            public static unsafe void VertexStream3svATI(VertexStreamATI stream, ref readonly short coords)
             {
                 fixed (short* coords_ptr = &coords)
                 {
@@ -29063,7 +29063,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream4dvATI(VertexStreamATI, double*)"/>
-            public static unsafe void VertexStream4dvATI(VertexStreamATI stream, in double coords)
+            public static unsafe void VertexStream4dvATI(VertexStreamATI stream, ref readonly double coords)
             {
                 fixed (double* coords_ptr = &coords)
                 {
@@ -29087,7 +29087,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream4fvATI(VertexStreamATI, float*)"/>
-            public static unsafe void VertexStream4fvATI(VertexStreamATI stream, in float coords)
+            public static unsafe void VertexStream4fvATI(VertexStreamATI stream, ref readonly float coords)
             {
                 fixed (float* coords_ptr = &coords)
                 {
@@ -29111,7 +29111,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream4ivATI(VertexStreamATI, int*)"/>
-            public static unsafe void VertexStream4ivATI(VertexStreamATI stream, in int coords)
+            public static unsafe void VertexStream4ivATI(VertexStreamATI stream, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -29135,7 +29135,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexStream4svATI(VertexStreamATI, short*)"/>
-            public static unsafe void VertexStream4svATI(VertexStreamATI stream, in short coords)
+            public static unsafe void VertexStream4svATI(VertexStreamATI stream, ref readonly short coords)
             {
                 fixed (short* coords_ptr = &coords)
                 {
@@ -29172,7 +29172,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreTexturesResidentEXT(int, int*, bool*)"/>
-            public static unsafe bool AreTexturesResidentEXT(int n, in int textures, ref bool residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, ref readonly int textures, ref bool residences)
             {
                 bool returnValue;
                 fixed (int* textures_ptr = &textures)
@@ -29206,7 +29206,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Binormal3bvEXT(sbyte*)"/>
-            public static unsafe void Binormal3bvEXT(in sbyte v)
+            public static unsafe void Binormal3bvEXT(ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -29230,7 +29230,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Binormal3dvEXT(double*)"/>
-            public static unsafe void Binormal3dvEXT(in double v)
+            public static unsafe void Binormal3dvEXT(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -29254,7 +29254,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Binormal3fvEXT(float*)"/>
-            public static unsafe void Binormal3fvEXT(in float v)
+            public static unsafe void Binormal3fvEXT(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -29278,7 +29278,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Binormal3ivEXT(int*)"/>
-            public static unsafe void Binormal3ivEXT(in int v)
+            public static unsafe void Binormal3ivEXT(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -29302,7 +29302,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Binormal3svEXT(short*)"/>
-            public static unsafe void Binormal3svEXT(in short v)
+            public static unsafe void Binormal3svEXT(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -29334,7 +29334,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BinormalPointerEXT(BinormalPointerTypeEXT, int, void*)"/>
-            public static unsafe void BinormalPointerEXT<T1>(BinormalPointerTypeEXT type, int stride, in T1 pointer)
+            public static unsafe void BinormalPointerEXT<T1>(BinormalPointerTypeEXT type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -29400,7 +29400,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedBufferDataEXT(int, SizedInternalFormat, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearNamedBufferDataEXT<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearNamedBufferDataEXT<T1>(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -29433,7 +29433,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClearNamedBufferSubDataEXT(int, SizedInternalFormat, nint, nint, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ClearNamedBufferSubDataEXT<T1>(int buffer, SizedInternalFormat internalformat, nint offset, nint size, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ClearNamedBufferSubDataEXT<T1>(int buffer, SizedInternalFormat internalformat, nint offset, nint size, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -29466,7 +29466,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorPointerEXT(int, ColorPointerType, int, int, void*)"/>
-            public static unsafe void ColorPointerEXT<T1>(int size, ColorPointerType type, int stride, int count, in T1 pointer)
+            public static unsafe void ColorPointerEXT<T1>(int size, ColorPointerType type, int stride, int count, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -29499,7 +29499,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorSubTableEXT(ColorTableTarget, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ColorSubTableEXT<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, in T1 data)
+            public static unsafe void ColorSubTableEXT<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -29532,7 +29532,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableEXT(ColorTableTarget, InternalFormat, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ColorTableEXT<T1>(ColorTableTarget target, InternalFormat internalFormat, int width, PixelFormat format, PixelType type, in T1 table)
+            public static unsafe void ColorTableEXT<T1>(ColorTableTarget target, InternalFormat internalFormat, int width, PixelFormat format, PixelType type, ref readonly T1 table)
                 where T1 : unmanaged
             {
                 fixed (void* table_ptr = &table)
@@ -29565,7 +29565,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, void*)"/>
-            public static unsafe void CompressedMultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29598,7 +29598,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
-            public static unsafe void CompressedMultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29631,7 +29631,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, int, void*)"/>
-            public static unsafe void CompressedMultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29664,7 +29664,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage1DEXT(TextureUnit, TextureTarget, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29697,7 +29697,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29730,7 +29730,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29763,7 +29763,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, int, void*)"/>
-            public static unsafe void CompressedTextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29796,7 +29796,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
-            public static unsafe void CompressedTextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29829,7 +29829,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, int, void*)"/>
-            public static unsafe void CompressedTextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29862,7 +29862,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1DEXT(int, TextureTarget, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29895,7 +29895,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2DEXT(int, TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29928,7 +29928,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3DEXT(int, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*)"/>
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, ref readonly T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -29961,7 +29961,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionFilter1DEXT(ConvolutionTargetEXT, InternalFormat, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ConvolutionFilter1DEXT<T1>(ConvolutionTargetEXT target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 image)
+            public static unsafe void ConvolutionFilter1DEXT<T1>(ConvolutionTargetEXT target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ref readonly T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -29994,7 +29994,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionFilter2DEXT(ConvolutionTargetEXT, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ConvolutionFilter2DEXT<T1>(ConvolutionTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 image)
+            public static unsafe void ConvolutionFilter2DEXT<T1>(ConvolutionTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ref readonly T1 image)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -30019,7 +30019,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterfvEXT(ConvolutionTargetEXT, ConvolutionParameter, float*)"/>
-            public static unsafe void ConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, in float parameters)
+            public static unsafe void ConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -30043,7 +30043,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterivEXT(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, in int parameters)
+            public static unsafe void ConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -30148,7 +30148,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffersEXT(int, int*)"/>
-            public static unsafe void DeleteFramebuffersEXT(int n, in int framebuffers)
+            public static unsafe void DeleteFramebuffersEXT(int n, ref readonly int framebuffers)
             {
                 fixed (int* framebuffers_ptr = &framebuffers)
                 {
@@ -30172,7 +30172,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteMemoryObjectsEXT(int, uint*)"/>
-            public static unsafe void DeleteMemoryObjectsEXT(int n, in uint memoryObjects)
+            public static unsafe void DeleteMemoryObjectsEXT(int n, ref readonly uint memoryObjects)
             {
                 fixed (uint* memoryObjects_ptr = &memoryObjects)
                 {
@@ -30196,7 +30196,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteProgramPipelinesEXT(int, int*)"/>
-            public static unsafe void DeleteProgramPipelinesEXT(int n, in int pipelines)
+            public static unsafe void DeleteProgramPipelinesEXT(int n, ref readonly int pipelines)
             {
                 fixed (int* pipelines_ptr = &pipelines)
                 {
@@ -30220,7 +30220,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffersEXT(int, int*)"/>
-            public static unsafe void DeleteRenderbuffersEXT(int n, in int renderbuffers)
+            public static unsafe void DeleteRenderbuffersEXT(int n, ref readonly int renderbuffers)
             {
                 fixed (int* renderbuffers_ptr = &renderbuffers)
                 {
@@ -30244,7 +30244,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteSemaphoresEXT(int, uint*)"/>
-            public static unsafe void DeleteSemaphoresEXT(int n, in uint semaphores)
+            public static unsafe void DeleteSemaphoresEXT(int n, ref readonly uint semaphores)
             {
                 fixed (uint* semaphores_ptr = &semaphores)
                 {
@@ -30268,7 +30268,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteTexturesEXT(int, int*)"/>
-            public static unsafe void DeleteTexturesEXT(int n, in int textures)
+            public static unsafe void DeleteTexturesEXT(int n, ref readonly int textures)
             {
                 fixed (int* textures_ptr = &textures)
                 {
@@ -30304,7 +30304,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT(int, int, bool*)"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, in bool pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, ref readonly bool pointer)
             {
                 fixed (bool* pointer_ptr = &pointer)
                 {
@@ -30330,7 +30330,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EGLImageTargetTexStorageEXT(All, void*, int*)"/>
-            public static unsafe void EGLImageTargetTexStorageEXT(All target, IntPtr image, in int attrib_list)
+            public static unsafe void EGLImageTargetTexStorageEXT(All target, IntPtr image, ref readonly int attrib_list)
             {
                 fixed (int* attrib_list_ptr = &attrib_list)
                 {
@@ -30363,7 +30363,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EGLImageTargetTexStorageEXT(All, void*, int*)"/>
-            public static unsafe void EGLImageTargetTexStorageEXT<T1>(All target, ref T1 image, in int attrib_list)
+            public static unsafe void EGLImageTargetTexStorageEXT<T1>(All target, ref T1 image, ref readonly int attrib_list)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -30391,7 +30391,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EGLImageTargetTextureStorageEXT(int, void*, int*)"/>
-            public static unsafe void EGLImageTargetTextureStorageEXT(int texture, IntPtr image, in int attrib_list)
+            public static unsafe void EGLImageTargetTextureStorageEXT(int texture, IntPtr image, ref readonly int attrib_list)
             {
                 fixed (int* attrib_list_ptr = &attrib_list)
                 {
@@ -30424,7 +30424,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EGLImageTargetTextureStorageEXT(int, void*, int*)"/>
-            public static unsafe void EGLImageTargetTextureStorageEXT<T1>(int texture, ref T1 image, in int attrib_list)
+            public static unsafe void EGLImageTargetTextureStorageEXT<T1>(int texture, ref T1 image, ref readonly int attrib_list)
                 where T1 : unmanaged
             {
                 fixed (void* image_ptr = &image)
@@ -30434,7 +30434,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogCoorddvEXT(double*)"/>
-            public static unsafe void FogCoorddvEXT(in double coord)
+            public static unsafe void FogCoorddvEXT(ref readonly double coord)
             {
                 fixed (double* coord_ptr = &coord)
                 {
@@ -30442,7 +30442,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogCoordfvEXT(float*)"/>
-            public static unsafe void FogCoordfvEXT(in float coord)
+            public static unsafe void FogCoordfvEXT(ref readonly float coord)
             {
                 fixed (float* coord_ptr = &coord)
                 {
@@ -30474,7 +30474,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogCoordPointerEXT(FogPointerTypeEXT, int, void*)"/>
-            public static unsafe void FogCoordPointerEXT<T1>(FogPointerTypeEXT type, int stride, in T1 pointer)
+            public static unsafe void FogCoordPointerEXT<T1>(FogPointerTypeEXT type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -30499,7 +30499,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FramebufferDrawBuffersEXT(int, int, DrawBufferMode*)"/>
-            public static unsafe void FramebufferDrawBuffersEXT(int framebuffer, int n, in DrawBufferMode bufs)
+            public static unsafe void FramebufferDrawBuffersEXT(int framebuffer, int n, ref readonly DrawBufferMode bufs)
             {
                 fixed (DrawBufferMode* bufs_ptr = &bufs)
                 {
@@ -33454,7 +33454,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ImportMemoryWin32HandleEXT(uint, ulong, ExternalHandleType, void*)"/>
-            public static unsafe void ImportMemoryWin32HandleEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, in T1 handle)
+            public static unsafe void ImportMemoryWin32HandleEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, ref readonly T1 handle)
                 where T1 : unmanaged
             {
                 fixed (void* handle_ptr = &handle)
@@ -33487,7 +33487,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ImportMemoryWin32NameEXT(uint, ulong, ExternalHandleType, void*)"/>
-            public static unsafe void ImportMemoryWin32NameEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, in T1 name)
+            public static unsafe void ImportMemoryWin32NameEXT<T1>(uint memory, ulong size, ExternalHandleType handleType, ref readonly T1 name)
                 where T1 : unmanaged
             {
                 fixed (void* name_ptr = &name)
@@ -33553,7 +33553,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ImportSemaphoreWin32NameEXT(uint, ExternalHandleType, void*)"/>
-            public static unsafe void ImportSemaphoreWin32NameEXT<T1>(uint semaphore, ExternalHandleType handleType, in T1 name)
+            public static unsafe void ImportSemaphoreWin32NameEXT<T1>(uint semaphore, ExternalHandleType handleType, ref readonly T1 name)
                 where T1 : unmanaged
             {
                 fixed (void* name_ptr = &name)
@@ -33586,7 +33586,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="IndexPointerEXT(IndexPointerType, int, int, void*)"/>
-            public static unsafe void IndexPointerEXT<T1>(IndexPointerType type, int stride, int count, in T1 pointer)
+            public static unsafe void IndexPointerEXT<T1>(IndexPointerType type, int stride, int count, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -33625,7 +33625,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoaddEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixLoaddEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixLoaddEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -33649,7 +33649,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadfEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixLoadfEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixLoadfEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -33673,7 +33673,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadTransposedEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixLoadTransposedEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixLoadTransposedEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -33697,7 +33697,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadTransposefEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixLoadTransposefEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixLoadTransposefEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -33721,7 +33721,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultdEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixMultdEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixMultdEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -33745,7 +33745,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultfEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixMultfEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixMultfEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -33769,7 +33769,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultTransposedEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixMultTransposedEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixMultTransposedEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -33793,7 +33793,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultTransposefEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixMultTransposefEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixMultTransposefEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -33817,7 +33817,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MemoryObjectParameterivEXT(uint, MemoryObjectParameterName, int*)"/>
-            public static unsafe void MemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, in int parameters)
+            public static unsafe void MemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -33847,7 +33847,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysEXT(PrimitiveType, int*, int*, int)"/>
-            public static unsafe void MultiDrawArraysEXT(PrimitiveType mode, in int first, in int count, int primcount)
+            public static unsafe void MultiDrawArraysEXT(PrimitiveType mode, ref readonly int first, ref readonly int count, int primcount)
             {
                 fixed (int* first_ptr = &first)
                 fixed (int* count_ptr = &count)
@@ -33872,7 +33872,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsEXT(PrimitiveType, int*, DrawElementsType, void**, int)"/>
-            public static unsafe void MultiDrawElementsEXT(PrimitiveType mode, in int count, DrawElementsType type, void** indices, int primcount)
+            public static unsafe void MultiDrawElementsEXT(PrimitiveType mode, ref readonly int count, DrawElementsType type, void** indices, int primcount)
             {
                 fixed (int* count_ptr = &count)
                 {
@@ -33904,7 +33904,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoordPointerEXT(TextureUnit, int, TexCoordPointerType, int, void*)"/>
-            public static unsafe void MultiTexCoordPointerEXT<T1>(TextureUnit texunit, int size, TexCoordPointerType type, int stride, in T1 pointer)
+            public static unsafe void MultiTexCoordPointerEXT<T1>(TextureUnit texunit, int size, TexCoordPointerType type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -33929,7 +33929,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexEnvfvEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, float*)"/>
-            public static unsafe void MultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, in float parameters)
+            public static unsafe void MultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -33953,7 +33953,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexEnvivEXT(TextureUnit, TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void MultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
+            public static unsafe void MultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -33977,7 +33977,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexGendvEXT(TextureUnit, TextureCoordName, TextureGenParameter, double*)"/>
-            public static unsafe void MultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, in double parameters)
+            public static unsafe void MultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref readonly double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -34001,7 +34001,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexGenfvEXT(TextureUnit, TextureCoordName, TextureGenParameter, float*)"/>
-            public static unsafe void MultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, in float parameters)
+            public static unsafe void MultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34025,7 +34025,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexGenivEXT(TextureUnit, TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void MultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, in int parameters)
+            public static unsafe void MultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34057,7 +34057,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34090,7 +34090,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34123,7 +34123,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34148,7 +34148,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexParameterfvEXT(TextureUnit, TextureTarget, TextureParameterName, float*)"/>
-            public static unsafe void MultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, in float parameters)
+            public static unsafe void MultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34172,7 +34172,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexParameterIivEXT(TextureUnit, TextureTarget, TextureParameterName, int*)"/>
-            public static unsafe void MultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, in int parameters)
+            public static unsafe void MultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34196,7 +34196,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexParameterIuivEXT(TextureUnit, TextureTarget, TextureParameterName, uint*)"/>
-            public static unsafe void MultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, in uint parameters)
+            public static unsafe void MultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -34220,7 +34220,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexParameterivEXT(TextureUnit, TextureTarget, TextureParameterName, int*)"/>
-            public static unsafe void MultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, in int parameters)
+            public static unsafe void MultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34252,7 +34252,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexSubImage1DEXT(TextureUnit, TextureTarget, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34285,7 +34285,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexSubImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34318,7 +34318,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexSubImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34351,7 +34351,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferDataEXT(int, nint, void*, VertexBufferObjectUsage)"/>
-            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferDataEXT<T1>(int buffer, nint size, ref readonly T1 data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -34384,7 +34384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferStorageEXT(int, nint, void*, BufferStorageMask)"/>
-            public static unsafe void NamedBufferStorageEXT<T1>(int buffer, nint size, in T1 data, BufferStorageMask flags)
+            public static unsafe void NamedBufferStorageEXT<T1>(int buffer, nint size, ref readonly T1 data, BufferStorageMask flags)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -34450,7 +34450,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedBufferSubDataEXT(int, IntPtr, nint, void*)"/>
-            public static unsafe void NamedBufferSubDataEXT<T1>(int buffer, IntPtr offset, nint size, in T1 data)
+            public static unsafe void NamedBufferSubDataEXT<T1>(int buffer, IntPtr offset, nint size, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -34475,7 +34475,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParameter4dvEXT(int, ProgramTarget, uint, double*)"/>
-            public static unsafe void NamedProgramLocalParameter4dvEXT(int program, ProgramTarget target, uint index, in double parameters)
+            public static unsafe void NamedProgramLocalParameter4dvEXT(int program, ProgramTarget target, uint index, ref readonly double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -34499,7 +34499,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParameter4fvEXT(int, ProgramTarget, uint, float*)"/>
-            public static unsafe void NamedProgramLocalParameter4fvEXT(int program, ProgramTarget target, uint index, in float parameters)
+            public static unsafe void NamedProgramLocalParameter4fvEXT(int program, ProgramTarget target, uint index, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34523,7 +34523,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParameterI4ivEXT(int, ProgramTarget, uint, int*)"/>
-            public static unsafe void NamedProgramLocalParameterI4ivEXT(int program, ProgramTarget target, uint index, in int parameters)
+            public static unsafe void NamedProgramLocalParameterI4ivEXT(int program, ProgramTarget target, uint index, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34547,7 +34547,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParameterI4uivEXT(int, ProgramTarget, uint, uint*)"/>
-            public static unsafe void NamedProgramLocalParameterI4uivEXT(int program, ProgramTarget target, uint index, in uint parameters)
+            public static unsafe void NamedProgramLocalParameterI4uivEXT(int program, ProgramTarget target, uint index, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -34571,7 +34571,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParameters4fvEXT(int, ProgramTarget, uint, int, float*)"/>
-            public static unsafe void NamedProgramLocalParameters4fvEXT(int program, ProgramTarget target, uint index, int count, in float parameters)
+            public static unsafe void NamedProgramLocalParameters4fvEXT(int program, ProgramTarget target, uint index, int count, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34595,7 +34595,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParametersI4ivEXT(int, ProgramTarget, uint, int, int*)"/>
-            public static unsafe void NamedProgramLocalParametersI4ivEXT(int program, ProgramTarget target, uint index, int count, in int parameters)
+            public static unsafe void NamedProgramLocalParametersI4ivEXT(int program, ProgramTarget target, uint index, int count, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34619,7 +34619,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramLocalParametersI4uivEXT(int, ProgramTarget, uint, int, uint*)"/>
-            public static unsafe void NamedProgramLocalParametersI4uivEXT(int program, ProgramTarget target, uint index, int count, in uint parameters)
+            public static unsafe void NamedProgramLocalParametersI4uivEXT(int program, ProgramTarget target, uint index, int count, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -34651,7 +34651,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedProgramStringEXT(int, ProgramTarget, ProgramFormat, int, void*)"/>
-            public static unsafe void NamedProgramStringEXT<T1>(int program, ProgramTarget target, ProgramFormat format, int len, in T1 str)
+            public static unsafe void NamedProgramStringEXT<T1>(int program, ProgramTarget target, ProgramFormat format, int len, ref readonly T1 str)
                 where T1 : unmanaged
             {
                 fixed (void* str_ptr = &str)
@@ -34684,7 +34684,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NormalPointerEXT(NormalPointerType, int, int, void*)"/>
-            public static unsafe void NormalPointerEXT<T1>(NormalPointerType type, int stride, int count, in T1 pointer)
+            public static unsafe void NormalPointerEXT<T1>(NormalPointerType type, int stride, int count, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -34693,7 +34693,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelTransformParameterfvEXT(PixelTransformTargetEXT, PixelTransformPNameEXT, float*)"/>
-            public static unsafe void PixelTransformParameterfvEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, in float parameters)
+            public static unsafe void PixelTransformParameterfvEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34701,7 +34701,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelTransformParameterivEXT(PixelTransformTargetEXT, PixelTransformPNameEXT, int*)"/>
-            public static unsafe void PixelTransformParameterivEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, in int parameters)
+            public static unsafe void PixelTransformParameterivEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -34725,7 +34725,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointParameterfvEXT(PointParameterNameARB, float*)"/>
-            public static unsafe void PointParameterfvEXT(PointParameterNameARB pname, in float parameters)
+            public static unsafe void PointParameterfvEXT(PointParameterNameARB pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34755,7 +34755,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PrioritizeTexturesEXT(int, int*, float*)"/>
-            public static unsafe void PrioritizeTexturesEXT(int n, in int textures, in float priorities)
+            public static unsafe void PrioritizeTexturesEXT(int n, ref readonly int textures, ref readonly float priorities)
             {
                 fixed (int* textures_ptr = &textures)
                 fixed (float* priorities_ptr = &priorities)
@@ -34780,7 +34780,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParameters4fvEXT(ProgramTarget, uint, int, float*)"/>
-            public static unsafe void ProgramEnvParameters4fvEXT(ProgramTarget target, uint index, int count, in float parameters)
+            public static unsafe void ProgramEnvParameters4fvEXT(ProgramTarget target, uint index, int count, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34804,7 +34804,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParameters4fvEXT(ProgramTarget, uint, int, float*)"/>
-            public static unsafe void ProgramLocalParameters4fvEXT(ProgramTarget target, uint index, int count, in float parameters)
+            public static unsafe void ProgramLocalParameters4fvEXT(ProgramTarget target, uint index, int count, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -34812,7 +34812,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1dvEXT(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dvEXT(int program, int location, int count, in double value)
+            public static unsafe void ProgramUniform1dvEXT(int program, int location, int count, ref readonly double value)
             {
                 fixed (double* tmp_value = &value)
                 {
@@ -34821,7 +34821,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fvEXT(int program, int location, int count, in float value)
+            public static unsafe void ProgramUniform1fvEXT(int program, int location, int count, ref readonly float value)
             {
                 fixed (float* tmp_value = &value)
                 {
@@ -34830,7 +34830,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ivEXT(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1ivEXT(int program, int location, int count, in int value)
+            public static unsafe void ProgramUniform1ivEXT(int program, int location, int count, ref readonly int value)
             {
                 fixed (int* tmp_value = &value)
                 {
@@ -34839,7 +34839,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1uivEXT(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1uivEXT(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform1uivEXT(int program, int location, int count, ref readonly uint value)
             {
                 fixed (uint* tmp_value = &value)
                 {
@@ -34848,7 +34848,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dvEXT(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform2dvEXT(int program, int location, int count, in Vector2d value)
+            public static unsafe void ProgramUniform2dvEXT(int program, int location, int count, ref readonly Vector2d value)
             {
                 fixed (Vector2d* tmp_value = &value)
                 {
@@ -34875,7 +34875,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -34902,7 +34902,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -34929,7 +34929,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ivEXT(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, in Vector2i value)
+            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -34956,7 +34956,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uivEXT(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2uivEXT(int program, int location, int count, in Vector2i value)
+            public static unsafe void ProgramUniform2uivEXT(int program, int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -34983,7 +34983,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dvEXT(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform3dvEXT(int program, int location, int count, in Vector3d value)
+            public static unsafe void ProgramUniform3dvEXT(int program, int location, int count, ref readonly Vector3d value)
             {
                 fixed (Vector3d* tmp_value = &value)
                 {
@@ -35010,7 +35010,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -35037,7 +35037,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -35064,7 +35064,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ivEXT(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, in Vector3i value)
+            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -35091,7 +35091,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uivEXT(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3uivEXT(int program, int location, int count, in Vector3i value)
+            public static unsafe void ProgramUniform3uivEXT(int program, int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -35118,7 +35118,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dvEXT(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform4dvEXT(int program, int location, int count, in Vector4d value)
+            public static unsafe void ProgramUniform4dvEXT(int program, int location, int count, ref readonly Vector4d value)
             {
                 fixed (Vector4d* tmp_value = &value)
                 {
@@ -35145,7 +35145,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -35172,7 +35172,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fvEXT(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -35199,7 +35199,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ivEXT(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, in Vector4i value)
+            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -35226,7 +35226,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uivEXT(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4uivEXT(int program, int location, int count, in Vector4i value)
+            public static unsafe void ProgramUniform4uivEXT(int program, int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -35253,7 +35253,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2dvEXT(int program, int location, int count, bool transpose, in Matrix2d value)
+            public static unsafe void ProgramUniformMatrix2dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2d value)
             {
                 fixed (Matrix2d* tmp_value = &value)
                 {
@@ -35280,7 +35280,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2fvEXT(int program, int location, int count, bool transpose, in Matrix2 value)
+            public static unsafe void ProgramUniformMatrix2fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2 value)
             {
                 fixed (Matrix2* tmp_value = &value)
                 {
@@ -35307,7 +35307,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x3dvEXT(int program, int location, int count, bool transpose, in Matrix2x3d value)
+            public static unsafe void ProgramUniformMatrix2x3dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2x3d value)
             {
                 fixed (Matrix2x3d* tmp_value = &value)
                 {
@@ -35334,7 +35334,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x3fvEXT(int program, int location, int count, bool transpose, in Matrix2x3 value)
+            public static unsafe void ProgramUniformMatrix2x3fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2x3 value)
             {
                 fixed (Matrix2x3* tmp_value = &value)
                 {
@@ -35361,7 +35361,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x4dvEXT(int program, int location, int count, bool transpose, in Matrix2x4d value)
+            public static unsafe void ProgramUniformMatrix2x4dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2x4d value)
             {
                 fixed (Matrix2x4d* tmp_value = &value)
                 {
@@ -35388,7 +35388,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x4fvEXT(int program, int location, int count, bool transpose, in Matrix2x4 value)
+            public static unsafe void ProgramUniformMatrix2x4fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix2x4 value)
             {
                 fixed (Matrix2x4* tmp_value = &value)
                 {
@@ -35415,7 +35415,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3dvEXT(int program, int location, int count, bool transpose, in Matrix3d value)
+            public static unsafe void ProgramUniformMatrix3dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3d value)
             {
                 fixed (Matrix3d* tmp_value = &value)
                 {
@@ -35442,7 +35442,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3fvEXT(int program, int location, int count, bool transpose, in Matrix3 value)
+            public static unsafe void ProgramUniformMatrix3fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3 value)
             {
                 fixed (Matrix3* tmp_value = &value)
                 {
@@ -35469,7 +35469,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x2dvEXT(int program, int location, int count, bool transpose, in Matrix3x2d value)
+            public static unsafe void ProgramUniformMatrix3x2dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3x2d value)
             {
                 fixed (Matrix3x2d* tmp_value = &value)
                 {
@@ -35496,7 +35496,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2fvEXT(int program, int location, int count, bool transpose, in Matrix3x2 value)
+            public static unsafe void ProgramUniformMatrix3x2fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3x2 value)
             {
                 fixed (Matrix3x2* tmp_value = &value)
                 {
@@ -35523,7 +35523,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2fvEXT(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
+            public static unsafe void ProgramUniformMatrix3x2fvEXT(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix3x2 value)
             {
                 fixed (System.Numerics.Matrix3x2* tmp_value = &value)
                 {
@@ -35550,7 +35550,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x4dvEXT(int program, int location, int count, bool transpose, in Matrix3x4d value)
+            public static unsafe void ProgramUniformMatrix3x4dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3x4d value)
             {
                 fixed (Matrix3x4d* tmp_value = &value)
                 {
@@ -35577,7 +35577,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x4fvEXT(int program, int location, int count, bool transpose, in Matrix3x4 value)
+            public static unsafe void ProgramUniformMatrix3x4fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix3x4 value)
             {
                 fixed (Matrix3x4* tmp_value = &value)
                 {
@@ -35604,7 +35604,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4dvEXT(int program, int location, int count, bool transpose, in Matrix4d value)
+            public static unsafe void ProgramUniformMatrix4dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4d value)
             {
                 fixed (Matrix4d* tmp_value = &value)
                 {
@@ -35631,7 +35631,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4fvEXT(int program, int location, int count, bool transpose, in Matrix4 value)
+            public static unsafe void ProgramUniformMatrix4fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4 value)
             {
                 fixed (Matrix4* tmp_value = &value)
                 {
@@ -35658,7 +35658,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4fvEXT(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+            public static unsafe void ProgramUniformMatrix4fvEXT(int program, int location, int count, bool transpose, ref readonly System.Numerics.Matrix4x4 value)
             {
                 fixed (System.Numerics.Matrix4x4* tmp_value = &value)
                 {
@@ -35685,7 +35685,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x2dvEXT(int program, int location, int count, bool transpose, in Matrix4x2d value)
+            public static unsafe void ProgramUniformMatrix4x2dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4x2d value)
             {
                 fixed (Matrix4x2d* tmp_value = &value)
                 {
@@ -35712,7 +35712,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x2fvEXT(int program, int location, int count, bool transpose, in Matrix4x2 value)
+            public static unsafe void ProgramUniformMatrix4x2fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4x2 value)
             {
                 fixed (Matrix4x2* tmp_value = &value)
                 {
@@ -35739,7 +35739,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dvEXT(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x3dvEXT(int program, int location, int count, bool transpose, in Matrix4x3d value)
+            public static unsafe void ProgramUniformMatrix4x3dvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4x3d value)
             {
                 fixed (Matrix4x3d* tmp_value = &value)
                 {
@@ -35766,7 +35766,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x3fvEXT(int program, int location, int count, bool transpose, in Matrix4x3 value)
+            public static unsafe void ProgramUniformMatrix4x3fvEXT(int program, int location, int count, bool transpose, ref readonly Matrix4x3 value)
             {
                 fixed (Matrix4x3* tmp_value = &value)
                 {
@@ -35816,7 +35816,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3bvEXT(sbyte*)"/>
-            public static unsafe void SecondaryColor3bvEXT(in sbyte v)
+            public static unsafe void SecondaryColor3bvEXT(ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -35840,7 +35840,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3dvEXT(double*)"/>
-            public static unsafe void SecondaryColor3dvEXT(in double v)
+            public static unsafe void SecondaryColor3dvEXT(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -35848,7 +35848,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3fvEXT(float*)"/>
-            public static unsafe void SecondaryColor3fvEXT(in Color3<Rgb> v)
+            public static unsafe void SecondaryColor3fvEXT(ref readonly Color3<Rgb> v)
             {
                 fixed (Color3<Rgb>* tmp_v = &v)
                 {
@@ -35873,7 +35873,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3ivEXT(int*)"/>
-            public static unsafe void SecondaryColor3ivEXT(in int v)
+            public static unsafe void SecondaryColor3ivEXT(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -35897,7 +35897,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3svEXT(short*)"/>
-            public static unsafe void SecondaryColor3svEXT(in short v)
+            public static unsafe void SecondaryColor3svEXT(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -35921,7 +35921,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3ubvEXT(byte*)"/>
-            public static unsafe void SecondaryColor3ubvEXT(in byte v)
+            public static unsafe void SecondaryColor3ubvEXT(ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -35945,7 +35945,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3uivEXT(uint*)"/>
-            public static unsafe void SecondaryColor3uivEXT(in uint v)
+            public static unsafe void SecondaryColor3uivEXT(ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -35969,7 +35969,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3usvEXT(ushort*)"/>
-            public static unsafe void SecondaryColor3usvEXT(in ushort v)
+            public static unsafe void SecondaryColor3usvEXT(ref readonly ushort v)
             {
                 fixed (ushort* v_ptr = &v)
                 {
@@ -36001,7 +36001,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColorPointerEXT(int, ColorPointerType, int, void*)"/>
-            public static unsafe void SecondaryColorPointerEXT<T1>(int size, ColorPointerType type, int stride, in T1 pointer)
+            public static unsafe void SecondaryColorPointerEXT<T1>(int size, ColorPointerType type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -36026,7 +36026,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SemaphoreParameterui64vEXT(uint, SemaphoreParameterName, ulong*)"/>
-            public static unsafe void SemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname, in ulong parameters)
+            public static unsafe void SemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname, ref readonly ulong parameters)
             {
                 fixed (ulong* parameters_ptr = &parameters)
                 {
@@ -36067,7 +36067,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SeparableFilter2DEXT(SeparableTargetEXT, InternalFormat, int, int, PixelFormat, PixelType, void*, void*)"/>
-            public static unsafe void SeparableFilter2DEXT<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 row, in T2 column)
+            public static unsafe void SeparableFilter2DEXT<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ref readonly T1 row, ref readonly T2 column)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -36102,7 +36102,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SetInvariantEXT(uint, ScalarType, void*)"/>
-            public static unsafe void SetInvariantEXT<T1>(uint id, ScalarType type, in T1 addr)
+            public static unsafe void SetInvariantEXT<T1>(uint id, ScalarType type, ref readonly T1 addr)
                 where T1 : unmanaged
             {
                 fixed (void* addr_ptr = &addr)
@@ -36135,7 +36135,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SetLocalConstantEXT(uint, ScalarType, void*)"/>
-            public static unsafe void SetLocalConstantEXT<T1>(uint id, ScalarType type, in T1 addr)
+            public static unsafe void SetLocalConstantEXT<T1>(uint id, ScalarType type, ref readonly T1 addr)
                 where T1 : unmanaged
             {
                 fixed (void* addr_ptr = &addr)
@@ -36172,7 +36172,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SignalSemaphoreEXT(uint, uint, int*, uint, int*, TextureLayout*)"/>
-            public static unsafe void SignalSemaphoreEXT(uint semaphore, uint numBufferBarriers, in int buffers, uint numTextureBarriers, in int textures, in TextureLayout dstLayouts)
+            public static unsafe void SignalSemaphoreEXT(uint semaphore, uint numBufferBarriers, ref readonly int buffers, uint numTextureBarriers, ref readonly int textures, ref readonly TextureLayout dstLayouts)
             {
                 fixed (int* buffers_ptr = &buffers)
                 fixed (int* textures_ptr = &textures)
@@ -36198,7 +36198,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Tangent3bvEXT(sbyte*)"/>
-            public static unsafe void Tangent3bvEXT(in sbyte v)
+            public static unsafe void Tangent3bvEXT(ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -36222,7 +36222,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Tangent3dvEXT(double*)"/>
-            public static unsafe void Tangent3dvEXT(in double v)
+            public static unsafe void Tangent3dvEXT(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -36246,7 +36246,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Tangent3fvEXT(float*)"/>
-            public static unsafe void Tangent3fvEXT(in float v)
+            public static unsafe void Tangent3fvEXT(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -36270,7 +36270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Tangent3ivEXT(int*)"/>
-            public static unsafe void Tangent3ivEXT(in int v)
+            public static unsafe void Tangent3ivEXT(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -36294,7 +36294,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Tangent3svEXT(short*)"/>
-            public static unsafe void Tangent3svEXT(in short v)
+            public static unsafe void Tangent3svEXT(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -36326,7 +36326,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TangentPointerEXT(TangentPointerTypeEXT, int, void*)"/>
-            public static unsafe void TangentPointerEXT<T1>(TangentPointerTypeEXT type, int stride, in T1 pointer)
+            public static unsafe void TangentPointerEXT<T1>(TangentPointerTypeEXT type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -36359,7 +36359,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoordPointerEXT(int, TexCoordPointerType, int, int, void*)"/>
-            public static unsafe void TexCoordPointerEXT<T1>(int size, TexCoordPointerType type, int stride, int count, in T1 pointer)
+            public static unsafe void TexCoordPointerEXT<T1>(int size, TexCoordPointerType type, int stride, int count, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -36392,7 +36392,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexImage3DEXT(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexImage3DEXT<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexImage3DEXT<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36417,7 +36417,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexParameterIivEXT(TextureTarget, TextureParameterName, int*)"/>
-            public static unsafe void TexParameterIivEXT(TextureTarget target, TextureParameterName pname, in int parameters)
+            public static unsafe void TexParameterIivEXT(TextureTarget target, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -36441,7 +36441,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexParameterIuivEXT(TextureTarget, TextureParameterName, uint*)"/>
-            public static unsafe void TexParameterIuivEXT(TextureTarget target, TextureParameterName pname, in uint parameters)
+            public static unsafe void TexParameterIuivEXT(TextureTarget target, TextureParameterName pname, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -36473,7 +36473,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexSubImage1DEXT(TextureTarget, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexSubImage1DEXT<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexSubImage1DEXT<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36506,7 +36506,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexSubImage2DEXT(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexSubImage2DEXT<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexSubImage2DEXT<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36539,7 +36539,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexSubImage3DEXT(TextureTarget, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexSubImage3DEXT<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexSubImage3DEXT<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36572,7 +36572,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36605,7 +36605,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36638,7 +36638,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36663,7 +36663,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterfvEXT(int, TextureTarget, TextureParameterName, float*)"/>
-            public static unsafe void TextureParameterfvEXT(int texture, TextureTarget target, TextureParameterName pname, in float parameters)
+            public static unsafe void TextureParameterfvEXT(int texture, TextureTarget target, TextureParameterName pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -36687,7 +36687,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterIivEXT(int, TextureTarget, TextureParameterName, int*)"/>
-            public static unsafe void TextureParameterIivEXT(int texture, TextureTarget target, TextureParameterName pname, in int parameters)
+            public static unsafe void TextureParameterIivEXT(int texture, TextureTarget target, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -36711,7 +36711,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterIuivEXT(int, TextureTarget, TextureParameterName, uint*)"/>
-            public static unsafe void TextureParameterIuivEXT(int texture, TextureTarget target, TextureParameterName pname, in uint parameters)
+            public static unsafe void TextureParameterIuivEXT(int texture, TextureTarget target, TextureParameterName pname, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -36735,7 +36735,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureParameterivEXT(int, TextureTarget, TextureParameterName, int*)"/>
-            public static unsafe void TextureParameterivEXT(int texture, TextureTarget target, TextureParameterName pname, in int parameters)
+            public static unsafe void TextureParameterivEXT(int texture, TextureTarget target, TextureParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -36767,7 +36767,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage1DEXT(int, TextureTarget, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage1DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage1DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36800,7 +36800,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage2DEXT(int, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage2DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage2DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36833,7 +36833,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TextureSubImage3DEXT(int, TextureTarget, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureSubImage3DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureSubImage3DEXT<T1>(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36842,7 +36842,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1uivEXT(int, int, uint*)"/>
-            public static unsafe void Uniform1uivEXT(int location, int count, in uint value)
+            public static unsafe void Uniform1uivEXT(int location, int count, ref readonly uint value)
             {
                 fixed (uint* tmp_value = &value)
                 {
@@ -36869,7 +36869,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2uivEXT(int, int, uint*)"/>
-            public static unsafe void Uniform2uivEXT(int location, int count, in Vector2i value)
+            public static unsafe void Uniform2uivEXT(int location, int count, ref readonly Vector2i value)
             {
                 fixed (Vector2i* tmp_value = &value)
                 {
@@ -36896,7 +36896,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3uivEXT(int, int, uint*)"/>
-            public static unsafe void Uniform3uivEXT(int location, int count, in Vector3i value)
+            public static unsafe void Uniform3uivEXT(int location, int count, ref readonly Vector3i value)
             {
                 fixed (Vector3i* tmp_value = &value)
                 {
@@ -36923,7 +36923,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4uivEXT(int, int, uint*)"/>
-            public static unsafe void Uniform4uivEXT(int location, int count, in Vector4i value)
+            public static unsafe void Uniform4uivEXT(int location, int count, ref readonly Vector4i value)
             {
                 fixed (Vector4i* tmp_value = &value)
                 {
@@ -36966,7 +36966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantbvEXT(uint, sbyte*)"/>
-            public static unsafe void VariantbvEXT(uint id, in sbyte addr)
+            public static unsafe void VariantbvEXT(uint id, ref readonly sbyte addr)
             {
                 fixed (sbyte* addr_ptr = &addr)
                 {
@@ -36990,7 +36990,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantdvEXT(uint, double*)"/>
-            public static unsafe void VariantdvEXT(uint id, in double addr)
+            public static unsafe void VariantdvEXT(uint id, ref readonly double addr)
             {
                 fixed (double* addr_ptr = &addr)
                 {
@@ -37014,7 +37014,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantfvEXT(uint, float*)"/>
-            public static unsafe void VariantfvEXT(uint id, in float addr)
+            public static unsafe void VariantfvEXT(uint id, ref readonly float addr)
             {
                 fixed (float* addr_ptr = &addr)
                 {
@@ -37038,7 +37038,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantivEXT(uint, int*)"/>
-            public static unsafe void VariantivEXT(uint id, in int addr)
+            public static unsafe void VariantivEXT(uint id, ref readonly int addr)
             {
                 fixed (int* addr_ptr = &addr)
                 {
@@ -37070,7 +37070,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantPointerEXT(uint, ScalarType, uint, void*)"/>
-            public static unsafe void VariantPointerEXT<T1>(uint id, ScalarType type, uint stride, in T1 addr)
+            public static unsafe void VariantPointerEXT<T1>(uint id, ScalarType type, uint stride, ref readonly T1 addr)
                 where T1 : unmanaged
             {
                 fixed (void* addr_ptr = &addr)
@@ -37095,7 +37095,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantsvEXT(uint, short*)"/>
-            public static unsafe void VariantsvEXT(uint id, in short addr)
+            public static unsafe void VariantsvEXT(uint id, ref readonly short addr)
             {
                 fixed (short* addr_ptr = &addr)
                 {
@@ -37119,7 +37119,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantubvEXT(uint, byte*)"/>
-            public static unsafe void VariantubvEXT(uint id, in byte addr)
+            public static unsafe void VariantubvEXT(uint id, ref readonly byte addr)
             {
                 fixed (byte* addr_ptr = &addr)
                 {
@@ -37143,7 +37143,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantuivEXT(uint, uint*)"/>
-            public static unsafe void VariantuivEXT(uint id, in uint addr)
+            public static unsafe void VariantuivEXT(uint id, ref readonly uint addr)
             {
                 fixed (uint* addr_ptr = &addr)
                 {
@@ -37167,7 +37167,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VariantusvEXT(uint, ushort*)"/>
-            public static unsafe void VariantusvEXT(uint id, in ushort addr)
+            public static unsafe void VariantusvEXT(uint id, ref readonly ushort addr)
             {
                 fixed (ushort* addr_ptr = &addr)
                 {
@@ -37175,7 +37175,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI1ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI1ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI1ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -37183,7 +37183,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI1uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI1uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI1uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -37207,7 +37207,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI2ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI2ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI2ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -37231,7 +37231,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI2uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI2uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI2uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -37255,7 +37255,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI3ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI3ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI3ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -37279,7 +37279,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI3uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI3uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI3uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -37303,7 +37303,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4bvEXT(uint, sbyte*)"/>
-            public static unsafe void VertexAttribI4bvEXT(uint index, in sbyte v)
+            public static unsafe void VertexAttribI4bvEXT(uint index, ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -37327,7 +37327,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI4ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI4ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -37351,7 +37351,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4svEXT(uint, short*)"/>
-            public static unsafe void VertexAttribI4svEXT(uint index, in short v)
+            public static unsafe void VertexAttribI4svEXT(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -37375,7 +37375,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4ubvEXT(uint, byte*)"/>
-            public static unsafe void VertexAttribI4ubvEXT(uint index, in byte v)
+            public static unsafe void VertexAttribI4ubvEXT(uint index, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -37399,7 +37399,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI4uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI4uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -37423,7 +37423,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4usvEXT(uint, ushort*)"/>
-            public static unsafe void VertexAttribI4usvEXT(uint index, in ushort v)
+            public static unsafe void VertexAttribI4usvEXT(uint index, ref readonly ushort v)
             {
                 fixed (ushort* v_ptr = &v)
                 {
@@ -37455,7 +37455,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribIPointerEXT(uint, int, VertexAttribIType, int, void*)"/>
-            public static unsafe void VertexAttribIPointerEXT<T1>(uint index, int size, VertexAttribIType type, int stride, in T1 pointer)
+            public static unsafe void VertexAttribIPointerEXT<T1>(uint index, int size, VertexAttribIType type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -37464,7 +37464,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL1dvEXT(uint, double*)"/>
-            public static unsafe void VertexAttribL1dvEXT(uint index, in double v)
+            public static unsafe void VertexAttribL1dvEXT(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -37488,7 +37488,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL2dvEXT(uint, double*)"/>
-            public static unsafe void VertexAttribL2dvEXT(uint index, in double v)
+            public static unsafe void VertexAttribL2dvEXT(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -37512,7 +37512,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL3dvEXT(uint, double*)"/>
-            public static unsafe void VertexAttribL3dvEXT(uint index, in double v)
+            public static unsafe void VertexAttribL3dvEXT(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -37536,7 +37536,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL4dvEXT(uint, double*)"/>
-            public static unsafe void VertexAttribL4dvEXT(uint index, in double v)
+            public static unsafe void VertexAttribL4dvEXT(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -37568,7 +37568,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribLPointerEXT(uint, int, VertexAttribLType, int, void*)"/>
-            public static unsafe void VertexAttribLPointerEXT<T1>(uint index, int size, VertexAttribLType type, int stride, in T1 pointer)
+            public static unsafe void VertexAttribLPointerEXT<T1>(uint index, int size, VertexAttribLType type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -37601,7 +37601,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexPointerEXT(int, VertexPointerType, int, int, void*)"/>
-            public static unsafe void VertexPointerEXT<T1>(int size, VertexPointerType type, int stride, int count, in T1 pointer)
+            public static unsafe void VertexPointerEXT<T1>(int size, VertexPointerType type, int stride, int count, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -37610,7 +37610,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexWeightfvEXT(float*)"/>
-            public static unsafe void VertexWeightfvEXT(in float weight)
+            public static unsafe void VertexWeightfvEXT(ref readonly float weight)
             {
                 fixed (float* weight_ptr = &weight)
                 {
@@ -37642,7 +37642,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexWeightPointerEXT(int, VertexWeightPointerTypeEXT, int, void*)"/>
-            public static unsafe void VertexWeightPointerEXT<T1>(int size, VertexWeightPointerTypeEXT type, int stride, in T1 pointer)
+            public static unsafe void VertexWeightPointerEXT<T1>(int size, VertexWeightPointerTypeEXT type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -37679,7 +37679,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WaitSemaphoreEXT(uint, uint, int*, uint, int*, TextureLayout*)"/>
-            public static unsafe void WaitSemaphoreEXT(uint semaphore, uint numBufferBarriers, in int buffers, uint numTextureBarriers, in int textures, in TextureLayout srcLayouts)
+            public static unsafe void WaitSemaphoreEXT(uint semaphore, uint numBufferBarriers, ref readonly int buffers, uint numTextureBarriers, ref readonly int textures, ref readonly TextureLayout srcLayouts)
             {
                 fixed (int* buffers_ptr = &buffers)
                 fixed (int* textures_ptr = &textures)
@@ -37705,7 +37705,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowRectanglesEXT(All, int, int*)"/>
-            public static unsafe void WindowRectanglesEXT(All mode, int count, in int box)
+            public static unsafe void WindowRectanglesEXT(All mode, int count, ref readonly int box)
             {
                 fixed (int* box_ptr = &box)
                 {
@@ -37740,7 +37740,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StringMarkerGREMEDY(int, void*)"/>
-            public static unsafe void StringMarkerGREMEDY<T1>(int len, in T1 str)
+            public static unsafe void StringMarkerGREMEDY<T1>(int len, ref readonly T1 str)
                 where T1 : unmanaged
             {
                 fixed (void* str_ptr = &str)
@@ -37836,7 +37836,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ImageTransformParameterfvHP(ImageTransformTargetHP, ImageTransformPNameHP, float*)"/>
-            public static unsafe void ImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, in float parameters)
+            public static unsafe void ImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -37860,7 +37860,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ImageTransformParameterivHP(ImageTransformTargetHP, ImageTransformPNameHP, int*)"/>
-            public static unsafe void ImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, in int parameters)
+            public static unsafe void ImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -37899,7 +37899,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiModeDrawArraysIBM(PrimitiveType*, int*, int*, int, int)"/>
-            public static unsafe void MultiModeDrawArraysIBM(in PrimitiveType mode, in int first, in int count, int primcount, int modestride)
+            public static unsafe void MultiModeDrawArraysIBM(ref readonly PrimitiveType mode, ref readonly int first, ref readonly int count, int primcount, int modestride)
             {
                 fixed (PrimitiveType* mode_ptr = &mode)
                 fixed (int* first_ptr = &first)
@@ -37931,7 +37931,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiModeDrawElementsIBM(PrimitiveType*, int*, DrawElementsType, void**, int, int)"/>
-            public static unsafe void MultiModeDrawElementsIBM(in PrimitiveType mode, in int count, DrawElementsType type, void** indices, int primcount, int modestride)
+            public static unsafe void MultiModeDrawElementsIBM(ref readonly PrimitiveType mode, ref readonly int count, DrawElementsType type, void** indices, int primcount, int modestride)
             {
                 fixed (PrimitiveType* mode_ptr = &mode)
                 fixed (int* count_ptr = &count)
@@ -38268,7 +38268,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, in T1 userParam)
+            public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, ref readonly T1 userParam)
                 where T1 : unmanaged
             {
                 fixed (void* userParam_ptr = &userParam)
@@ -38305,7 +38305,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
-            public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, in T1 userParam)
+            public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, ref readonly T1 userParam)
                 where T1 : unmanaged
             {
                 fixed (void* userParam_ptr = &userParam)
@@ -38331,7 +38331,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
+            public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
                 {
@@ -38355,7 +38355,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DebugMessageControlKHR(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
-            public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
+            public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, ref readonly uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
                 {
@@ -38793,7 +38793,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length)
+            public static unsafe string GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -38808,7 +38808,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, out int length, out string label)
+            public static unsafe void GetObjectPtrLabel<T1>(ref readonly T1 ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -38911,7 +38911,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, out int length)
+            public static unsafe string GetObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int bufSize, out int length)
                 where T1 : unmanaged
             {
                 string label;
@@ -38926,7 +38926,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return label;
             }
             /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
-            public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, out int length, out string label)
+            public static unsafe void GetObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int bufSize, out int length, out string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -38988,7 +38988,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabel<T1>(in T1 ptr, int length, string label)
+            public static unsafe void ObjectPtrLabel<T1>(ref readonly T1 ptr, int length, string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -39029,7 +39029,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
-            public static unsafe void ObjectPtrLabelKHR<T1>(in T1 ptr, int length, string label)
+            public static unsafe void ObjectPtrLabelKHR<T1>(ref readonly T1 ptr, int length, string label)
                 where T1 : unmanaged
             {
                 fixed (void* ptr_ptr = &ptr)
@@ -39173,7 +39173,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2dvMESA(double*)"/>
-            public static unsafe void WindowPos2dvMESA(in double v)
+            public static unsafe void WindowPos2dvMESA(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -39197,7 +39197,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2fvMESA(float*)"/>
-            public static unsafe void WindowPos2fvMESA(in float v)
+            public static unsafe void WindowPos2fvMESA(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -39221,7 +39221,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2ivMESA(int*)"/>
-            public static unsafe void WindowPos2ivMESA(in int v)
+            public static unsafe void WindowPos2ivMESA(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -39245,7 +39245,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos2svMESA(short*)"/>
-            public static unsafe void WindowPos2svMESA(in short v)
+            public static unsafe void WindowPos2svMESA(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -39269,7 +39269,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3dvMESA(double*)"/>
-            public static unsafe void WindowPos3dvMESA(in double v)
+            public static unsafe void WindowPos3dvMESA(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -39293,7 +39293,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3fvMESA(float*)"/>
-            public static unsafe void WindowPos3fvMESA(in float v)
+            public static unsafe void WindowPos3fvMESA(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -39317,7 +39317,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3ivMESA(int*)"/>
-            public static unsafe void WindowPos3ivMESA(in int v)
+            public static unsafe void WindowPos3ivMESA(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -39341,7 +39341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos3svMESA(short*)"/>
-            public static unsafe void WindowPos3svMESA(in short v)
+            public static unsafe void WindowPos3svMESA(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -39365,7 +39365,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos4dvMESA(double*)"/>
-            public static unsafe void WindowPos4dvMESA(in double v)
+            public static unsafe void WindowPos4dvMESA(ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -39389,7 +39389,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos4fvMESA(float*)"/>
-            public static unsafe void WindowPos4fvMESA(in float v)
+            public static unsafe void WindowPos4fvMESA(ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -39413,7 +39413,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos4ivMESA(int*)"/>
-            public static unsafe void WindowPos4ivMESA(in int v)
+            public static unsafe void WindowPos4ivMESA(ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -39437,7 +39437,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WindowPos4svMESA(short*)"/>
-            public static unsafe void WindowPos4svMESA(in short v)
+            public static unsafe void WindowPos4svMESA(ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -39481,7 +39481,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreProgramsResidentNV(int, int*, bool*)"/>
-            public static unsafe bool AreProgramsResidentNV(int n, in int programs, ref bool residences)
+            public static unsafe bool AreProgramsResidentNV(int n, ref readonly int programs, ref bool residences)
             {
                 bool returnValue;
                 fixed (int* programs_ptr = &programs)
@@ -39508,7 +39508,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color3hvNV(Half*)"/>
-            public static unsafe void Color3hvNV(in Half v)
+            public static unsafe void Color3hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -39532,7 +39532,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4hvNV(Half*)"/>
-            public static unsafe void Color4hvNV(in Half v)
+            public static unsafe void Color4hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -39556,7 +39556,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CombinerParameterfvNV(CombinerParameterNV, float*)"/>
-            public static unsafe void CombinerParameterfvNV(CombinerParameterNV pname, in float parameters)
+            public static unsafe void CombinerParameterfvNV(CombinerParameterNV pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -39580,7 +39580,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CombinerParameterivNV(CombinerParameterNV, int*)"/>
-            public static unsafe void CombinerParameterivNV(CombinerParameterNV pname, in int parameters)
+            public static unsafe void CombinerParameterivNV(CombinerParameterNV pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -39604,7 +39604,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CombinerStageParameterfvNV(CombinerStageNV, CombinerParameterNV, float*)"/>
-            public static unsafe void CombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, in float parameters)
+            public static unsafe void CombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -39628,7 +39628,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CoverageModulationTableNV(int, float*)"/>
-            public static unsafe void CoverageModulationTableNV(int n, in float v)
+            public static unsafe void CoverageModulationTableNV(int n, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -39654,7 +39654,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV(int, PathElementType, void*, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -39687,7 +39687,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV(int, PathElementType, void*, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -39715,7 +39715,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV(int, PathElementType, void*, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -39748,7 +39748,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV(int, PathElementType, void*, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -39846,7 +39846,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteCommandListsNV(int, uint*)"/>
-            public static unsafe void DeleteCommandListsNV(int n, in uint lists)
+            public static unsafe void DeleteCommandListsNV(int n, ref readonly uint lists)
             {
                 fixed (uint* lists_ptr = &lists)
                 {
@@ -39870,7 +39870,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFencesNV(int, uint*)"/>
-            public static unsafe void DeleteFencesNV(int n, in uint fences)
+            public static unsafe void DeleteFencesNV(int n, ref readonly uint fences)
             {
                 fixed (uint* fences_ptr = &fences)
                 {
@@ -39894,7 +39894,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteOcclusionQueriesNV(int, uint*)"/>
-            public static unsafe void DeleteOcclusionQueriesNV(int n, in uint ids)
+            public static unsafe void DeleteOcclusionQueriesNV(int n, ref readonly uint ids)
             {
                 fixed (uint* ids_ptr = &ids)
                 {
@@ -39918,7 +39918,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteProgramsNV(int, int*)"/>
-            public static unsafe void DeleteProgramsNV(int n, in int programs)
+            public static unsafe void DeleteProgramsNV(int n, ref readonly int programs)
             {
                 fixed (int* programs_ptr = &programs)
                 {
@@ -39942,7 +39942,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteQueryResourceTagNV(int, int*)"/>
-            public static unsafe void DeleteQueryResourceTagNV(int n, in int tagIds)
+            public static unsafe void DeleteQueryResourceTagNV(int n, ref readonly int tagIds)
             {
                 fixed (int* tagIds_ptr = &tagIds)
                 {
@@ -39966,7 +39966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteStatesNV(int, uint*)"/>
-            public static unsafe void DeleteStatesNV(int n, in uint states)
+            public static unsafe void DeleteStatesNV(int n, ref readonly uint states)
             {
                 fixed (uint* states_ptr = &states)
                 {
@@ -39990,7 +39990,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacksNV(int, int*)"/>
-            public static unsafe void DeleteTransformFeedbacksNV(int n, in int ids)
+            public static unsafe void DeleteTransformFeedbacksNV(int n, ref readonly int ids)
             {
                 fixed (int* ids_ptr = &ids)
                 {
@@ -40020,7 +40020,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawCommandsAddressNV(All, ulong*, int*, uint)"/>
-            public static unsafe void DrawCommandsAddressNV(All primitiveMode, in ulong indirects, in int sizes, uint count)
+            public static unsafe void DrawCommandsAddressNV(All primitiveMode, ref readonly ulong indirects, ref readonly int sizes, uint count)
             {
                 fixed (ulong* indirects_ptr = &indirects)
                 fixed (int* sizes_ptr = &sizes)
@@ -40051,7 +40051,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawCommandsNV(All, uint, IntPtr*, int*, uint)"/>
-            public static unsafe void DrawCommandsNV(All primitiveMode, uint buffer, in IntPtr indirects, in int sizes, uint count)
+            public static unsafe void DrawCommandsNV(All primitiveMode, uint buffer, ref readonly IntPtr indirects, ref readonly int sizes, uint count)
             {
                 fixed (IntPtr* indirects_ptr = &indirects)
                 fixed (int* sizes_ptr = &sizes)
@@ -40094,7 +40094,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawCommandsStatesAddressNV(ulong*, int*, uint*, uint*, uint)"/>
-            public static unsafe void DrawCommandsStatesAddressNV(in ulong indirects, in int sizes, in uint states, in uint fbos, uint count)
+            public static unsafe void DrawCommandsStatesAddressNV(ref readonly ulong indirects, ref readonly int sizes, ref readonly uint states, ref readonly uint fbos, uint count)
             {
                 fixed (ulong* indirects_ptr = &indirects)
                 fixed (int* sizes_ptr = &sizes)
@@ -40139,7 +40139,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DrawCommandsStatesNV(int, IntPtr*, int*, uint*, uint*, uint)"/>
-            public static unsafe void DrawCommandsStatesNV(int buffer, in IntPtr indirects, in int sizes, in uint states, in uint fbos, uint count)
+            public static unsafe void DrawCommandsStatesNV(int buffer, ref readonly IntPtr indirects, ref readonly int sizes, ref readonly uint states, ref readonly uint fbos, uint count)
             {
                 fixed (IntPtr* indirects_ptr = &indirects)
                 fixed (int* sizes_ptr = &sizes)
@@ -40166,7 +40166,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ExecuteProgramNV(VertexAttribEnumNV, uint, float*)"/>
-            public static unsafe void ExecuteProgramNV(VertexAttribEnumNV target, uint id, in float parameters)
+            public static unsafe void ExecuteProgramNV(VertexAttribEnumNV target, uint id, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -40174,7 +40174,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
-            public static unsafe void FogCoordhvNV(in Half fog)
+            public static unsafe void FogCoordhvNV(ref readonly Half fog)
             {
                 fixed (Half* fog_ptr = &fog)
                 {
@@ -40198,7 +40198,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FramebufferSampleLocationsfvNV(FramebufferTarget, uint, int, float*)"/>
-            public static unsafe void FramebufferSampleLocationsfvNV(FramebufferTarget target, uint start, int count, in float v)
+            public static unsafe void FramebufferSampleLocationsfvNV(FramebufferTarget target, uint start, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -41372,7 +41372,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride)
+            public static unsafe float GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, int stride)
                 where T1 : unmanaged
             {
                 float metrics;
@@ -41384,7 +41384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return metrics;
             }
             /// <inheritdoc cref="GetPathMetricsNV(PathMetricMask, int, PathElementType, void*, uint, int, float*)"/>
-            public static unsafe void GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int stride, out float metrics)
+            public static unsafe void GetPathMetricsNV<T1>(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, int stride, out float metrics)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -41504,7 +41504,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
+            public static unsafe float GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType)
                 where T1 : unmanaged
             {
                 float returnedSpacing;
@@ -41516,7 +41516,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnedSpacing;
             }
             /// <inheritdoc cref="GetPathSpacingNV(PathListMode, int, PathElementType, void*, uint, float, float, PathTransformType, float*)"/>
-            public static unsafe void GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, out float returnedSpacing)
+            public static unsafe void GetPathSpacingNV<T1>(PathListMode pathListMode, int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, out float returnedSpacing)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -41714,7 +41714,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterdvNV(int, int, byte*, double*)"/>
-            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, in byte name, Span<double> parameters)
+            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, ref readonly byte name, Span<double> parameters)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -41725,7 +41725,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterdvNV(int, int, byte*, double*)"/>
-            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, in byte name, double[] parameters)
+            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, ref readonly byte name, double[] parameters)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -41736,7 +41736,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterdvNV(int, int, byte*, double*)"/>
-            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, in byte name, ref double parameters)
+            public static unsafe void GetProgramNamedParameterdvNV(int id, int len, ref readonly byte name, ref double parameters)
             {
                 fixed (byte* name_ptr = &name)
                 fixed (double* parameters_ptr = &parameters)
@@ -41745,7 +41745,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterfvNV(int, int, byte*, float*)"/>
-            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, in byte name, Span<float> parameters)
+            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, ref readonly byte name, Span<float> parameters)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -41756,7 +41756,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterfvNV(int, int, byte*, float*)"/>
-            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, in byte name, float[] parameters)
+            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, ref readonly byte name, float[] parameters)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -41767,7 +41767,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramNamedParameterfvNV(int, int, byte*, float*)"/>
-            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, in byte name, ref float parameters)
+            public static unsafe void GetProgramNamedParameterfvNV(int id, int len, ref readonly byte name, ref float parameters)
             {
                 fixed (byte* name_ptr = &name)
                 fixed (float* parameters_ptr = &parameters)
@@ -41852,7 +41852,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetProgramResourcefvNV(int, ProgramInterface, uint, int, All*, int, int*, float*)"/>
-            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, in All props, int count, out int length, ref float parameters)
+            public static unsafe void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, ref readonly All props, int count, out int length, ref float parameters)
             {
                 fixed (All* props_ptr = &props)
                 fixed (int* length_ptr = &length)
@@ -42576,7 +42576,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ListDrawCommandsStatesClientNV(uint, uint, void**, int*, uint*, uint*, uint)"/>
-            public static unsafe void ListDrawCommandsStatesClientNV(uint list, uint segment, void** indirects, in int sizes, in uint states, in uint fbos, uint count)
+            public static unsafe void ListDrawCommandsStatesClientNV(uint list, uint segment, void** indirects, ref readonly int sizes, ref readonly uint states, ref readonly uint fbos, uint count)
             {
                 fixed (int* sizes_ptr = &sizes)
                 fixed (uint* states_ptr = &states)
@@ -42602,7 +42602,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LoadProgramNV(VertexAttribEnumNV, uint, int, byte*)"/>
-            public static unsafe void LoadProgramNV(VertexAttribEnumNV target, uint id, int len, in byte program)
+            public static unsafe void LoadProgramNV(VertexAttribEnumNV target, uint id, int len, ref readonly byte program)
             {
                 fixed (byte* program_ptr = &program)
                 {
@@ -42634,7 +42634,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapControlPointsNV(EvalTargetNV, uint, MapTypeNV, int, int, int, int, bool, void*)"/>
-            public static unsafe void MapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, in T1 points)
+            public static unsafe void MapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, ref readonly T1 points)
                 where T1 : unmanaged
             {
                 fixed (void* points_ptr = &points)
@@ -42659,7 +42659,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapParameterfvNV(EvalTargetNV, MapParameterNV, float*)"/>
-            public static unsafe void MapParameterfvNV(EvalTargetNV target, MapParameterNV pname, in float parameters)
+            public static unsafe void MapParameterfvNV(EvalTargetNV target, MapParameterNV pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -42683,7 +42683,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MapParameterivNV(EvalTargetNV, MapParameterNV, int*)"/>
-            public static unsafe void MapParameterivNV(EvalTargetNV target, MapParameterNV pname, in int parameters)
+            public static unsafe void MapParameterivNV(EvalTargetNV target, MapParameterNV pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -42707,7 +42707,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoad3x2fNV(All, float*)"/>
-            public static unsafe void MatrixLoad3x2fNV(All matrixMode, in float m)
+            public static unsafe void MatrixLoad3x2fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42731,7 +42731,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoad3x3fNV(All, float*)"/>
-            public static unsafe void MatrixLoad3x3fNV(All matrixMode, in float m)
+            public static unsafe void MatrixLoad3x3fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42755,7 +42755,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoaddEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixLoaddEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixLoaddEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -42779,7 +42779,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadfEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixLoadfEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixLoadfEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42803,7 +42803,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadTranspose3x3fNV(All, float*)"/>
-            public static unsafe void MatrixLoadTranspose3x3fNV(All matrixMode, in float m)
+            public static unsafe void MatrixLoadTranspose3x3fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42827,7 +42827,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadTransposedEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixLoadTransposedEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixLoadTransposedEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -42851,7 +42851,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixLoadTransposefEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixLoadTransposefEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixLoadTransposefEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42875,7 +42875,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMult3x2fNV(All, float*)"/>
-            public static unsafe void MatrixMult3x2fNV(All matrixMode, in float m)
+            public static unsafe void MatrixMult3x2fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42899,7 +42899,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMult3x3fNV(All, float*)"/>
-            public static unsafe void MatrixMult3x3fNV(All matrixMode, in float m)
+            public static unsafe void MatrixMult3x3fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42923,7 +42923,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultdEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixMultdEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixMultdEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -42947,7 +42947,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultfEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixMultfEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixMultfEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42971,7 +42971,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultTranspose3x3fNV(All, float*)"/>
-            public static unsafe void MatrixMultTranspose3x3fNV(All matrixMode, in float m)
+            public static unsafe void MatrixMultTranspose3x3fNV(All matrixMode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -42995,7 +42995,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultTransposedEXT(MatrixMode, double*)"/>
-            public static unsafe void MatrixMultTransposedEXT(MatrixMode mode, in double m)
+            public static unsafe void MatrixMultTransposedEXT(MatrixMode mode, ref readonly double m)
             {
                 fixed (double* m_ptr = &m)
                 {
@@ -43019,7 +43019,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MatrixMultTransposefEXT(MatrixMode, float*)"/>
-            public static unsafe void MatrixMultTransposefEXT(MatrixMode mode, in float m)
+            public static unsafe void MatrixMultTransposefEXT(MatrixMode mode, ref readonly float m)
             {
                 fixed (float* m_ptr = &m)
                 {
@@ -43051,7 +43051,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MulticastBufferSubDataNV(uint, int, IntPtr, nint, void*)"/>
-            public static unsafe void MulticastBufferSubDataNV<T1>(uint gpuMask, int buffer, IntPtr offset, nint size, in T1 data)
+            public static unsafe void MulticastBufferSubDataNV<T1>(uint gpuMask, int buffer, IntPtr offset, nint size, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -43076,7 +43076,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MulticastFramebufferSampleLocationsfvNV(uint, int, uint, int, float*)"/>
-            public static unsafe void MulticastFramebufferSampleLocationsfvNV(uint gpu, int framebuffer, uint start, int count, in float v)
+            public static unsafe void MulticastFramebufferSampleLocationsfvNV(uint gpu, int framebuffer, uint start, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -43204,7 +43204,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysIndirectBindlessCountNV(PrimitiveType, void*, int, int, int, int)"/>
-            public static unsafe void MultiDrawArraysIndirectBindlessCountNV<T1>(PrimitiveType mode, in T1 indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount)
+            public static unsafe void MultiDrawArraysIndirectBindlessCountNV<T1>(PrimitiveType mode, ref readonly T1 indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -43237,7 +43237,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawArraysIndirectBindlessNV(PrimitiveType, void*, int, int, int)"/>
-            public static unsafe void MultiDrawArraysIndirectBindlessNV<T1>(PrimitiveType mode, in T1 indirect, int drawCount, int stride, int vertexBufferCount)
+            public static unsafe void MultiDrawArraysIndirectBindlessNV<T1>(PrimitiveType mode, ref readonly T1 indirect, int drawCount, int stride, int vertexBufferCount)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -43270,7 +43270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirectBindlessCountNV(PrimitiveType, DrawElementsType, void*, int, int, int, int)"/>
-            public static unsafe void MultiDrawElementsIndirectBindlessCountNV<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount)
+            public static unsafe void MultiDrawElementsIndirectBindlessCountNV<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -43303,7 +43303,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirectBindlessNV(PrimitiveType, DrawElementsType, void*, int, int, int)"/>
-            public static unsafe void MultiDrawElementsIndirectBindlessNV<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int drawCount, int stride, int vertexBufferCount)
+            public static unsafe void MultiDrawElementsIndirectBindlessNV<T1>(PrimitiveType mode, DrawElementsType type, ref readonly T1 indirect, int drawCount, int stride, int vertexBufferCount)
                 where T1 : unmanaged
             {
                 fixed (void* indirect_ptr = &indirect)
@@ -43312,7 +43312,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, in Half v)
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -43336,7 +43336,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, in Half v)
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -43360,7 +43360,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, in Half v)
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -43384,7 +43384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, in Half v)
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -43408,7 +43408,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="NamedFramebufferSampleLocationsfvNV(int, uint, int, float*)"/>
-            public static unsafe void NamedFramebufferSampleLocationsfvNV(int framebuffer, uint start, int count, in float v)
+            public static unsafe void NamedFramebufferSampleLocationsfvNV(int framebuffer, uint start, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -43432,7 +43432,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Normal3hvNV(Half*)"/>
-            public static unsafe void Normal3hvNV(in Half v)
+            public static unsafe void Normal3hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -43456,7 +43456,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathColorGenNV(PathColor, PathGenMode, PathColorFormat, float*)"/>
-            public static unsafe void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, in float coeffs)
+            public static unsafe void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, ref readonly float coeffs)
             {
                 fixed (float* coeffs_ptr = &coeffs)
                 {
@@ -43482,7 +43482,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathCommandsNV(uint, int, byte*, int, PathCoordType, void*)"/>
-            public static unsafe void PathCommandsNV(uint path, int numCommands, in byte commands, int numCoords, PathCoordType coordType, IntPtr coords)
+            public static unsafe void PathCommandsNV(uint path, int numCommands, ref readonly byte commands, int numCoords, PathCoordType coordType, IntPtr coords)
             {
                 fixed (byte* commands_ptr = &commands)
                 {
@@ -43515,7 +43515,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathCommandsNV(uint, int, byte*, int, PathCoordType, void*)"/>
-            public static unsafe void PathCommandsNV<T1>(uint path, int numCommands, in byte commands, int numCoords, PathCoordType coordType, in T1 coords)
+            public static unsafe void PathCommandsNV<T1>(uint path, int numCommands, ref readonly byte commands, int numCoords, PathCoordType coordType, ref readonly T1 coords)
                 where T1 : unmanaged
             {
                 fixed (byte* commands_ptr = &commands)
@@ -43549,7 +43549,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathCoordsNV(uint, int, PathCoordType, void*)"/>
-            public static unsafe void PathCoordsNV<T1>(uint path, int numCoords, PathCoordType coordType, in T1 coords)
+            public static unsafe void PathCoordsNV<T1>(uint path, int numCoords, PathCoordType coordType, ref readonly T1 coords)
                 where T1 : unmanaged
             {
                 fixed (void* coords_ptr = &coords)
@@ -43574,7 +43574,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathDashArrayNV(uint, int, float*)"/>
-            public static unsafe void PathDashArrayNV(uint path, int dashCount, in float dashArray)
+            public static unsafe void PathDashArrayNV(uint path, int dashCount, ref readonly float dashArray)
             {
                 fixed (float* dashArray_ptr = &dashArray)
                 {
@@ -43612,7 +43612,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="PathGlyphIndexArrayNV(uint, All, void*, PathFontStyle, uint, int, uint, float)"/>
-            public static unsafe All PathGlyphIndexArrayNV<T1>(uint firstPathName, All fontTarget, in T1 fontName, PathFontStyle fontStyle, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale)
+            public static unsafe All PathGlyphIndexArrayNV<T1>(uint firstPathName, All fontTarget, ref readonly T1 fontName, PathFontStyle fontStyle, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale)
                 where T1 : unmanaged
             {
                 All returnValue;
@@ -43684,7 +43684,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="PathGlyphIndexRangeNV(All, void*, PathFontStyle, uint, float, uint*)"/>
-            public static unsafe All PathGlyphIndexRangeNV<T1>(All fontTarget, in T1 fontName, PathFontStyle fontStyle, uint pathParameterTemplate, float emScale, ref uint baseAndCount)
+            public static unsafe All PathGlyphIndexRangeNV<T1>(All fontTarget, ref readonly T1 fontName, PathFontStyle fontStyle, uint pathParameterTemplate, float emScale, ref uint baseAndCount)
                 where T1 : unmanaged
             {
                 All returnValue;
@@ -43720,7 +43720,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathGlyphRangeNV(uint, PathFontTarget, void*, PathFontStyle, uint, int, PathHandleMissingGlyphs, uint, float)"/>
-            public static unsafe void PathGlyphRangeNV<T1>(uint firstPathName, PathFontTarget fontTarget, in T1 fontName, PathFontStyle fontStyle, uint firstGlyph, int numGlyphs, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale)
+            public static unsafe void PathGlyphRangeNV<T1>(uint firstPathName, PathFontTarget fontTarget, ref readonly T1 fontName, PathFontStyle fontStyle, uint firstGlyph, int numGlyphs, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale)
                 where T1 : unmanaged
             {
                 fixed (void* fontName_ptr = &fontName)
@@ -43762,7 +43762,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathGlyphsNV(uint, PathFontTarget, void*, PathFontStyle, int, PathElementType, void*, PathHandleMissingGlyphs, uint, float)"/>
-            public static unsafe void PathGlyphsNV<T1, T2>(uint firstPathName, PathFontTarget fontTarget, in T1 fontName, PathFontStyle fontStyle, int numGlyphs, PathElementType type, in T2 charcodes, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale)
+            public static unsafe void PathGlyphsNV<T1, T2>(uint firstPathName, PathFontTarget fontTarget, ref readonly T1 fontName, PathFontStyle fontStyle, int numGlyphs, PathElementType type, ref readonly T2 charcodes, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -43803,7 +43803,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="PathMemoryGlyphIndexArrayNV(uint, All, nint, void*, int, uint, int, uint, float)"/>
-            public static unsafe All PathMemoryGlyphIndexArrayNV<T1>(uint firstPathName, All fontTarget, nint fontSize, in T1 fontData, int faceIndex, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale)
+            public static unsafe All PathMemoryGlyphIndexArrayNV<T1>(uint firstPathName, All fontTarget, nint fontSize, ref readonly T1 fontData, int faceIndex, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale)
                 where T1 : unmanaged
             {
                 All returnValue;
@@ -43830,7 +43830,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathParameterfvNV(uint, PathParameter, float*)"/>
-            public static unsafe void PathParameterfvNV(uint path, PathParameter pname, in float value)
+            public static unsafe void PathParameterfvNV(uint path, PathParameter pname, ref readonly float value)
             {
                 fixed (float* value_ptr = &value)
                 {
@@ -43854,7 +43854,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathParameterivNV(uint, PathParameter, int*)"/>
-            public static unsafe void PathParameterivNV(uint path, PathParameter pname, in int value)
+            public static unsafe void PathParameterivNV(uint path, PathParameter pname, ref readonly int value)
             {
                 fixed (int* value_ptr = &value)
                 {
@@ -43886,7 +43886,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathStringNV(uint, PathStringFormat, int, void*)"/>
-            public static unsafe void PathStringNV<T1>(uint path, PathStringFormat format, int length, in T1 pathString)
+            public static unsafe void PathStringNV<T1>(uint path, PathStringFormat format, int length, ref readonly T1 pathString)
                 where T1 : unmanaged
             {
                 fixed (void* pathString_ptr = &pathString)
@@ -43913,7 +43913,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathSubCommandsNV(uint, int, int, int, byte*, int, PathCoordType, void*)"/>
-            public static unsafe void PathSubCommandsNV(uint path, int commandStart, int commandsToDelete, int numCommands, in byte commands, int numCoords, PathCoordType coordType, IntPtr coords)
+            public static unsafe void PathSubCommandsNV(uint path, int commandStart, int commandsToDelete, int numCommands, ref readonly byte commands, int numCoords, PathCoordType coordType, IntPtr coords)
             {
                 fixed (byte* commands_ptr = &commands)
                 {
@@ -43946,7 +43946,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathSubCommandsNV(uint, int, int, int, byte*, int, PathCoordType, void*)"/>
-            public static unsafe void PathSubCommandsNV<T1>(uint path, int commandStart, int commandsToDelete, int numCommands, in byte commands, int numCoords, PathCoordType coordType, in T1 coords)
+            public static unsafe void PathSubCommandsNV<T1>(uint path, int commandStart, int commandsToDelete, int numCommands, ref readonly byte commands, int numCoords, PathCoordType coordType, ref readonly T1 coords)
                 where T1 : unmanaged
             {
                 fixed (byte* commands_ptr = &commands)
@@ -43980,7 +43980,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathSubCoordsNV(uint, int, int, PathCoordType, void*)"/>
-            public static unsafe void PathSubCoordsNV<T1>(uint path, int coordStart, int numCoords, PathCoordType coordType, in T1 coords)
+            public static unsafe void PathSubCoordsNV<T1>(uint path, int coordStart, int numCoords, PathCoordType coordType, ref readonly T1 coords)
                 where T1 : unmanaged
             {
                 fixed (void* coords_ptr = &coords)
@@ -44005,7 +44005,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PathTexGenNV(PathColor, PathGenMode, int, float*)"/>
-            public static unsafe void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, in float coeffs)
+            public static unsafe void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, ref readonly float coeffs)
             {
                 fixed (float* coeffs_ptr = &coeffs)
                 {
@@ -44037,7 +44037,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelDataRangeNV(PixelDataRangeTargetNV, int, void*)"/>
-            public static unsafe void PixelDataRangeNV<T1>(PixelDataRangeTargetNV target, int length, in T1 pointer)
+            public static unsafe void PixelDataRangeNV<T1>(PixelDataRangeTargetNV target, int length, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -44075,7 +44075,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointParameterivNV(PointParameterNameARB, int*)"/>
-            public static unsafe void PointParameterivNV(PointParameterNameARB pname, in int parameters)
+            public static unsafe void PointParameterivNV(PointParameterNameARB pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44099,7 +44099,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramBufferParametersfvNV(ProgramTarget, uint, uint, int, float*)"/>
-            public static unsafe void ProgramBufferParametersfvNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, in float parameters)
+            public static unsafe void ProgramBufferParametersfvNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -44123,7 +44123,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramBufferParametersIivNV(ProgramTarget, uint, uint, int, int*)"/>
-            public static unsafe void ProgramBufferParametersIivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, in int parameters)
+            public static unsafe void ProgramBufferParametersIivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44147,7 +44147,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramBufferParametersIuivNV(ProgramTarget, uint, uint, int, uint*)"/>
-            public static unsafe void ProgramBufferParametersIuivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, in uint parameters)
+            public static unsafe void ProgramBufferParametersIuivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44171,7 +44171,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParameterI4ivNV(ProgramTarget, uint, int*)"/>
-            public static unsafe void ProgramEnvParameterI4ivNV(ProgramTarget target, uint index, in int parameters)
+            public static unsafe void ProgramEnvParameterI4ivNV(ProgramTarget target, uint index, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44195,7 +44195,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParameterI4uivNV(ProgramTarget, uint, uint*)"/>
-            public static unsafe void ProgramEnvParameterI4uivNV(ProgramTarget target, uint index, in uint parameters)
+            public static unsafe void ProgramEnvParameterI4uivNV(ProgramTarget target, uint index, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44219,7 +44219,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParametersI4ivNV(ProgramTarget, uint, int, int*)"/>
-            public static unsafe void ProgramEnvParametersI4ivNV(ProgramTarget target, uint index, int count, in int parameters)
+            public static unsafe void ProgramEnvParametersI4ivNV(ProgramTarget target, uint index, int count, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44243,7 +44243,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramEnvParametersI4uivNV(ProgramTarget, uint, int, uint*)"/>
-            public static unsafe void ProgramEnvParametersI4uivNV(ProgramTarget target, uint index, int count, in uint parameters)
+            public static unsafe void ProgramEnvParametersI4uivNV(ProgramTarget target, uint index, int count, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44267,7 +44267,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParameterI4ivNV(ProgramTarget, uint, int*)"/>
-            public static unsafe void ProgramLocalParameterI4ivNV(ProgramTarget target, uint index, in int parameters)
+            public static unsafe void ProgramLocalParameterI4ivNV(ProgramTarget target, uint index, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44291,7 +44291,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParameterI4uivNV(ProgramTarget, uint, uint*)"/>
-            public static unsafe void ProgramLocalParameterI4uivNV(ProgramTarget target, uint index, in uint parameters)
+            public static unsafe void ProgramLocalParameterI4uivNV(ProgramTarget target, uint index, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44315,7 +44315,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParametersI4ivNV(ProgramTarget, uint, int, int*)"/>
-            public static unsafe void ProgramLocalParametersI4ivNV(ProgramTarget target, uint index, int count, in int parameters)
+            public static unsafe void ProgramLocalParametersI4ivNV(ProgramTarget target, uint index, int count, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -44339,7 +44339,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramLocalParametersI4uivNV(ProgramTarget, uint, int, uint*)"/>
-            public static unsafe void ProgramLocalParametersI4uivNV(ProgramTarget target, uint index, int count, in uint parameters)
+            public static unsafe void ProgramLocalParametersI4uivNV(ProgramTarget target, uint index, int count, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44347,7 +44347,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4dNV(int, int, byte*, double, double, double, double)"/>
-            public static unsafe void ProgramNamedParameter4dNV(int id, int len, in byte name, double x, double y, double z, double w)
+            public static unsafe void ProgramNamedParameter4dNV(int id, int len, ref readonly byte name, double x, double y, double z, double w)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44355,7 +44355,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4dvNV(int, int, byte*, double*)"/>
-            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, in byte name, ReadOnlySpan<double> v)
+            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, ref readonly byte name, ReadOnlySpan<double> v)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44366,7 +44366,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4dvNV(int, int, byte*, double*)"/>
-            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, in byte name, double[] v)
+            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, ref readonly byte name, double[] v)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44377,7 +44377,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4dvNV(int, int, byte*, double*)"/>
-            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, in byte name, in double v)
+            public static unsafe void ProgramNamedParameter4dvNV(int id, int len, ref readonly byte name, ref readonly double v)
             {
                 fixed (byte* name_ptr = &name)
                 fixed (double* v_ptr = &v)
@@ -44386,7 +44386,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4fNV(int, int, byte*, float, float, float, float)"/>
-            public static unsafe void ProgramNamedParameter4fNV(int id, int len, in byte name, float x, float y, float z, float w)
+            public static unsafe void ProgramNamedParameter4fNV(int id, int len, ref readonly byte name, float x, float y, float z, float w)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44394,7 +44394,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4fvNV(int, int, byte*, float*)"/>
-            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, in byte name, ReadOnlySpan<float> v)
+            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, ref readonly byte name, ReadOnlySpan<float> v)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44405,7 +44405,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4fvNV(int, int, byte*, float*)"/>
-            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, in byte name, float[] v)
+            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, ref readonly byte name, float[] v)
             {
                 fixed (byte* name_ptr = &name)
                 {
@@ -44416,7 +44416,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramNamedParameter4fvNV(int, int, byte*, float*)"/>
-            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, in byte name, in float v)
+            public static unsafe void ProgramNamedParameter4fvNV(int id, int len, ref readonly byte name, ref readonly float v)
             {
                 fixed (byte* name_ptr = &name)
                 fixed (float* v_ptr = &v)
@@ -44441,7 +44441,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramParameter4dvNV(VertexAttribEnumNV, uint, double*)"/>
-            public static unsafe void ProgramParameter4dvNV(VertexAttribEnumNV target, uint index, in double v)
+            public static unsafe void ProgramParameter4dvNV(VertexAttribEnumNV target, uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -44465,7 +44465,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramParameter4fvNV(VertexAttribEnumNV, uint, float*)"/>
-            public static unsafe void ProgramParameter4fvNV(VertexAttribEnumNV target, uint index, in float v)
+            public static unsafe void ProgramParameter4fvNV(VertexAttribEnumNV target, uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -44489,7 +44489,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramParameters4dvNV(VertexAttribEnumNV, uint, int, double*)"/>
-            public static unsafe void ProgramParameters4dvNV(VertexAttribEnumNV target, uint index, int count, in double v)
+            public static unsafe void ProgramParameters4dvNV(VertexAttribEnumNV target, uint index, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -44513,7 +44513,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramParameters4fvNV(VertexAttribEnumNV, uint, int, float*)"/>
-            public static unsafe void ProgramParameters4fvNV(VertexAttribEnumNV target, uint index, int count, in float v)
+            public static unsafe void ProgramParameters4fvNV(VertexAttribEnumNV target, uint index, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -44537,7 +44537,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramPathFragmentInputGenNV(int, int, All, int, float*)"/>
-            public static unsafe void ProgramPathFragmentInputGenNV(int program, int location, All genMode, int components, in float coeffs)
+            public static unsafe void ProgramPathFragmentInputGenNV(int program, int location, All genMode, int components, ref readonly float coeffs)
             {
                 fixed (float* coeffs_ptr = &coeffs)
                 {
@@ -44561,7 +44561,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramSubroutineParametersuivNV(All, int, uint*)"/>
-            public static unsafe void ProgramSubroutineParametersuivNV(All target, int count, in uint parameters)
+            public static unsafe void ProgramSubroutineParametersuivNV(All target, int count, ref readonly uint parameters)
             {
                 fixed (uint* parameters_ptr = &parameters)
                 {
@@ -44569,7 +44569,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64vNV(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform1i64vNV(int program, int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -44578,7 +44578,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform1ui64vNV(int program, int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -44587,7 +44587,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -44614,7 +44614,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -44641,7 +44641,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in Vector2 value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -44668,7 +44668,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -44695,7 +44695,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -44722,7 +44722,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -44749,7 +44749,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in Vector3 value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -44776,7 +44776,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -44803,7 +44803,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -44830,7 +44830,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -44857,7 +44857,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in Vector4 value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -44884,7 +44884,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -44927,7 +44927,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformHandleui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniformHandleui64vNV(int program, int location, int count, in ulong values)
+            public static unsafe void ProgramUniformHandleui64vNV(int program, int location, int count, ref readonly ulong values)
             {
                 fixed (ulong* values_ptr = &values)
                 {
@@ -44951,7 +44951,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ProgramUniformui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniformui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniformui64vNV(int program, int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* value_ptr = &value)
                 {
@@ -45012,7 +45012,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="RequestResidentProgramsNV(int, int*)"/>
-            public static unsafe void RequestResidentProgramsNV(int n, in int programs)
+            public static unsafe void RequestResidentProgramsNV(int n, ref readonly int programs)
             {
                 fixed (int* programs_ptr = &programs)
                 {
@@ -45036,7 +45036,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ScissorExclusiveArrayvNV(uint, int, int*)"/>
-            public static unsafe void ScissorExclusiveArrayvNV(uint first, int count, in int v)
+            public static unsafe void ScissorExclusiveArrayvNV(uint first, int count, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -45060,7 +45060,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
-            public static unsafe void SecondaryColor3hvNV(in Half v)
+            public static unsafe void SecondaryColor3hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -45084,7 +45084,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SemaphoreParameterivNV(uint, SemaphoreParameterName, int*)"/>
-            public static unsafe void SemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname, in int parameters)
+            public static unsafe void SemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -45108,7 +45108,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ShadingRateImagePaletteNV(uint, uint, int, All*)"/>
-            public static unsafe void ShadingRateImagePaletteNV(uint viewport, uint first, int count, in All rates)
+            public static unsafe void ShadingRateImagePaletteNV(uint viewport, uint first, int count, ref readonly All rates)
             {
                 fixed (All* rates_ptr = &rates)
                 {
@@ -45132,7 +45132,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ShadingRateSampleOrderCustomNV(All, uint, int*)"/>
-            public static unsafe void ShadingRateSampleOrderCustomNV(All rate, uint samples, in int locations)
+            public static unsafe void ShadingRateSampleOrderCustomNV(All rate, uint samples, ref readonly int locations)
             {
                 fixed (int* locations_ptr = &locations)
                 {
@@ -45158,7 +45158,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilFillPathInstancedNV(int, PathElementType, void*, uint, PathFillMode, uint, PathTransformType, float*)"/>
-            public static unsafe void StencilFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -45191,7 +45191,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilFillPathInstancedNV(int, PathElementType, void*, uint, PathFillMode, uint, PathTransformType, float*)"/>
-            public static unsafe void StencilFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -45219,7 +45219,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilStrokePathInstancedNV(int, PathElementType, void*, uint, int, uint, PathTransformType, float*)"/>
-            public static unsafe void StencilStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -45252,7 +45252,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilStrokePathInstancedNV(int, PathElementType, void*, uint, int, uint, PathTransformType, float*)"/>
-            public static unsafe void StencilStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int reference, uint mask, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, int reference, uint mask, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -45280,7 +45280,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV(int, PathElementType, void*, uint, PathFillMode, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -45313,7 +45313,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV(int, PathElementType, void*, uint, PathFillMode, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -45341,7 +45341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV(int, PathElementType, void*, uint, int, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -45374,7 +45374,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV(int, PathElementType, void*, uint, int, uint, InstancedPathCoverMode, PathTransformType, float*)"/>
-            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ref readonly T1 paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ref readonly float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -45384,7 +45384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
-            public static unsafe void TexCoord1hvNV(in Half v)
+            public static unsafe void TexCoord1hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -45408,7 +45408,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
-            public static unsafe void TexCoord2hvNV(in Half v)
+            public static unsafe void TexCoord2hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -45432,7 +45432,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
-            public static unsafe void TexCoord3hvNV(in Half v)
+            public static unsafe void TexCoord3hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -45456,7 +45456,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
-            public static unsafe void TexCoord4hvNV(in Half v)
+            public static unsafe void TexCoord4hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -45480,7 +45480,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TransformFeedbackAttribsNV(int, int*, All)"/>
-            public static unsafe void TransformFeedbackAttribsNV(int count, in int attribs, All bufferMode)
+            public static unsafe void TransformFeedbackAttribsNV(int count, ref readonly int attribs, All bufferMode)
             {
                 fixed (int* attribs_ptr = &attribs)
                 {
@@ -45510,7 +45510,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TransformFeedbackStreamAttribsNV(int, int*, int, int*, All)"/>
-            public static unsafe void TransformFeedbackStreamAttribsNV(int count, in int attribs, int nbuffers, in int bufstreams, All bufferMode)
+            public static unsafe void TransformFeedbackStreamAttribsNV(int count, ref readonly int attribs, int nbuffers, ref readonly int bufstreams, All bufferMode)
             {
                 fixed (int* attribs_ptr = &attribs)
                 fixed (int* bufstreams_ptr = &bufstreams)
@@ -45535,7 +45535,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, TransformFeedbackTokenNV*, TransformFeedbackBufferMode)"/>
-            public static unsafe void TransformFeedbackVaryingsNV(int program, int count, in TransformFeedbackTokenNV locations, TransformFeedbackBufferMode bufferMode)
+            public static unsafe void TransformFeedbackVaryingsNV(int program, int count, ref readonly TransformFeedbackTokenNV locations, TransformFeedbackBufferMode bufferMode)
             {
                 fixed (TransformFeedbackTokenNV* locations_ptr = &locations)
                 {
@@ -45559,7 +45559,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TransformPathNV(uint, uint, PathTransformType, float*)"/>
-            public static unsafe void TransformPathNV(uint resultPath, uint srcPath, PathTransformType transformType, in float transformValues)
+            public static unsafe void TransformPathNV(uint resultPath, uint srcPath, PathTransformType transformType, ref readonly float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -45567,7 +45567,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform1i64vNV(int location, int count, in long value)
+            public static unsafe void Uniform1i64vNV(int location, int count, ref readonly long value)
             {
                 fixed (long* tmp_value = &value)
                 {
@@ -45594,7 +45594,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniform1ui64vNV(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* tmp_value = &value)
                 {
@@ -45621,7 +45621,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2i64vNV(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -45648,7 +45648,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2i64vNV(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -45675,7 +45675,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, int count, in Vector2 value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, ref readonly Vector2 value)
             {
                 fixed (Vector2* tmp_value = &value)
                 {
@@ -45702,7 +45702,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, int count, in System.Numerics.Vector2 value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, ref readonly System.Numerics.Vector2 value)
             {
                 fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
@@ -45729,7 +45729,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3i64vNV(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -45756,7 +45756,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3i64vNV(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -45783,7 +45783,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, int count, in Vector3 value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, ref readonly Vector3 value)
             {
                 fixed (Vector3* tmp_value = &value)
                 {
@@ -45810,7 +45810,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, int count, in System.Numerics.Vector3 value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, ref readonly System.Numerics.Vector3 value)
             {
                 fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
@@ -45837,7 +45837,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4i64vNV(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -45864,7 +45864,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4i64vNV(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -45891,7 +45891,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, int count, in Vector4 value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, ref readonly Vector4 value)
             {
                 fixed (Vector4* tmp_value = &value)
                 {
@@ -45918,7 +45918,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, int count, in System.Numerics.Vector4 value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, ref readonly System.Numerics.Vector4 value)
             {
                 fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
@@ -45961,7 +45961,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="UniformHandleui64vNV(int, int, ulong*)"/>
-            public static unsafe void UniformHandleui64vNV(int location, int count, in ulong value)
+            public static unsafe void UniformHandleui64vNV(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* value_ptr = &value)
                 {
@@ -45985,7 +45985,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Uniformui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniformui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniformui64vNV(int location, int count, ref readonly ulong value)
             {
                 fixed (ulong* value_ptr = &value)
                 {
@@ -46057,7 +46057,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VDPAUInitNV(void*, void*)"/>
-            public static unsafe void VDPAUInitNV<T1, T2>(in T1 vdpDevice, in T2 getProcAddress)
+            public static unsafe void VDPAUInitNV<T1, T2>(ref readonly T1 vdpDevice, ref readonly T2 getProcAddress)
                 where T1 : unmanaged
                 where T2 : unmanaged
             {
@@ -46084,7 +46084,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VDPAUMapSurfacesNV(int, IntPtr*)"/>
-            public static unsafe void VDPAUMapSurfacesNV(int numSurfaces, in IntPtr surfaces)
+            public static unsafe void VDPAUMapSurfacesNV(int numSurfaces, ref readonly IntPtr surfaces)
             {
                 fixed (IntPtr* surfaces_ptr = &surfaces)
                 {
@@ -46114,7 +46114,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterOutputSurfaceNV(void*, All, int, uint*)"/>
-            public static unsafe IntPtr VDPAURegisterOutputSurfaceNV(IntPtr vdpSurface, All target, int numTextureNames, in uint textureNames)
+            public static unsafe IntPtr VDPAURegisterOutputSurfaceNV(IntPtr vdpSurface, All target, int numTextureNames, ref readonly uint textureNames)
             {
                 IntPtr returnValue;
                 fixed (uint* textureNames_ptr = &textureNames)
@@ -46153,7 +46153,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterOutputSurfaceNV(void*, All, int, uint*)"/>
-            public static unsafe IntPtr VDPAURegisterOutputSurfaceNV<T1>(in T1 vdpSurface, All target, int numTextureNames, in uint textureNames)
+            public static unsafe IntPtr VDPAURegisterOutputSurfaceNV<T1>(ref readonly T1 vdpSurface, All target, int numTextureNames, ref readonly uint textureNames)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -46187,7 +46187,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterVideoSurfaceNV(void*, All, int, uint*)"/>
-            public static unsafe IntPtr VDPAURegisterVideoSurfaceNV(IntPtr vdpSurface, All target, int numTextureNames, in uint textureNames)
+            public static unsafe IntPtr VDPAURegisterVideoSurfaceNV(IntPtr vdpSurface, All target, int numTextureNames, ref readonly uint textureNames)
             {
                 IntPtr returnValue;
                 fixed (uint* textureNames_ptr = &textureNames)
@@ -46226,7 +46226,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterVideoSurfaceNV(void*, All, int, uint*)"/>
-            public static unsafe IntPtr VDPAURegisterVideoSurfaceNV<T1>(in T1 vdpSurface, All target, int numTextureNames, in uint textureNames)
+            public static unsafe IntPtr VDPAURegisterVideoSurfaceNV<T1>(ref readonly T1 vdpSurface, All target, int numTextureNames, ref readonly uint textureNames)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -46260,7 +46260,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterVideoSurfaceWithPictureStructureNV(void*, All, int, uint*, bool)"/>
-            public static unsafe IntPtr VDPAURegisterVideoSurfaceWithPictureStructureNV(IntPtr vdpSurface, All target, int numTextureNames, in uint textureNames, bool isFrameStructure)
+            public static unsafe IntPtr VDPAURegisterVideoSurfaceWithPictureStructureNV(IntPtr vdpSurface, All target, int numTextureNames, ref readonly uint textureNames, bool isFrameStructure)
             {
                 IntPtr returnValue;
                 fixed (uint* textureNames_ptr = &textureNames)
@@ -46299,7 +46299,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="VDPAURegisterVideoSurfaceWithPictureStructureNV(void*, All, int, uint*, bool)"/>
-            public static unsafe IntPtr VDPAURegisterVideoSurfaceWithPictureStructureNV<T1>(in T1 vdpSurface, All target, int numTextureNames, in uint textureNames, bool isFrameStructure)
+            public static unsafe IntPtr VDPAURegisterVideoSurfaceWithPictureStructureNV<T1>(ref readonly T1 vdpSurface, All target, int numTextureNames, ref readonly uint textureNames, bool isFrameStructure)
                 where T1 : unmanaged
             {
                 IntPtr returnValue;
@@ -46327,7 +46327,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VDPAUUnmapSurfacesNV(int, IntPtr*)"/>
-            public static unsafe void VDPAUUnmapSurfacesNV(int numSurface, in IntPtr surfaces)
+            public static unsafe void VDPAUUnmapSurfacesNV(int numSurface, ref readonly IntPtr surfaces)
             {
                 fixed (IntPtr* surfaces_ptr = &surfaces)
                 {
@@ -46351,7 +46351,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
-            public static unsafe void Vertex2hvNV(in Half v)
+            public static unsafe void Vertex2hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46375,7 +46375,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
-            public static unsafe void Vertex3hvNV(in Half v)
+            public static unsafe void Vertex3hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46399,7 +46399,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
-            public static unsafe void Vertex4hvNV(in Half v)
+            public static unsafe void Vertex4hvNV(ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46431,7 +46431,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexArrayRangeNV(int, void*)"/>
-            public static unsafe void VertexArrayRangeNV<T1>(int length, in T1 pointer)
+            public static unsafe void VertexArrayRangeNV<T1>(int length, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -46440,7 +46440,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1dvNV(uint, double*)"/>
-            public static unsafe void VertexAttrib1dvNV(uint index, in double v)
+            public static unsafe void VertexAttrib1dvNV(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -46448,7 +46448,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1fvNV(uint, float*)"/>
-            public static unsafe void VertexAttrib1fvNV(uint index, in float v)
+            public static unsafe void VertexAttrib1fvNV(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -46456,7 +46456,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, in Half v)
+            public static unsafe void VertexAttrib1hvNV(uint index, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46464,7 +46464,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib1svNV(uint, short*)"/>
-            public static unsafe void VertexAttrib1svNV(uint index, in short v)
+            public static unsafe void VertexAttrib1svNV(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -46488,7 +46488,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2dvNV(uint, double*)"/>
-            public static unsafe void VertexAttrib2dvNV(uint index, in double v)
+            public static unsafe void VertexAttrib2dvNV(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -46512,7 +46512,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2fvNV(uint, float*)"/>
-            public static unsafe void VertexAttrib2fvNV(uint index, in float v)
+            public static unsafe void VertexAttrib2fvNV(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -46536,7 +46536,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, in Half v)
+            public static unsafe void VertexAttrib2hvNV(uint index, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46560,7 +46560,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib2svNV(uint, short*)"/>
-            public static unsafe void VertexAttrib2svNV(uint index, in short v)
+            public static unsafe void VertexAttrib2svNV(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -46584,7 +46584,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3dvNV(uint, double*)"/>
-            public static unsafe void VertexAttrib3dvNV(uint index, in double v)
+            public static unsafe void VertexAttrib3dvNV(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -46608,7 +46608,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3fvNV(uint, float*)"/>
-            public static unsafe void VertexAttrib3fvNV(uint index, in float v)
+            public static unsafe void VertexAttrib3fvNV(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -46632,7 +46632,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, in Half v)
+            public static unsafe void VertexAttrib3hvNV(uint index, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46656,7 +46656,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib3svNV(uint, short*)"/>
-            public static unsafe void VertexAttrib3svNV(uint index, in short v)
+            public static unsafe void VertexAttrib3svNV(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -46680,7 +46680,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4dvNV(uint, double*)"/>
-            public static unsafe void VertexAttrib4dvNV(uint index, in double v)
+            public static unsafe void VertexAttrib4dvNV(uint index, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -46704,7 +46704,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4fvNV(uint, float*)"/>
-            public static unsafe void VertexAttrib4fvNV(uint index, in float v)
+            public static unsafe void VertexAttrib4fvNV(uint index, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -46728,7 +46728,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, in Half v)
+            public static unsafe void VertexAttrib4hvNV(uint index, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -46752,7 +46752,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4svNV(uint, short*)"/>
-            public static unsafe void VertexAttrib4svNV(uint index, in short v)
+            public static unsafe void VertexAttrib4svNV(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -46776,7 +46776,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttrib4ubvNV(uint, byte*)"/>
-            public static unsafe void VertexAttrib4ubvNV(uint index, in byte v)
+            public static unsafe void VertexAttrib4ubvNV(uint index, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -46784,7 +46784,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI1ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI1ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI1ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -46792,7 +46792,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI1uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI1uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI1uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -46816,7 +46816,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI2ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI2ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI2ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -46840,7 +46840,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI2uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI2uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI2uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -46864,7 +46864,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI3ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI3ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI3ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -46888,7 +46888,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI3uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI3uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI3uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -46912,7 +46912,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4bvEXT(uint, sbyte*)"/>
-            public static unsafe void VertexAttribI4bvEXT(uint index, in sbyte v)
+            public static unsafe void VertexAttribI4bvEXT(uint index, ref readonly sbyte v)
             {
                 fixed (sbyte* v_ptr = &v)
                 {
@@ -46936,7 +46936,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4ivEXT(uint, int*)"/>
-            public static unsafe void VertexAttribI4ivEXT(uint index, in int v)
+            public static unsafe void VertexAttribI4ivEXT(uint index, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -46960,7 +46960,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4svEXT(uint, short*)"/>
-            public static unsafe void VertexAttribI4svEXT(uint index, in short v)
+            public static unsafe void VertexAttribI4svEXT(uint index, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -46984,7 +46984,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4ubvEXT(uint, byte*)"/>
-            public static unsafe void VertexAttribI4ubvEXT(uint index, in byte v)
+            public static unsafe void VertexAttribI4ubvEXT(uint index, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -47008,7 +47008,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4uivEXT(uint, uint*)"/>
-            public static unsafe void VertexAttribI4uivEXT(uint index, in uint v)
+            public static unsafe void VertexAttribI4uivEXT(uint index, ref readonly uint v)
             {
                 fixed (uint* v_ptr = &v)
                 {
@@ -47032,7 +47032,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribI4usvEXT(uint, ushort*)"/>
-            public static unsafe void VertexAttribI4usvEXT(uint index, in ushort v)
+            public static unsafe void VertexAttribI4usvEXT(uint index, ref readonly ushort v)
             {
                 fixed (ushort* v_ptr = &v)
                 {
@@ -47064,7 +47064,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribIPointerEXT(uint, int, VertexAttribIType, int, void*)"/>
-            public static unsafe void VertexAttribIPointerEXT<T1>(uint index, int size, VertexAttribIType type, int stride, in T1 pointer)
+            public static unsafe void VertexAttribIPointerEXT<T1>(uint index, int size, VertexAttribIType type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -47073,7 +47073,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL1i64vNV(uint, long*)"/>
-            public static unsafe void VertexAttribL1i64vNV(uint index, in long v)
+            public static unsafe void VertexAttribL1i64vNV(uint index, ref readonly long v)
             {
                 fixed (long* v_ptr = &v)
                 {
@@ -47081,7 +47081,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL1ui64vNV(uint, ulong*)"/>
-            public static unsafe void VertexAttribL1ui64vNV(uint index, in ulong v)
+            public static unsafe void VertexAttribL1ui64vNV(uint index, ref readonly ulong v)
             {
                 fixed (ulong* v_ptr = &v)
                 {
@@ -47105,7 +47105,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL2i64vNV(uint, long*)"/>
-            public static unsafe void VertexAttribL2i64vNV(uint index, in long v)
+            public static unsafe void VertexAttribL2i64vNV(uint index, ref readonly long v)
             {
                 fixed (long* v_ptr = &v)
                 {
@@ -47129,7 +47129,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL2ui64vNV(uint, ulong*)"/>
-            public static unsafe void VertexAttribL2ui64vNV(uint index, in ulong v)
+            public static unsafe void VertexAttribL2ui64vNV(uint index, ref readonly ulong v)
             {
                 fixed (ulong* v_ptr = &v)
                 {
@@ -47153,7 +47153,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL3i64vNV(uint, long*)"/>
-            public static unsafe void VertexAttribL3i64vNV(uint index, in long v)
+            public static unsafe void VertexAttribL3i64vNV(uint index, ref readonly long v)
             {
                 fixed (long* v_ptr = &v)
                 {
@@ -47177,7 +47177,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL3ui64vNV(uint, ulong*)"/>
-            public static unsafe void VertexAttribL3ui64vNV(uint index, in ulong v)
+            public static unsafe void VertexAttribL3ui64vNV(uint index, ref readonly ulong v)
             {
                 fixed (ulong* v_ptr = &v)
                 {
@@ -47201,7 +47201,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL4i64vNV(uint, long*)"/>
-            public static unsafe void VertexAttribL4i64vNV(uint index, in long v)
+            public static unsafe void VertexAttribL4i64vNV(uint index, ref readonly long v)
             {
                 fixed (long* v_ptr = &v)
                 {
@@ -47225,7 +47225,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribL4ui64vNV(uint, ulong*)"/>
-            public static unsafe void VertexAttribL4ui64vNV(uint index, in ulong v)
+            public static unsafe void VertexAttribL4ui64vNV(uint index, ref readonly ulong v)
             {
                 fixed (ulong* v_ptr = &v)
                 {
@@ -47257,7 +47257,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribPointerNV(uint, int, VertexAttribEnumNV, int, void*)"/>
-            public static unsafe void VertexAttribPointerNV<T1>(uint index, int fsize, VertexAttribEnumNV type, int stride, in T1 pointer)
+            public static unsafe void VertexAttribPointerNV<T1>(uint index, int fsize, VertexAttribEnumNV type, int stride, ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 fixed (void* pointer_ptr = &pointer)
@@ -47282,7 +47282,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs1dvNV(uint, int, double*)"/>
-            public static unsafe void VertexAttribs1dvNV(uint index, int count, in double v)
+            public static unsafe void VertexAttribs1dvNV(uint index, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -47306,7 +47306,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs1fvNV(uint, int, float*)"/>
-            public static unsafe void VertexAttribs1fvNV(uint index, int count, in float v)
+            public static unsafe void VertexAttribs1fvNV(uint index, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -47330,7 +47330,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, int n, in Half v)
+            public static unsafe void VertexAttribs1hvNV(uint index, int n, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -47354,7 +47354,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs1svNV(uint, int, short*)"/>
-            public static unsafe void VertexAttribs1svNV(uint index, int count, in short v)
+            public static unsafe void VertexAttribs1svNV(uint index, int count, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -47378,7 +47378,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs2dvNV(uint, int, double*)"/>
-            public static unsafe void VertexAttribs2dvNV(uint index, int count, in double v)
+            public static unsafe void VertexAttribs2dvNV(uint index, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -47402,7 +47402,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs2fvNV(uint, int, float*)"/>
-            public static unsafe void VertexAttribs2fvNV(uint index, int count, in float v)
+            public static unsafe void VertexAttribs2fvNV(uint index, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -47426,7 +47426,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, int n, in Half v)
+            public static unsafe void VertexAttribs2hvNV(uint index, int n, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -47450,7 +47450,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs2svNV(uint, int, short*)"/>
-            public static unsafe void VertexAttribs2svNV(uint index, int count, in short v)
+            public static unsafe void VertexAttribs2svNV(uint index, int count, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -47474,7 +47474,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs3dvNV(uint, int, double*)"/>
-            public static unsafe void VertexAttribs3dvNV(uint index, int count, in double v)
+            public static unsafe void VertexAttribs3dvNV(uint index, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -47498,7 +47498,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs3fvNV(uint, int, float*)"/>
-            public static unsafe void VertexAttribs3fvNV(uint index, int count, in float v)
+            public static unsafe void VertexAttribs3fvNV(uint index, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -47522,7 +47522,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, int n, in Half v)
+            public static unsafe void VertexAttribs3hvNV(uint index, int n, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -47546,7 +47546,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs3svNV(uint, int, short*)"/>
-            public static unsafe void VertexAttribs3svNV(uint index, int count, in short v)
+            public static unsafe void VertexAttribs3svNV(uint index, int count, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -47570,7 +47570,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs4dvNV(uint, int, double*)"/>
-            public static unsafe void VertexAttribs4dvNV(uint index, int count, in double v)
+            public static unsafe void VertexAttribs4dvNV(uint index, int count, ref readonly double v)
             {
                 fixed (double* v_ptr = &v)
                 {
@@ -47594,7 +47594,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs4fvNV(uint, int, float*)"/>
-            public static unsafe void VertexAttribs4fvNV(uint index, int count, in float v)
+            public static unsafe void VertexAttribs4fvNV(uint index, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -47618,7 +47618,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, int n, in Half v)
+            public static unsafe void VertexAttribs4hvNV(uint index, int n, ref readonly Half v)
             {
                 fixed (Half* v_ptr = &v)
                 {
@@ -47642,7 +47642,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs4svNV(uint, int, short*)"/>
-            public static unsafe void VertexAttribs4svNV(uint index, int count, in short v)
+            public static unsafe void VertexAttribs4svNV(uint index, int count, ref readonly short v)
             {
                 fixed (short* v_ptr = &v)
                 {
@@ -47666,7 +47666,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexAttribs4ubvNV(uint, int, byte*)"/>
-            public static unsafe void VertexAttribs4ubvNV(uint index, int count, in byte v)
+            public static unsafe void VertexAttribs4ubvNV(uint index, int count, ref readonly byte v)
             {
                 fixed (byte* v_ptr = &v)
                 {
@@ -47674,7 +47674,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
-            public static unsafe void VertexWeighthvNV(in Half weight)
+            public static unsafe void VertexWeighthvNV(ref readonly Half weight)
             {
                 fixed (Half* weight_ptr = &weight)
                 {
@@ -47735,7 +47735,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VideoCaptureStreamParameterdvNV(uint, uint, All, double*)"/>
-            public static unsafe void VideoCaptureStreamParameterdvNV(uint video_capture_slot, uint stream, All pname, in double parameters)
+            public static unsafe void VideoCaptureStreamParameterdvNV(uint video_capture_slot, uint stream, All pname, ref readonly double parameters)
             {
                 fixed (double* parameters_ptr = &parameters)
                 {
@@ -47759,7 +47759,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VideoCaptureStreamParameterfvNV(uint, uint, All, float*)"/>
-            public static unsafe void VideoCaptureStreamParameterfvNV(uint video_capture_slot, uint stream, All pname, in float parameters)
+            public static unsafe void VideoCaptureStreamParameterfvNV(uint video_capture_slot, uint stream, All pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -47783,7 +47783,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="VideoCaptureStreamParameterivNV(uint, uint, All, int*)"/>
-            public static unsafe void VideoCaptureStreamParameterivNV(uint video_capture_slot, uint stream, All pname, in int parameters)
+            public static unsafe void VideoCaptureStreamParameterivNV(uint video_capture_slot, uint stream, All pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -47813,7 +47813,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WeightPathsNV(uint, int, uint*, float*)"/>
-            public static unsafe void WeightPathsNV(uint resultPath, int numPaths, in uint paths, in float weights)
+            public static unsafe void WeightPathsNV(uint resultPath, int numPaths, ref readonly uint paths, ref readonly float weights)
             {
                 fixed (uint* paths_ptr = &paths)
                 fixed (float* weights_ptr = &weights)
@@ -47863,7 +47863,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AsyncCopyBufferSubDataNVX(int, uint*, ulong*, uint, uint, int, int, IntPtr, IntPtr, nint, int, uint*, ulong*)"/>
-            public static unsafe uint AsyncCopyBufferSubDataNVX(int waitSemaphoreCount, in uint waitSemaphoreArray, in ulong fenceValueArray, uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size, int signalSemaphoreCount, in uint signalSemaphoreArray, in ulong signalValueArray)
+            public static unsafe uint AsyncCopyBufferSubDataNVX(int waitSemaphoreCount, ref readonly uint waitSemaphoreArray, ref readonly ulong fenceValueArray, uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size, int signalSemaphoreCount, ref readonly uint signalSemaphoreArray, ref readonly ulong signalValueArray)
             {
                 uint returnValue;
                 fixed (uint* waitSemaphoreArray_ptr = &waitSemaphoreArray)
@@ -47914,7 +47914,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AsyncCopyImageSubDataNVX(int, uint*, ulong*, uint, uint, uint, All, int, int, int, int, uint, All, int, int, int, int, int, int, int, int, uint*, ulong*)"/>
-            public static unsafe uint AsyncCopyImageSubDataNVX(int waitSemaphoreCount, in uint waitSemaphoreArray, in ulong waitValueArray, uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, in uint signalSemaphoreArray, in ulong signalValueArray)
+            public static unsafe uint AsyncCopyImageSubDataNVX(int waitSemaphoreCount, ref readonly uint waitSemaphoreArray, ref readonly ulong waitValueArray, uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, ref readonly uint signalSemaphoreArray, ref readonly ulong signalValueArray)
             {
                 uint returnValue;
                 fixed (uint* waitSemaphoreArray_ptr = &waitSemaphoreArray)
@@ -47949,7 +47949,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClientWaitSemaphoreui64NVX(int, uint*, ulong*)"/>
-            public static unsafe void ClientWaitSemaphoreui64NVX(int fenceObjectCount, in uint semaphoreArray, in ulong fenceValueArray)
+            public static unsafe void ClientWaitSemaphoreui64NVX(int fenceObjectCount, ref readonly uint semaphoreArray, ref readonly ulong fenceValueArray)
             {
                 fixed (uint* semaphoreArray_ptr = &semaphoreArray)
                 fixed (ulong* fenceValueArray_ptr = &fenceValueArray)
@@ -47982,7 +47982,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LGPUNamedBufferSubDataNVX(uint, int, IntPtr, nint, void*)"/>
-            public static unsafe void LGPUNamedBufferSubDataNVX<T1>(uint gpuMask, int buffer, IntPtr offset, nint size, in T1 data)
+            public static unsafe void LGPUNamedBufferSubDataNVX<T1>(uint gpuMask, int buffer, IntPtr offset, nint size, ref readonly T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -48007,7 +48007,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MulticastScissorArrayvNVX(uint, uint, int, int*)"/>
-            public static unsafe void MulticastScissorArrayvNVX(uint gpu, uint first, int count, in int v)
+            public static unsafe void MulticastScissorArrayvNVX(uint gpu, uint first, int count, ref readonly int v)
             {
                 fixed (int* v_ptr = &v)
                 {
@@ -48031,7 +48031,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MulticastViewportArrayvNVX(uint, uint, int, float*)"/>
-            public static unsafe void MulticastViewportArrayvNVX(uint gpu, uint first, int count, in float v)
+            public static unsafe void MulticastViewportArrayvNVX(uint gpu, uint first, int count, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -48061,7 +48061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SignalSemaphoreui64NVX(uint, int, uint*, ulong*)"/>
-            public static unsafe void SignalSemaphoreui64NVX(uint signalGpu, int fenceObjectCount, in uint semaphoreArray, in ulong fenceValueArray)
+            public static unsafe void SignalSemaphoreui64NVX(uint signalGpu, int fenceObjectCount, ref readonly uint semaphoreArray, ref readonly ulong fenceValueArray)
             {
                 fixed (uint* semaphoreArray_ptr = &semaphoreArray)
                 fixed (ulong* fenceValueArray_ptr = &fenceValueArray)
@@ -48092,7 +48092,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="WaitSemaphoreui64NVX(uint, int, uint*, ulong*)"/>
-            public static unsafe void WaitSemaphoreui64NVX(uint waitGpu, int fenceObjectCount, in uint semaphoreArray, in ulong fenceValueArray)
+            public static unsafe void WaitSemaphoreui64NVX(uint waitGpu, int fenceObjectCount, ref readonly uint semaphoreArray, ref readonly ulong fenceValueArray)
             {
                 fixed (uint* semaphoreArray_ptr = &semaphoreArray)
                 fixed (ulong* fenceValueArray_ptr = &fenceValueArray)
@@ -48120,7 +48120,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
-            public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, in byte bitmap)
+            public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ref readonly byte bitmap)
             {
                 fixed (byte* bitmap_ptr = &bitmap)
                 {
@@ -48144,7 +48144,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClipPlanefOES(ClipPlaneName, float*)"/>
-            public static unsafe void ClipPlanefOES(ClipPlaneName plane, in float equation)
+            public static unsafe void ClipPlanefOES(ClipPlaneName plane, ref readonly float equation)
             {
                 fixed (float* equation_ptr = &equation)
                 {
@@ -48168,7 +48168,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ClipPlanexOES(ClipPlaneName, int*)"/>
-            public static unsafe void ClipPlanexOES(ClipPlaneName plane, in int equation)
+            public static unsafe void ClipPlanexOES(ClipPlaneName plane, ref readonly int equation)
             {
                 fixed (int* equation_ptr = &equation)
                 {
@@ -48192,7 +48192,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color3xvOES(int*)"/>
-            public static unsafe void Color3xvOES(in int components)
+            public static unsafe void Color3xvOES(ref readonly int components)
             {
                 fixed (int* components_ptr = &components)
                 {
@@ -48216,7 +48216,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4xvOES(int*)"/>
-            public static unsafe void Color4xvOES(in int components)
+            public static unsafe void Color4xvOES(ref readonly int components)
             {
                 fixed (int* components_ptr = &components)
                 {
@@ -48240,7 +48240,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, in int parameters)
+            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -48248,7 +48248,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EvalCoord1xvOES(int*)"/>
-            public static unsafe void EvalCoord1xvOES(in int coords)
+            public static unsafe void EvalCoord1xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -48272,7 +48272,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
-            public static unsafe void EvalCoord2xvOES(in int coords)
+            public static unsafe void EvalCoord2xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -48296,7 +48296,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
-            public static unsafe void FeedbackBufferxOES(int n, All type, in int buffer)
+            public static unsafe void FeedbackBufferxOES(int n, All type, ref readonly int buffer)
             {
                 fixed (int* buffer_ptr = &buffer)
                 {
@@ -48320,7 +48320,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogxvOES(FogPName, int*)"/>
-            public static unsafe void FogxvOES(FogPName pname, in int param)
+            public static unsafe void FogxvOES(FogPName pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -48774,7 +48774,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="IndexxvOES(int*)"/>
-            public static unsafe void IndexxvOES(in int component)
+            public static unsafe void IndexxvOES(ref readonly int component)
             {
                 fixed (int* component_ptr = &component)
                 {
@@ -48798,7 +48798,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LightModelxvOES(LightModelParameter, int*)"/>
-            public static unsafe void LightModelxvOES(LightModelParameter pname, in int param)
+            public static unsafe void LightModelxvOES(LightModelParameter pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -48822,7 +48822,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
-            public static unsafe void LightxvOES(LightName light, LightParameter pname, in int parameters)
+            public static unsafe void LightxvOES(LightName light, LightParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -48846,7 +48846,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LoadMatrixxOES(int*)"/>
-            public static unsafe void LoadMatrixxOES(in int m)
+            public static unsafe void LoadMatrixxOES(ref readonly int m)
             {
                 fixed (int* m_ptr = &m)
                 {
@@ -48870,7 +48870,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
-            public static unsafe void LoadTransposeMatrixxOES(in int m)
+            public static unsafe void LoadTransposeMatrixxOES(ref readonly int m)
             {
                 fixed (int* m_ptr = &m)
                 {
@@ -48894,7 +48894,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, in int param)
+            public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, ref readonly int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -48902,7 +48902,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, in sbyte coords)
+            public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -48910,7 +48910,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord1xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, in int coords)
+            public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -48934,7 +48934,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, in sbyte coords)
+            public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -48958,7 +48958,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, in int coords)
+            public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -48982,7 +48982,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, in sbyte coords)
+            public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49006,7 +49006,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, in int coords)
+            public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49030,7 +49030,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
-            public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, in sbyte coords)
+            public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49054,7 +49054,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
-            public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, in int coords)
+            public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49078,7 +49078,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultMatrixxOES(int*)"/>
-            public static unsafe void MultMatrixxOES(in int m)
+            public static unsafe void MultMatrixxOES(ref readonly int m)
             {
                 fixed (int* m_ptr = &m)
                 {
@@ -49102,7 +49102,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
-            public static unsafe void MultTransposeMatrixxOES(in int m)
+            public static unsafe void MultTransposeMatrixxOES(ref readonly int m)
             {
                 fixed (int* m_ptr = &m)
                 {
@@ -49126,7 +49126,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Normal3xvOES(int*)"/>
-            public static unsafe void Normal3xvOES(in int coords)
+            public static unsafe void Normal3xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49150,7 +49150,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
-            public static unsafe void PixelMapx(PixelMap map, int size, in int values)
+            public static unsafe void PixelMapx(PixelMap map, int size, ref readonly int values)
             {
                 fixed (int* values_ptr = &values)
                 {
@@ -49174,7 +49174,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
-            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, in int parameters)
+            public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -49204,7 +49204,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, in int textures, in int priorities)
+            public static unsafe void PrioritizeTexturesxOES(int n, ref readonly int textures, ref readonly int priorities)
             {
                 fixed (int* textures_ptr = &textures)
                 fixed (int* priorities_ptr = &priorities)
@@ -49266,7 +49266,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
-            public static unsafe void RasterPos2xvOES(in int coords)
+            public static unsafe void RasterPos2xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49290,7 +49290,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
-            public static unsafe void RasterPos3xvOES(in int coords)
+            public static unsafe void RasterPos3xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49314,7 +49314,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
-            public static unsafe void RasterPos4xvOES(in int coords)
+            public static unsafe void RasterPos4xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49344,7 +49344,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="RectxvOES(int*, int*)"/>
-            public static unsafe void RectxvOES(in int v1, in int v2)
+            public static unsafe void RectxvOES(ref readonly int v1, ref readonly int v2)
             {
                 fixed (int* v1_ptr = &v1)
                 fixed (int* v2_ptr = &v2)
@@ -49353,7 +49353,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord1bvOES(sbyte*)"/>
-            public static unsafe void TexCoord1bvOES(in sbyte coords)
+            public static unsafe void TexCoord1bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49361,7 +49361,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord1xvOES(int*)"/>
-            public static unsafe void TexCoord1xvOES(in int coords)
+            public static unsafe void TexCoord1xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49385,7 +49385,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
-            public static unsafe void TexCoord2bvOES(in sbyte coords)
+            public static unsafe void TexCoord2bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49409,7 +49409,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
-            public static unsafe void TexCoord2xvOES(in int coords)
+            public static unsafe void TexCoord2xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49433,7 +49433,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
-            public static unsafe void TexCoord3bvOES(in sbyte coords)
+            public static unsafe void TexCoord3bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49457,7 +49457,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
-            public static unsafe void TexCoord3xvOES(in int coords)
+            public static unsafe void TexCoord3xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49481,7 +49481,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
-            public static unsafe void TexCoord4bvOES(in sbyte coords)
+            public static unsafe void TexCoord4bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49505,7 +49505,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
-            public static unsafe void TexCoord4xvOES(in int coords)
+            public static unsafe void TexCoord4xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49529,7 +49529,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
-            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
+            public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -49553,7 +49553,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
-            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, in int parameters)
+            public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -49577,7 +49577,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
-            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, in int parameters)
+            public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -49601,7 +49601,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
-            public static unsafe void Vertex2bvOES(in sbyte coords)
+            public static unsafe void Vertex2bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49625,7 +49625,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex2xvOES(int*)"/>
-            public static unsafe void Vertex2xvOES(in int coords)
+            public static unsafe void Vertex2xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49649,7 +49649,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
-            public static unsafe void Vertex3bvOES(in sbyte coords)
+            public static unsafe void Vertex3bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49673,7 +49673,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex3xvOES(int*)"/>
-            public static unsafe void Vertex3xvOES(in int coords)
+            public static unsafe void Vertex3xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49697,7 +49697,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
-            public static unsafe void Vertex4bvOES(in sbyte coords)
+            public static unsafe void Vertex4bvOES(ref readonly sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
                 {
@@ -49721,7 +49721,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Vertex4xvOES(int*)"/>
-            public static unsafe void Vertex4xvOES(in int coords)
+            public static unsafe void Vertex4xvOES(ref readonly int coords)
             {
                 fixed (int* coords_ptr = &coords)
                 {
@@ -49738,7 +49738,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static unsafe partial class SGI
         {
             /// <inheritdoc cref="ColorTableParameterfvSGI(ColorTableTargetSGI, ColorTableParameterPName, float*)"/>
-            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, in Color4<Rgba> parameters)
+            public static unsafe void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, ref readonly Color4<Rgba> parameters)
             {
                 fixed (Color4<Rgba>* tmp_parameters = &parameters)
                 {
@@ -49763,7 +49763,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableParameterivSGI(ColorTableTargetSGI, ColorTableParameterPName, int*)"/>
-            public static unsafe void ColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, in int parameters)
+            public static unsafe void ColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -49795,7 +49795,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ColorTableSGI(ColorTableTargetSGI, InternalFormat, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void ColorTableSGI<T1>(ColorTableTargetSGI target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 table)
+            public static unsafe void ColorTableSGI<T1>(ColorTableTargetSGI target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ref readonly T1 table)
                 where T1 : unmanaged
             {
                 fixed (void* table_ptr = &table)
@@ -49935,7 +49935,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DetailTexFuncSGIS(TextureTarget, int, float*)"/>
-            public static unsafe void DetailTexFuncSGIS(TextureTarget target, int n, in float points)
+            public static unsafe void DetailTexFuncSGIS(TextureTarget target, int n, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -49959,7 +49959,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FogFuncSGIS(int, float*)"/>
-            public static unsafe void FogFuncSGIS(int n, in float points)
+            public static unsafe void FogFuncSGIS(int n, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -50187,7 +50187,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS, float*)"/>
-            public static unsafe void PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, in float parameters)
+            public static unsafe void PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50211,7 +50211,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS, int*)"/>
-            public static unsafe void PixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, in int parameters)
+            public static unsafe void PixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -50235,7 +50235,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointParameterfvSGIS(PointParameterNameARB, float*)"/>
-            public static unsafe void PointParameterfvSGIS(PointParameterNameARB pname, in float parameters)
+            public static unsafe void PointParameterfvSGIS(PointParameterNameARB pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50259,7 +50259,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SharpenTexFuncSGIS(TextureTarget, int, float*)"/>
-            public static unsafe void SharpenTexFuncSGIS(TextureTarget target, int n, in float points)
+            public static unsafe void SharpenTexFuncSGIS(TextureTarget target, int n, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -50283,7 +50283,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexFilterFuncSGIS(TextureTarget, TextureFilterSGIS, int, float*)"/>
-            public static unsafe void TexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, int n, in float weights)
+            public static unsafe void TexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, int n, ref readonly float weights)
             {
                 fixed (float* weights_ptr = &weights)
                 {
@@ -50315,7 +50315,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexImage4DSGIS(TextureTarget, int, InternalFormat, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexImage4DSGIS<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int size4d, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexImage4DSGIS<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int size4d, int border, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -50348,7 +50348,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexSubImage4DSGIS(TextureTarget, int, int, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TexSubImage4DSGIS<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TexSubImage4DSGIS<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, PixelFormat format, PixelType type, ref readonly T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -50376,7 +50376,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeformationMap3dSGIX(FfdTargetSGIX, double, double, int, int, double, double, int, int, double, double, int, int, double*)"/>
-            public static unsafe void DeformationMap3dSGIX(FfdTargetSGIX target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, in double points)
+            public static unsafe void DeformationMap3dSGIX(FfdTargetSGIX target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, ref readonly double points)
             {
                 fixed (double* points_ptr = &points)
                 {
@@ -50400,7 +50400,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeformationMap3fSGIX(FfdTargetSGIX, float, float, int, int, float, float, int, int, float, float, int, int, float*)"/>
-            public static unsafe void DeformationMap3fSGIX(FfdTargetSGIX target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, in float points)
+            public static unsafe void DeformationMap3fSGIX(FfdTargetSGIX target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, ref readonly float points)
             {
                 fixed (float* points_ptr = &points)
                 {
@@ -50434,7 +50434,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentLightfvSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, float*)"/>
-            public static unsafe void FragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, in float parameters)
+            public static unsafe void FragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50458,7 +50458,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentLightivSGIX(FragmentLightNameSGIX, FragmentLightParameterSGIX, int*)"/>
-            public static unsafe void FragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, in int parameters)
+            public static unsafe void FragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -50482,7 +50482,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentLightModelfvSGIX(FragmentLightModelParameterSGIX, float*)"/>
-            public static unsafe void FragmentLightModelfvSGIX(FragmentLightModelParameterSGIX pname, in float parameters)
+            public static unsafe void FragmentLightModelfvSGIX(FragmentLightModelParameterSGIX pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50506,7 +50506,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentLightModelivSGIX(FragmentLightModelParameterSGIX, int*)"/>
-            public static unsafe void FragmentLightModelivSGIX(FragmentLightModelParameterSGIX pname, in int parameters)
+            public static unsafe void FragmentLightModelivSGIX(FragmentLightModelParameterSGIX pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -50530,7 +50530,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentMaterialfvSGIX(TriangleFace, MaterialParameter, float*)"/>
-            public static unsafe void FragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, in float parameters)
+            public static unsafe void FragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50554,7 +50554,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="FragmentMaterialivSGIX(TriangleFace, MaterialParameter, int*)"/>
-            public static unsafe void FragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, in int parameters)
+            public static unsafe void FragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -50790,7 +50790,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="IglooInterfaceSGIX(All, void*)"/>
-            public static unsafe void IglooInterfaceSGIX<T1>(All pname, in T1 parameters)
+            public static unsafe void IglooInterfaceSGIX<T1>(All pname, ref readonly T1 parameters)
                 where T1 : unmanaged
             {
                 fixed (void* parameters_ptr = &parameters)
@@ -50839,7 +50839,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ListParameterfvSGIX(int, ListParameterName, float*)"/>
-            public static unsafe void ListParameterfvSGIX(int list, ListParameterName pname, in float parameters)
+            public static unsafe void ListParameterfvSGIX(int list, ListParameterName pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50863,7 +50863,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ListParameterivSGIX(int, ListParameterName, int*)"/>
-            public static unsafe void ListParameterivSGIX(int list, ListParameterName pname, in int parameters)
+            public static unsafe void ListParameterivSGIX(int list, ListParameterName pname, ref readonly int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -50907,7 +50907,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReferencePlaneSGIX(double*)"/>
-            public static unsafe void ReferencePlaneSGIX(in double equation)
+            public static unsafe void ReferencePlaneSGIX(ref readonly double equation)
             {
                 fixed (double* equation_ptr = &equation)
                 {
@@ -50931,7 +50931,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SpriteParameterfvSGIX(SpriteParameterNameSGIX, float*)"/>
-            public static unsafe void SpriteParameterfvSGIX(SpriteParameterNameSGIX pname, in float parameters)
+            public static unsafe void SpriteParameterfvSGIX(SpriteParameterNameSGIX pname, ref readonly float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -50955,7 +50955,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, in SpriteModeSGIX parameters)
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, ref readonly SpriteModeSGIX parameters)
             {
                 fixed (SpriteModeSGIX* parameters_ptr = &parameters)
                 {
@@ -50966,7 +50966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static unsafe partial class SUN
         {
             /// <inheritdoc cref="Color3fVertex3fvSUN(float*, float*)"/>
-            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, ReadOnlySpan<float> v)
+            public static unsafe void Color3fVertex3fvSUN(ref readonly Color3<Rgb> c, ReadOnlySpan<float> v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -50978,7 +50978,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color3fVertex3fvSUN(float*, float*)"/>
-            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, float[] v)
+            public static unsafe void Color3fVertex3fvSUN(ref readonly Color3<Rgb> c, float[] v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -50990,7 +50990,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color3fVertex3fvSUN(float*, float*)"/>
-            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, in float v)
+            public static unsafe void Color3fVertex3fvSUN(ref readonly Color3<Rgb> c, ref readonly float v)
             {
                 fixed (float* v_ptr = &v)
                 {
@@ -51002,7 +51002,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(ref readonly Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51017,7 +51017,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, float[] n, float[] v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(ref readonly Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51032,7 +51032,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, in float n, in float v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(ref readonly Color4<Rgba> c, ref readonly float n, ref readonly float v)
             {
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
@@ -51067,7 +51067,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4ubVertex2fvSUN(byte*, float*)"/>
-            public static unsafe void Color4ubVertex2fvSUN(in byte c, in float v)
+            public static unsafe void Color4ubVertex2fvSUN(ref readonly byte c, ref readonly float v)
             {
                 fixed (byte* c_ptr = &c)
                 fixed (float* v_ptr = &v)
@@ -51098,7 +51098,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4ubVertex3fvSUN(byte*, float*)"/>
-            public static unsafe void Color4ubVertex3fvSUN(in byte c, in float v)
+            public static unsafe void Color4ubVertex3fvSUN(ref readonly byte c, ref readonly float v)
             {
                 fixed (byte* c_ptr = &c)
                 fixed (float* v_ptr = &v)
@@ -51129,7 +51129,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Normal3fVertex3fvSUN(float*, float*)"/>
-            public static unsafe void Normal3fVertex3fvSUN(in float n, in float v)
+            public static unsafe void Normal3fVertex3fvSUN(ref readonly float n, ref readonly float v)
             {
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
@@ -51154,7 +51154,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeubvSUN(byte*)"/>
-            public static unsafe void ReplacementCodeubvSUN(in byte code)
+            public static unsafe void ReplacementCodeubvSUN(ref readonly byte code)
             {
                 fixed (byte* code_ptr = &code)
                 {
@@ -51162,7 +51162,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in Color3<Rgb> c, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color3<Rgb> c, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51177,7 +51177,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in Color3<Rgb> c, float[] v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color3<Rgb> c, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51192,7 +51192,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in Color3<Rgb> c, in float v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color3<Rgb> c, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* v_ptr = &v)
@@ -51205,7 +51205,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51223,7 +51223,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in Color4<Rgba> c, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51241,7 +51241,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in Color4<Rgba> c, in float n, in float v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly Color4<Rgba> c, ref readonly float n, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* n_ptr = &n)
@@ -51255,7 +51255,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<byte> c, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<byte> c, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51269,7 +51269,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(in TriangleListSUN rc, byte[] c, float[] v)
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(ref readonly TriangleListSUN rc, byte[] c, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51283,7 +51283,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(in TriangleListSUN rc, in byte c, in float v)
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly byte c, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (byte* c_ptr = &c)
@@ -51293,7 +51293,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51307,7 +51307,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(in TriangleListSUN rc, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51321,7 +51321,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(in TriangleListSUN rc, in float n, in float v)
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly float n, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* n_ptr = &n)
@@ -51331,7 +51331,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<float> tc, ref readonly Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51352,7 +51352,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, float[] tc, in Color4<Rgba> c, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, float[] tc, ref readonly Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51373,7 +51373,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in Color4<Rgba> c, in float n, in float v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly float tc, ref readonly Color4<Rgba> c, ref readonly float n, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
@@ -51388,7 +51388,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51405,7 +51405,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(in TriangleListSUN rc, float[] tc, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, float[] tc, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51422,7 +51422,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in float n, in float v)
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly float tc, ref readonly float n, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
@@ -51433,7 +51433,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51447,7 +51447,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(in TriangleListSUN rc, float[] tc, float[] v)
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(ref readonly TriangleListSUN rc, float[] tc, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51461,7 +51461,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(in TriangleListSUN rc, in float tc, in float v)
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly float tc, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
@@ -51471,7 +51471,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(in TriangleListSUN rc, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(ref readonly TriangleListSUN rc, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51482,7 +51482,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(in TriangleListSUN rc, float[] v)
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(ref readonly TriangleListSUN rc, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 {
@@ -51493,7 +51493,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(in TriangleListSUN rc, in float v)
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(ref readonly TriangleListSUN rc, ref readonly float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* v_ptr = &v)
@@ -51518,7 +51518,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuivSUN(TriangleListSUN*)"/>
-            public static unsafe void ReplacementCodeuivSUN(in TriangleListSUN code)
+            public static unsafe void ReplacementCodeuivSUN(ref readonly TriangleListSUN code)
             {
                 fixed (TriangleListSUN* code_ptr = &code)
                 {
@@ -51542,7 +51542,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeusvSUN(ushort*)"/>
-            public static unsafe void ReplacementCodeusvSUN(in ushort code)
+            public static unsafe void ReplacementCodeusvSUN(ref readonly ushort code)
             {
                 fixed (ushort* code_ptr = &code)
                 {
@@ -51550,7 +51550,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(ReadOnlySpan<float> tc, in Color3<Rgb> c, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(ReadOnlySpan<float> tc, ref readonly Color3<Rgb> c, ReadOnlySpan<float> v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51565,7 +51565,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(float[] tc, in Color3<Rgb> c, float[] v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(float[] tc, ref readonly Color3<Rgb> c, float[] v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51580,7 +51580,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(in float tc, in Color3<Rgb> c, in float v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(ref readonly float tc, ref readonly Color3<Rgb> c, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* v_ptr = &v)
@@ -51593,7 +51593,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<float> tc, ref readonly Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51611,7 +51611,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(float[] tc, in Color4<Rgba> c, float[] n, float[] v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(float[] tc, ref readonly Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51629,7 +51629,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(in float tc, in Color4<Rgba> c, in float n, in float v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(ref readonly float tc, ref readonly Color4<Rgba> c, ref readonly float n, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* n_ptr = &n)
@@ -51671,7 +51671,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4ubVertex3fvSUN(float*, byte*, float*)"/>
-            public static unsafe void TexCoord2fColor4ubVertex3fvSUN(in float tc, in byte c, in float v)
+            public static unsafe void TexCoord2fColor4ubVertex3fvSUN(ref readonly float tc, ref readonly byte c, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (byte* c_ptr = &c)
@@ -51709,7 +51709,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fNormal3fVertex3fvSUN(float*, float*, float*)"/>
-            public static unsafe void TexCoord2fNormal3fVertex3fvSUN(in float tc, in float n, in float v)
+            public static unsafe void TexCoord2fNormal3fVertex3fvSUN(ref readonly float tc, ref readonly float n, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* n_ptr = &n)
@@ -51741,7 +51741,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fVertex3fvSUN(float*, float*)"/>
-            public static unsafe void TexCoord2fVertex3fvSUN(in float tc, in float v)
+            public static unsafe void TexCoord2fVertex3fvSUN(ref readonly float tc, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* v_ptr = &v)
@@ -51750,7 +51750,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(ReadOnlySpan<float> tc, ref readonly Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51768,7 +51768,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(float[] tc, in Color4<Rgba> c, float[] n, float[] v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(float[] tc, ref readonly Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (float* v_ptr = v)
                 {
@@ -51786,7 +51786,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN(float*, float*, float*, float*)"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(in float tc, in Color4<Rgba> c, in float n, in float v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(ref readonly float tc, ref readonly Color4<Rgba> c, ref readonly float n, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* n_ptr = &n)
@@ -51822,7 +51822,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fVertex4fvSUN(float*, float*)"/>
-            public static unsafe void TexCoord4fVertex4fvSUN(in float tc, in float v)
+            public static unsafe void TexCoord4fVertex4fvSUN(ref readonly float tc, ref readonly float v)
             {
                 fixed (float* tc_ptr = &tc)
                 fixed (float* v_ptr = &v)

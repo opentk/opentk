@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-07-16 18:34:15 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:38 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -38,7 +38,7 @@ namespace OpenTK.Graphics.Glx
             return returnValue;
         }
         /// <inheritdoc cref="ChooseFBConfig(DisplayPtr, int, int*, int*)"/>
-        public static unsafe GLXFBConfig* ChooseFBConfig(DisplayPtr dpy, int screen, in int attrib_list, ref int nelements)
+        public static unsafe GLXFBConfig* ChooseFBConfig(DisplayPtr dpy, int screen, ref readonly int attrib_list, ref int nelements)
         {
             GLXFBConfig* returnValue;
             fixed (int* attrib_list_ptr = &attrib_list)
@@ -99,7 +99,7 @@ namespace OpenTK.Graphics.Glx
             return returnValue;
         }
         /// <inheritdoc cref="CreatePbuffer(DisplayPtr, GLXFBConfig, int*)"/>
-        public static unsafe GLXPbuffer CreatePbuffer(DisplayPtr dpy, GLXFBConfig config, in int attrib_list)
+        public static unsafe GLXPbuffer CreatePbuffer(DisplayPtr dpy, GLXFBConfig config, ref readonly int attrib_list)
         {
             GLXPbuffer returnValue;
             fixed (int* attrib_list_ptr = &attrib_list)
@@ -129,7 +129,7 @@ namespace OpenTK.Graphics.Glx
             return returnValue;
         }
         /// <inheritdoc cref="CreatePixmap(DisplayPtr, GLXFBConfig, Pixmap, int*)"/>
-        public static unsafe GLXPixmap CreatePixmap(DisplayPtr dpy, GLXFBConfig config, Pixmap pixmap, in int attrib_list)
+        public static unsafe GLXPixmap CreatePixmap(DisplayPtr dpy, GLXFBConfig config, Pixmap pixmap, ref readonly int attrib_list)
         {
             GLXPixmap returnValue;
             fixed (int* attrib_list_ptr = &attrib_list)
@@ -159,7 +159,7 @@ namespace OpenTK.Graphics.Glx
             return returnValue;
         }
         /// <inheritdoc cref="CreateWindow(DisplayPtr, GLXFBConfig, Window, int*)"/>
-        public static unsafe GLXWindow CreateWindow(DisplayPtr dpy, GLXFBConfig config, Window win, in int attrib_list)
+        public static unsafe GLXWindow CreateWindow(DisplayPtr dpy, GLXFBConfig config, Window win, ref readonly int attrib_list)
         {
             GLXWindow returnValue;
             fixed (int* attrib_list_ptr = &attrib_list)
@@ -288,7 +288,7 @@ namespace OpenTK.Graphics.Glx
             return returnValue;
         }
         /// <inheritdoc cref="GetProcAddress(byte*)"/>
-        public static unsafe IntPtr GetProcAddress(in byte procName)
+        public static unsafe IntPtr GetProcAddress(ref readonly byte procName)
         {
             IntPtr returnValue;
             fixed (byte* procName_ptr = &procName)
@@ -490,7 +490,7 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="CreateAssociatedContextAttribsAMD(uint, GLXContext, int*)"/>
-            public static unsafe GLXContext CreateAssociatedContextAttribsAMD(uint id, GLXContext share_context, in int attribList)
+            public static unsafe GLXContext CreateAssociatedContextAttribsAMD(uint id, GLXContext share_context, ref readonly int attribList)
             {
                 GLXContext returnValue;
                 fixed (int* attribList_ptr = &attribList)
@@ -594,7 +594,7 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="CreateContextAttribsARB(DisplayPtr, GLXFBConfig, GLXContext, bool, int*)"/>
-            public static unsafe GLXContext CreateContextAttribsARB(DisplayPtr dpy, GLXFBConfig config, GLXContext share_context, bool direct, in int attrib_list)
+            public static unsafe GLXContext CreateContextAttribsARB(DisplayPtr dpy, GLXFBConfig config, GLXContext share_context, bool direct, ref readonly int attrib_list)
             {
                 GLXContext returnValue;
                 fixed (int* attrib_list_ptr = &attrib_list)
@@ -624,7 +624,7 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="GetProcAddressARB(byte*)"/>
-            public static unsafe IntPtr GetProcAddressARB(in byte procName)
+            public static unsafe IntPtr GetProcAddressARB(ref readonly byte procName)
             {
                 IntPtr returnValue;
                 fixed (byte* procName_ptr = &procName)
@@ -653,7 +653,7 @@ namespace OpenTK.Graphics.Glx
                 }
             }
             /// <inheritdoc cref="BindTexImageEXT(DisplayPtr, GLXDrawable, int, int*)"/>
-            public static unsafe void BindTexImageEXT(DisplayPtr dpy, GLXDrawable drawable, int buffer, in int attrib_list)
+            public static unsafe void BindTexImageEXT(DisplayPtr dpy, GLXDrawable drawable, int buffer, ref readonly int attrib_list)
             {
                 fixed (int* attrib_list_ptr = &attrib_list)
                 {
@@ -724,7 +724,7 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="GetAGPOffsetMESA(void*)"/>
-            public static unsafe uint GetAGPOffsetMESA<T1>(in T1 pointer)
+            public static unsafe uint GetAGPOffsetMESA<T1>(ref readonly T1 pointer)
                 where T1 : unmanaged
             {
                 uint returnValue;
@@ -836,7 +836,7 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="BindVideoDeviceNV(DisplayPtr, uint, uint, int*)"/>
-            public static unsafe int BindVideoDeviceNV(DisplayPtr dpy, uint video_slot, uint video_device, in int attrib_list)
+            public static unsafe int BindVideoDeviceNV(DisplayPtr dpy, uint video_slot, uint video_device, ref readonly int attrib_list)
             {
                 int returnValue;
                 fixed (int* attrib_list_ptr = &attrib_list)
