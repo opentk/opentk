@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -59,6 +60,9 @@ namespace VkGenerator
 
                 foreach (EnumType @enum in enums)
                 {
+                    // FIXME: Make sure to not do name mangling?
+                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@enum.Name}.html\" /></remarks>");
+
                     if (@enum.Bitmask)
                     {
                         writer.WriteLine("[Flags]");
@@ -130,6 +134,9 @@ namespace VkGenerator
                         writer.WriteLine($"/// <summary>{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}</summary>");
                     }
 
+                    // FIXME: Make sure to not do name mangling?
+                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
+
                     WriteStruct(writer, @struct, enums);
                 }
 
@@ -153,7 +160,10 @@ namespace VkGenerator
 
                 foreach (HandleType handle in handles)
                 {
-                    // FIXME: Figure out the right underlying type!s
+                    // FIXME: Make sure to not do name mangling?
+                    writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{handle.Name}.html\" /></remarks>");
+
+                    // FIXME: Figure out the right underlying type!
                     writer.WriteLine($"[DebuggerDisplay(\"{handle.Name}\\\\{{{{Handle}}\\\\}}\")]");
                     writer.WriteLine($"public unsafe struct {handle.Name} : IEquatable<{handle.Name}>");
                     using (writer.CsScope())
@@ -213,6 +223,8 @@ namespace VkGenerator
                         }
                         signature.Length -= 2;
                         paramNames.Length -= 2;
+
+                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
 
                         writer.WriteLine($"public static {command.StrongReturnType!.ToCSString()} {functionName}({signature})");
                         using (writer.CsScope())
@@ -328,6 +340,8 @@ namespace VkGenerator
                         {
                             writer.WriteLine($"/// <summary>{constant.Comment}</summary>");
                         }
+
+                        writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{name}.html\" /></remarks>");
 
                         switch (constant.Type)
                         {

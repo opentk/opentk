@@ -4,6 +4,7 @@ using System;
 namespace OpenTK.Graphics.Vulkan
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageLayout.html" /></remarks>
     public enum VkImageLayout : int
     {
         /// <summary>Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)</summary>
@@ -83,6 +84,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>]</summary>
         ImageLayoutAttachmentOptimalKhr = 1000314001,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentLoadOp.html" /></remarks>
     public enum VkAttachmentLoadOp : int
     {
         AttachmentLoadOpLoad = 0,
@@ -93,6 +95,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_load_store_op_none</b>]</summary>
         AttachmentLoadOpNoneExt = 1000400000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentStoreOp.html" /></remarks>
     public enum VkAttachmentStoreOp : int
     {
         AttachmentStoreOpStore = 0,
@@ -106,12 +109,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_load_store_op_none</b>]</summary>
         AttachmentStoreOpNoneExt = 1000301000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageType.html" /></remarks>
     public enum VkImageType : int
     {
         ImageType1d = 0,
         ImageType2d = 1,
         ImageType3d = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageTiling.html" /></remarks>
     public enum VkImageTiling : int
     {
         ImageTilingOptimal = 0,
@@ -119,6 +124,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_image_drm_format_modifier</b>]</summary>
         ImageTilingDrmFormatModifierExt = 1000158000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageViewType.html" /></remarks>
     public enum VkImageViewType : int
     {
         ImageViewType1d = 0,
@@ -129,11 +135,13 @@ namespace OpenTK.Graphics.Vulkan
         ImageViewType2dArray = 5,
         ImageViewTypeCubeArray = 6,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferLevel.html" /></remarks>
     public enum VkCommandBufferLevel : int
     {
         CommandBufferLevelPrimary = 0,
         CommandBufferLevelSecondary = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComponentSwizzle.html" /></remarks>
     public enum VkComponentSwizzle : int
     {
         ComponentSwizzleIdentity = 0,
@@ -144,6 +152,7 @@ namespace OpenTK.Graphics.Vulkan
         ComponentSwizzleB = 5,
         ComponentSwizzleA = 6,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorType.html" /></remarks>
     public enum VkDescriptorType : int
     {
         DescriptorTypeSampler = 0,
@@ -174,6 +183,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_VALVE_mutable_descriptor_type</b>]</summary>
         DescriptorTypeMutableValve = 1000351000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryType.html" /></remarks>
     public enum VkQueryType : int
     {
         QueryTypeOcclusion = 0,
@@ -209,6 +219,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_opacity_micromap</b>]</summary>
         QueryTypeMicromapCompactedSizeExt = 1000396001,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBorderColor.html" /></remarks>
     public enum VkBorderColor : int
     {
         BorderColorFloatTransparentBlack = 0,
@@ -222,6 +233,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_custom_border_color</b>]</summary>
         BorderColorIntCustomExt = 1000287004,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineBindPoint.html" /></remarks>
     public enum VkPipelineBindPoint : int
     {
         PipelineBindPointGraphics = 0,
@@ -235,10 +247,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         PipelineBindPointRayTracingNv = 1000165000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCacheHeaderVersion.html" /></remarks>
     public enum VkPipelineCacheHeaderVersion : int
     {
         PipelineCacheHeaderVersionOne = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCacheCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineCacheCreateFlagBits : uint
     {
@@ -247,6 +261,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_pipeline_creation_cache_control</b>]</summary>
         PipelineCacheCreateExternallySynchronizedBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrimitiveTopology.html" /></remarks>
     public enum VkPrimitiveTopology : int
     {
         PrimitiveTopologyPointList = 0,
@@ -261,11 +276,13 @@ namespace OpenTK.Graphics.Vulkan
         PrimitiveTopologyTriangleStripWithAdjacency = 9,
         PrimitiveTopologyPatchList = 10,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSharingMode.html" /></remarks>
     public enum VkSharingMode : int
     {
         SharingModeExclusive = 0,
         SharingModeConcurrent = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndexType.html" /></remarks>
     public enum VkIndexType : int
     {
         IndexTypeUint16 = 0,
@@ -279,6 +296,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_index_type_uint8</b>]</summary>
         IndexTypeUint8Ext = 1000265000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFilter.html" /></remarks>
     public enum VkFilter : int
     {
         FilterNearest = 0,
@@ -288,6 +306,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_IMG_filter_cubic</b>]</summary>
         FilterCubicImg = 1000015000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerMipmapMode.html" /></remarks>
     public enum VkSamplerMipmapMode : int
     {
         /// <summary>Choose nearest mip level</summary>
@@ -295,6 +314,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Linear filter between mip levels</summary>
         SamplerMipmapModeLinear = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerAddressMode.html" /></remarks>
     public enum VkSamplerAddressMode : int
     {
         SamplerAddressModeRepeat = 0,
@@ -306,6 +326,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_mirror_clamp_to_edge</b>]Introduced for consistency with extension suffixing rules</summary>
         SamplerAddressModeMirrorClampToEdgeKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCompareOp.html" /></remarks>
     public enum VkCompareOp : int
     {
         CompareOpNever = 0,
@@ -317,6 +338,7 @@ namespace OpenTK.Graphics.Vulkan
         CompareOpGreaterOrEqual = 6,
         CompareOpAlways = 7,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPolygonMode.html" /></remarks>
     public enum VkPolygonMode : int
     {
         PolygonModeFill = 0,
@@ -325,11 +347,13 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_fill_rectangle</b>]</summary>
         PolygonModeFillRectangleNv = 1000153000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFrontFace.html" /></remarks>
     public enum VkFrontFace : int
     {
         FrontFaceCounterClockwise = 0,
         FrontFaceClockwise = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendFactor.html" /></remarks>
     public enum VkBlendFactor : int
     {
         BlendFactorZero = 0,
@@ -352,6 +376,7 @@ namespace OpenTK.Graphics.Vulkan
         BlendFactorSrc1Alpha = 17,
         BlendFactorOneMinusSrc1Alpha = 18,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendOp.html" /></remarks>
     public enum VkBlendOp : int
     {
         BlendOpAdd = 0,
@@ -452,6 +477,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_blend_operation_advanced</b>]</summary>
         BlendOpBlueExt = 1000148045,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStencilOp.html" /></remarks>
     public enum VkStencilOp : int
     {
         StencilOpKeep = 0,
@@ -463,6 +489,7 @@ namespace OpenTK.Graphics.Vulkan
         StencilOpIncrementAndWrap = 6,
         StencilOpDecrementAndWrap = 7,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLogicOp.html" /></remarks>
     public enum VkLogicOp : int
     {
         LogicOpClear = 0,
@@ -482,10 +509,12 @@ namespace OpenTK.Graphics.Vulkan
         LogicOpNand = 14,
         LogicOpSet = 15,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInternalAllocationType.html" /></remarks>
     public enum VkInternalAllocationType : int
     {
         InternalAllocationTypeExecutable = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSystemAllocationScope.html" /></remarks>
     public enum VkSystemAllocationScope : int
     {
         SystemAllocationScopeCommand = 0,
@@ -494,6 +523,7 @@ namespace OpenTK.Graphics.Vulkan
         SystemAllocationScopeDevice = 3,
         SystemAllocationScopeInstance = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceType.html" /></remarks>
     public enum VkPhysicalDeviceType : int
     {
         PhysicalDeviceTypeOther = 0,
@@ -502,11 +532,13 @@ namespace OpenTK.Graphics.Vulkan
         PhysicalDeviceTypeVirtualGpu = 3,
         PhysicalDeviceTypeCpu = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVertexInputRate.html" /></remarks>
     public enum VkVertexInputRate : int
     {
         VertexInputRateVertex = 0,
         VertexInputRateInstance = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormat.html" /></remarks>
     public enum VkFormat : int
     {
         FormatUndefined = 0,
@@ -935,6 +967,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_optical_flow</b>]</summary>
         FormatR16g16S105Nv = 1000464000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStructureType.html" /></remarks>
     public enum VkStructureType : int
     {
         StructureTypeApplicationInfo = 0,
@@ -3107,6 +3140,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         StructureTypeShaderRequiredSubgroupSizeCreateInfoExt = 1000225001,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassContents.html" /></remarks>
     public enum VkSubpassContents : int
     {
         SubpassContentsInline = 0,
@@ -3116,6 +3150,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_nested_command_buffer</b>]</summary>
         SubpassContentsInlineAndSecondaryCommandBuffersExt = 1000451000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResult.html" /></remarks>
     public enum VkResult : int
     {
         /// <summary>Command completed successfully</summary>
@@ -3231,6 +3266,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         ErrorIncompatibleShaderBinaryExt = 1000482000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDynamicState.html" /></remarks>
     public enum VkDynamicState : int
     {
         DynamicStateViewport = 0,
@@ -3401,6 +3437,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_extended_dynamic_state2</b>]</summary>
         DynamicStatePrimitiveRestartEnableExt = 1000377004,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateType.html" /></remarks>
     public enum VkDescriptorUpdateTemplateType : int
     {
         /// <summary>Create descriptor update template for descriptor set updates</summary>
@@ -3410,6 +3447,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_descriptor_update_template</b>]</summary>
         DescriptorUpdateTemplateTypeDescriptorSetKhr = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkObjectType.html" /></remarks>
     public enum VkObjectType : int
     {
         ObjectTypeUnknown = 0,
@@ -3497,16 +3535,19 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_private_data</b>]</summary>
         ObjectTypePrivateDataSlotExt = 1000295000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingInvocationReorderModeNV.html" /></remarks>
     public enum VkRayTracingInvocationReorderModeNV : int
     {
         RayTracingInvocationReorderModeNoneNv = 0,
         RayTracingInvocationReorderModeReorderNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingModeLUNARG.html" /></remarks>
     public enum VkDirectDriverLoadingModeLUNARG : int
     {
         DirectDriverLoadingModeExclusiveLunarg = 0,
         DirectDriverLoadingModeInclusiveLunarg = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueFlagBits.html" /></remarks>
     [Flags]
     public enum VkQueueFlagBits : uint
     {
@@ -3527,6 +3568,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_optical_flow</b>]</summary>
         QueueOpticalFlowBitNv = 256,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCullModeFlagBits.html" /></remarks>
     [Flags]
     public enum VkCullModeFlagBits : uint
     {
@@ -3535,18 +3577,21 @@ namespace OpenTK.Graphics.Vulkan
         CullModeBackBit = 2,
         CullModeFrontAndBack = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderPassCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkRenderPassCreateFlagBits : uint
     {
         /// <summary>[requires: <b>VK_QCOM_render_pass_transform</b>]</summary>
         RenderPassCreateTransformBitQcom = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceQueueCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkDeviceQueueCreateFlagBits : uint
     {
         /// <summary>[requires: <b>VK_VERSION_1_1</b>]Queue is a protected-capable device queue</summary>
         DeviceQueueCreateProtectedBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryPropertyFlagBits.html" /></remarks>
     [Flags]
     public enum VkMemoryPropertyFlagBits : uint
     {
@@ -3569,6 +3614,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_external_memory_rdma</b>]</summary>
         MemoryPropertyRdmaCapableBitNv = 256,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryHeapFlagBits.html" /></remarks>
     [Flags]
     public enum VkMemoryHeapFlagBits : uint
     {
@@ -3579,6 +3625,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_device_group_creation</b>]</summary>
         MemoryHeapMultiInstanceBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits.html" /></remarks>
     [Flags]
     public enum VkAccessFlagBits : uint
     {
@@ -3649,6 +3696,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>]</summary>
         AccessNoneKhr = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits.html" /></remarks>
     [Flags]
     public enum VkBufferUsageFlagBits : uint
     {
@@ -3711,6 +3759,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_buffer_device_address</b>]</summary>
         BufferUsageShaderDeviceAddressBitKhr = 131072,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2KHR.html" /></remarks>
     [Flags]
     public enum VkBufferUsageFlagBits2KHR : ulong
     {
@@ -3760,6 +3809,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_maintenance5</b>]</summary>
         BufferUsage2RayTracingBitNv = 1024,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkBufferCreateFlagBits : uint
     {
@@ -3782,6 +3832,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_buffer_device_address</b>]</summary>
         BufferCreateDeviceAddressCaptureReplayBitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderStageFlagBits.html" /></remarks>
     [Flags]
     public enum VkShaderStageFlagBits : uint
     {
@@ -3830,6 +3881,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_mesh_shader</b>]</summary>
         ShaderStageMeshBitNv = 128,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageUsageFlagBits.html" /></remarks>
     [Flags]
     public enum VkImageUsageFlagBits : uint
     {
@@ -3878,6 +3930,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_shading_rate_image</b>]</summary>
         ImageUsageShadingRateImageBitNv = 256,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkImageCreateFlagBits : uint
     {
@@ -3934,6 +3987,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_bind_memory2</b>]</summary>
         ImageCreateAliasBitKhr = 1024,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageViewCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkImageViewCreateFlagBits : uint
     {
@@ -3944,6 +3998,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_fragment_density_map2</b>]</summary>
         ImageViewCreateFragmentDensityMapDeferredBitExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkSamplerCreateFlagBits : uint
     {
@@ -3958,6 +4013,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_QCOM_image_processing</b>]</summary>
         SamplerCreateImageProcessingBitQcom = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineCreateFlagBits : uint
     {
@@ -4035,6 +4091,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_pipeline_creation_cache_control</b>]</summary>
         PipelineCreateEarlyReturnOnFailureBitExt = 512,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2KHR.html" /></remarks>
     [Flags]
     public enum VkPipelineCreateFlagBits2KHR : ulong
     {
@@ -4100,6 +4157,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_maintenance5</b>]</summary>
         PipelineCreate2DescriptorBufferBitExt = 536870912,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineShaderStageCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineShaderStageCreateFlagBits : uint
     {
@@ -4112,6 +4170,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_subgroup_size_control</b>]</summary>
         PipelineShaderStageCreateRequireFullSubgroupsBitExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkColorComponentFlagBits.html" /></remarks>
     [Flags]
     public enum VkColorComponentFlagBits : uint
     {
@@ -4120,15 +4179,18 @@ namespace OpenTK.Graphics.Vulkan
         ColorComponentBBit = 4,
         ColorComponentABit = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFenceCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkFenceCreateFlagBits : uint
     {
         FenceCreateSignaledBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkSemaphoreCreateFlagBits : int
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormatFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkFormatFeatureFlagBits : uint
     {
@@ -4217,12 +4279,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_ycbcr_conversion</b>]</summary>
         FormatFeatureCositedChromaSamplesBitKhr = 8388608,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryControlFlagBits.html" /></remarks>
     [Flags]
     public enum VkQueryControlFlagBits : uint
     {
         /// <summary>Require precise results to be collected by the query</summary>
         QueryControlPreciseBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryResultFlagBits.html" /></remarks>
     [Flags]
     public enum VkQueryResultFlagBits : uint
     {
@@ -4237,6 +4301,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_video_queue</b>]</summary>
         QueryResultWithStatusBitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferUsageFlagBits.html" /></remarks>
     [Flags]
     public enum VkCommandBufferUsageFlagBits : uint
     {
@@ -4245,6 +4310,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Command buffer may be submitted/executed more than once simultaneously</summary>
         CommandBufferUsageSimultaneousUseBit = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPipelineStatisticFlagBits.html" /></remarks>
     [Flags]
     public enum VkQueryPipelineStatisticFlagBits : uint
     {
@@ -4277,12 +4343,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_HUAWEI_cluster_culling_shader</b>]</summary>
         QueryPipelineStatisticClusterCullingShaderInvocationsBitHuawei = 8192,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryMapFlagBits.html" /></remarks>
     [Flags]
     public enum VkMemoryMapFlagBits : uint
     {
         /// <summary>[requires: <b>VK_EXT_map_memory_placed</b>]</summary>
         MemoryMapPlacedBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageAspectFlagBits.html" /></remarks>
     [Flags]
     public enum VkImageAspectFlagBits : uint
     {
@@ -4315,6 +4383,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_maintenance4</b>]</summary>
         ImageAspectNoneKhr = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSparseImageFormatFlagBits.html" /></remarks>
     [Flags]
     public enum VkSparseImageFormatFlagBits : uint
     {
@@ -4325,12 +4394,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Image uses a non-standard sparse image block dimensions</summary>
         SparseImageFormatNonstandardBlockSizeBit = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSparseMemoryBindFlagBits.html" /></remarks>
     [Flags]
     public enum VkSparseMemoryBindFlagBits : uint
     {
         /// <summary>Operation binds resource metadata to memory</summary>
         SparseMemoryBindMetadataBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineStageFlagBits : uint
     {
@@ -4401,6 +4472,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>]</summary>
         PipelineStageNoneKhr = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPoolCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkCommandPoolCreateFlagBits : uint
     {
@@ -4411,18 +4483,21 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_VERSION_1_1</b>]Command buffers allocated from pool are protected command buffers</summary>
         CommandPoolCreateProtectedBit = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPoolResetFlagBits.html" /></remarks>
     [Flags]
     public enum VkCommandPoolResetFlagBits : uint
     {
         /// <summary>Release resources owned by the pool</summary>
         CommandPoolResetReleaseResourcesBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandBufferResetFlagBits.html" /></remarks>
     [Flags]
     public enum VkCommandBufferResetFlagBits : uint
     {
         /// <summary>Release resources owned by the buffer</summary>
         CommandBufferResetReleaseResourcesBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSampleCountFlagBits.html" /></remarks>
     [Flags]
     public enum VkSampleCountFlagBits : uint
     {
@@ -4441,12 +4516,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Sample count 64 supported</summary>
         SampleCount64Bit = 64,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAttachmentDescriptionFlagBits.html" /></remarks>
     [Flags]
     public enum VkAttachmentDescriptionFlagBits : uint
     {
         /// <summary>The attachment may alias physical memory of another attachment in the same render pass</summary>
         AttachmentDescriptionMayAliasBit = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStencilFaceFlagBits.html" /></remarks>
     [Flags]
     public enum VkStencilFaceFlagBits : uint
     {
@@ -4459,6 +4536,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Front and back faces</summary>
         StencilFrontAndBack = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkDescriptorPoolCreateFlagBits : uint
     {
@@ -4477,6 +4555,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_VALVE_mutable_descriptor_type</b>]</summary>
         DescriptorPoolCreateHostOnlyBitValve = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDependencyFlagBits.html" /></remarks>
     [Flags]
     public enum VkDependencyFlagBits : uint
     {
@@ -4493,6 +4572,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_device_group</b>]</summary>
         DependencyDeviceGroupBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreType.html" /></remarks>
     public enum VkSemaphoreType : int
     {
         SemaphoreTypeBinary = 0,
@@ -4502,6 +4582,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_timeline_semaphore</b>]</summary>
         SemaphoreTypeTimelineKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreWaitFlagBits.html" /></remarks>
     [Flags]
     public enum VkSemaphoreWaitFlagBits : uint
     {
@@ -4509,6 +4590,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_timeline_semaphore</b>]</summary>
         SemaphoreWaitAnyBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentModeKHR.html" /></remarks>
     public enum VkPresentModeKHR : int
     {
         PresentModeImmediateKhr = 0,
@@ -4520,6 +4602,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_shared_presentable_image</b>]</summary>
         PresentModeSharedContinuousRefreshKhr = 1000111001,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkColorSpaceKHR.html" /></remarks>
     public enum VkColorSpaceKHR : int
     {
         ColorSpaceSrgbNonlinearKhr = 0,
@@ -4557,6 +4640,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_swapchain_colorspace</b>]</summary>
         ColorSpaceDciP3LinearExt = 1000104003,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayPlaneAlphaFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkDisplayPlaneAlphaFlagBitsKHR : uint
     {
@@ -4565,6 +4649,7 @@ namespace OpenTK.Graphics.Vulkan
         DisplayPlaneAlphaPerPixelBitKhr = 4,
         DisplayPlaneAlphaPerPixelPremultipliedBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCompositeAlphaFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkCompositeAlphaFlagBitsKHR : uint
     {
@@ -4573,6 +4658,7 @@ namespace OpenTK.Graphics.Vulkan
         CompositeAlphaPostMultipliedBitKhr = 4,
         CompositeAlphaInheritBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceTransformFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkSurfaceTransformFlagBitsKHR : uint
     {
@@ -4586,11 +4672,13 @@ namespace OpenTK.Graphics.Vulkan
         SurfaceTransformHorizontalMirrorRotate270BitKhr = 128,
         SurfaceTransformInheritBitKhr = 256,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainImageUsageFlagBitsANDROID.html" /></remarks>
     [Flags]
     public enum VkSwapchainImageUsageFlagBitsANDROID : uint
     {
         SwapchainImageUsageSharedBitAndroid = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTimeDomainKHR.html" /></remarks>
     public enum VkTimeDomainKHR : int
     {
         TimeDomainDeviceKhr = 0,
@@ -4606,6 +4694,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_calibrated_timestamps</b>]</summary>
         TimeDomainQueryPerformanceCounterExt = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugReportFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkDebugReportFlagBitsEXT : uint
     {
@@ -4615,6 +4704,7 @@ namespace OpenTK.Graphics.Vulkan
         DebugReportErrorBitExt = 8,
         DebugReportDebugBitExt = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugReportObjectTypeEXT.html" /></remarks>
     public enum VkDebugReportObjectTypeEXT : int
     {
         DebugReportObjectTypeUnknownExt = 0,
@@ -4674,6 +4764,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_ycbcr_conversion</b>]</summary>
         DebugReportObjectTypeSamplerYcbcrConversionKhrExt = 1000156000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemoryReportEventTypeEXT.html" /></remarks>
     public enum VkDeviceMemoryReportEventTypeEXT : int
     {
         DeviceMemoryReportEventTypeAllocateExt = 0,
@@ -4682,11 +4773,13 @@ namespace OpenTK.Graphics.Vulkan
         DeviceMemoryReportEventTypeUnimportExt = 3,
         DeviceMemoryReportEventTypeAllocationFailedExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRasterizationOrderAMD.html" /></remarks>
     public enum VkRasterizationOrderAMD : int
     {
         RasterizationOrderStrictAmd = 0,
         RasterizationOrderRelaxedAmd = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryHandleTypeFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryHandleTypeFlagBitsNV : uint
     {
@@ -4695,6 +4788,7 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryHandleTypeD3d11ImageBitNv = 4,
         ExternalMemoryHandleTypeD3d11ImageKmtBitNv = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryFeatureFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryFeatureFlagBitsNV : uint
     {
@@ -4702,11 +4796,13 @@ namespace OpenTK.Graphics.Vulkan
         ExternalMemoryFeatureExportableBitNv = 2,
         ExternalMemoryFeatureImportableBitNv = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCheckEXT.html" /></remarks>
     public enum VkValidationCheckEXT : int
     {
         ValidationCheckAllExt = 0,
         ValidationCheckShadersExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationFeatureEnableEXT.html" /></remarks>
     public enum VkValidationFeatureEnableEXT : int
     {
         ValidationFeatureEnableGpuAssistedExt = 0,
@@ -4715,6 +4811,7 @@ namespace OpenTK.Graphics.Vulkan
         ValidationFeatureEnableDebugPrintfExt = 3,
         ValidationFeatureEnableSynchronizationValidationExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationFeatureDisableEXT.html" /></remarks>
     public enum VkValidationFeatureDisableEXT : int
     {
         ValidationFeatureDisableAllExt = 0,
@@ -4726,6 +4823,7 @@ namespace OpenTK.Graphics.Vulkan
         ValidationFeatureDisableUniqueHandlesExt = 6,
         ValidationFeatureDisableShaderValidationCacheExt = 7,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayerSettingTypeEXT.html" /></remarks>
     public enum VkLayerSettingTypeEXT : int
     {
         LayerSettingTypeBool32Ext = 0,
@@ -4737,6 +4835,7 @@ namespace OpenTK.Graphics.Vulkan
         LayerSettingTypeFloat64Ext = 6,
         LayerSettingTypeStringExt = 7,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubgroupFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkSubgroupFeatureFlagBits : uint
     {
@@ -4763,6 +4862,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_shader_subgroup_rotate</b>]</summary>
         SubgroupFeatureRotateClusteredBitKhr = 1024,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsLayoutUsageFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkIndirectCommandsLayoutUsageFlagBitsNV : uint
     {
@@ -4770,11 +4870,13 @@ namespace OpenTK.Graphics.Vulkan
         IndirectCommandsLayoutUsageIndexedSequencesBitNv = 2,
         IndirectCommandsLayoutUsageUnorderedSequencesBitNv = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectStateFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkIndirectStateFlagBitsNV : uint
     {
         IndirectStateFlagFrontfaceBitNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeNV.html" /></remarks>
     public enum VkIndirectCommandsTokenTypeNV : int
     {
         IndirectCommandsTokenTypeShaderGroupNv = 0,
@@ -4792,10 +4894,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_device_generated_commands_compute</b>]</summary>
         IndirectCommandsTokenTypeDispatchNv = 1000428004,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPrivateDataSlotCreateFlagBits : int
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorSetLayoutCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkDescriptorSetLayoutCreateFlagBits : uint
     {
@@ -4818,6 +4922,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_VALVE_mutable_descriptor_type</b>]</summary>
         DescriptorSetLayoutCreateHostOnlyPoolBitValve = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryHandleTypeFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryHandleTypeFlagBits : uint
     {
@@ -4859,6 +4964,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>]</summary>
         ExternalMemoryHandleTypeD3d12ResourceBitKhr = 64,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryFeatureFlagBits : uint
     {
@@ -4872,6 +4978,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_memory_capabilities</b>]</summary>
         ExternalMemoryFeatureImportableBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalSemaphoreHandleTypeFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalSemaphoreHandleTypeFlagBits : uint
     {
@@ -4896,6 +5003,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_semaphore_capabilities</b>]</summary>
         ExternalSemaphoreHandleTypeSyncFdBitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalSemaphoreFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalSemaphoreFeatureFlagBits : uint
     {
@@ -4906,6 +5014,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_semaphore_capabilities</b>]</summary>
         ExternalSemaphoreFeatureImportableBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreImportFlagBits.html" /></remarks>
     [Flags]
     public enum VkSemaphoreImportFlagBits : uint
     {
@@ -4913,6 +5022,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_semaphore</b>]</summary>
         SemaphoreImportTemporaryBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalFenceHandleTypeFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalFenceHandleTypeFlagBits : uint
     {
@@ -4933,6 +5043,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_fence_capabilities</b>]</summary>
         ExternalFenceHandleTypeSyncFdBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalFenceFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkExternalFenceFeatureFlagBits : uint
     {
@@ -4943,6 +5054,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_fence_capabilities</b>]</summary>
         ExternalFenceFeatureImportableBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFenceImportFlagBits.html" /></remarks>
     [Flags]
     public enum VkFenceImportFlagBits : uint
     {
@@ -4950,26 +5062,31 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_external_fence</b>]</summary>
         FenceImportTemporaryBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSurfaceCounterFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkSurfaceCounterFlagBitsEXT : uint
     {
         SurfaceCounterVblankBitExt = 1,
         SurfaceCounterVblankExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayPowerStateEXT.html" /></remarks>
     public enum VkDisplayPowerStateEXT : int
     {
         DisplayPowerStateOffExt = 0,
         DisplayPowerStateSuspendExt = 1,
         DisplayPowerStateOnExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceEventTypeEXT.html" /></remarks>
     public enum VkDeviceEventTypeEXT : int
     {
         DeviceEventTypeDisplayHotplugExt = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayEventTypeEXT.html" /></remarks>
     public enum VkDisplayEventTypeEXT : int
     {
         DisplayEventTypeFirstPixelOutExt = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPeerMemoryFeatureFlagBits.html" /></remarks>
     [Flags]
     public enum VkPeerMemoryFeatureFlagBits : uint
     {
@@ -4990,6 +5107,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_device_group</b>]</summary>
         PeerMemoryFeatureGenericDstBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryAllocateFlagBits.html" /></remarks>
     [Flags]
     public enum VkMemoryAllocateFlagBits : uint
     {
@@ -5006,6 +5124,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_buffer_device_address</b>]</summary>
         MemoryAllocateDeviceAddressCaptureReplayBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceGroupPresentModeFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkDeviceGroupPresentModeFlagBitsKHR : uint
     {
@@ -5018,6 +5137,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Each physical device presents from local memory</summary>
         DeviceGroupPresentModeLocalMultiDeviceBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSwapchainCreateFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkSwapchainCreateFlagBitsKHR : uint
     {
@@ -5030,6 +5150,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_swapchain_maintenance1</b>]</summary>
         SwapchainCreateDeferredMemoryAllocationBitExt = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkViewportCoordinateSwizzleNV.html" /></remarks>
     public enum VkViewportCoordinateSwizzleNV : int
     {
         ViewportCoordinateSwizzlePositiveXNv = 0,
@@ -5041,11 +5162,13 @@ namespace OpenTK.Graphics.Vulkan
         ViewportCoordinateSwizzlePositiveWNv = 6,
         ViewportCoordinateSwizzleNegativeWNv = 7,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDiscardRectangleModeEXT.html" /></remarks>
     public enum VkDiscardRectangleModeEXT : int
     {
         DiscardRectangleModeInclusiveExt = 0,
         DiscardRectangleModeExclusiveExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassDescriptionFlagBits.html" /></remarks>
     [Flags]
     public enum VkSubpassDescriptionFlagBits : uint
     {
@@ -5072,6 +5195,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_ARM_rasterization_order_attachment_access</b>]</summary>
         SubpassDescriptionRasterizationOrderAttachmentStencilAccessBitArm = 64,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPointClippingBehavior.html" /></remarks>
     public enum VkPointClippingBehavior : int
     {
         PointClippingBehaviorAllClipPlanes = 0,
@@ -5081,6 +5205,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_maintenance2</b>]</summary>
         PointClippingBehaviorUserClipPlanesOnlyKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerReductionMode.html" /></remarks>
     public enum VkSamplerReductionMode : int
     {
         SamplerReductionModeWeightedAverage = 0,
@@ -5095,6 +5220,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_sampler_filter_minmax</b>]</summary>
         SamplerReductionModeMaxExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkTessellationDomainOrigin.html" /></remarks>
     public enum VkTessellationDomainOrigin : int
     {
         TessellationDomainOriginUpperLeft = 0,
@@ -5104,6 +5230,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_maintenance2</b>]</summary>
         TessellationDomainOriginLowerLeftKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrModelConversion.html" /></remarks>
     public enum VkSamplerYcbcrModelConversion : int
     {
         SamplerYcbcrModelConversionRgbIdentity = 0,
@@ -5126,6 +5253,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_ycbcr_conversion</b>]</summary>
         SamplerYcbcrModelConversionYcbcr2020Khr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSamplerYcbcrRange.html" /></remarks>
     public enum VkSamplerYcbcrRange : int
     {
         /// <summary>Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)</summary>
@@ -5137,6 +5265,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_ycbcr_conversion</b>]</summary>
         SamplerYcbcrRangeItuNarrowKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkChromaLocation.html" /></remarks>
     public enum VkChromaLocation : int
     {
         ChromaLocationCositedEven = 0,
@@ -5146,12 +5275,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_sampler_ycbcr_conversion</b>]</summary>
         ChromaLocationMidpointKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlendOverlapEXT.html" /></remarks>
     public enum VkBlendOverlapEXT : int
     {
         BlendOverlapUncorrelatedExt = 0,
         BlendOverlapDisjointExt = 1,
         BlendOverlapConjointExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoverageModulationModeNV.html" /></remarks>
     public enum VkCoverageModulationModeNV : int
     {
         CoverageModulationModeNoneNv = 0,
@@ -5159,21 +5290,25 @@ namespace OpenTK.Graphics.Vulkan
         CoverageModulationModeAlphaNv = 2,
         CoverageModulationModeRgbaNv = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoverageReductionModeNV.html" /></remarks>
     public enum VkCoverageReductionModeNV : int
     {
         CoverageReductionModeMergeNv = 0,
         CoverageReductionModeTruncateNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCacheHeaderVersionEXT.html" /></remarks>
     public enum VkValidationCacheHeaderVersionEXT : int
     {
         ValidationCacheHeaderVersionOneExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderInfoTypeAMD.html" /></remarks>
     public enum VkShaderInfoTypeAMD : int
     {
         ShaderInfoTypeStatisticsAmd = 0,
         ShaderInfoTypeBinaryAmd = 1,
         ShaderInfoTypeDisassemblyAmd = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityKHR.html" /></remarks>
     public enum VkQueueGlobalPriorityKHR : int
     {
         QueueGlobalPriorityLowKhr = 128,
@@ -5185,6 +5320,7 @@ namespace OpenTK.Graphics.Vulkan
         QueueGlobalPriorityHighExt = 512,
         QueueGlobalPriorityRealtimeExt = 1024,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessageSeverityFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkDebugUtilsMessageSeverityFlagBitsEXT : uint
     {
@@ -5193,6 +5329,7 @@ namespace OpenTK.Graphics.Vulkan
         DebugUtilsMessageSeverityWarningBitExt = 256,
         DebugUtilsMessageSeverityErrorBitExt = 4096,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessageTypeFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkDebugUtilsMessageTypeFlagBitsEXT : uint
     {
@@ -5202,12 +5339,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_device_address_binding_report</b>]</summary>
         DebugUtilsMessageTypeDeviceAddressBindingBitExt = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkConservativeRasterizationModeEXT.html" /></remarks>
     public enum VkConservativeRasterizationModeEXT : int
     {
         ConservativeRasterizationModeDisabledExt = 0,
         ConservativeRasterizationModeOverestimateExt = 1,
         ConservativeRasterizationModeUnderestimateExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBindingFlagBits.html" /></remarks>
     [Flags]
     public enum VkDescriptorBindingFlagBits : uint
     {
@@ -5224,6 +5363,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_descriptor_indexing</b>]</summary>
         DescriptorBindingVariableDescriptorCountBitExt = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVendorId.html" /></remarks>
     public enum VkVendorId : int
     {
         /// <summary>Khronos vendor ID</summary>
@@ -5243,6 +5383,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>Mobileye vendor ID</summary>
         VendorIdMobileye = 65543,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDriverId.html" /></remarks>
     public enum VkDriverId : int
     {
         /// <summary>Advanced Micro Devices, Inc.</summary>
@@ -5324,11 +5465,13 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_driver_properties</b>]</summary>
         DriverIdBroadcomProprietaryKhr = 12,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkConditionalRenderingFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkConditionalRenderingFlagBitsEXT : uint
     {
         ConditionalRenderingInvertedBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResolveModeFlagBits.html" /></remarks>
     [Flags]
     public enum VkResolveModeFlagBits : uint
     {
@@ -5350,6 +5493,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_depth_stencil_resolve</b>]</summary>
         ResolveModeMaxBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShadingRatePaletteEntryNV.html" /></remarks>
     public enum VkShadingRatePaletteEntryNV : int
     {
         ShadingRatePaletteEntryNoInvocationsNv = 0,
@@ -5365,6 +5509,7 @@ namespace OpenTK.Graphics.Vulkan
         ShadingRatePaletteEntry1InvocationPer2x4PixelsNv = 10,
         ShadingRatePaletteEntry1InvocationPer4x4PixelsNv = 11,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCoarseSampleOrderTypeNV.html" /></remarks>
     public enum VkCoarseSampleOrderTypeNV : int
     {
         CoarseSampleOrderTypeDefaultNv = 0,
@@ -5372,6 +5517,7 @@ namespace OpenTK.Graphics.Vulkan
         CoarseSampleOrderTypePixelMajorNv = 2,
         CoarseSampleOrderTypeSampleMajorNv = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryInstanceFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkGeometryInstanceFlagBitsKHR : uint
     {
@@ -5393,6 +5539,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         GeometryInstanceForceNoOpaqueBitNv = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkGeometryFlagBitsKHR : uint
     {
@@ -5403,6 +5550,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         GeometryNoDuplicateAnyHitInvocationBitNv = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildAccelerationStructureFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkBuildAccelerationStructureFlagBitsKHR : uint
     {
@@ -5434,6 +5582,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         BuildAccelerationStructureLowMemoryBitNv = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCreateFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkAccelerationStructureCreateFlagBitsKHR : uint
     {
@@ -5443,6 +5592,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing_motion_blur</b>]</summary>
         AccelerationStructureCreateMotionBitNv = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCopyAccelerationStructureModeKHR.html" /></remarks>
     public enum VkCopyAccelerationStructureModeKHR : int
     {
         CopyAccelerationStructureModeCloneKhr = 0,
@@ -5454,11 +5604,13 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         CopyAccelerationStructureModeCompactNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildAccelerationStructureModeKHR.html" /></remarks>
     public enum VkBuildAccelerationStructureModeKHR : int
     {
         BuildAccelerationStructureModeBuildKhr = 0,
         BuildAccelerationStructureModeUpdateKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureTypeKHR.html" /></remarks>
     public enum VkAccelerationStructureTypeKHR : int
     {
         AccelerationStructureTypeTopLevelKhr = 0,
@@ -5469,6 +5621,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         AccelerationStructureTypeBottomLevelNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryTypeKHR.html" /></remarks>
     public enum VkGeometryTypeKHR : int
     {
         GeometryTypeTrianglesKhr = 0,
@@ -5479,18 +5632,21 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         GeometryTypeAabbsNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMemoryRequirementsTypeNV.html" /></remarks>
     public enum VkAccelerationStructureMemoryRequirementsTypeNV : int
     {
         AccelerationStructureMemoryRequirementsTypeObjectNv = 0,
         AccelerationStructureMemoryRequirementsTypeBuildScratchNv = 1,
         AccelerationStructureMemoryRequirementsTypeUpdateScratchNv = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureBuildTypeKHR.html" /></remarks>
     public enum VkAccelerationStructureBuildTypeKHR : int
     {
         AccelerationStructureBuildTypeHostKhr = 0,
         AccelerationStructureBuildTypeDeviceKhr = 1,
         AccelerationStructureBuildTypeHostOrDeviceKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRayTracingShaderGroupTypeKHR.html" /></remarks>
     public enum VkRayTracingShaderGroupTypeKHR : int
     {
         RayTracingShaderGroupTypeGeneralKhr = 0,
@@ -5503,11 +5659,13 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_ray_tracing</b>]</summary>
         RayTracingShaderGroupTypeProceduralHitGroupNv = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureCompatibilityKHR.html" /></remarks>
     public enum VkAccelerationStructureCompatibilityKHR : int
     {
         AccelerationStructureCompatibilityCompatibleKhr = 0,
         AccelerationStructureCompatibilityIncompatibleKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderGroupShaderKHR.html" /></remarks>
     public enum VkShaderGroupShaderKHR : int
     {
         ShaderGroupShaderGeneralKhr = 0,
@@ -5515,12 +5673,14 @@ namespace OpenTK.Graphics.Vulkan
         ShaderGroupShaderAnyHitKhr = 2,
         ShaderGroupShaderIntersectionKhr = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryOverallocationBehaviorAMD.html" /></remarks>
     public enum VkMemoryOverallocationBehaviorAMD : int
     {
         MemoryOverallocationBehaviorDefaultAmd = 0,
         MemoryOverallocationBehaviorAllowedAmd = 1,
         MemoryOverallocationBehaviorDisallowedAmd = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFramebufferCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkFramebufferCreateFlagBits : uint
     {
@@ -5529,6 +5689,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_imageless_framebuffer</b>]</summary>
         FramebufferCreateImagelessBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceDiagnosticsConfigFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkDeviceDiagnosticsConfigFlagBitsNV : uint
     {
@@ -5537,6 +5698,7 @@ namespace OpenTK.Graphics.Vulkan
         DeviceDiagnosticsConfigEnableAutomaticCheckpointsBitNv = 4,
         DeviceDiagnosticsConfigEnableShaderErrorReportingBitNv = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedbackFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineCreationFeedbackFlagBits : uint
     {
@@ -5547,6 +5709,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineCreationFeedbackBasePipelineAccelerationBit = 4,
         PipelineCreationFeedbackBasePipelineAccelerationBitExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFullScreenExclusiveEXT.html" /></remarks>
     public enum VkFullScreenExclusiveEXT : int
     {
         FullScreenExclusiveDefaultExt = 0,
@@ -5554,6 +5717,7 @@ namespace OpenTK.Graphics.Vulkan
         FullScreenExclusiveDisallowedExt = 2,
         FullScreenExclusiveApplicationControlledExt = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterScopeKHR.html" /></remarks>
     public enum VkPerformanceCounterScopeKHR : int
     {
         PerformanceCounterScopeCommandBufferKhr = 0,
@@ -5563,11 +5727,13 @@ namespace OpenTK.Graphics.Vulkan
         QueryScopeRenderPassKhr = 1,
         QueryScopeCommandKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryDecompressionMethodFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkMemoryDecompressionMethodFlagBitsNV : ulong
     {
         MemoryDecompressionMethodGdeflate10BitNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterUnitKHR.html" /></remarks>
     public enum VkPerformanceCounterUnitKHR : int
     {
         PerformanceCounterUnitGenericKhr = 0,
@@ -5582,6 +5748,7 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceCounterUnitHertzKhr = 9,
         PerformanceCounterUnitCyclesKhr = 10,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterStorageKHR.html" /></remarks>
     public enum VkPerformanceCounterStorageKHR : int
     {
         PerformanceCounterStorageInt32Khr = 0,
@@ -5591,6 +5758,7 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceCounterStorageFloat32Khr = 4,
         PerformanceCounterStorageFloat64Khr = 5,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceCounterDescriptionFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkPerformanceCounterDescriptionFlagBitsKHR : uint
     {
@@ -5599,36 +5767,44 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceCounterDescriptionConcurrentlyImpactedBitKhr = 2,
         PerformanceCounterDescriptionConcurrentlyImpactedKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAcquireProfilingLockFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkAcquireProfilingLockFlagBitsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCorePropertiesFlagBitsAMD.html" /></remarks>
     [Flags]
     public enum VkShaderCorePropertiesFlagBitsAMD : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRefreshObjectFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkRefreshObjectFlagBitsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceConfigurationTypeINTEL.html" /></remarks>
     public enum VkPerformanceConfigurationTypeINTEL : int
     {
         PerformanceConfigurationTypeCommandQueueMetricsDiscoveryActivatedIntel = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolSamplingModeINTEL.html" /></remarks>
     public enum VkQueryPoolSamplingModeINTEL : int
     {
         QueryPoolSamplingModeManualIntel = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceOverrideTypeINTEL.html" /></remarks>
     public enum VkPerformanceOverrideTypeINTEL : int
     {
         PerformanceOverrideTypeNullHardwareIntel = 0,
         PerformanceOverrideTypeFlushGpuCachesIntel = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceParameterTypeINTEL.html" /></remarks>
     public enum VkPerformanceParameterTypeINTEL : int
     {
         PerformanceParameterTypeHwCountersSupportedIntel = 0,
         PerformanceParameterTypeStreamMarkerValidBitsIntel = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPerformanceValueTypeINTEL.html" /></remarks>
     public enum VkPerformanceValueTypeINTEL : int
     {
         PerformanceValueTypeUint32Intel = 0,
@@ -5637,6 +5813,7 @@ namespace OpenTK.Graphics.Vulkan
         PerformanceValueTypeBoolIntel = 3,
         PerformanceValueTypeStringIntel = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderFloatControlsIndependence.html" /></remarks>
     public enum VkShaderFloatControlsIndependence : int
     {
         ShaderFloatControlsIndependence32BitOnly = 0,
@@ -5649,6 +5826,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_shader_float_controls</b>]</summary>
         ShaderFloatControlsIndependenceNoneKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineExecutableStatisticFormatKHR.html" /></remarks>
     public enum VkPipelineExecutableStatisticFormatKHR : int
     {
         PipelineExecutableStatisticFormatBool32Khr = 0,
@@ -5656,6 +5834,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineExecutableStatisticFormatUint64Khr = 2,
         PipelineExecutableStatisticFormatFloat64Khr = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeKHR.html" /></remarks>
     public enum VkLineRasterizationModeKHR : int
     {
         LineRasterizationModeDefaultKhr = 0,
@@ -5667,14 +5846,17 @@ namespace OpenTK.Graphics.Vulkan
         LineRasterizationModeRectangularSmoothKhr = 3,
         LineRasterizationModeRectangularSmoothExt = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderModuleCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkShaderModuleCreateFlagBits : int
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCompilerControlFlagBitsAMD.html" /></remarks>
     [Flags]
     public enum VkPipelineCompilerControlFlagBitsAMD : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFaultLevel.html" /></remarks>
     public enum VkFaultLevel : int
     {
         FaultLevelUnassigned = 0,
@@ -5682,6 +5864,7 @@ namespace OpenTK.Graphics.Vulkan
         FaultLevelRecoverable = 2,
         FaultLevelWarning = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFaultType.html" /></remarks>
     public enum VkFaultType : int
     {
         FaultTypeInvalid = 0,
@@ -5692,10 +5875,12 @@ namespace OpenTK.Graphics.Vulkan
         FaultTypeCommandBufferFull = 5,
         FaultTypeInvalidApiUsage = 6,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFaultQueryBehavior.html" /></remarks>
     public enum VkFaultQueryBehavior : int
     {
         FaultQueryBehaviorGetAndClearAllFaults = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkToolPurposeFlagBits.html" /></remarks>
     [Flags]
     public enum VkToolPurposeFlagBits : uint
     {
@@ -5714,10 +5899,12 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_tooling_info</b>]</summary>
         ToolPurposeDebugMarkersBitExt = 64,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineMatchControl.html" /></remarks>
     public enum VkPipelineMatchControl : int
     {
         PipelineMatchControlApplicationUuidExactMatch = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateCombinerOpKHR.html" /></remarks>
     public enum VkFragmentShadingRateCombinerOpKHR : int
     {
         FragmentShadingRateCombinerOpKeepKhr = 0,
@@ -5726,6 +5913,7 @@ namespace OpenTK.Graphics.Vulkan
         FragmentShadingRateCombinerOpMaxKhr = 3,
         FragmentShadingRateCombinerOpMulKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateNV.html" /></remarks>
     public enum VkFragmentShadingRateNV : int
     {
         FragmentShadingRate1InvocationPerPixelNv = 0,
@@ -5741,11 +5929,13 @@ namespace OpenTK.Graphics.Vulkan
         FragmentShadingRate16InvocationsPerPixelNv = 14,
         FragmentShadingRateNoInvocationsNv = 15,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFragmentShadingRateTypeNV.html" /></remarks>
     public enum VkFragmentShadingRateTypeNV : int
     {
         FragmentShadingRateTypeFragmentSizeNv = 0,
         FragmentShadingRateTypeEnumsNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubpassMergeStatusEXT.html" /></remarks>
     public enum VkSubpassMergeStatusEXT : int
     {
         SubpassMergeStatusMergedExt = 0,
@@ -5763,6 +5953,7 @@ namespace OpenTK.Graphics.Vulkan
         SubpassMergeStatusNotMergedSingleSubpassExt = 12,
         SubpassMergeStatusNotMergedUnspecifiedExt = 13,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits2.html" /></remarks>
     [Flags]
     public enum VkAccessFlagBits2 : ulong
     {
@@ -5859,6 +6050,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>]</summary>
         Access2AccelerationStructureWriteBitNv = 4194304,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlagBits2.html" /></remarks>
     [Flags]
     public enum VkPipelineStageFlagBits2 : ulong
     {
@@ -5961,12 +6153,14 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_HUAWEI_subpass_shading</b>]</summary>
         PipelineStage2SubpassShadingBitHuawei = 128,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubmitFlagBits.html" /></remarks>
     [Flags]
     public enum VkSubmitFlagBits : uint
     {
         SubmitProtectedBit = 1,
         SubmitProtectedBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkEventCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkEventCreateFlagBits : uint
     {
@@ -5975,38 +6169,45 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_synchronization2</b>]</summary>
         EventCreateDeviceOnlyBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineLayoutCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineLayoutCreateFlagBits : uint
     {
         /// <summary>[requires: <b>VK_EXT_graphics_pipeline_library</b>]</summary>
         PipelineLayoutCreateIndependentSetsBitExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSciSyncClientTypeNV.html" /></remarks>
     public enum VkSciSyncClientTypeNV : int
     {
         SciSyncClientTypeSignalerNv = 0,
         SciSyncClientTypeWaiterNv = 1,
         SciSyncClientTypeSignalerWaiterNv = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSciSyncPrimitiveTypeNV.html" /></remarks>
     public enum VkSciSyncPrimitiveTypeNV : int
     {
         SciSyncPrimitiveTypeFenceNv = 0,
         SciSyncPrimitiveTypeSemaphoreNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkProvokingVertexModeEXT.html" /></remarks>
     public enum VkProvokingVertexModeEXT : int
     {
         ProvokingVertexModeFirstVertexExt = 0,
         ProvokingVertexModeLastVertexExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCacheValidationVersion.html" /></remarks>
     public enum VkPipelineCacheValidationVersion : int
     {
         PipelineCacheValidationVersionSafetyCriticalOne = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMotionInstanceTypeNV.html" /></remarks>
     public enum VkAccelerationStructureMotionInstanceTypeNV : int
     {
         AccelerationStructureMotionInstanceTypeStaticNv = 0,
         AccelerationStructureMotionInstanceTypeMatrixMotionNv = 1,
         AccelerationStructureMotionInstanceTypeSrtMotionNv = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineColorBlendStateCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineColorBlendStateCreateFlagBits : uint
     {
@@ -6015,6 +6216,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_ARM_rasterization_order_attachment_access</b>]</summary>
         PipelineColorBlendStateCreateRasterizationOrderAttachmentAccessBitArm = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineDepthStencilStateCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkPipelineDepthStencilStateCreateFlagBits : uint
     {
@@ -6027,6 +6229,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_ARM_rasterization_order_attachment_access</b>]</summary>
         PipelineDepthStencilStateCreateRasterizationOrderAttachmentStencilAccessBitArm = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGraphicsPipelineLibraryFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkGraphicsPipelineLibraryFlagBitsEXT : uint
     {
@@ -6035,21 +6238,25 @@ namespace OpenTK.Graphics.Vulkan
         GraphicsPipelineLibraryFragmentShaderBitExt = 4,
         GraphicsPipelineLibraryFragmentOutputInterfaceBitExt = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkDeviceAddressBindingFlagBitsEXT : uint
     {
         DeviceAddressBindingInternalObjectBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceAddressBindingTypeEXT.html" /></remarks>
     public enum VkDeviceAddressBindingTypeEXT : int
     {
         DeviceAddressBindingTypeBindExt = 0,
         DeviceAddressBindingTypeUnbindExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFrameBoundaryFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkFrameBoundaryFlagBitsEXT : uint
     {
         FrameBoundaryFrameEndBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentScalingFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkPresentScalingFlagBitsEXT : uint
     {
@@ -6057,6 +6264,7 @@ namespace OpenTK.Graphics.Vulkan
         PresentScalingAspectRatioStretchBitExt = 2,
         PresentScalingStretchBitExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPresentGravityFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkPresentGravityFlagBitsEXT : uint
     {
@@ -6064,11 +6272,13 @@ namespace OpenTK.Graphics.Vulkan
         PresentGravityMaxBitExt = 2,
         PresentGravityCenteredBitExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceSchedulingControlsFlagBitsARM.html" /></remarks>
     [Flags]
     public enum VkPhysicalDeviceSchedulingControlsFlagBitsARM : ulong
     {
         PhysicalDeviceSchedulingControlsShaderCoreCountArm = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoCodecOperationFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoCodecOperationFlagBitsKHR : uint
     {
@@ -6084,6 +6294,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_video_decode_av1</b>]</summary>
         VideoCodecOperationDecodeAv1BitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoChromaSubsamplingFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoChromaSubsamplingFlagBitsKHR : uint
     {
@@ -6093,6 +6304,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoChromaSubsampling422BitKhr = 4,
         VideoChromaSubsampling444BitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoComponentBitDepthFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoComponentBitDepthFlagBitsKHR : uint
     {
@@ -6101,12 +6313,14 @@ namespace OpenTK.Graphics.Vulkan
         VideoComponentBitDepth10BitKhr = 4,
         VideoComponentBitDepth12BitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoCapabilityFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoCapabilityFlagBitsKHR : uint
     {
         VideoCapabilityProtectedContentBitKhr = 1,
         VideoCapabilitySeparateReferenceImagesBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionCreateFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoSessionCreateFlagBitsKHR : uint
     {
@@ -6116,6 +6330,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_video_maintenance1</b>]</summary>
         VideoSessionCreateInlineQueriesBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeH264PictureLayoutFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoDecodeH264PictureLayoutFlagBitsKHR : uint
     {
@@ -6123,6 +6338,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoDecodeH264PictureLayoutInterlacedInterleavedLinesBitKhr = 1,
         VideoDecodeH264PictureLayoutInterlacedSeparatePlanesBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoCodingControlFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoCodingControlFlagBitsKHR : uint
     {
@@ -6132,6 +6348,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_video_encode_queue</b>]</summary>
         VideoCodingControlEncodeQualityLevelBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryResultStatusKHR.html" /></remarks>
     public enum VkQueryResultStatusKHR : int
     {
         QueryResultStatusErrorKhr = -1,
@@ -6140,6 +6357,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_KHR_video_encode_queue</b>]</summary>
         QueryResultStatusInsufficientBitstreamBufferRangeKhr = -1000299000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeUsageFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoDecodeUsageFlagBitsKHR : uint
     {
@@ -6148,16 +6366,19 @@ namespace OpenTK.Graphics.Vulkan
         VideoDecodeUsageOfflineBitKhr = 2,
         VideoDecodeUsageStreamingBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeCapabilityFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoDecodeCapabilityFlagBitsKHR : uint
     {
         VideoDecodeCapabilityDpbAndOutputCoincideBitKhr = 1,
         VideoDecodeCapabilityDpbAndOutputDistinctBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeFlagBitsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeUsageFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeUsageFlagBitsKHR : uint
     {
@@ -6167,6 +6388,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeUsageRecordingBitKhr = 4,
         VideoEncodeUsageConferencingBitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeContentFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeContentFlagBitsKHR : uint
     {
@@ -6175,6 +6397,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeContentDesktopBitKhr = 2,
         VideoEncodeContentRenderedBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeTuningModeKHR.html" /></remarks>
     public enum VkVideoEncodeTuningModeKHR : int
     {
         VideoEncodeTuningModeDefaultKhr = 0,
@@ -6183,12 +6406,14 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeTuningModeUltraLowLatencyKhr = 3,
         VideoEncodeTuningModeLosslessKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeCapabilityFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeCapabilityFlagBitsKHR : uint
     {
         VideoEncodeCapabilityPrecedingExternallyEncodedBytesBitKhr = 1,
         VideoEncodeCapabilityInsufficientBitstreamBufferRangeDetectionBitKhr = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeFeedbackFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeFeedbackFlagBitsKHR : uint
     {
@@ -6196,6 +6421,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeFeedbackBitstreamBytesWrittenBitKhr = 2,
         VideoEncodeFeedbackBitstreamHasOverridesBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlModeFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeRateControlModeFlagBitsKHR : uint
     {
@@ -6204,6 +6430,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeRateControlModeCbrBitKhr = 2,
         VideoEncodeRateControlModeVbrBitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264CapabilityFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH264CapabilityFlagBitsKHR : uint
     {
@@ -6217,6 +6444,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264CapabilityPerSliceConstantQpBitKhr = 128,
         VideoEncodeH264CapabilityGeneratePrefixNaluBitKhr = 256,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264StdFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH264StdFlagBitsKHR : uint
     {
@@ -6241,6 +6469,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264StdSliceQpDeltaBitKhr = 524288,
         VideoEncodeH264StdDifferentSliceQpDeltaBitKhr = 1048576,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH264RateControlFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH264RateControlFlagBitsKHR : uint
     {
@@ -6250,15 +6479,18 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH264RateControlReferencePatternDyadicBitKhr = 8,
         VideoEncodeH264RateControlTemporalLayerPatternDyadicBitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkHostImageCopyFlagBitsEXT : uint
     {
         HostImageCopyMemcpyExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageFormatConstraintsFlagBitsFUCHSIA.html" /></remarks>
     [Flags]
     public enum VkImageFormatConstraintsFlagBitsFUCHSIA : int
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageConstraintsInfoFlagBitsFUCHSIA.html" /></remarks>
     [Flags]
     public enum VkImageConstraintsInfoFlagBitsFUCHSIA : uint
     {
@@ -6268,6 +6500,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageConstraintsInfoCpuWriteOftenFuchsia = 8,
         ImageConstraintsInfoProtectedOptionalFuchsia = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormatFeatureFlagBits2.html" /></remarks>
     [Flags]
     public enum VkFormatFeatureFlagBits2 : ulong
     {
@@ -6358,6 +6591,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_optical_flow</b>]</summary>
         FormatFeature2OpticalFlowCostBitNv = 1024,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingFlagBits.html" /></remarks>
     [Flags]
     public enum VkRenderingFlagBits : uint
     {
@@ -6374,6 +6608,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_nested_command_buffer</b>]</summary>
         RenderingContentsInlineBitExt = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CapabilityFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH265CapabilityFlagBitsKHR : uint
     {
@@ -6388,6 +6623,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265CapabilityMultipleTilesPerSliceSegmentBitKhr = 256,
         VideoEncodeH265CapabilityMultipleSliceSegmentsPerTileBitKhr = 512,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265StdFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH265StdFlagBitsKHR : uint
     {
@@ -6413,6 +6649,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265StdSliceQpDeltaBitKhr = 524288,
         VideoEncodeH265StdDifferentSliceQpDeltaBitKhr = 1048576,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265RateControlFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH265RateControlFlagBitsKHR : uint
     {
@@ -6422,6 +6659,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265RateControlReferencePatternDyadicBitKhr = 8,
         VideoEncodeH265RateControlTemporalSubLayerPatternDyadicBitKhr = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265CtbSizeFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH265CtbSizeFlagBitsKHR : uint
     {
@@ -6429,6 +6667,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265CtbSize32BitKhr = 2,
         VideoEncodeH265CtbSize64BitKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeH265TransformBlockSizeFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeH265TransformBlockSizeFlagBitsKHR : uint
     {
@@ -6437,6 +6676,7 @@ namespace OpenTK.Graphics.Vulkan
         VideoEncodeH265TransformBlockSize16BitKhr = 4,
         VideoEncodeH265TransformBlockSize32BitKhr = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExportMetalObjectTypeFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkExportMetalObjectTypeFlagBitsEXT : uint
     {
@@ -6447,12 +6687,14 @@ namespace OpenTK.Graphics.Vulkan
         ExportMetalObjectTypeMetalIosurfaceBitExt = 16,
         ExportMetalObjectTypeMetalSharedEventBitExt = 32,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkInstanceCreateFlagBits.html" /></remarks>
     [Flags]
     public enum VkInstanceCreateFlagBits : uint
     {
         /// <summary>[requires: <b>VK_KHR_portability_enumeration</b>]</summary>
         InstanceCreateEnumeratePortabilityBitKhr = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkImageCompressionFlagBitsEXT : uint
     {
@@ -6461,6 +6703,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageCompressionFixedRateExplicitExt = 2,
         ImageCompressionDisabledExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageCompressionFixedRateFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkImageCompressionFixedRateFlagBitsEXT : uint
     {
@@ -6490,6 +6733,7 @@ namespace OpenTK.Graphics.Vulkan
         ImageCompressionFixedRate23bpcBitExt = 4194304,
         ImageCompressionFixedRate24bpcBitExt = 8388608,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html" /></remarks>
     public enum VkPipelineRobustnessBufferBehaviorEXT : int
     {
         PipelineRobustnessBufferBehaviorDeviceDefaultExt = 0,
@@ -6497,6 +6741,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineRobustnessBufferBehaviorRobustBufferAccessExt = 2,
         PipelineRobustnessBufferBehaviorRobustBufferAccess2Ext = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehaviorEXT.html" /></remarks>
     public enum VkPipelineRobustnessImageBehaviorEXT : int
     {
         PipelineRobustnessImageBehaviorDeviceDefaultExt = 0,
@@ -6504,6 +6749,7 @@ namespace OpenTK.Graphics.Vulkan
         PipelineRobustnessImageBehaviorRobustImageAccessExt = 2,
         PipelineRobustnessImageBehaviorRobustImageAccess2Ext = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowGridSizeFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkOpticalFlowGridSizeFlagBitsNV : uint
     {
@@ -6513,6 +6759,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowGridSize4x4BitNv = 4,
         OpticalFlowGridSize8x8BitNv = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowUsageFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkOpticalFlowUsageFlagBitsNV : uint
     {
@@ -6523,6 +6770,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowUsageCostBitNv = 8,
         OpticalFlowUsageGlobalFlowBitNv = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowPerformanceLevelNV.html" /></remarks>
     public enum VkOpticalFlowPerformanceLevelNV : int
     {
         OpticalFlowPerformanceLevelUnknownNv = 0,
@@ -6530,6 +6778,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowPerformanceLevelMediumNv = 2,
         OpticalFlowPerformanceLevelFastNv = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionBindingPointNV.html" /></remarks>
     public enum VkOpticalFlowSessionBindingPointNV : int
     {
         OpticalFlowSessionBindingPointUnknownNv = 0,
@@ -6542,6 +6791,7 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowSessionBindingPointBackwardCostNv = 7,
         OpticalFlowSessionBindingPointGlobalFlowNv = 8,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowSessionCreateFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkOpticalFlowSessionCreateFlagBitsNV : uint
     {
@@ -6551,17 +6801,20 @@ namespace OpenTK.Graphics.Vulkan
         OpticalFlowSessionCreateAllowRegionsBitNv = 8,
         OpticalFlowSessionCreateBothDirectionsBitNv = 16,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpticalFlowExecuteFlagBitsNV.html" /></remarks>
     [Flags]
     public enum VkOpticalFlowExecuteFlagBitsNV : uint
     {
         OpticalFlowExecuteDisableTemporalHintsBitNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapTypeEXT.html" /></remarks>
     public enum VkMicromapTypeEXT : int
     {
         MicromapTypeOpacityMicromapExt = 0,
         /// <summary>[requires: <b>VK_NV_displacement_micromap</b>]</summary>
         MicromapTypeDisplacementMicromapNv = 1000397000,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildMicromapFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkBuildMicromapFlagBitsEXT : uint
     {
@@ -6569,11 +6822,13 @@ namespace OpenTK.Graphics.Vulkan
         BuildMicromapPreferFastBuildBitExt = 2,
         BuildMicromapAllowCompactionBitExt = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMicromapCreateFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkMicromapCreateFlagBitsEXT : uint
     {
         MicromapCreateDeviceAddressCaptureReplayBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCopyMicromapModeEXT.html" /></remarks>
     public enum VkCopyMicromapModeEXT : int
     {
         CopyMicromapModeCloneExt = 0,
@@ -6581,15 +6836,18 @@ namespace OpenTK.Graphics.Vulkan
         CopyMicromapModeDeserializeExt = 2,
         CopyMicromapModeCompactExt = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildMicromapModeEXT.html" /></remarks>
     public enum VkBuildMicromapModeEXT : int
     {
         BuildMicromapModeBuildExt = 0,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapFormatEXT.html" /></remarks>
     public enum VkOpacityMicromapFormatEXT : int
     {
         OpacityMicromapFormat2StateExt = 1,
         OpacityMicromapFormat4StateExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOpacityMicromapSpecialIndexEXT.html" /></remarks>
     public enum VkOpacityMicromapSpecialIndexEXT : int
     {
         OpacityMicromapSpecialIndexFullyTransparentExt = -1,
@@ -6597,12 +6855,14 @@ namespace OpenTK.Graphics.Vulkan
         OpacityMicromapSpecialIndexFullyUnknownTransparentExt = -3,
         OpacityMicromapSpecialIndexFullyUnknownOpaqueExt = -4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDepthBiasRepresentationEXT.html" /></remarks>
     public enum VkDepthBiasRepresentationEXT : int
     {
         DepthBiasRepresentationLeastRepresentableValueFormatExt = 0,
         DepthBiasRepresentationLeastRepresentableValueForceUnormExt = 1,
         DepthBiasRepresentationFloatExt = 2,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultAddressTypeEXT.html" /></remarks>
     public enum VkDeviceFaultAddressTypeEXT : int
     {
         /// <summary>Currently unused</summary>
@@ -6614,16 +6874,19 @@ namespace OpenTK.Graphics.Vulkan
         DeviceFaultAddressTypeInstructionPointerInvalidExt = 5,
         DeviceFaultAddressTypeInstructionPointerFaultExt = 6,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceFaultVendorBinaryHeaderVersionEXT.html" /></remarks>
     public enum VkDeviceFaultVendorBinaryHeaderVersionEXT : int
     {
         DeviceFaultVendorBinaryHeaderVersionOneExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplacementMicromapFormatNV.html" /></remarks>
     public enum VkDisplacementMicromapFormatNV : int
     {
         DisplacementMicromapFormat64Triangles64BytesNv = 1,
         DisplacementMicromapFormat256Triangles128BytesNv = 2,
         DisplacementMicromapFormat1024Triangles128BytesNv = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCreateFlagBitsEXT.html" /></remarks>
     [Flags]
     public enum VkShaderCreateFlagBitsEXT : uint
     {
@@ -6641,11 +6904,13 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_EXT_shader_object</b>]</summary>
         ShaderCreateFragmentDensityMapAttachmentBitExt = 64,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderCodeTypeEXT.html" /></remarks>
     public enum VkShaderCodeTypeEXT : int
     {
         ShaderCodeTypeBinaryExt = 0,
         ShaderCodeTypeSpirvExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkScopeKHR.html" /></remarks>
     public enum VkScopeKHR : int
     {
         ScopeDeviceKhr = 1,
@@ -6661,6 +6926,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_cooperative_matrix</b>]</summary>
         ScopeQueueFamilyNv = 5,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkComponentTypeKHR.html" /></remarks>
     public enum VkComponentTypeKHR : int
     {
         ComponentTypeFloat16Khr = 0,
@@ -6697,6 +6963,7 @@ namespace OpenTK.Graphics.Vulkan
         /// <summary>[requires: <b>VK_NV_cooperative_matrix</b>]</summary>
         ComponentTypeUint64Nv = 10,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCubicFilterWeightsQCOM.html" /></remarks>
     public enum VkCubicFilterWeightsQCOM : int
     {
         CubicFilterWeightsCatmullRomQcom = 0,
@@ -6704,11 +6971,13 @@ namespace OpenTK.Graphics.Vulkan
         CubicFilterWeightsBSplineQcom = 2,
         CubicFilterWeightsMitchellNetravaliQcom = 3,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBlockMatchWindowCompareModeQCOM.html" /></remarks>
     public enum VkBlockMatchWindowCompareModeQCOM : int
     {
         BlockMatchWindowCompareModeMinQcom = 0,
         BlockMatchWindowCompareModeMaxQcom = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiKHR.html" /></remarks>
     public enum VkPhysicalDeviceLayeredApiKHR : int
     {
         PhysicalDeviceLayeredApiVulkanKhr = 0,
@@ -6717,11 +6986,13 @@ namespace OpenTK.Graphics.Vulkan
         PhysicalDeviceLayeredApiOpenglKhr = 3,
         PhysicalDeviceLayeredApiOpenglesKhr = 4,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLayeredDriverUnderlyingApiMSFT.html" /></remarks>
     public enum VkLayeredDriverUnderlyingApiMSFT : int
     {
         LayeredDriverUnderlyingApiNoneMsft = 0,
         LayeredDriverUnderlyingApiD3d12Msft = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkLatencyMarkerNV.html" /></remarks>
     public enum VkLatencyMarkerNV : int
     {
         LatencyMarkerSimulationStartNv = 0,
@@ -6737,329 +7008,410 @@ namespace OpenTK.Graphics.Vulkan
         LatencyMarkerOutOfBandPresentStartNv = 10,
         LatencyMarkerOutOfBandPresentEndNv = 11,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkOutOfBandQueueTypeNV.html" /></remarks>
     public enum VkOutOfBandQueueTypeNV : int
     {
         OutOfBandQueueTypeRenderNv = 0,
         OutOfBandQueueTypePresentNv = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBitsKHR.html" /></remarks>
     [Flags]
     public enum VkMemoryUnmapFlagBitsKHR : uint
     {
         /// <summary>[requires: <b>VK_EXT_map_memory_placed</b>]</summary>
         MemoryUnmapReserveBitExt = 1,
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkQueryPoolCreateFlags.html" /></remarks>
     [Flags]
     public enum VkQueryPoolCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineDynamicStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineDynamicStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineMultisampleStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineMultisampleStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRasterizationStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineRasterizationStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineViewportStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineViewportStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineTessellationStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineTessellationStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineInputAssemblyStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineInputAssemblyStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineVertexInputStateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPipelineVertexInputStateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBufferViewCreateFlags.html" /></remarks>
     [Flags]
     public enum VkBufferViewCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceCreateFlags.html" /></remarks>
     [Flags]
     public enum VkDeviceCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreCreateFlags.html" /></remarks>
     [Flags]
     public enum VkSemaphoreCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkShaderModuleCreateFlags.html" /></remarks>
     [Flags]
     public enum VkShaderModuleCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorPoolResetFlags.html" /></remarks>
     [Flags]
     public enum VkDescriptorPoolResetFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryFlagsNV.html" /></remarks>
     [Flags]
     public enum VkGeometryFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkGeometryInstanceFlagsNV.html" /></remarks>
     [Flags]
     public enum VkGeometryInstanceFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkBuildAccelerationStructureFlagsNV.html" /></remarks>
     [Flags]
     public enum VkBuildAccelerationStructureFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotCreateFlags.html" /></remarks>
     [Flags]
     public enum VkPrivateDataSlotCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPrivateDataSlotCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPrivateDataSlotCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateCreateFlags.html" /></remarks>
     [Flags]
     public enum VkDescriptorUpdateTemplateCreateFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkDescriptorUpdateTemplateCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCreationFeedbackFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPipelineCreationFeedbackFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreWaitFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkSemaphoreWaitFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccessFlags2KHR.html" /></remarks>
     [Flags]
     public enum VkAccessFlags2KHR : ulong
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlags2KHR.html" /></remarks>
     [Flags]
     public enum VkPipelineStageFlags2KHR : ulong
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMotionInfoFlagsNV.html" /></remarks>
     [Flags]
     public enum VkAccelerationStructureMotionInfoFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMotionInstanceFlagsNV.html" /></remarks>
     [Flags]
     public enum VkAccelerationStructureMotionInstanceFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFormatFeatureFlags2KHR.html" /></remarks>
     [Flags]
     public enum VkFormatFeatureFlags2KHR : ulong
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkRenderingFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkRenderingFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectDriverLoadingFlagsLUNARG.html" /></remarks>
     [Flags]
     public enum VkDirectDriverLoadingFlagsLUNARG : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplayModeCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkDisplayModeCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDisplaySurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkDisplaySurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkAndroidSurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkAndroidSurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkViSurfaceCreateFlagsNN.html" /></remarks>
     [Flags]
     public enum VkViSurfaceCreateFlagsNN : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWaylandSurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkWaylandSurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkWin32SurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkWin32SurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkXlibSurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkXlibSurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkXcbSurfaceCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkXcbSurfaceCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDirectFBSurfaceCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkDirectFBSurfaceCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkIOSSurfaceCreateFlagsMVK.html" /></remarks>
     [Flags]
     public enum VkIOSSurfaceCreateFlagsMVK : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMacOSSurfaceCreateFlagsMVK.html" /></remarks>
     [Flags]
     public enum VkMacOSSurfaceCreateFlagsMVK : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMetalSurfaceCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkMetalSurfaceCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImagePipeSurfaceCreateFlagsFUCHSIA.html" /></remarks>
     [Flags]
     public enum VkImagePipeSurfaceCreateFlagsFUCHSIA : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkStreamDescriptorSurfaceCreateFlagsGGP.html" /></remarks>
     [Flags]
     public enum VkStreamDescriptorSurfaceCreateFlagsGGP : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkHeadlessSurfaceCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkHeadlessSurfaceCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkScreenSurfaceCreateFlagsQNX.html" /></remarks>
     [Flags]
     public enum VkScreenSurfaceCreateFlagsQNX : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPeerMemoryFeatureFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkPeerMemoryFeatureFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkMemoryAllocateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkMemoryAllocateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPoolTrimFlags.html" /></remarks>
     [Flags]
     public enum VkCommandPoolTrimFlags : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkCommandPoolTrimFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkCommandPoolTrimFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryHandleTypeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryHandleTypeFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryFeatureFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalMemoryFeatureFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalSemaphoreHandleTypeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalSemaphoreHandleTypeFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalSemaphoreFeatureFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalSemaphoreFeatureFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSemaphoreImportFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkSemaphoreImportFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalFenceHandleTypeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalFenceHandleTypeFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkExternalFenceFeatureFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkExternalFenceFeatureFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkFenceImportFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkFenceImportFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineViewportSwizzleStateCreateFlagsNV.html" /></remarks>
     [Flags]
     public enum VkPipelineViewportSwizzleStateCreateFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineDiscardRectangleStateCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPipelineDiscardRectangleStateCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCoverageToColorStateCreateFlagsNV.html" /></remarks>
     [Flags]
     public enum VkPipelineCoverageToColorStateCreateFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCoverageModulationStateCreateFlagsNV.html" /></remarks>
     [Flags]
     public enum VkPipelineCoverageModulationStateCreateFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineCoverageReductionStateCreateFlagsNV.html" /></remarks>
     [Flags]
     public enum VkPipelineCoverageReductionStateCreateFlagsNV : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkValidationCacheCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkValidationCacheCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessengerCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkDebugUtilsMessengerCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDebugUtilsMessengerCallbackDataFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkDebugUtilsMessengerCallbackDataFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDeviceMemoryReportFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkDeviceMemoryReportFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRasterizationConservativeStateCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPipelineRasterizationConservativeStateCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkDescriptorBindingFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkDescriptorBindingFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkResolveModeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkResolveModeFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRasterizationStateStreamCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPipelineRasterizationStateStreamCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkPipelineRasterizationDepthClipStateCreateFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkPipelineRasterizationDepthClipStateCreateFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkToolPurposeFlagsEXT.html" /></remarks>
     [Flags]
     public enum VkToolPurposeFlagsEXT : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkSubmitFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkSubmitFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkImageFormatConstraintsFlagsFUCHSIA.html" /></remarks>
     [Flags]
     public enum VkImageFormatConstraintsFlagsFUCHSIA : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoSessionParametersCreateFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoSessionParametersCreateFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoBeginCodingFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoBeginCodingFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEndCodingFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEndCodingFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoDecodeFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoDecodeFlagsKHR : uint
     {
     }
+    /// <remarks><see href="https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VkVideoEncodeRateControlFlagsKHR.html" /></remarks>
     [Flags]
     public enum VkVideoEncodeRateControlFlagsKHR : uint
     {
