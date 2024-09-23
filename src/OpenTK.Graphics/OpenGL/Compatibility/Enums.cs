@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:38 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility

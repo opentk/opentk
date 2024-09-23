@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:38 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Glx
@@ -302,6 +302,87 @@ namespace OpenTK.Graphics.Glx
         PbufferClobberMask = 134217728,
         DontCare = 4294967295,
     }
+    [Flags]
+    public enum BindToTextureTargetMask : uint
+    {
+        Texture1dBitExt = 1,
+        Texture2dBitExt = 2,
+        TextureRectangleBitExt = 4,
+    }
+    public enum ContextAttribs : uint
+    {
+        ContextMajorVersionArb = 8337,
+        ContextMinorVersionArb = 8338,
+        ContextFlagsArb = 8340,
+        ContextReleaseBehaviorArb = 8343,
+        ContextOpenglNoErrorArb = 12723,
+        RenderType = 32785,
+        ContextResetNotificationStrategyArb = 33366,
+        ContextProfileMaskArb = 37158,
+    }
+    [Flags]
+    public enum ContextFlags : uint
+    {
+        ContextDebugBitArb = 1,
+        ContextForwardCompatibleBitArb = 2,
+        ContextRobustAccessBitArb = 4,
+        ContextResetIsolationBitArb = 8,
+    }
+    [Flags]
+    public enum ContextProfileMask : uint
+    {
+        ContextCoreProfileBitArb = 1,
+        ContextCompatibilityProfileBitArb = 2,
+        ContextEs2ProfileBitExt = 4,
+        ContextEsProfileBitExt = 4,
+    }
+    public enum ContextReleaseBehavior : uint
+    {
+        ContextReleaseBehaviorNoneArb = 0,
+        ContextReleaseBehaviorFlushArb = 8344,
+    }
+    ///<summary>Used in <see cref="Glx.QueryDrawable" /></summary>
+    public enum DrawableAttrib : uint
+    {
+        SwapIntervalExt = 8433,
+        MaxSwapIntervalExt = 8434,
+        FbconfigId = 32787,
+        PreservedContents = 32795,
+        LargestPbuffer = 32796,
+        Width = 32797,
+        Height = 32798,
+        EventMask = 32799,
+    }
+    [Flags]
+    public enum DrawableTypeMask : uint
+    {
+        WindowBit = 1,
+        WindowBitSgix = 1,
+        PixmapBit = 2,
+        PixmapBitSgix = 2,
+        PbufferBit = 4,
+        PbufferBitSgix = 4,
+    }
+    public enum ErrorCode : uint
+    {
+        BadScreen = 1,
+        BadAttribute = 2,
+        NoExtension = 3,
+        BadVisual = 4,
+        BadContext = 5,
+        BadValue = 6,
+        BadEnum = 7,
+        BadHyperpipeConfigSgix = 91,
+        BadHyperpipeSgix = 92,
+    }
+    [Flags]
+    public enum EventMask : uint
+    {
+        StereoNotifyMaskExt = 1,
+        BufferSwapCompleteIntelMask = 67108864,
+        BufferClobberMaskSgix = 134217728,
+        PbufferClobberMask = 134217728,
+    }
     public enum GLXAttribute : uint
     {
         UseGl = 1,
@@ -337,6 +418,82 @@ namespace OpenTK.Graphics.Glx
         TransparentBlueValueExt = 39,
         TransparentAlphaValue = 40,
         TransparentAlphaValueExt = 40,
+    }
+    [Flags]
+    public enum HyperpipeAttribSGIX : uint
+    {
+        PipeRectSgix = 1,
+        PipeRectLimitsSgix = 2,
+        HyperpipeStereoSgix = 3,
+        HyperpipePixelAverageSgix = 4,
+    }
+    [Flags]
+    public enum HyperpipeTypeMask : uint
+    {
+        HyperpipeDisplayPipeSgix = 1,
+        HyperpipeRenderPipeSgix = 2,
+    }
+    public enum Mesa3DFXMode : uint
+    {
+        _3dfxWindowModeMesa = 1,
+        _3dfxFullscreenModeMesa = 2,
+    }
+    [Flags]
+    public enum PbufferClobberMask : uint
+    {
+        FrontLeftBufferBit = 1,
+        FrontLeftBufferBitSgix = 1,
+        FrontRightBufferBit = 2,
+        FrontRightBufferBitSgix = 2,
+        BackLeftBufferBit = 4,
+        BackLeftBufferBitSgix = 4,
+        BackRightBufferBit = 8,
+        BackRightBufferBitSgix = 8,
+        AuxBuffersBit = 16,
+        AuxBuffersBitSgix = 16,
+        DepthBufferBit = 32,
+        DepthBufferBitSgix = 32,
+        StencilBufferBit = 64,
+        StencilBufferBitSgix = 64,
+        AccumBufferBit = 128,
+        AccumBufferBitSgix = 128,
+        SampleBuffersBitSgix = 256,
+    }
+    public enum RenderType : uint
+    {
+        RgbaUnsignedFloatTypeExt = 8369,
+        RgbaFloatTypeArb = 8377,
+        RgbaType = 32788,
+        RgbaTypeSgix = 32788,
+        ColorIndexTypeSgix = 32789,
+    }
+    [Flags]
+    public enum RenderTypeMask : uint
+    {
+        RgbaBit = 1,
+        RgbaBitSgix = 1,
+        ColorIndexBit = 2,
+        ColorIndexBitSgix = 2,
+        RgbaFloatBitArb = 4,
+        RgbaUnsignedFloatBitExt = 8,
+    }
+    public enum ResetNotificationStrategy : uint
+    {
+        LoseContextOnResetArb = 33362,
+        NoResetNotificationArb = 33377,
+    }
+    ///<summary>Used in <see cref="Glx.GetClientString" />, <see cref="Glx.QueryServerString" /></summary>
+    public enum StringName : uint
+    {
+        Vendor = 1,
+        Version = 2,
+        Extensions = 3,
+    }
+    [Flags]
+    public enum SyncType : uint
+    {
+        SyncFrameSgix = 0,
+        SyncSwapSgix = 1,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

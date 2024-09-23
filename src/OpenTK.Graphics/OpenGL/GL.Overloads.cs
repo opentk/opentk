@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:37 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -37454,38 +37454,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, Span<byte> program)
+            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, string program)
             {
-                fixed (byte* program_ptr = program)
-                {
-                    GetProgramStringNV(id, pname, program_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, byte[] program)
-            {
-                fixed (byte* program_ptr = program)
-                {
-                    GetProgramStringNV(id, pname, program_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe byte GetProgramStringNV(int id, VertexAttribEnumNV pname)
-            {
-                byte program;
-                byte* program_ptr = &program;
-                {
-                    GetProgramStringNV(id, pname, program_ptr);
-                }
-                return program;
-            }
-            /// <inheritdoc cref="GetProgramStringNV(int, VertexAttribEnumNV, byte*)"/>
-            public static unsafe void GetProgramStringNV(int id, VertexAttribEnumNV pname, out byte program)
-            {
-                fixed (byte* program_ptr = &program)
-                {
-                    GetProgramStringNV(id, pname, program_ptr);
-                }
+                byte* program_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(program);
+                GetProgramStringNV(id, pname, program_ptr);
+                Marshal.FreeCoTaskMem((IntPtr)program_ptr);
             }
             /// <inheritdoc cref="GetProgramSubroutineParameteruivNV(All, uint, uint*)"/>
             public static unsafe void GetProgramSubroutineParameteruivNV(All target, uint index, Span<uint> param)

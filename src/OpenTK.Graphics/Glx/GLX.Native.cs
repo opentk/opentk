@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 20:17:38 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -52,7 +52,7 @@ namespace OpenTK.Graphics.Glx
         public static void DestroyWindow(DisplayPtr dpy, GLXWindow win) => GlxPointers._glXDestroyWindow_fnptr((IntPtr)dpy, (nuint)win);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[entry point: <c>glXGetClientString</c>]</b><br/>  </summary>
-        public static byte* GetClientString_(DisplayPtr dpy, int name) => GlxPointers._glXGetClientString_fnptr((IntPtr)dpy, name);
+        public static byte* GetClientString_(DisplayPtr dpy, StringName name) => GlxPointers._glXGetClientString_fnptr((IntPtr)dpy, (int)name);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glXGetConfig</c>]</b><br/>  </summary>
         public static int GetConfig(DisplayPtr dpy, XVisualInfoPtr visual, int attrib, int* value) => GlxPointers._glXGetConfig_fnptr((IntPtr)dpy, (IntPtr)visual, attrib, value);
@@ -97,7 +97,7 @@ namespace OpenTK.Graphics.Glx
         public static int QueryContext(DisplayPtr dpy, GLXContext ctx, int attribute, int* value) => GlxPointers._glXQueryContext_fnptr((IntPtr)dpy, (IntPtr)ctx, attribute, value);
         
         /// <summary> <b>[requires: v1.3]</b> <b>[entry point: <c>glXQueryDrawable</c>]</b><br/>  </summary>
-        public static void QueryDrawable(DisplayPtr dpy, GLXDrawable draw, int attribute, uint* value) => GlxPointers._glXQueryDrawable_fnptr((IntPtr)dpy, (nuint)draw, attribute, value);
+        public static void QueryDrawable(DisplayPtr dpy, GLXDrawable draw, DrawableAttrib attribute, uint* value) => GlxPointers._glXQueryDrawable_fnptr((IntPtr)dpy, (nuint)draw, (int)attribute, value);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glXQueryExtension</c>]</b><br/>  </summary>
         public static bool QueryExtension(DisplayPtr dpy, int* errorb, int* @event) => GlxPointers._glXQueryExtension_fnptr((IntPtr)dpy, errorb, @event) != 0;
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.Glx
         public static byte* QueryExtensionsString_(DisplayPtr dpy, int screen) => GlxPointers._glXQueryExtensionsString_fnptr((IntPtr)dpy, screen);
         
         /// <summary> <b>[requires: v1.1]</b> <b>[entry point: <c>glXQueryServerString</c>]</b><br/>  </summary>
-        public static byte* QueryServerString_(DisplayPtr dpy, int screen, int name) => GlxPointers._glXQueryServerString_fnptr((IntPtr)dpy, screen, name);
+        public static byte* QueryServerString_(DisplayPtr dpy, int screen, StringName name) => GlxPointers._glXQueryServerString_fnptr((IntPtr)dpy, screen, (int)name);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glXQueryVersion</c>]</b><br/>  </summary>
         public static bool QueryVersion(DisplayPtr dpy, int* maj, int* min) => GlxPointers._glXQueryVersion_fnptr((IntPtr)dpy, maj, min) != 0;

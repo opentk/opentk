@@ -187,18 +187,18 @@ typedef unsigned __int64 uint64_t;
     <!-- Bitmasks each have their own namespace, as do a few other
          categories of enumeration -->
 
-    <enums namespace="GLXStringName">
-        <enum value="0x1"           name="GLX_VENDOR"/>
-        <enum value="0x2"           name="GLX_VERSION"/>
-        <enum value="0x3"           name="GLX_EXTENSIONS"/>
+    <enums namespace="StringName">
+        <enum value="0x1"           name="GLX_VENDOR" group="StringName"/>
+        <enum value="0x2"           name="GLX_VERSION" group="StringName"/>
+        <enum value="0x3"           name="GLX_EXTENSIONS" group="StringName"/>
     </enums>
 
-    <enums namespace="GLXMesa3DFXMode" vendor="MESA">
-        <enum value="0x1"           name="GLX_3DFX_WINDOW_MODE_MESA"/>
-        <enum value="0x2"           name="GLX_3DFX_FULLSCREEN_MODE_MESA"/>
+    <enums namespace="Mesa3DFXMode" vendor="MESA">
+        <enum value="0x1"           name="GLX_3DFX_WINDOW_MODE_MESA" group="Mesa3DFXMode"/>
+        <enum value="0x2"           name="GLX_3DFX_FULLSCREEN_MODE_MESA" group="Mesa3DFXMode"/>
     </enums>
 
-    <enums namespace="GLXEventCodes">
+    <enums namespace="EventCodes">
         <!-- __GLX_NUMBER_EVENTS is set to 17 to account for the
              BufferClobberSGIX event. This helps initialization if the
              server supports the extension and the client doesn't. -->
@@ -207,102 +207,102 @@ typedef unsigned __int64 uint64_t;
         <enum value="17"            name="__GLX_NUMBER_EVENTS"/>
     </enums>
 
-    <enums namespace="GLXErrorCode">
-        <enum value="1"             name="GLX_BAD_SCREEN"/>
-        <enum value="2"             name="GLX_BAD_ATTRIBUTE"/>
-        <enum value="3"             name="GLX_NO_EXTENSION"/>
-        <enum value="4"             name="GLX_BAD_VISUAL"/>
-        <enum value="5"             name="GLX_BAD_CONTEXT"/>
-        <enum value="6"             name="GLX_BAD_VALUE"/>
-        <enum value="7"             name="GLX_BAD_ENUM"/>
-        <enum value="91"            name="GLX_BAD_HYPERPIPE_CONFIG_SGIX"/>
-        <enum value="92"            name="GLX_BAD_HYPERPIPE_SGIX"/>
+    <enums namespace="ErrorCode">
+        <enum value="1"             name="GLX_BAD_SCREEN" group="ErrorCode"/>
+        <enum value="2"             name="GLX_BAD_ATTRIBUTE" group="ErrorCode"/>
+        <enum value="3"             name="GLX_NO_EXTENSION" group="ErrorCode"/>
+        <enum value="4"             name="GLX_BAD_VISUAL" group="ErrorCode"/>
+        <enum value="5"             name="GLX_BAD_CONTEXT" group="ErrorCode"/>
+        <enum value="6"             name="GLX_BAD_VALUE" group="ErrorCode"/>
+        <enum value="7"             name="GLX_BAD_ENUM" group="ErrorCode"/>
+        <enum value="91"            name="GLX_BAD_HYPERPIPE_CONFIG_SGIX" group="ErrorCode"/>
+        <enum value="92"            name="GLX_BAD_HYPERPIPE_SGIX" group="ErrorCode"/>
     </enums>
 
     <enums namespace="GLX_GenericEventCode" vendor="ARB" comment="Returned in the evtype field of XGenericEventCookie requests. This is a numeric code, not a bitmask. See http://www.x.org/releases/X11R7.6/doc/xextproto/geproto.html">
         <enum value="0x00000000"    name="GLX_STEREO_NOTIFY_EXT"/>
     </enums>
 
-    <enums namespace="GLXDrawableTypeMask" type="bitmask" comment="DRAWABLE_TYPE bits">
-        <enum value="0x00000001"    name="GLX_WINDOW_BIT"/>
-        <enum value="0x00000001"    name="GLX_WINDOW_BIT_SGIX"/>
-        <enum value="0x00000002"    name="GLX_PIXMAP_BIT"/>
-        <enum value="0x00000002"    name="GLX_PIXMAP_BIT_SGIX"/>
-        <enum value="0x00000004"    name="GLX_PBUFFER_BIT"/>
-        <enum value="0x00000004"    name="GLX_PBUFFER_BIT_SGIX"/>
+    <enums namespace="DrawableTypeMask" type="bitmask" comment="DRAWABLE_TYPE bits">
+        <enum value="0x00000001"    name="GLX_WINDOW_BIT" group="DrawableTypeMask"/>
+        <enum value="0x00000001"    name="GLX_WINDOW_BIT_SGIX" group="DrawableTypeMask"/>
+        <enum value="0x00000002"    name="GLX_PIXMAP_BIT" group="DrawableTypeMask"/>
+        <enum value="0x00000002"    name="GLX_PIXMAP_BIT_SGIX" group="DrawableTypeMask"/>
+        <enum value="0x00000004"    name="GLX_PBUFFER_BIT" group="DrawableTypeMask"/>
+        <enum value="0x00000004"    name="GLX_PBUFFER_BIT_SGIX" group="DrawableTypeMask"/>
     </enums>
 
-    <enums namespace="GLXRenderTypeMask" type="bitmask" comment="RENDER_TYPE bits">
-        <enum value="0x00000001"    name="GLX_RGBA_BIT"/>
-        <enum value="0x00000001"    name="GLX_RGBA_BIT_SGIX"/>
-        <enum value="0x00000002"    name="GLX_COLOR_INDEX_BIT"/>
-        <enum value="0x00000002"    name="GLX_COLOR_INDEX_BIT_SGIX"/>
-        <enum value="0x00000004"    name="GLX_RGBA_FLOAT_BIT_ARB"/>
-        <enum value="0x00000008"    name="GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT"/>
+    <enums namespace="RenderTypeMask" type="bitmask" comment="RENDER_TYPE bits">
+        <enum value="0x00000001"    name="GLX_RGBA_BIT" group="RenderTypeMask"/>
+        <enum value="0x00000001"    name="GLX_RGBA_BIT_SGIX" group="RenderTypeMask"/>
+        <enum value="0x00000002"    name="GLX_COLOR_INDEX_BIT" group="RenderTypeMask"/>
+        <enum value="0x00000002"    name="GLX_COLOR_INDEX_BIT_SGIX" group="RenderTypeMask"/>
+        <enum value="0x00000004"    name="GLX_RGBA_FLOAT_BIT_ARB" group="RenderTypeMask"/>
+        <enum value="0x00000008"    name="GLX_RGBA_UNSIGNED_FLOAT_BIT_EXT" group="RenderTypeMask"/>
     </enums>
 
-    <enums namespace="GLXSyncType" type="bitmask" comment="ChannelRectSyncSGIX bits">
-        <enum value="0x00000000"    name="GLX_SYNC_FRAME_SGIX"/>
-        <enum value="0x00000001"    name="GLX_SYNC_SWAP_SGIX"/>
+    <enums namespace="SyncType" type="bitmask" comment="ChannelRectSyncSGIX bits">
+        <enum value="0x00000000"    name="GLX_SYNC_FRAME_SGIX" group="SyncType"/>
+        <enum value="0x00000001"    name="GLX_SYNC_SWAP_SGIX" group="SyncType"/>
     </enums>
 
-    <enums namespace="GLXEventMask" type="bitmask" comment="SelectEvent mask">
-        <enum value="0x00000001"    name="GLX_STEREO_NOTIFY_MASK_EXT"/>
-        <enum value="0x04000000"    name="GLX_BUFFER_SWAP_COMPLETE_INTEL_MASK"/>
-        <enum value="0x08000000"    name="GLX_PBUFFER_CLOBBER_MASK"/>
-        <enum value="0x08000000"    name="GLX_BUFFER_CLOBBER_MASK_SGIX"/>
+    <enums namespace="EventMask" type="bitmask" comment="SelectEvent mask">
+        <enum value="0x00000001"    name="GLX_STEREO_NOTIFY_MASK_EXT" group="EventMask"/>
+        <enum value="0x04000000"    name="GLX_BUFFER_SWAP_COMPLETE_INTEL_MASK" group="EventMask"/>
+        <enum value="0x08000000"    name="GLX_PBUFFER_CLOBBER_MASK" group="EventMask"/>
+        <enum value="0x08000000"    name="GLX_BUFFER_CLOBBER_MASK_SGIX" group="EventMask"/>
     </enums>
 
-    <enums namespace="GLXPbufferClobberMask" type="bitmask">
-        <enum value="0x00000001"    name="GLX_FRONT_LEFT_BUFFER_BIT"/>
-        <enum value="0x00000001"    name="GLX_FRONT_LEFT_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000002"    name="GLX_FRONT_RIGHT_BUFFER_BIT"/>
-        <enum value="0x00000002"    name="GLX_FRONT_RIGHT_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000004"    name="GLX_BACK_LEFT_BUFFER_BIT"/>
-        <enum value="0x00000004"    name="GLX_BACK_LEFT_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000008"    name="GLX_BACK_RIGHT_BUFFER_BIT"/>
-        <enum value="0x00000008"    name="GLX_BACK_RIGHT_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000010"    name="GLX_AUX_BUFFERS_BIT"/>
-        <enum value="0x00000010"    name="GLX_AUX_BUFFERS_BIT_SGIX"/>
-        <enum value="0x00000020"    name="GLX_DEPTH_BUFFER_BIT"/>
-        <enum value="0x00000020"    name="GLX_DEPTH_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000040"    name="GLX_STENCIL_BUFFER_BIT"/>
-        <enum value="0x00000040"    name="GLX_STENCIL_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000080"    name="GLX_ACCUM_BUFFER_BIT"/>
-        <enum value="0x00000080"    name="GLX_ACCUM_BUFFER_BIT_SGIX"/>
-        <enum value="0x00000100"    name="GLX_SAMPLE_BUFFERS_BIT_SGIX"/>
+    <enums namespace="PbufferClobberMask" type="bitmask">
+        <enum value="0x00000001"    name="GLX_FRONT_LEFT_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000001"    name="GLX_FRONT_LEFT_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000002"    name="GLX_FRONT_RIGHT_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000002"    name="GLX_FRONT_RIGHT_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000004"    name="GLX_BACK_LEFT_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000004"    name="GLX_BACK_LEFT_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000008"    name="GLX_BACK_RIGHT_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000008"    name="GLX_BACK_RIGHT_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000010"    name="GLX_AUX_BUFFERS_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000010"    name="GLX_AUX_BUFFERS_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000020"    name="GLX_DEPTH_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000020"    name="GLX_DEPTH_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000040"    name="GLX_STENCIL_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000040"    name="GLX_STENCIL_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000080"    name="GLX_ACCUM_BUFFER_BIT" group="PbufferClobberMask"/>
+        <enum value="0x00000080"    name="GLX_ACCUM_BUFFER_BIT_SGIX" group="PbufferClobberMask"/>
+        <enum value="0x00000100"    name="GLX_SAMPLE_BUFFERS_BIT_SGIX" group="PbufferClobberMask"/>
     </enums>
 
-    <enums namespace="GLXHyperpipeTypeMask" type="bitmask">
-        <enum value="0x00000001"    name="GLX_HYPERPIPE_DISPLAY_PIPE_SGIX"/>
-        <enum value="0x00000002"    name="GLX_HYPERPIPE_RENDER_PIPE_SGIX"/>
+    <enums namespace="HyperpipeTypeMask" type="bitmask">
+        <enum value="0x00000001"    name="GLX_HYPERPIPE_DISPLAY_PIPE_SGIX" group="HyperpipeTypeMask"/>
+        <enum value="0x00000002"    name="GLX_HYPERPIPE_RENDER_PIPE_SGIX" group="HyperpipeTypeMask"/>
     </enums>
 
-    <enums namespace="GLXHyperpipeAttribSGIX" type="bitmask">
-        <enum value="0x00000001"    name="GLX_PIPE_RECT_SGIX"/>
-        <enum value="0x00000002"    name="GLX_PIPE_RECT_LIMITS_SGIX"/>
-        <enum value="0x00000003"    name="GLX_HYPERPIPE_STEREO_SGIX"/>
-        <enum value="0x00000004"    name="GLX_HYPERPIPE_PIXEL_AVERAGE_SGIX"/>
+    <enums namespace="HyperpipeAttribSGIX" type="bitmask">
+        <enum value="0x00000001"    name="GLX_PIPE_RECT_SGIX" group="HyperpipeAttribSGIX"/>
+        <enum value="0x00000002"    name="GLX_PIPE_RECT_LIMITS_SGIX" group="HyperpipeAttribSGIX"/>
+        <enum value="0x00000003"    name="GLX_HYPERPIPE_STEREO_SGIX" group="HyperpipeAttribSGIX"/>
+        <enum value="0x00000004"    name="GLX_HYPERPIPE_PIXEL_AVERAGE_SGIX" group="HyperpipeAttribSGIX"/>
     </enums>
 
-    <enums namespace="GLXBindToTextureTargetMask" type="bitmask">
-        <enum value="0x00000001"    name="GLX_TEXTURE_1D_BIT_EXT"/>
-        <enum value="0x00000002"    name="GLX_TEXTURE_2D_BIT_EXT"/>
-        <enum value="0x00000004"    name="GLX_TEXTURE_RECTANGLE_BIT_EXT"/>
+    <enums namespace="BindToTextureTargetMask" type="bitmask">
+        <enum value="0x00000001"    name="GLX_TEXTURE_1D_BIT_EXT" group="BindToTextureTargetMask"/>
+        <enum value="0x00000002"    name="GLX_TEXTURE_2D_BIT_EXT" group="BindToTextureTargetMask"/>
+        <enum value="0x00000004"    name="GLX_TEXTURE_RECTANGLE_BIT_EXT" group="BindToTextureTargetMask"/>
     </enums>
 
-    <enums namespace="GLXContextFlags" type="bitmask" comment="CONTEXT_FLAGS_ARB bits (shared with WGL/GL)">
-        <enum value="0x00000001"    name="GLX_CONTEXT_DEBUG_BIT_ARB"/>
-        <enum value="0x00000002"    name="GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB"/>
-        <enum value="0x00000004"    name="GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB"/>
-        <enum value="0x00000008"    name="GLX_CONTEXT_RESET_ISOLATION_BIT_ARB"/>
+    <enums namespace="ContextFlags" type="bitmask" comment="CONTEXT_FLAGS_ARB bits (shared with WGL/GL)">
+        <enum value="0x00000001"    name="GLX_CONTEXT_DEBUG_BIT_ARB" group="ContextFlags"/>
+        <enum value="0x00000002"    name="GLX_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB" group="ContextFlags"/>
+        <enum value="0x00000004"    name="GLX_CONTEXT_ROBUST_ACCESS_BIT_ARB" group="ContextFlags"/>
+        <enum value="0x00000008"    name="GLX_CONTEXT_RESET_ISOLATION_BIT_ARB" group="ContextFlags"/>
     </enums>
 
-    <enums namespace="GLXContextProfileMask" type="bitmask" comment="CONTEXT_PROFILE_MASK_ARB bits">
-        <enum value="0x00000001"    name="GLX_CONTEXT_CORE_PROFILE_BIT_ARB"/>
-        <enum value="0x00000002"    name="GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB"/>
-        <enum value="0x00000004"    name="GLX_CONTEXT_ES_PROFILE_BIT_EXT"/>
-        <enum value="0x00000004"    name="GLX_CONTEXT_ES2_PROFILE_BIT_EXT" alias="GLX_CONTEXT_ES_PROFILE_BIT_EXT"/>
+    <enums namespace="ContextProfileMask" type="bitmask" comment="CONTEXT_PROFILE_MASK_ARB bits">
+        <enum value="0x00000001"    name="GLX_CONTEXT_CORE_PROFILE_BIT_ARB" group="ContextProfileMask"/>
+        <enum value="0x00000002"    name="GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB" group="ContextProfileMask"/>
+        <enum value="0x00000004"    name="GLX_CONTEXT_ES_PROFILE_BIT_EXT" group="ContextProfileMask"/>
+        <enum value="0x00000004"    name="GLX_CONTEXT_ES2_PROFILE_BIT_EXT" alias="GLX_CONTEXT_ES_PROFILE_BIT_EXT" group="ContextProfileMask"/>
     </enums>
 
     <enums namespace="GLXHyperpipeMiscSGIX">
@@ -313,7 +313,7 @@ typedef unsigned __int64 uint64_t;
     <enums namespace="GLX" start="0x0000" end="0x2FFF" vendor="ARB"           comment="Miscellaneous OpenGL 1.0/1.1 enums. Most parts of this range are unused and should remain unused."/>
 
     <enums namespace="GLX" group="SpecialNumbers"  vendor="ARB" comment="Tokens whose numeric value is intrinsically meaningful">
-        <enum value="0"             name="GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB"/>
+        <enum value="0"             name="GLX_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB" group="ContextReleaseBehavior"/>
         <enum value="0xFFFFFFFF"    name="GLX_DONT_CARE"                            comment="For ChooseFBConfig attributes"/>
     </enums>
 
@@ -361,15 +361,15 @@ typedef unsigned __int64 uint64_t;
     </enums>
 
     <enums namespace="GLX" start="0x2070" end="0x209F" vendor="ARB" comment="Shared with WGL; synchronize create_context enums">
-        <enum value="0x2091"        name="GLX_CONTEXT_MAJOR_VERSION_ARB"/>
-        <enum value="0x2092"        name="GLX_CONTEXT_MINOR_VERSION_ARB"/>
+        <enum value="0x2091"        name="GLX_CONTEXT_MAJOR_VERSION_ARB" group="ContextAttribs"/>
+        <enum value="0x2092"        name="GLX_CONTEXT_MINOR_VERSION_ARB" group="ContextAttribs"/>
             <!-- 0x2093 used for WGL_CONTEXT_LAYER_PLANE_ARB -->
-        <enum value="0x2094"        name="GLX_CONTEXT_FLAGS_ARB"/>
+        <enum value="0x2094"        name="GLX_CONTEXT_FLAGS_ARB" group="ContextAttribs"/>
             <!-- 0x2095 collides with WGL_ERROR_INVALID_VERSION_ARB! -->
         <enum value="0x2095"        name="GLX_CONTEXT_ALLOW_BUFFER_BYTE_ORDER_MISMATCH_ARB"/>
             <!-- 0x2096 used for WGL_ERROR_INVALID_PROFILE_ARB -->
-        <enum value="0x2097"        name="GLX_CONTEXT_RELEASE_BEHAVIOR_ARB"/>
-        <enum value="0x2098"        name="GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB"/>
+        <enum value="0x2097"        name="GLX_CONTEXT_RELEASE_BEHAVIOR_ARB" group="ContextAttribs"/>
+        <enum value="0x2098"        name="GLX_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB" group="ContextReleaseBehavior"/>
             <unused start="0x2099" end="0x209F"/>
     </enums>
 
@@ -380,12 +380,12 @@ typedef unsigned __int64 uint64_t;
         <enum value="0x20AD"        name="GLX_CONTEXT_MULTIGPU_ATTRIB_MULTICAST_NV"/>
         <enum value="0x20AE"        name="GLX_CONTEXT_MULTIGPU_ATTRIB_MULTI_DISPLAY_MULTICAST_NV"/>
         <enum value="0x20B0"        name="GLX_FLOAT_COMPONENTS_NV"/>
-        <enum value="0x20B1"        name="GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT"/>
+        <enum value="0x20B1"        name="GLX_RGBA_UNSIGNED_FLOAT_TYPE_EXT" group="RenderType"/>
         <enum value="0x20B2"        name="GLX_FRAMEBUFFER_SRGB_CAPABLE_ARB"/>
         <enum value="0x20B2"        name="GLX_FRAMEBUFFER_SRGB_CAPABLE_EXT"/>
         <enum value="0x20B3"        name="GLX_COLOR_SAMPLES_NV"/>
             <unused start="0x20B4" end="0x20B8"/>
-        <enum value="0x20B9"        name="GLX_RGBA_FLOAT_TYPE_ARB"/>
+        <enum value="0x20B9"        name="GLX_RGBA_FLOAT_TYPE_ARB" group="RenderType"/>
             <unused start="0x20BA" end="0x20C2"/>
         <enum value="0x20C3"        name="GLX_VIDEO_OUT_COLOR_NV"/>
         <enum value="0x20C4"        name="GLX_VIDEO_OUT_ALPHA_NV"/>
@@ -432,8 +432,8 @@ typedef unsigned __int64 uint64_t;
         <enum value="0x20EB"        name="GLX_AUX9_EXT"/>
             <unused start="0x20EC" end="0x20EF"/>
         <enum value="0x20F0"        name="GLX_NUM_VIDEO_SLOTS_NV"/>
-        <enum value="0x20F1"        name="GLX_SWAP_INTERVAL_EXT"/>
-        <enum value="0x20F2"        name="GLX_MAX_SWAP_INTERVAL_EXT"/>
+        <enum value="0x20F1"        name="GLX_SWAP_INTERVAL_EXT" group="DrawableAttrib"/>
+        <enum value="0x20F2"        name="GLX_MAX_SWAP_INTERVAL_EXT" group="DrawableAttrib"/>
         <enum value="0x20F3"        name="GLX_LATE_SWAPS_TEAR_EXT"/>
         <enum value="0x20F4"        name="GLX_BACK_BUFFER_AGE_EXT"/>
         <enum value="0x20F5"        name="GLX_STEREO_TREE_EXT"/>
@@ -462,80 +462,80 @@ typedef unsigned __int64 uint64_t;
     </enums>
 
     <enums namespace="GLX" start="0x31B3" end="0x31B3" vendor="ARB" comment="Shared with WGL.">
-        <enum value="0x31B3" name="GLX_CONTEXT_OPENGL_NO_ERROR_ARB"/>
+        <enum value="0x31B3" name="GLX_CONTEXT_OPENGL_NO_ERROR_ARB" group="ContextAttribs"/>
     </enums>
 
     <enums namespace="GLX" start="0x8000" end="0x804F" vendor="ARB">
-        <enum value="0x8000"        name="GLX_NONE"                                 comment="Attribute value"/>
-        <enum value="0x8001"        name="GLX_SLOW_CONFIG"                          comment="CONFIG_CAVEAT attribute value"/>
-        <enum value="0x8002"        name="GLX_TRUE_COLOR"                           comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8003"        name="GLX_DIRECT_COLOR"                         comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8004"        name="GLX_PSEUDO_COLOR"                         comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8005"        name="GLX_STATIC_COLOR"                         comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8006"        name="GLX_GRAY_SCALE"                           comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8007"        name="GLX_STATIC_GRAY"                          comment="X_VISUAL_TYPE attribute value"/>
-        <enum value="0x8008"        name="GLX_TRANSPARENT_RGB"                      comment="TRANSPARENT_TYPE attribute value"/>
-        <enum value="0x8009"        name="GLX_TRANSPARENT_INDEX"                    comment="TRANSPARENT_TYPE attribute value"/>
-        <enum value="0x800B"        name="GLX_VISUAL_ID"                            comment="Context attribute"/>
-        <enum value="0x800C"        name="GLX_SCREEN"                               comment="Context attribute"/>
-        <enum value="0x800D"        name="GLX_NON_CONFORMANT_CONFIG"                comment="CONFIG_CAVEAT attribute value"/>
-        <enum value="0x8010"        name="GLX_DRAWABLE_TYPE"                        comment="FBConfig attribute"/>
-        <enum value="0x8011"        name="GLX_RENDER_TYPE"                          comment="FBConfig attribute"/>
-        <enum value="0x8012"        name="GLX_X_RENDERABLE"                         comment="FBConfig attribute"/>
-        <enum value="0x8013"        name="GLX_FBCONFIG_ID"                          comment="FBConfig attribute"/>
-        <enum value="0x8014"        name="GLX_RGBA_TYPE"                            comment="CreateNewContext render_type value"/>
-        <enum value="0x8015"        name="GLX_COLOR_INDEX_TYPE"                     comment="CreateNewContext render_type value"/>
-        <enum value="0x8016"        name="GLX_MAX_PBUFFER_WIDTH"                    comment="FBConfig attribute"/>
-        <enum value="0x8017"        name="GLX_MAX_PBUFFER_HEIGHT"                   comment="FBConfig attribute"/>
-        <enum value="0x8018"        name="GLX_MAX_PBUFFER_PIXELS"                   comment="FBConfig attribute"/>
-        <enum value="0x801B"        name="GLX_PRESERVED_CONTENTS"                   comment="CreateGLXPbuffer attribute"/>
-        <enum value="0x801C"        name="GLX_LARGEST_PBUFFER"                      comment="CreateGLXPbuffer attribute"/>
-        <enum value="0x801D"        name="GLX_WIDTH"                                comment="Drawable attribute"/>
-        <enum value="0x801E"        name="GLX_HEIGHT"                               comment="Drawable attribute"/>
-        <enum value="0x801F"        name="GLX_EVENT_MASK"                           comment="Drawable attribute"/>
-        <enum value="0x8020"        name="GLX_DAMAGED"                              comment="PbufferClobber event_type value"/>
-        <enum value="0x8021"        name="GLX_SAVED"                                comment="PbufferClobber event_type value"/>
-        <enum value="0x8022"        name="GLX_WINDOW"                               comment="PbufferClobber draw_type value"/>
-        <enum value="0x8023"        name="GLX_PBUFFER"                              comment="PbufferClobber draw_type value"/>
-        <enum value="0x8000"        name="GLX_NONE_EXT"                             comment="several EXT attribute values"/>
-        <enum value="0x8001"        name="GLX_SLOW_VISUAL_EXT"                      comment="VISUAL_CAVEAT_EXT attribute value"/>
-        <enum value="0x8002"        name="GLX_TRUE_COLOR_EXT"                       comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8003"        name="GLX_DIRECT_COLOR_EXT"                     comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8004"        name="GLX_PSEUDO_COLOR_EXT"                     comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8005"        name="GLX_STATIC_COLOR_EXT"                     comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8006"        name="GLX_GRAY_SCALE_EXT"                       comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8007"        name="GLX_STATIC_GRAY_EXT"                      comment="X_VISUAL_TYPE_EXT attribute value"/>
-        <enum value="0x8008"        name="GLX_TRANSPARENT_RGB_EXT"                  comment="TRANSPARENT_TYPE_EXT attribute value"/>
-        <enum value="0x8009"        name="GLX_TRANSPARENT_INDEX_EXT"                comment="TRANSPARENT_TYPE_EXT attribute value"/>
-        <enum value="0x800A"        name="GLX_SHARE_CONTEXT_EXT"                    comment="QueryContextInfoEXT attribute"/>
-        <enum value="0x800B"        name="GLX_VISUAL_ID_EXT"                        comment="QueryContextInfoEXT attribute"/>
-        <enum value="0x800C"        name="GLX_SCREEN_EXT"                           comment="QueryContextInfoEXT attribute"/>
-        <enum value="0x800D"        name="GLX_NON_CONFORMANT_VISUAL_EXT"            comment="VISUAL_CAVEAT_EXT attribute value"/>
-        <enum value="0x8010"        name="GLX_DRAWABLE_TYPE_SGIX"                   comment="FBConfigSGIX attribute"/>
-        <enum value="0x8011"        name="GLX_RENDER_TYPE_SGIX"                     comment="FBConfigSGIX attribute"/>
-        <enum value="0x8012"        name="GLX_X_RENDERABLE_SGIX"                    comment="FBConfigSGIX attribute"/>
-        <enum value="0x8013"        name="GLX_FBCONFIG_ID_SGIX"                     comment="FBConfigSGIX attribute"/>
-        <enum value="0x8014"        name="GLX_RGBA_TYPE_SGIX"                       comment="CreateContextWithConfigSGIX render_type value"/>
-        <enum value="0x8015"        name="GLX_COLOR_INDEX_TYPE_SGIX"                comment="CreateContextWithConfigSGIX render_type value"/>
-        <enum value="0x8016"        name="GLX_MAX_PBUFFER_WIDTH_SGIX"               comment="FBConfigSGIX attribute"/>
-        <enum value="0x8017"        name="GLX_MAX_PBUFFER_HEIGHT_SGIX"              comment="FBConfigSGIX attribute"/>
-        <enum value="0x8018"        name="GLX_MAX_PBUFFER_PIXELS_SGIX"              comment="FBConfigSGIX attribute"/>
-        <enum value="0x8019"        name="GLX_OPTIMAL_PBUFFER_WIDTH_SGIX"           comment="FBConfigSGIX attribute"/>
-        <enum value="0x801A"        name="GLX_OPTIMAL_PBUFFER_HEIGHT_SGIX"          comment="FBConfigSGIX attribute"/>
-        <enum value="0x801B"        name="GLX_PRESERVED_CONTENTS_SGIX"              comment="PbufferSGIX attribute"/>
-        <enum value="0x801C"        name="GLX_LARGEST_PBUFFER_SGIX"                 comment="PbufferSGIX attribute"/>
-        <enum value="0x801D"        name="GLX_WIDTH_SGIX"                           comment="PbufferSGIX attribute"/>
-        <enum value="0x801E"        name="GLX_HEIGHT_SGIX"                          comment="PbufferSGIX attribute"/>
-        <enum value="0x801F"        name="GLX_EVENT_MASK_SGIX"                      comment="PbufferSGIX attribute"/>
-        <enum value="0x8020"        name="GLX_DAMAGED_SGIX"                         comment="BufferClobberSGIX event_type value"/>
-        <enum value="0x8021"        name="GLX_SAVED_SGIX"                           comment="BufferClobberSGIX event_type value"/>
-        <enum value="0x8022"        name="GLX_WINDOW_SGIX"                          comment="BufferClobberSGIX draw_type value"/>
-        <enum value="0x8023"        name="GLX_PBUFFER_SGIX"                         comment="BufferClobberSGIX draw_type value"/>
-        <enum value="0x8024"        name="GLX_DIGITAL_MEDIA_PBUFFER_SGIX"           comment="PbufferSGIX attribute"/>
-        <enum value="0x8025"        name="GLX_BLENDED_RGBA_SGIS"                    comment="TRANSPARENT_TYPE_EXT attribute value"/>
-        <enum value="0x8026"        name="GLX_MULTISAMPLE_SUB_RECT_WIDTH_SGIS"      comment="Visual attribute (shared_multisample)"/>
-        <enum value="0x8027"        name="GLX_MULTISAMPLE_SUB_RECT_HEIGHT_SGIS"     comment="Visual attribute (shared_multisample)"/>
-        <enum value="0x8028"        name="GLX_VISUAL_SELECT_GROUP_SGIX"             comment="Visual attribute (visual_select_group)"/>
+        <enum value="0x8000"        name="GLX_NONE"                                      comment="Attribute value"/>
+        <enum value="0x8001"        name="GLX_SLOW_CONFIG"                               comment="CONFIG_CAVEAT attribute value"/>
+        <enum value="0x8002"        name="GLX_TRUE_COLOR"                                comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8003"        name="GLX_DIRECT_COLOR"                              comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8004"        name="GLX_PSEUDO_COLOR"                              comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8005"        name="GLX_STATIC_COLOR"                              comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8006"        name="GLX_GRAY_SCALE"                                comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8007"        name="GLX_STATIC_GRAY"                               comment="X_VISUAL_TYPE attribute value"/>
+        <enum value="0x8008"        name="GLX_TRANSPARENT_RGB"                           comment="TRANSPARENT_TYPE attribute value"/>
+        <enum value="0x8009"        name="GLX_TRANSPARENT_INDEX"                         comment="TRANSPARENT_TYPE attribute value"/>
+        <enum value="0x800B"        name="GLX_VISUAL_ID"                                 comment="Context attribute"/>
+        <enum value="0x800C"        name="GLX_SCREEN"                                    comment="Context attribute"/>
+        <enum value="0x800D"        name="GLX_NON_CONFORMANT_CONFIG"                     comment="CONFIG_CAVEAT attribute value"/>
+        <enum value="0x8010"        name="GLX_DRAWABLE_TYPE"                             comment="FBConfig attribute"/>
+        <enum value="0x8011"        name="GLX_RENDER_TYPE" group="ContextAttribs"        comment="FBConfig attribute"/>
+        <enum value="0x8012"        name="GLX_X_RENDERABLE"                              comment="FBConfig attribute"/>
+        <enum value="0x8013"        name="GLX_FBCONFIG_ID" group="DrawableAttrib"        comment="FBConfig attribute"/>
+        <enum value="0x8014"        name="GLX_RGBA_TYPE" group="RenderType"              comment="CreateNewContext render_type value"/>
+        <enum value="0x8015"        name="GLX_COLOR_INDEX_TYPE"                          comment="CreateNewContext render_type value"/>
+        <enum value="0x8016"        name="GLX_MAX_PBUFFER_WIDTH"                         comment="FBConfig attribute"/>
+        <enum value="0x8017"        name="GLX_MAX_PBUFFER_HEIGHT"                        comment="FBConfig attribute"/>
+        <enum value="0x8018"        name="GLX_MAX_PBUFFER_PIXELS"                        comment="FBConfig attribute"/>
+        <enum value="0x801B"        name="GLX_PRESERVED_CONTENTS" group="DrawableAttrib" comment="CreateGLXPbuffer attribute"/>
+        <enum value="0x801C"        name="GLX_LARGEST_PBUFFER" group="DrawableAttrib"    comment="CreateGLXPbuffer attribute"/>
+        <enum value="0x801D"        name="GLX_WIDTH" group="DrawableAttrib"              comment="Drawable attribute"/>
+        <enum value="0x801E"        name="GLX_HEIGHT" group="DrawableAttrib"             comment="Drawable attribute"/>
+        <enum value="0x801F"        name="GLX_EVENT_MASK" group="DrawableAttrib"         comment="Drawable attribute"/>
+        <enum value="0x8020"        name="GLX_DAMAGED"                                   comment="PbufferClobber event_type value"/>
+        <enum value="0x8021"        name="GLX_SAVED"                                     comment="PbufferClobber event_type value"/>
+        <enum value="0x8022"        name="GLX_WINDOW"                                    comment="PbufferClobber draw_type value"/>
+        <enum value="0x8023"        name="GLX_PBUFFER"                                   comment="PbufferClobber draw_type value"/>
+        <enum value="0x8000"        name="GLX_NONE_EXT"                                  comment="several EXT attribute values"/>
+        <enum value="0x8001"        name="GLX_SLOW_VISUAL_EXT"                           comment="VISUAL_CAVEAT_EXT attribute value"/>
+        <enum value="0x8002"        name="GLX_TRUE_COLOR_EXT"                            comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8003"        name="GLX_DIRECT_COLOR_EXT"                          comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8004"        name="GLX_PSEUDO_COLOR_EXT"                          comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8005"        name="GLX_STATIC_COLOR_EXT"                          comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8006"        name="GLX_GRAY_SCALE_EXT"                            comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8007"        name="GLX_STATIC_GRAY_EXT"                           comment="X_VISUAL_TYPE_EXT attribute value"/>
+        <enum value="0x8008"        name="GLX_TRANSPARENT_RGB_EXT"                       comment="TRANSPARENT_TYPE_EXT attribute value"/>
+        <enum value="0x8009"        name="GLX_TRANSPARENT_INDEX_EXT"                     comment="TRANSPARENT_TYPE_EXT attribute value"/>
+        <enum value="0x800A"        name="GLX_SHARE_CONTEXT_EXT"                         comment="QueryContextInfoEXT attribute"/>
+        <enum value="0x800B"        name="GLX_VISUAL_ID_EXT"                             comment="QueryContextInfoEXT attribute"/>
+        <enum value="0x800C"        name="GLX_SCREEN_EXT"                                comment="QueryContextInfoEXT attribute"/>
+        <enum value="0x800D"        name="GLX_NON_CONFORMANT_VISUAL_EXT"                 comment="VISUAL_CAVEAT_EXT attribute value"/>
+        <enum value="0x8010"        name="GLX_DRAWABLE_TYPE_SGIX"                        comment="FBConfigSGIX attribute"/>
+        <enum value="0x8011"        name="GLX_RENDER_TYPE_SGIX"                          comment="FBConfigSGIX attribute"/>
+        <enum value="0x8012"        name="GLX_X_RENDERABLE_SGIX"                         comment="FBConfigSGIX attribute"/>
+        <enum value="0x8013"        name="GLX_FBCONFIG_ID_SGIX"                          comment="FBConfigSGIX attribute"/>
+        <enum value="0x8014"        name="GLX_RGBA_TYPE_SGIX" group="RenderType"         comment="CreateContextWithConfigSGIX render_type value"/>
+        <enum value="0x8015"        name="GLX_COLOR_INDEX_TYPE_SGIX" group="RenderType"  comment="CreateContextWithConfigSGIX render_type value"/>
+        <enum value="0x8016"        name="GLX_MAX_PBUFFER_WIDTH_SGIX"                    comment="FBConfigSGIX attribute"/>
+        <enum value="0x8017"        name="GLX_MAX_PBUFFER_HEIGHT_SGIX"                   comment="FBConfigSGIX attribute"/>
+        <enum value="0x8018"        name="GLX_MAX_PBUFFER_PIXELS_SGIX"                   comment="FBConfigSGIX attribute"/>
+        <enum value="0x8019"        name="GLX_OPTIMAL_PBUFFER_WIDTH_SGIX"                comment="FBConfigSGIX attribute"/>
+        <enum value="0x801A"        name="GLX_OPTIMAL_PBUFFER_HEIGHT_SGIX"               comment="FBConfigSGIX attribute"/>
+        <enum value="0x801B"        name="GLX_PRESERVED_CONTENTS_SGIX"                   comment="PbufferSGIX attribute"/>
+        <enum value="0x801C"        name="GLX_LARGEST_PBUFFER_SGIX"                      comment="PbufferSGIX attribute"/>
+        <enum value="0x801D"        name="GLX_WIDTH_SGIX"                                comment="PbufferSGIX attribute"/>
+        <enum value="0x801E"        name="GLX_HEIGHT_SGIX"                               comment="PbufferSGIX attribute"/>
+        <enum value="0x801F"        name="GLX_EVENT_MASK_SGIX"                           comment="PbufferSGIX attribute"/>
+        <enum value="0x8020"        name="GLX_DAMAGED_SGIX"                              comment="BufferClobberSGIX event_type value"/>
+        <enum value="0x8021"        name="GLX_SAVED_SGIX"                                comment="BufferClobberSGIX event_type value"/>
+        <enum value="0x8022"        name="GLX_WINDOW_SGIX"                               comment="BufferClobberSGIX draw_type value"/>
+        <enum value="0x8023"        name="GLX_PBUFFER_SGIX"                              comment="BufferClobberSGIX draw_type value"/>
+        <enum value="0x8024"        name="GLX_DIGITAL_MEDIA_PBUFFER_SGIX"                comment="PbufferSGIX attribute"/>
+        <enum value="0x8025"        name="GLX_BLENDED_RGBA_SGIS"                         comment="TRANSPARENT_TYPE_EXT attribute value"/>
+        <enum value="0x8026"        name="GLX_MULTISAMPLE_SUB_RECT_WIDTH_SGIS"           comment="Visual attribute (shared_multisample)"/>
+        <enum value="0x8027"        name="GLX_MULTISAMPLE_SUB_RECT_HEIGHT_SGIS"          comment="Visual attribute (shared_multisample)"/>
+        <enum value="0x8028"        name="GLX_VISUAL_SELECT_GROUP_SGIX"                  comment="Visual attribute (visual_select_group)"/>
             <unused start="0x8029" end="0x802F"/>
         <enum value="0x8030"        name="GLX_HYPERPIPE_ID_SGIX"/>
             <unused start="0x8031" end="0x803F"/>
@@ -596,14 +596,14 @@ typedef unsigned __int64 uint64_t;
     </enums>
 
     <enums namespace="GL" start="0x8250" end="0x826F" vendor="ARB" comment="Values shared with GL. Do not allocate additional values in this range.">
-        <enum value="0x8252"        name="GLX_LOSE_CONTEXT_ON_RESET_ARB"/>
-        <enum value="0x8256"        name="GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB"/>
-        <enum value="0x8261"        name="GLX_NO_RESET_NOTIFICATION_ARB"/>
+        <enum value="0x8252"        name="GLX_LOSE_CONTEXT_ON_RESET_ARB" group="ResetNotificationStrategy"/>
+        <enum value="0x8256"        name="GLX_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB" group="ContextAttribs"/>
+        <enum value="0x8261"        name="GLX_NO_RESET_NOTIFICATION_ARB" group="ResetNotificationStrategy"/>
     </enums>
 
     <enums namespace="GLX" start="0x8270" end="99999"  vendor="ARB" comment="RESERVED FOR FUTURE ALLOCATIONS BY KHRONOS">
             <unused start="0x8270" end="0x9125"/>
-        <enum value="0x9126"        name="GLX_CONTEXT_PROFILE_MASK_ARB" comment="Value shared with GL"/>
+        <enum value="0x9126"        name="GLX_CONTEXT_PROFILE_MASK_ARB"  group="ContextAttribs" comment="Value shared with GL"/>
             <unused start="0x9127" end="99999"/>
     </enums>
 
@@ -966,7 +966,7 @@ typedef unsigned __int64 uint64_t;
         <command>
             <proto>const char *<name>glXGetClientString</name></proto>
             <param><ptype>Display</ptype> *<name>dpy</name></param>
-            <param>int <name>name</name></param>
+            <param group="StringName">int <name>name</name></param>
         </command>
         <command>
             <proto>int <name>glXGetConfig</name></proto>
@@ -1051,11 +1051,11 @@ typedef unsigned __int64 uint64_t;
         </command>
         <command>
             <proto><ptype>__GLXextFuncPtr</ptype> <name>glXGetProcAddressARB</name></proto>
-            <param>const <ptype>GLubyte</ptype> *<name>procName</name></param>
+            <param kind="String">const <ptype>GLubyte</ptype> *<name>procName</name></param>
         </command>
         <command>
             <proto><ptype>__GLXextFuncPtr</ptype> <name>glXGetProcAddress</name></proto>
-            <param>const <ptype>GLubyte</ptype> *<name>procName</name></param>
+            <param kind="String">const <ptype>GLubyte</ptype> *<name>procName</name></param>
         </command>
         <command>
             <proto>void <name>glXGetSelectedEvent</name></proto>
@@ -1230,14 +1230,14 @@ typedef unsigned __int64 uint64_t;
             <proto>void <name>glXQueryDrawable</name></proto>
             <param><ptype>Display</ptype> *<name>dpy</name></param>
             <param><ptype>GLXDrawable</ptype> <name>draw</name></param>
-            <param>int <name>attribute</name></param>
-            <param>unsigned int *<name>value</name></param>
+            <param group="DrawableAttrib">int <name>attribute</name></param>
+            <param len="1">unsigned int *<name>value</name></param>
         </command>
         <command>
             <proto><ptype>Bool</ptype> <name>glXQueryExtension</name></proto>
             <param><ptype>Display</ptype> *<name>dpy</name></param>
-            <param>int *<name>errorb</name></param>
-            <param>int *<name>event</name></param>
+            <param len="1">int *<name>errorb</name></param>
+            <param len="1">int *<name>event</name></param>
         </command>
         <command>
             <proto>const char *<name>glXQueryExtensionsString</name></proto>
@@ -1317,7 +1317,7 @@ typedef unsigned __int64 uint64_t;
             <proto>const char *<name>glXQueryServerString</name></proto>
             <param><ptype>Display</ptype> *<name>dpy</name></param>
             <param>int <name>screen</name></param>
-            <param>int <name>name</name></param>
+            <param group="StringName">int <name>name</name></param>
         </command>
         <command>
             <proto><ptype>Bool</ptype> <name>glXQuerySwapGroupNV</name></proto>
@@ -1329,8 +1329,8 @@ typedef unsigned __int64 uint64_t;
         <command>
             <proto><ptype>Bool</ptype> <name>glXQueryVersion</name></proto>
             <param><ptype>Display</ptype> *<name>dpy</name></param>
-            <param>int *<name>maj</name></param>
-            <param>int *<name>min</name></param>
+            <param len="1">int *<name>maj</name></param>
+            <param len="1">int *<name>min</name></param>
         </command>
         <command>
             <proto>int <name>glXQueryVideoCaptureDeviceNV</name></proto>

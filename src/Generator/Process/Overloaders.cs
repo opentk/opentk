@@ -10,7 +10,6 @@ using Generator.Parsing;
 using Generator.Utility;
 using Generator.Utility.Extensions;
 using Generator.Writing;
-using static Generator.Process.ColorTypeOverloader;
 
 namespace Generator.Process
 {
@@ -1174,9 +1173,33 @@ namespace Generator.Process
             Overload newOverload = overload;
             for (int i = newParams.Count - 1; i >= 0; i--)
             {
-                // FIXME: We want to handle sized strings different!!!
                 var param = newParams[i];
-                if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
+
+                // There are a few functions that are supposed to take string arguments but are defined as
+                // GLubyte* or unsigned byte*. The ones marked with kind="String" we overload so that they get the correct signature.
+                // - Noggin_bops 2024-09-23
+                if (param.Kinds.Contains("String") && param.Type is CSPointer spt && spt.BaseType is CSPrimitive sbt && sbt.TypeName == "byte")
+                {
+                    var pointerParam = newParams[i];
+                    var nameTable = newOverload.NameTable.New();
+                    nameTable.Rename(pointerParam, $"{pointerParam.Name}_ptr");
+
+                    StringLayer.StringType stringType = StringLayer.StringType.Char8;
+
+                    // FIXME: Can we know if the string is nullable or not?
+                    newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
+                    var stringParams = newParams.ToArray();
+                    var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
+
+                    newOverload = newOverload with
+                    {
+                        NestedOverload = newOverload,
+                        MarshalLayerToNested = stringLayer,
+                        InputParameters = stringParams,
+                        NameTable = nameTable
+                    };
+                }
+                else if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
