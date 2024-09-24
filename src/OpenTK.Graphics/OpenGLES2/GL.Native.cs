@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;

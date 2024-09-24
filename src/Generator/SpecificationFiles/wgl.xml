@@ -146,7 +146,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
          extensions and API versions). -->
 
     <enums namespace="WGL" group="SpecialNumbers" vendor="MS">
-        <enum value="0"           name="WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB"/>
+        <enum value="0"           name="WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB" group="ContextReleaseBehavior"/>
         <enum value="0"           name="WGL_FONT_LINES" group="FontFormat"/>
         <enum value="1"           name="WGL_FONT_POLYGONS" group="FontFormat"/>
     </enums>
@@ -351,8 +351,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x2094"        name="WGL_CONTEXT_FLAGS_ARB" group="ContextAttribs"/>
         <enum value="0x2095"        name="ERROR_INVALID_VERSION_ARB"/>
         <enum value="0x2096"        name="ERROR_INVALID_PROFILE_ARB"/>
-        <enum value="0x2097"        name="WGL_CONTEXT_RELEASE_BEHAVIOR_ARB"/>
-        <enum value="0x2098"        name="WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB"/>
+        <enum value="0x2097"        name="WGL_CONTEXT_RELEASE_BEHAVIOR_ARB" group="ContextAttribs"/>
+        <enum value="0x2098"        name="WGL_CONTEXT_RELEASE_BEHAVIOR_FLUSH_ARB" group="ContextReleaseBehavior"/>
             <unused start="0x2099" end="0x209F"/>
     </enums>
 
@@ -365,7 +365,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x20A5"        name="WGL_DEPTH_TEXTURE_FORMAT_NV"/>
         <enum value="0x20A6"        name="WGL_TEXTURE_DEPTH_COMPONENT_NV"/>
         <enum value="0x20A7"        name="WGL_DEPTH_COMPONENT_NV"/>
-        <enum value="0x20A8"        name="WGL_TYPE_RGBA_UNSIGNED_FLOAT_EXT"/>
+        <enum value="0x20A8"        name="WGL_TYPE_RGBA_UNSIGNED_FLOAT_EXT" group="PixelType"/>
         <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_ARB" group="PixelFormatAttribute"/>
         <enum value="0x20A9"        name="WGL_FRAMEBUFFER_SRGB_CAPABLE_EXT" group="PixelFormatAttribute"/>
         <enum value="0x20AA"        name="WGL_CONTEXT_MULTIGPU_ATTRIB_NV"/>
@@ -409,8 +409,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="WGL" start="0x21A0" end="0x21AF" vendor="AMD">
-        <enum value="0x21A0"        name="WGL_TYPE_RGBA_FLOAT_ARB"/>
-        <enum value="0x21A0"        name="WGL_TYPE_RGBA_FLOAT_ATI"/>
+        <enum value="0x21A0"        name="WGL_TYPE_RGBA_FLOAT_ARB" group="PixelType"/>
+        <enum value="0x21A0"        name="WGL_TYPE_RGBA_FLOAT_ATI" group="PixelType"/>
             <unused start="0x21A1"/>
         <enum value="0x21A2"        name="WGL_GPU_FASTEST_TARGET_GPUS_AMD"/>
         <enum value="0x21A3"        name="WGL_GPU_RAM_AMD" group="GPUPropertyAMD"/>
@@ -441,19 +441,19 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="EGL" start="0x3080" end="0x30AF" vendor="KHR" comment="Values shared with EGL. Do not allocate additional values in this range.">
-        <enum value="0x309D" name="WGL_COLORSPACE_EXT"/>
-        <enum value="0x3089" name="WGL_COLORSPACE_SRGB_EXT"/>
-        <enum value="0x308A" name="WGL_COLORSPACE_LINEAR_EXT"/>
+        <enum value="0x309D" name="WGL_COLORSPACE_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x3089" name="WGL_COLORSPACE_SRGB_EXT" group="ColorspaceEXT"/>
+        <enum value="0x308A" name="WGL_COLORSPACE_LINEAR_EXT" group="ColorspaceEXT"/>
     </enums>
 
     <enums namespace="WGL" start="0x31B3" end="0x31B3" vendor="ARB" comment="Shared with GLX.">
-        <enum value="0x31B3" name="WGL_CONTEXT_OPENGL_NO_ERROR_ARB"/>
+        <enum value="0x31B3" name="WGL_CONTEXT_OPENGL_NO_ERROR_ARB" group="ContextAttribs"/>
     </enums>
 
     <enums namespace="GL" start="0x8250" end="0x826F" vendor="ARB" comment="Values shared with GL. Do not allocate additional values in this range.">
-        <enum value="0x8252"        name="WGL_LOSE_CONTEXT_ON_RESET_ARB"/>
-        <enum value="0x8256"        name="WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB"/>
-        <enum value="0x8261"        name="WGL_NO_RESET_NOTIFICATION_ARB"/>
+        <enum value="0x8252"        name="WGL_LOSE_CONTEXT_ON_RESET_ARB" group="ContextResetNotificationStrategy"/>
+        <enum value="0x8256"        name="WGL_CONTEXT_RESET_NOTIFICATION_STRATEGY_ARB" group="ContextAttribs"/>
+        <enum value="0x8261"        name="WGL_NO_RESET_NOTIFICATION_ARB"  group="ContextResetNotificationStrategy"/>
     </enums>
 
     <enums namespace="GL" start="0x9120" end="0x912F"  vendor="ARB" comment="Values shared with GL. Do not allocate additional values in this range.">

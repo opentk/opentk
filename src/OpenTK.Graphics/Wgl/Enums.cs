@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2024-09-23 23:09:51 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2024-09-24 18:01:57 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Wgl
@@ -349,6 +349,11 @@ namespace OpenTK.Graphics.Wgl
         DepthBufferBitArb = 4,
         StencilBufferBitArb = 8,
     }
+    public enum ColorspaceEXT : uint
+    {
+        ColorspaceSrgbExt = 12425,
+        ColorspaceLinearExt = 12426,
+    }
     ///<summary>Used in <see cref="Wgl.ARB.CreateContextAttribsARB" /></summary>
     public enum ContextAttribs : uint
     {
@@ -356,6 +361,9 @@ namespace OpenTK.Graphics.Wgl
         ContextMinorVersionArb = 8338,
         ContextLayerPlaneArb = 8339,
         ContextFlagsArb = 8340,
+        ContextReleaseBehaviorArb = 8343,
+        ContextOpenglNoErrorArb = 12723,
+        ContextResetNotificationStrategyArb = 33366,
         ContextProfileMaskArb = 37158,
     }
     ///<summary>Used in <see cref="Wgl.NV.QueryCurrentContextNV" /></summary>
@@ -379,6 +387,16 @@ namespace OpenTK.Graphics.Wgl
         ContextCompatibilityProfileBitArb = 2,
         ContextEs2ProfileBitExt = 4,
         ContextEsProfileBitExt = 4,
+    }
+    public enum ContextReleaseBehavior : uint
+    {
+        ContextReleaseBehaviorNoneArb = 0,
+        ContextReleaseBehaviorFlushArb = 8344,
+    }
+    public enum ContextResetNotificationStrategy : uint
+    {
+        LoseContextOnResetArb = 33362,
+        NoResetNotificationArb = 33377,
     }
     ///<summary>Used in <see cref="Wgl.I3D.GetDigitalVideoParametersI3D" />, <see cref="Wgl.I3D.SetDigitalVideoParametersI3D" /></summary>
     public enum DigitalVideoAttribute : uint
@@ -596,6 +614,7 @@ namespace OpenTK.Graphics.Wgl
         SamplesExt = 8258,
         FramebufferSrgbCapableArb = 8361,
         FramebufferSrgbCapableExt = 8361,
+        ColorspaceExt = 12445,
     }
     public enum PixelType : uint
     {
@@ -603,6 +622,9 @@ namespace OpenTK.Graphics.Wgl
         TypeRgbaExt = 8235,
         TypeColorindexArb = 8236,
         TypeColorindexExt = 8236,
+        TypeRgbaUnsignedFloatExt = 8360,
+        TypeRgbaFloatArb = 8608,
+        TypeRgbaFloatAti = 8608,
     }
     ///<summary>Used in <see cref="Wgl._3DL.SetStereoEmitterState3DL" /></summary>
     public enum StereoEmitterState : uint
