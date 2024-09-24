@@ -60,6 +60,49 @@ namespace VkGenerator
 
                 foreach (EnumType @enum in enums)
                 {
+                    writer.Write("/// <summary>");
+                    if (@enum.VersionInfo != null)
+                    {
+                        List<string> strs = [.. @enum.VersionInfo.Extensions];
+                        if (@enum.VersionInfo.Version != null)
+                        {
+                            strs.Insert(0, $"v{@enum.VersionInfo.Version.Major}.{@enum.VersionInfo.Version.Minor}");
+                        }
+                        writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                    }
+                    else
+                    {
+                        // There are three "valid" reasons why a enum type would be missing version data.
+                        // 1. The only reference to the enum type is in a disabled extension.
+                        //    Currently such enum types still get emitted even if no-one references them.
+                        // 2. The enum type is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                        // 3. The enum doesn't have any values associated with it, this happens with some "Bits" enum that
+                        //    have no entries.
+                        //
+                        // This is a list of the known enum types that fullfill any of these criteria.
+                        // - Noggin_bops 2024-09-24
+                        ReadOnlySpan<string> exceptedNames = [
+                                "VkSemaphoreCreateFlagBits",
+                                "VkSwapchainImageUsageFlagBitsANDROID",
+                                "VkPrivateDataSlotCreateFlagBits",
+                                "VkShaderModuleCreateFlagBits",
+                                "VkFaultLevel",
+                                "VkFaultType",
+                                "VkFaultQueryBehavior",
+                                "VkPipelineMatchControl",
+                                "VkPipelineCacheValidationVersion",
+                                "VkVideoEncodeFlagBitsKHR",
+                                "VkImageFormatConstraintsFlagBitsFUCHSIA",
+                                "VkWaylandSurfaceCreateFlagBitsKHR",
+                            ];
+
+                        if (exceptedNames.Contains(@enum.Name) == false)
+                        {
+                            Debug.Assert(false);
+                        }
+                    }
+                    writer.WriteLine("</summary>");
+
                     // FIXME: Make sure to not do name mangling?
                     writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@enum.Name}.html\" /></remarks>");
 
@@ -68,21 +111,84 @@ namespace VkGenerator
                         writer.WriteLine("[Flags]");
                     }
 
-                    // FIXME: Figure out the right underlying type!s
+                    // FIXME: Figure out the right underlying type!
                     writer.WriteLine($"public enum {@enum.Name} : {@enum.StrongUnderlyingType?.ToCSString() ?? throw new Exception()}");
                     using (writer.CsScope())
                     {
                         foreach (EnumMember member in @enum.Members)
                         {
                             string? comment = NameMangler.MaybeRemoveStart(member.Comment, "// ");
-                            if (member.Extension != null)
+                            if (member.Extension != null && member.VersionInfo != null)
                             {
-                                writer.WriteLine($"/// <summary>[requires: <b>{member.Extension}</b>]{comment}</summary>");
+                                if (member.Extension.StartsWith("VK_VERSION") == false)
+                                    Debug.Assert(member.VersionInfo.Extensions.Contains(member.Extension));
                             }
-                            else if (comment != null)
+
+                            writer.Write("/// <summary>");
+                            if (member.VersionInfo != null)
                             {
-                                writer.WriteLine($"/// <summary>{comment}</summary>");
+                                List<string> strs = [.. member.VersionInfo.Extensions];
+                                if (member.VersionInfo.Version != null)
+                                {
+                                    strs.Insert(0, $"v{member.VersionInfo.Version.Major}.{member.VersionInfo.Version.Minor}");
+                                }
+                                writer.Write($"[requires: <b>{string.Join(" | ", strs)}</b>] ");
                             }
+                            else
+                            {
+                                if (@enum.VersionInfo != null)
+                                {
+                                    // If the enum member didn't have it's own version info, take the one from the enum type.
+                                    // This means we assume that if we have no version info for a member it's part of the "base package"
+                                    // for this enum type.
+                                    // - Noggin_bops 2024-09-24
+
+                                    List<string> strs = [.. @enum.VersionInfo.Extensions];
+                                    if (@enum.VersionInfo.Version != null)
+                                    {
+                                        strs.Insert(0, $"v{@enum.VersionInfo.Version.Major}.{@enum.VersionInfo.Version.Minor}");
+                                    }
+                                    writer.Write($"[requires: <b>{string.Join(" | ", strs)}</b>] ");
+                                }
+                                else
+                                {
+                                    // There are two "valid" reasons why a enum member would be missing version data.
+                                    // 1. The only reference to the enum member is in a disabled extension.
+                                    //    Currently such enum members still get emitted even if no-one references them.
+                                    // 2. The enum member is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                                    //
+                                    // This is a list of the known enum member that fullfill either of these criteria.
+                                    // - Noggin_bops 2024-09-24
+                                    ReadOnlySpan<(string, string)> exceptedNames = [
+                                                ("VkFaultQueryBehavior", "VK_FAULT_QUERY_BEHAVIOR_GET_AND_CLEAR_ALL_FAULTS"),
+                                                ("VkPipelineMatchControl", "VK_PIPELINE_MATCH_CONTROL_APPLICATION_UUID_EXACT_MATCH"),
+                                                ("VkPipelineCacheValidationVersion", "VK_PIPELINE_CACHE_VALIDATION_VERSION_SAFETY_CRITICAL_ONE"),
+                                                ("VkSwapchainImageUsageFlagBitsANDROID", "VK_SWAPCHAIN_IMAGE_USAGE_SHARED_BIT_ANDROID"),
+                                                ("VkFaultLevel", "VK_FAULT_LEVEL_UNASSIGNED"),
+                                                ("VkFaultLevel", "VK_FAULT_LEVEL_CRITICAL"),
+                                                ("VkFaultLevel", "VK_FAULT_LEVEL_RECOVERABLE"),
+                                                ("VkFaultLevel", "VK_FAULT_LEVEL_WARNING"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_UNASSIGNED"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_IMPLEMENTATION"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_SYSTEM"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_PHYSICAL_DEVICE"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_COMMAND_BUFFER_FULL"),
+                                                ("VkFaultType", "VK_FAULT_TYPE_INVALID_API_USAGE")
+                                            ];
+
+                                    if (exceptedNames.Contains((@enum.Name, member.Name)) == false)
+                                    {
+                                        Debug.Assert(false);
+                                    }
+                                }
+                            }
+
+                            if (comment != null)
+                            {
+                                writer.Write($"{comment}");
+                            }
+                            writer.WriteLine("</summary>");
 
                             if (@enum.StrongUnderlyingType == CSPrimitive.Int(true))
                             {
@@ -129,10 +235,56 @@ namespace VkGenerator
 
                 foreach (StructType @struct in structs)
                 {
+                    writer.Write("/// <summary>");
+                    if (@struct.VersionInfo != null)
+                    {
+                        List<string> strs = [.. @struct.VersionInfo.Extensions];
+                        if (@struct.VersionInfo.Version != null)
+                        {
+                            strs.Insert(0, $"v{@struct.VersionInfo.Version.Major}.{@struct.VersionInfo.Version.Minor}");
+                        }
+                        writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                    }
+                    else
+                    {
+                        // There are two "valid" reasons why a struct would be missing version data.
+                        // 1. The only reference to the struct is in a disabled extension.
+                        //    Currently such structs still get emitted even if no-one references them.
+                        // 2. The struct is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                        //
+                        // This is a list of the known structs that fullfill either of these criteria.
+                        // - Noggin_bops 2024-09-24
+                        ReadOnlySpan<string> exceptedNames = [
+                                "VkPipelineCacheStageValidationIndexEntry",
+                                "VkPipelineCacheSafetyCriticalIndexEntry",
+                                "VkPipelineCacheHeaderVersionSafetyCriticalOne",
+                                "VkDeviceSemaphoreSciSyncPoolReservationCreateInfoNV",
+                                "VkNativeBufferUsage2ANDROID",
+                                "VkNativeBufferANDROID",
+                                "VkSwapchainImageCreateInfoANDROID",
+                                "VkPhysicalDevicePresentationPropertiesANDROID",
+                                "VkPerformanceQueryReservationInfoKHR",
+                                "VkFaultData",
+                                "VkFaultCallbackInfo",
+                                "VkPipelineOfflineCreateInfo",
+                                "VkPhysicalDeviceVulkanSC10Properties",
+                                "VkPipelinePoolSize",
+                                "VkDeviceObjectReservationCreateInfo",
+                                "VkCommandPoolMemoryReservationCreateInfo",
+                                "VkCommandPoolMemoryConsumption",
+                                "VkPhysicalDeviceVulkanSC10Features",
+                            ];
+
+                        if (exceptedNames.Contains(@struct.Name) == false)
+                        {
+                            Debug.Assert(false);
+                        }
+                    }
                     if (@struct.Comment != null)
                     {
-                        writer.WriteLine($"/// <summary>{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}</summary>");
+                        writer.Write($"{NameMangler.MaybeRemoveStart(@struct.Comment, "// ")}");
                     }
+                    writer.Write("</summary>");
 
                     // FIXME: Make sure to not do name mangling?
                     writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{@struct.Name}.html\" /></remarks>");
@@ -223,6 +375,50 @@ namespace VkGenerator
                         }
                         signature.Length -= 2;
                         paramNames.Length -= 2;
+
+                        // Write documentation string.
+                        {
+                            writer.Write("/// <summary>");
+                            if (command.VersionInfo != null)
+                            {
+                                List<string> strs = [.. command.VersionInfo.Extensions];
+                                if (command.VersionInfo.Version != null)
+                                {
+                                    strs.Insert(0, $"v{command.VersionInfo.Version.Major}.{command.VersionInfo.Version.Minor}");
+                                }
+                                writer.Write($"<b>[requires: {string.Join(" | ", strs)}]</b> ");
+                            }
+                            else
+                            {
+                                // There are two "valid" reasons why a command would be missing version data.
+                                // 1. The only reference to the command is in a disabled extension.
+                                //    Currently such functions still get emitted even if no-one references them.
+                                // 2. The command is part of vulkansc or a vulkansc extension. We don't deal with vulkancs atm.
+                                //
+                                // This is a list of the known commands that fullfill either of these criteria.
+                                // - Noggin_bops 2024-09-24
+                                ReadOnlySpan<string> exceptedNames = [
+                                    "vkGetSwapchainGrallocUsageANDROID",
+                                    "vkGetSwapchainGrallocUsage2ANDROID",
+                                    "vkAcquireImageANDROID",
+                                    "vkQueueSignalReleaseImageANDROID",
+                                    "vkGetFaultData",
+                                    "vkGetCommandPoolMemoryConsumption",
+                                ];
+
+                                if (exceptedNames.Contains(command.Name) == false)
+                                {
+                                    // See comment above.
+                                    Debug.Assert(false);
+                                }
+                            }
+
+                            if (command.Alias != null)
+                            {
+                                writer.Write($" Alias of <see cref=\"{NameMangler.MangleFunctionName(command.Alias)}\"/>");
+                            }
+                            writer.WriteLine("</summary>");
+                        }
 
                         writer.WriteLine($"/// <remarks><see href=\"https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/{entryPoint}.html\" /></remarks>");
 

@@ -351,6 +351,154 @@ namespace VkGenerator.Process
             }
         }
 
+        public static void ResolveVersionInfo(SpecificationData data, Dictionary<string, BaseCSType> typeMap)
+        {
+            foreach (Feature feature in data.Features)
+            {
+                // FIXME: More robust parsing?
+                Version featureVer = Version.Parse(feature.Number);
+                
+                foreach (RequireTag require in feature.RequireTags)
+                {
+                    foreach (RequireCommand requireCommand in require.RequiredCommands)
+                    {
+                        Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
+
+                        if (command.VersionInfo == null)
+                        {
+                            command.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                        }
+                        else if (command.VersionInfo.Version > featureVer)
+                        {
+                            Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                            command.VersionInfo = command.VersionInfo with { Version = featureVer };
+                        }
+                    }
+
+                    foreach (RequireEnum requireEnum in require.RequiredEnums)
+                    {
+                        EnumType? extends = data.Enums.Find(e => e.Name == requireEnum.Extends);
+                        Debug.Assert(extends != null);
+                        EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
+                        if (member.VersionInfo == null)
+                        {
+                            member.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                        }
+                        else if (member.VersionInfo.Version < featureVer)
+                        {
+                            Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                            member.VersionInfo = member.VersionInfo with { Version = featureVer };
+                        }
+                    }
+
+                    foreach (RequireType requireType in require.RequiredTypes)
+                    {
+                        StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
+                        EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
+                        Debug.Assert(!(structType != null && enumType != null), "We matched two types for this require... Something has gone bad.");
+                        if (structType != null)
+                        {
+                            if (structType.VersionInfo == null)
+                            {
+                                structType.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                            }
+                            else if (structType.VersionInfo.Version < featureVer)
+                            {
+                                Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                                structType.VersionInfo = structType.VersionInfo with { Version = featureVer };
+                            }
+                        }
+                        else if (enumType != null)
+                        {
+                            if (enumType.VersionInfo == null)
+                            {
+                                enumType.VersionInfo = new VersionInfo(featureVer, null, new List<string>());
+                            }
+                            else if (enumType.VersionInfo.Version < featureVer)
+                            {
+                                Debug.Assert(false, "This has never happened. So this codepath is untested.");
+                                enumType.VersionInfo = enumType.VersionInfo with { Version = featureVer };
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Extension extension in data.Extensions)
+            {
+                string extensionName = extension.Name;
+                foreach (RequireTag require in extension.RequireTags)
+                {
+                    foreach (RequireCommand requireCommand in require.RequiredCommands)
+                    {
+                        Command command = data.Commands.Find(c => c.Name == requireCommand.Name) ?? throw new Exception();
+
+                        if (command.VersionInfo == null)
+                        {
+                            command.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                        }
+                        else
+                        {
+                            command.VersionInfo.Extensions.Add(extensionName);
+                        }
+                    }
+
+                    foreach (RequireEnum requireEnum in require.RequiredEnums)
+                    {
+                        // FIXME: This enum is referenced in the VK_EXT_display_surface_counter but it's
+                        // actually never defined outside it. So we won't be able to find it's EnumType.
+                        // One solution would be to add this enum member automatically, but as it's misspelled
+                        // and should not be used we opt to just ignore this member.
+                        // As of 2024-09-24 Vulkan 1.3.295 this is the only such occurance in the specification.
+                        // - Noggin_bops 2024-09-24
+                        if (requireEnum.Name == "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT")
+                            continue;
+
+                        EnumType? extends = data.Enums.Find(e => e.Name == requireEnum.Extends);
+                        Debug.Assert(extends != null);
+                        EnumMember member = extends.Members.Find(m => m.Name == requireEnum.Name) ?? throw new Exception();
+                        if (member.VersionInfo == null)
+                        {
+                            member.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                        }
+                        else
+                        {
+                            member.VersionInfo.Extensions.Add(extensionName);
+                        }
+                    }
+
+                    foreach (RequireType requireType in require.RequiredTypes)
+                    {
+                        StructType? structType = data.Structs.Find(s => s.Name == requireType.Name);
+                        EnumType? enumType = data.Enums.Find(e => e.Name == requireType.Name);
+                        Debug.Assert(!(structType != null && enumType != null), "We matched two types for this require... Something has gone bad.");
+                        if (structType != null)
+                        {
+                            if (structType.VersionInfo == null)
+                            {
+                                structType.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                            }
+                            else
+                            {
+                                structType.VersionInfo.Extensions.Add(extensionName);
+                            }
+                        }
+                        else if (enumType != null)
+                        {
+                            if (enumType.VersionInfo == null)
+                            {
+                                enumType.VersionInfo = new VersionInfo(null, null, [extensionName]);
+                            }
+                            else
+                            {
+                                enumType.VersionInfo.Extensions.Add(extensionName);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public static void ResolveEnumUnderlyingTypes(SpecificationData data)
         {
             foreach (EnumType @enum in data.Enums)
