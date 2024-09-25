@@ -1,3 +1,49 @@
+## 5.0-pre.12
+
+**Vulkan bindings changes:**
+
+* Add links to relevant documentation in Vulkan documentation strings. (@NogginBops)
+* Add `[requires: v1.0 | KHR_extension]` strings that document version and extension requirements for function, structs, and enums. (@NogginBops)
+* Updated Vulkan to 1.3.295. (@NogginBops)
+
+**OpenGL bindings changes:**
+
+* Switched to using `ref readonly` instead of `in` in OpenGL bindings. (@NogginBops)
+* Improvements to glX and WGL bindings. (@NogginBops)
+
+**PAL2 changes:**
+
+* Renamed `Toolkit.Mouse.GetPosition` to `Toolkit.Mouse.GetGlobalPosition`. (@NogginBops)
+* Renamed `Toolkit.Mouse.SetPosition` to `Toolkit.Mouse.SetGlobalPosition`. (@NogginBops)
+* Renamed `Toolkit.Mouse.GetState` to `Toolkit.Mouse.GetGlobalState`. (@NogginBops)
+* Added `Toolkit.Mouse.GetPosition` and `Toolkit.Mouse.GetState` for getting window relative mouse state. (@NogginBops)
+* Added `Toolkit.Clipboard.SetClipboardBitmap`. (@NogginBops)
+* Added `Toolkit.Window.ClientToFramebuffer` and `Toolkit.Window.FramebufferToClient`. (@NogginBops)
+* Switched to using `VectorN` types for most positions and sizes. (@NogginBops)
+* Renamed `MouseMoveEventArgs.Position` to `MouseMoveEventArgs.ClientPosition`. (@NogginBops)
+
+win32:
+
+* win32: Switched `OpenGLComponent` to use the generated WGL bindings. (@NogginBops)
+
+macOS:
+
+* macOS: Added `MacOSShellComponent.NSLog` to be able to write to the macOS system log. (@NogginBops)
+
+x11:
+
+* x11: Implemented `X11VulkanComponent` (`Toolkit.Vulkan`). (@NogginBops)
+* x11: Implemented `X11ClipboardComponent.SetClipboardText`. (@NogginBops)
+* x11: Added `IPngCodec` and `X11ClipboardComponent.SetPngCodec` interface to `X11ClipboardComponent` for optional bitmap support on linux. (@NogginBops)
+* x11: Implemented `HitTest` and `Toolkit.Window.SetHitTest`. (@NogginBops)
+* x11: Improve `Toolkit.Display` api performance by using `XRRGetScreenResourcesCurrent` instead of `XRRGetScreenResources`. (@NogginBops)
+* x11: Fixed issue where pressing cancel in a file dialog would return a list with one empty string in it, instead of null. (@NogginBops)
+* x11: Fixed issue where setting a window to Minimized, Maximized, or Fullscreen directly from the Hidden state didn't actually show the window. (@NogginBops)
+* x11: Fixed issue where the values for `QueuedAfterFlush` and `QueuedAfterReading` where swapped causing lots of event issues on linux. (@NogginBops)
+* x11: Switched `X11OpenGLComponent` to use the generated glX bindings. (@NogginBops)
+* x11: Fixed `Toolkit.Window.GetMode` crash when a window doesn't have a `WM_STATE` property set. (@NogginBops)
+* x11: Reduce potential memory leaks. (@NogginBops)
+
 ## 5.0-pre.11
 
 * Updated all projects to target .net8.0. (@NogginBops)
