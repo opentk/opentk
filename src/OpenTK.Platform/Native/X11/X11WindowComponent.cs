@@ -16,6 +16,7 @@ using static OpenTK.Platform.Native.X11.XI2.XI2;
 using OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Platform.Native.X11.XI2;
 using System.Reflection.Metadata.Ecma335;
+using OpenTK.Platform.Native.Windows;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -2346,7 +2347,8 @@ namespace OpenTK.Platform.Native.X11
                 out long remainingBytes,
                 out IntPtr contents);
 
-            if (result == Success)
+            WindowMode? mode = null;
+            if (result == Success && numberOfItems > 0)
             {
                 const int WithdrawnState = 0;
                 const int NormalState = 1;
@@ -2355,14 +2357,17 @@ namespace OpenTK.Platform.Native.X11
                 unsafe
                 {
                     int state = *(int*)contents;
-                    XFree(contents);
                     if (state == IconicState)
                     {
-                        return WindowMode.Minimized;
+                        mode = WindowMode.Minimized;
                     }
                     else if (state == WithdrawnState)
                     {
-                        return WindowMode.Hidden;
+                        mode = WindowMode.Hidden;
+                    }
+                    else if (state == NormalState)
+                    {
+                        mode = WindowMode.Normal;
                     }
                 }
             }
@@ -2372,19 +2377,40 @@ namespace OpenTK.Platform.Native.X11
                 XFree(contents);
             }
 
-            WMState wmState = GetNETWMState(xwindow.Window);
-
-            if (wmState.HasFlag(WMState.MaximizedHorz | WMState.MaximizedVert))
+            if (mode == null)
             {
-                return WindowMode.Maximized;
-            }
-            
-            if (wmState.HasFlag(WMState.Hidden))
-            {
-                return WindowMode.Hidden;
+                XGetWindowAttributes(X11.Display, xwindow.Window, out XWindowAttributes attributes);
+
+                switch (attributes.MapState)
+                {
+                    case MapState.IsUnmapped:
+                    case MapState.IsUnviewable:
+                        mode = WindowMode.Hidden;
+                        break;
+                    case MapState.IsViewable:
+                        mode = WindowMode.Normal;
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("map state (this is an opentk bug)", (int)attributes.MapState, typeof(MapState));
+                }
             }
 
-            return WindowMode.Normal;
+            if (mode.Value == WindowMode.Normal)
+            {
+                WMState wmState = GetNETWMState(xwindow.Window);
+
+                if (wmState.HasFlag(WMState.MaximizedHorz | WMState.MaximizedVert))
+                {
+                    mode = WindowMode.Maximized;
+                }
+                
+                if (wmState.HasFlag(WMState.Hidden))
+                {
+                    mode = WindowMode.Hidden;
+                }
+            }
+
+            return mode.Value;
         }
 
         /// <inheritdoc />
@@ -2466,8 +2492,8 @@ namespace OpenTK.Platform.Native.X11
                     {
                         // FIXME: There seems to be an issue where the window
                         // doesn't appear in the correct position after being unmapped.
-                        XClearWindow(X11.Display, xwindow.Window);
                         XMapWindow(X11.Display, xwindow.Window);
+                        XClearWindow(X11.Display, xwindow.Window);
 
                         // FIXME: We might need to do something if NET_WM is defined
                         // See: https://github.com/libsdl-org/SDL/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
@@ -2493,7 +2519,7 @@ namespace OpenTK.Platform.Native.X11
                     }
                 case WindowMode.Minimized:
                     {
-                        if (IsMapped(xwindow))
+                        if (IsMapped(xwindow) == false)
                         {
                             XMapWindow(X11.Display, xwindow.Window);
                         }
@@ -2508,7 +2534,7 @@ namespace OpenTK.Platform.Native.X11
                     }
                 case WindowMode.Maximized:
                     {
-                        if (IsMapped(xwindow))
+                        if (IsMapped(xwindow) == false)
                         {
                             XMapWindow(X11.Display, xwindow.Window);
                         }
@@ -2557,11 +2583,21 @@ namespace OpenTK.Platform.Native.X11
                     }
                 case WindowMode.WindowedFullscreen:
                     {
+                        if (IsMapped(xwindow) == false)
+                        {
+                            XMapWindow(X11.Display, xwindow.Window);
+                        }
+
                         SetFullscreenDisplay(handle, null);
                         break;
                     }
                 case WindowMode.ExclusiveFullscreen:
                     {
+                        if (IsMapped(xwindow) == false)
+                        {
+                            XMapWindow(X11.Display, xwindow.Window);
+                        }
+
                         XDisplayHandle xdisplay = (XDisplayHandle)GetDisplay(handle);
                         X11DisplayComponent.GetVideoMode(this, xdisplay, out VideoMode videoMode);
                         SetFullscreenDisplay(handle, xdisplay, videoMode);

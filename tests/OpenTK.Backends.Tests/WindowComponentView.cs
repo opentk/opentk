@@ -174,6 +174,7 @@ namespace OpenTK.Backends.Tests
                     ImGui.Text($"Position: ({pos.X}, {pos.Y})");
                     ImGui.Text($"Client Size: ({cSize.X}, {cSize.Y})");
                     ImGui.Text($"Size: ({size.X}, {size.Y})");
+                    ImGui.Text($"Mode: {Toolkit.Window.GetMode(window)}");
                 }
 
                 ImGui.AlignTextToFramePadding();
